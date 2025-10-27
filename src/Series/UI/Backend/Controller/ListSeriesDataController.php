@@ -2,7 +2,7 @@
 
 namespace App\Series\UI\Backend\Controller;
 
-use App\Series\Application\List\ListSeriesHandler;
+use App\Series\Application\List\ListSeriesService;
 use App\Series\Application\List\ListSeriesRequest;
 use App\Series\Domain\SeriesRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,9 +12,13 @@ use Symfony\Component\Routing\RouterInterface;
 
 final class ListSeriesDataController extends AbstractController
 {
+    public function __construct(
+        private ListSeriesService $listSeriesService,
+        private SeriesRepositoryInterface $seriesRepository
+    ) {}
+
     public function __invoke(
         Request $request,
-        SeriesRepositoryInterface $repository,
         RouterInterface $router
     ): JsonResponse {
         $offset = (int) $request->query->get('offset', 0);
@@ -39,8 +43,7 @@ final class ListSeriesDataController extends AbstractController
             order: $order
         );
 
-        $handler = new ListSeriesHandler($repository);
-        $seriesResponse = $handler->execute($dto);
+        $seriesResponse = ($this->listSeriesService)($dto);
 
         $rows = [];
         foreach ($seriesResponse->series as $item) {
@@ -67,8 +70,8 @@ final class ListSeriesDataController extends AbstractController
             $rows[] = [
                 'oneSeries' => $item,
                 'thumbnail' => $item->getMainThumbnail($request->getScheme(), $request->getHost()),
-                'objectCount' => $repository->countMultimediaObjects($item->getId()),
-                'eventCount' => $repository->countEventMultimediaObjects($item->getId()),
+                'objectCount' => $this->seriesRepository->countMultimediaObjects($item->getId()),
+                'eventCount' => $this->seriesRepository->countEventMultimediaObjects($item->getId()),
                 'actions' => $actionsHtml,
             ];
         }

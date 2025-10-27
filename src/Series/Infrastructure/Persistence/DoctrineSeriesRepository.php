@@ -5,7 +5,6 @@ namespace App\Series\Infrastructure\Persistence;
 use App\Series\Domain\SeriesRepositoryInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
-use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 

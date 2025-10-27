@@ -14,7 +14,7 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\Series\Application\List\ListSeriesHandler:
+  App\Series\Application\List\ListSeriesService:
     arguments:
       $repository: '@App\Series\Domain\SeriesRepositoryInterface'
 
@@ -29,9 +29,14 @@ services:
   App\Series\UI\Backend\Twig\SeriesExtension:
     arguments:
       $picService: '@Pumukit\SchemaBundle\Services\PicService'
-      $getSeriesOwnersHandler: '@App\Series\Application\ViewSeriesOwners\GetSeriesOwnersHandler'
+      $getSeriesOwnersService: '@App\Series\Application\ViewSeriesOwners\GetSeriesOwnersService'
     tags:
       - { name: twig.extension }
+
+  App\Series\Application\ViewSeriesOwners\GetSeriesOwnersService:
+    arguments:
+      $seriesRepository: '@App\Series\Domain\SeriesRepositoryInterface'
+      $userRepository: '@App\User\Domain\UserRepositoryInterface'
 
   App\Series\Domain\SeriesFactoryInterface:
     alias: App\Series\Infrastructure\Factory\SeriesFactoryAdapter

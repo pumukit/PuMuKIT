@@ -2,9 +2,8 @@
 
 namespace App\Series\UI\Backend\Controller;
 
-use App\Series\Application\ViewSeriesMultimediaObjects\ViewSeriesMultimediaObjectsHandler;
+use App\Series\Application\ViewSeriesMultimediaObjects\ViewSeriesMultimediaObjectsService;
 use App\Series\Application\ViewSeriesMultimediaObjects\ViewSeriesMultimediaObjectsRequest;
-use App\Series\Domain\SeriesRepositoryInterface;
 use MongoDB\BSON\ObjectId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,9 +12,10 @@ use Symfony\Component\Routing\RouterInterface;
 
 final class ViewSeriesMultimediaObjectsDataController extends AbstractController
 {
+    public function __construct(private ViewSeriesMultimediaObjectsService $viewSeriesMultimediaObjectsService) {}
+
     public function __invoke(
         Request $request,
-        SeriesRepositoryInterface $repository,
         RouterInterface $router,
         string $id,
     ): JsonResponse {
@@ -44,8 +44,7 @@ final class ViewSeriesMultimediaObjectsDataController extends AbstractController
             order: $order,
         );
 
-        $handler = new ViewSeriesMultimediaObjectsHandler($repository);
-        $response = $handler->handle($dto);
+        $response = ($this->viewSeriesMultimediaObjectsService)($dto);
 
         $rows = [];
         foreach ($response->multimediaObjects as $om) {

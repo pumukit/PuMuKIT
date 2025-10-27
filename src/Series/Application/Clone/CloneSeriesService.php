@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Series\Application\Clone;
 
-use App\Series\Domain\SeriesRepositoryInterface;
 use App\Series\Domain\Exception\SeriesNotFoundException;
-use Pumukit\SchemaBundle\Document\Series;
+use App\Series\Domain\SeriesRepositoryInterface;
 use Pumukit\SchemaBundle\Services\FactoryService;
 
 final class CloneSeriesService
@@ -14,19 +15,29 @@ final class CloneSeriesService
         private FactoryService $factoryService
     ) {}
 
-    public function __invoke(string $seriesId): Series
+    public function __invoke(CloneSeriesRequest $request): CloneSeriesResponse
     {
-        $originalSeries = $this->repository->find($seriesId);
+        CloneSeriesValidator::validate($request);
+
+        $originalSeries = $this->repository->find($request->seriesId);
 
         if (!$originalSeries) {
-            throw new SeriesNotFoundException($seriesId);
+            throw new SeriesNotFoundException($request->seriesId);
         }
 
-        try {
-            return $this->factoryService->cloneSeries($originalSeries);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        $clonedSeries = $this->factoryService->cloneSeries($originalSeries);
+
+        $multimediaObjectsCount = 0;
+        foreach ($originalSeries->getMultimediaObjects() as $multimediaObject) {
+            $this->factoryService->cloneMultimediaObject($multimediaObject, $clonedSeries);
+            ++$multimediaObjectsCount;
         }
+
+        $this->repository->save($clonedSeries);
+
+        return new CloneSeriesResponse($clonedSeries, $multimediaObjectsCount);
     }
 }
+
+
 

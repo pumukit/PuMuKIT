@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Series\Application\Create;
+
+use Pumukit\SchemaBundle\Document\Series;
 
 final class CreateSeriesResponse
 {
     public function __construct(
-        public readonly string $id,
-        public readonly array $title,
-        public readonly string $ownerId
+        public readonly Series $series
     ) {}
 }

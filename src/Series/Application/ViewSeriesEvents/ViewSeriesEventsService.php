@@ -4,11 +4,11 @@ namespace App\Series\Application\ViewSeriesEvents;
 
 use App\Series\Domain\SeriesRepositoryInterface;
 
-final class ViewSeriesEventsHandler
+final class ViewSeriesEventsService
 {
     public function __construct(private SeriesRepositoryInterface $repository) {}
 
-    public function handle(ViewSeriesEventsRequest $request): ViewSeriesEventsResponse
+    public function __invoke(ViewSeriesEventsRequest $request): ViewSeriesEventsResponse
     {
         ViewSeriesEventsValidator::validate($request);
 
@@ -27,3 +27,4 @@ final class ViewSeriesEventsHandler
         return new ViewSeriesEventsResponse($multimediaObjects, $total);
     }
 }
+

@@ -1,15 +1,14 @@
 <?php
 
-
 namespace App\Series\Application\ViewSeriesMultimediaObjects;
 
 use App\Series\Domain\SeriesRepositoryInterface;
 
-final class ViewSeriesMultimediaObjectsHandler
+final class ViewSeriesMultimediaObjectsService
 {
     public function __construct(private SeriesRepositoryInterface $repository) {}
 
-    public function handle(ViewSeriesMultimediaObjectsRequest $request): ViewSeriesMultimediaObjectsResponse
+    public function __invoke(ViewSeriesMultimediaObjectsRequest $request): ViewSeriesMultimediaObjectsResponse
     {
         ViewSeriesMultimediaObjectsValidator::validate($request);
 
@@ -28,3 +27,4 @@ final class ViewSeriesMultimediaObjectsHandler
         return new ViewSeriesMultimediaObjectsResponse($multimediaObjects, $total);
     }
 }
+

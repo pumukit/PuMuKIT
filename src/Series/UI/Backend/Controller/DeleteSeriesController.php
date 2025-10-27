@@ -2,18 +2,18 @@
 
 namespace App\Series\UI\Backend\Controller;
 
-use App\Series\Application\Delete\DeleteSeriesHandler;
+use App\Series\Application\Delete\DeleteSeriesService;
 use App\Series\Application\Delete\DeleteSeriesRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 final class DeleteSeriesController extends AbstractController
 {
-    public function __invoke(string $id, DeleteSeriesHandler $handler): RedirectResponse
+    public function __invoke(string $id, DeleteSeriesService $deleteSeriesService): RedirectResponse
     {
         $requestDto = new DeleteSeriesRequest($id);
 
-        $response = $handler($requestDto);
+        $response = ($deleteSeriesService)($requestDto);
 
         if ($response->success) {
             $this->addFlash('success', $response->message);

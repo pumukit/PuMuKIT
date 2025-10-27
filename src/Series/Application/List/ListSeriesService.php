@@ -4,11 +4,11 @@ namespace App\Series\Application\List;
 
 use App\Series\Domain\SeriesRepositoryInterface;
 
-class ListSeriesHandler
+final class ListSeriesService
 {
     public function __construct(private SeriesRepositoryInterface $repository) {}
 
-    public function execute(ListSeriesRequest $request): ListSeriesResponse
+    public function __invoke(ListSeriesRequest $request): ListSeriesResponse
     {
         ListSeriesValidator::validate($request);
 
@@ -25,3 +25,4 @@ class ListSeriesHandler
         return new ListSeriesResponse($series, $total);
     }
 }
+

@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Series\UI\Backend\Twig;
 
-use App\Series\Application\ViewSeriesOwners\GetSeriesOwnersHandler;
+use App\Series\Application\ViewSeriesOwners\GetSeriesOwnersRequest;
+use App\Series\Application\ViewSeriesOwners\GetSeriesOwnersService;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\PicService;
 use Twig\Extension\AbstractExtension;
@@ -12,7 +15,7 @@ class SeriesExtension extends AbstractExtension
 {
     public function __construct(
         private PicService $picService,
-        private GetSeriesOwnersHandler $getSeriesOwnersHandler
+        private GetSeriesOwnersService $getSeriesOwnersService
     ) {}
 
     public function getFilters(): array
@@ -30,6 +33,11 @@ class SeriesExtension extends AbstractExtension
 
     public function ownerFilter(Series $series): array
     {
-        return $this->getSeriesOwnersHandler->handle($series);
+        $request = new GetSeriesOwnersRequest($series->getId());
+        $response = ($this->getSeriesOwnersService)($request);
+
+        return $response->owners;
     }
 }
+
+

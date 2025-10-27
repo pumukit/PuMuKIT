@@ -8,7 +8,7 @@ use App\Series\Domain\Event\SeriesDeletedEvent;
 use App\Series\Domain\SeriesRepositoryInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-final class DeleteSeriesHandler
+final class DeleteSeriesService
 {
     public function __construct(
         private readonly SeriesRepositoryInterface $repository,

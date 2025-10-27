@@ -3,8 +3,7 @@
 namespace App\Series\UI\Backend\Controller;
 
 use App\Series\Application\ViewSeriesEvents\ViewSeriesEventsRequest;
-use App\Series\Application\ViewSeriesEvents\ViewSeriesEventsHandler;
-use App\Series\Domain\SeriesRepositoryInterface;
+use App\Series\Application\ViewSeriesEvents\ViewSeriesEventsService;
 use MongoDB\BSON\ObjectId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,9 +12,10 @@ use Symfony\Component\Routing\RouterInterface;
 
 final class ViewSeriesEventsDataController extends AbstractController
 {
+    public function __construct(private ViewSeriesEventsService $viewSeriesEventsService) {}
+
     public function __invoke(
         Request $request,
-        SeriesRepositoryInterface $repository,
         RouterInterface $router,
         string $id,
     ): JsonResponse {
@@ -44,8 +44,7 @@ final class ViewSeriesEventsDataController extends AbstractController
             order: $order,
         );
 
-        $handler = new ViewSeriesEventsHandler($repository);
-        $response = $handler->handle($dto);
+        $response = ($this->viewSeriesEventsService)($dto);
 
         $rows = [];
         foreach ($response->multimediaObjects as $om) {

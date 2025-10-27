@@ -1,24 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Series\UI\Backend\Controller;
 
-use App\Series\Application\Create\CreateSeriesCommand;
-use App\Series\Application\Create\CreateSeriesHandler;
+use App\Series\Application\Create\CreateSeriesRequest;
+use App\Series\Application\Create\CreateSeriesService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 final class CreateSeriesController extends AbstractController
 {
-    public function __construct(private CreateSeriesHandler $handler) {}
+    public function __construct(private CreateSeriesService $createSeriesService) {}
 
     public function __invoke(): RedirectResponse
     {
         $user = $this->getUser();
 
-        $command = new CreateSeriesCommand($user->getId());
+        $request = new CreateSeriesRequest($user->getId());
 
-        $response = $this->handler->__invoke($command);
+        $response = ($this->createSeriesService)($request);
 
-        return $this->redirectToRoute('series_view', ['id' => $response->id]);
+        $this->addFlash('success', sprintf(
+            'Series "%s" created successfully',
+            $response->series->getTitle()
+        ));
+
+        return $this->redirectToRoute('series_view', ['id' => $response->series->getId()]);
     }
 }
