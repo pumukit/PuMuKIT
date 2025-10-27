@@ -1541,6 +1541,19 @@ class MultimediaObject
         return $this->updatedAt;
     }
 
+    public function getMainThumbnail(string $scheme, string $host): string
+    {
+        foreach ($this->pics as $pic) {
+            if (false === $pic->getHide()) {
+                $url = $pic->getUrl();
+
+                return $this->makeAbsoluteUrl($url, $scheme, $host);
+            }
+        }
+
+        return $this->makeAbsoluteUrl('/bundles/pumukitnewadmin/images/none.jpg', $scheme, $host);
+    }
+
     /**
      * Reorder track by id.
      *
@@ -1586,19 +1599,6 @@ class MultimediaObject
         if ($minDuration > $trackMinDuration) {
             $this->setDuration($trackMinDuration);
         }
-    }
-
-    public function getMainThumbnail(string $scheme, string $host): string
-    {
-
-        foreach ($this->pics as $pic) {
-            if ($pic->getHide() === false) {
-                $url = $pic->getUrl();
-                return $this->makeAbsoluteUrl($url, $scheme, $host);
-            }
-        }
-
-        return $this->makeAbsoluteUrl('/bundles/pumukitnewadmin/images/none.jpg', $scheme, $host);
     }
 
     private function makeAbsoluteUrl(string $url, string $scheme, string $host): string

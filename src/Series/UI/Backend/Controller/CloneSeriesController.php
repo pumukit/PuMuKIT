@@ -16,7 +16,7 @@ final class CloneSeriesController extends AbstractController
 {
     public function __construct(private CloneSeriesService $cloneSeriesService) {}
 
-    public function __invoke(string $id): RedirectResponse|JsonResponse
+    public function __invoke(string $id): JsonResponse|RedirectResponse
     {
         try {
             $request = new CloneSeriesRequest($id);
@@ -36,6 +36,3 @@ final class CloneSeriesController extends AbstractController
         }
     }
 }
-
-
-

@@ -2,8 +2,8 @@
 
 namespace App\Series\UI\Backend\Controller;
 
-use App\Series\Application\View\ViewSeriesService;
 use App\Series\Application\View\ViewSeriesRequest;
+use App\Series\Application\View\ViewSeriesService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

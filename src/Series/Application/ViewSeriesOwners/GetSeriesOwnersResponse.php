@@ -10,4 +10,3 @@ final class GetSeriesOwnersResponse
         public readonly array $owners
     ) {}
 }
-

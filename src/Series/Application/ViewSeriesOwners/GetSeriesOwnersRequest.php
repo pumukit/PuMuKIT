@@ -10,4 +10,3 @@ final class GetSeriesOwnersRequest
         public readonly string $seriesId
     ) {}
 }
-

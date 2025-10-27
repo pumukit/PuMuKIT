@@ -2,8 +2,8 @@
 
 namespace App\Series\UI\Backend\Controller;
 
-use App\Series\Application\ViewSeriesMultimediaObjects\ViewSeriesMultimediaObjectsService;
 use App\Series\Application\ViewSeriesMultimediaObjects\ViewSeriesMultimediaObjectsRequest;
+use App\Series\Application\ViewSeriesMultimediaObjects\ViewSeriesMultimediaObjectsService;
 use MongoDB\BSON\ObjectId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,11 +19,10 @@ final class ViewSeriesMultimediaObjectsDataController extends AbstractController
         RouterInterface $router,
         string $id,
     ): JsonResponse {
-
         $offset = (int) $request->query->get('offset', 0);
-        $limit  = (int) $request->query->get('limit', 10);
-        $sort   = $request->query->get('sort', 'title');
-        $order  = $request->query->get('order', 'asc');
+        $limit = (int) $request->query->get('limit', 10);
+        $sort = $request->query->get('sort', 'title');
+        $order = $request->query->get('order', 'asc');
         $search = $request->query->get('search', '');
 
         $page = (int) floor($offset / $limit) + 1;
@@ -68,13 +67,13 @@ final class ViewSeriesMultimediaObjectsDataController extends AbstractController
                 'duration' => $om->getDurationString(),
                 'hide' => $om->isHidden(),
                 'type' => $om->getType(),
-                'actions' => $actionsHtml
+                'actions' => $actionsHtml,
             ];
         }
 
         return $this->json([
             'total' => $response->total,
-            'rows' => $rows
+            'rows' => $rows,
         ]);
     }
 }

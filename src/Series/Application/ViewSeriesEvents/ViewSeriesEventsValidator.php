@@ -2,8 +2,6 @@
 
 namespace App\Series\Application\ViewSeriesEvents;
 
-use App\Series\Application\ViewSeriesEvents\ViewSeriesEventsRequest;
-
 class ViewSeriesEventsValidator
 {
     public static function validate(ViewSeriesEventsRequest $request): void

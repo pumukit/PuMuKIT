@@ -2,8 +2,8 @@
 
 namespace App\Series\UI\Backend\Controller;
 
-use App\Series\Application\Delete\DeleteSeriesService;
 use App\Series\Application\Delete\DeleteSeriesRequest;
+use App\Series\Application\Delete\DeleteSeriesService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 

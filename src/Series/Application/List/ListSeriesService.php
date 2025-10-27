@@ -25,4 +25,3 @@ final class ListSeriesService
         return new ListSeriesResponse($series, $total);
     }
 }
-

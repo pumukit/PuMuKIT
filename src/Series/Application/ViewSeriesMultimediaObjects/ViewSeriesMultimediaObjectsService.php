@@ -27,4 +27,3 @@ final class ViewSeriesMultimediaObjectsService
         return new ViewSeriesMultimediaObjectsResponse($multimediaObjects, $total);
     }
 }
-

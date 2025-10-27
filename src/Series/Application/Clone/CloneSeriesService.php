@@ -40,6 +40,3 @@ final class CloneSeriesService
         return new CloneSeriesResponse($clonedSeries, $multimediaObjectsCount);
     }
 }
-
-
-

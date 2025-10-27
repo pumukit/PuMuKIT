@@ -2,10 +2,8 @@
 
 namespace App\Series\Application\Find;
 
-use App\Series\Application\Find\FindSeriesRequest;
-use App\Series\Application\Find\FindSeriesResponse;
-use App\Series\Domain\SeriesRepositoryInterface;
 use App\Series\Domain\Exception\SeriesNotFoundException;
+use App\Series\Domain\SeriesRepositoryInterface;
 
 final class FindSeriesService
 {

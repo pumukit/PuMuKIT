@@ -2,8 +2,8 @@
 
 namespace App\Series\Application\View;
 
-use App\Series\Application\Find\FindSeriesService;
 use App\Series\Application\Find\FindSeriesRequest;
+use App\Series\Application\Find\FindSeriesService;
 
 final class ViewSeriesService
 {

@@ -18,15 +18,15 @@ use Symfony\Component\Serializer\Annotation\Ignore;
  */
 #[ApiResource(
     collectionOperations: [
-        'get' => ['security' => "is_granted('ROLE_ACCESS_API')"]
+        'get' => ['security' => "is_granted('ROLE_ACCESS_API')"],
     ],
     itemOperations: [
-        'get' => ['security' => "is_granted('ROLE_ACCESS_API')"]
+        'get' => ['security' => "is_granted('ROLE_ACCESS_API')"],
     ]
 )]
 #[ApiFilter(SearchFilter::class, properties: [
     'username' => 'partial',
-    'email' => 'exact'
+    'email' => 'exact',
 ])]
 class User implements UserInterface
 {

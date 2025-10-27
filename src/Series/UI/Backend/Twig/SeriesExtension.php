@@ -39,5 +39,3 @@ class SeriesExtension extends AbstractExtension
         return $response->owners;
     }
 }
-
-

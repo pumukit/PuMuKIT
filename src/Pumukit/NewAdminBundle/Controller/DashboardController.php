@@ -10,15 +10,12 @@ use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Repository\MultimediaObjectRepository;
 use Pumukit\SchemaBundle\Services\StatsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -43,8 +40,7 @@ class DashboardController extends AbstractController implements NewAdminControll
         StatsService $statsService,
         ProfileService $profileService,
         RouterInterface $router,
-    )
-    {
+    ) {
         $this->documentManager = $documentManager;
         $this->statsService = $statsService;
         $this->profileService = $profileService;
@@ -90,13 +86,12 @@ class DashboardController extends AbstractController implements NewAdminControll
         $data['live'] = count($this->documentManager->getRepository(MultimediaObject::class)->findBy(['type' => MultimediaObject::TYPE_LIVE]));
         $data['channels'] = count($this->documentManager->getRepository(Live::class)->findAll());
 
-
         $data['multimedia_object_audio'] = count($this->documentManager->getRepository(MultimediaObject::class)->findBy(['type' => MultimediaObject::TYPE_AUDIO]));
         $data['multimedia_object_document'] = count($this->documentManager->getRepository(MultimediaObject::class)->findBy(['type' => MultimediaObject::TYPE_DOCUMENT]));
         $data['multimedia_object_image'] = count($this->documentManager->getRepository(MultimediaObject::class)->findBy(['type' => MultimediaObject::TYPE_IMAGE]));
         $data['multimedia_object_external'] = count($this->documentManager->getRepository(MultimediaObject::class)->findBy(['type' => MultimediaObject::TYPE_EXTERNAL]));
         $data['multimedia_object_video'] = count($this->documentManager->getRepository(MultimediaObject::class)->findBy(['type' => MultimediaObject::TYPE_VIDEO, 'status' => ['$ne' => MultimediaObject::STATUS_PROTOTYPE]]));
-        $data['multimedia_object'] = $data['multimedia_object_audio'] + $data['multimedia_object_document'] + $data['multimedia_object_image'] + $data['multimedia_object_external'] +$data['multimedia_object_video'];
+        $data['multimedia_object'] = $data['multimedia_object_audio'] + $data['multimedia_object_document'] + $data['multimedia_object_image'] + $data['multimedia_object_external'] + $data['multimedia_object_video'];
 
         return ['data' => $data];
     }

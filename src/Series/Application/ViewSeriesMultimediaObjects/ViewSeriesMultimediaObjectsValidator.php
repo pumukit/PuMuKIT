@@ -2,8 +2,6 @@
 
 namespace App\Series\Application\ViewSeriesMultimediaObjects;
 
-use App\Series\Application\ViewSeriesMultimediaObjects\ViewSeriesMultimediaObjectsRequest;
-
 class ViewSeriesMultimediaObjectsValidator
 {
     public static function validate(ViewSeriesMultimediaObjectsRequest $request): void

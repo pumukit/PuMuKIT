@@ -558,12 +558,12 @@ class Series
         return $this->properties['owners'] ?? [];
     }
 
-
     public function getMainThumbnail(string $scheme, string $host): string
     {
         foreach ($this->pics as $pic) {
-            if ($pic->isHide() === false && !empty($pic->url)) {
+            if (false === $pic->isHide() && !empty($pic->url)) {
                 $url = $pic->url;
+
                 return $this->makeAbsoluteUrl($url, $scheme, $host);
             }
         }

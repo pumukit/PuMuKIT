@@ -2,8 +2,8 @@
 
 namespace App\Series\UI\Backend\Controller;
 
-use App\Series\Application\List\ListSeriesService;
 use App\Series\Application\List\ListSeriesRequest;
+use App\Series\Application\List\ListSeriesService;
 use App\Series\Domain\SeriesRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -65,7 +65,6 @@ final class ListSeriesDataController extends AbstractController
                 $router->generate('series_clone', ['id' => $item->getId()]),
                 $router->generate('series_delete', ['id' => $item->getId()])
             );
-
 
             $rows[] = [
                 'oneSeries' => $item,

@@ -2,9 +2,7 @@
 
 namespace App\Series\Domain\Exception;
 
-use DomainException;
-
-final class SeriesNotFoundException extends DomainException
+final class SeriesNotFoundException extends \DomainException
 {
     public function __construct(string $seriesId)
     {

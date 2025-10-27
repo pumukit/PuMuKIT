@@ -35,5 +35,3 @@ final class GetSeriesOwnersService
         return new GetSeriesOwnersResponse($owners);
     }
 }
-
-

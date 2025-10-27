@@ -2,8 +2,6 @@
 
 namespace App\Series\Application\View;
 
-use App\Series\Application\View\Exception\InvalidSeriesIdException;
-
 final class ViewSeriesValidator
 {
     public static function validate(ViewSeriesRequest $request): void

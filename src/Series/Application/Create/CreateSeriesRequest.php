@@ -11,4 +11,3 @@ final class CreateSeriesRequest
         public readonly ?array $title = null
     ) {}
 }
-

@@ -93,7 +93,6 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
         return $qb->count()->getQuery()->execute();
     }
 
-
     public function findMultimediaObjectsBySeries(string $seriesId, int $offset = 0, int $limit = 10, string $sort = 'title', string $order = 'asc'): array
     {
         $fieldMapping = [
@@ -103,7 +102,7 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
         ];
 
         $sortField = $fieldMapping[$sort] ?? 'title';
-        $sortDirection = strtolower($order) === 'asc' ? 1 : -1;
+        $sortDirection = 'asc' === strtolower($order) ? 1 : -1;
 
         $qb = $this->documentManager
             ->getRepository(MultimediaObject::class)
@@ -113,7 +112,8 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
             ->field('series')->equals(new ObjectId($seriesId))
             ->skip($offset)
             ->limit($limit)
-            ->sort($sortField, $sortDirection);
+            ->sort($sortField, $sortDirection)
+        ;
 
         return $qb->getQuery()->execute()->toArray();
     }
@@ -127,7 +127,7 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
         ];
 
         $sortField = $fieldMapping[$sort] ?? 'title';
-        $sortDirection = strtolower($order) === 'asc' ? 1 : -1;
+        $sortDirection = 'asc' === strtolower($order) ? 1 : -1;
 
         $qb = $this->documentManager
             ->getRepository(MultimediaObject::class)
@@ -137,7 +137,8 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
             ->field('series')->equals(new ObjectId($seriesId))
             ->skip($offset)
             ->limit($limit)
-            ->sort($sortField, $sortDirection);
+            ->sort($sortField, $sortDirection)
+        ;
 
         return $qb->getQuery()->execute()->toArray();
     }
@@ -158,7 +159,7 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
             ->count()
             ->getQuery()
             ->execute()
-            ;
+        ;
     }
 
     public function save(Series $series): void

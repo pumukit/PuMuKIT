@@ -31,4 +31,3 @@ final class CreateSeriesService
         return new CreateSeriesResponse($series);
     }
 }
-

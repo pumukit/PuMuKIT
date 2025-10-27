@@ -13,4 +13,3 @@ final class CloneSeriesResponse
         public readonly int $multimediaObjectsCloned
     ) {}
 }
-

@@ -19,11 +19,10 @@ final class ViewSeriesEventsDataController extends AbstractController
         RouterInterface $router,
         string $id,
     ): JsonResponse {
-
         $offset = (int) $request->query->get('offset', 0);
-        $limit  = (int) $request->query->get('limit', 10);
-        $sort   = $request->query->get('sort', 'title');
-        $order  = $request->query->get('order', 'asc');
+        $limit = (int) $request->query->get('limit', 10);
+        $sort = $request->query->get('sort', 'title');
+        $order = $request->query->get('order', 'asc');
         $search = $request->query->get('search', '');
 
         $page = (int) floor($offset / $limit) + 1;
@@ -60,13 +59,13 @@ final class ViewSeriesEventsDataController extends AbstractController
             $rows[] = [
                 'thumbnail' => $om->getMainThumbnail($request->getScheme(), $request->getHost()),
                 'title' => $om->getTitle(),
-                'actions' => $actionsHtml
+                'actions' => $actionsHtml,
             ];
         }
 
         return $this->json([
             'total' => $response->total,
-            'rows' => $rows
+            'rows' => $rows,
         ]);
     }
 }
