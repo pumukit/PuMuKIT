@@ -475,6 +475,8 @@ class FactoryService
         $this->generateNumericalIDSeries($newSeries);
 
         $this->seriesDispatcher->dispatchCreate($series);
+
+        return $newSeries;
     }
 
     /**

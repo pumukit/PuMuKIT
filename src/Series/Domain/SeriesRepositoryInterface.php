@@ -16,5 +16,7 @@ interface SeriesRepositoryInterface
 
     public function countMultimediaObjects(string $seriesId): int;
 
+    public function save(Series $series): void;
+
     public function delete(Series $series): void;
 }

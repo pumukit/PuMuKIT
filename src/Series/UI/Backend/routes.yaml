@@ -31,3 +31,7 @@ series_delete:
   controller: App\Series\UI\Backend\Controller\DeleteSeriesController
   methods: [POST]
 
+series_clone:
+  path: /admin/backend/series/{id}/clone
+  controller: App\Series\UI\Backend\Controller\CloneSeriesController
+  methods: [POST]

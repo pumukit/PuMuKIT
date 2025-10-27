@@ -47,7 +47,11 @@ final class ListSeriesDataController extends AbstractController
             $actionsHtml = sprintf(
                 '<div class="d-flex gap-1 justify-content-end">
         <a href="%s" class="btn btn-sm"><i class="fa fa-eye"></i></a>
-        <a href="%s" class="btn btn-sm"><i class="fa fa-copy"></i></a>
+        <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to clone this series?\');">
+            <button type="submit" class="btn btn-sm">
+                <i class="fa fa-copy"></i>
+            </button>
+        </form>
         <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to delete this series?\');">
             <button type="submit" class="btn btn-sm">
                 <i class="fa fa-trash"></i>
@@ -55,7 +59,7 @@ final class ListSeriesDataController extends AbstractController
         </form>
     </div>',
                 $router->generate('series_view', ['id' => $item->getId()]),
-                '#',
+                $router->generate('series_clone', ['id' => $item->getId()]),
                 $router->generate('series_delete', ['id' => $item->getId()])
             );
 

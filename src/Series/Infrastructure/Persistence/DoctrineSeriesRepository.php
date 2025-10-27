@@ -161,4 +161,10 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
             ->execute()
             ;
     }
+
+    public function save(Series $series): void
+    {
+        $this->documentManager->persist($series);
+        $this->documentManager->flush();
+    }
 }
