@@ -143,3 +143,19 @@ body.layout-body {
     background-color: rgba(255, 255, 255, 0.08);
     border-radius: 3px;
 }
+
+
+/** PUMUKIT BTN **/
+
+.btn-pumukit {
+    background-color: #c05800;
+    color: #fff;
+    border: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.btn-pumukit:hover {
+    background-color: #c05800;
+    border: none;
+}

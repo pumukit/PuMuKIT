@@ -10,14 +10,14 @@
 }
 
 .modern-tabs .nav-link:hover {
-    color: #0d6efd;
+    color: #c05800;
     transform: translateY(-2px);
 }
 
 .modern-tabs .nav-link.active {
-    color: #0d6efd;
+    color: #c05800;
     font-weight: 600;
-    border-bottom: 3px solid #0d6efd;
+    border-bottom: 3px solid #c05800;
     background-color: transparent;
 }
 
@@ -28,5 +28,5 @@
 
 .modern-tabs .nav-link.active i {
     opacity: 1;
-    color: #0d6efd;
+    color: #c05800;
 }
