@@ -14,13 +14,10 @@ services:
     autowire: true
     autoconfigure: true
 
+  App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface: '@App\MultimediaObject\Infrastructure\Persistence\DoctrineMultimediaObjectRepository'
+
   App\MultimediaObject\Infrastructure\Persistence\DoctrineMultimediaObjectRepository:
     autowire: true
     autoconfigure: true
     public: false
-
-  App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface: '@App\MultimediaObject\Infrastructure\Persistence\DoctrineMultimediaObjectRepository'
-
-  App\MultimediaObject\Application\View\ViewMultimediaObjectHandler:
-    arguments:
-      $repository: '@App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface'
+    tags: [ 'doctrine.repository' ]

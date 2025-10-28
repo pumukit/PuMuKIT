@@ -2,7 +2,7 @@
 
 namespace App\Series\Application\List;
 
-class ListSeriesResponse
+final class ListSeriesResponse
 {
     public array $series;
     public int $total;

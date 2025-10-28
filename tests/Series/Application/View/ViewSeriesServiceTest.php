@@ -4,25 +4,26 @@ declare(strict_types=1);
 
 namespace Tests\Series\Application\View;
 
-use App\Series\Application\Find\FindSeriesRequest;
-use App\Series\Application\Find\FindSeriesResponse;
 use App\Series\Application\Find\FindSeriesService;
 use App\Series\Application\View\ViewSeriesRequest;
 use App\Series\Application\View\ViewSeriesResponse;
 use App\Series\Application\View\ViewSeriesService;
 use App\Series\Domain\Exception\SeriesNotFoundException;
+use App\Series\Domain\SeriesRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Series;
 
 final class ViewSeriesServiceTest extends TestCase
 {
-    private FindSeriesService $findSeriesService;
+    private SeriesRepositoryInterface $repository;
+    private FindSeriesService $findService;
     private ViewSeriesService $service;
 
     protected function setUp(): void
     {
-        $this->findSeriesService = $this->createMock(FindSeriesService::class);
-        $this->service = new ViewSeriesService($this->findSeriesService);
+        $this->repository = $this->createMock(SeriesRepositoryInterface::class);
+        $this->findService = new FindSeriesService($this->repository);
+        $this->service = new ViewSeriesService($this->findService);
     }
 
     public function testItViewsExistingSeries(): void
@@ -30,13 +31,11 @@ final class ViewSeriesServiceTest extends TestCase
         $series = $this->createMock(Series::class);
         $series->method('getId')->willReturn('507f1f77bcf86cd799439011');
 
-        $findResponse = new FindSeriesResponse($series);
-
-        $this->findSeriesService
+        $this->repository
             ->expects($this->once())
-            ->method('__invoke')
-            ->with($this->callback(fn($req) => $req instanceof FindSeriesRequest && $req->id === '507f1f77bcf86cd799439011'))
-            ->willReturn($findResponse);
+            ->method('find')
+            ->with('507f1f77bcf86cd799439011')
+            ->willReturn($series);
 
         $request = new ViewSeriesRequest('507f1f77bcf86cd799439011');
         $response = ($this->service)($request);
@@ -49,10 +48,11 @@ final class ViewSeriesServiceTest extends TestCase
     {
         $this->expectException(SeriesNotFoundException::class);
 
-        $this->findSeriesService
+        $this->repository
             ->expects($this->once())
-            ->method('__invoke')
-            ->willThrowException(new SeriesNotFoundException('507f1f77bcf86cd799439011'));
+            ->method('find')
+            ->with('507f1f77bcf86cd799439011')
+            ->willReturn(null);
 
         $request = new ViewSeriesRequest('507f1f77bcf86cd799439011');
         ($this->service)($request);

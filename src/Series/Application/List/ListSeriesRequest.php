@@ -2,7 +2,7 @@
 
 namespace App\Series\Application\List;
 
-class ListSeriesRequest
+final class ListSeriesRequest
 {
     public function __construct(
         public readonly ?int $page = 1,

@@ -30,22 +30,27 @@ final class CloneSeriesServiceTest extends TestCase
 
     public function testItClonesSeriesWithMultimediaObjects(): void
     {
+        // Mock Series to have an ID
         $originalSeries = $this->createMock(Series::class);
+        $originalSeries->method('getId')->willReturn('507f1f77bcf86cd799439011');
+
         $clonedSeries = $this->createMock(Series::class);
 
         $mm1 = $this->createMock(MultimediaObject::class);
         $mm2 = $this->createMock(MultimediaObject::class);
-
-        $multimediaObjects = new ArrayCollection([$mm1, $mm2]);
-
-        $originalSeries->method('getId')->willReturn('507f1f77bcf86cd799439011');
-        $originalSeries->method('getMultimediaObjects')->willReturn($multimediaObjects);
 
         $this->repository
             ->expects($this->once())
             ->method('find')
             ->with('507f1f77bcf86cd799439011')
             ->willReturn($originalSeries);
+
+        // Mock findMultimediaObjectsBySeries to return the multimedia objects
+        $this->repository
+            ->expects($this->once())
+            ->method('findMultimediaObjectsBySeries')
+            ->with('507f1f77bcf86cd799439011')
+            ->willReturn([$mm1, $mm2]);
 
         $this->factoryService
             ->expects($this->once())
@@ -55,7 +60,11 @@ final class CloneSeriesServiceTest extends TestCase
 
         $this->factoryService
             ->expects($this->exactly(2))
-            ->method('cloneMultimediaObject');
+            ->method('cloneMultimediaObject')
+            ->withConsecutive(
+                [$mm1, $clonedSeries],
+                [$mm2, $clonedSeries]
+            );
 
         $this->repository
             ->expects($this->once())

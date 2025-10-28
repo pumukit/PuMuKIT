@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Document;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use JMS\Serializer\Annotation as Serializer;
 
@@ -104,6 +105,13 @@ class Series
     private $playlist;
 
     /**
+     * @MongoDB\ReferenceMany(targetDocument=MultimediaObject::class, mappedBy="series", sort={"rank"="asc"})
+     *
+     * @Serializer\Exclude
+     */
+    private $multimedia_objects;
+
+    /**
      * @MongoDB\Field(type="bool")
      */
     private $announce = false;
@@ -180,6 +188,7 @@ class Series
     {
         $this->secret = base_convert(sha1(uniqid((string) random_int(0, mt_getrandmax()), true)), 16, 36);
         $this->playlist = new Playlist();
+        $this->multimedia_objects = new ArrayCollection();
         $this->__PicConstruct();
     }
 
@@ -278,6 +287,16 @@ class Series
     public function getPlaylist(): Playlist
     {
         return $this->playlist;
+    }
+
+    /**
+     * Get multimedia objects.
+     *
+     * @return ArrayCollection|MultimediaObject[]
+     */
+    public function getMultimediaObjects()
+    {
+        return $this->multimedia_objects;
     }
 
     public function setAnnounce($announce): void

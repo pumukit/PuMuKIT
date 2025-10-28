@@ -98,16 +98,6 @@ final class CreateSeriesServiceTest extends TestCase
         ($this->service)($request);
     }
 
-    public function testItValidatesInvalidTitleType(): void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Title must be an array');
-
-        // This would need to be tested differently since PHP typing prevents this
-        // But the validator is there for runtime validation
-        $this->assertTrue(true);
-    }
-
     public function testItValidatesEmptyTitleArray(): void
     {
         $this->expectException(\InvalidArgumentException::class);
