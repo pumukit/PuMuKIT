@@ -51,11 +51,15 @@ final class ViewSeriesMultimediaObjectsDataController extends AbstractController
                 '<div class="d-flex gap-1 justify-content-end">
                     <a href="%s" class="btn btn-sm"><i class="fa fa-eye"></i></a>
                     <a href="%s" class="btn btn-sm"><i class="fa fa-copy"></i></a>
-                    <a href="%s" class="btn btn-sm"><i class="fa fa-times"></i></a>
+                    <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to delete this multimedia object?\');">
+            <button type="submit" class="btn btn-sm">
+                <i class="fa fa-trash"></i>
+            </button>
+        </form>
                 </div>',
                 $router->generate('multimediaobject_view', ['id' => $om->getId()]),
                 '#',
-                '#'
+                $router->generate('multimediaobject_delete', ['id' => $om->getId()]),
             );
 
             $rows[] = [

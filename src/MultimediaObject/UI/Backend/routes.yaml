@@ -5,3 +5,8 @@ multimediaobject_view:
     tab: 'general'
   requirements:
     tab: general|media|metadata|owners|people|publication|tags
+
+multimediaobject_delete:
+  path: /admin/backend/multimedia-object/{id}/delete
+  controller: App\MultimediaObject\UI\Backend\Controller\DeleteMultimediaObjectController
+  methods: [POST]
