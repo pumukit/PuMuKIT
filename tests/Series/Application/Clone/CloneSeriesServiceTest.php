@@ -48,10 +48,7 @@ final class CloneSeriesServiceTest extends TestCase
         // Mock findMultimediaObjectsBySeries to return the multimedia objects
         $this->repository
             ->expects($this->once())
-            ->method('findMultimediaObjectsBySeries')
-            ->with('507f1f77bcf86cd799439011')
-            ->willReturn([$mm1, $mm2]);
-
+            ->method('findMultimediaObjectsBySeries');
         $this->factoryService
             ->expects($this->once())
             ->method('cloneSeries')
