@@ -8,7 +8,7 @@ use App\MultimediaObject\Application\Find\FindMultimediaObjectRequest;
 use App\MultimediaObject\Application\Find\FindMultimediaObjectResponse;
 use App\MultimediaObject\Application\Find\FindMultimediaObjectService;
 use App\MultimediaObject\Domain\Exception\MultimediaObjectNotFoundException;
-use App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface;
+use App\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 

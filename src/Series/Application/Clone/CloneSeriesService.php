@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Series\Application\Clone;
 
 use App\Series\Domain\Exception\SeriesNotFoundException;
-use App\Series\Domain\SeriesRepositoryInterface;
+use App\Series\Domain\Repository\SeriesRepositoryInterface;
 use Pumukit\SchemaBundle\Services\FactoryService;
 
 final class CloneSeriesService

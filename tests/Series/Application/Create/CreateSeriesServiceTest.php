@@ -8,7 +8,7 @@ use App\Series\Application\Create\CreateSeriesRequest;
 use App\Series\Application\Create\CreateSeriesResponse;
 use App\Series\Application\Create\CreateSeriesService;
 use App\Series\Domain\Event\SeriesCreatedEvent;
-use App\Series\Domain\SeriesFactoryInterface;
+use App\Series\Domain\Factory\SeriesFactoryInterface;
 use App\Shared\Domain\EventBusInterface;
 use App\User\Domain\ValueObject\UserId;
 use PHPUnit\Framework\TestCase;

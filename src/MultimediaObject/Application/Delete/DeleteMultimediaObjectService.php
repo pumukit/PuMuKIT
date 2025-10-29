@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\MultimediaObject\Application\Delete;
 
 use App\MultimediaObject\Domain\Event\MultimediaObjectDeletedEvent;
-use App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface;
+use App\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class DeleteMultimediaObjectService

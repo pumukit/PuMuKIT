@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\MultimediaObject\Application\Find;
 
 use App\MultimediaObject\Domain\Exception\MultimediaObjectNotFoundException;
-use App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface;
+use App\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
 
 final class FindMultimediaObjectService
 {

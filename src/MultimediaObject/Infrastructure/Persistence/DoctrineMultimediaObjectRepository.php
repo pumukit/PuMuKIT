@@ -2,7 +2,7 @@
 
 namespace App\MultimediaObject\Infrastructure\Persistence;
 
-use App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface;
+use App\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;

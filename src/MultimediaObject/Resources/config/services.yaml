@@ -14,7 +14,7 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface: '@App\MultimediaObject\Infrastructure\Persistence\DoctrineMultimediaObjectRepository'
+  App\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface: '@App\MultimediaObject\Infrastructure\Persistence\DoctrineMultimediaObjectRepository'
 
   App\MultimediaObject\Infrastructure\Persistence\DoctrineMultimediaObjectRepository:
     autowire: true

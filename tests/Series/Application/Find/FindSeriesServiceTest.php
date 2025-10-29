@@ -8,7 +8,7 @@ use App\Series\Application\Find\FindSeriesRequest;
 use App\Series\Application\Find\FindSeriesResponse;
 use App\Series\Application\Find\FindSeriesService;
 use App\Series\Domain\Exception\SeriesNotFoundException;
-use App\Series\Domain\SeriesRepositoryInterface;
+use App\Series\Domain\Repository\SeriesRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Series;
 

@@ -4,7 +4,7 @@ namespace App\Series\UI\Backend\Controller;
 
 use App\Series\Application\List\ListSeriesRequest;
 use App\Series\Application\List\ListSeriesService;
-use App\Series\Domain\SeriesRepositoryInterface;
+use App\Series\Domain\Repository\SeriesRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

@@ -2,7 +2,7 @@
 
 namespace App\User\Infrastructure\Persistence;
 
-use App\User\Domain\UserRepositoryInterface;
+use App\User\Domain\Repository\UserRepositoryInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\User;

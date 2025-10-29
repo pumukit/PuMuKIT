@@ -6,11 +6,8 @@ namespace App\MultimediaObject\UI\Backend\Controller;
 
 use App\MultimediaObject\Application\Delete\DeleteMultimediaObjectRequest;
 use App\MultimediaObject\Application\Delete\DeleteMultimediaObjectService;
-use App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface;
-use App\Series\Domain\SeriesRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class DeleteMultimediaObjectController extends AbstractController
 {

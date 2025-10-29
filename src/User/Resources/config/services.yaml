@@ -17,5 +17,5 @@ services:
     arguments:
       $documentManager: '@doctrine_mongodb.odm.document_manager'
 
-  App\User\Domain\UserRepositoryInterface:
+  App\User\Domain\Repository\UserRepositoryInterface:
     alias: App\User\Infrastructure\Persistence\DoctrineUserRepository

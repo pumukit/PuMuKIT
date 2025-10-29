@@ -2,7 +2,7 @@
 
 namespace App\Series\Application\List;
 
-use App\Series\Domain\SeriesRepositoryInterface;
+use App\Series\Domain\Repository\SeriesRepositoryInterface;
 
 final class ListSeriesService
 {

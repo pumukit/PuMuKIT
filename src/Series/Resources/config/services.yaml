@@ -14,11 +14,11 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\Series\Domain\SeriesRepositoryInterface: '@App\Series\Infrastructure\Persistence\DoctrineSeriesRepository'
+  App\Series\Domain\Repository\SeriesRepositoryInterface: '@App\Series\Infrastructure\Persistence\DoctrineSeriesRepository'
 
   App\Series\Application\List\ListSeriesService:
     arguments:
-      $repository: '@App\Series\Domain\SeriesRepositoryInterface'
+      $repository: '@App\Series\Domain\Repository\SeriesRepositoryInterface'
 
   App\Series\Infrastructure\Persistence\DoctrineSeriesRepository:
     autowire: true
@@ -33,10 +33,10 @@ services:
     tags:
       - { name: twig.extension }
 
-  App\Series\Domain\SeriesFactoryInterface:
+  App\Series\Domain\Factory\SeriesFactoryInterface:
     alias: App\Series\Infrastructure\Factory\SeriesFactoryAdapter
 
   App\Series\Infrastructure\Factory\SeriesFactoryAdapter:
     arguments:
       $factoryService: '@Pumukit\SchemaBundle\Services\FactoryService'
-      $userRepository: '@App\User\Domain\UserRepositoryInterface'
+      $userRepository: '@App\User\Domain\Repository\UserRepositoryInterface'

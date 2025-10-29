@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Series\Application\Create;
 
 use App\Series\Domain\Event\SeriesCreatedEvent;
-use App\Series\Domain\SeriesFactoryInterface;
+use App\Series\Domain\Factory\SeriesFactoryInterface;
 use App\Shared\Domain\EventBusInterface;
 use App\User\Domain\ValueObject\UserId;
 

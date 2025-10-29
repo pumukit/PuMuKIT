@@ -2,8 +2,8 @@
 
 namespace App\Series\Infrastructure\Factory;
 
-use App\Series\Domain\SeriesFactoryInterface;
-use App\User\Domain\UserRepositoryInterface;
+use App\Series\Domain\Factory\SeriesFactoryInterface;
+use App\User\Domain\Repository\UserRepositoryInterface;
 use App\User\Domain\ValueObject\UserId;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\FactoryService;

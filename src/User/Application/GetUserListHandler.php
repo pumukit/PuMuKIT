@@ -2,7 +2,7 @@
 
 namespace App\User\Application;
 
-use App\User\Domain\UserRepositoryInterface;
+use App\User\Domain\Repository\UserRepositoryInterface;
 
 final class GetUserListHandler
 {

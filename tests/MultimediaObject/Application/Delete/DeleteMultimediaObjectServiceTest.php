@@ -8,7 +8,7 @@ use App\MultimediaObject\Application\Delete\DeleteMultimediaObjectRequest;
 use App\MultimediaObject\Application\Delete\DeleteMultimediaObjectResponse;
 use App\MultimediaObject\Application\Delete\DeleteMultimediaObjectService;
 use App\MultimediaObject\Domain\Event\MultimediaObjectDeletedEvent;
-use App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface;
+use App\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;

@@ -7,7 +7,7 @@ namespace Tests\Series\Application\List;
 use App\Series\Application\List\ListSeriesRequest;
 use App\Series\Application\List\ListSeriesResponse;
 use App\Series\Application\List\ListSeriesService;
-use App\Series\Domain\SeriesRepositoryInterface;
+use App\Series\Domain\Repository\SeriesRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Series;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MultimediaObject\Domain;
+namespace App\MultimediaObject\Domain\Repository;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 

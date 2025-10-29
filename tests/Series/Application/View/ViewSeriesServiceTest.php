@@ -9,7 +9,7 @@ use App\Series\Application\View\ViewSeriesRequest;
 use App\Series\Application\View\ViewSeriesResponse;
 use App\Series\Application\View\ViewSeriesService;
 use App\Series\Domain\Exception\SeriesNotFoundException;
-use App\Series\Domain\SeriesRepositoryInterface;
+use App\Series\Domain\Repository\SeriesRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Series;
 

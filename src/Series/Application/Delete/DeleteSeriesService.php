@@ -3,9 +3,9 @@
 namespace App\Series\Application\Delete;
 
 use App\MultimediaObject\Domain\Event\MultimediaObjectDeletedEvent;
-use App\MultimediaObject\Domain\MultimediaObjectRepositoryInterface;
+use App\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
 use App\Series\Domain\Event\SeriesDeletedEvent;
-use App\Series\Domain\SeriesRepositoryInterface;
+use App\Series\Domain\Repository\SeriesRepositoryInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class DeleteSeriesService

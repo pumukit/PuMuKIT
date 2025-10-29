@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Series\Domain;
+namespace App\Series\Domain\Repository;
 
 use Pumukit\SchemaBundle\Document\Series;
 
