@@ -31,9 +31,14 @@ final class DeleteMultimediaObjectServiceTest extends TestCase
 
     public function testItDeletesMultimediaObject(): void
     {
+        // Create a mock Series - MultimediaObject requires an associated Series
+        $series = $this->createMock(\Pumukit\SchemaBundle\Document\Series::class);
+        $series->method('getId')->willReturn('607f1f77bcf86cd799439012');
+
         $multimediaObject = $this->createMock(MultimediaObject::class);
         $multimediaObject->method('getId')->willReturn('507f1f77bcf86cd799439011');
         $multimediaObject->method('getTitle')->willReturn('Test Video');
+        $multimediaObject->method('getSeries')->willReturn($series);
 
         $this->repository
             ->expects($this->once())
@@ -61,6 +66,7 @@ final class DeleteMultimediaObjectServiceTest extends TestCase
         $this->assertTrue($response->success);
         $this->assertStringContainsString('Test Video', $response->message);
         $this->assertStringContainsString('deleted successfully', $response->message);
+        $this->assertEquals('607f1f77bcf86cd799439012', $response->series);
     }
 
     public function testItReturnsErrorWhenMultimediaObjectNotFound(): void

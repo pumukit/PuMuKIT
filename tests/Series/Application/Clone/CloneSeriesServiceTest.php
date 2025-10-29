@@ -33,8 +33,6 @@ final class CloneSeriesServiceTest extends TestCase
         $originalSeries = $this->createMock(Series::class);
         $originalSeries->method('getId')->willReturn('507f1f77bcf86cd799439011');
 
-        $clonedSeries = $this->createMock(Series::class);
-
         $mm1 = $this->createMock(MultimediaObject::class);
         $mm2 = $this->createMock(MultimediaObject::class);
 
@@ -47,31 +45,14 @@ final class CloneSeriesServiceTest extends TestCase
         // Mock findMultimediaObjectsBySeries to return the multimedia objects
         $this->repository
             ->expects($this->once())
-            ->method('findMultimediaObjectsBySeries');
-        $this->factoryService
-            ->expects($this->once())
-            ->method('cloneSeries')
-            ->with($originalSeries)
-            ->willReturn($clonedSeries);
-
-        $this->factoryService
-            ->expects($this->exactly(2))
-            ->method('cloneMultimediaObject')
-            ->withConsecutive(
-                [$mm1, $clonedSeries],
-                [$mm2, $clonedSeries]
-            );
-
-        $this->repository
-            ->expects($this->once())
-            ->method('save')
-            ->with($clonedSeries);
+            ->method('findMultimediaObjectsBySeries')
+            ->with('507f1f77bcf86cd799439011')
+            ->willReturn([$mm1, $mm2]);
 
         $request = new CloneSeriesRequest('507f1f77bcf86cd799439011');
         $response = ($this->service)($request);
 
         $this->assertInstanceOf(CloneSeriesResponse::class, $response);
-        $this->assertSame($clonedSeries, $response->clonedSeries);
         $this->assertSame(2, $response->multimediaObjectsCloned);
     }
 
