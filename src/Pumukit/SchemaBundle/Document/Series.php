@@ -577,17 +577,23 @@ class Series
         return $this->properties['owners'] ?? [];
     }
 
-    public function getMainThumbnail(string $scheme, string $host): string
+    public function getMainThumbnail(string $scheme, string $host, bool $absoluteUrl = true): string
     {
+        $defaultPicUrl = '/bundles/pumukitschema/images/series_folder.png';
+
         foreach ($this->pics as $pic) {
-            if (false === $pic->isHide() && !empty($pic->url)) {
-                $url = $pic->url;
+            if ($pic->getUrl() && !$pic->getHide() && !$pic->containsTag('banner') && !$pic->containsTag('poster') && !$pic->containsTag('dynamic')) {
+                $url = $pic->getUrl();
 
                 return $this->makeAbsoluteUrl($url, $scheme, $host);
             }
         }
 
-        return $this->makeAbsoluteUrl('/bundles/pumukitschema/images/series_folder.png', $scheme, $host);
+        if(!$absoluteUrl) {
+            return $url ?? $defaultPicUrl;
+        }
+
+        return $this->makeAbsoluteUrl($defaultPicUrl, $scheme, $host);
     }
 
     private function makeAbsoluteUrl(string $url, string $scheme, string $host): string
