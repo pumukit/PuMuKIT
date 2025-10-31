@@ -10,7 +10,7 @@
                 {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\InboxController::FormAction', {'onlyDir': true, 'series' : series})) }}
             </div>
             <a id="submit_upload_files_from_server" href="#" class="btn btn-default btn-pumukit pull-right">
-                &laquo; {{ "Submit"|trans }}
+                {{ "Submit"|trans }} &raquo;
             </a>
         {% else %}
             <br/>
