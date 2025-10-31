@@ -23,11 +23,10 @@ final class DeleteMultimediaObjectController extends AbstractController
             $this->addFlash('danger', $response->message);
         }
 
-        if($response->series) {
+        if ($response->series) {
             return $this->redirectToRoute('series_view', ['id' => $response->series]);
         }
 
         return $this->redirectToRoute('series_list');
     }
 }
-

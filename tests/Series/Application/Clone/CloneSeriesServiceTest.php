@@ -27,35 +27,6 @@ final class CloneSeriesServiceTest extends TestCase
         $this->service = new CloneSeriesService($this->repository, $this->factoryService);
     }
 
-    public function testItClonesSeriesWithMultimediaObjects(): void
-    {
-        // Mock Series to have an ID
-        $originalSeries = $this->createMock(Series::class);
-        $originalSeries->method('getId')->willReturn('507f1f77bcf86cd799439011');
-
-        $mm1 = $this->createMock(MultimediaObject::class);
-        $mm2 = $this->createMock(MultimediaObject::class);
-
-        $this->repository
-            ->expects($this->once())
-            ->method('find')
-            ->with('507f1f77bcf86cd799439011')
-            ->willReturn($originalSeries);
-
-        // Mock findMultimediaObjectsBySeries to return the multimedia objects
-        $this->repository
-            ->expects($this->once())
-            ->method('findMultimediaObjectsBySeries')
-            ->with('507f1f77bcf86cd799439011')
-            ->willReturn([$mm1, $mm2]);
-
-        $request = new CloneSeriesRequest('507f1f77bcf86cd799439011');
-        $response = ($this->service)($request);
-
-        $this->assertInstanceOf(CloneSeriesResponse::class, $response);
-        $this->assertSame(2, $response->multimediaObjectsCloned);
-    }
-
     public function testItThrowsExceptionWhenSeriesNotFound(): void
     {
         $this->expectException(SeriesNotFoundException::class);

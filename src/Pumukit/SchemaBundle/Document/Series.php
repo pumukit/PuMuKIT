@@ -579,21 +579,20 @@ class Series
 
     public function getMainThumbnail(string $scheme, string $host, bool $absoluteUrl = true): string
     {
-        $defaultPicUrl = '/bundles/pumukitschema/images/series_folder.png';
-
+        $url = null;
         foreach ($this->pics as $pic) {
             if ($pic->getUrl() && !$pic->getHide() && !$pic->containsTag('banner') && !$pic->containsTag('poster') && !$pic->containsTag('dynamic')) {
                 $url = $pic->getUrl();
 
-                return $this->makeAbsoluteUrl($url, $scheme, $host);
+                if ($absoluteUrl) {
+                    return $this->makeAbsoluteUrl($url, $scheme, $host);
+                }
+
+                break;
             }
         }
 
-        if(!$absoluteUrl) {
-            return $url ?? $defaultPicUrl;
-        }
-
-        return $this->makeAbsoluteUrl($defaultPicUrl, $scheme, $host);
+        return $url ?? '/bundles/pumukitschema/images/series_folder.png';
     }
 
     private function makeAbsoluteUrl(string $url, string $scheme, string $host): string

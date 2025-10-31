@@ -10,4 +10,3 @@ final class DeleteMultimediaObjectRequest
         public readonly string $id
     ) {}
 }
-
