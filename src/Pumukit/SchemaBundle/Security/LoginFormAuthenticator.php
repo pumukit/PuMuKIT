@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Security;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\User;
+use ReCaptcha\ReCaptcha;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -35,13 +37,17 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
+    private $recaptcha;
+    private $logger;
 
-    public function __construct(DocumentManager $objectManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(DocumentManager $objectManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, ReCaptcha $recaptcha, LoggerInterface $logger)
     {
         $this->objectManager = $objectManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->recaptcha = $recaptcha;
+        $this->logger = $logger;
     }
 
     public function supports(Request $request): bool
@@ -51,6 +57,32 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function getCredentials(Request $request): array
     {
+        $captchaResponse = $request->request->get('g-recaptcha-response');
+        $result = $this->recaptcha->verify($captchaResponse, $request->getClientIp());
+
+        $this->logger->info('reCAPTCHA verification', [
+            'success' => $result->isSuccess(),
+            'errors' => $result->getErrorCodes(),
+            'payload' => method_exists($result, 'getResult') ? $result->getResult() : null,
+        ]);
+
+        if (!$result->isSuccess()) {
+            throw new CustomUserMessageAuthenticationException(
+                'reCAPTCHA inválido: '.implode(', ', $result->getErrorCodes())
+            );
+        }
+
+        if (method_exists($result, 'getResult')) {
+            $payload = $result->getResult();
+            $score = $payload['score'] ?? 1;
+            $action = $payload['action'] ?? 'login';
+            if ('login' !== $action || $score < 0.5) {
+                throw new CustomUserMessageAuthenticationException(
+                    sprintf('reCAPTCHA sospechoso (acción: %s, score: %.2f)', $action, $score)
+                );
+            }
+        }
+
         $credentials = [
             'username' => strtolower($request->request->get('username')),
             'password' => $request->request->get('password'),
