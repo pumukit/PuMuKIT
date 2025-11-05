@@ -39,8 +39,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     private $passwordEncoder;
     private $recaptcha;
     private $logger;
+    private $recaptchaEnabled;
 
-    public function __construct(DocumentManager $objectManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, ReCaptcha $recaptcha, LoggerInterface $logger)
+    public function __construct(DocumentManager $objectManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, ReCaptcha $recaptcha, LoggerInterface $logger, bool $recaptchaEnabled = false)
     {
         $this->objectManager = $objectManager;
         $this->urlGenerator = $urlGenerator;
@@ -48,6 +49,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         $this->passwordEncoder = $passwordEncoder;
         $this->recaptcha = $recaptcha;
         $this->logger = $logger;
+        $this->recaptchaEnabled = $recaptchaEnabled;
     }
 
     public function supports(Request $request): bool
@@ -57,29 +59,31 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function getCredentials(Request $request): array
     {
-        $captchaResponse = $request->request->get('g-recaptcha-response');
-        $result = $this->recaptcha->verify($captchaResponse, $request->getClientIp());
+        if ($this->recaptchaEnabled) {
+            $captchaResponse = $request->request->get('g-recaptcha-response');
+            $result = $this->recaptcha->verify($captchaResponse, $request->getClientIp());
 
-        $this->logger->info('reCAPTCHA verification', [
-            'success' => $result->isSuccess(),
-            'errors' => $result->getErrorCodes(),
-            'payload' => method_exists($result, 'getResult') ? $result->getResult() : null,
-        ]);
+            $this->logger->info('reCAPTCHA verification', [
+                'success' => $result->isSuccess(),
+                'errors' => $result->getErrorCodes(),
+                'payload' => method_exists($result, 'getResult') ? $result->getResult() : null,
+            ]);
 
-        if (!$result->isSuccess()) {
-            throw new CustomUserMessageAuthenticationException(
-                'reCAPTCHA inválido: '.implode(', ', $result->getErrorCodes())
-            );
-        }
-
-        if (method_exists($result, 'getResult')) {
-            $payload = $result->getResult();
-            $score = $payload['score'] ?? 1;
-            $action = $payload['action'] ?? 'login';
-            if ('login' !== $action || $score < 0.5) {
+            if (!$result->isSuccess()) {
                 throw new CustomUserMessageAuthenticationException(
-                    sprintf('reCAPTCHA sospechoso (acción: %s, score: %.2f)', $action, $score)
+                    'reCAPTCHA inválido: '.implode(', ', $result->getErrorCodes())
                 );
+            }
+
+            if (method_exists($result, 'getResult')) {
+                $payload = $result->getResult();
+                $score = $payload['score'] ?? 1;
+                $action = $payload['action'] ?? 'login';
+                if ('login' !== $action || $score < 0.5) {
+                    throw new CustomUserMessageAuthenticationException(
+                        sprintf('reCAPTCHA sospechoso (acción: %s, score: %.2f)', $action, $score)
+                    );
+                }
             }
         }
 
