@@ -41,7 +41,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     private $logger;
     private $recaptchaEnabled;
 
-    public function __construct(DocumentManager $objectManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, ReCaptcha $recaptcha, LoggerInterface $logger, bool $recaptchaEnabled = false)
+    public function __construct(DocumentManager $objectManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder, ?ReCaptcha $recaptcha, LoggerInterface $logger, bool $recaptchaEnabled = false)
     {
         $this->objectManager = $objectManager;
         $this->urlGenerator = $urlGenerator;
@@ -59,7 +59,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function getCredentials(Request $request): array
     {
-        if ($this->recaptchaEnabled) {
+        if ($this->recaptchaEnabled && $this->recaptcha) {
             $captchaResponse = $request->request->get('g-recaptcha-response');
             $result = $this->recaptcha->verify($captchaResponse, $request->getClientIp());
 
