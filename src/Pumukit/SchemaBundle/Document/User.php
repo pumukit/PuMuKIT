@@ -247,7 +247,7 @@ class User implements UserInterface
         return $this->loginAttempt < self::MAX_LOGIN_ATTEMPTS;
     }
 
-    public function getLastLoginAttempt(): \DateTime
+    public function getLastLoginAttempt(): ?\DateTime
     {
         return $this->lastLoginAttempt;
     }
