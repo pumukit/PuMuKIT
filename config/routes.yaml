@@ -3,10 +3,10 @@
 #    controller: App\Controller\DefaultController::index
 
 user_routes:
-  resource: ../src/User/UI/Backend/routes.yaml
+  resource: ../src/User/Resources/config/routes.yaml
 
 series_routes:
-  resource: ../src/Series/UI/Backend/routes.yaml
+  resource: ../src/Series/Resources/config/routes.yaml
 
 multimedia_object_routes:
-  resource: ../src/MultimediaObject/UI/Backend/routes.yaml
+  resource: ../src/MultimediaObject/Resources/config/routes.yaml
