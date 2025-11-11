@@ -1,66 +1,24 @@
 {% extends '@Shared/UI/Backend/Templates/layout/layout.html.twig' %}
 
 {% block body %}
+
     <div class="container-fluid mt-3">
-        {% include '@Shared/UI/Backend/Templates/partials/_title.html.twig' with { 'page_title': 'Users' } %}
+        {% include '@Shared/UI/Backend/Templates/partials/_title.html.twig' with {'page_title': 'User list'} %}
 
-        <table
-            id="userTable"
-            class="table table-striped"
-            data-toggle="table"
-            data-search="true"
-            data-pagination="true"
-            data-page-size="20"
-            data-click-to-select="true"
-            data-sort-name="username"
-            data-sort-order="asc"
-        >
-            <thead class="table-light">
-            <tr>
-                <th data-field="id" data-checkbox="true"></th>
-                <th data-field="fullName" data-sortable="true">Name</th>
-                <th data-field="username" data-sortable="true">Username</th>
-                <th data-field="profile" data-sortable="true">Permission Profile</th>
-                <th data-field="origin" data-sortable="true">Origin</th>
-                <th data-field="email" data-sortable="true">Email</th>
-                <th>{{ "Actions"|trans }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for user in users %}
-                <tr>
-                    <td></td>
-                    <td>{{ user.fullName }}</td>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.permissionProfile }}</td>
-                    <td>{{ user.origin }}</td>
-                    <td>{{ user.email }}</td>
-                    <td class="right">
-                        <i class="fa fa-edit"></i>
-                        <i class="fa fa-trash"></i>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <div style="float: right;">
-        {% include '@Shared/UI/Backend/Templates/components/button/_button_create.html.twig' with {
-            'url':'#',
-            'icon':'fa fa-plus',
-            'label':'Create',
-
+        {% include '@Shared/UI/Backend/Templates/components/table/_table.html.twig' with {
+            id: 'usersTable',
+            title: 'Users',
+            server_side: true,
+            ajax_url: path('users_list_data'),
+            checkbox: true,
+            columns: [
+                {'field': 'user.fullName', 'label': 'fullName', 'sortable': true},
+                {'field': 'user.username', 'label': 'Username', 'sortable': true},
+                {'field': 'user.email', 'label': 'Email', 'sortable': true},
+                {'field': 'user.origin', 'label': 'Origin', 'sortable': true},
+                {'field': 'user.enabled', 'label': 'Enabled', 'formatter': 'boolean','sortable': true},
+                {'field': 'actions', 'label': 'Actions', 'align': 'right'}
+            ],
         } %}
-        </div>
     </div>
-{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.25.0/dist/bootstrap-table.min.css">
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.25.0/dist/bootstrap-table.min.js"></script>
 {% endblock %}
