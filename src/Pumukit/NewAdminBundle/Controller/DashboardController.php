@@ -56,6 +56,63 @@ class DashboardController extends AbstractController implements NewAdminControll
     public function indexAction(Request $request)
     {
         $data = ['stats' => false];
+        if ($request->get('show_stats')) {
+            $groupBy = $request->get('group_by', 'year');
+
+            $stats = $this->statsService->getGlobalStats($groupBy);
+
+            $data['stats'] = $stats;
+
+            $storage = $this->profileService->getDirOutInfo();
+            $data['storage'] = $storage;
+
+            $seriesRepo = $this->documentManager->getRepository(Series::class);
+
+            $data['num_series'] = $seriesRepo->count();
+            $data['num_mm'] = array_sum(array_map(function ($e) {
+                return $e['num'];
+            }, $stats));
+            $data['duration'] = array_sum(array_map(function ($e) {
+                return $e['duration'];
+            }, $stats));
+            $data['size'] = array_sum(array_map(function ($e) {
+                return $e['size'];
+            }, $stats));
+        }
+
+        return $data;
+    }
+
+    /**
+     * @Route("/dashboard/series/timeline.xml")
+     */
+    public function seriesTimelineAction(Request $request)
+    {
+        $repo = $this->documentManager->getRepository(Series::class);
+        $series = $repo->findAll();
+
+        $XML = new \SimpleXMLElement('<data></data>');
+        $XML->addAttribute('wiki-url', $request->getUri());
+        $XML->addAttribute('wiki-section', 'Pumukit time-line Feed');
+
+        foreach ($series as $s) {
+            $XMLSeries = $XML->addChild('event', htmlspecialchars($s->getTitle()));
+            $XMLSeries->addAttribute('start', $s->getPublicDate()->format('M j Y H:i:s \\G\\M\\TP'));
+            $XMLSeries->addAttribute('title', $s->getTitle());
+            $XMLSeries->addAttribute('link', $this->router->generate('pumukit_webtv_series_index', ['id' => $s->getId()], UrlGeneratorInterface::ABSOLUTE_URL));
+        }
+
+        return new Response($XML->asXML(), 200, ['Content-Type' => 'text/xml']);
+    }
+
+    /**
+     * @Route("/backend/dashboard", name="pumukit_newadmin_backend_dashboard")
+     *
+     * @Template("@PumukitNewAdmin/Dashboard/index2.html.twig")
+     */
+    public function index2Action(Request $request)
+    {
+        $data = ['stats' => false];
 
         $groupBy = $request->get('group_by', 'year');
 

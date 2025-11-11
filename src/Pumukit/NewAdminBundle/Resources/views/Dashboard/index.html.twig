@@ -1,198 +1,93 @@
-{% extends '@Shared/UI/Backend/Templates/layout/layout.html.twig' %}
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('/bundles/pumukitnewadmin/css/admin/dashboard.css') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('/bundles/pumukitnewadmin/js/timeline_2.3.1/timeline_js/timeline-api.js') }}"></script>
+{% endblock %}
 
 {% block body %}
+    <h3 class="cab_body_div">
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active">{% trans %}Dashboard{% endtrans %}</li>
+        </ul>
+    </h3>
 
-    {% include "@Shared/UI/Backend/Templates/partials/_title.html.twig" with { page_title: 'Storage' } %}
-
-    <div class="well">
-        <div class="row">
-            {% for disk in data.storage %}
-                {% set usedBytes = disk.total - disk.free %}
-                {% set percentUsed = (usedBytes / disk.total * 100) | round(1) %}
-
-                {# Convertir a GB para mostrar #}
-                {% set usedGB = usedBytes / 1024 / 1024 / 1024 %}
-                {% set freeGB = disk.free / 1024 / 1024 / 1024 %}
-                {% set totalGB = disk.total / 1024 / 1024 / 1024 %}
-
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card shadow-sm border-0 h-100">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h6 class="card-title mb-0 text-truncate" title="{{ disk.dir }}">
-                                    {{ disk.dir|split('/')|last }}
-                                </h6>
-                                <i class="fa-solid fa-hdd fa-lg text-secondary"></i>
-                            </div>
-
-                            <h3 class="fw-bold">{{ usedGB | number_format(2, '.', ',') }} GB</h3>
-                            <small class="text-muted">
-                                Libre: {{ freeGB | number_format(2, '.', ',') }} GB / Total: {{ totalGB | number_format(2, '.', ',') }} GB
-                            </small>
-
-                            <div class="progress mt-2" style="height: 8px;">
-                                <div class="progress-bar bg-warning" role="progressbar"
-                                     style="width: {{ percentUsed }}%;"
-                                     aria-valuenow="{{ percentUsed }}" aria-valuemin="0" aria-valuemax="100">
-                                </div>
-                            </div>
-                            <small class="text-muted">{{ percentUsed }}% usado</small>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-
-    </div>
-    {% include "@Shared/UI/Backend/Templates/partials/_title.html.twig" with { page_title: 'Multimedia Objects' } %}
-
-    <div class="well">
-        <div class="row">
-
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Videos
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ data['multimedia_object_video'] }}</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fa fa-video fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Audios
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ data['multimedia_object_audio'] }}</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fa fa-headphones fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Images
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ data['multimedia_object_image'] }}</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fa fa-images fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Documents
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ data['multimedia_object_document'] }}</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fa fa-file fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    External
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ data['multimedia_object_external'] }}</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fa fa-link fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+    <div class="text-center well">
+        <div id="my-timeline" style="height: 300px; border: 1px solid #aaa"></div>
+        <br/>
+        <br/>
+        <noscript>
+            {% trans %}This page uses Javascript to show you a Timeline.{% endtrans %}
+            {% trans %}Please enable Javascript in your browser to see the full page.{% endtrans %}
+            {% trans %}Thank you.{% endtrans %}
+        </noscript>
     </div>
 
+    <script type="text/javascript">
 
-    {% include "@Shared/UI/Backend/Templates/partials/_title.html.twig" with { page_title: 'Series' } %}
+        $(function () {
+            var eventSource = new Timeline.DefaultEventSource();
+            var bandInfos = [
+                Timeline.createBandInfo({
+                    eventSource: eventSource,
+                    width: '70%',
+                    intervalUnit: Timeline.DateTime.DAY,
+                    intervalPixels: 100
+                }),
+                Timeline.createBandInfo({
+                    eventSource: eventSource,
+                    overview: true,
+                    width: '30%',
+                    intervalUnit: Timeline.DateTime.MONTH,
+                    intervalPixels: 200
+                })
+            ];
 
-    <div class="well">
-        <div class="row">
+            bandInfos[1].syncWith = 0;
+            bandInfos[1].highlight = true;
 
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Total
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ data['series'] }}</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fa fa-folder fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            tl = Timeline.create(document.getElementById('my-timeline'), bandInfos);
+            Timeline.loadXML('{{ url('pumukit_newadmin_dashboard_seriestimeline' ) }}', function (xml, url) {
+                eventSource.loadXML(xml, url);
+            });
 
-        </div>
-    </div>
+        });
 
-    {% include "@Shared/UI/Backend/Templates/partials/_title.html.twig" with { page_title: 'Users' } %}
+        {# Sobrecargo la función que pinta la burbuja y sólo pinto el título y la fecha traducida al español #}
+        var oldFillInfoBubble = Timeline.DefaultEventSource.Event.prototype.fillInfoBubble;
+        Timeline.DefaultEventSource.Event.prototype.fillInfoBubble = function (elmt, theme, labeller) {
+            var eventObject = this;
 
-    <div class="well">
-        <div class="row">
+            // oldFillInfoBubble.call(this, elmt, theme, labeller); {# antigua función para crear el html de la burbuja #}
 
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Total
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ data['num_users'] }}</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fa fa-users fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            var start = new Date(eventObject._start);
+            var div_title = document.createElement("div");
+            div_title.className = "timeline-event-bubble-title";
+            var a_title = document.createElement("a");
+            a_title.setAttribute('href', eventObject._link);
+            a_title.innerHTML = eventObject._text;
+            div_title.appendChild(a_title);
+            var div_time = document.createElement("div");
+            div_time.className = "timeline-event-bubble-time";
+            div_time.innerText = start;
+            elmt.appendChild(div_title);
+            elmt.appendChild(div_time);
+            var link_frontend = eventObject._link;
+            var a_frontend = document.createElement("a");
+            a_frontend.setAttribute('href', link_frontend);
+            a_frontend.innerHTML = "{% trans %}Go to series WebTV page{% endtrans %}";
+            elmt.appendChild(a_frontend);
+        }
+    </script>
+    <br/>
 
-        </div>
-    </div>
+
+    {% if stats %}
+        {% include "@PumukitNewAdmin/Dashboard/stats.html.twig" %}
+    {% endif %}
 {% endblock %}
