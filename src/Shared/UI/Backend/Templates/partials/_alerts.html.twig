@@ -1,7 +1,7 @@
 <div class="flash-container position-fixed bottom-0 start-0 p-3" style="z-index: 1080;">
     {% for label, messages in app.flashes %}
         {% for message in messages %}
-            <div class="custom-flash alert-dismissible fade show mb-2 shadow-lg rounded-3" role="alert">
+            <div class="custom-flash {% if label == 'success'%} success-flash {% else if label == 'error' %} danger-flash {% endif%} alert-dismissible fade show mb-2 shadow-lg rounded-3" role="alert">
                 {{ message }}
             </div>
         {% endfor %}

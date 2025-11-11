@@ -6,3 +6,20 @@
     padding: 0.75rem 1rem;
     border: none;
 }
+
+
+.success-flash {
+    background-color: #28a745 !important;
+    color: #fff !important;
+    min-width: 250px;
+    max-width: 350px;
+    padding: 0.75rem 1rem;
+    border: none;
+}
+
+.danger-flash {
+    background-color: #dc3545 !important;
+    color: #fff !important;
+    min-width: 250px;
+    max-width: 350px;
+}
