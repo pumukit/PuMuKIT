@@ -1,51 +1,7 @@
 <a href="{{ path('series_list') }}" class="btn btn-sm btn-primary btn-pumukit">
-    <i class="fa-solid fa-arrow-left"></i> Listado de series
+    <i class="fa-solid fa-arrow-left"></i> {{  "Series List"|trans }}
 </a>
 
 <hr />
 
-<div class="card mb-3 shadow-sm position-relative" id="series-card-{{ series.id }}">
-    <button type="button" class="btn-close position-absolute top-0 end-0 m-2" aria-label="Close" onclick="closeCard('{{ series.id }}')"></button>
-
-    <div class="card-body d-flex align-items-center">
-        <img src="{{ series.getMainThumbnail(app.request.scheme, app.request.host) }}" alt="{{ series.title }}" class="rounded me-3" width="100">
-
-        <div class="flex-grow-1">
-            <h4 class="mb-1">{{ series.title }}</h4>
-            <small>{{ series.subtitle }}</small>
-            <div class="text-muted small">
-                📅 {{ series.getPublicDate()|format_date('medium', locale=app.request.locale) }} |
-                {% for owner in series|owner_filter %}
-                    <span>&nbsp; 👤 {{ owner.fullName }}</span>
-                {% endfor %} |
-                🔒 {{ series.hide ? 'Hidden'|trans : 'Visible'|trans }}
-            </div>
-        </div>
-
-        <div>
-            <a href="{{ path('series_view', {id: series.id, tab: 'edit'}) }}" class="btn btn-sm">
-                <i class="fa fa-edit"></i> {{ "Edit"|trans }}
-            </a>
-        </div>
-    </div>
-</div>
-
-
-{% block partial_javascripts %}
-<script>
-    function closeCard(seriesId) {
-        const card = document.getElementById("series-card-" + seriesId);
-        if (!card) return;
-
-        card.style.transition = "opacity 0.3s, height 0.3s, margin 0.3s";
-        card.style.opacity = "0";
-        card.style.height = "0";
-        card.style.margin = "0";
-        card.style.padding = "0";
-
-        setTimeout(() => {
-            card.remove();
-        }, 300);
-    }
-</script>
-{% endblock %}
+<h4 class="mb-4">{{ "Series details"|trans }}: {{ series.title }}</h4>

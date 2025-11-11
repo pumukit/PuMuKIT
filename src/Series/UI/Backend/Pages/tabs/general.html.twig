@@ -1,0 +1,75 @@
+{% block body %}
+
+    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+        {% set video_url = url('pumukit_webtv_series_index', {id: series.id}) %}
+        {% set magic_url = url('pumukit_webtv_series_magicindex', {secret: series.secret}) %}
+    {% endif %}
+
+    <div class="row g-3">
+
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ series.title }}</h5>
+                    <hr>
+                    {% if series.description is defined %}
+                        <h6 class="card-subtitle mb-2 text-muted">{{ series.description }}</h6>
+                    {% endif %}
+
+                    <p><strong>{{ "Internal ID"|trans }}:</strong> {{ series.id }}</p>
+                    <p><strong>{{ "Public ID"|trans }}:</strong> {{ series.getNumericalId() }}</p>
+                    <p><strong>{{ "Publication Date"|trans }}:</strong> {{ series.getPublicDate().format('Y/m/d') }}</p>
+{#                    <p><strong>{{ "Recording Date"|trans }}:</strong> {{ series.getRecordDate().format('Y/m/d') }}</p>#}
+{#                    <p><strong>{{ "Last modified"|trans }}:</strong> {{ series.updatedAt().format('Y/m/d') }}</p>#}
+
+{#                    <p><strong>{{ "Published"|trans }}:</strong>#}
+{#                        {% if object.isPublished() %}#}
+{#                            <span class="badge bg-success">{{ "Yes"|trans }}</span>#}
+{#                        {% else %}#}
+{#                            <span class="badge bg-danger">{{ "No"|trans }}</span>#}
+{#                        {% endif %}#}
+{#                    </p>#}
+
+                    <div class="mb-3">
+                        <label for="publicUrl" class="form-label"><strong>{{ "Public URL"|trans }}:</strong></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="publicUrl" value="{{ video_url }}" readonly>
+                            <button class="btn btn-outline-secondary" type="button" onclick="copyToClipboard('publicUrl')"><i class="fa fa-copy"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="magicUrl" class="form-label"><strong>{{ "Magic URL"|trans }}:</strong></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="magicUrl" value="{{ magic_url }}" readonly>
+                            <button class="btn btn-outline-secondary" type="button" onclick="copyToClipboard('magicUrl')"><i class="fa fa-copy"></i></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="ratio ratio-16x9 overflow-hidden shadow-sm" style="min-height: 34em !important;">
+                <img src="{{ series.getMainThumbnail(app.request.scheme, app.request.host) }}" alt="{{ series.title }}" class="rounded me-3" width="100">
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block partial_javascripts %}
+
+    <script>
+        function copyToClipboard(elementId) {
+            const input = document.getElementById(elementId);
+            input.select();
+            input.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(input.value).then(() => {
+            });
+        }
+    </script>
+
+{% endblock %}

@@ -14,9 +14,9 @@ series_view:
   path: /admin/backend/series/{id}/{tab}
   controller: App\Series\UI\Backend\Controller\ViewSeriesController
   defaults:
-    tab: 'objects'
+    tab: 'general'
   requirements:
-    tab: objects|events|edit|template
+    tab: general|objects|events|edit|template
 
 series_multimedia_data:
   path: /admin/backend/series/{id}/multimedia/data

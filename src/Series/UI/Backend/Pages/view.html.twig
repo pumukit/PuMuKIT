@@ -9,6 +9,11 @@
 
         <ul class="nav nav-tabs modern-tabs text-uppercase small">
             <li class="nav-item">
+                <a class="nav-link {{ tab == 'general' ? 'active' : '' }}" href="{{ path('series_view', {id: series.id, tab: 'general'}) }}">
+                    <i class="fa-solid fa-ellipsis"></i> {{ "General"|trans }}
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ tab == 'objects' ? 'active' : '' }}" href="{{ path('series_view', {id: series.id, tab: 'objects'}) }}">
                     <i class="fa-solid fa-photo-film"></i> {{ "Multimedia Objects"|trans }}
                 </a>

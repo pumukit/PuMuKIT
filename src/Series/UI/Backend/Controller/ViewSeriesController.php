@@ -12,9 +12,9 @@ final class ViewSeriesController extends AbstractController
 {
     public function __construct(private ViewSeriesService $viewSeriesService) {}
 
-    public function __invoke(Request $request, string $id, string $tab = 'objects'): Response
+    public function __invoke(Request $request, string $id, string $tab = 'general'): Response
     {
-        $dto = new ViewSeriesRequest($id);
+        $dto = new ViewSeriesRequest($id, $tab);
         $seriesResponse = ($this->viewSeriesService)($dto);
 
         return $this->render('@Series/UI/Backend/Pages/view.html.twig', [

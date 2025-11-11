@@ -114,7 +114,7 @@
                     responseHandler: function (res) {
                         res.rows.forEach(function(row) {
                             if (row.thumbnail) {
-                                row.thumbnail = '<img src="' + row.thumbnail + '" style="width:40px; height:auto;">';
+                                row.thumbnail = '<img alt="" src="' + row.thumbnail + '" style="width:40px; height:auto;">';
                             }
                         });
                         return res;
@@ -131,7 +131,8 @@
         {% include '@Shared/UI/Backend/Templates/components/button/_button_create.html.twig' with {
             'url': create_button.url,
             'icon': create_button.icon,
-            'label': create_button.label
+            'label': create_button.label,
+            'extra_class': 'btn-pumukit'
         } %}
     </div>
 {% endif %}
