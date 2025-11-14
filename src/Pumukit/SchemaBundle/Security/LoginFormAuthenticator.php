@@ -59,6 +59,28 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function getCredentials(Request $request): array
     {
+        // Honeypot field
+        if ($request->request->get('website')) {
+            throw new CustomUserMessageAuthenticationException('Bot detected.');
+        }
+
+        // Rate limiting
+        $attempts = $request->getSession()->get('login_attempts', 0);
+        $lastAttempt = $request->getSession()->get('login_last_attempt', 0);
+        $now = time();
+
+        if ($now - $lastAttempt > 60) {
+            $attempts = 0; // reset after 1 minute
+        }
+
+        ++$attempts;
+        $request->getSession()->set('login_attempts', $attempts);
+        $request->getSession()->set('login_last_attempt', $now);
+
+        if ($attempts > 5) {
+            throw new CustomUserMessageAuthenticationException('Too many attempts. Please try again later.');
+        }
+
         if ($this->recaptchaEnabled && $this->recaptcha) {
             $captchaResponse = $request->request->get('g-recaptcha-response');
             $result = $this->recaptcha->verify($captchaResponse, $request->getClientIp());
@@ -92,6 +114,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
+
         $request->getSession()->set(
             Security::LAST_USERNAME,
             $credentials['username']
@@ -153,6 +176,14 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): RedirectResponse
     {
+        $message = $exception->getMessage();
+
+        if ($exception instanceof CustomUserMessageAuthenticationException) {
+            $request->getSession()->getFlashBag()->add('error', $message);
+
+            return new RedirectResponse($this->urlGenerator->generate(self::LOGIN_ROUTE));
+        }
+
         $username = $request->request->get('username');
         if (!$username) {
             throw new UsernameNotFoundException(self::EXCEPTION_MESSAGE);

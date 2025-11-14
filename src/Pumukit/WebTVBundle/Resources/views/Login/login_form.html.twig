@@ -19,6 +19,9 @@
     </div>
 
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+
+    <input type="text" name="website" style="display:none" />
+
     {% if recaptcha_enabled %}
         <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" />
         <script src="https://www.google.com/recaptcha/api.js?render={{ google_recaptcha_site_key }}"></script>
