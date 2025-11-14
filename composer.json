@@ -128,6 +128,12 @@
         "sort-packages": true,
         "allow-plugins": {
             "symfony/flex": true
+        },
+        "audit": {
+            "ignore": [
+                "PKSA-gs8r-6kz6-pp56",
+                "PKSA-gnn4-pxdg-q76m"
+            ]
         }
     },
     "autoload": {

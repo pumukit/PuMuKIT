@@ -31,7 +31,7 @@ class TrackService
     ) {
         $this->dm = $documentManager;
         $this->dispatcher = $dispatcher;
-        $this->tmpPath = $tmpPath ?: sys_get_temp_dir();
+        $this->tmpPath = (is_string($tmpPath) && '' !== $tmpPath) ? $tmpPath : sys_get_temp_dir();
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
         $this->logger = $logger;
     }
