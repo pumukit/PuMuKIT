@@ -13,10 +13,10 @@
 
                     <div class="mb-3">
                         <label class="form-label font-bold">
-                            {{ "Title"|trans }} <span class="text-danger">*</span>
+                            {{ "Title"|trans }}
                         </label>
                         {% for locale in locales %}
-                            <div class="input-group input-group-sm mb-3">
+                            <div class="input-group mb-3">
                                 <span class="input-group-text">{{ locale }}</span>
                                 <input type="text"
                                        class="form-control"
@@ -31,7 +31,7 @@
                     <div class="mb-3">
                         <label class="form-label font-bold">{{ "Subtitle"|trans }}</label>
                         {% for locale in locales %}
-                            <div class="input-group input-group-sm mb-3">
+                            <div class="input-group mb-3">
                                 <span class="input-group-text">{{ locale }}</span>
                                 <input type="text"
                                        class="form-control"
@@ -45,7 +45,7 @@
                     <div class="mb-3">
                         <label class="form-label font-bold">{{ "Description"|trans }}</label>
                         {% for locale in locales %}
-                            <div class="input-group input-group-sm mb-3">
+                            <div class="input-group mb-3">
                                 <span class="input-group-text">{{ locale }}</span>
                                 <textarea class="form-control"
                                           id="description_{{ locale }}"
@@ -58,7 +58,7 @@
                     <div class="mb-3">
                         <label class="form-label font-bold">{{ "Keywords"|trans }} <small class="text-muted">({{ "Separate keywords with commas"|trans }})</small></label>
                         {% for locale in locales %}
-                            <div class="input-group input-group-sm mb-3">
+                            <div class="input-group mb-3">
                                 <span class="input-group-text">{{ locale }}</span>
                                 <input type="text"
                                        class="form-control"
@@ -192,7 +192,7 @@
                     <div class="mb-3">
                         <label class="form-label font-bold">{{ "Header"|trans }}</label>
                         {% for locale in locales %}
-                            <div class="input-group input-group-sm mb-3">
+                            <div class="input-group mb-3">
                                 <span class="input-group-text">{{ locale }}</span>
                                 <textarea class="form-control"
                                           id="header_{{ locale }}"
@@ -205,7 +205,7 @@
                     <div class="mb-3">
                         <label class="form-label font-bold">{{ "Footer"|trans }}</label>
                         {% for locale in locales %}
-                            <div class="input-group input-group-sm mb-3">
+                            <div class="input-group mb-3">
                                 <span class="input-group-text">{{ locale }}</span>
                                 <textarea class="form-control"
                                           id="footer_{{ locale }}"

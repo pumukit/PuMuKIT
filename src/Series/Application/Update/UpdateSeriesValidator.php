@@ -27,7 +27,6 @@ final class UpdateSeriesValidator
                 throw new \InvalidArgumentException('Title array cannot be empty');
             }
 
-            dump($request);
             foreach ($request->title as $locale => $value) {
                 if (!is_string($locale)) {
                     throw new \InvalidArgumentException('Title keys must be locale strings');
