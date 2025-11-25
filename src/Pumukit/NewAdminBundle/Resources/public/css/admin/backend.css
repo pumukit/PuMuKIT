@@ -159,3 +159,7 @@ body.layout-body {
     background-color: #c05800;
     border: none;
 }
+
+.font-bold {
+    font-weight: bold;
+}

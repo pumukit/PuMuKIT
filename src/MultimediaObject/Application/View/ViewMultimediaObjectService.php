@@ -17,7 +17,6 @@ final class ViewMultimediaObjectService
     {
         ViewMultimediaObjectValidator::validate($request);
 
-        // Reuse the Find use case to get the multimedia object
         $findRequest = new FindMultimediaObjectRequest($request->id);
         $findResponse = ($this->findMultimediaObjectService)($findRequest);
 

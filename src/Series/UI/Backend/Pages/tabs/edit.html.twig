@@ -1,1 +1,243 @@
-<p class="text-muted">Aquí podrás editar toda la informacion de esa serie.</p>
+{% set locales = ['en', 'es'] %}
+
+<form id="editSeriesForm" method="POST" action="{{ path('series_update', {id: series.id}) }}">
+    <input type="hidden" name="id" value="{{ series.id }}">
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fa fa-info-circle"></i> {{ "Public Information"|trans }}</h5>
+                </div>
+                <div class="card-body">
+
+                    <div class="mb-3">
+                        <label class="form-label font-bold">
+                            {{ "Title"|trans }} <span class="text-danger">*</span>
+                        </label>
+                        {% for locale in locales %}
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text">{{ locale }}</span>
+                                <input type="text"
+                                       class="form-control"
+                                       id="title_{{ locale }}"
+                                       name="title[{{ locale }}]"
+                                       value="{{ series.getI18nTitle()[locale]|default('') }}"
+                                       {% if locale == locales[0] %}required{% endif %}>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label font-bold">{{ "Subtitle"|trans }}</label>
+                        {% for locale in locales %}
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text">{{ locale }}</span>
+                                <input type="text"
+                                       class="form-control"
+                                       id="subtitle_{{ locale }}"
+                                       name="subtitle[{{ locale }}]"
+                                       value="{{ series.getI18nSubtitle()[locale]|default('') }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label font-bold">{{ "Description"|trans }}</label>
+                        {% for locale in locales %}
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text">{{ locale }}</span>
+                                <textarea class="form-control"
+                                          id="description_{{ locale }}"
+                                          name="description[{{ locale }}]"
+                                          rows="4">{{ series.getI18nDescription()[locale]|default('') }}</textarea>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label font-bold">{{ "Keywords"|trans }} <small class="text-muted">({{ "Separate keywords with commas"|trans }})</small></label>
+                        {% for locale in locales %}
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text">{{ locale }}</span>
+                                <input type="text"
+                                       class="form-control"
+                                       id="keywords_{{ locale }}"
+                                       name="keywords[{{ locale }}]"
+                                       value="{{ series.getI18nKeywords()[locale]|default('') }}"
+                                       placeholder="keyword1, keyword2, keyword3">
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+
+            {# Dynamic fields from bundles (left column) #}
+            {% if formBuildEvent is defined and formBuildEvent %}
+                {% for field in formBuildEvent.getFormFields('left') %}
+                    {% include field.template with field.data|merge({'series': series}) %}
+                {% endfor %}
+            {% endif %}
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fa fa-cog"></i> {{ "General Settings"|trans }}</h5>
+                </div>
+                <div class="card-body">
+
+                    <div class="mb-3">
+                        <label for="publicDate" class="form-label font-bold">{{ "Publication Date"|trans }}</label>
+                        <input type="date"
+                               class="form-control"
+                               id="publicDate"
+                               name="publicDate"
+                               value="{{ series.getPublicDate() ? series.getPublicDate().format('Y-m-d') : '' }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="sorting" class="form-label font-bold">{{ "Sorting"|trans }}</label>
+                        <select class="form-select" id="sorting" name="sorting">
+                            <option
+                                value="0" {{ series.getSorting() == 0 ? 'selected' : '' }}>{{ "Manual"|trans }}</option>
+                            <option
+                                value="1" {{ series.getSorting() == 1 ? 'selected' : '' }}>{{ "Publication Date (Ascending)"|trans }}</option>
+                            <option
+                                value="2" {{ series.getSorting() == 2 ? 'selected' : '' }}>{{ "Publication Date (Descending)"|trans }}</option>
+                            <option
+                                value="3" {{ series.getSorting() == 3 ? 'selected' : '' }}>{{ "Recording Date (Descending)"|trans }}</option>
+                            <option
+                                value="4" {{ series.getSorting() == 4 ? 'selected' : '' }}>{{ "Recording Date (Ascending)"|trans }}</option>
+                            <option
+                                value="5" {{ series.getSorting() == 5 ? 'selected' : '' }}>{{ "Alphabetical"|trans }}</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="template" class="form-label font-bold">{{ "Template"|trans }}</label>
+                        <select class="form-select" id="template" name="template">
+                            <option value="date">date</option>
+                            <option value="date_subserial">date_subserial</option>
+                            <option value="place_subserial">place_subserial</option>
+                            <option value="subserial">subserial</option>
+                            <option value="multisubserial">multisubserial</option>
+                        </select>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="series_style" class="form-label font-bold">{{ "Series Style"|trans }}</label>
+                        <select class="form-select" id="series_style" name="series_style">
+                            <option value=""></option>
+                            <option value="691313564f73fcdb08003592">test</option>
+                        </select>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   id="announce"
+                                   name="announce"
+                                {{ series.isAnnounce() ? 'checked' : '' }}>
+                            <label class="form-check-label font-bold" for="announce">
+                                {{ "Announce"|trans }}
+                            </label>
+                            <small
+                                class="form-text text-muted d-block">{{ "Show this series in announcements"|trans }}</small>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   id="hide"
+                                   name="hide"
+                                {{ series.isHide() ? 'checked' : '' }}>
+                            <label class="form-check-label font-bold" for="hide">
+                                {{ "Hide"|trans }}
+                            </label>
+                            <small
+                                class="form-text text-muted d-block">{{ "Hide this series from public view"|trans }}</small>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-3">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fa fa-comment"></i> {{ "Internal Comments"|trans }}</h5>
+                </div>
+                <div class="card-body">
+                    <textarea class="form-control"
+                              id="comments"
+                              name="comments"
+                              rows="3"
+                              placeholder="{{ 'Internal notes (not visible to public)'|trans }}">{{ series.getComments()|default('') }}</textarea>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-3">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fa fa-file-text"></i> {{ "Header & Footer"|trans }}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label font-bold">{{ "Header"|trans }}</label>
+                        {% for locale in locales %}
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text">{{ locale }}</span>
+                                <textarea class="form-control"
+                                          id="header_{{ locale }}"
+                                          name="header[{{ locale }}]"
+                                          rows="3">{{ series.getI18nHeader()[locale]|default('') }}</textarea>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label font-bold">{{ "Footer"|trans }}</label>
+                        {% for locale in locales %}
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text">{{ locale }}</span>
+                                <textarea class="form-control"
+                                          id="footer_{{ locale }}"
+                                          name="footer[{{ locale }}]"
+                                          rows="3">{{ series.getI18nFooter()[locale]|default('') }}</textarea>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            {# Dynamic fields from bundles (right column) #}
+            {% if formBuildEvent is defined and formBuildEvent %}
+                {% for field in formBuildEvent.getFormFields('right') %}
+                    {% include field.template with field.data|merge({'series': series}) %}
+                {% endfor %}
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-end gap-2">
+                <button type="button" class="btn btn-secondary"
+                        onclick="window.location.href='{{ path('series_view', {id: series.id, tab: 'general'}) }}'">
+                    <i class="fa fa-times"></i> {{ "Cancel"|trans }}
+                </button>
+                <button type="submit" class="btn btn-primary" id="saveSeriesBtn">
+                    <i class="fa fa-save"></i> {{ "Save Changes"|trans }}
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

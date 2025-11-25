@@ -1,0 +1,38 @@
+{#
+    Example template for a custom text input field
+
+    Expected data:
+    - field_name: string (required)
+    - label: string (required)
+    - value: string (optional)
+    - placeholder: string (optional)
+    - required: boolean (optional)
+    - help_text: string (optional)
+#}
+
+<div class="card shadow-sm mb-3">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="fa fa-puzzle-piece"></i> {{ label }}
+        </h5>
+    </div>
+    <div class="card-body">
+        <div class="mb-3">
+            <label for="{{ field_name }}" class="form-label font-bold">
+                {{ label }}
+                {% if required|default(false) %}<span class="text-danger">*</span>{% endif %}
+            </label>
+            <input type="text"
+                   class="form-control"
+                   id="{{ field_name }}"
+                   name="{{ field_name }}"
+                   value="{{ value|default('') }}"
+                   placeholder="{{ placeholder|default('') }}"
+                   {% if required|default(false) %}required{% endif %}>
+            {% if help_text is defined and help_text %}
+                <small class="form-text text-muted">{{ help_text }}</small>
+            {% endif %}
+        </div>
+    </div>
+</div>
+

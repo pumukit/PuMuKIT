@@ -21,4 +21,9 @@ final class SeriesFactoryAdapter implements SeriesFactoryInterface
 
         return $this->factoryService->createSeries($user, $title);
     }
+
+    public function update(Series $series): Series
+    {
+        // TODO: Implement update() method.
+    }
 }

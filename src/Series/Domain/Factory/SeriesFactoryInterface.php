@@ -8,4 +8,6 @@ use Pumukit\SchemaBundle\Document\Series;
 interface SeriesFactoryInterface
 {
     public function createForUser(UserId $userId, array $title): Series;
+
+    public function update(Series $series): Series;
 }

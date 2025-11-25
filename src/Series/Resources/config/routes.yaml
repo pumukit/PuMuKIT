@@ -35,3 +35,8 @@ series_clone:
   path: /admin/backend/series/{id}/clone
   controller: App\Series\UI\Backend\Controller\CloneSeriesController
   methods: [POST]
+
+series_update:
+  path: /admin/backend/series/{id}/update
+  controller: App\Series\UI\Backend\Controller\UpdateSeriesController
+  methods: [POST]

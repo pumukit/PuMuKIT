@@ -11,7 +11,6 @@ final class DeleteSeriesValidator
         }
 
         if (!preg_match('/^[a-f0-9]{24}$/i', $request->id)) {
-            // Por si estás usando MongoDB con ObjectId de 24 chars
             throw new \InvalidArgumentException('Invalid Series ID format.');
         }
     }

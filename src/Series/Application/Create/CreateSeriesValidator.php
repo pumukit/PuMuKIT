@@ -12,14 +12,12 @@ final class CreateSeriesValidator
             throw new \InvalidArgumentException('Owner ID cannot be empty');
         }
 
-        // Validate MongoDB ObjectId format (24 hex characters)
         if (!preg_match('/^[a-f0-9]{24}$/i', $request->ownerId)) {
             throw new \InvalidArgumentException(
                 sprintf('Invalid Owner ID format: %s', $request->ownerId)
             );
         }
 
-        // Validate title if provided
         if (null !== $request->title) {
             if (!is_array($request->title)) {
                 throw new \InvalidArgumentException('Title must be an array');
