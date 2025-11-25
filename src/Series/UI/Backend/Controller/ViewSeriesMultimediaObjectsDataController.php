@@ -4,10 +4,12 @@ namespace App\Series\UI\Backend\Controller;
 
 use App\MultimediaObject\UI\Backend\Helpers\DurationFormat;
 use App\MultimediaObject\UI\Backend\Helpers\StatusIcon;
+use App\MultimediaObject\UI\Backend\Helpers\TypeIcon;
 use App\Series\Application\ViewSeriesMultimediaObjects\ViewSeriesMultimediaObjectsRequest;
 use App\Series\Application\ViewSeriesMultimediaObjects\ViewSeriesMultimediaObjectsService;
 use App\Shared\UI\Backend\Helpers\BooleanIcon;
 use App\Shared\UI\Backend\Helpers\DateFormat;
+use App\Shared\UI\Backend\Helpers\TextTruncate;
 use App\Shared\UI\Backend\Helpers\Thumbnail;
 use MongoDB\BSON\ObjectId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -53,14 +55,14 @@ final class ViewSeriesMultimediaObjectsDataController extends AbstractController
         $rows = [];
         foreach ($response->multimediaObjects as $item) {
             $actionsHtml = sprintf(
-                '<div class="d-flex gap-1 justify-content-end">
+        '<div class="d-flex gap-1 justify-content-end">
                     <a href="%s" class="btn btn-sm"><i class="fa fa-eye"></i></a>
                     <a href="%s" class="btn btn-sm"><i class="fa fa-copy"></i></a>
                     <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to delete this multimedia object?\');">
-            <button type="submit" class="btn btn-sm">
-                <i class="fa fa-trash"></i>
-            </button>
-        </form>
+                        <button type="submit" class="btn btn-sm">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </form>
                 </div>',
                 $router->generate('multimediaobject_view', ['id' => $item->getId()]),
                 '#',
@@ -69,13 +71,13 @@ final class ViewSeriesMultimediaObjectsDataController extends AbstractController
 
             $rows[] = [
                 'thumbnail' => Thumbnail::convert($item->getMainThumbnail($request->getScheme(), $request->getHost())),
-                'title' => $item->getTitle(),
+                'title' => TextTruncate::long($item->getTitle()),
                 'status' => StatusIcon::convert($item->getStatus()),
                 'public_date' => DateFormat::format($item->getPublicDate()),
                 'record_date' => DateFormat::format($item->getRecordDate()),
-                'duration' => DurationFormat::convert($item->getDuration()),
-                'hide' => BooleanIcon::convert($item->isHidden()),
-                'type' => $item->getType(),
+                'duration' => '---',
+                'hide' => BooleanIcon::convert($item->  isHidden()),
+                'type' => TypeIcon::convert($item->getType()),
                 'actions' => $actionsHtml,
             ];
         }
