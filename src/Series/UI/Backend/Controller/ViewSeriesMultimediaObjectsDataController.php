@@ -75,8 +75,8 @@ final class ViewSeriesMultimediaObjectsDataController extends AbstractController
                 'status' => StatusIcon::convert($item->getStatus()),
                 'public_date' => DateFormat::format($item->getPublicDate()),
                 'record_date' => DateFormat::format($item->getRecordDate()),
-                'duration' => '---',
-                'hide' => BooleanIcon::convert($item->  isHidden()),
+                'duration' => ($item->isVideoAudioType()) ? DurationFormat::convert($item->getDuration()) : '---',
+                'hide' => BooleanIcon::convert($item->isHidden()),
                 'type' => TypeIcon::convert($item->getType()),
                 'actions' => $actionsHtml,
             ];

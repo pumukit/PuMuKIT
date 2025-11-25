@@ -4,19 +4,15 @@ namespace App\MultimediaObject\UI\Backend\Helpers;
 
 final class DurationFormat
 {
+    private const ICON = '<i class="fas fa-clock"></i>';
+
     public static function convert(int $duration): string
     {
-        if ($duration > 0) {
-            $min = floor($duration / 60);
-            $seg = $duration % 60;
+        if ($duration <= 0) return '0:00';
 
-            if ($seg < 10) {
-                $seg = '0'.$seg;
-            }
+        $min = floor($duration / 60);
+        $sec = $duration % 60;
 
-            return $min."' ".$seg."''";
-        }
-
-        return "0''";
+        return sprintf('%d:%02d', $min, $sec);
     }
 }
