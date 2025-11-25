@@ -14,7 +14,7 @@
     data-locale="{{ app.request.getLocale() }}"
     data-show-refresh="true"
     data-icons-prefix="fa"
-    data-toolbar="#{{ table_id }}-toolbar"
+    data-toolbar="#bulk-action-toolbar"
     data-search="{{ enable_search ? 'true' : 'false' }}"
     data-pagination="{{ enable_pagination ? 'true' : 'false' }}"
     data-page-size="{{ page_size }}"
@@ -101,6 +101,10 @@
         </tbody>
     {% endif %}
 </table>
+
+{% if id == 'seriesTable' %}
+    {% include '@Series/UI/Backend/Pages/partials/_bulk_operations.html.twig' %}
+{% endif %}
 
 {% if server_side %}
     <script>
