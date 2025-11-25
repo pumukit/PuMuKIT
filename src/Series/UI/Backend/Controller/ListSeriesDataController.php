@@ -5,6 +5,9 @@ namespace App\Series\UI\Backend\Controller;
 use App\Series\Application\List\ListSeriesRequest;
 use App\Series\Application\List\ListSeriesService;
 use App\Series\Domain\Repository\SeriesRepositoryInterface;
+use App\Shared\UI\Backend\Helpers\BooleanIcon;
+use App\Shared\UI\Backend\Helpers\DateFormat;
+use App\Shared\UI\Backend\Helpers\Thumbnail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,19 +51,19 @@ final class ListSeriesDataController extends AbstractController
         $rows = [];
         foreach ($seriesResponse->series as $item) {
             $actionsHtml = sprintf(
-                '<div class="d-flex gap-1 justify-content-end">
-        <a href="%s" class="btn btn-sm"><i class="fa fa-eye"></i></a>
-        <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to clone this series?\');">
-            <button type="submit" class="btn btn-sm">
-                <i class="fa fa-copy"></i>
-            </button>
-        </form>
-        <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to delete this series?\');">
-            <button type="submit" class="btn btn-sm">
-                <i class="fa fa-trash"></i>
-            </button>
-        </form>
-    </div>',
+        '<div class="d-flex gap-1 justify-content-end">
+                    <a href="%s" class="btn btn-sm"><i class="fa fa-eye"></i></a>
+                    <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to clone this series?\');">
+                        <button type="submit" class="btn btn-sm">
+                            <i class="fa fa-copy"></i>
+                        </button>
+                    </form>
+                    <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to delete this series?\');">
+                        <button type="submit" class="btn btn-sm">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </form>
+                </div>',
                 $router->generate('series_view', ['id' => $item->getId()]),
                 $router->generate('series_clone', ['id' => $item->getId()]),
                 $router->generate('series_delete', ['id' => $item->getId()])
@@ -68,7 +71,10 @@ final class ListSeriesDataController extends AbstractController
 
             $rows[] = [
                 'oneSeries' => $item,
-                'thumbnail' => $item->getMainThumbnail($request->getScheme(), $request->getHost()),
+                'hide' => BooleanIcon::convert($item->getHide()),
+                'announce' => BooleanIcon::convert($item->getAnnounce()),
+                'public_date' => DateFormat::format($item->getPublicDate()),
+                'thumbnail' => Thumbnail::convert($item->getMainThumbnail($request->getScheme(), $request->getHost())),
                 'objectCount' => $this->seriesRepository->countMultimediaObjects($item->getId()),
                 'eventCount' => $this->seriesRepository->countEventMultimediaObjects($item->getId()),
                 'actions' => $actionsHtml,

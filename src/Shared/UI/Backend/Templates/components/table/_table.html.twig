@@ -116,11 +116,6 @@
                         return params;
                     },
                     responseHandler: function (res) {
-                        res.rows.forEach(function(row) {
-                            if (row.thumbnail) {
-                                row.thumbnail = '<img alt="" src="' + row.thumbnail + '" style="width:40px; height:auto;">';
-                            }
-                        });
                         return res;
                     }
                 });

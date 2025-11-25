@@ -2,8 +2,13 @@
 
 namespace App\Series\UI\Backend\Controller;
 
+use App\MultimediaObject\UI\Backend\Helpers\DurationFormat;
+use App\MultimediaObject\UI\Backend\Helpers\StatusIcon;
 use App\Series\Application\ViewSeriesMultimediaObjects\ViewSeriesMultimediaObjectsRequest;
 use App\Series\Application\ViewSeriesMultimediaObjects\ViewSeriesMultimediaObjectsService;
+use App\Shared\UI\Backend\Helpers\BooleanIcon;
+use App\Shared\UI\Backend\Helpers\DateFormat;
+use App\Shared\UI\Backend\Helpers\Thumbnail;
 use MongoDB\BSON\ObjectId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -46,7 +51,7 @@ final class ViewSeriesMultimediaObjectsDataController extends AbstractController
         $response = ($this->viewSeriesMultimediaObjectsService)($dto);
 
         $rows = [];
-        foreach ($response->multimediaObjects as $om) {
+        foreach ($response->multimediaObjects as $item) {
             $actionsHtml = sprintf(
                 '<div class="d-flex gap-1 justify-content-end">
                     <a href="%s" class="btn btn-sm"><i class="fa fa-eye"></i></a>
@@ -57,20 +62,20 @@ final class ViewSeriesMultimediaObjectsDataController extends AbstractController
             </button>
         </form>
                 </div>',
-                $router->generate('multimediaobject_view', ['id' => $om->getId()]),
+                $router->generate('multimediaobject_view', ['id' => $item->getId()]),
                 '#',
-                $router->generate('multimediaobject_delete', ['id' => $om->getId()]),
+                $router->generate('multimediaobject_delete', ['id' => $item->getId()]),
             );
 
             $rows[] = [
-                'thumbnail' => $om->getMainThumbnail($request->getScheme(), $request->getHost()),
-                'title' => $om->getTitle(),
-                'status' => $om->getStatus(),
-                'publicDate' => $om->getPublicDate()->format('Y-m-d H:i'),
-                'recordDate' => $om->getRecordDate()->format('Y-m-d H:i'),
-                'duration' => $om->getDurationString(),
-                'hide' => $om->isHidden(),
-                'type' => $om->getType(),
+                'thumbnail' => Thumbnail::convert($item->getMainThumbnail($request->getScheme(), $request->getHost())),
+                'title' => $item->getTitle(),
+                'status' => StatusIcon::convert($item->getStatus()),
+                'public_date' => DateFormat::format($item->getPublicDate()),
+                'record_date' => DateFormat::format($item->getRecordDate()),
+                'duration' => DurationFormat::convert($item->getDuration()),
+                'hide' => BooleanIcon::convert($item->isHidden()),
+                'type' => $item->getType(),
                 'actions' => $actionsHtml,
             ];
         }

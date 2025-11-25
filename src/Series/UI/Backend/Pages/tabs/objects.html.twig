@@ -4,12 +4,12 @@
     ajax_url: path('series_multimedia_data', {id: series.id}),
     checkbox: true,
     columns: [
-        {'field': 'thumbnail', 'label': 'Image', 'formatter': 'thumbnailFormatter', 'escape': false},
+        {'field': 'thumbnail', 'label': 'Image'},
         {'field': 'title', 'label': 'Title', 'sortable': true, 'truncate': true},
         {'field': 'status', 'label': 'Status', 'sortable': true},
         {'field': 'duration', 'label': 'Duration', 'sortable': true},
-        {'field': 'recordDate', 'label': 'Record Date', 'formatter': 'date', 'sortable': true},
-        {'field': 'publicDate', 'label': 'Public Date', 'formatter': 'date', 'sortable': true},
+        {'field': 'public_date', 'label': 'Record Date', 'sortable': true},
+        {'field': 'record_date', 'label': 'Public Date', 'sortable': true},
         {'field': 'hide', 'label': 'Hide', 'formatter': 'boolean'},
         {'field': 'actions', 'label': 'Actions', 'align': 'right'}
     ],

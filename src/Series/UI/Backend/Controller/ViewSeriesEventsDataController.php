@@ -4,6 +4,9 @@ namespace App\Series\UI\Backend\Controller;
 
 use App\Series\Application\ViewSeriesEvents\ViewSeriesEventsRequest;
 use App\Series\Application\ViewSeriesEvents\ViewSeriesEventsService;
+use App\Shared\UI\Backend\Helpers\BooleanIcon;
+use App\Shared\UI\Backend\Helpers\DateFormat;
+use App\Shared\UI\Backend\Helpers\Thumbnail;
 use MongoDB\BSON\ObjectId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -46,7 +49,7 @@ final class ViewSeriesEventsDataController extends AbstractController
         $response = ($this->viewSeriesEventsService)($dto);
 
         $rows = [];
-        foreach ($response->multimediaObjects as $om) {
+        foreach ($response->multimediaObjects as $item) {
             $actionsHtml = sprintf(
                 '<div class="d-flex gap-1 justify-content-end">
                     <a href="%s" class="btn btn-sm"><i class="fa fa-eye"></i></a>
@@ -57,8 +60,8 @@ final class ViewSeriesEventsDataController extends AbstractController
             );
 
             $rows[] = [
-                'thumbnail' => $om->getMainThumbnail($request->getScheme(), $request->getHost()),
-                'title' => $om->getTitle(),
+                'thumbnail' => Thumbnail::convert($item->getMainThumbnail($request->getScheme(), $request->getHost())),
+                'title' => $item->getTitle(),
                 'actions' => $actionsHtml,
             ];
         }
