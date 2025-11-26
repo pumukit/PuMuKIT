@@ -14,7 +14,7 @@ final class TextTruncate
             return $text;
         }
 
-        return mb_substr($text, 0, $length) . $suffix;
+        return mb_substr($text, 0, $length).$suffix;
     }
 
     public static function small(string $text): string

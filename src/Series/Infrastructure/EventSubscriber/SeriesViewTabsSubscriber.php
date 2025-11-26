@@ -59,4 +59,3 @@ final class SeriesViewTabsSubscriber implements EventSubscriberInterface
         );
     }
 }
-

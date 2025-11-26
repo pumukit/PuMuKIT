@@ -22,4 +22,3 @@ final class DoctrineSeriesTypeRepository implements SeriesTypeRepositoryInterfac
         return $this->documentManager->getRepository(SeriesType::class)->findAll();
     }
 }
-

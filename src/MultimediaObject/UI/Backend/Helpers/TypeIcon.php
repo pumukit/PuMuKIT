@@ -8,7 +8,7 @@ final class TypeIcon
 {
     public static function convert(int $type)
     {
-        return match($type) {
+        return match ($type) {
             MultimediaObject::TYPE_UNKNOWN => '<i class="fas fa-question text-warning"></i>',
             MultimediaObject::TYPE_VIDEO => '<i class="fas fa-video text-primary"></i>',
             MultimediaObject::TYPE_AUDIO => '<i class="fas fa-music text-info"></i>',
@@ -19,5 +19,4 @@ final class TypeIcon
             default => '<i class="fas fa-question text-warning"></i>',
         };
     }
-
 }

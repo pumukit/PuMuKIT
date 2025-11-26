@@ -8,7 +8,9 @@ final class DurationFormat
 
     public static function convert(int $duration): string
     {
-        if ($duration <= 0) return '0:00';
+        if ($duration <= 0) {
+            return '0:00';
+        }
 
         $min = floor($duration / 60);
         $sec = $duration % 60;

@@ -26,12 +26,12 @@ final class ViewSeriesController extends AbstractController
         $viewTabsEvent = new SeriesViewTabsEvent($seriesResponse->series);
         $this->eventDispatcher->dispatch($viewTabsEvent, SeriesViewTabsEvent::NAME);
 
-        $allTabKeys = array_map(fn($t) => $t['key'], $viewTabsEvent->getTabs());
+        $allTabKeys = array_map(fn ($t) => $t['key'], $viewTabsEvent->getTabs());
 
         if (!in_array($tab, $allTabKeys)) {
             return $this->redirectToRoute('series_view', [
                 'id' => $id,
-                'tab' => 'general'
+                'tab' => 'general',
             ]);
         }
 

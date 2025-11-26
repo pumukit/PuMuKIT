@@ -30,7 +30,7 @@ class ListUserDataController extends AbstractController
 
         $filters = [];
 
-        if(str_starts_with($sort, 'user.')) {
+        if (str_starts_with($sort, 'user.')) {
             $sort = substr($sort, 5);
         }
 
@@ -55,8 +55,8 @@ class ListUserDataController extends AbstractController
             </button>
         </form>
     </div>',
-                "#",
-                "#"
+                '#',
+                '#'
             );
 
             $rows[] = [

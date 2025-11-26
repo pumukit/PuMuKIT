@@ -31,5 +31,4 @@ class LocaleExtension extends AbstractExtension
             default => 'Ingles'
         };
     }
-
 }

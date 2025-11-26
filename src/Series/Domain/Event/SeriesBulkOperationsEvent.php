@@ -13,16 +13,16 @@ final class SeriesBulkOperationsEvent extends Event
     private array $operations = [];
 
     /**
-     * Add a custom bulk operation
+     * Add a custom bulk operation.
      *
-     * @param string $key Unique identifier for the operation
-     * @param string $label Label to show in the dropdown
-     * @param string $handler JavaScript handler function name, URL endpoint, or Symfony route name
-     * @param string $type Type of handler: 'js' for JavaScript function, 'url' for AJAX endpoint, 'route' for Symfony route
-     * @param string $icon Font Awesome icon class (optional)
+     * @param string $key            Unique identifier for the operation
+     * @param string $label          Label to show in the dropdown
+     * @param string $handler        JavaScript handler function name, URL endpoint, or Symfony route name
+     * @param string $type           Type of handler: 'js' for JavaScript function, 'url' for AJAX endpoint, 'route' for Symfony route
+     * @param string $icon           Font Awesome icon class (optional)
      * @param string $confirmMessage Confirmation message before executing (optional)
-     * @param array $routeParams Route parameters if type is 'route' (optional)
-     * @param int $priority Higher priority renders first (default: 0)
+     * @param array  $routeParams    Route parameters if type is 'route' (optional)
+     * @param int    $priority       Higher priority renders first (default: 0)
      */
     public function addOperation(
         string $key,
@@ -48,7 +48,7 @@ final class SeriesBulkOperationsEvent extends Event
 
     public function getOperations(): array
     {
-        usort($this->operations, fn($a, $b) => $a['priority'] <=> $b['priority']);
+        usort($this->operations, fn ($a, $b) => $a['priority'] <=> $b['priority']);
 
         return $this->operations;
     }
@@ -58,4 +58,3 @@ final class SeriesBulkOperationsEvent extends Event
         return !empty($this->operations);
     }
 }
-

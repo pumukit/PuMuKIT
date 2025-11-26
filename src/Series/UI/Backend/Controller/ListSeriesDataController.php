@@ -55,16 +55,16 @@ final class ListSeriesDataController extends AbstractController
             $cloneText = 'Clone';
             $deleteText = 'Delete';
             $actionsHtml = sprintf(
-        '<div class="d-flex gap-1 justify-content-end">
-                    <a href="%s" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> '. $viewText .'</a>
+                '<div class="d-flex gap-1 justify-content-end">
+                    <a href="%s" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> '.$viewText.'</a>
                     <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to clone this series?\');">
                         <button type="submit" class="btn btn-sm btn-warning">
-                            <i class="fa fa-copy"></i>'. $cloneText .'
+                            <i class="fa fa-copy"></i>'.$cloneText.'
                         </button>
                     </form>
                     <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to delete this series?\');">
                         <button type="submit" class="btn btn-sm btn-danger">
-                            <i class="fa fa-trash"></i>'. $deleteText .'
+                            <i class="fa fa-trash"></i>'.$deleteText.'
                         </button>
                     </form>
                 </div>',

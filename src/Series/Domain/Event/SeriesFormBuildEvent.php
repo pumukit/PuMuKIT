@@ -37,12 +37,11 @@ final class SeriesFormBuildEvent extends Event
         $fields = $this->formFields;
 
         if (null !== $position) {
-            $fields = array_filter($fields, fn($field) => $field['position'] === $position);
+            $fields = array_filter($fields, fn ($field) => $field['position'] === $position);
         }
 
-        usort($fields, fn($a, $b) => $a['priority'] <=> $b['priority']);
+        usort($fields, fn ($a, $b) => $a['priority'] <=> $b['priority']);
 
         return $fields;
     }
 }
-

@@ -53,4 +53,3 @@ final class SeriesFormSubmitEvent extends Event
         return $this->errors;
     }
 }
-

@@ -13,17 +13,17 @@ final class SeriesListActionsEvent extends Event
     private array $actions = [];
 
     /**
-     * Add a custom action button to the series list
+     * Add a custom action button to the series list.
      *
-     * @param string $key Unique identifier for the action
-     * @param string $label Button label
-     * @param string $url URL or route name
-     * @param string $type Type: 'url' for direct link, 'route' for Symfony route name
-     * @param array $routeParams Route parameters if type is 'route' (optional)
-     * @param string $icon Font Awesome icon class (optional)
-     * @param string $class CSS classes for the button (default: 'btn btn-primary')
-     * @param string $target Link target: '_self', '_blank', etc. (optional)
-     * @param int $priority Higher priority renders first (default: 0)
+     * @param string $key         Unique identifier for the action
+     * @param string $label       Button label
+     * @param string $url         URL or route name
+     * @param string $type        Type: 'url' for direct link, 'route' for Symfony route name
+     * @param array  $routeParams Route parameters if type is 'route' (optional)
+     * @param string $icon        Font Awesome icon class (optional)
+     * @param string $class       CSS classes for the button (default: 'btn btn-primary')
+     * @param string $target      Link target: '_self', '_blank', etc. (optional)
+     * @param int    $priority    Higher priority renders first (default: 0)
      */
     public function addAction(
         string $key,
@@ -51,7 +51,7 @@ final class SeriesListActionsEvent extends Event
 
     public function getActions(): array
     {
-        usort($this->actions, fn($a, $b) => $a['priority'] <=> $b['priority']);
+        usort($this->actions, fn ($a, $b) => $a['priority'] <=> $b['priority']);
 
         return $this->actions;
     }
@@ -61,4 +61,3 @@ final class SeriesListActionsEvent extends Event
         return !empty($this->actions);
     }
 }
-

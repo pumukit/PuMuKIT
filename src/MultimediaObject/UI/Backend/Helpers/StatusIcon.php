@@ -8,7 +8,7 @@ final class StatusIcon
 {
     public static function convert(int $status): string
     {
-        return match($status) {
+        return match ($status) {
             MultimediaObject::STATUS_PUBLISHED => '<i class="fas fa-check text-success"></i>',
             MultimediaObject::STATUS_BLOCKED => '<i class="fas fa-ban text-danger"></i>',
             MultimediaObject::STATUS_HIDDEN => '<i class="fas fa-eye-slash text-muted"></i>',

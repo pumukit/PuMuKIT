@@ -5,8 +5,8 @@ namespace App\Series\UI\Backend\Controller;
 use App\Series\Domain\Event\SeriesBulkOperationsEvent;
 use App\Series\Domain\Event\SeriesListActionsEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
-use \Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class ListSeriesController extends AbstractController
 {
@@ -21,8 +21,8 @@ final class ListSeriesController extends AbstractController
 
         $operations = $bulkOperationsEvent->getOperations();
         foreach ($operations as &$operation) {
-            if ($operation['type'] === 'route') {
-                if($operation['handler'] === '#') {
+            if ('route' === $operation['type']) {
+                if ('#' === $operation['handler']) {
                     continue;
                 }
                 $operation['handler'] = $this->generateUrl(
@@ -38,7 +38,7 @@ final class ListSeriesController extends AbstractController
 
         $customActions = $listActionsEvent->getActions();
         foreach ($customActions as &$action) {
-            if ($action['type'] === 'route') {
+            if ('route' === $action['type']) {
                 $action['url'] = $this->generateUrl(
                     $action['url'],
                     $action['route_params'] ?? []

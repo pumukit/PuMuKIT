@@ -12,4 +12,3 @@ interface SeriesTypeRepositoryInterface
 
     public function findAll(): array;
 }
-

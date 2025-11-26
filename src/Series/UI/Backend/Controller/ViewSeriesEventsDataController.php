@@ -4,8 +4,6 @@ namespace App\Series\UI\Backend\Controller;
 
 use App\Series\Application\ViewSeriesEvents\ViewSeriesEventsRequest;
 use App\Series\Application\ViewSeriesEvents\ViewSeriesEventsService;
-use App\Shared\UI\Backend\Helpers\BooleanIcon;
-use App\Shared\UI\Backend\Helpers\DateFormat;
 use App\Shared\UI\Backend\Helpers\Thumbnail;
 use MongoDB\BSON\ObjectId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -54,10 +52,10 @@ final class ViewSeriesEventsDataController extends AbstractController
             $deleteText = 'Delete';
             $actionsHtml = sprintf(
                 '<div class="d-flex gap-1 justify-content-end">
-                    <a href="%s" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> '. $viewText .'</a>
+                    <a href="%s" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> '.$viewText.'</a>
                     <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to delete this series?\');">
                         <button type="submit" class="btn btn-sm btn-danger">
-                            <i class="fa fa-trash"></i>'. $deleteText .'
+                            <i class="fa fa-trash"></i>'.$deleteText.'
                         </button>
                     </form>
                 </div>',

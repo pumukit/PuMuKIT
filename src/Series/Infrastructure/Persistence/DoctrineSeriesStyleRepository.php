@@ -22,4 +22,3 @@ final class DoctrineSeriesStyleRepository implements SeriesStyleRepositoryInterf
         return $this->documentManager->getRepository(SeriesStyle::class)->findAll();
     }
 }
-

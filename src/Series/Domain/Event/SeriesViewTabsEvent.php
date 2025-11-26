@@ -16,13 +16,13 @@ final class SeriesViewTabsEvent extends Event
     public function __construct(private Series $series) {}
 
     /**
-     * Add a custom tab to the series view page
+     * Add a custom tab to the series view page.
      *
-     * @param string $key Unique identifier for the tab
-     * @param string $label Tab label
-     * @param string $icon Font Awesome icon class (e.g., 'fa-solid fa-chart-bar')
+     * @param string $key      Unique identifier for the tab
+     * @param string $label    Tab label
+     * @param string $icon     Font Awesome icon class (e.g., 'fa-solid fa-chart-bar')
      * @param string $template Template path to render when tab is active
-     * @param int $priority Higher priority renders first (default: 0)
+     * @param int    $priority Higher priority renders first (default: 0)
      */
     public function addTab(
         string $key,
@@ -42,7 +42,7 @@ final class SeriesViewTabsEvent extends Event
 
     public function getTabs(): array
     {
-        usort($this->tabs, fn($a, $b) => $a['priority'] <=> $b['priority']);
+        usort($this->tabs, fn ($a, $b) => $a['priority'] <=> $b['priority']);
 
         return $this->tabs;
     }

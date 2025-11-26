@@ -29,4 +29,3 @@ final class SeriesListActionsSubscriber implements EventSubscriberInterface
         );
     }
 }
-

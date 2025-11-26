@@ -33,4 +33,3 @@ final class SeriesFormFieldsSubscriber implements EventSubscriberInterface
         // TODO: We can process all fields using subscriber instead defined on controller.
     }
 }
-
