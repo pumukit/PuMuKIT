@@ -3,6 +3,7 @@
 namespace App\Series\UI\Backend\Controller;
 
 use App\Series\Domain\Event\SeriesBulkOperationsEvent;
+use App\Series\Domain\Event\SeriesListActionsEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use \Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -32,9 +33,24 @@ final class ListSeriesController extends AbstractController
             }
         }
 
+        $listActionsEvent = new SeriesListActionsEvent();
+        $this->eventDispatcher->dispatch($listActionsEvent, SeriesListActionsEvent::NAME);
+
+        $customActions = $listActionsEvent->getActions();
+        foreach ($customActions as &$action) {
+            if ($action['type'] === 'route') {
+                $action['url'] = $this->generateUrl(
+                    $action['url'],
+                    $action['route_params'] ?? []
+                );
+            }
+        }
+
         return $this->render('@Series/UI/Backend/Pages/list.html.twig', [
             'bulkOperationsEvent' => $bulkOperationsEvent,
             'bulkOperations' => $operations,
+            'listActionsEvent' => $listActionsEvent,
+            'customActions' => $customActions,
         ]);
     }
 }

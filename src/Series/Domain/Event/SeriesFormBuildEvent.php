@@ -40,7 +40,7 @@ final class SeriesFormBuildEvent extends Event
             $fields = array_filter($fields, fn($field) => $field['position'] === $position);
         }
 
-        usort($fields, fn($a, $b) => $b['priority'] <=> $a['priority']);
+        usort($fields, fn($a, $b) => $a['priority'] <=> $b['priority']);
 
         return $fields;
     }

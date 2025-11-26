@@ -19,13 +19,9 @@
             {'field': 'objectCount', 'label': 'Objects'},
             {'field': 'eventCount', 'label': 'Events'},
             {'field': 'actions', 'label': 'Actions', 'align': 'right'}
-        ],
-        create_button: {
-            'url': path('series_create'),
-            'icon': 'fa fa-plus',
-            'label': 'Create'
-        }
+        ]
     } %}
 
+    {% include '@Series/UI/Backend/Pages/partials/_actions.html.twig' %}
 </div>
 {% endblock %}
