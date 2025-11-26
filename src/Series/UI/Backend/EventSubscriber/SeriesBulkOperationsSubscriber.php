@@ -19,13 +19,13 @@ final class SeriesBulkOperationsSubscriber implements EventSubscriberInterface
     public function onBulkOperations(SeriesBulkOperationsEvent $event): void
     {
         $event->addOperation(
-            key: 'announce',
-            label: 'Announce | Not announce',
-            handler: '#',
+            key: 'toggle_announce',
+            label: 'Toggle Announce',
+            handler: 'series_bulk_toggle_announce',
             type: 'route',
-            icon: 'fa-download',
-            confirmMessage: 'Do you want announce all series selected?',
-            priority: 10
+            icon: 'fa-bullhorn',
+            confirmMessage: 'Toggle announce status for selected series?',
+            priority: 90
         );
 
         $event->addOperation(
