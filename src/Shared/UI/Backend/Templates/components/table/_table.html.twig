@@ -105,6 +105,12 @@
 {% if id == 'seriesTable' %}
     {% include '@Series/UI/Backend/Pages/partials/_bulk_operations.html.twig' %}
 {% endif %}
+{% if id == 'multimediaObjectsTable' %}
+    {% include '@MultimediaObject/UI/Backend/Pages/partials/_bulk_operations.html.twig' %}
+{% endif %}
+{% if id == 'eventsTable' %}
+    {% include '@MultimediaObject/UI/Backend/Pages/partials/_bulk_operations_events.html.twig' %}
+{% endif %}
 
 {% if server_side %}
     <script>
