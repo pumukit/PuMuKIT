@@ -31,10 +31,10 @@ final class SeriesBulkOperationsSubscriber implements EventSubscriberInterface
         $event->addOperation(
             key: 'delete',
             label: 'Delete',
-            handler: '#',
+            handler: 'series_bulk_delete',
             type: 'route',
             icon: 'fa-trash',
-            confirmMessage: 'Do you want delete all series selected?',
+            confirmMessage: 'Are you sure you want to delete the selected series? This action cannot be undone.',
             priority: 100
         );
     }

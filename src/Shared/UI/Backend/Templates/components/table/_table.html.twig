@@ -22,6 +22,7 @@
     data-click-to-select="{{ click_to_select ? 'true' : 'false' }}"
     data-sort-name="{{ sort_name }}"
     data-sort-order="{{ sort_order }}"
+    data-id-field="id"
     {% if server_side %}
         data-side-pagination="server"
         data-url="{{ ajax_url|default('') }}"
@@ -32,7 +33,7 @@
     <thead class="table-light">
     <tr>
         {% if checkbox is defined and checkbox %}
-            <th data-field="id" data-checkbox="true"></th>
+            <th data-field="state" data-checkbox="true"></th>
         {% endif %}
         {% for col in columns %}
             {% set truncate = col.truncate|default(false) %}
@@ -129,15 +130,4 @@
             }
         })(jQuery);
     </script>
-{% endif %}
-
-{% if create_button is defined %}
-    <div style="float: right;">
-        {% include '@Shared/UI/Backend/Templates/components/button/_button_create.html.twig' with {
-            'url': create_button.url,
-            'icon': create_button.icon,
-            'label': create_button.label,
-            'extra_class': 'btn-pumukit'
-        } %}
-    </div>
 {% endif %}

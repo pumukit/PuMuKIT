@@ -74,6 +74,7 @@ final class ListSeriesDataController extends AbstractController
             );
 
             $rows[] = [
+                'id' => $item->getId(),  // Required for bootstrap-table checkbox selection
                 'title' => TextTruncate::long($item->getTitle()),
                 'hide' => BooleanIcon::convert($item->getHide()),
                 'announce' => BooleanIcon::convert($item->getAnnounce()),

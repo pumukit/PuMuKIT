@@ -10,13 +10,20 @@ series_list_data:
   path: /admin/backend/series/data
   controller: App\Series\UI\Backend\Controller\ListSeriesDataController
 
+# Bulk operations (must be before {id} routes)
+series_bulk_delete:
+  path: /admin/backend/series/bulk/delete
+  controller: App\Series\UI\Backend\Controller\BulkDeleteSeriesController
+  methods: [POST]
+
+# Routes with {id} parameter (must be after specific routes like /bulk/*)
 series_view:
   path: /admin/backend/series/{id}/{tab}
   controller: App\Series\UI\Backend\Controller\ViewSeriesController
   defaults:
     tab: 'general'
   requirements:
-    tab: '[a-zA-Z0-9_-]+'  # Allow any alphanumeric tab name (core + dynamic tabs)
+    tab: '[a-zA-Z0-9_-]+'
 
 series_multimedia_data:
   path: /admin/backend/series/{id}/multimedia/data
@@ -29,7 +36,7 @@ series_events_data:
 series_delete:
   path: /admin/backend/series/{id}/delete
   controller: App\Series\UI\Backend\Controller\DeleteSeriesController
-  methods: [POST]
+
 
 series_clone:
   path: /admin/backend/series/{id}/clone
