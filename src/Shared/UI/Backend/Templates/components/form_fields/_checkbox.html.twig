@@ -1,13 +1,3 @@
-{#
-    Example template for a custom checkbox field
-
-    Expected data:
-    - field_name: string (required)
-    - label: string (required)
-    - checked: boolean (optional)
-    - help_text: string (optional)
-#}
-
 <div class="card shadow-sm mb-3">
     <div class="card-header">
         <h5 class="mb-0">
@@ -17,11 +7,7 @@
     <div class="card-body">
         <div class="mb-3">
             <div class="form-check form-switch">
-                <input class="form-check-input"
-                       type="checkbox"
-                       id="{{ field_name }}"
-                       name="{{ field_name }}"
-                       {% if checked|default(false) %}checked{% endif %}>
+                <input class="form-check-input" type="checkbox" id="{{ field_name }}" name="{{ field_name }}" {% if checked|default(false) %}checked{% endif %}>
                 <label class="form-check-label font-bold" for="{{ field_name }}">
                     {{ label }}
                 </label>
