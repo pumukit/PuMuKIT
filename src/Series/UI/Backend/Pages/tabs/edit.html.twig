@@ -10,7 +10,7 @@
                     <select id="languageSelector" class="form-select w-auto">
                         {% for locale in locales %}
                             <option value="{{ locale }}">
-                                {{ locale|upper }} - {{ locale == 'en' ? 'English' : (locale == 'es' ? 'Español' : locale|upper) }}
+                                {{ locale|upper }} - {{ locale|lower|locale_text }}
                             </option>
                         {% endfor %}
                         <option value="all">

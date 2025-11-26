@@ -3,3 +3,7 @@ services:
 
   App\Shared\Domain\EventBusInterface:
     alias: App\Shared\Infrastructure\EventBus
+
+  App\Shared\UI\Backend\Twig\LocaleExtension:
+    tags:
+      - { name: twig.extension }
