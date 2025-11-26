@@ -592,7 +592,7 @@ class Series
             }
         }
 
-        return $url ?? '/bundles/pumukitschema/images/series_folder.png';
+        return $url ?? '/bundles/pumukitschema/images/series_folder.svg';
     }
 
     private function makeAbsoluteUrl(string $url, string $scheme, string $host): string

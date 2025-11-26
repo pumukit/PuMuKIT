@@ -11,7 +11,7 @@ pumukit_schema:
     multimedia_object_add_owner_template: '@PumukitNewAdmin/MultimediaObject/Owner/email.html.twig'
     default_copyright: ''
     default_license: ''
-    default_series_pic: /bundles/pumukitschema/images/series_folder.png
+    default_series_pic: /bundles/pumukitschema/images/series_folder.svg
     default_playlist_pic: /bundles/pumukitschema/images/playlist_folder.png
     default_video_pic: /bundles/pumukitschema/images/video_none.jpg
     default_audio_hd_pic: /bundles/pumukitschema/images/audio_hd.svg

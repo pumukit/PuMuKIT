@@ -49,7 +49,7 @@ class Configuration implements ConfigurationInterface
             ->info('Default license MultimediaObject')
             ->end()
             ->scalarNode('default_series_pic')
-            ->defaultValue('/bundles/pumukitschema/images/series_folder.png')
+            ->defaultValue('/bundles/pumukitschema/images/series_folder.svg')
             ->info('Default Series picture')
             ->end()
             ->scalarNode('default_playlist_pic')

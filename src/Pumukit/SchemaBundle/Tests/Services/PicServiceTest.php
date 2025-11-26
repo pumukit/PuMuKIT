@@ -251,7 +251,7 @@ class PicServiceTest extends PumukitTestCase
 
         static::assertEquals($mmPath1, $this->picService->getFirstPathPic($mm));
 
-        $mmPath2 = realpath(__DIR__.'/../Resources/images/series_folder.png');
+        $mmPath2 = realpath(__DIR__.'/../Resources/images/series_folder.svg');
         $mmPic2 = new Pic();
         $mmPic2->setPath($mmPath2);
 

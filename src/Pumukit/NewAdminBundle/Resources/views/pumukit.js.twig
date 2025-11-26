@@ -381,7 +381,7 @@ window.submit_delete_link = function(id, mmId)
 window.update_mmspic = function(mm_id, resource_type) {
     var resource_type = typeof resource_type !== 'undefined' ? resource_type : 'mms';
     var element = document.querySelector('img.pic-' + mm_id + '.first');
-    var default_pics = {'mms': '/images/none.jpg', 'series': '/bundles/pumukitschema/images/series_folder.png', 'playlist': '/bundles/pumukitschema/images/playlist_folder.png'};
+    var default_pics = {'mms': '/images/none.jpg', 'series': '/bundles/pumukitschema/images/series_folder.svg', 'playlist': '/bundles/pumukitschema/images/playlist_folder.png'};
     var default_pic = default_pics[resource_type] || default_pics['mms'];
     var src = element ? element.src : default_pic;
     $('img.pic-' + mm_id + '.preview').each(function(e, i){e.src = src});
@@ -686,9 +686,9 @@ window.change_select = function(element, selector, pluralName, seriesId)
             $.ajax({
                     url: route.replace('__ids__', JSON.stringify(ids)),
                     type: 'GET',
-                    success: function(response) {                        
+                    success: function(response) {
                         if (confirm('{% trans %}Are you sure you want to delete this/these series{% endtrans %}? {% trans %}This/these series has/have{% endtrans %} '+response.mms+' {% trans %}multimedia object(s){% endtrans %} {% trans %}and{% endtrans %} '+response.events+' {% trans %}live event(s){% endtrans %}.')) {
-                            var route = get_batch_delete_route(element, ids);        
+                            var route = get_batch_delete_route(element, ids);
                             $.ajax({
                                 url: route,
                                 type: 'POST',
