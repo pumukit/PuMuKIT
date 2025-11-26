@@ -2,8 +2,8 @@
 
 namespace App\Series\UI\Backend\Controller;
 
-use App\Series\Domain\Event\SeriesBulkOperationsEvent;
-use App\Series\Domain\Event\SeriesListActionsEvent;
+use App\Series\UI\Backend\Event\SeriesBulkOperationsEvent;
+use App\Series\UI\Backend\Event\SeriesListActionsEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;

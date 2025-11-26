@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Series\Infrastructure\EventSubscriber;
+namespace App\Series\UI\Backend\EventSubscriber;
 
-use App\Series\Domain\Event\SeriesViewTabsEvent;
+use App\Series\UI\Backend\Event\SeriesViewTabsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class SeriesViewTabsSubscriber implements EventSubscriberInterface

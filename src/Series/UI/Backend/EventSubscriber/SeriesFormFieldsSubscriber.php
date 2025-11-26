@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Series\Infrastructure\EventSubscriber;
+namespace App\Series\UI\Backend\EventSubscriber;
 
-use App\Series\Domain\Event\SeriesFormBuildEvent;
-use App\Series\Domain\Event\SeriesFormSubmitEvent;
 use App\Series\Domain\Repository\SeriesRepositoryInterface;
+use App\Series\UI\Backend\Event\SeriesFormBuildEvent;
+use App\Series\UI\Backend\Event\SeriesFormSubmitEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class SeriesFormFieldsSubscriber implements EventSubscriberInterface

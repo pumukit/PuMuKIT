@@ -51,8 +51,8 @@ services:
       $factoryService: '@Pumukit\SchemaBundle\Services\FactoryService'
       $userRepository: '@App\User\Domain\Repository\UserRepositoryInterface'
 
-  App\Series\Infrastructure\EventSubscriber\:
-    resource: '../../Infrastructure/EventSubscriber'
+  App\Series\UI\Backend\EventSubscriber\:
+    resource: '../../UI/Backend/EventSubscriber'
     tags: [ 'kernel.event_subscriber' ]
     autowire: true
     autoconfigure: true

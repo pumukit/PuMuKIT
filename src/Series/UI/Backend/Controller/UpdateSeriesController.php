@@ -4,7 +4,7 @@ namespace App\Series\UI\Backend\Controller;
 
 use App\Series\Application\Update\UpdateSeriesRequest;
 use App\Series\Application\Update\UpdateSeriesService;
-use App\Series\Domain\Event\SeriesFormSubmitEvent;
+use App\Series\UI\Backend\Event\SeriesFormSubmitEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;

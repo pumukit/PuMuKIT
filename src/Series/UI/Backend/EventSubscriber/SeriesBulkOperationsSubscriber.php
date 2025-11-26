@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Series\Infrastructure\EventSubscriber;
+namespace App\Series\UI\Backend\EventSubscriber;
 
-use App\Series\Domain\Event\SeriesBulkOperationsEvent;
+use App\Series\UI\Backend\Event\SeriesBulkOperationsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class SeriesBulkOperationsSubscriber implements EventSubscriberInterface

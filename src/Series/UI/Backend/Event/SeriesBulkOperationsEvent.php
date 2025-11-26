@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Series\Domain\Event;
+namespace App\Series\UI\Backend\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
