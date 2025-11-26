@@ -1,5 +1,3 @@
-{% set locales = ['en','es','gl'] %}
-
 {% if locales|length > 1 %}
 <div class="row mb-3">
     <div class="col-12">
@@ -274,26 +272,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const languageSelector = document.getElementById('languageSelector');
     const localeFields = document.querySelectorAll('.locale-field');
 
-    // If there's no language selector (single language), ensure all fields are visible
     if (!languageSelector) {
-        console.log('Single language mode - no selector needed');
         localeFields.forEach(field => {
             field.style.display = '';
         });
         return;
     }
 
-    // Multi-language mode - initialize switcher
     function switchLanguage(selectedLocale) {
-        console.log('Switching to language:', selectedLocale);
-
         if (selectedLocale === 'all') {
-            console.log('Showing all languages');
             localeFields.forEach(field => {
                 field.style.display = '';
             });
         } else {
-            console.log('Showing only:', selectedLocale);
             localeFields.forEach(field => {
                 const fieldLocale = field.dataset.locale;
                 if (fieldLocale === selectedLocale) {
@@ -318,8 +309,6 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         switchLanguage(languageSelector.value);
     }
-
-    console.log('Language switcher initialized. Current language:', languageSelector.value);
 });
 </script>
 
