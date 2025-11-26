@@ -15,6 +15,16 @@ services:
     autoconfigure: true
 
   App\Series\Domain\Repository\SeriesRepositoryInterface: '@App\Series\Infrastructure\Persistence\DoctrineSeriesRepository'
+  App\Series\Domain\Repository\SeriesTypeRepositoryInterface: '@App\Series\Infrastructure\Persistence\DoctrineSeriesTypeRepository'
+  App\Series\Domain\Repository\SeriesStyleRepositoryInterface: '@App\Series\Infrastructure\Persistence\DoctrineSeriesStyleRepository'
+
+  App\Series\Infrastructure\Persistence\DoctrineSeriesTypeRepository:
+    autowire: true
+    autoconfigure: true
+
+  App\Series\Infrastructure\Persistence\DoctrineSeriesStyleRepository:
+    autowire: true
+    autoconfigure: true
 
   App\Series\Application\List\ListSeriesService:
     arguments:

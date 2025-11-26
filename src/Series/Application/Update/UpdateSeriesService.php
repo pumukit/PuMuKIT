@@ -7,16 +7,16 @@ namespace App\Series\Application\Update;
 use App\Series\Domain\Event\SeriesUpdatedEvent;
 use App\Series\Domain\Exception\SeriesNotFoundException;
 use App\Series\Domain\Repository\SeriesRepositoryInterface;
+use App\Series\Domain\Repository\SeriesStyleRepositoryInterface;
+use App\Series\Domain\Repository\SeriesTypeRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\SchemaBundle\Document\SeriesStyle;
-use Pumukit\SchemaBundle\Document\SeriesType;
 
 final class UpdateSeriesService
 {
     public function __construct(
         private SeriesRepositoryInterface $seriesRepository,
-        private DocumentManager $documentManager,
+        private SeriesTypeRepositoryInterface $seriesTypeRepository,
+        private SeriesStyleRepositoryInterface $seriesStyleRepository,
         private EventBusInterface $eventBus
     ) {}
 
@@ -75,7 +75,7 @@ final class UpdateSeriesService
         }
 
         if (null !== $request->seriesTypeId) {
-            $seriesType = $this->documentManager->getRepository(SeriesType::class)->find($request->seriesTypeId);
+            $seriesType = $this->seriesTypeRepository->find($request->seriesTypeId);
             if (!$seriesType) {
                 throw new \InvalidArgumentException(
                     sprintf('Series Type with ID %s not found', $request->seriesTypeId)
@@ -85,7 +85,7 @@ final class UpdateSeriesService
         }
 
         if (null !== $request->seriesStyleId) {
-            $seriesStyle = $this->documentManager->getRepository(SeriesStyle::class)->find($request->seriesStyleId);
+            $seriesStyle = $this->seriesStyleRepository->find($request->seriesStyleId);
             if (!$seriesStyle) {
                 throw new \InvalidArgumentException(
                     sprintf('Series Style with ID %s not found', $request->seriesStyleId)
