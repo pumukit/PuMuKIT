@@ -44,20 +44,19 @@ final class BulkToggleAnnounceSeriesService
 
                 $this->eventBus->dispatch(new SeriesUpdatedEvent($series));
 
-                $updatedCount++;
+                ++$updatedCount;
                 if ($series->getAnnounce()) {
-                    $announcedCount++;
+                    ++$announcedCount;
                 } else {
-                    $unAnnouncedCount++;
+                    ++$unAnnouncedCount;
                 }
 
                 $this->logger->info('Series announce toggled successfully', [
                     'id' => $seriesId,
                     'title' => $series->getTitle(),
                     'announce' => $series->getAnnounce(),
-                    'was_announced' => $wasAnnounced
+                    'was_announced' => $wasAnnounced,
                 ]);
-
             } catch (SeriesNotFoundException $e) {
                 $failedIds[] = $seriesId;
                 $errors[$seriesId] = 'Series not found';
@@ -68,7 +67,7 @@ final class BulkToggleAnnounceSeriesService
                 $this->logger->error('Error toggling announce for series', [
                     'id' => $seriesId,
                     'error' => $e->getMessage(),
-                    'trace' => $e->getTraceAsString()
+                    'trace' => $e->getTraceAsString(),
                 ]);
             }
         }
@@ -82,4 +81,3 @@ final class BulkToggleAnnounceSeriesService
         );
     }
 }
-

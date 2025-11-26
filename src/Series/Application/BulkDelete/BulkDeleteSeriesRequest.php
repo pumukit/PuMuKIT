@@ -10,4 +10,3 @@ final class BulkDeleteSeriesRequest
         public readonly array $seriesIds
     ) {}
 }
-

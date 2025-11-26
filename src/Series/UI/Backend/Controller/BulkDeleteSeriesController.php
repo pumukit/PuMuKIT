@@ -24,7 +24,7 @@ final class BulkDeleteSeriesController extends AbstractController
         if (empty($ids)) {
             return new JsonResponse([
                 'success' => false,
-                'message' => 'No series IDs provided'
+                'message' => 'No series IDs provided',
             ], 400);
         }
 
@@ -39,7 +39,7 @@ final class BulkDeleteSeriesController extends AbstractController
                         'Successfully deleted %d series',
                         $response->deletedCount
                     ),
-                    'deleted_count' => $response->deletedCount
+                    'deleted_count' => $response->deletedCount,
                 ]);
             }
 
@@ -58,20 +58,18 @@ final class BulkDeleteSeriesController extends AbstractController
                 'deleted_count' => $response->deletedCount,
                 'failed_count' => count($response->failedIds),
                 'failed_ids' => $response->failedIds,
-                'errors' => $errorMessages
+                'errors' => $errorMessages,
             ], 207);
-
         } catch (\InvalidArgumentException $e) {
             return new JsonResponse([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 400);
         } catch (\Exception $e) {
             return new JsonResponse([
                 'success' => false,
-                'message' => 'An error occurred while deleting series: ' . $e->getMessage()
+                'message' => 'An error occurred while deleting series: '.$e->getMessage(),
             ], 500);
         }
     }
 }
-

@@ -10,4 +10,3 @@ final class BulkToggleAnnounceSeriesRequest
         public readonly array $seriesIds
     ) {}
 }
-

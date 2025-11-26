@@ -41,21 +41,21 @@ final class BulkDeleteSeriesService
                     );
                     $this->logger->warning('Cannot delete series with multimedia objects', [
                         'id' => $seriesId,
-                        'multimedia_objects_count' => $series->getMultimediaObjects()->count()
+                        'multimedia_objects_count' => $series->getMultimediaObjects()->count(),
                     ]);
+
                     continue;
                 }
 
                 $deleteRequest = new DeleteSeriesRequest($seriesId);
                 ($this->deleteSeriesService)($deleteRequest);
 
-                $deletedCount++;
+                ++$deletedCount;
 
                 $this->logger->info('Series deleted successfully', [
                     'id' => $seriesId,
-                    'title' => $series->getTitle()
+                    'title' => $series->getTitle(),
                 ]);
-
             } catch (SeriesNotFoundException $e) {
                 $failedIds[] = $seriesId;
                 $errors[$seriesId] = 'Series not found';
@@ -66,7 +66,7 @@ final class BulkDeleteSeriesService
                 $this->logger->error('Error deleting series', [
                     'id' => $seriesId,
                     'error' => $e->getMessage(),
-                    'trace' => $e->getTraceAsString()
+                    'trace' => $e->getTraceAsString(),
                 ]);
             }
         }

@@ -22,4 +22,3 @@ final class BulkDeleteSeriesResponse
         return !empty($this->errors);
     }
 }
-

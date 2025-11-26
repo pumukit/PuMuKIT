@@ -24,4 +24,3 @@ final class BulkToggleAnnounceSeriesResponse
         return !empty($this->errors);
     }
 }
-
