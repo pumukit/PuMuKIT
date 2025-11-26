@@ -16,7 +16,7 @@ series_view:
   defaults:
     tab: 'general'
   requirements:
-    tab: general|objects|events|edit|template
+    tab: '[a-zA-Z0-9_-]+'  # Allow any alphanumeric tab name (core + dynamic tabs)
 
 series_multimedia_data:
   path: /admin/backend/series/{id}/multimedia/data

@@ -25,7 +25,7 @@ final class SeriesListActionsSubscriber implements EventSubscriberInterface
             type: 'route',
             icon: 'fa-plus',
             class: 'btn btn-pumukit',
-            priority: 1
+            priority: 10
         );
     }
 }

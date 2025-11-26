@@ -35,4 +35,5 @@
     overflow-x: auto;
     white-space: nowrap;
     flex-wrap: nowrap;
+    min-height: 38px;
 }

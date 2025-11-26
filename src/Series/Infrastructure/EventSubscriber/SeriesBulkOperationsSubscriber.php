@@ -25,7 +25,7 @@ final class SeriesBulkOperationsSubscriber implements EventSubscriberInterface
             type: 'route',
             icon: 'fa-download',
             confirmMessage: 'Do you want announce all series selected?',
-            priority: 1
+            priority: 10
         );
 
         $event->addOperation(
@@ -35,7 +35,7 @@ final class SeriesBulkOperationsSubscriber implements EventSubscriberInterface
             type: 'route',
             icon: 'fa-trash',
             confirmMessage: 'Do you want delete all series selected?',
-            priority: 99
+            priority: 100
         );
     }
 }

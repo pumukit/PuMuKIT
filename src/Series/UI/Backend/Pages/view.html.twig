@@ -9,37 +9,35 @@
 
         <div class="tabs-scroll">
             <ul class="nav nav-tabs modern-tabs text-uppercase small mobile-tabs">
-
-                <li class="nav-item">
-                    <a class="nav-link {{ tab == 'general' ? 'active' : '' }}" href="{{ path('series_view', {id: series.id, tab: 'general'}) }}">
-                        <i class="fa-solid fa-ellipsis"></i> {{ "General"|trans }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ tab == 'objects' ? 'active' : '' }}" href="{{ path('series_view', {id: series.id, tab: 'objects'}) }}">
-                        <i class="fa-solid fa-photo-film"></i> {{ "Multimedia Objects"|trans }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ tab == 'events' ? 'active' : '' }}" href="{{ path('series_view', {id: series.id, tab: 'events'}) }}">
-                        <i class="fa-solid fa-circle"></i> {{ "Events"|trans }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ tab == 'edit' ? 'active' : '' }}" href="{{ path('series_view', {id: series.id, tab: 'edit'}) }}">
-                        <i class="fa-solid fa-edit"></i> {{ "Series"|trans }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ tab == 'template' ? 'active' : '' }}" href="{{ path('series_view', {id: series.id, tab: 'template'}) }}">
-                        <i class="fa-solid fa-file-lines"></i> {{ "Template"|trans }}
-                    </a>
-                </li>
+                {% if customTabs is defined and customTabs is not empty %}
+                    {% for customTab in customTabs %}
+                        <li class="nav-item">
+                            <a class="nav-link {{ tab == customTab.key ? 'active' : '' }}" href="{{ path('series_view', {id: series.id, tab: customTab.key}) }}">
+                                <i class="{{ customTab.icon }}"></i> {{ customTab.label|trans }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
             </ul>
         </div>
 
         <div class="mt-3">
-            {% include '@Series/UI/Backend/Pages/tabs/' ~ tab ~ '.html.twig' %}
+            {% set currentTabTemplate = null %}
+            {% if customTabs is defined and customTabs is not empty %}
+                {% for customTab in customTabs %}
+                    {% if tab == customTab.key %}
+                        {% set currentTabTemplate = customTab.template %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            {% if currentTabTemplate %}
+                {% include currentTabTemplate with {series: series, formBuildEvent: formBuildEvent} %}
+            {% else %}
+                <div class="alert alert-warning">
+                    <i class="fa fa-exclamation-triangle"></i> Tab "{{ tab }}" not found.
+                </div>
+            {% endif %}
         </div>
 
     </div>
