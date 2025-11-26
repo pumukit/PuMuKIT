@@ -30,3 +30,9 @@
     opacity: 1;
     color: #c05800;
 }
+
+.mobile-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+}

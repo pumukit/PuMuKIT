@@ -10,7 +10,7 @@
                     <select id="languageSelector" class="form-select w-auto">
                         {% for locale in locales %}
                             <option value="{{ locale }}">
-                                {{ locale|upper }} - {{ locale|lower|locale_text }}
+                                {{ locale }} - {{ locale|lower|locale_text }}
                             </option>
                         {% endfor %}
                         <option value="all">
@@ -44,7 +44,7 @@
                         </label>
                         {% for locale in locales %}
                             <div class="input-group mb-2 locale-field locale-{{ locale }}" data-locale="{{ locale }}">
-                                <span class="input-group-text fw-bold">{{ locale|upper }}</span>
+                                <span class="input-group-text fw-bold" title="{{ locale|lower|locale_text }}">{{ locale|lower }}</span>
                                 <input type="text"
                                        class="form-control"
                                        id="title_{{ locale }}"
@@ -59,7 +59,7 @@
                         <label class="form-label font-bold">{{ "Subtitle"|trans }}</label>
                         {% for locale in locales %}
                             <div class="input-group mb-2 locale-field locale-{{ locale }}" data-locale="{{ locale }}">
-                                <span class="input-group-text fw-bold">{{ locale|upper }}</span>
+                                <span class="input-group-text fw-bold" title="{{ locale|lower|locale_text }}">{{ locale|lower }}</span>
                                 <input type="text"
                                        class="form-control"
                                        id="subtitle_{{ locale }}"
@@ -73,7 +73,7 @@
                         <label class="form-label font-bold">{{ "Description"|trans }}</label>
                         {% for locale in locales %}
                             <div class="input-group mb-2 locale-field locale-{{ locale }}" data-locale="{{ locale }}">
-                                <span class="input-group-text fw-bold">{{ locale|upper }}</span>
+                                <span class="input-group-text fw-bold" title="{{ locale|lower|locale_text }}">{{ locale|lower }}</span>
                                 <textarea class="form-control"
                                           id="description_{{ locale }}"
                                           name="description[{{ locale }}]"
@@ -86,7 +86,7 @@
                         <label class="form-label font-bold">{{ "Keywords"|trans }} <small class="text-muted">({{ "Separate keywords with commas"|trans }})</small></label>
                         {% for locale in locales %}
                             <div class="input-group mb-2 locale-field locale-{{ locale }}" data-locale="{{ locale }}">
-                                <span class="input-group-text fw-bold">{{ locale|upper }}</span>
+                                <span class="input-group-text fw-bold" title="{{ locale|lower|locale_text }}">{{ locale|lower }}</span>
                                 <input type="text"
                                        class="form-control"
                                        id="keywords_{{ locale }}"
@@ -219,7 +219,7 @@
                         <label class="form-label font-bold">{{ "Header"|trans }}</label>
                         {% for locale in locales %}
                             <div class="input-group mb-2 locale-field locale-{{ locale }}" data-locale="{{ locale }}">
-                                <span class="input-group-text fw-bold">{{ locale|upper }}</span>
+                                <span class="input-group-text fw-bold" title="{{ locale|lower|locale_text }}">{{ locale|lower }}</span>
                                 <textarea class="form-control"
                                           id="header_{{ locale }}"
                                           name="header[{{ locale }}]"
@@ -232,7 +232,7 @@
                         <label class="form-label font-bold">{{ "Footer"|trans }}</label>
                         {% for locale in locales %}
                             <div class="input-group mb-2 locale-field locale-{{ locale }}" data-locale="{{ locale }}">
-                                <span class="input-group-text fw-bold">{{ locale|upper }}</span>
+                                <span class="input-group-text fw-bold" title="{{ locale|lower|locale_text }}">{{ locale|lower }}</span>
                                 <textarea class="form-control"
                                           id="footer_{{ locale }}"
                                           name="footer[{{ locale }}]"
