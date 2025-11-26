@@ -7,6 +7,7 @@ use App\Series\Application\List\ListSeriesService;
 use App\Series\Domain\Repository\SeriesRepositoryInterface;
 use App\Shared\UI\Backend\Helpers\BooleanIcon;
 use App\Shared\UI\Backend\Helpers\DateFormat;
+use App\Shared\UI\Backend\Helpers\TextTruncate;
 use App\Shared\UI\Backend\Helpers\Thumbnail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -73,7 +74,7 @@ final class ListSeriesDataController extends AbstractController
             );
 
             $rows[] = [
-                'oneSeries' => $item,
+                'title' => TextTruncate::long($item->getTitle()),
                 'hide' => BooleanIcon::convert($item->getHide()),
                 'announce' => BooleanIcon::convert($item->getAnnounce()),
                 'public_date' => DateFormat::format($item->getPublicDate()),
