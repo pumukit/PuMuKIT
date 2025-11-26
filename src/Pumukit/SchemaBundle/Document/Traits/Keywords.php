@@ -29,7 +29,7 @@ trait Keywords
     {
         $keywords = [];
         foreach ($this->keywords as $lang => $value) {
-            if(is_string($value)) {
+            if (is_string($value)) {
                 $keywords[$lang] = $value;
             } else {
                 $keywords[$lang] = implode(',', $value);
@@ -88,7 +88,7 @@ trait Keywords
         $this->keywords[$locale] = $keywords;
     }
 
-    public function getKeywords($locale = null): string|array
+    public function getKeywords($locale = null): array|string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -99,7 +99,7 @@ trait Keywords
 
     public function getKeywordsAsString($locale = null): string
     {
-        if(is_string($this->getKeywords($locale))) {
+        if (is_string($this->getKeywords($locale))) {
             return $this->getKeywords($locale);
         }
 

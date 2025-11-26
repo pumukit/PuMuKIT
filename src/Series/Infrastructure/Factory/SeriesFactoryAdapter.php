@@ -24,6 +24,6 @@ final class SeriesFactoryAdapter implements SeriesFactoryInterface
 
     public function update(Series $series): Series
     {
-        // TODO: Implement update() method.
+        return $series;
     }
 }
