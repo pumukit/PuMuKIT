@@ -1,4 +1,33 @@
-{% set locales = ['en', 'es'] %}
+{% set locales = ['en','es','gl'] %}
+
+{% if locales|length > 1 %}
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <label for="languageSelector" class="form-label font-bold mb-0 me-3">
+                        <i class="fa fa-language"></i> {{ "Edit Language"|trans }}:
+                    </label>
+                    <select id="languageSelector" class="form-select w-auto">
+                        {% for locale in locales %}
+                            <option value="{{ locale }}">
+                                {{ locale|upper }} - {{ locale == 'en' ? 'English' : (locale == 'es' ? 'Español' : locale|upper) }}
+                            </option>
+                        {% endfor %}
+                        <option value="all">
+                            <i class="fa fa-globe"></i> {{ "ALL - All Languages"|trans }}
+                        </option>
+                    </select>
+                    <small class="text-muted ms-3">
+                        <i class="fa fa-info-circle"></i> {{ "Select the language you want to edit or 'ALL' to see all"|trans }}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 <form id="editSeriesForm" method="POST" action="{{ path('series_update', {id: series.id}) }}">
     <input type="hidden" name="id" value="{{ series.id }}">
@@ -16,8 +45,8 @@
                             {{ "Title"|trans }}
                         </label>
                         {% for locale in locales %}
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">{{ locale }}</span>
+                            <div class="input-group mb-2 locale-field locale-{{ locale }}" data-locale="{{ locale }}">
+                                <span class="input-group-text fw-bold">{{ locale|upper }}</span>
                                 <input type="text"
                                        class="form-control"
                                        id="title_{{ locale }}"
@@ -31,8 +60,8 @@
                     <div class="mb-3">
                         <label class="form-label font-bold">{{ "Subtitle"|trans }}</label>
                         {% for locale in locales %}
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">{{ locale }}</span>
+                            <div class="input-group mb-2 locale-field locale-{{ locale }}" data-locale="{{ locale }}">
+                                <span class="input-group-text fw-bold">{{ locale|upper }}</span>
                                 <input type="text"
                                        class="form-control"
                                        id="subtitle_{{ locale }}"
@@ -45,8 +74,8 @@
                     <div class="mb-3">
                         <label class="form-label font-bold">{{ "Description"|trans }}</label>
                         {% for locale in locales %}
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">{{ locale }}</span>
+                            <div class="input-group mb-2 locale-field locale-{{ locale }}" data-locale="{{ locale }}">
+                                <span class="input-group-text fw-bold">{{ locale|upper }}</span>
                                 <textarea class="form-control"
                                           id="description_{{ locale }}"
                                           name="description[{{ locale }}]"
@@ -58,8 +87,8 @@
                     <div class="mb-3">
                         <label class="form-label font-bold">{{ "Keywords"|trans }} <small class="text-muted">({{ "Separate keywords with commas"|trans }})</small></label>
                         {% for locale in locales %}
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">{{ locale }}</span>
+                            <div class="input-group mb-2 locale-field locale-{{ locale }}" data-locale="{{ locale }}">
+                                <span class="input-group-text fw-bold">{{ locale|upper }}</span>
                                 <input type="text"
                                        class="form-control"
                                        id="keywords_{{ locale }}"
@@ -73,7 +102,6 @@
                 </div>
             </div>
 
-            {# Dynamic fields from bundles (left column) #}
             {% if formBuildEvent is defined and formBuildEvent %}
                 {% for field in formBuildEvent.getFormFields('left') %}
                     {% include field.template with field.data|merge({'series': series}) %}
@@ -192,8 +220,8 @@
                     <div class="mb-3">
                         <label class="form-label font-bold">{{ "Header"|trans }}</label>
                         {% for locale in locales %}
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">{{ locale }}</span>
+                            <div class="input-group mb-2 locale-field locale-{{ locale }}" data-locale="{{ locale }}">
+                                <span class="input-group-text fw-bold">{{ locale|upper }}</span>
                                 <textarea class="form-control"
                                           id="header_{{ locale }}"
                                           name="header[{{ locale }}]"
@@ -205,8 +233,8 @@
                     <div class="mb-3">
                         <label class="form-label font-bold">{{ "Footer"|trans }}</label>
                         {% for locale in locales %}
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">{{ locale }}</span>
+                            <div class="input-group mb-2 locale-field locale-{{ locale }}" data-locale="{{ locale }}">
+                                <span class="input-group-text fw-bold">{{ locale|upper }}</span>
                                 <textarea class="form-control"
                                           id="footer_{{ locale }}"
                                           name="footer[{{ locale }}]"
@@ -217,7 +245,6 @@
                 </div>
             </div>
 
-            {# Dynamic fields from bundles (right column) #}
             {% if formBuildEvent is defined and formBuildEvent %}
                 {% for field in formBuildEvent.getFormFields('right') %}
                     {% include field.template with field.data|merge({'series': series}) %}
@@ -241,3 +268,58 @@
         </div>
     </div>
 </form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const languageSelector = document.getElementById('languageSelector');
+    const localeFields = document.querySelectorAll('.locale-field');
+
+    // If there's no language selector (single language), ensure all fields are visible
+    if (!languageSelector) {
+        console.log('Single language mode - no selector needed');
+        localeFields.forEach(field => {
+            field.style.display = '';
+        });
+        return;
+    }
+
+    // Multi-language mode - initialize switcher
+    function switchLanguage(selectedLocale) {
+        console.log('Switching to language:', selectedLocale);
+
+        if (selectedLocale === 'all') {
+            console.log('Showing all languages');
+            localeFields.forEach(field => {
+                field.style.display = '';
+            });
+        } else {
+            console.log('Showing only:', selectedLocale);
+            localeFields.forEach(field => {
+                const fieldLocale = field.dataset.locale;
+                if (fieldLocale === selectedLocale) {
+                    field.style.display = '';
+                } else {
+                    field.style.display = 'none';
+                }
+            });
+        }
+
+        localStorage.setItem('series_edit_selected_language', selectedLocale);
+    }
+
+    languageSelector.addEventListener('change', function() {
+        switchLanguage(this.value);
+    });
+
+    const savedLanguage = localStorage.getItem('series_edit_selected_language');
+    if (savedLanguage && languageSelector.querySelector('option[value="' + savedLanguage + '"]')) {
+        languageSelector.value = savedLanguage;
+        switchLanguage(savedLanguage);
+    } else {
+        switchLanguage(languageSelector.value);
+    }
+
+    console.log('Language switcher initialized. Current language:', languageSelector.value);
+});
+</script>
+
