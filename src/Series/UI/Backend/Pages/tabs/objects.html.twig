@@ -3,6 +3,7 @@
     server_side: true,
     ajax_url: path('series_multimedia_data', {id: series.id}),
     checkbox: true,
+    toolbar: '#multimedia-bulk-action-toolbar',
     columns: [
         {'field': 'thumbnail', 'label': 'Image'},
         {'field': 'title', 'label': 'Title', 'sortable': true, 'truncate': true},
@@ -14,9 +15,12 @@
         {'field': 'record_date', 'label': 'Public Date', 'sortable': true},
         {'field': 'actions', 'label': 'Actions', 'align': 'right'}
     ],
-    create_button: {
-        'url': '#',
-        'icon': 'fa fa-plus',
-        'label': 'Upload'
-    }
 } %}
+
+{% if multimediaObjectCustomActions is defined and multimediaObjectCustomActions is not empty %}
+    <div class="mb-3">
+        {% include '@MultimediaObject/UI/Backend/Pages/partials/_actions.html.twig' with {
+            customActions: multimediaObjectCustomActions
+        } %}
+    </div>
+{% endif %}

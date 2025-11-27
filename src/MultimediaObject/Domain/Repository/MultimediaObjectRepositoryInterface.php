@@ -10,5 +10,7 @@ interface MultimediaObjectRepositoryInterface
 
     public function findBySeriesId(string $seriesId): iterable;
 
+    public function save(MultimediaObject $multimediaObject): void;
+
     public function delete(MultimediaObject $multimediaObject): void;
 }

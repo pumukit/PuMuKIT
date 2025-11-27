@@ -25,6 +25,12 @@ final class DoctrineMultimediaObjectRepository implements MultimediaObjectReposi
         ;
     }
 
+    public function save(MultimediaObject $multimediaObject): void
+    {
+        $this->documentManager->persist($multimediaObject);
+        $this->documentManager->flush();
+    }
+
     public function delete(MultimediaObject $multimediaObject): void
     {
         $this->documentManager->remove($multimediaObject);

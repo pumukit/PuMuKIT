@@ -77,6 +77,7 @@ final class ViewSeriesMultimediaObjectsDataController extends AbstractController
             );
 
             $rows[] = [
+                'id' => $item->getId(),
                 'thumbnail' => Thumbnail::convert($item->getMainThumbnail($request->getScheme(), $request->getHost())),
                 'title' => TextTruncate::long($item->getTitle()),
                 'status' => StatusIcon::convert($item->getStatus()),
