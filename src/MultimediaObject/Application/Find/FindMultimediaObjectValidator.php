@@ -4,18 +4,12 @@ declare(strict_types=1);
 
 namespace App\MultimediaObject\Application\Find;
 
+use App\Shared\Domain\Validator\IdValidator;
+
 final class FindMultimediaObjectValidator
 {
     public static function validate(FindMultimediaObjectRequest $request): void
     {
-        if (empty($request->id)) {
-            throw new \InvalidArgumentException('MultimediaObject ID cannot be empty');
-        }
-
-        if (!preg_match('/^[a-f0-9]{24}$/i', $request->id)) {
-            throw new \InvalidArgumentException(
-                sprintf('Invalid MultimediaObject ID format: %s', $request->id)
-            );
-        }
+        IdValidator::validate($request->id, 'MultimediaObject ID');
     }
 }

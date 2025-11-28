@@ -4,18 +4,12 @@ declare(strict_types=1);
 
 namespace App\Series\Application\Clone;
 
+use App\Shared\Domain\Validator\IdValidator;
+
 final class CloneSeriesValidator
 {
     public static function validate(CloneSeriesRequest $request): void
     {
-        if (empty($request->seriesId)) {
-            throw new \InvalidArgumentException('Series ID cannot be empty');
-        }
-
-        if (!preg_match('/^[a-f0-9]{24}$/i', $request->seriesId)) {
-            throw new \InvalidArgumentException(
-                sprintf('Invalid Series ID format: %s', $request->seriesId)
-            );
-        }
+        IdValidator::validate($request->seriesId, 'Series ID');
     }
 }

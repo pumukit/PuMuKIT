@@ -4,25 +4,13 @@ declare(strict_types=1);
 
 namespace App\Series\Application\BulkToggleAnnounce;
 
+use App\Shared\Domain\Validator\IdValidator;
+
 final class BulkToggleAnnounceSeriesValidator
 {
     public static function validate(BulkToggleAnnounceSeriesRequest $request): void
     {
-        if (empty($request->seriesIds)) {
-            throw new \InvalidArgumentException('Series IDs array cannot be empty');
-        }
-
-        foreach ($request->seriesIds as $seriesId) {
-            if (empty($seriesId) || !is_string($seriesId)) {
-                throw new \InvalidArgumentException('All series IDs must be non-empty strings');
-            }
-
-            if (!preg_match('/^[a-f0-9]{24}$/', $seriesId)) {
-                throw new \InvalidArgumentException(
-                    sprintf('Invalid series ID format: %s', $seriesId)
-                );
-            }
-        }
+        IdValidator::validateArray($request->seriesIds, 'Series ID');
 
         $uniqueIds = array_unique($request->seriesIds);
         if (count($uniqueIds) !== count($request->seriesIds)) {

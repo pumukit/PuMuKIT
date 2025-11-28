@@ -4,19 +4,13 @@ declare(strict_types=1);
 
 namespace App\Series\Application\Update;
 
+use App\Shared\Domain\Validator\IdValidator;
+
 final class UpdateSeriesValidator
 {
     public static function validate(UpdateSeriesRequest $request): void
     {
-        if (empty($request->id)) {
-            throw new \InvalidArgumentException('Series ID cannot be empty');
-        }
-
-        if (!preg_match('/^[a-f0-9]{24}$/i', $request->id)) {
-            throw new \InvalidArgumentException(
-                sprintf('Invalid Series ID format: %s', $request->id)
-            );
-        }
+        IdValidator::validate($request->id, 'Series ID');
 
         if (null !== $request->title) {
             if (!is_array($request->title)) {
@@ -122,19 +116,11 @@ final class UpdateSeriesValidator
         }
 
         if (null !== $request->seriesTypeId) {
-            if (!preg_match('/^[a-f0-9]{24}$/i', $request->seriesTypeId)) {
-                throw new \InvalidArgumentException(
-                    sprintf('Invalid Series Type ID format: %s', $request->seriesTypeId)
-                );
-            }
+            IdValidator::validate($request->seriesTypeId, 'Series Type ID');
         }
 
         if (null !== $request->seriesStyleId) {
-            if (!preg_match('/^[a-f0-9]{24}$/i', $request->seriesStyleId)) {
-                throw new \InvalidArgumentException(
-                    sprintf('Invalid Series Style ID format: %s', $request->seriesStyleId)
-                );
-            }
+            IdValidator::validate($request->seriesStyleId, 'Series Style ID');
         }
 
         if (null !== $request->properties) {

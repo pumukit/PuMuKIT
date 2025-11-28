@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace App\User\Application\View;
 
+use App\Shared\Domain\Validator\IdValidator;
+
 final class ViewUserValidator
 {
     public static function validate(ViewUserRequest $request): void
     {
-        if (empty($request->id)) {
-            throw new \InvalidArgumentException('User ID cannot be empty');
-        }
-
-        // Validate MongoDB ObjectId format (24 hex characters)
-        if (!preg_match('/^[a-f0-9]{24}$/i', $request->id)) {
-            throw new \InvalidArgumentException(
-                sprintf('Invalid User ID format: %s', $request->id)
-            );
-        }
+        IdValidator::validate($request->id, 'User ID');
     }
 }

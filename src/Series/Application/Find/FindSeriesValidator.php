@@ -4,18 +4,12 @@ declare(strict_types=1);
 
 namespace App\Series\Application\Find;
 
+use App\Shared\Domain\Validator\IdValidator;
+
 final class FindSeriesValidator
 {
     public static function validate(FindSeriesRequest $request): void
     {
-        if (empty($request->id)) {
-            throw new \InvalidArgumentException('Series ID cannot be empty');
-        }
-
-        if (!preg_match('/^[a-f0-9]{24}$/i', $request->id)) {
-            throw new \InvalidArgumentException(
-                sprintf('Invalid Series ID format: %s', $request->id)
-            );
-        }
+        IdValidator::validate($request->id, 'Series ID');
     }
 }
