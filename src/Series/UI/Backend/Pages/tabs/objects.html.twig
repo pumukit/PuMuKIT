@@ -1,7 +1,7 @@
 {% include '@Shared/UI/Backend/Templates/components/table/_table.html.twig' with {
     id: 'multimediaObjectsTable',
     server_side: true,
-    ajax_url: path('series_multimedia_data', {id: series.id}),
+    ajax_url: path('series_multimedia_object_data', {id: series.id}),
     checkbox: true,
     toolbar: '#multimedia-bulk-action-toolbar',
     columns: [

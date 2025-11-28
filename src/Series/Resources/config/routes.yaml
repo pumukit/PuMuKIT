@@ -30,7 +30,7 @@ series_view:
   requirements:
     tab: '[a-zA-Z0-9_-]+'
 
-series_multimedia_data:
+series_multimedia_object_data:
   path: /admin/backend/series/{id}/multimedia/data
   controller: App\Series\UI\Backend\Controller\ViewSeriesMultimediaObjectsDataController
 

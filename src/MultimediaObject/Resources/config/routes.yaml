@@ -10,7 +10,7 @@ multimedia_object_bulk_toggle_announce:
   methods: [POST]
 
 # Routes with {id} parameter (must be after bulk operations)
-multimediaobject_view:
+multimedia_object_view:
   path: /admin/backend/multimedia-object/{id}/{tab}
   controller: App\MultimediaObject\UI\Backend\Controller\ViewMultimediaObjectController
   defaults:
@@ -18,7 +18,7 @@ multimediaobject_view:
   requirements:
     tab: general|media|metadata|owners|people|publication|tags
 
-multimediaobject_delete:
+multimedia_object_delete:
   path: /admin/backend/multimedia-object/{id}/delete
   controller: App\MultimediaObject\UI\Backend\Controller\DeleteMultimediaObjectController
   methods: [POST]

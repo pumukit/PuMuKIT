@@ -44,8 +44,8 @@ final class MultimediaObjectDataTablePresenter
 
     private function renderActions(MultimediaObject $multimediaObject): string
     {
-        $viewUrl = $this->router->generate('multimediaobject_view', ['id' => $multimediaObject->getId()]);
-        $deleteUrl = $this->router->generate('multimediaobject_delete', ['id' => $multimediaObject->getId()]);
+        $viewUrl = $this->router->generate('multimedia_object_view', ['id' => $multimediaObject->getId()]);
+        $deleteUrl = $this->router->generate('multimedia_object_delete', ['id' => $multimediaObject->getId()]);
 
         return sprintf(
             '<div class="d-flex gap-1 justify-content-end">
