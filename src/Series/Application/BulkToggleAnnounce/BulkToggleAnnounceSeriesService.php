@@ -10,7 +10,7 @@ use App\Series\Domain\Event\SeriesUpdatedEvent;
 use App\Series\Domain\Exception\SeriesNotFoundException;
 use App\Series\Domain\Repository\SeriesRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
-use Psr\Log\LoggerInterface;
+use App\Shared\Domain\LoggerInterface;
 
 final class BulkToggleAnnounceSeriesService
 {

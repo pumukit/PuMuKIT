@@ -9,7 +9,7 @@ use App\Series\Application\Delete\DeleteSeriesService;
 use App\Series\Application\Find\FindSeriesRequest;
 use App\Series\Application\Find\FindSeriesService;
 use App\Series\Domain\Exception\SeriesNotFoundException;
-use Psr\Log\LoggerInterface;
+use App\Shared\Domain\LoggerInterface;
 
 final class BulkDeleteSeriesService
 {

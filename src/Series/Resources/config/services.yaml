@@ -14,6 +14,16 @@ services:
     autowire: true
     autoconfigure: true
 
+  App\Series\UI\Backend\Presenter\:
+    resource: '../../UI/Backend/Presenter'
+    autowire: true
+    autoconfigure: true
+
+  App\Series\UI\Backend\FormHandler\:
+    resource: '../../UI/Backend/FormHandler'
+    autowire: true
+    autoconfigure: true
+
   App\Series\Domain\Repository\SeriesRepositoryInterface: '@App\Series\Infrastructure\Persistence\DoctrineSeriesRepository'
   App\Series\Domain\Repository\SeriesTypeRepositoryInterface: '@App\Series\Infrastructure\Persistence\DoctrineSeriesTypeRepository'
   App\Series\Domain\Repository\SeriesStyleRepositoryInterface: '@App\Series\Infrastructure\Persistence\DoctrineSeriesStyleRepository'

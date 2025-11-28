@@ -11,7 +11,6 @@ use App\Shared\UI\Backend\Helpers\BooleanIcon;
 use App\Shared\UI\Backend\Helpers\DateFormat;
 use App\Shared\UI\Backend\Helpers\TextTruncate;
 use App\Shared\UI\Backend\Helpers\Thumbnail;
-use MongoDB\BSON\ObjectId;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +34,7 @@ final class ViewSeriesMultimediaObjectsDataController extends AbstractController
         $page = (int) floor($offset / $limit) + 1;
 
         $filters = [
-            'series.id' => new ObjectId($id),
+            'series_id' => $id,  // Pass as string, let Application layer handle conversion
         ];
         if ($search) {
             $filters['title'] = $search;

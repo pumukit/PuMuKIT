@@ -4,6 +4,14 @@ services:
   App\Shared\Domain\EventBusInterface:
     alias: App\Shared\Infrastructure\EventBus
 
+  # Logger adapter from PSR-3 to our domain interface
+  App\Shared\Infrastructure\Logger\PsrLoggerAdapter:
+    arguments:
+      $psrLogger: '@monolog.logger'
+
+  App\Shared\Domain\LoggerInterface:
+    alias: App\Shared\Infrastructure\Logger\PsrLoggerAdapter
+
   App\Shared\UI\Backend\Twig\LocaleExtension:
     tags:
       - { name: twig.extension }

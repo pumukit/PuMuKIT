@@ -14,15 +14,22 @@ final class ViewSeriesMultimediaObjectsService
 
         $offset = ($request->page - 1) * $request->limit;
 
+        // Support both 'series.id' and 'series_id' keys for backwards compatibility
+        $seriesId = $request->filters['series_id'] ?? $request->filters['series.id'] ?? null;
+
+        if (!$seriesId) {
+            throw new \InvalidArgumentException('series_id is required in filters');
+        }
+
         $multimediaObjects = $this->repository->findMultimediaObjectsBySeries(
-            seriesId: $request->filters['series.id'],
+            seriesId: $seriesId,
             offset: $offset,
             limit: $request->limit,
             sort: $request->sort ?? 'title',
             order: $request->order ?? 'asc'
         );
 
-        $total = $this->repository->countMultimediaObjects($request->filters['series.id']);
+        $total = $this->repository->countMultimediaObjects($seriesId);
 
         return new ViewSeriesMultimediaObjectsResponse($multimediaObjects, $total);
     }

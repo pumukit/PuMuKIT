@@ -3,9 +3,8 @@
 namespace App\Series\Domain\Event;
 
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Contracts\EventDispatcher\Event;
 
-final class SeriesDeletedEvent extends Event
+final class SeriesDeletedEvent
 {
     public const NAME = 'series.deleted';
 
