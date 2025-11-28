@@ -12,10 +12,6 @@ use App\Shared\UI\Backend\Helpers\Thumbnail;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\Routing\RouterInterface;
 
-/**
- * Presenter for Series data table
- * Separates presentation logic from controller
- */
 final class SeriesDataTablePresenter
 {
     public function __construct(

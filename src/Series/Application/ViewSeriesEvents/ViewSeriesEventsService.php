@@ -14,15 +14,22 @@ final class ViewSeriesEventsService
 
         $offset = ($request->page - 1) * $request->limit;
 
+        // Support both 'series.id' and 'series_id' keys for backwards compatibility
+        $seriesId = $request->filters['series_id'] ?? $request->filters['series.id'] ?? null;
+
+        if (!$seriesId) {
+            throw new \InvalidArgumentException('series_id is required in filters');
+        }
+
         $multimediaObjects = $this->repository->findEventsBySeries(
-            seriesId: $request->filters['series.id'],
+            seriesId: $seriesId,
             offset: $offset,
             limit: $request->limit,
             sort: $request->sort ?? 'title',
             order: $request->order ?? 'asc'
         );
 
-        $total = $this->repository->countEvents($request->filters['series.id']);
+        $total = $this->repository->countEvents($seriesId);
 
         return new ViewSeriesEventsResponse($multimediaObjects, $total);
     }

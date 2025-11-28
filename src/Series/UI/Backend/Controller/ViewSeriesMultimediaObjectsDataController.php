@@ -2,27 +2,22 @@
 
 namespace App\Series\UI\Backend\Controller;
 
-use App\MultimediaObject\UI\Backend\Helpers\DurationFormat;
-use App\MultimediaObject\UI\Backend\Helpers\StatusIcon;
-use App\MultimediaObject\UI\Backend\Helpers\TypeIcon;
 use App\Series\Application\ViewSeriesMultimediaObjects\ViewSeriesMultimediaObjectsRequest;
 use App\Series\Application\ViewSeriesMultimediaObjects\ViewSeriesMultimediaObjectsService;
-use App\Shared\UI\Backend\Helpers\BooleanIcon;
-use App\Shared\UI\Backend\Helpers\DateFormat;
-use App\Shared\UI\Backend\Helpers\TextTruncate;
-use App\Shared\UI\Backend\Helpers\Thumbnail;
+use App\Series\UI\Backend\Presenter\MultimediaObjectDataTablePresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
 
 final class ViewSeriesMultimediaObjectsDataController extends AbstractController
 {
-    public function __construct(private ViewSeriesMultimediaObjectsService $viewSeriesMultimediaObjectsService) {}
+    public function __construct(
+        private ViewSeriesMultimediaObjectsService $viewSeriesMultimediaObjectsService,
+        private MultimediaObjectDataTablePresenter $presenter
+    ) {}
 
     public function __invoke(
         Request $request,
-        RouterInterface $router,
         string $id,
     ): JsonResponse {
         $offset = (int) $request->query->get('offset', 0);
@@ -34,7 +29,7 @@ final class ViewSeriesMultimediaObjectsDataController extends AbstractController
         $page = (int) floor($offset / $limit) + 1;
 
         $filters = [
-            'series_id' => $id,  // Pass as string, let Application layer handle conversion
+            'series_id' => $id,
         ];
         if ($search) {
             $filters['title'] = $search;
@@ -52,41 +47,12 @@ final class ViewSeriesMultimediaObjectsDataController extends AbstractController
         $response = ($this->viewSeriesMultimediaObjectsService)($dto);
 
         $rows = [];
-        foreach ($response->multimediaObjects as $item) {
-            $viewText = 'View';
-            $cloneText = 'Clone';
-            $deleteText = 'Delete';
-            $actionsHtml = sprintf(
-                '<div class="d-flex gap-1 justify-content-end">
-                    <a href="%s" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> '.$viewText.'</a>
-                    <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to clone this series?\');">
-                        <button type="submit" class="btn btn-sm btn-warning">
-                            <i class="fa fa-copy"></i>'.$cloneText.'
-                        </button>
-                    </form>
-                    <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to delete this series?\');">
-                        <button type="submit" class="btn btn-sm btn-danger">
-                            <i class="fa fa-trash"></i>'.$deleteText.'
-                        </button>
-                    </form>
-                </div>',
-                $router->generate('multimediaobject_view', ['id' => $item->getId()]),
-                '#',
-                $router->generate('multimediaobject_delete', ['id' => $item->getId()]),
+        foreach ($response->multimediaObjects as $multimediaObject) {
+            $rows[] = $this->presenter->present(
+                $multimediaObject,
+                $request->getScheme(),
+                $request->getHost()
             );
-
-            $rows[] = [
-                'id' => $item->getId(),
-                'thumbnail' => Thumbnail::convert($item->getMainThumbnail($request->getScheme(), $request->getHost())),
-                'title' => TextTruncate::long($item->getTitle()),
-                'status' => StatusIcon::convert($item->getStatus()),
-                'public_date' => DateFormat::format($item->getPublicDate()),
-                'record_date' => DateFormat::format($item->getRecordDate()),
-                'duration' => ($item->isVideoAudioType()) ? DurationFormat::convert($item->getDuration()) : '---',
-                'hide' => BooleanIcon::convert($item->isHidden()),
-                'type' => TypeIcon::convert($item->getType()),
-                'actions' => $actionsHtml,
-            ];
         }
 
         return $this->json([

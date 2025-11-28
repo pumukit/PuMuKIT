@@ -7,10 +7,6 @@ namespace App\Series\UI\Backend\FormHandler;
 use App\Series\Application\Update\UpdateSeriesRequest;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Handles form data extraction and transformation for Series update
- * Separates HTTP concerns from Application layer
- */
 final class UpdateSeriesFormHandler
 {
     public function handleRequest(Request $request, string $id): UpdateSeriesRequest

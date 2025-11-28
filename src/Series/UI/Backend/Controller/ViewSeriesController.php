@@ -43,18 +43,15 @@ final class ViewSeriesController extends AbstractController
             $this->eventDispatcher->dispatch($formBuildEvent, SeriesFormBuildEvent::NAME);
         }
 
-        // Dispatch event for multimedia object bulk operations (objects tab)
         $multimediaObjectBulkOperationsEvent = null;
         $multimediaObjectBulkOperations = [];
         $multimediaObjectListActionsEvent = null;
         $multimediaObjectCustomActions = [];
 
         if ('objects' === $tab) {
-            // Bulk operations
             $multimediaObjectBulkOperationsEvent = new MultimediaObjectBulkOperationsEvent();
             $this->eventDispatcher->dispatch($multimediaObjectBulkOperationsEvent, MultimediaObjectBulkOperationsEvent::NAME);
 
-            // Convert route names to URLs for bulk operations
             $multimediaObjectBulkOperations = $multimediaObjectBulkOperationsEvent->getOperations();
             foreach ($multimediaObjectBulkOperations as &$operation) {
                 if ('route' === $operation['type']) {
@@ -69,11 +66,9 @@ final class ViewSeriesController extends AbstractController
                 }
             }
 
-            // Individual row actions
             $multimediaObjectListActionsEvent = new MultimediaObjectListActionsEvent();
             $this->eventDispatcher->dispatch($multimediaObjectListActionsEvent, MultimediaObjectListActionsEvent::NAME);
 
-            // Convert route names to URLs for individual actions
             $multimediaObjectCustomActions = $multimediaObjectListActionsEvent->getActions();
             foreach ($multimediaObjectCustomActions as &$action) {
                 if ('route' === $action['type']) {

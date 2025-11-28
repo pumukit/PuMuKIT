@@ -22,7 +22,6 @@ final class UpdateSeriesController extends AbstractController
     public function __invoke(Request $request, string $id): Response
     {
         try {
-            // Use FormHandler to extract and transform request data
             $dto = $this->formHandler->handleRequest($request, $id);
 
             $response = ($this->updateSeriesService)($dto);
