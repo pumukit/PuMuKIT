@@ -29,19 +29,40 @@
             return;
         }
 
+        function showFlashMessage(type, message) {
+            const container = document.querySelector('.flash-container');
+            if (!container) {
+                console.error('Flash container not found');
+                return;
+            }
+
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `custom-flash ${type === 'success' ? 'success-flash' : 'danger-flash'} alert-dismissible fade show mb-2 shadow-lg rounded-3`;
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.textContent = message;
+
+            container.appendChild(alertDiv);
+
+            // Auto-dismiss after 3 seconds
+            setTimeout(() => {
+                const bsAlert = bootstrap.Alert.getOrCreateInstance(alertDiv);
+                bsAlert.close();
+            }, 3000);
+        }
+
         applyButton.addEventListener('click', function() {
             const selectedOption = selectElement.options[selectElement.selectedIndex];
             const operation = selectedOption.value;
 
             if (!operation) {
-                alert('{{ "Please select an operation"|trans }}');
+                showFlashMessage('danger', '{{ "Please select an operation"|trans }}');
                 return;
             }
 
             const selectedRows = $(tableElement).bootstrapTable('getSelections');
 
             if (selectedRows.length === 0) {
-                alert('{{ "Please select at least one item"|trans }}');
+                showFlashMessage('danger', '{{ "Please select at least one item"|trans }}');
                 return;
             }
 
@@ -68,21 +89,23 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            alert(data.message);
+                            showFlashMessage('success', data.message || '{{ "Operation completed successfully"|trans }}');
                             $(tableElement).bootstrapTable('refresh');
+                            selectElement.selectedIndex = 0;
                         } else {
-                            alert('Error: ' + data.message);
+                            showFlashMessage('danger', data.message || '{{ "Operation failed"|trans }}');
                         }
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        alert('An error occurred while executing the operation');
+                        showFlashMessage('danger', '{{ "An error occurred"|trans }}');
                     });
             } else if (operationType === 'js') {
                 if (typeof window[handler] === 'function') {
                     window[handler](selectedIds);
                 } else {
                     console.error('Handler function not found:', handler);
+                    showFlashMessage('danger', '{{ "Handler function not found"|trans }}');
                 }
             }
         });

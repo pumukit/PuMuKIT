@@ -6,15 +6,12 @@ namespace App\Series\Application\BulkDelete;
 
 use App\Series\Application\Delete\DeleteSeriesRequest;
 use App\Series\Application\Delete\DeleteSeriesService;
-use App\Series\Application\Find\FindSeriesRequest;
-use App\Series\Application\Find\FindSeriesService;
 use App\Series\Domain\Exception\SeriesNotFoundException;
 use App\Shared\Domain\LoggerInterface;
 
 final class BulkDeleteSeriesService
 {
     public function __construct(
-        private FindSeriesService $findSeriesService,
         private DeleteSeriesService $deleteSeriesService,
         private LoggerInterface $logger
     ) {}
@@ -29,32 +26,25 @@ final class BulkDeleteSeriesService
 
         foreach ($request->seriesIds as $seriesId) {
             try {
-                $findRequest = new FindSeriesRequest($seriesId);
-                $findResponse = ($this->findSeriesService)($findRequest);
-                $series = $findResponse->series;
+                // Just try to delete directly - DeleteSeriesService will handle MM objects
+                $deleteRequest = new DeleteSeriesRequest($seriesId);
+                $deleteResponse = ($this->deleteSeriesService)($deleteRequest);
 
-                if ($series->getMultimediaObjects()->count() > 0) {
+                if (!$deleteResponse->success) {
                     $failedIds[] = $seriesId;
-                    $errors[$seriesId] = sprintf(
-                        'Series has %d multimedia objects. Delete them first.',
-                        $series->getMultimediaObjects()->count()
-                    );
-                    $this->logger->warning('Cannot delete series with multimedia objects', [
+                    $errors[$seriesId] = $deleteResponse->message;
+                    $this->logger->warning('Failed to delete series', [
                         'id' => $seriesId,
-                        'multimedia_objects_count' => $series->getMultimediaObjects()->count(),
+                        'reason' => $deleteResponse->message,
                     ]);
-
                     continue;
                 }
-
-                $deleteRequest = new DeleteSeriesRequest($seriesId);
-                ($this->deleteSeriesService)($deleteRequest);
 
                 ++$deletedCount;
 
                 $this->logger->info('Series deleted successfully', [
                     'id' => $seriesId,
-                    'title' => $series->getTitle(),
+                    'message' => $deleteResponse->message,
                 ]);
             } catch (SeriesNotFoundException $e) {
                 $failedIds[] = $seriesId;

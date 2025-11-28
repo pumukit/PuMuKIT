@@ -32,34 +32,9 @@ final class BulkDeleteSeriesController extends AbstractController
             $dto = new BulkDeleteSeriesRequest($ids);
             $response = ($this->bulkDeleteSeriesService)($dto);
 
-            if ($response->isFullySuccessful()) {
-                return new JsonResponse([
-                    'success' => true,
-                    'message' => sprintf(
-                        'Successfully deleted %d series',
-                        $response->deletedCount
-                    ),
-                    'deleted_count' => $response->deletedCount,
-                ]);
-            }
+            $statusCode = $response->isFullySuccessful() ? 200 : 207;
 
-            $errorMessages = [];
-            foreach ($response->errors as $id => $error) {
-                $errorMessages[] = sprintf('ID %s: %s', $id, $error);
-            }
-
-            return new JsonResponse([
-                'success' => $response->deletedCount > 0,
-                'message' => sprintf(
-                    'Deleted %d series. Failed to delete %d series.',
-                    $response->deletedCount,
-                    count($response->failedIds)
-                ),
-                'deleted_count' => $response->deletedCount,
-                'failed_count' => count($response->failedIds),
-                'failed_ids' => $response->failedIds,
-                'errors' => $errorMessages,
-            ], 207);
+            return new JsonResponse($response->toArray(), $statusCode);
         } catch (\InvalidArgumentException $e) {
             return new JsonResponse([
                 'success' => false,

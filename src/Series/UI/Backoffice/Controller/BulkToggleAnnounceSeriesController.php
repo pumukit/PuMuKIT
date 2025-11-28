@@ -32,42 +32,9 @@ final class BulkToggleAnnounceSeriesController extends AbstractController
             $dto = new BulkToggleAnnounceSeriesRequest($ids);
             $response = ($this->bulkToggleAnnounceSeriesService)($dto);
 
-            if ($response->isFullySuccessful()) {
-                return new JsonResponse([
-                    'success' => true,
-                    'message' => sprintf(
-                        'Successfully toggled announce for %d series (%d announced, %d not announced)',
-                        $response->updatedCount,
-                        $response->announcedCount,
-                        $response->unAnnouncedCount
-                    ),
-                    'updated_count' => $response->updatedCount,
-                    'announced_count' => $response->announcedCount,
-                    'un_announced_count' => $response->unAnnouncedCount,
-                ]);
-            }
+            $statusCode = $response->isFullySuccessful() ? 200 : 207;
 
-            $errorMessages = [];
-            foreach ($response->errors as $id => $error) {
-                $errorMessages[] = sprintf('ID %s: %s', $id, $error);
-            }
-
-            return new JsonResponse([
-                'success' => $response->updatedCount > 0,
-                'message' => sprintf(
-                    'Toggled announce for %d series (%d announced, %d not announced). Failed for %d series.',
-                    $response->updatedCount,
-                    $response->announcedCount,
-                    $response->unAnnouncedCount,
-                    count($response->failedIds)
-                ),
-                'updated_count' => $response->updatedCount,
-                'announced_count' => $response->announcedCount,
-                'un_announced_count' => $response->unAnnouncedCount,
-                'failed_count' => count($response->failedIds),
-                'failed_ids' => $response->failedIds,
-                'errors' => $errorMessages,
-            ], 207);
+            return new JsonResponse($response->toArray(), $statusCode);
         } catch (\InvalidArgumentException $e) {
             return new JsonResponse([
                 'success' => false,

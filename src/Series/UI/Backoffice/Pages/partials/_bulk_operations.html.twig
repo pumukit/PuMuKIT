@@ -90,33 +90,54 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert(data.message || '{{ "Operation completed successfully"|trans }}');
+                    showFlashMessage('success', data.message || '{{ "Operation completed successfully"|trans }}');
                     $(tableElement).bootstrapTable('refresh');
                     selectElement.selectedIndex = 0;
                 } else {
-                    alert(data.message || '{{ "Operation failed"|trans }}');
+                    showFlashMessage('danger', data.message || '{{ "Operation failed"|trans }}');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('{{ "An error occurred"|trans }}');
+                showFlashMessage('danger', '{{ "An error occurred"|trans }}');
             });
+        }
+
+        function showFlashMessage(type, message) {
+            const container = document.querySelector('.flash-container');
+            if (!container) {
+                console.error('Flash container not found');
+                return;
+            }
+
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `custom-flash ${type === 'success' ? 'success-flash' : 'danger-flash'} alert-dismissible fade show mb-2 shadow-lg rounded-3`;
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.textContent = message;
+
+            container.appendChild(alertDiv);
+
+            // Auto-dismiss after 3 seconds
+            setTimeout(() => {
+                const bsAlert = bootstrap.Alert.getOrCreateInstance(alertDiv);
+                bsAlert.close();
+            }, 3000);
         }
 
         function handleJsOperation(functionName, ids) {
             if (typeof window[functionName] === 'function') {
                 window[functionName](ids, function(success, message) {
                     if (success) {
-                        alert(message || '{{ "Operation completed successfully"|trans }}');
+                        showFlashMessage('success', message || '{{ "Operation completed successfully"|trans }}');
                         $(tableElement).bootstrapTable('refresh');
                         selectElement.selectedIndex = 0;
                     } else {
-                        alert(message || '{{ "Operation failed"|trans }}');
+                        showFlashMessage('danger', message || '{{ "Operation failed"|trans }}');
                     }
                 });
             } else {
                 console.error('Function not found:', functionName);
-                alert('{{ "Handler function not found"|trans }}');
+                showFlashMessage('danger', '{{ "Handler function not found"|trans }}');
             }
         }
     });
