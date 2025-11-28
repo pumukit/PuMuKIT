@@ -12,6 +12,6 @@ services:
   App\Shared\Domain\LoggerInterface:
     alias: App\Shared\Infrastructure\Logger\PsrLoggerAdapter
 
-  App\Shared\UI\Backend\Twig\LocaleExtension:
+  App\Shared\UI\Backoffice\Twig\LocaleExtension:
     tags:
       - { name: twig.extension }

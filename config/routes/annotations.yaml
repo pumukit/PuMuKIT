@@ -3,15 +3,15 @@ controllers:
     type: annotation
 
 series_controllers:
-  resource: ../../src/Series/UI/Backend/Controller
+  resource: ../../src/Series/UI/Backoffice/Controller
   type: annotation
 
 multimediaobject_controllers:
-  resource: ../../src/MultimediaObject/UI/Backend/Controller
+  resource: ../../src/MultimediaObject/UI/Backoffice/Controller
   type: annotation
 
 user_controllers:
-  resource: ../../src/User/UI/Backend/Controller
+  resource: ../../src/User/UI/Backoffice/Controller
   type: annotation
 
 pumukit_stats_ui:

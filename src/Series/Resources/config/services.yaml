@@ -8,19 +8,19 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\Series\UI\Backend\Controller\:
-    resource: '../../UI/Backend/Controller'
+  App\Series\UI\Backoffice\Controller\:
+    resource: '../../UI/Backoffice/Controller'
     tags: [ 'controller.service_arguments' ]
     autowire: true
     autoconfigure: true
 
-  App\Series\UI\Backend\Presenter\:
-    resource: '../../UI/Backend/Presenter'
+  App\Series\UI\Backoffice\Presenter\:
+    resource: '../../UI/Backoffice/Presenter'
     autowire: true
     autoconfigure: true
 
-  App\Series\UI\Backend\FormHandler\:
-    resource: '../../UI/Backend/FormHandler'
+  App\Series\UI\Backoffice\FormHandler\:
+    resource: '../../UI/Backoffice/FormHandler'
     autowire: true
     autoconfigure: true
 
@@ -46,7 +46,7 @@ services:
     public: false
     tags: [ 'doctrine.repository' ]
 
-  App\Series\UI\Backend\Twig\SeriesExtension:
+  App\Series\UI\Backoffice\Twig\SeriesExtension:
     arguments:
       $picService: '@Pumukit\SchemaBundle\Services\PicService'
       $getSeriesOwnersService: '@App\Series\Application\ViewSeriesOwners\GetSeriesOwnersService'
@@ -61,8 +61,8 @@ services:
       $factoryService: '@Pumukit\SchemaBundle\Services\FactoryService'
       $userRepository: '@App\User\Domain\Repository\UserRepositoryInterface'
 
-  App\Series\UI\Backend\EventSubscriber\:
-    resource: '../../UI/Backend/EventSubscriber'
+  App\Series\UI\Backoffice\EventSubscriber\:
+    resource: '../../UI/Backoffice/EventSubscriber'
     tags: [ 'kernel.event_subscriber' ]
     autowire: true
     autoconfigure: true

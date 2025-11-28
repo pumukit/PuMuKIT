@@ -1,30 +1,30 @@
 series_create:
   path: /admin/backend/series/new
-  controller: App\Series\UI\Backend\Controller\CreateSeriesController
+  controller: App\Series\UI\Backoffice\Controller\CreateSeriesController
 
 series_list:
   path: /admin/backend/series
-  controller: App\Series\UI\Backend\Controller\ListSeriesController
+  controller: App\Series\UI\Backoffice\Controller\ListSeriesController
 
 series_list_data:
   path: /admin/backend/series/data
-  controller: App\Series\UI\Backend\Controller\ListSeriesDataController
+  controller: App\Series\UI\Backoffice\Controller\ListSeriesDataController
 
 # Bulk operations first
 series_bulk_delete:
   path: /admin/backend/series/bulk/delete
-  controller: App\Series\UI\Backend\Controller\BulkDeleteSeriesController
+  controller: App\Series\UI\Backoffice\Controller\BulkDeleteSeriesController
   methods: [POST]
 
 series_bulk_toggle_announce:
   path: /admin/backend/series/bulk/toggle-announce
-  controller: App\Series\UI\Backend\Controller\BulkToggleAnnounceSeriesController
+  controller: App\Series\UI\Backoffice\Controller\BulkToggleAnnounceSeriesController
   methods: [POST]
 
 # Routes with {id} parameter after bulk operations
 series_view:
   path: /admin/backend/series/{id}/{tab}
-  controller: App\Series\UI\Backend\Controller\ViewSeriesController
+  controller: App\Series\UI\Backoffice\Controller\ViewSeriesController
   defaults:
     tab: 'general'
   requirements:
@@ -32,23 +32,23 @@ series_view:
 
 series_multimedia_object_data:
   path: /admin/backend/series/{id}/multimedia/data
-  controller: App\Series\UI\Backend\Controller\ViewSeriesMultimediaObjectsDataController
+  controller: App\Series\UI\Backoffice\Controller\ViewSeriesMultimediaObjectsDataController
 
 series_events_data:
   path: /admin/backend/series/{id}/events/data
-  controller: App\Series\UI\Backend\Controller\ViewSeriesEventsDataController
+  controller: App\Series\UI\Backoffice\Controller\ViewSeriesEventsDataController
 
 series_delete:
   path: /admin/backend/series/{id}/delete
-  controller: App\Series\UI\Backend\Controller\DeleteSeriesController
+  controller: App\Series\UI\Backoffice\Controller\DeleteSeriesController
 
 
 series_clone:
   path: /admin/backend/series/{id}/clone
-  controller: App\Series\UI\Backend\Controller\CloneSeriesController
+  controller: App\Series\UI\Backoffice\Controller\CloneSeriesController
   methods: [POST]
 
 series_update:
   path: /admin/backend/series/{id}/update
-  controller: App\Series\UI\Backend\Controller\UpdateSeriesController
+  controller: App\Series\UI\Backoffice\Controller\UpdateSeriesController
   methods: [POST]

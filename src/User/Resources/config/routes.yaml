@@ -1,12 +1,12 @@
 #user_create:
 #  path: /admin/backend/user/new
-#  controller: App\User\UI\Backend\Controller\CreateUserController
+#  controller: App\User\UI\Backoffice\Controller\CreateUserController
 
 
 user_list:
   path: /admin/backend/users
-  controller: App\User\UI\Backend\Controller\ListUserController
+  controller: App\User\UI\Backoffice\Controller\ListUserController
 
 users_list_data:
   path: /admin/backend/users/data
-  controller: App\User\UI\Backend\Controller\ListUserDataController
+  controller: App\User\UI\Backoffice\Controller\ListUserDataController

@@ -1,0 +1,24 @@
+{% extends '@Shared/UI/Backoffice/Templates/layout/layout.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid mt-3">
+        {% include '@Shared/UI/Backoffice/Templates/partials/_title.html.twig' with {'page_title': 'User list'} %}
+
+        {% include '@Shared/UI/Backoffice/Templates/components/table/_table.html.twig' with {
+            id: 'usersTable',
+            title: 'Users',
+            server_side: true,
+            ajax_url: path('users_list_data'),
+            checkbox: true,
+            columns: [
+                {'field': 'user.fullName', 'label': 'fullName', 'sortable': true},
+                {'field': 'user.username', 'label': 'Username', 'sortable': true},
+                {'field': 'user.email', 'label': 'Email', 'sortable': true},
+                {'field': 'user.origin', 'label': 'Origin', 'sortable': true},
+                {'field': 'user.enabled', 'label': 'Enabled', 'formatter': 'boolean','sortable': true},
+                {'field': 'actions', 'label': 'Actions', 'align': 'right'}
+            ],
+        } %}
+    </div>
+{% endblock %}

@@ -8,8 +8,8 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\User\UI\Backend\Controller\:
-    resource: '../../UI/Backend/Controller'
+  App\User\UI\Backoffice\Controller\:
+    resource: '../../UI/Backoffice/Controller'
     tags: [ 'controller.service_arguments' ]
     autowire: true
     autoconfigure: true

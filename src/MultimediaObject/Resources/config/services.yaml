@@ -8,14 +8,14 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\MultimediaObject\UI\Backend\Controller\:
-    resource: '../../UI/Backend/Controller'
+  App\MultimediaObject\UI\Backoffice\Controller\:
+    resource: '../../UI/Backoffice/Controller'
     tags: [ 'controller.service_arguments' ]
     autowire: true
     autoconfigure: true
 
-  App\MultimediaObject\UI\Backend\EventSubscriber\:
-    resource: '../../UI/Backend/EventSubscriber'
+  App\MultimediaObject\UI\Backoffice\EventSubscriber\:
+    resource: '../../UI/Backoffice/EventSubscriber'
     tags: [ 'kernel.event_subscriber' ]
     autowire: true
     autoconfigure: true

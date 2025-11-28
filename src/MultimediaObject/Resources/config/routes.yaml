@@ -1,18 +1,18 @@
 # Bulk operations (must be before {id} routes)
 multimedia_object_bulk_delete:
   path: /admin/backend/multimedia-object/bulk/delete
-  controller: App\MultimediaObject\UI\Backend\Controller\BulkDeleteMultimediaObjectController
+  controller: App\MultimediaObject\UI\Backoffice\Controller\BulkDeleteMultimediaObjectController
   methods: [POST]
 
 multimedia_object_bulk_toggle_announce:
   path: /admin/backend/multimedia-object/bulk/toggle-announce
-  controller: App\MultimediaObject\UI\Backend\Controller\BulkToggleAnnounceMultimediaObjectController
+  controller: App\MultimediaObject\UI\Backoffice\Controller\BulkToggleAnnounceMultimediaObjectController
   methods: [POST]
 
 # Routes with {id} parameter (must be after bulk operations)
 multimedia_object_view:
   path: /admin/backend/multimedia-object/{id}/{tab}
-  controller: App\MultimediaObject\UI\Backend\Controller\ViewMultimediaObjectController
+  controller: App\MultimediaObject\UI\Backoffice\Controller\ViewMultimediaObjectController
   defaults:
     tab: 'general'
   requirements:
@@ -20,5 +20,5 @@ multimedia_object_view:
 
 multimedia_object_delete:
   path: /admin/backend/multimedia-object/{id}/delete
-  controller: App\MultimediaObject\UI\Backend\Controller\DeleteMultimediaObjectController
+  controller: App\MultimediaObject\UI\Backoffice\Controller\DeleteMultimediaObjectController
   methods: [POST]
