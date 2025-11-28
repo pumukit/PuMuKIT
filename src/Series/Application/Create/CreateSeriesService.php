@@ -18,7 +18,6 @@ final class CreateSeriesService
 
     public function __invoke(CreateSeriesRequest $request): CreateSeriesResponse
     {
-        CreateSeriesValidator::validate($request);
 
         $userId = UserId::fromString($request->ownerId);
 

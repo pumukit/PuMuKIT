@@ -22,5 +22,7 @@ final class UpdateSeriesRequest
         public readonly ?string $seriesTypeId = null,
         public readonly ?string $seriesStyleId = null,
         public readonly ?array $properties = null
-    ) {}
+    ) {
+        UpdateSeriesValidator::validate($this);
+    }
 }

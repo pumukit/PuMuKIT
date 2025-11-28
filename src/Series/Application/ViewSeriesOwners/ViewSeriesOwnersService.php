@@ -8,17 +8,15 @@ use App\Series\Domain\Exception\SeriesNotFoundException;
 use App\Series\Domain\Repository\SeriesRepositoryInterface;
 use App\User\Domain\Repository\UserRepositoryInterface;
 
-final class GetSeriesOwnersService
+final class ViewSeriesOwnersService
 {
     public function __construct(
-        private SeriesRepositoryInterface $seriesRepository,
-        private UserRepositoryInterface $userRepository
+        private readonly SeriesRepositoryInterface $seriesRepository,
+        private readonly UserRepositoryInterface $userRepository
     ) {}
 
-    public function __invoke(GetSeriesOwnersRequest $request): GetSeriesOwnersResponse
+    public function __invoke(ViewSeriesOwnersRequest $request): ViewSeriesOwnersResponse
     {
-        GetSeriesOwnersValidator::validate($request);
-
         $series = $this->seriesRepository->find($request->seriesId);
 
         if (!$series) {
@@ -27,11 +25,12 @@ final class GetSeriesOwnersService
 
         $ownerIds = $series->getOwnerIds();
         if (empty($ownerIds)) {
-            return new GetSeriesOwnersResponse([]);
+            return new ViewSeriesOwnersResponse([]);
         }
 
         $owners = $this->userRepository->findByIds($ownerIds);
 
-        return new GetSeriesOwnersResponse($owners);
+        return new ViewSeriesOwnersResponse($owners);
     }
 }
+

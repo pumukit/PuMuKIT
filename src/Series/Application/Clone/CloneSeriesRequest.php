@@ -8,5 +8,7 @@ final class CloneSeriesRequest
 {
     public function __construct(
         public readonly string $seriesId
-    ) {}
+    ) {
+        CloneSeriesValidator::validate($this);
+    }
 }

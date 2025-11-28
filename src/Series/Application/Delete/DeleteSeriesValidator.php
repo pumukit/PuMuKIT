@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Series\Application\Delete;
 
 use App\Shared\Domain\Validator\IdValidator;

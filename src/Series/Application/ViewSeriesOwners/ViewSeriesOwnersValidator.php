@@ -6,10 +6,11 @@ namespace App\Series\Application\ViewSeriesOwners;
 
 use App\Shared\Domain\Validator\IdValidator;
 
-final class GetSeriesOwnersValidator
+final class ViewSeriesOwnersValidator
 {
-    public static function validate(GetSeriesOwnersRequest $request): void
+    public static function validate(ViewSeriesOwnersRequest $request): void
     {
         IdValidator::validate($request->seriesId, 'Series ID');
     }
 }
+

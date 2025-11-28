@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Series\Application\ViewSeriesEvents;
 
 use App\Series\Domain\Repository\SeriesRepositoryInterface;
 
 final class ViewSeriesEventsService
 {
-    public function __construct(private SeriesRepositoryInterface $repository) {}
+    public function __construct(private readonly SeriesRepositoryInterface $repository) {}
 
     public function __invoke(ViewSeriesEventsRequest $request): ViewSeriesEventsResponse
     {
-        ViewSeriesEventsValidator::validate($request);
 
         $offset = ($request->page - 1) * $request->limit;
 

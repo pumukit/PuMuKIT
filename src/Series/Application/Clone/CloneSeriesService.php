@@ -11,13 +11,12 @@ use Pumukit\SchemaBundle\Services\FactoryService;
 final class CloneSeriesService
 {
     public function __construct(
-        private SeriesRepositoryInterface $repository,
-        private FactoryService $factoryService
+        private readonly SeriesRepositoryInterface $repository,
+        private readonly FactoryService $factoryService
     ) {}
 
     public function __invoke(CloneSeriesRequest $request): CloneSeriesResponse
     {
-        CloneSeriesValidator::validate($request);
 
         $originalSeries = $this->repository->find($request->seriesId);
 

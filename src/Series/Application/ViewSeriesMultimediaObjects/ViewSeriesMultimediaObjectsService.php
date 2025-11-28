@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Series\Application\ViewSeriesMultimediaObjects;
 
 use App\Series\Domain\Repository\SeriesRepositoryInterface;
 
 final class ViewSeriesMultimediaObjectsService
 {
-    public function __construct(private SeriesRepositoryInterface $repository) {}
+    public function __construct(private readonly SeriesRepositoryInterface $repository) {}
 
     public function __invoke(ViewSeriesMultimediaObjectsRequest $request): ViewSeriesMultimediaObjectsResponse
     {
-        ViewSeriesMultimediaObjectsValidator::validate($request);
 
         $offset = ($request->page - 1) * $request->limit;
 

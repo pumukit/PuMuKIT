@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Series\Application\ViewSeriesOwners;
 
-final class GetSeriesOwnersRequest
+final class ViewSeriesOwnersResponse
 {
     public function __construct(
-        public readonly string $seriesId
+        public readonly array $owners
     ) {}
 }
+

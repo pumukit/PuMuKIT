@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Series\Application\ViewSeriesMultimediaObjects;
 
 final class ViewSeriesMultimediaObjectsRequest
@@ -10,5 +12,7 @@ final class ViewSeriesMultimediaObjectsRequest
         public readonly array $filters = [],
         public readonly ?string $sort = 'title',
         public readonly ?string $order = 'asc',
-    ) {}
+    ) {
+        ViewSeriesMultimediaObjectsValidator::validate($this);
+    }
 }

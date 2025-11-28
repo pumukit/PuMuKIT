@@ -49,7 +49,7 @@ services:
   App\Series\UI\Backoffice\Twig\SeriesExtension:
     arguments:
       $picService: '@Pumukit\SchemaBundle\Services\PicService'
-      $getSeriesOwnersService: '@App\Series\Application\ViewSeriesOwners\GetSeriesOwnersService'
+      $viewSeriesOwnersService: '@App\Series\Application\ViewSeriesOwners\ViewSeriesOwnersService'
     tags:
       - { name: twig.extension }
 

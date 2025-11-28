@@ -15,15 +15,14 @@ use App\Shared\Domain\LoggerInterface;
 final class BulkToggleAnnounceSeriesService
 {
     public function __construct(
-        private FindSeriesService $findSeriesService,
-        private SeriesRepositoryInterface $seriesRepository,
-        private EventBusInterface $eventBus,
-        private LoggerInterface $logger
+        private readonly FindSeriesService $findSeriesService,
+        private readonly SeriesRepositoryInterface $seriesRepository,
+        private readonly EventBusInterface $eventBus,
+        private readonly LoggerInterface $logger
     ) {}
 
     public function __invoke(BulkToggleAnnounceSeriesRequest $request): BulkToggleAnnounceSeriesResponse
     {
-        BulkToggleAnnounceSeriesValidator::validate($request);
 
         $updatedCount = 0;
         $announcedCount = 0;

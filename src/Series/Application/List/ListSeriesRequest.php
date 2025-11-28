@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Series\Application\List;
 
 final class ListSeriesRequest
@@ -10,5 +12,7 @@ final class ListSeriesRequest
         public readonly array $filters = [],
         public readonly string $sort = 'rank',
         public readonly string $order = 'asc'
-    ) {}
+    ) {
+        ListSeriesValidator::validate($this);
+    }
 }

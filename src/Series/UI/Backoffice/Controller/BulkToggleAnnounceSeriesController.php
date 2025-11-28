@@ -6,6 +6,7 @@ namespace App\Series\UI\Backoffice\Controller;
 
 use App\Series\Application\BulkToggleAnnounce\BulkToggleAnnounceSeriesRequest;
 use App\Series\Application\BulkToggleAnnounce\BulkToggleAnnounceSeriesService;
+use App\Shared\Domain\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,20 +14,14 @@ use Symfony\Component\HttpFoundation\Request;
 final class BulkToggleAnnounceSeriesController extends AbstractController
 {
     public function __construct(
-        private BulkToggleAnnounceSeriesService $bulkToggleAnnounceSeriesService
+        private readonly BulkToggleAnnounceSeriesService $bulkToggleAnnounceSeriesService,
+        private readonly LoggerInterface $logger
     ) {}
 
     public function __invoke(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         $ids = $data['ids'] ?? [];
-
-        if (empty($ids)) {
-            return new JsonResponse([
-                'success' => false,
-                'message' => 'No series IDs provided',
-            ], 400);
-        }
 
         try {
             $dto = new BulkToggleAnnounceSeriesRequest($ids);
@@ -41,9 +36,14 @@ final class BulkToggleAnnounceSeriesController extends AbstractController
                 'message' => $e->getMessage(),
             ], 400);
         } catch (\Exception $e) {
+            $this->logger->error('Unexpected error in bulk toggle announce controller', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
             return new JsonResponse([
                 'success' => false,
-                'message' => 'An error occurred while toggling announce: '.$e->getMessage(),
+                'message' => 'An error occurred while toggling announce',
             ], 500);
         }
     }

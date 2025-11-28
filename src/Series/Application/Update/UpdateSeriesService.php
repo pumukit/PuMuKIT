@@ -14,15 +14,14 @@ use App\Shared\Domain\EventBusInterface;
 final class UpdateSeriesService
 {
     public function __construct(
-        private SeriesRepositoryInterface $seriesRepository,
-        private SeriesTypeRepositoryInterface $seriesTypeRepository,
-        private SeriesStyleRepositoryInterface $seriesStyleRepository,
-        private EventBusInterface $eventBus
+        private readonly SeriesRepositoryInterface $seriesRepository,
+        private readonly SeriesTypeRepositoryInterface $seriesTypeRepository,
+        private readonly SeriesStyleRepositoryInterface $seriesStyleRepository,
+        private readonly EventBusInterface $eventBus
     ) {}
 
     public function __invoke(UpdateSeriesRequest $request): UpdateSeriesResponse
     {
-        UpdateSeriesValidator::validate($request);
 
         $series = $this->seriesRepository->find($request->id);
 

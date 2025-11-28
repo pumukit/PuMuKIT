@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Series\Application\Delete;
 
 use App\MultimediaObject\Domain\Event\MultimediaObjectDeletedEvent;
@@ -12,13 +14,12 @@ final class DeleteSeriesService
 {
     public function __construct(
         private readonly SeriesRepositoryInterface $repository,
-        private MultimediaObjectRepositoryInterface $multimediaRepository,
-        private EventBusInterface $eventBus
+        private readonly MultimediaObjectRepositoryInterface $multimediaRepository,
+        private readonly EventBusInterface $eventBus
     ) {}
 
     public function __invoke(DeleteSeriesRequest $request): DeleteSeriesResponse
     {
-        DeleteSeriesValidator::validate($request);
 
         $series = $this->repository->find($request->id);
 

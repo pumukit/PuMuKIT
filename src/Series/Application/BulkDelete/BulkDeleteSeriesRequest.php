@@ -8,5 +8,7 @@ final class BulkDeleteSeriesRequest
 {
     public function __construct(
         public readonly array $seriesIds
-    ) {}
+    ) {
+        BulkDeleteSeriesValidator::validate($this);
+    }
 }
