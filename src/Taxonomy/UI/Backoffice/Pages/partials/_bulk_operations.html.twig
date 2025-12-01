@@ -1,0 +1,128 @@
+<div id="bulk-action-toolbar" class="d-flex gap-2 mb-2">
+    <select id="bulk-action-select" class="form-select" data-operations='{{ bulk_operations_config|default('{}')|raw }}'>
+        <option value="">{{ "Select an option..."|trans }}</option>
+        {% if bulkOperations is defined and bulkOperations is not empty %}
+            {% for operation in bulkOperations %}
+                <option
+                    value="{{ operation.key }}"
+                    data-type="{{ operation.type }}"
+                    data-handler="{{ operation.handler }}"
+                    {% if operation.icon %}data-icon="{{ operation.icon }}"{% endif %}
+                    {% if operation.confirm_message %}data-confirm="{{ operation.confirm_message|trans }}"{% endif %}>
+                    {% if operation.icon %}<i class="fa {{ operation.icon }}"></i> {% endif %}
+                    {{ operation.label|trans }}
+                </option>
+            {% endfor %}
+        {% endif %}
+    </select>
+    <button id="bulk-action-apply" class="btn btn-sm btn-pumukit">{{ "Apply"|trans }}</button>
+</div>
+
+<script>
+(function() {
+    'use strict';
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectElement = document.getElementById('bulk-action-select');
+        const applyButton = document.getElementById('bulk-action-apply');
+        const tableElement = document.getElementById('tagsTreeTable');
+
+        if (!selectElement || !applyButton || !tableElement) {
+            console.error('Bulk operations: Required elements not found');
+            return;
+        }
+
+        applyButton.addEventListener('click', function() {
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            const operation = selectedOption.value;
+
+            if (!operation) {
+                alert('Please select an operation');
+                return;
+            }
+
+            const selectedRows = $('.row-checkbox:checked');
+
+            if (selectedRows.length === 0) {
+                alert('Please select at least one tag');
+                return;
+            }
+
+            const selectedIds = [];
+            selectedRows.each(function() {
+                selectedIds.push($(this).val());
+            });
+
+            const confirmMessage = selectedOption.dataset.confirm;
+
+            if (confirmMessage && !confirm(confirmMessage)) {
+                return;
+            }
+
+            const operationType = selectedOption.dataset.type;
+            const handler = selectedOption.dataset.handler;
+
+            console.log('Bulk operation:', operation, 'Type:', operationType, 'IDs:', selectedIds);
+
+            if (operationType === 'url') {
+                handleUrlOperation(handler, selectedIds);
+            } else if (operationType === 'js') {
+                handleJsOperation(handler, selectedIds);
+            }
+        });
+
+        function handleUrlOperation(url, ids) {
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ids: ids })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showFlashMessage('success', data.message || 'Operation completed successfully');
+                    location.reload();
+                } else {
+                    showFlashMessage('danger', data.message || 'Operation failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showFlashMessage('danger', 'An error occurred: ' + error.message);
+            });
+        }
+
+        function handleJsOperation(functionName, ids) {
+            if (typeof window[functionName] === 'function') {
+                window[functionName](ids);
+            } else {
+                console.error('Function not found:', functionName);
+                alert('Operation handler not found');
+            }
+        }
+
+        function showFlashMessage(type, message) {
+            // Simple flash message implementation
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.role = 'alert';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+
+            const container = document.querySelector('.container-fluid');
+            if (container) {
+                container.insertBefore(alertDiv, container.firstChild);
+
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 5000);
+            }
+        }
+    });
+})();
+</script>
+

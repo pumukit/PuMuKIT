@@ -77,4 +77,5 @@ imports:
   - { resource: '../src/User/Resources/config/services.yaml' }
   - { resource: '../src/Series/Resources/config/services.yaml' }
   - { resource: '../src/MultimediaObject/Resources/config/services.yaml' }
+  - { resource: '../src/Taxonomy/Resources/config/services.yaml' }
   - { resource: '../src/Shared/Resources/config/services.yaml' }

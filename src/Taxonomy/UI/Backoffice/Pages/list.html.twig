@@ -1,0 +1,37 @@
+{% extends '@Shared/UI/Backoffice/Templates/layout/layout.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid mt-3">
+        {% include '@Shared/UI/Backoffice/Templates/partials/_title.html.twig' with {'page_title': 'List of tags'} %}
+
+        {% include '@Shared/UI/Backoffice/Templates/components/table/_tree_grid_table.html.twig' with {
+            id: 'tagsTreeTable',
+            ajax_url: path('taxonomy_tag_list_data'),
+            checkbox: true,
+            id_field: 'id',
+            parent_id_field: 'parent_id',
+            tree_show_field: 'title',
+            root_parent_id: rootParentId|default(null),
+            columns: [
+                {'field': 'title', 'label': 'Title', 'sortable': true},
+                {'field': 'cod', 'label': 'Code', 'sortable': true},
+                {'field': 'display', 'label': 'Display', 'formatter': 'treeGridFormatters.booleanFormatter'},
+                {'field': 'metatag', 'label': 'Metatag', 'formatter': 'treeGridFormatters.booleanFormatter'},
+                {'field': 'number_multimedia_objects', 'label': 'MM Objects', 'formatter': 'treeGridFormatters.badgeFormatter'},
+                {'field': 'number_children', 'label': 'Children', 'formatter': 'treeGridFormatters.badgeFormatter'},
+                {'field': 'actions', 'label': 'Actions'}
+            ]
+        } %}
+
+        {% include '@Taxonomy/UI/Backoffice/Pages/partials/_actions.html.twig' %}
+    </div>
+
+    <script>
+        function collapseAllTags() {
+            $('#tagsTreeTable .treegrid-expander-expanded').each(function() {
+                $(this).trigger('click');
+            });
+        }
+    </script>
+{% endblock %}
+

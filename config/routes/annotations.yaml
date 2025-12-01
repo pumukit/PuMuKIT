@@ -2,18 +2,6 @@ controllers:
     resource: ../../src/Pumukit/*/Controller/*
     type: annotation
 
-series_controllers:
-  resource: ../../src/Series/UI/Backoffice/Controller
-  type: annotation
-
-multimediaobject_controllers:
-  resource: ../../src/MultimediaObject/UI/Backoffice/Controller
-  type: annotation
-
-user_controllers:
-  resource: ../../src/User/UI/Backoffice/Controller
-  type: annotation
-
 pumukit_stats_ui:
   resource: "@PumukitStatsUIBundle/Resources/config/routing.yml"
   prefix:   /
