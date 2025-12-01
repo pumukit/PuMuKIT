@@ -10,3 +10,6 @@ series_routes:
 
 multimedia_object_routes:
   resource: ../src/MultimediaObject/Resources/config/routes.yaml
+
+taxonomy_routes:
+  resource: ../src/Taxonomy/Resources/config/routes.yaml

@@ -6,9 +6,6 @@
         </h4>
     </div>
     <div class="sidebar-body flex-grow-1 overflow-auto">
-        {{ knp_menu_render('PumukitNewAdminBundle:Builder:mainMenu', {
-            'currentClass': 'active',
-            'template': '@Shared/UI/Backoffice/Templates/components/knp_sidebar.html.twig'
-        }) }}
+        {% include '@Shared/UI/Backoffice/Templates/components/_menu.html.twig' %}
     </div>
 </nav>
