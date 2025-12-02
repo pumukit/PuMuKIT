@@ -19,7 +19,7 @@ final class ViewMultimediaObjectController extends AbstractController
         $dto = new ViewMultimediaObjectRequest($id, $tab);
         $response = ($this->viewMultimediaObjectService)($dto);
 
-        return $this->render('@MultimediaObject/UI/Backoffice/Pages/view.html.twig', [
+        return $this->render('@MultimediaObject/UI/Backoffice/Views/view.html.twig', [
             'object' => $response->multimediaObject,
             'tab' => $response->tab,
         ]);

@@ -1,10 +1,10 @@
-{% extends '@Shared/UI/Backoffice/Templates/layout/layout.html.twig' %}
+{% extends '@Shared/UI/Backoffice/Views/layout/layout.html.twig' %}
 
 {% block body %}
 <div class="container-fluid mt-3">
-    {% include '@Shared/UI/Backoffice/Templates/partials/_title.html.twig' with {'page_title': 'Listado de Series'} %}
+    {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'Listado de Series'} %}
 
-    {% include '@Shared/UI/Backoffice/Templates/components/table/_table.html.twig' with {
+    {% include '@Shared/UI/Backoffice/Views/components/table/_table.html.twig' with {
         id: 'seriesTable',
         title: 'Series',
         server_side: true,
@@ -22,6 +22,6 @@
         ]
     } %}
 
-    {% include '@Series/UI/Backoffice/Pages/partials/_actions.html.twig' %}
+    {% include '@Series/UI/Backoffice/Views/partials/_actions.html.twig' %}
 </div>
 {% endblock %}

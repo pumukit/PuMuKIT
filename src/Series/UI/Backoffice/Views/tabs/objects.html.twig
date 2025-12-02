@@ -1,4 +1,4 @@
-{% include '@Shared/UI/Backoffice/Templates/components/table/_table.html.twig' with {
+{% include '@Shared/UI/Backoffice/Views/components/table/_table.html.twig' with {
     id: 'multimediaObjectsTable',
     server_side: true,
     ajax_url: path('series_multimedia_object_data', {id: series.id}),
@@ -19,7 +19,7 @@
 
 {% if multimediaObjectCustomActions is defined and multimediaObjectCustomActions is not empty %}
     <div class="mb-3">
-        {% include '@MultimediaObject/UI/Backoffice/Pages/partials/_actions.html.twig' with {
+        {% include '@MultimediaObject/UI/Backoffice/Views/partials/_actions.html.twig' with {
             customActions: multimediaObjectCustomActions
         } %}
     </div>

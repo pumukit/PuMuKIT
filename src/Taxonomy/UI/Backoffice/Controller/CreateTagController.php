@@ -53,7 +53,7 @@ final class CreateTagController extends AbstractController
         $listTagsRequest = new ListTagsRequest(onlyRoots: false);
         $tagsResponse = ($this->listTagsService)($listTagsRequest);
 
-        return $this->render('@Taxonomy/UI/Backoffice/Pages/create.html.twig', [
+        return $this->render('@Taxonomy/UI/Backoffice/Views/create.html.twig', [
             'tags' => $tagsResponse->tags,
         ]);
     }

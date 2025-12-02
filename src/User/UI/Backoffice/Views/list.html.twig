@@ -1,11 +1,11 @@
-{% extends '@Shared/UI/Backoffice/Templates/layout/layout.html.twig' %}
+{% extends '@Shared/UI/Backoffice/Views/layout/layout.html.twig' %}
 
 {% block body %}
 
     <div class="container-fluid mt-3">
-        {% include '@Shared/UI/Backoffice/Templates/partials/_title.html.twig' with {'page_title': 'User list'} %}
+        {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'User list'} %}
 
-        {% include '@Shared/UI/Backoffice/Templates/components/table/_table.html.twig' with {
+        {% include '@Shared/UI/Backoffice/Views/components/table/_table.html.twig' with {
             id: 'usersTable',
             title: 'Users',
             server_side: true,

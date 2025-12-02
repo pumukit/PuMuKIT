@@ -1,9 +1,9 @@
-{% extends '@Shared/UI/Backoffice/Templates/layout/layout.html.twig' %}
+{% extends '@Shared/UI/Backoffice/Views/layout/layout.html.twig' %}
 
 {% block body %}
     <div class="container-fluid mt-3">
 
-        {% include '@MultimediaObject/UI/Backoffice/Pages/partials/_multimedia_object_header.html.twig' with {
+        {% include '@MultimediaObject/UI/Backoffice/Views/partials/_multimedia_object_header.html.twig' with {
             object: object
         } %}
 
@@ -52,7 +52,7 @@
         </ul>
 
         <div class="mt-3">
-            {% include '@MultimediaObject/UI/Backoffice/Pages/tabs/' ~ tab ~ '.html.twig' %}
+            {% include '@MultimediaObject/UI/Backoffice/Views/tabs/' ~ tab ~ '.html.twig' %}
         </div>
     </div>
 {% endblock %}

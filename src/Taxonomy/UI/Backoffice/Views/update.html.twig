@@ -1,8 +1,8 @@
-{% extends '@Shared/UI/Backoffice/Templates/layout/layout.html.twig' %}
+{% extends '@Shared/UI/Backoffice/Views/layout/layout.html.twig' %}
 
 {% block body %}
 <div class="container-fluid mt-3">
-    {% include '@Shared/UI/Backoffice/Templates/partials/_title.html.twig' with {'page_title': 'Create New Tag'} %}
+    {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'Update Tag: ' ~ tag.cod} %}
 
     <div class="row">
         <div class="col-md-8">
@@ -11,16 +11,17 @@
                     <h5 class="card-title mb-0">Tag Information</h5>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{{ path('taxonomy_tag_create') }}" class="form-horizontal">
+                    <form method="post" action="{{ path('taxonomy_tag_update', {'id': tag.id}) }}" class="form-horizontal">
                         <div class="mb-3">
-                            <label for="cod" class="form-label">Code *</label>
+                            <label for="cod" class="form-label">Code</label>
                             <input type="text"
                                    id="cod"
                                    name="cod"
                                    class="form-control"
-                                   placeholder="PUCHD"
-                                   required>
-                            <small class="form-text text-muted">Unique identifier for the tag (e.g., PUCHD)</small>
+                                   value="{{ tag.cod }}"
+                                   readonly
+                                   disabled>
+                            <small class="form-text text-muted">Code cannot be changed</small>
                         </div>
 
                         <div class="mb-3">
@@ -29,8 +30,7 @@
                                       name="title"
                                       class="form-control"
                                       rows="3"
-                                      placeholder='{"en": "PuMuKIT HD", "es": "PuMuKIT HD"}'
-                                      required></textarea>
+                                      required>{{ tag.i18nTitle|json_encode }}</textarea>
                             <small class="form-text text-muted">Enter titles in JSON format: {"en": "English Title", "es": "Spanish Title"}</small>
                         </div>
 
@@ -39,8 +39,7 @@
                             <textarea id="description"
                                       name="description"
                                       class="form-control"
-                                      rows="3"
-                                      placeholder='{"en": "High Definition Channel"}'></textarea>
+                                      rows="3">{{ tag.i18nDescription|json_encode }}</textarea>
                             <small class="form-text text-muted">Enter descriptions in JSON format</small>
                         </div>
 
@@ -50,20 +49,22 @@
                                    id="slug"
                                    name="slug"
                                    class="form-control"
-                                   placeholder="pumukit-hd">
+                                   value="{{ tag.slug }}">
                         </div>
 
                         <div class="mb-3">
                             <label for="parent" class="form-label">Parent Tag</label>
-                            <select id="parent" name="parent" class="form-control">
+                            <select id="parent" name="parent" class="form-control" disabled>
                                 <option value="">No parent (root tag)</option>
-                                {% for tag in tags %}
-                                    <option value="{{ tag.id }}">
-                                        {{ '&nbsp;&nbsp;'|raw }}{{ tag.getTitle('en') }} ({{ tag.cod }})
-                                    </option>
+                                {% for t in tags %}
+                                    {% if t.id != tag.id %}
+                                        <option value="{{ t.id }}" {{ tag.parent and tag.parent.id == t.id ? 'selected' : '' }}>
+                                            {{ '&nbsp;&nbsp;'|raw }}{{ t.getTitle('en') }} ({{ t.cod }})
+                                        </option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
-                            <small class="form-text text-muted">Select a parent tag to create a hierarchical structure</small>
+                            <small class="form-text text-muted">Parent cannot be changed (would break hierarchy)</small>
                         </div>
 
                         <div class="mb-3 form-check">
@@ -71,7 +72,8 @@
                                    id="display"
                                    name="display"
                                    class="form-check-input"
-                                   value="1">
+                                   value="1"
+                                   {{ tag.display ? 'checked' : '' }}>
                             <label for="display" class="form-check-label">Display</label>
                         </div>
 
@@ -80,7 +82,8 @@
                                    id="metatag"
                                    name="metatag"
                                    class="form-check-input"
-                                   value="1">
+                                   value="1"
+                                   {{ tag.metatag ? 'checked' : '' }}>
                             <label for="metatag" class="form-check-label">Is Metatag</label>
                         </div>
 
@@ -89,14 +92,13 @@
                             <textarea id="properties"
                                       name="properties"
                                       class="form-control"
-                                      rows="3"
-                                      placeholder='{"color": "#FF0000"}'></textarea>
+                                      rows="3">{{ tag.properties|json_encode }}</textarea>
                             <small class="form-text text-muted">Enter additional properties in JSON format</small>
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <button type="submit" class="btn btn-success">
-                                <i class="fa fa-save"></i> Create Tag
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-save"></i> Update Tag
                             </button>
                             <a href="{{ path('taxonomy_tag_index') }}" class="btn btn-secondary">
                                 <i class="fa fa-times"></i> Cancel
@@ -109,6 +111,33 @@
 
         <div class="col-md-4">
             <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Tag Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">ID:</dt>
+                        <dd class="col-sm-8"><code>{{ tag.id }}</code></dd>
+
+                        <dt class="col-sm-4">Code:</dt>
+                        <dd class="col-sm-8"><code>{{ tag.cod }}</code></dd>
+
+                        <dt class="col-sm-4">Level:</dt>
+                        <dd class="col-sm-8">{{ tag.level }}</dd>
+
+                        <dt class="col-sm-4">Path:</dt>
+                        <dd class="col-sm-8"><small>{{ tag.path }}</small></dd>
+
+                        <dt class="col-sm-4">Children:</dt>
+                        <dd class="col-sm-8">{{ tag.numberOfChildren ?? 0 }}</dd>
+
+                        <dt class="col-sm-4">MM Objects:</dt>
+                        <dd class="col-sm-8">{{ tag.numberMultimediaObjects }}</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="card mt-3">
                 <div class="card-header">
                     <h5 class="card-title mb-0">Help</h5>
                 </div>

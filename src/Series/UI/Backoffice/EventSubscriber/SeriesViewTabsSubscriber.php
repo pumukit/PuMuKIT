@@ -22,7 +22,7 @@ final class SeriesViewTabsSubscriber implements EventSubscriberInterface
             key: 'general',
             label: 'General',
             icon: 'fa-solid fa-ellipsis',
-            template: '@Series/UI/Backoffice/Pages/tabs/general.html.twig',
+            template: '@Series/UI/Backoffice/Views/tabs/general.html.twig',
             priority: 10
         );
 
@@ -30,7 +30,7 @@ final class SeriesViewTabsSubscriber implements EventSubscriberInterface
             key: 'objects',
             label: 'Multimedia Objects',
             icon: 'fa-solid fa-photo-film',
-            template: '@Series/UI/Backoffice/Pages/tabs/objects.html.twig',
+            template: '@Series/UI/Backoffice/Views/tabs/objects.html.twig',
             priority: 20
         );
 
@@ -38,7 +38,7 @@ final class SeriesViewTabsSubscriber implements EventSubscriberInterface
             key: 'events',
             label: 'Events',
             icon: 'fa-solid fa-circle',
-            template: '@Series/UI/Backoffice/Pages/tabs/events.html.twig',
+            template: '@Series/UI/Backoffice/Views/tabs/events.html.twig',
             priority: 30
         );
 
@@ -46,7 +46,7 @@ final class SeriesViewTabsSubscriber implements EventSubscriberInterface
             key: 'edit',
             label: 'Series',
             icon: 'fa-solid fa-edit',
-            template: '@Series/UI/Backoffice/Pages/tabs/edit.html.twig',
+            template: '@Series/UI/Backoffice/Views/tabs/edit.html.twig',
             priority: 40
         );
 
@@ -54,7 +54,7 @@ final class SeriesViewTabsSubscriber implements EventSubscriberInterface
             key: 'template',
             label: 'Template',
             icon: 'fa-solid fa-file-lines',
-            template: '@Series/UI/Backoffice/Pages/tabs/template.html.twig',
+            template: '@Series/UI/Backoffice/Views/tabs/template.html.twig',
             priority: 50
         );
     }

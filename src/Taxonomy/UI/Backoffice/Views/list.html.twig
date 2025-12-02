@@ -1,10 +1,10 @@
-{% extends '@Shared/UI/Backoffice/Templates/layout/layout.html.twig' %}
+{% extends '@Shared/UI/Backoffice/Views/layout/layout.html.twig' %}
 
 {% block body %}
     <div class="container-fluid mt-3">
-        {% include '@Shared/UI/Backoffice/Templates/partials/_title.html.twig' with {'page_title': 'List of tags'} %}
+        {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'List of tags'} %}
 
-        {% include '@Shared/UI/Backoffice/Templates/components/table/_tree_grid_table.html.twig' with {
+        {% include '@Shared/UI/Backoffice/Views/components/table/_tree_grid_table.html.twig' with {
             id: 'tagsTreeTable',
             ajax_url: path('taxonomy_tag_list_data'),
             checkbox: true,
@@ -23,7 +23,7 @@
             ]
         } %}
 
-        {% include '@Taxonomy/UI/Backoffice/Pages/partials/_actions.html.twig' %}
+        {% include '@Taxonomy/UI/Backoffice/Views/partials/_actions.html.twig' %}
     </div>
 
     <script>
