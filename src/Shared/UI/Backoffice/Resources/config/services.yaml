@@ -36,3 +36,22 @@ services:
     tags:
       - { name: kernel.event_subscriber }
 
+  # Header System
+  App\Shared\UI\Backoffice\Header\HeaderBuilder:
+    arguments:
+      $eventDispatcher: '@event_dispatcher'
+      $urlGenerator: '@router'
+      $authorizationChecker: '@security.authorization_checker'
+
+  App\Shared\UI\Backoffice\Header\HeaderExtension:
+    arguments:
+      $headerBuilder: '@App\Shared\UI\Backoffice\Header\HeaderBuilder'
+    tags:
+      - { name: twig.extension }
+
+  # Header Event Subscribers
+  App\Shared\UI\Backoffice\Header\EventSubscriber\:
+    resource: '../../Header/EventSubscriber'
+    tags:
+      - { name: kernel.event_subscriber }
+

@@ -1,0 +1,77 @@
+{% for item in app_header_items %}
+    {% if item.template %}
+        {% include item.template with item.template_vars %}
+    {% elseif item.type == 'button' %}
+        <button type="button"
+                class="{{ item.class|default('btn btn-default') }} position-relative"
+                {% if item.id %}id="{{ item.id }}"{% endif %}
+                {% if item.url %}onclick="window.location.href='{{ item.url }}'"{% endif %}
+                {% for attr, value in item.attributes %}{{ attr }}="{{ value }}" {% endfor %}>
+            {% if item.icon %}
+                <i class="{{ item.icon }}"></i>
+            {% endif %}
+            {% if item.label %}
+                <span class="ms-1">{{ item.label }}</span>
+            {% endif %}
+            {% if item.badge %}
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill {{ item.badge_class }}">
+                    {{ item.badge }}
+                    <span class="visually-hidden">{{ item.label|default('notifications') }}</span>
+                </span>
+            {% endif %}
+        </button>
+    {% elseif item.type == 'link' %}
+        <a href="{{ item.url }}"
+           class="{{ item.class|default('btn btn-default') }} position-relative"
+           {% if item.id %}id="{{ item.id }}"{% endif %}
+           {% for attr, value in item.attributes %}{{ attr }}="{{ value }}" {% endfor %}>
+            {% if item.icon %}
+                <i class="{{ item.icon }}"></i>
+            {% endif %}
+            {% if item.label %}
+                <span class="ms-1">{{ item.label }}</span>
+            {% endif %}
+            {% if item.badge %}
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill {{ item.badge_class }}">
+                    {{ item.badge }}
+                    <span class="visually-hidden">{{ item.label|default('notifications') }}</span>
+                </span>
+            {% endif %}
+        </a>
+    {% elseif item.type == 'dropdown' %}
+        <div class="dropdown">
+            <button class="{{ item.class|default('btn btn-default dropdown-toggle') }} position-relative"
+                    type="button"
+                    {% if item.id %}id="{{ item.id }}"{% else %}id="dropdown-{{ item.key }}"{% endif %}
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    {% for attr, value in item.attributes %}{{ attr }}="{{ value }}" {% endfor %}>
+                {% if item.icon %}
+                    <i class="{{ item.icon }}"></i>
+                {% endif %}
+                {% if item.label %}
+                    <span class="ms-1">{{ item.label }}</span>
+                {% endif %}
+                {% if item.badge %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill {{ item.badge_class }}">
+                        {{ item.badge }}
+                        <span class="visually-hidden">{{ item.label|default('notifications') }}</span>
+                    </span>
+                {% endif %}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="{{ item.id|default('dropdown-' ~ item.key) }}">
+                {% if item.template_vars.dropdown_items is defined %}
+                    {% for dropdown_item in item.template_vars.dropdown_items %}
+                        <li>
+                            <a class="dropdown-item" href="{{ dropdown_item.url }}">
+                                {% if dropdown_item.icon %}<i class="{{ dropdown_item.icon }} me-2"></i>{% endif %}
+                                {{ dropdown_item.label }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+{% endfor %}
+
