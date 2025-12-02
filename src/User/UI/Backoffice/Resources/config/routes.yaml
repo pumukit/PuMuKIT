@@ -1,7 +1,7 @@
-#user_create:
-#  path: /admin/backend/user/new
-#  controller: App\User\UI\Backoffice\Controller\CreateUserController
-
+# Bulk operations first
+user_create:
+  path: /admin/backend/users
+  controller: App\User\UI\Backoffice\Controller\ListUserController
 
 user_list:
   path: /admin/backend/users

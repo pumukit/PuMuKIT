@@ -16,9 +16,14 @@ services:
 
   App\User\Domain\Repository\UserRepositoryInterface: '@App\User\Infrastructure\Persistence\DoctrineUserRepository'
 
-  App\Series\Application\List\ListSeriesService:
+  App\User\Application\List\ListUserService:
     arguments:
-      $repository: '@App\Series\Domain\Repository\SeriesRepositoryInterface'
+      $repository: '@App\User\Domain\Repository\UserRepositoryInterface'
+
+  App\User\UI\Backoffice\Presenter\:
+    resource: '../../Presenter'
+    autowire: true
+    autoconfigure: true
 
   App\User\Infrastructure\Persistence\DoctrineUserRepository:
     autowire: true

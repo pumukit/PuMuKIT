@@ -112,6 +112,9 @@
 {% if id == 'eventsTable' %}
     {% include '@MultimediaObject/UI/Backoffice/Views/partials/_bulk_operations_events.html.twig' %}
 {% endif %}
+{% if id == 'usersTable' %}
+    {% include '@User/UI/Backoffice/Views/partials/_bulk_operations.html.twig' %}
+{% endif %}
 
 {% if server_side %}
     <script>

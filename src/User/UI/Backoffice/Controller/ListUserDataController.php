@@ -2,9 +2,9 @@
 
 namespace App\User\UI\Backoffice\Controller;
 
+use App\User\UI\Backoffice\Presenter\UserDataTablePresenter;
 use App\User\Application\List\ListUserRequest;
 use App\User\Application\List\ListUserService;
-use App\User\Domain\Repository\UserRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +14,7 @@ class ListUserDataController extends AbstractController
 {
     public function __construct(
         private ListUserService $listUserService,
-        private UserRepositoryInterface $userRepository
+        private UserDataTablePresenter $presenter
     ) {}
 
     public function __invoke(
@@ -45,24 +45,13 @@ class ListUserDataController extends AbstractController
         $userResponse = ($this->listUserService)($dto);
 
         $rows = [];
-        foreach ($userResponse->users as $item) {
-            $actionsHtml = sprintf(
-                '<div class="d-flex gap-1 justify-content-end">
-        <a href="%s" class="btn btn-sm"><i class="fa fa-eye"></i></a>
-        <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to delete this user?\');">
-            <button type="submit" class="btn btn-sm">
-                <i class="fa fa-trash"></i>
-            </button>
-        </form>
-    </div>',
-                '#',
-                '#'
+        foreach ($userResponse->users as $user) {
+            $rows[] = $this->presenter->present(
+                $user,
+                $request->getScheme(),
+                $request->getHost(),
+                $request->getLocale()
             );
-
-            $rows[] = [
-                'user' => $item,
-                'actions' => $actionsHtml,
-            ];
         }
 
         return $this->json([
