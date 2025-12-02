@@ -2,33 +2,26 @@
     {% for item in app_menu %}
         {% if item.children is not empty %}
             <li class="nav-item">
-                <a class="nav-link d-flex align-items-center justify-content-between {{ item.is_active ? 'active' : '' }}"
-                   data-bs-toggle="collapse"
-                   href="#menu-{{ item.key }}"
-                   role="button"
-                   aria-expanded="{{ item.is_active ? 'true' : 'false' }}">
-                            <span>
-                                {% if item.icon %}
-                                    <i class="fa {{ item.icon }} me-2"></i>
-                                {% endif %}
-                                {{ item.label }}
-                            </span>
-                    <i class="fa fa-chevron-down fa-xs transition-transform"></i>
-                </a>
-                <div class="collapse {{ item.is_active ? 'show' : '' }}" id="menu-{{ item.key }}">
-                    <ul class="nav flex-column ms-3">
-                        {% for child in item.children %}
-                            <li class="nav-item">
-                                <a class="nav-link {{ child.is_active ? 'active' : '' }}" href="{{ child.url }}">
-                                    {% if child.icon %}
-                                        <i class="fa {{ child.icon }} me-2"></i>
-                                    {% endif %}
-                                    {{ child.label }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                <div class="nav-link d-flex align-items-center {{ item.is_active ? 'active' : '' }}" style="font-weight: 600; cursor: default;">
+                    <span>
+                        {% if item.icon %}
+                            <i class="fa {{ item.icon }} me-2"></i>
+                        {% endif %}
+                        {{ item.label }}
+                    </span>
                 </div>
+                <ul class="nav flex-column ms-4">
+                    {% for child in item.children %}
+                        <li class="nav-item">
+                            <a class="nav-link {{ child.is_active ? 'active' : '' }}" href="{{ child.url }}">
+                                {% if child.icon %}
+                                    <i class="fa {{ child.icon }} me-2"></i>
+                                {% endif %}
+                                {{ child.label }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
             </li>
         {% else %}
             <li class="nav-item">
