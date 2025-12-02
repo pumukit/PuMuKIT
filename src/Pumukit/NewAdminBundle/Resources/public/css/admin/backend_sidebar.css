@@ -14,7 +14,7 @@
 #sidebar .nav-link.active {
     background-color: transparent;
     color: white;
-    font-weight: 500;
+    font-weight: 900;
 }
 
 #sidebar .nav-link i.fa {
