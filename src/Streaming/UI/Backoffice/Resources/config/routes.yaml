@@ -1,0 +1,3 @@
+streaming_index:
+  path: /admin/backend/streaming
+  controller: App\Streaming\UI\Backoffice\Controller\IndexController

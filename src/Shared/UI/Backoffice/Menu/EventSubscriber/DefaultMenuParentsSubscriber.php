@@ -35,9 +35,9 @@ final class DefaultMenuParentsSubscriber implements EventSubscriberInterface
         );
 
         $event->addParent(
-            key: 'live',
-            label: 'Live',
-            icon: 'fa-broadcast-tower',
+            key: 'streaming',
+            label: 'Streaming',
+            icon: 'fa-circle',
             priority: 200,
             permission: null
         );

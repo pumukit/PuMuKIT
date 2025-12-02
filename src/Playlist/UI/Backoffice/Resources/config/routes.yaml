@@ -1,0 +1,3 @@
+playlist_index:
+  path: /admin/backend/playlist
+  controller: App\Playlist\UI\Backoffice\Controller\IndexController

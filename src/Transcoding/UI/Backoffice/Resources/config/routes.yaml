@@ -1,0 +1,3 @@
+transcoding_index:
+  path: /admin/backend/transcoding
+  controller: App\Transcoding\UI\Backoffice\Controller\IndexController

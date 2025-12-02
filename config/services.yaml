@@ -74,9 +74,14 @@ services:
           - '@annotation_reader'
 
 imports:
+  - { resource: '../src/Analytics/UI/Backoffice/Resources/config/services.yaml' }
   - { resource: '../src/Dashboard/UI/Backoffice/Resources/config/services.yaml' }
   - { resource: '../src/MultimediaObject/UI/Backoffice/Resources/config/services.yaml' }
+#  - { resource: '../src/Notification/UI/Backoffice/Resources/config/services.yaml' }
+  - { resource: '../src/Playlist/UI/Backoffice/Resources/config/services.yaml' }
   - { resource: '../src/Series/UI/Backoffice/Resources/config/services.yaml' }
   - { resource: '../src/Shared/UI/Backoffice/Resources/config/services.yaml' }
+  - { resource: '../src/Streaming/UI/Backoffice/Resources/config/services.yaml' }
   - { resource: '../src/Taxonomy/UI/Backoffice/Resources/config/services.yaml' }
+  - { resource: '../src/Transcoding/UI/Backoffice/Resources/config/services.yaml' }
   - { resource: '../src/User/UI/Backoffice/Resources/config/services.yaml' }

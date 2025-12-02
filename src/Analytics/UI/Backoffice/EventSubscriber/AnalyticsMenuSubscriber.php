@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Series\UI\Backoffice\EventSubscriber;
+namespace App\Analytics\UI\Backoffice\EventSubscriber;
 
 use App\Shared\UI\Backoffice\Menu\Event\MenuBuildEvent;
 use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class SeriesMenuSubscriber implements EventSubscriberInterface
+final class AnalyticsMenuSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
     {
@@ -20,13 +20,12 @@ final class SeriesMenuSubscriber implements EventSubscriberInterface
     public function onMenuBuild(MenuBuildEvent $event): void
     {
         $event->addItem(
-            key: 'series',
-            label: 'Series',
-            route: 'series_list',
-            parent: 'media_manager',
-            icon: 'fa-folder',
-            priority: 100,
-            permission: Permission::ACCESS_MULTIMEDIA_SERIES
+            key: 'analytics',
+            label: 'Stats',
+            route: 'analytics_index',
+            parent: 'home',
+            icon: 'fa-chart-bar',
+            priority: 200,
         );
     }
 }

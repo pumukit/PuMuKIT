@@ -3,11 +3,16 @@ twig:
   strict_variables: "%kernel.debug%"
   exception_controller: null
   paths:
+    '%kernel.project_dir%/src/Analytics': Analytics
     '%kernel.project_dir%/src/Dashboard': Dashboard
     '%kernel.project_dir%/src/MultimediaObject': MultimediaObject
+#    '%kernel.project_dir%/src/Notification': Notification
+    '%kernel.project_dir%/src/Playlist': Playlist
     '%kernel.project_dir%/src/Series': Series
     '%kernel.project_dir%/src/Shared': Shared
+    '%kernel.project_dir%/src/Streaming': Streaming
     '%kernel.project_dir%/src/Taxonomy': Taxonomy
+    '%kernel.project_dir%/src/Transcoding': Transcoding
     '%kernel.project_dir%/src/User': User
   globals:
     pumukit_info:  "%pumukit.info%"
