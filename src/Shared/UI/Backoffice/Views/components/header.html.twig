@@ -1,10 +1,9 @@
-<header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3">
+<header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top px-3" style="padding: 1em;">
     <button id="sidebarToggle" class="btn btn-outline-secondary me-3" type="button">
         <i class="fa-solid fa-bars"></i>
     </button>
 
     <div class="ms-auto d-flex align-items-center gap-3">
-        {# Dynamic header items #}
         {% include '@Shared/UI/Backoffice/Views/components/_header_items.html.twig' %}
 
         <div class="dropdown">
@@ -16,6 +15,7 @@
                     {{ "Login since"|trans }}: {{ app.user.lastLogin|format_datetime('medium','medium',locale=app.request.locale) }}
                 </li>
                 <li class="dropdown-header small text-muted">{{ app.user.email }}</li>
+                {# TODO: Cambiar el widget y creado en shared #}
                 {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\WidgetController::languageselectAction') ) }}
                 <li><hr class="dropdown-divider"></li>
                 <li>

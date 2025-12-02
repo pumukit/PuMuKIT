@@ -18,16 +18,16 @@ final class DefaultHeaderItemsSubscriber implements EventSubscriberInterface
 
     public function onHeaderBuild(HeaderBuildEvent $event): void
     {
-//        $event->addItem(
-//            key: 'notifications',
-//            type: 'button',
-//            icon: 'fa-solid fa-bell',
-//            badge: '99+',
-//            badgeClass: 'bg-danger',
-//            priority: 100,
-//            permission: null,
-//            class: 'btn btn-default'
-//        );
+        $event->addItem(
+            key: 'notifications',
+            type: 'button',
+            icon: 'fa-solid fa-bell',
+            badge: '99+',
+            badgeClass: 'bg-danger',
+            priority: 100,
+            permission: null,
+            class: 'btn btn-default'
+        );
     }
 }
 
