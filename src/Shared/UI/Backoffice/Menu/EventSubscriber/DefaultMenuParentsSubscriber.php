@@ -28,7 +28,7 @@ final class DefaultMenuParentsSubscriber implements EventSubscriberInterface
 
         $event->addParent(
             key: 'media_manager',
-            label: 'Media Manager',
+            label: 'Content',
             icon: 'fa-photo-video',
             priority: 100,
             permission: null
@@ -43,16 +43,8 @@ final class DefaultMenuParentsSubscriber implements EventSubscriberInterface
         );
 
         $event->addParent(
-            key: 'tables',
-            label: 'Tables',
-            icon: 'fa-table',
-            priority: 300,
-            permission: null
-        );
-
-        $event->addParent(
             key: 'management',
-            label: 'Management',
+            label: 'Administration',
             icon: 'fa-cogs',
             priority: 400,
             permission: null
