@@ -23,9 +23,19 @@ final class TranscodingMenuSubscriber implements EventSubscriberInterface
             key: 'transcoding_jobs',
             label: 'Jobs',
             route: 'transcoding_index',
-            parent: 'media_manager',
+            parent: 'transcoding',
             icon: 'fa-cogs',
-            priority: 300,
+            priority: 100,
+            permission: Permission::ACCESS_JOBS
+        );
+
+        $event->addItem(
+            key: 'transcoding_cpus',
+            label: 'CPU',
+            route: 'transcoding_index',
+            parent: 'transcoding',
+            icon: 'fa-microchip',
+            priority: 200,
             permission: Permission::ACCESS_JOBS
         );
     }

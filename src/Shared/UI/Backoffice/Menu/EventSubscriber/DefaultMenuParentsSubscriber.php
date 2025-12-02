@@ -35,10 +35,18 @@ final class DefaultMenuParentsSubscriber implements EventSubscriberInterface
         );
 
         $event->addParent(
+            key: 'transcoding',
+            label: 'Transcoding',
+            icon: 'fa-tasks',
+            priority: 200,
+            permission: null
+        );
+
+        $event->addParent(
             key: 'streaming',
             label: 'Streaming',
             icon: 'fa-circle',
-            priority: 200,
+            priority: 300,
             permission: null
         );
 
@@ -51,18 +59,10 @@ final class DefaultMenuParentsSubscriber implements EventSubscriberInterface
         );
 
         $event->addParent(
-            key: 'jobs',
-            label: 'Jobs',
-            icon: 'fa-tasks',
-            priority: 500,
-            permission: null
-        );
-
-        $event->addParent(
             key: 'statistics',
             label: 'Statistics',
             icon: 'fa-chart-bar',
-            priority: 600,
+            priority: 500,
             permission: null
         );
 
@@ -70,7 +70,7 @@ final class DefaultMenuParentsSubscriber implements EventSubscriberInterface
             key: 'connected_app',
             label: 'Applications',
             icon: 'fa-plug',
-            priority: 700,
+            priority: 600,
             permission: null
         );
 
@@ -78,7 +78,7 @@ final class DefaultMenuParentsSubscriber implements EventSubscriberInterface
             key: 'system',
             label: 'System',
             icon: 'fa-cog',
-            priority: 800,
+            priority: 1000,
             permission: null
         );
     }
