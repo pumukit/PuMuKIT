@@ -32,7 +32,7 @@ services:
 
   # Menu Event Subscribers
   App\Shared\UI\Backoffice\Menu\EventSubscriber\:
-    resource: '../../UI/Backoffice/Menu/EventSubscriber'
+    resource: '../../Menu/EventSubscriber'
     tags:
       - { name: kernel.event_subscriber }
 

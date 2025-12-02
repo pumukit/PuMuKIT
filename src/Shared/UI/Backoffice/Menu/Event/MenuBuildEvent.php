@@ -19,8 +19,6 @@ final class MenuBuildEvent extends Event
     }
 
     /**
-     * Add a menu item.
-     *
      * @param string      $key        Unique identifier for the menu item
      * @param string      $label      Label to display
      * @param string      $route      Symfony route name
@@ -53,9 +51,6 @@ final class MenuBuildEvent extends Event
         ];
     }
 
-    /**
-     * Add a parent menu (group) that can contain children.
-     */
     public function addParent(
         string $key,
         string $label,
@@ -86,23 +81,18 @@ final class MenuBuildEvent extends Event
         return $this->currentRoute;
     }
 
-    /**
-     * Build hierarchical menu structure.
-     */
     public function buildHierarchy(): array
     {
         // Sort by priority
-        usort($this->items, fn($a, $b) => $b['priority'] <=> $a['priority']);
+        usort($this->items, fn($a, $b) => $a['priority'] <=> $b['priority']);
 
         $hierarchy = [];
         $itemsMap = [];
 
-        // First pass: create map
         foreach ($this->items as $item) {
             $itemsMap[$item['key']] = $item;
         }
 
-        // Second pass: build hierarchy
         foreach ($this->items as $item) {
             if ($item['parent'] === null) {
                 $hierarchy[] = &$itemsMap[$item['key']];

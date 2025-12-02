@@ -1,15 +1,14 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-
-user_routes:
-  resource: ../src/User/Resources/config/routes.yaml
-
-series_routes:
-  resource: ../src/Series/Resources/config/routes.yaml
+dashboard_routes:
+  resource: ../src/Dashboard/UI/Backoffice/Resources/config/routes.yaml
 
 multimedia_object_routes:
-  resource: ../src/MultimediaObject/Resources/config/routes.yaml
+  resource: ../src/MultimediaObject/UI/Backoffice/Resources/config/routes.yaml
+
+series_routes:
+  resource: ../src/Series/UI/Backoffice/Resources/config/routes.yaml
 
 taxonomy_routes:
-  resource: ../src/Taxonomy/Resources/config/routes.yaml
+  resource: ../src/Taxonomy/UI/Backoffice/Resources/config/routes.yaml
+
+user_routes:
+  resource: ../src/User/UI/Backoffice/Resources/config/routes.yaml

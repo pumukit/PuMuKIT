@@ -1,0 +1,12 @@
+services:
+  App\Dashboard\UI\Backoffice\Controller\:
+    resource: '../../Controller'
+    tags: [ 'controller.service_arguments' ]
+    autowire: true
+    autoconfigure: true
+
+  App\Dashboard\UI\Backoffice\EventSubscriber\:
+    resource: '../../EventSubscriber'
+    tags: [ 'kernel.event_subscriber' ]
+    autowire: true
+    autoconfigure: true

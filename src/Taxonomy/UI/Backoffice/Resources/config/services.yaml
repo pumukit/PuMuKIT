@@ -20,7 +20,7 @@ services:
 
     # Backoffice Controllers
     App\Taxonomy\UI\Backoffice\Controller\:
-        resource: '../../UI/Backoffice/Controller'
+        resource: '../../Controller'
         tags: ['controller.service_arguments']
 
     # Backoffice Services
@@ -28,7 +28,7 @@ services:
 
     # Event Subscribers
     App\Taxonomy\UI\Backoffice\EventSubscriber\:
-      resource: '../../UI/Backoffice/EventSubscriber'
+      resource: '../../EventSubscriber'
       tags: [ 'kernel.event_subscriber' ]
       autowire: true
       autoconfigure: true

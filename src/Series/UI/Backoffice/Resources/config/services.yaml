@@ -1,26 +1,26 @@
 services:
   App\Series\Application\:
-    resource: '../../Application/*'
+    resource: '../../../../Application/*'
     exclude:
-      - '../../Application/*/*Query.php'
-      - '../../Application/*/*Request.php'
-      - '../../Application/*/*Response.php'
+      - '../../../../Application/*/*Query.php'
+      - '../../../../Application/*/*Request.php'
+      - '../../../../Application/*/*Response.php'
     autowire: true
     autoconfigure: true
 
   App\Series\UI\Backoffice\Controller\:
-    resource: '../../UI/Backoffice/Controller'
+    resource: '../../Controller'
     tags: [ 'controller.service_arguments' ]
     autowire: true
     autoconfigure: true
 
   App\Series\UI\Backoffice\Presenter\:
-    resource: '../../UI/Backoffice/Presenter'
+    resource: '../../Presenter'
     autowire: true
     autoconfigure: true
 
   App\Series\UI\Backoffice\FormHandler\:
-    resource: '../../UI/Backoffice/FormHandler'
+    resource: '../../FormHandler'
     autowire: true
     autoconfigure: true
 
@@ -62,7 +62,7 @@ services:
       $userRepository: '@App\User\Domain\Repository\UserRepositoryInterface'
 
   App\Series\UI\Backoffice\EventSubscriber\:
-    resource: '../../UI/Backoffice/EventSubscriber'
+    resource: '../../EventSubscriber'
     tags: [ 'kernel.event_subscriber' ]
     autowire: true
     autoconfigure: true

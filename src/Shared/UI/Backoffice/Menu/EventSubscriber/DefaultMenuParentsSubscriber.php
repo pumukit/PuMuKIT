@@ -19,10 +19,10 @@ final class DefaultMenuParentsSubscriber implements EventSubscriberInterface
     public function onMenuBuild(MenuBuildEvent $event): void
     {
         $event->addParent(
-            key: 'dashboard',
-            label: 'Dashboard',
+            key: 'home',
+            label: 'Home',
             icon: 'fa-home',
-            priority: 1000,
+            priority: 1,
             permission: null
         );
 
@@ -30,7 +30,7 @@ final class DefaultMenuParentsSubscriber implements EventSubscriberInterface
             key: 'media_manager',
             label: 'Media Manager',
             icon: 'fa-photo-video',
-            priority: 900,
+            priority: 100,
             permission: null
         );
 
@@ -38,7 +38,7 @@ final class DefaultMenuParentsSubscriber implements EventSubscriberInterface
             key: 'live',
             label: 'Live',
             icon: 'fa-broadcast-tower',
-            priority: 800,
+            priority: 200,
             permission: null
         );
 
@@ -46,7 +46,7 @@ final class DefaultMenuParentsSubscriber implements EventSubscriberInterface
             key: 'tables',
             label: 'Tables',
             icon: 'fa-table',
-            priority: 700,
+            priority: 300,
             permission: null
         );
 
@@ -54,7 +54,7 @@ final class DefaultMenuParentsSubscriber implements EventSubscriberInterface
             key: 'management',
             label: 'Management',
             icon: 'fa-cogs',
-            priority: 600,
+            priority: 400,
             permission: null
         );
 
@@ -70,7 +70,15 @@ final class DefaultMenuParentsSubscriber implements EventSubscriberInterface
             key: 'statistics',
             label: 'Statistics',
             icon: 'fa-chart-bar',
-            priority: 400,
+            priority: 600,
+            permission: null
+        );
+
+        $event->addParent(
+            key: 'connected_app',
+            label: 'Applications',
+            icon: 'fa-plug',
+            priority: 700,
             permission: null
         );
 
@@ -78,7 +86,7 @@ final class DefaultMenuParentsSubscriber implements EventSubscriberInterface
             key: 'system',
             label: 'System',
             icon: 'fa-cog',
-            priority: 300,
+            priority: 800,
             permission: null
         );
     }
