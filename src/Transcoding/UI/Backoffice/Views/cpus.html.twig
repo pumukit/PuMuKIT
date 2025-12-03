@@ -1,0 +1,75 @@
+{% extends '@Shared/UI/Backoffice/Views/layout/layout.html.twig' %}
+
+{% block body %}
+<div class="container-fluid mt-3">
+    {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'CPUs de Transcodificación'} %}
+
+    {% if localCpus is not empty %}
+        <div class="row mb-4">
+            <div class="col-12">
+                <h3 class="mb-3">
+                    <i class="fa fa-server"></i> CPUs Locales
+                </h3>
+            </div>
+            {% for name, cpu in localCpus %}
+                {% include '@Transcoding/UI/Backoffice/Views/partials/_cpu_card.html.twig' with {
+                    'name': name,
+                    'cpu': cpu,
+                    'cpusInMaintenance': cpusInMaintenance
+                } %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if remoteCpus is not empty %}
+        <div class="row">
+            <div class="col-12">
+                <h3 class="mb-3">
+                    <i class="fa fa-cloud"></i> CPUs Remotas
+                </h3>
+            </div>
+            {% for name, cpu in remoteCpus %}
+                {% include '@Transcoding/UI/Backoffice/Views/partials/_cpu_card.html.twig' with {
+                    'name': name,
+                    'cpu': cpu,
+                    'cpusInMaintenance': cpusInMaintenance
+                } %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if localCpus is empty and remoteCpus is empty %}
+        <div class="alert alert-info">
+            <i class="fa fa-info-circle"></i>
+            No hay CPUs configuradas en el sistema.
+        </div>
+    {% endif %}
+</div>
+
+<script>
+function toggleMaintenance(cpuName, isChecked) {
+    const action = isChecked ? 'deactivate' : 'activate';
+    const url = `/admin/backend/transcoding/cpus/${cpuName}/maintenance/${action}`;
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.reload();
+        } else {
+            alert('Error al cambiar el estado de mantenimiento');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al cambiar el estado de mantenimiento');
+    });
+}
+</script>
+{% endblock %}
+

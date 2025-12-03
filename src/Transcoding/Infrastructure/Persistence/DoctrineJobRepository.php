@@ -26,13 +26,29 @@ final class DoctrineJobRepository implements JobRepositoryInterface
             ->createQueryBuilder();
 
         if ($sort) {
-            $qb->sort($sort);
+            $mongoSort = $this->convertSortToMongoFormat($sort);
+            $qb->sort($mongoSort);
         }
 
         $qb->skip(($page - 1) * $limit)
             ->limit($limit);
 
         return $qb->getQuery()->execute();
+    }
+
+    private function convertSortToMongoFormat(array $sort): array
+    {
+        $mongoSort = [];
+        foreach ($sort as $field => $direction) {
+            if (is_string($direction)) {
+                $mongoSort[$field] = strtolower($direction) === 'asc' ? 1 : -1;
+            } elseif (is_int($direction)) {
+                $mongoSort[$field] = $direction >= 0 ? 1 : -1;
+            } else {
+                $mongoSort[$field] = -1;
+            }
+        }
+        return $mongoSort;
     }
 
     public function countAll(): int

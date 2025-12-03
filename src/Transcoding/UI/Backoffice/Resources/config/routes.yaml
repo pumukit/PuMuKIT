@@ -26,3 +26,15 @@ transcoding_job_cancel:
   requirements:
     id: '[a-f0-9]{24}'
 
+transcoding_cpus_list:
+  path: /admin/backend/transcoding/cpus
+  controller: App\Transcoding\UI\Backoffice\Controller\ListCpusController
+  methods: [GET]
+
+transcoding_cpu_toggle_maintenance:
+  path: /admin/backend/transcoding/cpus/{cpuName}/maintenance/{action}
+  controller: App\Transcoding\UI\Backoffice\Controller\ToggleCpuMaintenanceController
+  methods: [POST]
+  requirements:
+    action: 'activate|deactivate'
+

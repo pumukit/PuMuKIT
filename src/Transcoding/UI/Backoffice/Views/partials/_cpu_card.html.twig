@@ -1,0 +1,83 @@
+{% set inMaintenance = name in cpusInMaintenance %}
+
+<div class="col-12 col-md-6 col-lg-4 mb-3">
+    <div class="card {% if inMaintenance %}border-warning{% endif %}">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">
+                <i class="fa fa-microchip"></i>
+                {{ name }}
+            </h5>
+            {% if inMaintenance %}
+                <span class="badge bg-warning text-dark">
+                    <i class="fa fa-tools"></i> Mantenimiento
+                </span>
+            {% else %}
+                <span class="badge bg-success">
+                    <i class="fa fa-check-circle"></i> Activa
+                </span>
+            {% endif %}
+        </div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-5">Host:</dt>
+                <dd class="col-sm-7">
+                    <small class="text-muted">{{ cpu.host }}</small>
+                </dd>
+
+                <dt class="col-sm-5">Tipo:</dt>
+                <dd class="col-sm-7">
+                    <span class="badge bg-info">{{ cpu.type }}</span>
+                </dd>
+
+                <dt class="col-sm-5">Descripción:</dt>
+                <dd class="col-sm-7">
+                    <small>{{ cpu.description|default('Sin descripción') }}</small>
+                </dd>
+
+
+                {% if cpu.profiles is defined and cpu.profiles is not empty %}
+                    <dt class="col-sm-5">Perfiles:</dt>
+                    <dd class="col-sm-7">
+                        <small class="text-muted">
+                            {% for profile in cpu.profiles %}
+                                <span class="badge bg-secondary">{{ profile }}</span>
+                            {% endfor %}
+                        </small>
+                    </dd>
+                {% endif %}
+            </dl>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="text-muted">
+                    {% if inMaintenance %}
+                        <i class="fa fa-pause-circle"></i> En mantenimiento
+                    {% else %}
+                        <i class="fa fa-play-circle"></i> En funcionamiento
+                    {% endif %}
+                </span>
+                <div class="form-check form-switch">
+                    {% if is_granted('ROLE_SCOPE_PERSONAL') %}
+                        <input class="form-check-input"
+                               type="checkbox"
+                               disabled
+                               {% if not inMaintenance %}checked{% endif %}>
+                        <label class="form-check-label text-muted">
+                            Activa
+                        </label>
+                    {% else %}
+                        <input class="form-check-input"
+                               type="checkbox"
+                               id="maintenance-{{ name }}"
+                               {% if not inMaintenance %}checked{% endif %}
+                               onchange="toggleMaintenance('{{ name }}', this.checked)">
+                        <label class="form-check-label" for="maintenance-{{ name }}">
+                            Activa
+                        </label>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

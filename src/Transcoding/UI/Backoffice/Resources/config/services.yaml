@@ -5,6 +5,12 @@ services:
   App\Transcoding\Domain\Repository\JobRepositoryInterface:
     alias: App\Transcoding\Infrastructure\Persistence\DoctrineJobRepository
 
+  App\Transcoding\Infrastructure\Persistence\DoctrineCpuRepository:
+    autowire: true
+
+  App\Transcoding\Domain\Repository\CpuRepositoryInterface:
+    alias: App\Transcoding\Infrastructure\Persistence\DoctrineCpuRepository
+
   App\Transcoding\Application\:
     resource: '../../../../Application/*'
     exclude:
@@ -13,6 +19,8 @@ services:
       - '../../../../Application/*/*Response.php'
     autowire: true
     autoconfigure: true
+    bind:
+      $cpus: '%pumukitencode.cpulist%'
 
   App\Transcoding\UI\Backoffice\Controller\:
     resource: '../../Controller'

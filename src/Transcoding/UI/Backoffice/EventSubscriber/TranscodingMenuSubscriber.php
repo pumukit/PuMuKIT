@@ -31,8 +31,8 @@ final class TranscodingMenuSubscriber implements EventSubscriberInterface
 
         $event->addItem(
             key: 'transcoding_cpus',
-            label: 'CPU',
-            route: 'transcoding_index',
+            label: 'CPUs',
+            route: 'transcoding_cpus_list',
             parent: 'transcoding',
             icon: 'fa-microchip',
             priority: 200,
