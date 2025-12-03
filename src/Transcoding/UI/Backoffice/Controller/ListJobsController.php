@@ -13,5 +13,4 @@ final class ListJobsController extends AbstractController
     {
         return $this->render('@Transcoding/UI/Backoffice/Views/list.html.twig');
     }
-
 }

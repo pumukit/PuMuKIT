@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Transcoding\UI\Backoffice\Presenter;
 
+use App\Shared\UI\Backoffice\Helpers\DateFormat;
 use Pumukit\EncoderBundle\Document\Job;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -21,9 +22,9 @@ final class JobDataTablePresenter
             'status_text' => $this->renderStatusBadge($job->getStatus(), $job->getStatusText()),
             'priority' => $job->getPriority() ?? 0,
             'cpu' => $job->getCpu() ?? '-',
-            'timeini' => $job->getTimeini()?->format('Y-m-d H:i:s') ?? '-',
-            'timestart' => $job->getTimestart()?->format('Y-m-d H:i:s') ?? '-',
-            'timeend' => $job->getTimeend()?->format('Y-m-d H:i:s') ?? '-',
+            'timeini' => DateFormat::formatComplete($job->getTimeini()) ?? '-',
+            'timestart' => DateFormat::formatComplete($job->getTimestart()) ?? '-',
+            'timeend' => DateFormat::formatComplete($job->getTimeend()) ?? '-',
             'actions' => $this->renderActions($job),
         ];
     }
