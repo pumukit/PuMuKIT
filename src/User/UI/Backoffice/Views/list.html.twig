@@ -23,7 +23,9 @@
             ],
         } %}
 
-        {% include '@User/UI/Backoffice/Views/partials/_actions.html.twig' %}
+        {% include '@Shared/UI/Backoffice/Views/partials/_actions.html.twig' with {
+            translationDomain: 'user'
+        } %}
 
     </div>
 {% endblock %}

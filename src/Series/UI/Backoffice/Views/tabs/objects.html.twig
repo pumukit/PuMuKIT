@@ -20,8 +20,9 @@
 
 {% if multimediaObjectCustomActions is defined and multimediaObjectCustomActions is not empty %}
     <div class="mb-3">
-        {% include '@MultimediaObject/UI/Backoffice/Views/partials/_actions.html.twig' with {
-            customActions: multimediaObjectCustomActions
+        {% include '@Shared/UI/Backoffice/Views/partials/_actions.html.twig' with {
+            customActions: multimediaObjectCustomActions,
+            translationDomain: 'multimedia_object'
         } %}
     </div>
 {% endif %}
