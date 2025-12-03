@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-end gap-2">
+    {% if customActions is defined and customActions is not empty %}
+        {% for action in customActions %}
+            <a href="{{ action.url }}"
+               class="{{ action.class }}"
+               {% if action.target is defined and action.target %}target="{{ action.target }}"{% endif %}
+               title="{{ action.label|trans }}">
+                {% if action.icon is defined and action.icon %}<i class="fa {{ action.icon }}"></i> {% endif %}
+                {{ action.label|trans }}
+            </a>
+        {% endfor %}
+    {% endif %}
+</div>
+

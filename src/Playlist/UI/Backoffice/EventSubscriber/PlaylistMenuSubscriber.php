@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Playlist\UI\Backoffice\EventSubscriber;
 
 use App\Shared\UI\Backoffice\Menu\Event\MenuBuildEvent;
-use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class PlaylistMenuSubscriber implements EventSubscriberInterface
@@ -22,11 +21,10 @@ final class PlaylistMenuSubscriber implements EventSubscriberInterface
         $event->addItem(
             key: 'playlist',
             label: 'Playlist',
-            route: 'playlist_index',
+            route: 'playlist_list',
             parent: 'media_manager',
             icon: 'fa-list',
             priority: 200,
         );
     }
 }
-

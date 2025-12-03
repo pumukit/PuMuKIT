@@ -1,0 +1,28 @@
+<div class="row g-3">
+
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ playlist.title }}</h5>
+                <hr>
+                {% if playlist.description is defined %}
+                    <h6 class="card-subtitle mb-2 text-muted">{{ playlist.description }}</h6>
+                {% endif %}
+
+                <p><strong>{{ "Internal ID"|trans }}:</strong> {{ playlist.id }}</p>
+                <p><strong>{{ "Public ID"|trans }}:</strong> {{ playlist.getNumericalId() }}</p>
+                <p><strong>{{ "Publication Date"|trans }}:</strong> {{ playlist.getPublicDate().format('Y/m/d') }}</p>
+                <p><strong>{{ "Objects Count"|trans }}:</strong> {{ playlist.getPlaylist().getMultimediaObjects().count() }}</p>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="ratio ratio-16x9 overflow-hidden shadow-sm" style="max-height: 26em !important;">
+            <img src="{{ playlist.getMainThumbnail(app.request.scheme, app.request.host) }}" alt="{{ playlist.title }}" class="rounded me-3" width="100">
+        </div>
+    </div>
+
+</div>
+

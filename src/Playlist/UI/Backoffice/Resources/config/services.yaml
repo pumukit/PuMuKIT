@@ -1,12 +1,49 @@
 services:
+  App\Playlist\Application\:
+    resource: '../../../../Application/*'
+    exclude:
+      - '../../../../Application/*/*Query.php'
+      - '../../../../Application/*/*Request.php'
+      - '../../../../Application/*/*Response.php'
+      - '../../../../Application/*/*Validator.php'
+    autowire: true
+    autoconfigure: true
+
   App\Playlist\UI\Backoffice\Controller\:
     resource: '../../Controller'
     tags: [ 'controller.service_arguments' ]
     autowire: true
     autoconfigure: true
 
+  App\Playlist\UI\Backoffice\Presenter\:
+    resource: '../../Presenter'
+    autowire: true
+    autoconfigure: true
+
+  App\Playlist\UI\Backoffice\FormHandler\:
+    resource: '../../FormHandler'
+    autowire: true
+    autoconfigure: true
+
+  App\Playlist\Domain\Repository\PlaylistRepositoryInterface: '@App\Playlist\Infrastructure\Persistence\DoctrinePlaylistRepository'
+
+  App\Playlist\Infrastructure\Persistence\DoctrinePlaylistRepository:
+    autowire: true
+    autoconfigure: true
+    public: false
+    tags: [ 'doctrine.repository' ]
+
+  App\Playlist\Domain\Factory\PlaylistFactoryInterface:
+    alias: App\Playlist\Infrastructure\Factory\PlaylistFactoryAdapter
+
+  App\Playlist\Infrastructure\Factory\PlaylistFactoryAdapter:
+    arguments:
+      $factoryService: '@Pumukit\SchemaBundle\Services\FactoryService'
+      $userRepository: '@App\User\Domain\Repository\UserRepositoryInterface'
+
   App\Playlist\UI\Backoffice\EventSubscriber\:
     resource: '../../EventSubscriber'
     tags: [ 'kernel.event_subscriber' ]
     autowire: true
     autoconfigure: true
+

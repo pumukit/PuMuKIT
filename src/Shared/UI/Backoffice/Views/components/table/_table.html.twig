@@ -115,6 +115,9 @@
 {% if id == 'usersTable' %}
     {% include '@User/UI/Backoffice/Views/partials/_bulk_operations.html.twig' %}
 {% endif %}
+{% if id == 'playlistTable' %}
+    {% include '@Playlist/UI/Backoffice/Views/partials/_bulk_operations.html.twig' %}
+{% endif %}
 
 {% if server_side %}
     <script>

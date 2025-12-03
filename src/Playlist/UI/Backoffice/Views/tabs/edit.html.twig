@@ -1,0 +1,189 @@
+{% if locales|length > 1 %}
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <label for="languageSelector" class="form-label font-bold mb-0 me-3">
+                        <i class="fa fa-language"></i> {{ "Edit Language"|trans }}:
+                    </label>
+                    <select id="languageSelector" class="form-select w-auto">
+                        {% for locale in locales %}
+                            <option value="{{ locale }}">
+                                {{ locale }} - {{ locale|lower|locale_text }}
+                            </option>
+                        {% endfor %}
+                        <option value="all">
+                            <i class="fa fa-globe"></i> {{ "ALL - All Languages"|trans }}
+                        </option>
+                    </select>
+                    <small class="text-muted ms-3">
+                        <i class="fa fa-info-circle"></i> {{ "Select the language you want to edit or 'ALL' to see all"|trans }}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<form id="editPlaylistForm" method="POST" action="{{ path('playlist_update', {id: playlist.id}) }}">
+    <input type="hidden" name="id" value="{{ playlist.id }}">
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fa fa-info-circle"></i> {{ "Public Information"|trans }}</h5>
+                </div>
+                <div class="card-body">
+
+                    <div class="mb-3">
+                        <label class="form-label font-bold">
+                            {{ "Title"|trans }}
+                        </label>
+                        {% for locale in locales %}
+                            <div class="input-group mb-2 locale-field locale-{{ locale }}" data-locale="{{ locale }}">
+                                <span class="input-group-text fw-bold" title="{{ locale|lower|locale_text }}">{{ locale|lower }}</span>
+                                <input type="text"
+                                       class="form-control"
+                                       id="title_{{ locale }}"
+                                       name="title[{{ locale }}]"
+                                       value="{{ playlist.getI18nTitle()[locale]|default('') }}"
+                                       {% if locale == locales[0] %}required{% endif %}>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label font-bold">{{ "Subtitle"|trans }}</label>
+                        {% for locale in locales %}
+                            <div class="input-group mb-2 locale-field locale-{{ locale }}" data-locale="{{ locale }}">
+                                <span class="input-group-text fw-bold" title="{{ locale|lower|locale_text }}">{{ locale|lower }}</span>
+                                <input type="text"
+                                       class="form-control"
+                                       id="subtitle_{{ locale }}"
+                                       name="subtitle[{{ locale }}]"
+                                       value="{{ playlist.getI18nSubtitle()[locale]|default('') }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label font-bold">{{ "Description"|trans }}</label>
+                        {% for locale in locales %}
+                            <div class="input-group mb-2 locale-field locale-{{ locale }}" data-locale="{{ locale }}">
+                                <span class="input-group-text fw-bold" title="{{ locale|lower|locale_text }}">{{ locale|lower }}</span>
+                                <textarea class="form-control"
+                                          id="description_{{ locale }}"
+                                          name="description[{{ locale }}]"
+                                          rows="4">{{ playlist.getI18nDescription()[locale]|default('') }}</textarea>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label font-bold">{{ "Keywords"|trans }} <small class="text-muted">({{ "Separate keywords with commas"|trans }})</small></label>
+                        {% for locale in locales %}
+                            <div class="input-group mb-2 locale-field locale-{{ locale }}" data-locale="{{ locale }}">
+                                <span class="input-group-text fw-bold" title="{{ locale|lower|locale_text }}">{{ locale|lower }}</span>
+                                <input type="text"
+                                       class="form-control"
+                                       id="keywords_{{ locale }}"
+                                       name="keywords[{{ locale }}]"
+                                       value="{{ playlist.getI18nKeywords()[locale]|default('') }}"
+                                       placeholder="keyword1, keyword2, keyword3">
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fa fa-cog"></i> {{ "General Settings"|trans }}</h5>
+                </div>
+                <div class="card-body">
+
+                    <div class="mb-3">
+                        <label for="publicDate" class="form-label font-bold">{{ "Publication Date"|trans }}</label>
+                        <input type="date"
+                               class="form-control"
+                               id="publicDate"
+                               name="publicDate"
+                               value="{{ playlist.getPublicDate() ? playlist.getPublicDate().format('Y-m-d') : '' }}">
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input type="checkbox"
+                               class="form-check-input"
+                               id="hide"
+                               name="hide"
+                               {{ playlist.getHide() ? 'checked' : '' }}>
+                        <label class="form-check-label" for="hide">
+                            {{ "Hide"|trans }}
+                        </label>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input type="checkbox"
+                               class="form-check-input"
+                               id="announce"
+                               name="announce"
+                               {{ playlist.getAnnounce() ? 'checked' : '' }}>
+                        <label class="form-check-label" for="announce">
+                            {{ "Announce"|trans }}
+                        </label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="comments" class="form-label font-bold">{{ "Comments"|trans }}</label>
+                        <textarea class="form-control"
+                                  id="comments"
+                                  name="comments"
+                                  rows="3">{{ playlist.getComments()|default('') }}</textarea>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary btn-pumukit">
+                <i class="fa fa-save"></i> {{ "Save"|trans }}
+            </button>
+            <a href="{{ path('playlist_view', {id: playlist.id}) }}" class="btn btn-secondary">
+                <i class="fa fa-times"></i> {{ "Cancel"|trans }}
+            </a>
+        </div>
+    </div>
+</form>
+
+{% if locales|length > 1 %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const languageSelector = document.getElementById('languageSelector');
+    const localeFields = document.querySelectorAll('.locale-field');
+
+    languageSelector.addEventListener('change', function() {
+        const selectedLocale = this.value;
+
+        localeFields.forEach(function(field) {
+            if (selectedLocale === 'all') {
+                field.style.display = 'flex';
+            } else {
+                const fieldLocale = field.dataset.locale;
+                field.style.display = fieldLocale === selectedLocale ? 'flex' : 'none';
+            }
+        });
+    });
+
+    languageSelector.dispatchEvent(new Event('change'));
+});
+</script>
+{% endif %}
+
