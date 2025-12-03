@@ -2,18 +2,18 @@
 
 {% block body %}
 <div class="container-fluid mt-3">
-    {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'Update Tag: ' ~ tag.cod} %}
+    {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'taxonomy.page.update'|trans({'%cod%': tag.cod}, 'taxonomy')} %}
 
     <div class="row">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Tag Information</h5>
+                    <h5 class="card-title mb-0">{{ 'taxonomy.form.tag_information'|trans({}, 'taxonomy') }}</h5>
                 </div>
                 <div class="card-body">
                     <form method="post" action="{{ path('taxonomy_tag_update', {'id': tag.id}) }}" class="form-horizontal">
                         <div class="mb-3">
-                            <label for="cod" class="form-label">Code</label>
+                            <label for="cod" class="form-label">{{ 'taxonomy.form.code'|trans({}, 'taxonomy') }}</label>
                             <input type="text"
                                    id="cod"
                                    name="cod"
@@ -21,30 +21,30 @@
                                    value="{{ tag.cod }}"
                                    readonly
                                    disabled>
-                            <small class="form-text text-muted">Code cannot be changed</small>
+                            <small class="form-text text-muted">{{ 'taxonomy.form.code_readonly_help'|trans({}, 'taxonomy') }}</small>
                         </div>
 
                         <div class="mb-3">
-                            <label for="title" class="form-label">Title (JSON) *</label>
+                            <label for="title" class="form-label">{{ 'taxonomy.form.title_json'|trans({}, 'taxonomy') }} *</label>
                             <textarea id="title"
                                       name="title"
                                       class="form-control"
                                       rows="3"
                                       required>{{ tag.i18nTitle|json_encode }}</textarea>
-                            <small class="form-text text-muted">Enter titles in JSON format: {"en": "English Title", "es": "Spanish Title"}</small>
+                            <small class="form-text text-muted">{{ 'taxonomy.form.title_json_help'|trans({}, 'taxonomy') }}</small>
                         </div>
 
                         <div class="mb-3">
-                            <label for="description" class="form-label">Description (JSON)</label>
+                            <label for="description" class="form-label">{{ 'taxonomy.form.description_json'|trans({}, 'taxonomy') }}</label>
                             <textarea id="description"
                                       name="description"
                                       class="form-control"
                                       rows="3">{{ tag.i18nDescription|json_encode }}</textarea>
-                            <small class="form-text text-muted">Enter descriptions in JSON format</small>
+                            <small class="form-text text-muted">{{ 'taxonomy.form.description_json_help'|trans({}, 'taxonomy') }}</small>
                         </div>
 
                         <div class="mb-3">
-                            <label for="slug" class="form-label">Slug</label>
+                            <label for="slug" class="form-label">{{ 'taxonomy.form.slug'|trans({}, 'taxonomy') }}</label>
                             <input type="text"
                                    id="slug"
                                    name="slug"
@@ -53,9 +53,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="parent" class="form-label">Parent Tag</label>
+                            <label for="parent" class="form-label">{{ 'taxonomy.form.parent'|trans({}, 'taxonomy') }}</label>
                             <select id="parent" name="parent" class="form-control" disabled>
-                                <option value="">No parent (root tag)</option>
+                                <option value="">{{ 'taxonomy.form.no_parent'|trans({}, 'taxonomy') }}</option>
                                 {% for t in tags %}
                                     {% if t.id != tag.id %}
                                         <option value="{{ t.id }}" {{ tag.parent and tag.parent.id == t.id ? 'selected' : '' }}>
@@ -64,7 +64,7 @@
                                     {% endif %}
                                 {% endfor %}
                             </select>
-                            <small class="form-text text-muted">Parent cannot be changed (would break hierarchy)</small>
+                            <small class="form-text text-muted">{{ 'taxonomy.form.parent_readonly_help'|trans({}, 'taxonomy') }}</small>
                         </div>
 
                         <div class="mb-3 form-check">
@@ -74,7 +74,7 @@
                                    class="form-check-input"
                                    value="1"
                                    {{ tag.display ? 'checked' : '' }}>
-                            <label for="display" class="form-check-label">Display</label>
+                            <label for="display" class="form-check-label">{{ 'taxonomy.form.display'|trans({}, 'taxonomy') }}</label>
                         </div>
 
                         <div class="mb-3 form-check">

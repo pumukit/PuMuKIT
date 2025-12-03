@@ -35,7 +35,7 @@
                 {% include currentTabTemplate with {playlist: playlist, formBuildEvent: formBuildEvent} %}
             {% else %}
                 <div class="alert alert-warning">
-                    <i class="fa fa-exclamation-triangle"></i> Tab "{{ tab }}" not found.
+                    <i class="fa fa-exclamation-triangle"></i> {{ 'playlist.view.tab_not_found'|trans({'%tab%': tab}, 'playlist') }}
                 </div>
             {% endif %}
         </div>

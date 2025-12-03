@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <!-- Pages -->
+            <trans-unit id="streaming.page.list">
+                <source>streaming.page.list</source>
+                <target>Channel Management</target>
+            </trans-unit>
+            <trans-unit id="streaming.page.create">
+                <source>streaming.page.create</source>
+                <target>Create Channel</target>
+            </trans-unit>
+            <trans-unit id="streaming.page.edit">
+                <source>streaming.page.edit</source>
+                <target>Edit Channel: %name%</target>
+            </trans-unit>
+
+            <!-- Table -->
+            <trans-unit id="streaming.table.title">
+                <source>streaming.table.title</source>
+                <target>Channels</target>
+            </trans-unit>
+            <trans-unit id="streaming.table.name">
+                <source>streaming.table.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="streaming.table.source">
+                <source>streaming.table.source</source>
+                <target>Source</target>
+            </trans-unit>
+            <trans-unit id="streaming.table.url">
+                <source>streaming.table.url</source>
+                <target>URL</target>
+            </trans-unit>
+            <trans-unit id="streaming.table.type">
+                <source>streaming.table.type</source>
+                <target>Type</target>
+            </trans-unit>
+            <trans-unit id="streaming.table.broadcasting">
+                <source>streaming.table.broadcasting</source>
+                <target>Broadcasting</target>
+            </trans-unit>
+            <trans-unit id="streaming.table.index_play">
+                <source>streaming.table.index_play</source>
+                <target>Index Play</target>
+            </trans-unit>
+            <trans-unit id="streaming.table.chat">
+                <source>streaming.table.chat</source>
+                <target>Chat</target>
+            </trans-unit>
+            <trans-unit id="streaming.table.actions">
+                <source>streaming.table.actions</source>
+                <target>Actions</target>
+            </trans-unit>
+
+            <!-- Form -->
+            <trans-unit id="streaming.form.name">
+                <source>streaming.form.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="streaming.form.description">
+                <source>streaming.form.description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="streaming.form.url">
+                <source>streaming.form.url</source>
+                <target>URL</target>
+            </trans-unit>
+            <trans-unit id="streaming.form.source_name">
+                <source>streaming.form.source_name</source>
+                <target>Source Name</target>
+            </trans-unit>
+            <trans-unit id="streaming.form.live_type">
+                <source>streaming.form.live_type</source>
+                <target>Live Type</target>
+            </trans-unit>
+            <trans-unit id="streaming.form.ip_source">
+                <source>streaming.form.ip_source</source>
+                <target>IP Source</target>
+            </trans-unit>
+            <trans-unit id="streaming.form.password">
+                <source>streaming.form.password</source>
+                <target>Password</target>
+            </trans-unit>
+            <trans-unit id="streaming.form.password_placeholder">
+                <source>streaming.form.password_placeholder</source>
+                <target>Leave empty to keep current</target>
+            </trans-unit>
+            <trans-unit id="streaming.form.index_play">
+                <source>streaming.form.index_play</source>
+                <target>Index Play</target>
+            </trans-unit>
+            <trans-unit id="streaming.form.broadcasting">
+                <source>streaming.form.broadcasting</source>
+                <target>Broadcasting</target>
+            </trans-unit>
+            <trans-unit id="streaming.form.chat">
+                <source>streaming.form.chat</source>
+                <target>Chat Enabled</target>
+            </trans-unit>
+            <trans-unit id="streaming.form.debug">
+                <source>streaming.form.debug</source>
+                <target>Debug Mode</target>
+            </trans-unit>
+
+            <!-- Buttons -->
+            <trans-unit id="streaming.button.create">
+                <source>streaming.button.create</source>
+                <target>Create Channel</target>
+            </trans-unit>
+            <trans-unit id="streaming.button.save">
+                <source>streaming.button.save</source>
+                <target>Save Changes</target>
+            </trans-unit>
+            <trans-unit id="streaming.button.edit">
+                <source>streaming.button.edit</source>
+                <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="streaming.button.delete">
+                <source>streaming.button.delete</source>
+                <target>Delete</target>
+            </trans-unit>
+            <trans-unit id="streaming.button.back">
+                <source>streaming.button.back</source>
+                <target>Back</target>
+            </trans-unit>
+            <trans-unit id="streaming.button.back_to_list">
+                <source>streaming.button.back_to_list</source>
+                <target>Back to List</target>
+            </trans-unit>
+
+            <!-- View -->
+            <trans-unit id="streaming.view.general_info">
+                <source>streaming.view.general_info</source>
+                <target>General Information</target>
+            </trans-unit>
+            <trans-unit id="streaming.view.technical_config">
+                <source>streaming.view.technical_config</source>
+                <target>Technical Configuration</target>
+            </trans-unit>
+            <trans-unit id="streaming.view.id">
+                <source>streaming.view.id</source>
+                <target>ID</target>
+            </trans-unit>
+            <trans-unit id="streaming.view.name">
+                <source>streaming.view.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="streaming.view.description">
+                <source>streaming.view.description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="streaming.view.no_description">
+                <source>streaming.view.no_description</source>
+                <target>No description</target>
+            </trans-unit>
+            <trans-unit id="streaming.view.source">
+                <source>streaming.view.source</source>
+                <target>Source</target>
+            </trans-unit>
+            <trans-unit id="streaming.view.type">
+                <source>streaming.view.type</source>
+                <target>Type</target>
+            </trans-unit>
+            <trans-unit id="streaming.view.url">
+                <source>streaming.view.url</source>
+                <target>URL</target>
+            </trans-unit>
+
+            <!-- Bulk Operations -->
+            <trans-unit id="streaming.bulk.select_option">
+                <source>streaming.bulk.select_option</source>
+                <target>Select an option...</target>
+            </trans-unit>
+            <trans-unit id="streaming.bulk.apply">
+                <source>streaming.bulk.apply</source>
+                <target>Apply</target>
+            </trans-unit>
+
+            <!-- Confirmations -->
+            <trans-unit id="streaming.confirm.delete">
+                <source>streaming.confirm.delete</source>
+                <target>Are you sure you want to delete this channel?</target>
+            </trans-unit>
+
+            <!-- Flash Messages -->
+            <trans-unit id="streaming.flash.channel_created">
+                <source>streaming.flash.channel_created</source>
+                <target>Channel created successfully</target>
+            </trans-unit>
+            <trans-unit id="streaming.flash.channel_updated">
+                <source>streaming.flash.channel_updated</source>
+                <target>Channel updated successfully</target>
+            </trans-unit>
+            <trans-unit id="streaming.flash.channel_deleted">
+                <source>streaming.flash.channel_deleted</source>
+                <target>Channel deleted successfully</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
+

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <!-- Pages -->
+            <trans-unit id="playlist.page.list">
+                <source>playlist.page.list</source>
+                <target>Playlist List</target>
+            </trans-unit>
+
+            <!-- Table -->
+            <trans-unit id="playlist.table.title">
+                <source>playlist.table.title</source>
+                <target>Playlists</target>
+            </trans-unit>
+            <trans-unit id="playlist.table.thumbnail">
+                <source>playlist.table.thumbnail</source>
+                <target>Thumbnail</target>
+            </trans-unit>
+            <trans-unit id="playlist.table.title_column">
+                <source>playlist.table.title_column</source>
+                <target>Title</target>
+            </trans-unit>
+            <trans-unit id="playlist.table.public_date">
+                <source>playlist.table.public_date</source>
+                <target>Publication Date</target>
+            </trans-unit>
+            <trans-unit id="playlist.table.hide">
+                <source>playlist.table.hide</source>
+                <target>Hide</target>
+            </trans-unit>
+            <trans-unit id="playlist.table.objects">
+                <source>playlist.table.objects</source>
+                <target>Objects</target>
+            </trans-unit>
+            <trans-unit id="playlist.table.actions">
+                <source>playlist.table.actions</source>
+                <target>Actions</target>
+            </trans-unit>
+
+            <!-- View -->
+            <trans-unit id="playlist.view.details">
+                <source>playlist.view.details</source>
+                <target>Playlist Details</target>
+            </trans-unit>
+            <trans-unit id="playlist.view.tab_not_found">
+                <source>playlist.view.tab_not_found</source>
+                <target>Tab "%tab%" not found</target>
+            </trans-unit>
+            <trans-unit id="playlist.view.internal_id">
+                <source>playlist.view.internal_id</source>
+                <target>Internal ID</target>
+            </trans-unit>
+            <trans-unit id="playlist.view.public_id">
+                <source>playlist.view.public_id</source>
+                <target>Public ID</target>
+            </trans-unit>
+            <trans-unit id="playlist.view.publication_date">
+                <source>playlist.view.publication_date</source>
+                <target>Publication Date</target>
+            </trans-unit>
+            <trans-unit id="playlist.view.objects_count">
+                <source>playlist.view.objects_count</source>
+                <target>Objects Count</target>
+            </trans-unit>
+
+            <!-- Form -->
+            <trans-unit id="playlist.form.edit_language">
+                <source>playlist.form.edit_language</source>
+                <target>Edit Language</target>
+            </trans-unit>
+            <trans-unit id="playlist.form.all_languages">
+                <source>playlist.form.all_languages</source>
+                <target>ALL - All Languages</target>
+            </trans-unit>
+            <trans-unit id="playlist.form.language_selector_help">
+                <source>playlist.form.language_selector_help</source>
+                <target>Select the language you want to edit or 'ALL' to see all</target>
+            </trans-unit>
+            <trans-unit id="playlist.form.public_information">
+                <source>playlist.form.public_information</source>
+                <target>Public Information</target>
+            </trans-unit>
+            <trans-unit id="playlist.form.title">
+                <source>playlist.form.title</source>
+                <target>Title</target>
+            </trans-unit>
+            <trans-unit id="playlist.form.subtitle">
+                <source>playlist.form.subtitle</source>
+                <target>Subtitle</target>
+            </trans-unit>
+
+            <!-- Objects -->
+            <trans-unit id="playlist.objects.header">
+                <source>playlist.objects.header</source>
+                <target>Multimedia Objects in Playlist</target>
+            </trans-unit>
+            <trans-unit id="playlist.objects.count">
+                <source>playlist.objects.count</source>
+                <target>This playlist contains %count% multimedia objects</target>
+            </trans-unit>
+            <trans-unit id="playlist.objects.empty">
+                <source>playlist.objects.empty</source>
+                <target>No multimedia objects in this playlist</target>
+            </trans-unit>
+            <trans-unit id="playlist.objects.table.thumbnail">
+                <source>playlist.objects.table.thumbnail</source>
+                <target>Thumbnail</target>
+            </trans-unit>
+            <trans-unit id="playlist.objects.table.title">
+                <source>playlist.objects.table.title</source>
+                <target>Title</target>
+            </trans-unit>
+            <trans-unit id="playlist.objects.table.status">
+                <source>playlist.objects.table.status</source>
+                <target>Status</target>
+            </trans-unit>
+            <trans-unit id="playlist.objects.status.published">
+                <source>playlist.objects.status.published</source>
+                <target>Published</target>
+            </trans-unit>
+            <trans-unit id="playlist.objects.status.hidden">
+                <source>playlist.objects.status.hidden</source>
+                <target>Hidden</target>
+            </trans-unit>
+            <trans-unit id="playlist.objects.status.blocked">
+                <source>playlist.objects.status.blocked</source>
+                <target>Blocked</target>
+            </trans-unit>
+
+            <!-- Buttons -->
+            <trans-unit id="playlist.button.back_to_list">
+                <source>playlist.button.back_to_list</source>
+                <target>Back to List</target>
+            </trans-unit>
+
+            <!-- Bulk Operations -->
+            <trans-unit id="playlist.bulk.select_option">
+                <source>playlist.bulk.select_option</source>
+                <target>Select an option...</target>
+            </trans-unit>
+            <trans-unit id="playlist.bulk.apply">
+                <source>playlist.bulk.apply</source>
+                <target>Apply</target>
+            </trans-unit>
+
+            <!-- Flash Messages -->
+            <trans-unit id="playlist.flash.created">
+                <source>playlist.flash.created</source>
+                <target>Playlist "%title%" created successfully</target>
+            </trans-unit>
+            <trans-unit id="playlist.flash.updated">
+                <source>playlist.flash.updated</source>
+                <target>Playlist "%title%" updated successfully</target>
+            </trans-unit>
+
+            <!-- Errors -->
+            <trans-unit id="playlist.form.error">
+                <source>playlist.form.error</source>
+                <target>Form validation error</target>
+            </trans-unit>
+            <trans-unit id="playlist.error.not_found">
+                <source>playlist.error.not_found</source>
+                <target>Playlist not found</target>
+            </trans-unit>
+            <trans-unit id="playlist.error.unexpected">
+                <source>playlist.error.unexpected</source>
+                <target>Unexpected error occurred</target>
+            </trans-unit>
+            <trans-unit id="playlist.error.unexpected_delete">
+                <source>playlist.error.unexpected_delete</source>
+                <target>Unexpected error during deletion</target>
+            </trans-unit>
+            <trans-unit id="playlist.error.unexpected_update">
+                <source>playlist.error.unexpected_update</source>
+                <target>Unexpected error during update</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
+

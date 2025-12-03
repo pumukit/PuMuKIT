@@ -1,6 +1,6 @@
 <div id="bulk-action-toolbar" class="d-flex gap-2 mb-2">
     <select id="bulk-action-select" class="form-select" data-operations='{{ bulk_operations_config|default('{}')|raw }}'>
-        <option value="">Seleccionar una opción...</option>
+        <option value="">{{ 'streaming.bulk.select_option'|trans({}, 'streaming') }}</option>
         {% if bulkOperations is defined and bulkOperations is not empty %}
             {% for operation in bulkOperations %}
                 <option
@@ -8,14 +8,14 @@
                     data-type="{{ operation.type }}"
                     data-handler="{{ operation.handler }}"
                     {% if operation.icon %}data-icon="{{ operation.icon }}"{% endif %}
-                    {% if operation.confirm_message %}data-confirm="{{ operation.confirm_message }}"{% endif %}>
+                    {% if operation.confirm_message %}data-confirm="{{ operation.confirm_message|trans({}, 'streaming') }}"{% endif %}>
                     {% if operation.icon %}<i class="fa {{ operation.icon }}"></i> {% endif %}
-                    {{ operation.label }}
+                    {{ operation.label|trans({}, 'streaming') }}
                 </option>
             {% endfor %}
         {% endif %}
     </select>
-    <button id="bulk-action-apply" class="btn btn-sm btn-pumukit">Aplicar</button>
+    <button id="bulk-action-apply" class="btn btn-sm btn-pumukit">{{ 'streaming.bulk.apply'|trans({}, 'streaming') }}</button>
 </div>
 
 <script>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <!-- Pages -->
+            <trans-unit id="dashboard.page.storage">
+                <source>dashboard.page.storage</source>
+                <target>Storage</target>
+            </trans-unit>
+            <trans-unit id="dashboard.page.multimedia_objects">
+                <source>dashboard.page.multimedia_objects</source>
+                <target>Multimedia Objects</target>
+            </trans-unit>
+
+            <!-- Storage -->
+            <trans-unit id="dashboard.storage.free">
+                <source>dashboard.storage.free</source>
+                <target>Free</target>
+            </trans-unit>
+            <trans-unit id="dashboard.storage.total">
+                <source>dashboard.storage.total</source>
+                <target>Total</target>
+            </trans-unit>
+            <trans-unit id="dashboard.storage.used_percent">
+                <source>dashboard.storage.used_percent</source>
+                <target>%percent%% used</target>
+            </trans-unit>
+
+            <!-- Stats -->
+            <trans-unit id="dashboard.stats.videos">
+                <source>dashboard.stats.videos</source>
+                <target>Videos</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
+

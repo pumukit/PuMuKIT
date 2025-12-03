@@ -6,15 +6,15 @@
     toolbar: '#multimedia-bulk-action-toolbar',
     bulk_operations_template: '@MultimediaObject/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
     columns: [
-        {'field': 'thumbnail', 'label': 'Image'},
-        {'field': 'title', 'label': 'Title', 'sortable': true, 'truncate': true},
-        {'field': 'type', 'label': 'Type', 'sortable': true},
-        {'field': 'status', 'label': 'Status', 'sortable': true},
-        {'field': 'hide', 'label': 'Hide', 'formatter': 'boolean'},
-        {'field': 'duration', 'label': 'Duration', 'sortable': true},
-        {'field': 'public_date', 'label': 'Record Date', 'sortable': true},
-        {'field': 'record_date', 'label': 'Public Date', 'sortable': true},
-        {'field': 'actions', 'label': 'Actions', 'align': 'right'}
+        {'field': 'thumbnail', 'label': 'series.objects.table.thumbnail'|trans({}, 'series')},
+        {'field': 'title', 'label': 'series.objects.table.title'|trans({}, 'series'), 'sortable': true, 'truncate': true},
+        {'field': 'type', 'label': 'series.objects.table.type'|trans({}, 'series'), 'sortable': true},
+        {'field': 'status', 'label': 'series.objects.table.status'|trans({}, 'series'), 'sortable': true},
+        {'field': 'hide', 'label': 'series.objects.table.hide'|trans({}, 'series'), 'formatter': 'boolean'},
+        {'field': 'duration', 'label': 'series.objects.table.duration'|trans({}, 'series'), 'sortable': true},
+        {'field': 'public_date', 'label': 'series.objects.table.public_date'|trans({}, 'series'), 'sortable': true},
+        {'field': 'record_date', 'label': 'series.objects.table.record_date'|trans({}, 'series'), 'sortable': true},
+        {'field': 'actions', 'label': 'series.objects.table.actions'|trans({}, 'series'), 'align': 'right'}
     ],
 } %}
 

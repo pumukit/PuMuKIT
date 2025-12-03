@@ -7,14 +7,14 @@
             <h1>{{ channel.name }}</h1>
             <div class="btn-group">
                 <a href="{{ path('streaming_channels_list') }}" class="btn btn-secondary">
-                    <i class="fa fa-arrow-left"></i> Volver al listado
+                    <i class="fa fa-arrow-left"></i> {{ 'streaming.button.back_to_list'|trans({}, 'streaming') }}
                 </a>
                 <a href="{{ path('streaming_channel_edit', {id: channel.id}) }}" class="btn btn-warning">
-                    <i class="fa fa-edit"></i> Editar
+                    <i class="fa fa-edit"></i> {{ 'streaming.button.edit'|trans({}, 'streaming') }}
                 </a>
-                <form action="{{ path('streaming_channel_delete', {id: channel.id}) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Está seguro de que desea eliminar este canal?');">
+                <form action="{{ path('streaming_channel_delete', {id: channel.id}) }}" method="POST" style="display:inline;" onsubmit="return confirm('{{ 'streaming.confirm.delete'|trans({}, 'streaming') }}');">
                     <button type="submit" class="btn btn-danger">
-                        <i class="fa fa-trash"></i> Eliminar
+                        <i class="fa fa-trash"></i> {{ 'streaming.button.delete'|trans({}, 'streaming') }}
                     </button>
                 </form>
             </div>
@@ -25,23 +25,23 @@
         <div class="col-md-6">
             <div class="card mb-3">
                 <div class="card-header">
-                    <h5>Información General</h5>
+                    <h5>{{ 'streaming.view.general_info'|trans({}, 'streaming') }}</h5>
                 </div>
                 <div class="card-body">
                     <dl class="row">
-                        <dt class="col-sm-4">ID:</dt>
+                        <dt class="col-sm-4">{{ 'streaming.view.id'|trans({}, 'streaming') }}:</dt>
                         <dd class="col-sm-8">{{ channel.id }}</dd>
 
-                        <dt class="col-sm-4">Nombre:</dt>
+                        <dt class="col-sm-4">{{ 'streaming.view.name'|trans({}, 'streaming') }}:</dt>
                         <dd class="col-sm-8">{{ channel.name }}</dd>
 
-                        <dt class="col-sm-4">Descripción:</dt>
-                        <dd class="col-sm-8">{{ channel.description|default('Sin descripción') }}</dd>
+                        <dt class="col-sm-4">{{ 'streaming.view.description'|trans({}, 'streaming') }}:</dt>
+                        <dd class="col-sm-8">{{ channel.description|default('streaming.view.no_description'|trans({}, 'streaming')) }}</dd>
 
-                        <dt class="col-sm-4">Fuente:</dt>
+                        <dt class="col-sm-4">{{ 'streaming.view.source'|trans({}, 'streaming') }}:</dt>
                         <dd class="col-sm-8">{{ channel.sourceName }}</dd>
 
-                        <dt class="col-sm-4">Tipo:</dt>
+                        <dt class="col-sm-4">{{ 'streaming.view.type'|trans({}, 'streaming') }}:</dt>
                         <dd class="col-sm-8">
                             <span class="badge bg-info">{{ channel.liveType }}</span>
                         </dd>
@@ -53,11 +53,11 @@
         <div class="col-md-6">
             <div class="card mb-3">
                 <div class="card-header">
-                    <h5>Configuración Técnica</h5>
+                    <h5>{{ 'streaming.view.technical_config'|trans({}, 'streaming') }}</h5>
                 </div>
                 <div class="card-body">
                     <dl class="row">
-                        <dt class="col-sm-4">URL:</dt>
+                        <dt class="col-sm-4">{{ 'streaming.view.url'|trans({}, 'streaming') }}:</dt>
                         <dd class="col-sm-8">
                             <code>{{ channel.url }}</code>
                         </dd>

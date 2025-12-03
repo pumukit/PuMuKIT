@@ -9,34 +9,34 @@
             </h5>
             {% if inMaintenance %}
                 <span class="badge bg-warning text-dark">
-                    <i class="fa fa-tools"></i> Mantenimiento
+                    <i class="fa fa-tools"></i> {{ 'transcoding.cpu.maintenance'|trans({}, 'transcoding') }}
                 </span>
             {% else %}
                 <span class="badge bg-success">
-                    <i class="fa fa-check-circle"></i> Activa
+                    <i class="fa fa-check-circle"></i> {{ 'transcoding.cpu.active'|trans({}, 'transcoding') }}
                 </span>
             {% endif %}
         </div>
         <div class="card-body">
             <dl class="row mb-0">
-                <dt class="col-sm-5">Host:</dt>
+                <dt class="col-sm-5">{{ 'transcoding.cpu.host'|trans({}, 'transcoding') }}:</dt>
                 <dd class="col-sm-7">
                     <small class="text-muted">{{ cpu.host }}</small>
                 </dd>
 
-                <dt class="col-sm-5">Tipo:</dt>
+                <dt class="col-sm-5">{{ 'transcoding.cpu.type'|trans({}, 'transcoding') }}:</dt>
                 <dd class="col-sm-7">
                     <span class="badge bg-info">{{ cpu.type }}</span>
                 </dd>
 
-                <dt class="col-sm-5">Descripción:</dt>
+                <dt class="col-sm-5">{{ 'transcoding.cpu.description'|trans({}, 'transcoding') }}:</dt>
                 <dd class="col-sm-7">
-                    <small>{{ cpu.description|default('Sin descripción') }}</small>
+                    <small>{{ cpu.description|default('transcoding.cpu.no_description'|trans({}, 'transcoding')) }}</small>
                 </dd>
 
 
                 {% if cpu.profiles is defined and cpu.profiles is not empty %}
-                    <dt class="col-sm-5">Perfiles:</dt>
+                    <dt class="col-sm-5">{{ 'transcoding.cpu.profiles'|trans({}, 'transcoding') }}:</dt>
                     <dd class="col-sm-7">
                         <small class="text-muted">
                             {% for profile in cpu.profiles %}

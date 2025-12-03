@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="container-fluid mt-3">
-        {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'List of tags'} %}
+        {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'taxonomy.page.list'|trans({}, 'taxonomy')} %}
 
         {% include '@Shared/UI/Backoffice/Views/components/table/_tree_grid_table.html.twig' with {
             id: 'tagsTreeTable',
@@ -13,13 +13,13 @@
             tree_show_field: 'title',
             root_parent_id: rootParentId|default(null),
             columns: [
-                {'field': 'title', 'label': 'Title', 'sortable': true},
-                {'field': 'cod', 'label': 'Code', 'sortable': true},
-                {'field': 'display', 'label': 'Display', 'formatter': 'treeGridFormatters.booleanFormatter'},
-                {'field': 'metatag', 'label': 'Metatag', 'formatter': 'treeGridFormatters.booleanFormatter'},
-                {'field': 'number_multimedia_objects', 'label': 'MM Objects', 'formatter': 'treeGridFormatters.badgeFormatter'},
-                {'field': 'number_children', 'label': 'Children', 'formatter': 'treeGridFormatters.badgeFormatter'},
-                {'field': 'actions', 'label': 'Actions'}
+                {'field': 'title', 'label': 'taxonomy.table.title'|trans({}, 'taxonomy'), 'sortable': true},
+                {'field': 'cod', 'label': 'taxonomy.table.code'|trans({}, 'taxonomy'), 'sortable': true},
+                {'field': 'display', 'label': 'taxonomy.table.display'|trans({}, 'taxonomy'), 'formatter': 'treeGridFormatters.booleanFormatter'},
+                {'field': 'metatag', 'label': 'taxonomy.table.metatag'|trans({}, 'taxonomy'), 'formatter': 'treeGridFormatters.booleanFormatter'},
+                {'field': 'number_multimedia_objects', 'label': 'taxonomy.table.mm_objects'|trans({}, 'taxonomy'), 'formatter': 'treeGridFormatters.badgeFormatter'},
+                {'field': 'number_children', 'label': 'taxonomy.table.children'|trans({}, 'taxonomy'), 'formatter': 'treeGridFormatters.badgeFormatter'},
+                {'field': 'actions', 'label': 'taxonomy.table.actions'|trans({}, 'taxonomy')}
             ]
         } %}
 

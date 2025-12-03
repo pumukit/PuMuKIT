@@ -2,13 +2,13 @@
 
 {% block body %}
 <div class="container-fluid mt-3">
-    {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'CPUs de Transcodificación'} %}
+    {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'transcoding.page.cpus'|trans({}, 'transcoding')} %}
 
     {% if localCpus is not empty %}
         <div class="row mb-4">
             <div class="col-12">
                 <h3 class="mb-3">
-                    <i class="fa fa-server"></i> CPUs Locales
+                    <i class="fa fa-server"></i> {{ 'transcoding.cpus.local'|trans({}, 'transcoding') }}
                 </h3>
             </div>
             {% for name, cpu in localCpus %}
@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-12">
                 <h3 class="mb-3">
-                    <i class="fa fa-cloud"></i> CPUs Remotas
+                    <i class="fa fa-cloud"></i> {{ 'transcoding.cpus.remote'|trans({}, 'transcoding') }}
                 </h3>
             </div>
             {% for name, cpu in remoteCpus %}

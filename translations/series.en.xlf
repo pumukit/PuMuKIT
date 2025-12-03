@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="series.page.list"><source>series.page.list</source><target>Series List</target></trans-unit>
+            <trans-unit id="series.table.title"><source>series.table.title</source><target>Series</target></trans-unit>
+            <trans-unit id="series.table.thumbnail"><source>series.table.thumbnail</source><target>Thumbnail</target></trans-unit>
+            <trans-unit id="series.table.title_column"><source>series.table.title_column</source><target>Title</target></trans-unit>
+            <trans-unit id="series.table.public_date"><source>series.table.public_date</source><target>Publication Date</target></trans-unit>
+            <trans-unit id="series.table.hide"><source>series.table.hide</source><target>Hide</target></trans-unit>
+            <trans-unit id="series.table.announce"><source>series.table.announce</source><target>Announce</target></trans-unit>
+            <trans-unit id="series.table.objects"><source>series.table.objects</source><target>Objects</target></trans-unit>
+            <trans-unit id="series.table.events"><source>series.table.events</source><target>Events</target></trans-unit>
+            <trans-unit id="series.table.actions"><source>series.table.actions</source><target>Actions</target></trans-unit>
+            <trans-unit id="series.view.details"><source>series.view.details</source><target>Series Details</target></trans-unit>
+            <trans-unit id="series.view.tab_not_found"><source>series.view.tab_not_found</source><target>Tab "%tab%" not found</target></trans-unit>
+            <trans-unit id="series.view.internal_id"><source>series.view.internal_id</source><target>Internal ID</target></trans-unit>
+            <trans-unit id="series.view.public_id"><source>series.view.public_id</source><target>Public ID</target></trans-unit>
+            <trans-unit id="series.view.publication_date"><source>series.view.publication_date</source><target>Publication Date</target></trans-unit>
+            <trans-unit id="series.view.public_url"><source>series.view.public_url</source><target>Public URL</target></trans-unit>
+            <trans-unit id="series.view.magic_url"><source>series.view.magic_url</source><target>Magic URL</target></trans-unit>
+            <trans-unit id="series.form.edit_language"><source>series.form.edit_language</source><target>Edit Language</target></trans-unit>
+            <trans-unit id="series.form.all_languages"><source>series.form.all_languages</source><target>ALL - All Languages</target></trans-unit>
+            <trans-unit id="series.form.language_selector_help"><source>series.form.language_selector_help</source><target>Select the language you want to edit or 'ALL' to see all</target></trans-unit>
+            <trans-unit id="series.form.public_information"><source>series.form.public_information</source><target>Public Information</target></trans-unit>
+            <trans-unit id="series.form.title"><source>series.form.title</source><target>Title</target></trans-unit>
+            <trans-unit id="series.form.subtitle"><source>series.form.subtitle</source><target>Subtitle</target></trans-unit>
+            <trans-unit id="series.button.back_to_list"><source>series.button.back_to_list</source><target>Back to List</target></trans-unit>
+            <trans-unit id="series.bulk.select_option"><source>series.bulk.select_option</source><target>Select an option...</target></trans-unit>
+            <trans-unit id="series.bulk.apply"><source>series.bulk.apply</source><target>Apply</target></trans-unit>
+            <trans-unit id="series.bulk.select_operation_required"><source>series.bulk.select_operation_required</source><target>Please select an operation</target></trans-unit>
+            <trans-unit id="series.objects.table.thumbnail"><source>series.objects.table.thumbnail</source><target>Thumbnail</target></trans-unit>
+            <trans-unit id="series.objects.table.title"><source>series.objects.table.title</source><target>Title</target></trans-unit>
+            <trans-unit id="series.objects.table.type"><source>series.objects.table.type</source><target>Type</target></trans-unit>
+            <trans-unit id="series.objects.table.status"><source>series.objects.table.status</source><target>Status</target></trans-unit>
+            <trans-unit id="series.objects.table.hide"><source>series.objects.table.hide</source><target>Hide</target></trans-unit>
+            <trans-unit id="series.objects.table.duration"><source>series.objects.table.duration</source><target>Duration</target></trans-unit>
+            <trans-unit id="series.objects.table.public_date"><source>series.objects.table.public_date</source><target>Publication Date</target></trans-unit>
+            <trans-unit id="series.objects.table.record_date"><source>series.objects.table.record_date</source><target>Record Date</target></trans-unit>
+            <trans-unit id="series.objects.table.actions"><source>series.objects.table.actions</source><target>Actions</target></trans-unit>
+            <trans-unit id="series.events.table.thumbnail"><source>series.events.table.thumbnail</source><target>Thumbnail</target></trans-unit>
+            <trans-unit id="series.events.table.title"><source>series.events.table.title</source><target>Title</target></trans-unit>
+            <trans-unit id="series.events.table.actions"><source>series.events.table.actions</source><target>Actions</target></trans-unit>
+            <trans-unit id="series.template.description"><source>series.template.description</source><target>Here you can configure the templates for multimedia objects in this series.</target></trans-unit>
+            <trans-unit id="series.flash.created"><source>series.flash.created</source><target>Series "%title%" created successfully</target></trans-unit>
+            <trans-unit id="series.flash.updated"><source>series.flash.updated</source><target>Series "%title%" updated successfully</target></trans-unit>
+            <trans-unit id="series.flash.cloned"><source>series.flash.cloned</source><target>Series cloned successfully</target></trans-unit>
+        </body>
+    </file>
+</xliff>

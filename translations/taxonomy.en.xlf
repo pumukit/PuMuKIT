@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <!-- Pages -->
+            <trans-unit id="taxonomy.page.list">
+                <source>taxonomy.page.list</source>
+                <target>List of Tags</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.page.create">
+                <source>taxonomy.page.create</source>
+                <target>Create New Tag</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.page.update">
+                <source>taxonomy.page.update</source>
+                <target>Update Tag: %cod%</target>
+            </trans-unit>
+
+            <!-- Table -->
+            <trans-unit id="taxonomy.table.title">
+                <source>taxonomy.table.title</source>
+                <target>Title</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.table.code">
+                <source>taxonomy.table.code</source>
+                <target>Code</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.table.display">
+                <source>taxonomy.table.display</source>
+                <target>Display</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.table.metatag">
+                <source>taxonomy.table.metatag</source>
+                <target>Metatag</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.table.mm_objects">
+                <source>taxonomy.table.mm_objects</source>
+                <target>MM Objects</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.table.children">
+                <source>taxonomy.table.children</source>
+                <target>Children</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.table.actions">
+                <source>taxonomy.table.actions</source>
+                <target>Actions</target>
+            </trans-unit>
+
+            <!-- Form -->
+            <trans-unit id="taxonomy.form.tag_information">
+                <source>taxonomy.form.tag_information</source>
+                <target>Tag Information</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.form.code">
+                <source>taxonomy.form.code</source>
+                <target>Code</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.form.code_help">
+                <source>taxonomy.form.code_help</source>
+                <target>Unique identifier for the tag (e.g., PUCHD)</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.form.code_readonly_help">
+                <source>taxonomy.form.code_readonly_help</source>
+                <target>Code cannot be changed</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.form.title_json">
+                <source>taxonomy.form.title_json</source>
+                <target>Title (JSON)</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.form.title_json_help">
+                <source>taxonomy.form.title_json_help</source>
+                <target>Enter titles in JSON format: {"en": "English Title", "es": "Spanish Title"}</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.form.description_json">
+                <source>taxonomy.form.description_json</source>
+                <target>Description (JSON)</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.form.description_json_help">
+                <source>taxonomy.form.description_json_help</source>
+                <target>Enter descriptions in JSON format</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.form.slug">
+                <source>taxonomy.form.slug</source>
+                <target>Slug</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.form.parent">
+                <source>taxonomy.form.parent</source>
+                <target>Parent Tag</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.form.no_parent">
+                <source>taxonomy.form.no_parent</source>
+                <target>No parent (root tag)</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.form.parent_help">
+                <source>taxonomy.form.parent_help</source>
+                <target>Select a parent tag to create a hierarchical structure</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.form.parent_readonly_help">
+                <source>taxonomy.form.parent_readonly_help</source>
+                <target>Parent cannot be changed (would break hierarchy)</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.form.display">
+                <source>taxonomy.form.display</source>
+                <target>Display</target>
+            </trans-unit>
+
+            <!-- Flash Messages -->
+            <trans-unit id="taxonomy.flash.created">
+                <source>taxonomy.flash.created</source>
+                <target>Tag created successfully</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.flash.updated">
+                <source>taxonomy.flash.updated</source>
+                <target>Tag "%cod%" updated successfully</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.flash.deleted">
+                <source>taxonomy.flash.deleted</source>
+                <target>Tag deleted successfully</target>
+            </trans-unit>
+
+            <!-- Errors -->
+            <trans-unit id="taxonomy.error.create_failed">
+                <source>taxonomy.error.create_failed</source>
+                <target>Failed to create tag</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.error.update_failed">
+                <source>taxonomy.error.update_failed</source>
+                <target>Failed to update tag</target>
+            </trans-unit>
+            <trans-unit id="taxonomy.error.delete_failed">
+                <source>taxonomy.error.delete_failed</source>
+                <target>Failed to delete tag</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
+

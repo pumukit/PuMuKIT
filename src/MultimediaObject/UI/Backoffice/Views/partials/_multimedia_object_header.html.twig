@@ -1,7 +1,7 @@
 <a href="{{ path('series_view', {id: object.series.id, tab: 'objects'}) }}" class="btn btn-sm btn-primary btn-pumukit">
-    <i class="fa-solid fa-arrow-left"></i> {{ "Series content"|trans }}
+    <i class="fa-solid fa-arrow-left"></i> {{ 'multimedia_object.button.back_to_series'|trans({}, 'multimedia_object') }}
 </a>
 
 <hr />
 
-<h4 class="mb-4">{{ "Multimedia Object details"|trans }}: {{ object.title }}</h4>
+<h4 class="mb-4">{{ 'multimedia_object.view.details'|trans({}, 'multimedia_object') }}: {{ object.title }}</h4>

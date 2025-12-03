@@ -5,8 +5,8 @@
     checkbox: true,
     bulk_operations_template: '@MultimediaObject/UI/Backoffice/Views/partials/_bulk_operations_events.html.twig',
     columns: [
-        {'field': 'thumbnail', 'label': 'Image'},
-        {'field': 'title', 'label': 'Title', 'sortable': true, 'truncate': true},
-        {'field': 'actions', 'label': 'Actions', 'align': 'right'}
+        {'field': 'thumbnail', 'label': 'series.events.table.thumbnail'|trans({}, 'series')},
+        {'field': 'title', 'label': 'series.events.table.title'|trans({}, 'series'), 'sortable': true, 'truncate': true},
+        {'field': 'actions', 'label': 'series.events.table.actions'|trans({}, 'series'), 'align': 'right'}
     ]
 } %}

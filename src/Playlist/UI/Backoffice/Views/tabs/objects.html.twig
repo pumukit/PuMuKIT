@@ -1,19 +1,19 @@
 <div class="card shadow-sm">
     <div class="card-header bg-info text-white">
-        <h5 class="mb-0"><i class="fa fa-video"></i> {{ "Multimedia Objects in Playlist"|trans }}</h5>
+        <h5 class="mb-0"><i class="fa fa-video"></i> {{ 'playlist.objects.header'|trans({}, 'playlist') }}</h5>
     </div>
     <div class="card-body">
         <p class="text-muted">
-            {{ "This playlist contains %count% multimedia objects"|trans({'%count%': playlist.getPlaylist().getMultimediaObjects().count()}) }}
+            {{ 'playlist.objects.count'|trans({'%count%': playlist.getPlaylist().getMultimediaObjects().count()}, 'playlist') }}
         </p>
 
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>{{ "Thumbnail"|trans }}</th>
-                        <th>{{ "Title"|trans }}</th>
-                        <th>{{ "Status"|trans }}</th>
+                        <th>{{ 'playlist.objects.table.thumbnail'|trans({}, 'playlist') }}</th>
+                        <th>{{ 'playlist.objects.table.title'|trans({}, 'playlist') }}</th>
+                        <th>{{ 'playlist.objects.table.status'|trans({}, 'playlist') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,18 +28,18 @@
                             <td>{{ mmobj.getTitle() }}</td>
                             <td>
                                 {% if mmobj.isPublished() %}
-                                    <span class="badge bg-success">{{ "Published"|trans }}</span>
+                                    <span class="badge bg-success">{{ 'playlist.objects.status.published'|trans({}, 'playlist') }}</span>
                                 {% elseif mmobj.isHidden() %}
-                                    <span class="badge bg-warning">{{ "Hidden"|trans }}</span>
+                                    <span class="badge bg-warning">{{ 'playlist.objects.status.hidden'|trans({}, 'playlist') }}</span>
                                 {% else %}
-                                    <span class="badge bg-secondary">{{ "Blocked"|trans }}</span>
+                                    <span class="badge bg-secondary">{{ 'playlist.objects.status.blocked'|trans({}, 'playlist') }}</span>
                                 {% endif %}
                             </td>
                         </tr>
                     {% else %}
                         <tr>
                             <td colspan="3" class="text-center text-muted">
-                                {{ "No multimedia objects in this playlist"|trans }}
+                                {{ 'playlist.objects.empty'|trans({}, 'playlist') }}
                             </td>
                         </tr>
                     {% endfor %}

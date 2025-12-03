@@ -2,24 +2,24 @@
 
 {% block body %}
 <div class="container-fluid mt-3">
-    {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'Multimedia Objects'} %}
+    {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'multimedia_object.page.list'|trans({}, 'multimedia_object')} %}
 
     {% include '@Shared/UI/Backoffice/Views/components/table/_table.html.twig' with {
         id: 'multimediaObjectsTable',
-        title: 'Multimedia Objects',
+        title: 'multimedia_object.table.title'|trans({}, 'multimedia_object'),
         server_side: true,
         ajax_url: path('multimedia_objects_list_data'),
         checkbox: true,
         bulk_operations_template: '@MultimediaObject/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
         columns: [
             {'field': 'id', 'label': 'ID', 'visible': false},
-            {'field': 'thumbnail', 'label': 'Thumbnail', 'sortable': false},
-            {'field': 'title', 'label': 'Title', 'sortable': true},
-            {'field': 'series', 'label': 'Series', 'sortable': false},
-            {'field': 'status', 'label': 'Status', 'sortable': true},
-            {'field': 'public_date', 'label': 'Publication Date', 'sortable': true},
-            {'field': 'duration', 'label': 'Duration', 'sortable': false},
-            {'field': 'actions', 'label': 'Actions', 'align': 'right'}
+            {'field': 'thumbnail', 'label': 'multimedia_object.table.thumbnail'|trans({}, 'multimedia_object'), 'sortable': false},
+            {'field': 'title', 'label': 'multimedia_object.table.title_column'|trans({}, 'multimedia_object'), 'sortable': true},
+            {'field': 'series', 'label': 'multimedia_object.table.series'|trans({}, 'multimedia_object'), 'sortable': false},
+            {'field': 'status', 'label': 'multimedia_object.table.status'|trans({}, 'multimedia_object'), 'sortable': true},
+            {'field': 'public_date', 'label': 'multimedia_object.table.public_date'|trans({}, 'multimedia_object'), 'sortable': true},
+            {'field': 'duration', 'label': 'multimedia_object.table.duration'|trans({}, 'multimedia_object'), 'sortable': false},
+            {'field': 'actions', 'label': 'multimedia_object.table.actions'|trans({}, 'multimedia_object'), 'align': 'right'}
         ]
     } %}
 </div>

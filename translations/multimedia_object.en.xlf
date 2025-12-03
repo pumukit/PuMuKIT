@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <!-- Pages -->
+            <trans-unit id="multimedia_object.page.list">
+                <source>multimedia_object.page.list</source>
+                <target>Multimedia Objects</target>
+            </trans-unit>
+
+            <!-- Table -->
+            <trans-unit id="multimedia_object.table.title">
+                <source>multimedia_object.table.title</source>
+                <target>Multimedia Objects</target>
+            </trans-unit>
+            <trans-unit id="multimedia_object.table.thumbnail">
+                <source>multimedia_object.table.thumbnail</source>
+                <target>Thumbnail</target>
+            </trans-unit>
+            <trans-unit id="multimedia_object.table.title_column">
+                <source>multimedia_object.table.title_column</source>
+                <target>Title</target>
+            </trans-unit>
+            <trans-unit id="multimedia_object.table.series">
+                <source>multimedia_object.table.series</source>
+                <target>Series</target>
+            </trans-unit>
+            <trans-unit id="multimedia_object.table.status">
+                <source>multimedia_object.table.status</source>
+                <target>Status</target>
+            </trans-unit>
+            <trans-unit id="multimedia_object.table.public_date">
+                <source>multimedia_object.table.public_date</source>
+                <target>Publication Date</target>
+            </trans-unit>
+            <trans-unit id="multimedia_object.table.duration">
+                <source>multimedia_object.table.duration</source>
+                <target>Duration</target>
+            </trans-unit>
+            <trans-unit id="multimedia_object.table.actions">
+                <source>multimedia_object.table.actions</source>
+                <target>Actions</target>
+            </trans-unit>
+
+            <!-- View -->
+            <trans-unit id="multimedia_object.view.details">
+                <source>multimedia_object.view.details</source>
+                <target>Multimedia Object Details</target>
+            </trans-unit>
+
+            <!-- Buttons -->
+            <trans-unit id="multimedia_object.button.back_to_series">
+                <source>multimedia_object.button.back_to_series</source>
+                <target>Back to Series</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
+

@@ -9,10 +9,10 @@
                     <h6 class="card-subtitle mb-2 text-muted">{{ playlist.description }}</h6>
                 {% endif %}
 
-                <p><strong>{{ "Internal ID"|trans }}:</strong> {{ playlist.id }}</p>
-                <p><strong>{{ "Public ID"|trans }}:</strong> {{ playlist.getNumericalId() }}</p>
-                <p><strong>{{ "Publication Date"|trans }}:</strong> {{ playlist.getPublicDate().format('Y/m/d') }}</p>
-                <p><strong>{{ "Objects Count"|trans }}:</strong> {{ playlist.getPlaylist().getMultimediaObjects().count() }}</p>
+                <p><strong>{{ 'playlist.view.internal_id'|trans({}, 'playlist') }}:</strong> {{ playlist.id }}</p>
+                <p><strong>{{ 'playlist.view.public_id'|trans({}, 'playlist') }}:</strong> {{ playlist.getNumericalId() }}</p>
+                <p><strong>{{ 'playlist.view.publication_date'|trans({}, 'playlist') }}:</strong> {{ playlist.getPublicDate().format('Y/m/d') }}</p>
+                <p><strong>{{ 'playlist.view.objects_count'|trans({}, 'playlist') }}:</strong> {{ playlist.getPlaylist().getMultimediaObjects().count() }}</p>
 
             </div>
         </div>

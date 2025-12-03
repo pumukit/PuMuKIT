@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    {% include "@Shared/UI/Backoffice/Views/partials/_title.html.twig" with { page_title: 'Storage' } %}
+    {% include "@Shared/UI/Backoffice/Views/partials/_title.html.twig" with { page_title: 'dashboard.page.storage'|trans({}, 'dashboard') } %}
 
     <div class="well">
         <div class="row">
@@ -27,7 +27,7 @@
 
                             <h3 class="fw-bold">{{ usedGB | number_format(2, '.', ',') }} GB</h3>
                             <small class="text-muted">
-                                Libre: {{ freeGB | number_format(2, '.', ',') }} GB / Total: {{ totalGB | number_format(2, '.', ',') }} GB
+                                {{ 'dashboard.storage.free'|trans({}, 'dashboard') }}: {{ freeGB | number_format(2, '.', ',') }} GB / {{ 'dashboard.storage.total'|trans({}, 'dashboard') }}: {{ totalGB | number_format(2, '.', ',') }} GB
                             </small>
 
                             <div class="progress mt-2" style="height: 8px;">
@@ -36,7 +36,7 @@
                                      aria-valuenow="{{ percentUsed }}" aria-valuemin="0" aria-valuemax="100">
                                 </div>
                             </div>
-                            <small class="text-muted">{{ percentUsed }}% usado</small>
+                            <small class="text-muted">{{ 'dashboard.storage.used_percent'|trans({'%percent%': percentUsed}, 'dashboard') }}</small>
                         </div>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
         </div>
 
     </div>
-    {% include "@Shared/UI/Backoffice/Views/partials/_title.html.twig" with { page_title: 'Multimedia Objects' } %}
+    {% include "@Shared/UI/Backoffice/Views/partials/_title.html.twig" with { page_title: 'dashboard.page.multimedia_objects'|trans({}, 'dashboard') } %}
 
     <div class="well">
         <div class="row">
@@ -55,7 +55,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Videos
+                                    {{ 'dashboard.stats.videos'|trans({}, 'dashboard') }}
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ data['multimedia_object_video'] }}</div>
                             </div>

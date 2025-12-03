@@ -2,24 +2,24 @@
 
 {% block body %}
 <div class="container-fluid mt-3">
-    {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'Listado de Series'} %}
+    {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'series.page.list'|trans({}, 'series')} %}
 
     {% include '@Shared/UI/Backoffice/Views/components/table/_table.html.twig' with {
         id: 'seriesTable',
-        title: 'Series',
+        title: 'series.table.title'|trans({}, 'series'),
         server_side: true,
         ajax_url: path('series_list_data'),
         checkbox: true,
         bulk_operations_template: '@Series/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
         columns: [
-            {'field': 'thumbnail', 'label': 'Image'},
-            {'field': 'title', 'label': 'Title', 'sortable': true},
-            {'field': 'public_date', 'label': 'Publication Date', 'sortable': true},
-            {'field': 'hide', 'label': 'Hide'},
-            {'field': 'announce', 'label': 'Announce'},
-            {'field': 'objectCount', 'label': 'Objects'},
-            {'field': 'eventCount', 'label': 'Events'},
-            {'field': 'actions', 'label': 'Actions', 'align': 'right'}
+            {'field': 'thumbnail', 'label': 'series.table.thumbnail'|trans({}, 'series')},
+            {'field': 'title', 'label': 'series.table.title_column'|trans({}, 'series'), 'sortable': true},
+            {'field': 'public_date', 'label': 'series.table.public_date'|trans({}, 'series'), 'sortable': true},
+            {'field': 'hide', 'label': 'series.table.hide'|trans({}, 'series')},
+            {'field': 'announce', 'label': 'series.table.announce'|trans({}, 'series')},
+            {'field': 'objectCount', 'label': 'series.table.objects'|trans({}, 'series')},
+            {'field': 'eventCount', 'label': 'series.table.events'|trans({}, 'series')},
+            {'field': 'actions', 'label': 'series.table.actions'|trans({}, 'series'), 'align': 'right'}
         ]
     } %}
 

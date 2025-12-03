@@ -2,25 +2,25 @@
 
 {% block body %}
 <div class="container-fluid mt-3">
-    {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'Gestión de Canales de Streaming'} %}
+    {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'streaming.page.list'|trans({}, 'streaming')} %}
 
     {% include '@Shared/UI/Backoffice/Views/components/table/_table.html.twig' with {
         id: 'channelsTable',
-        title: 'Canales',
+        title: 'streaming.table.title'|trans({}, 'streaming'),
         server_side: true,
         ajax_url: path('streaming_channels_list_data'),
         checkbox: true,
         bulk_operations_template: '@Streaming/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
         columns: [
             {'field': 'id', 'label': 'ID', 'visible': false},
-            {'field': 'name', 'label': 'Nombre', 'sortable': true},
-            {'field': 'source_name', 'label': 'Fuente', 'sortable': true},
-            {'field': 'url', 'label': 'URL', 'sortable': false},
-            {'field': 'live_type', 'label': 'Tipo', 'sortable': true},
-            {'field': 'broadcasting', 'label': 'En Emisión', 'sortable': true},
-            {'field': 'index_play', 'label': 'Index Play', 'sortable': false},
-            {'field': 'chat', 'label': 'Chat', 'sortable': false},
-            {'field': 'actions', 'label': 'Acciones', 'align': 'right'}
+            {'field': 'name', 'label': 'streaming.table.name'|trans({}, 'streaming'), 'sortable': true},
+            {'field': 'source_name', 'label': 'streaming.table.source'|trans({}, 'streaming'), 'sortable': true},
+            {'field': 'url', 'label': 'streaming.table.url'|trans({}, 'streaming'), 'sortable': false},
+            {'field': 'live_type', 'label': 'streaming.table.type'|trans({}, 'streaming'), 'sortable': true},
+            {'field': 'broadcasting', 'label': 'streaming.table.broadcasting'|trans({}, 'streaming'), 'sortable': true},
+            {'field': 'index_play', 'label': 'streaming.table.index_play'|trans({}, 'streaming'), 'sortable': false},
+            {'field': 'chat', 'label': 'streaming.table.chat'|trans({}, 'streaming'), 'sortable': false},
+            {'field': 'actions', 'label': 'streaming.table.actions'|trans({}, 'streaming'), 'align': 'right'}
         ]
     } %}
 

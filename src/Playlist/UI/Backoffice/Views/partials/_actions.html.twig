@@ -4,9 +4,9 @@
             <a href="{{ action.url }}"
                class="{{ action.class }}"
                {% if action.target is defined and action.target %}target="{{ action.target }}"{% endif %}
-               title="{{ action.label|trans }}">
+               title="{{ action.label|trans({}, 'playlist') }}">
                 {% if action.icon is defined and action.icon %}<i class="fa {{ action.icon }}"></i> {% endif %}
-                {{ action.label|trans }}
+                {{ action.label|trans({}, 'playlist') }}
             </a>
         {% endfor %}
     {% endif %}
