@@ -1,8 +1,9 @@
 services:
-  App\Shared\Infrastructure\EventBus: ~
+  # EventBus adapter from Symfony to our domain interface
+  App\Shared\Infrastructure\EventBus\SymfonyEventBus: ~
 
   App\Shared\Domain\EventBusInterface:
-    alias: App\Shared\Infrastructure\EventBus
+    alias: App\Shared\Infrastructure\EventBus\SymfonyEventBus
 
   # Logger adapter from PSR-3 to our domain interface
   App\Shared\Infrastructure\Logger\PsrLoggerAdapter:
@@ -11,6 +12,22 @@ services:
 
   App\Shared\Domain\LoggerInterface:
     alias: App\Shared\Infrastructure\Logger\PsrLoggerAdapter
+
+  # Translator adapter from Symfony to our domain interface
+  App\Shared\Infrastructure\Translation\SymfonyTranslator:
+    arguments:
+      $symfonyTranslator: '@translator'
+
+  App\Shared\Domain\TranslatorInterface:
+    alias: App\Shared\Infrastructure\Translation\SymfonyTranslator
+
+  # ObjectManager adapter from Doctrine ODM to our domain interface
+  App\Shared\Infrastructure\Persistence\DoctrineObjectManager:
+    arguments:
+      $documentManager: '@doctrine_mongodb.odm.document_manager'
+
+  App\Shared\Domain\ObjectManagerInterface:
+    alias: App\Shared\Infrastructure\Persistence\DoctrineObjectManager
 
   App\Shared\UI\Backoffice\Twig\LocaleExtension:
     tags:
