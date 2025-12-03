@@ -1,0 +1,112 @@
+{% extends '@Shared/UI/Backoffice/Views/layout/layout.html.twig' %}
+
+{% block body %}
+<div class="container-fluid mt-3">
+    <div class="row mb-3">
+        <div class="col">
+            <h1>Crear Canal de Streaming</h1>
+            <a href="{{ path('streaming_channels_list') }}" class="btn btn-secondary">
+                <i class="fa fa-arrow-left"></i> Volver al listado
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="name_en" class="form-label">Nombre (EN) *</label>
+                            <input type="text" class="form-control" id="name_en" name="name[en]" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="name_es" class="form-label">Nombre (ES)</label>
+                            <input type="text" class="form-control" id="name_es" name="name[es]">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description_en" class="form-label">Descripción (EN)</label>
+                            <textarea class="form-control" id="description_en" name="description[en]" rows="3"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description_es" class="form-label">Descripción (ES)</label>
+                            <textarea class="form-control" id="description_es" name="description[es]" rows="3"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="url" class="form-label">URL *</label>
+                            <input type="url" class="form-control" id="url" name="url" required placeholder="rtmp://...">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="source_name" class="form-label">Nombre de Fuente *</label>
+                            <input type="text" class="form-control" id="source_name" name="source_name" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="live_type" class="form-label">Tipo de Live</label>
+                            <select class="form-control" id="live_type" name="live_type">
+                                <option value="WOWZA">WOWZA</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ip_source" class="form-label">IP Origen</label>
+                            <input type="text" class="form-control" id="ip_source" name="ip_source" placeholder="192.168.1.1">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="passwd" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="passwd" name="passwd">
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="index_play" name="index_play">
+                                <label class="form-check-label" for="index_play">
+                                    Index Play
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="broadcasting" name="broadcasting">
+                                <label class="form-check-label" for="broadcasting">
+                                    En Emisión
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chat" name="chat">
+                                <label class="form-check-label" for="chat">
+                                    Chat Habilitado
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="debug" name="debug">
+                                <label class="form-check-label" for="debug">
+                                    Modo Debug
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-save"></i> Crear Canal
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

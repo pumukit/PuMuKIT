@@ -1,0 +1,112 @@
+{% extends '@Shared/UI/Backoffice/Views/layout/layout.html.twig' %}
+
+{% block body %}
+<div class="container-fluid mt-3">
+    <div class="row mb-3">
+        <div class="col">
+            <h1>{{ channel.name }}</h1>
+            <div class="btn-group">
+                <a href="{{ path('streaming_channels_list') }}" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i> Volver al listado
+                </a>
+                <a href="{{ path('streaming_channel_edit', {id: channel.id}) }}" class="btn btn-warning">
+                    <i class="fa fa-edit"></i> Editar
+                </a>
+                <form action="{{ path('streaming_channel_delete', {id: channel.id}) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Está seguro de que desea eliminar este canal?');">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-trash"></i> Eliminar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Información General</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">ID:</dt>
+                        <dd class="col-sm-8">{{ channel.id }}</dd>
+
+                        <dt class="col-sm-4">Nombre:</dt>
+                        <dd class="col-sm-8">{{ channel.name }}</dd>
+
+                        <dt class="col-sm-4">Descripción:</dt>
+                        <dd class="col-sm-8">{{ channel.description|default('Sin descripción') }}</dd>
+
+                        <dt class="col-sm-4">Fuente:</dt>
+                        <dd class="col-sm-8">{{ channel.sourceName }}</dd>
+
+                        <dt class="col-sm-4">Tipo:</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge bg-info">{{ channel.liveType }}</span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Configuración Técnica</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">URL:</dt>
+                        <dd class="col-sm-8">
+                            <code>{{ channel.url }}</code>
+                        </dd>
+
+                        {% if channel.ipSource %}
+                        <dt class="col-sm-4">IP Origen:</dt>
+                        <dd class="col-sm-8">{{ channel.ipSource }}</dd>
+                        {% endif %}
+
+                        <dt class="col-sm-4">En Emisión:</dt>
+                        <dd class="col-sm-8">
+                            {% if channel.broadcasting %}
+                                <span class="badge bg-success"><i class="fa fa-broadcast-tower"></i> Sí</span>
+                            {% else %}
+                                <span class="badge bg-secondary"><i class="fa fa-stop"></i> No</span>
+                            {% endif %}
+                        </dd>
+
+                        <dt class="col-sm-4">Index Play:</dt>
+                        <dd class="col-sm-8">
+                            {% if channel.indexPlay %}
+                                <span class="badge bg-success"><i class="fa fa-check"></i> Sí</span>
+                            {% else %}
+                                <span class="badge bg-secondary"><i class="fa fa-times"></i> No</span>
+                            {% endif %}
+                        </dd>
+
+                        <dt class="col-sm-4">Chat:</dt>
+                        <dd class="col-sm-8">
+                            {% if channel.chat %}
+                                <span class="badge bg-success"><i class="fa fa-check"></i> Sí</span>
+                            {% else %}
+                                <span class="badge bg-secondary"><i class="fa fa-times"></i> No</span>
+                            {% endif %}
+                        </dd>
+
+                        <dt class="col-sm-4">Debug:</dt>
+                        <dd class="col-sm-8">
+                            {% if channel.debug %}
+                                <span class="badge bg-warning"><i class="fa fa-bug"></i> Sí</span>
+                            {% else %}
+                                <span class="badge bg-secondary"><i class="fa fa-times"></i> No</span>
+                            {% endif %}
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,31 @@
+{% extends '@Shared/UI/Backoffice/Views/layout/layout.html.twig' %}
+
+{% block body %}
+<div class="container-fluid mt-3">
+    {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'Gestión de Canales de Streaming'} %}
+
+    {% include '@Shared/UI/Backoffice/Views/components/table/_table.html.twig' with {
+        id: 'channelsTable',
+        title: 'Canales',
+        server_side: true,
+        ajax_url: path('streaming_channels_list_data'),
+        checkbox: true,
+        bulk_operations_template: '@Streaming/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
+        columns: [
+            {'field': 'id', 'label': 'ID', 'visible': false},
+            {'field': 'name', 'label': 'Nombre', 'sortable': true},
+            {'field': 'source_name', 'label': 'Fuente', 'sortable': true},
+            {'field': 'url', 'label': 'URL', 'sortable': false},
+            {'field': 'live_type', 'label': 'Tipo', 'sortable': true},
+            {'field': 'broadcasting', 'label': 'En Emisión', 'sortable': true},
+            {'field': 'index_play', 'label': 'Index Play', 'sortable': false},
+            {'field': 'chat', 'label': 'Chat', 'sortable': false},
+            {'field': 'actions', 'label': 'Acciones', 'align': 'right'}
+        ]
+    } %}
+
+    {% include '@Streaming/UI/Backoffice/Views/partials/_actions.html.twig' %}
+</div>
+{% endblock %}
+
+

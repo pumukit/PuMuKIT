@@ -21,7 +21,7 @@ final class MultimediaObjectMenuSubscriber implements EventSubscriberInterface
     {
         $event->addItem(
             key: 'multimedia_object_catalog',
-            label: 'UNESCO Catalog',
+            label: 'Media',
             route: 'transcoding_index',
             parent: 'media_manager',
             icon: 'fa-photo-video',
