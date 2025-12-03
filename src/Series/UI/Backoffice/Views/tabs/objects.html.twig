@@ -4,6 +4,7 @@
     ajax_url: path('series_multimedia_object_data', {id: series.id}),
     checkbox: true,
     toolbar: '#multimedia-bulk-action-toolbar',
+    bulk_operations_template: '@MultimediaObject/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
     columns: [
         {'field': 'thumbnail', 'label': 'Image'},
         {'field': 'title', 'label': 'Title', 'sortable': true, 'truncate': true},

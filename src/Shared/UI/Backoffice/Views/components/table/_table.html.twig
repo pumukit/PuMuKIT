@@ -103,20 +103,8 @@
     {% endif %}
 </table>
 
-{% if id == 'seriesTable' %}
-    {% include '@Series/UI/Backoffice/Views/partials/_bulk_operations.html.twig' %}
-{% endif %}
-{% if id == 'multimediaObjectsTable' %}
-    {% include '@MultimediaObject/UI/Backoffice/Views/partials/_bulk_operations.html.twig' %}
-{% endif %}
-{% if id == 'eventsTable' %}
-    {% include '@MultimediaObject/UI/Backoffice/Views/partials/_bulk_operations_events.html.twig' %}
-{% endif %}
-{% if id == 'usersTable' %}
-    {% include '@User/UI/Backoffice/Views/partials/_bulk_operations.html.twig' %}
-{% endif %}
-{% if id == 'playlistTable' %}
-    {% include '@Playlist/UI/Backoffice/Views/partials/_bulk_operations.html.twig' %}
+{% if bulk_operations_template is defined and bulk_operations_template %}
+    {% include bulk_operations_template %}
 {% endif %}
 
 {% if server_side %}
