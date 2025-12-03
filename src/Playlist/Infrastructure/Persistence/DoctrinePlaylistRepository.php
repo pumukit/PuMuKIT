@@ -3,18 +3,18 @@
 namespace App\Playlist\Infrastructure\Persistence;
 
 use App\Playlist\Domain\Repository\PlaylistRepositoryInterface;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use App\Shared\Infrastructure\Persistence\DoctrineObjectManager;
 use Pumukit\SchemaBundle\Document\Series;
 
 final class DoctrinePlaylistRepository implements PlaylistRepositoryInterface
 {
     public function __construct(
-        private DocumentManager $documentManager
+        private DoctrineObjectManager $objectManager
     ) {}
 
     public function findAll(): iterable
     {
-        return $this->documentManager
+        return $this->objectManager->getDocumentManager()
             ->getRepository(Series::class)
             ->findBy(['type' => Series::TYPE_PLAYLIST])
         ;
@@ -22,7 +22,7 @@ final class DoctrinePlaylistRepository implements PlaylistRepositoryInterface
 
     public function find(string $id): ?object
     {
-        $playlist = $this->documentManager
+        $playlist = $this->objectManager->getDocumentManager()
             ->getRepository(Series::class)
             ->find($id)
         ;
@@ -38,7 +38,7 @@ final class DoctrinePlaylistRepository implements PlaylistRepositoryInterface
     {
         $filters['type'] = Series::TYPE_PLAYLIST;
 
-        return $this->documentManager
+        return $this->objectManager->getDocumentManager()
             ->getRepository(Series::class)
             ->findBy($filters)
         ;
@@ -48,7 +48,7 @@ final class DoctrinePlaylistRepository implements PlaylistRepositoryInterface
     {
         $filters['type'] = Series::TYPE_PLAYLIST;
 
-        $qb = $this->documentManager
+        $qb = $this->objectManager->getDocumentManager()
             ->createQueryBuilder(Series::class)
             ->field('type')->equals(Series::TYPE_PLAYLIST)
         ;
@@ -83,7 +83,7 @@ final class DoctrinePlaylistRepository implements PlaylistRepositoryInterface
     {
         $filters['type'] = Series::TYPE_PLAYLIST;
 
-        $qb = $this->documentManager
+        $qb = $this->objectManager->getDocumentManager()
             ->createQueryBuilder(Series::class)
             ->field('type')->equals(Series::TYPE_PLAYLIST)
             ->count()
@@ -109,14 +109,14 @@ final class DoctrinePlaylistRepository implements PlaylistRepositoryInterface
 
     public function save(Series $playlist): void
     {
-        $this->documentManager->persist($playlist);
-        $this->documentManager->flush();
+        $this->objectManager->getDocumentManager()->persist($playlist);
+        $this->objectManager->getDocumentManager()->flush();
     }
 
     public function delete(Series $playlist): void
     {
-        $this->documentManager->remove($playlist);
-        $this->documentManager->flush();
+        $this->objectManager->getDocumentManager()->remove($playlist);
+        $this->objectManager->getDocumentManager()->flush();
     }
 
     public function countMultimediaObjects(string $playlistId): int

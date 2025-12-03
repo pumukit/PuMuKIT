@@ -9,6 +9,7 @@ use App\Playlist\Domain\Exception\PlaylistNotFoundException;
 use App\Playlist\UI\Backoffice\Event\PlaylistFormSubmitEvent;
 use App\Playlist\UI\Backoffice\FormHandler\UpdatePlaylistFormHandler;
 use App\Shared\Domain\LoggerInterface;
+use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,8 @@ final class UpdatePlaylistController extends AbstractController
         private readonly UpdatePlaylistService $updatePlaylistService,
         private readonly UpdatePlaylistFormHandler $formHandler,
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly LoggerInterface $logger
+        private readonly LoggerInterface $logger,
+        private readonly TranslatorInterface $translator
     ) {}
 
     public function __invoke(Request $request, string $id): Response
@@ -36,18 +38,26 @@ final class UpdatePlaylistController extends AbstractController
             if ($submitEvent->hasErrors()) {
                 foreach ($submitEvent->getErrors() as $field => $errors) {
                     foreach ($errors as $error) {
-                        $this->addFlash('danger', sprintf('%s: %s', $field, $error));
+                        $this->addFlash('danger', $this->translator->trans(
+                            'playlist.form.error',
+                            ['%field%' => $field, '%error%' => $error],
+                            'playlist'
+                        ));
                     }
                 }
             } else {
-                $this->addFlash('success', sprintf('Playlist "%s" updated successfully', $response->playlist->getTitle()));
+                $this->addFlash('success', $this->translator->trans(
+                    'playlist.flash.updated',
+                    ['%title%' => $response->playlist->getTitle()],
+                    'playlist'
+                ));
             }
         } catch (PlaylistNotFoundException $e) {
-            $this->addFlash('danger', $e->getMessage());
+            $this->addFlash('danger', $this->translator->trans($e->getMessage(), [], 'playlist'));
 
             return $this->redirectToRoute('playlist_list');
         } catch (\InvalidArgumentException $e) {
-            $this->addFlash('danger', $e->getMessage());
+            $this->addFlash('danger', $this->translator->trans($e->getMessage(), [], 'playlist'));
         } catch (\Exception $e) {
             $this->logger->error('Unexpected error updating playlist', [
                 'playlistId' => $id,
@@ -55,7 +65,7 @@ final class UpdatePlaylistController extends AbstractController
                 'trace' => $e->getTraceAsString(),
             ]);
 
-            $this->addFlash('danger', 'Error updating the playlist');
+            $this->addFlash('danger', $this->translator->trans('playlist.error.unexpected_update', [], 'playlist'));
         }
 
         return $this->redirectToRoute('playlist_view', ['id' => $id, 'tab' => 'edit']);

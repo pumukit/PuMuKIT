@@ -8,6 +8,7 @@ use App\Taxonomy\Application\CreateTag\CreateTagRequest;
 use App\Taxonomy\Application\CreateTag\CreateTagService;
 use App\Taxonomy\Application\ListTags\ListTagsRequest;
 use App\Taxonomy\Application\ListTags\ListTagsService;
+use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,8 @@ final class CreateTagController extends AbstractController
 {
     public function __construct(
         private CreateTagService $createTagService,
-        private ListTagsService $listTagsService
+        private ListTagsService $listTagsService,
+        private TranslatorInterface $translator
     ) {}
 
     public function __invoke(Request $request): Response
@@ -41,11 +43,19 @@ final class CreateTagController extends AbstractController
 
                 ($this->createTagService)($createTagRequest);
 
-                $this->addFlash('success', sprintf('Tag "%s" created successfully.', $request->request->get('cod')));
+                $this->addFlash('success', $this->translator->trans(
+                    'taxonomy.flash.created',
+                    ['%cod%' => $request->request->get('cod')],
+                    'taxonomy'
+                ));
 
                 return $this->redirectToRoute('taxonomy_tag_index');
             } catch (\Exception $e) {
-                $this->addFlash('error', sprintf('Error creating tag: %s', $e->getMessage()));
+                $this->addFlash('error', $this->translator->trans(
+                    'taxonomy.error.create_failed',
+                    ['%message%' => $e->getMessage()],
+                    'taxonomy'
+                ));
             }
         }
 

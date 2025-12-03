@@ -7,6 +7,7 @@ namespace App\Series\UI\Backoffice\Controller;
 use App\Series\Application\Delete\DeleteSeriesRequest;
 use App\Series\Application\Delete\DeleteSeriesService;
 use App\Shared\Domain\LoggerInterface;
+use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -14,7 +15,8 @@ final class DeleteSeriesController extends AbstractController
 {
     public function __construct(
         private readonly DeleteSeriesService $deleteSeriesService,
-        private readonly LoggerInterface $logger
+        private readonly LoggerInterface $logger,
+        private readonly TranslatorInterface $translator
     ) {}
 
     public function __invoke(string $id): RedirectResponse
@@ -25,14 +27,14 @@ final class DeleteSeriesController extends AbstractController
             $response = ($this->deleteSeriesService)($requestDto);
 
             if ($response->success) {
-                $this->addFlash('success', $response->message);
+                $this->addFlash('success', $this->translator->trans($response->message, [], 'series'));
             } else {
-                $this->addFlash('danger', $response->message);
+                $this->addFlash('danger', $this->translator->trans($response->message, [], 'series'));
             }
 
             return $this->redirectToRoute('series_list');
         } catch (\InvalidArgumentException $e) {
-            $this->addFlash('danger', $e->getMessage());
+            $this->addFlash('danger', $this->translator->trans($e->getMessage(), [], 'series'));
 
             return $this->redirectToRoute('series_list');
         } catch (\Exception $e) {
@@ -42,7 +44,7 @@ final class DeleteSeriesController extends AbstractController
                 'trace' => $e->getTraceAsString(),
             ]);
 
-            $this->addFlash('danger', 'An error occurred while deleting the series');
+            $this->addFlash('danger', $this->translator->trans('series.error.unexpected_delete', [], 'series'));
 
             return $this->redirectToRoute('series_list');
         }

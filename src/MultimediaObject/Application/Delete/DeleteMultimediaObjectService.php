@@ -6,13 +6,13 @@ namespace App\MultimediaObject\Application\Delete;
 
 use App\MultimediaObject\Domain\Event\MultimediaObjectDeletedEvent;
 use App\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use App\Shared\Domain\EventBusInterface;
 
 final class DeleteMultimediaObjectService
 {
     public function __construct(
         private readonly MultimediaObjectRepositoryInterface $repository,
-        private readonly EventDispatcherInterface $eventDispatcher
+        private readonly EventBusInterface $eventBus
     ) {}
 
     public function __invoke(DeleteMultimediaObjectRequest $request): DeleteMultimediaObjectResponse
@@ -33,10 +33,7 @@ final class DeleteMultimediaObjectService
         $series = $multimediaObject->getSeries()->getId();
 
         $this->repository->delete($multimediaObject);
-        $this->eventDispatcher->dispatch(
-            new MultimediaObjectDeletedEvent($multimediaObject),
-            MultimediaObjectDeletedEvent::NAME
-        );
+        $this->eventBus->dispatch(new MultimediaObjectDeletedEvent($multimediaObject));
 
         return new DeleteMultimediaObjectResponse(
             success: true,

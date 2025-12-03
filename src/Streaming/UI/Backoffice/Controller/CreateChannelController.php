@@ -6,6 +6,7 @@ namespace App\Streaming\UI\Backoffice\Controller;
 
 use App\Streaming\Application\Channel\Create\CreateChannelRequest;
 use App\Streaming\Application\Channel\Create\CreateChannelService;
+use App\Shared\Domain\TranslatorInterface;
 use Pumukit\SchemaBundle\Document\Live;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +14,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class CreateChannelController extends AbstractController
 {
-    public function __construct(private readonly CreateChannelService $service) {}
+    public function __construct(
+        private readonly CreateChannelService $service,
+        private readonly TranslatorInterface $translator
+    ) {}
 
     public function __invoke(Request $request): Response
     {
@@ -36,7 +40,7 @@ final class CreateChannelController extends AbstractController
 
             $response = ($this->service)($requestDto);
 
-            $this->addFlash('success', 'Canal creado correctamente');
+            $this->addFlash('success', $this->translator->trans('streaming.flash.channel_created', [], 'streaming'));
 
             return $this->redirectToRoute('streaming_channel_view', ['id' => $response->channel->getId()]);
         }

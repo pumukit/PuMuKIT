@@ -6,21 +6,22 @@ namespace App\MultimediaObject\UI\Backoffice\Controller;
 
 use App\MultimediaObject\Application\Delete\DeleteMultimediaObjectRequest;
 use App\MultimediaObject\Application\Delete\DeleteMultimediaObjectService;
+use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 final class DeleteMultimediaObjectController extends AbstractController
 {
-    public function __invoke(string $id, DeleteMultimediaObjectService $deleteMultimediaObjectService): RedirectResponse
+    public function __invoke(string $id, DeleteMultimediaObjectService $deleteMultimediaObjectService, TranslatorInterface $translator): RedirectResponse
     {
         $requestDto = new DeleteMultimediaObjectRequest($id);
 
         $response = ($deleteMultimediaObjectService)($requestDto);
 
         if ($response->success) {
-            $this->addFlash('success', $response->message);
+            $this->addFlash('success', $translator->trans($response->message, [], 'multimedia_object'));
         } else {
-            $this->addFlash('danger', $response->message);
+            $this->addFlash('danger', $translator->trans($response->message, [], 'multimedia_object'));
         }
 
         if ($response->series) {

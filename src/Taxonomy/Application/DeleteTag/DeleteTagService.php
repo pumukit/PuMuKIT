@@ -7,13 +7,13 @@ namespace App\Taxonomy\Application\DeleteTag;
 use App\Taxonomy\Domain\Event\TagDeleted;
 use App\Taxonomy\Domain\Exception\TagNotFoundException;
 use App\Taxonomy\Domain\Repository\TagRepositoryInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use App\Shared\Domain\EventBusInterface;
 
 final readonly class DeleteTagService
 {
     public function __construct(
         private TagRepositoryInterface $tagRepository,
-        private EventDispatcherInterface $eventDispatcher
+        private EventBusInterface $eventBus
     ) {}
 
     public function __invoke(DeleteTagRequest $request): void
@@ -28,7 +28,7 @@ final readonly class DeleteTagService
             $tag->getId(),
             $tag->getCod()
         );
-        $this->eventDispatcher->dispatch($event);
+        $this->eventBus->dispatch($event);
 
         $this->tagRepository->delete($tag);
     }

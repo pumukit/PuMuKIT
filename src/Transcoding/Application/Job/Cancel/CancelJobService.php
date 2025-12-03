@@ -8,13 +8,13 @@ use App\Transcoding\Domain\Event\JobCancelledEvent;
 use App\Transcoding\Domain\Exception\JobNotFoundException;
 use App\Transcoding\Domain\Repository\JobRepositoryInterface;
 use Pumukit\EncoderBundle\Document\Job;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use App\Shared\Domain\EventBusInterface;
 
 final class CancelJobService
 {
     public function __construct(
         private readonly JobRepositoryInterface $repository,
-        private readonly EventDispatcherInterface $eventDispatcher
+        private readonly EventBusInterface $eventBus
     ) {}
 
     public function __invoke(CancelJobRequest $request): CancelJobResponse
@@ -29,7 +29,7 @@ final class CancelJobService
 
         $this->repository->save($job);
 
-        $this->eventDispatcher->dispatch(
+        $this->eventBus->dispatch(
             new JobCancelledEvent($job),
             JobCancelledEvent::NAME
         );

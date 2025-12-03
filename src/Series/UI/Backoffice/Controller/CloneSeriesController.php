@@ -8,6 +8,7 @@ use App\Series\Application\Clone\CloneSeriesRequest;
 use App\Series\Application\Clone\CloneSeriesService;
 use App\Series\Domain\Exception\SeriesNotFoundException;
 use App\Shared\Domain\LoggerInterface;
+use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -17,7 +18,8 @@ final class CloneSeriesController extends AbstractController
 {
     public function __construct(
         private readonly CloneSeriesService $cloneSeriesService,
-        private readonly LoggerInterface $logger
+        private readonly LoggerInterface $logger,
+        private readonly TranslatorInterface $translator
     ) {}
 
     public function __invoke(string $id): JsonResponse|RedirectResponse
@@ -26,10 +28,13 @@ final class CloneSeriesController extends AbstractController
             $request = new CloneSeriesRequest($id);
             $response = ($this->cloneSeriesService)($request);
 
-            $this->addFlash('success', sprintf(
-                'Series "%s" cloned successfully with %d multimedia objects',
-                $response->clonedSeries->getTitle(),
-                $response->multimediaObjectsCloned
+            $this->addFlash('success', $this->translator->trans(
+                'series.flash.cloned',
+                [
+                    '%title%' => $response->clonedSeries->getTitle(),
+                    '%count%' => $response->multimediaObjectsCloned
+                ],
+                'series'
             ));
 
             return $this->redirectToRoute('series_view', ['id' => $response->clonedSeries->getId()]);

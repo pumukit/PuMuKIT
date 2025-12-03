@@ -9,13 +9,13 @@ use App\Taxonomy\Domain\Exception\TagAlreadyExistsException;
 use App\Taxonomy\Domain\Exception\TagNotFoundException;
 use App\Taxonomy\Domain\Repository\TagRepositoryInterface;
 use Pumukit\SchemaBundle\Document\Tag;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use App\Shared\Domain\EventBusInterface;
 
 final readonly class CreateTagService
 {
     public function __construct(
         private TagRepositoryInterface $tagRepository,
-        private EventDispatcherInterface $eventDispatcher
+        private EventBusInterface $eventBus
     ) {}
 
     public function __invoke(CreateTagRequest $request): CreateTagResponse
@@ -63,7 +63,7 @@ final readonly class CreateTagService
             $tag->getI18nTitle(),
             $parent?->getId()
         );
-        $this->eventDispatcher->dispatch($event);
+        $this->eventBus->dispatch($event);
 
         return new CreateTagResponse($tag);
     }

@@ -8,6 +8,7 @@ use App\Taxonomy\Application\DeleteTag\DeleteTagRequest;
 use App\Taxonomy\Application\DeleteTag\DeleteTagService;
 use App\Taxonomy\Application\ViewTag\ViewTagRequest;
 use App\Taxonomy\Application\ViewTag\ViewTagService;
+use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,7 +16,8 @@ final class DeleteTagController extends AbstractController
 {
     public function __construct(
         private ViewTagService $viewTagService,
-        private DeleteTagService $deleteTagService
+        private DeleteTagService $deleteTagService,
+        private TranslatorInterface $translator
     ) {}
 
     public function __invoke(string $id): Response
@@ -28,9 +30,17 @@ final class DeleteTagController extends AbstractController
             $deleteTagRequest = new DeleteTagRequest($id);
             ($this->deleteTagService)($deleteTagRequest);
 
-            $this->addFlash('success', sprintf('Tag "%s" deleted successfully.', $cod));
+            $this->addFlash('success', $this->translator->trans(
+                'taxonomy.flash.deleted',
+                ['%cod%' => $cod],
+                'taxonomy'
+            ));
         } catch (\Exception $e) {
-            $this->addFlash('error', sprintf('Error deleting tag: %s', $e->getMessage()));
+            $this->addFlash('error', $this->translator->trans(
+                'taxonomy.error.delete_failed',
+                ['%message%' => $e->getMessage()],
+                'taxonomy'
+            ));
         }
 
         return $this->redirectToRoute('taxonomy_tag_index');

@@ -3,23 +3,23 @@
 namespace App\User\Infrastructure\Persistence;
 
 use App\User\Domain\Repository\UserRepositoryInterface;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use App\Shared\Infrastructure\Persistence\DoctrineObjectManager;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\User;
 
 class DoctrineUserRepository implements UserRepositoryInterface
 {
-    public function __construct(private DocumentManager $documentManager) {}
+    public function __construct(private DoctrineObjectManager $objectManager) {}
 
     public function findAllUsers(): array
     {
-        return $this->documentManager->getRepository(User::class)->findAll();
+        return $this->objectManager->getDocumentManager()->getRepository(User::class)->findAll();
     }
 
     public function findByFilters(array $filters = []): array
     {
-        $qb = $this->documentManager->createQueryBuilder(User::class);
+        $qb = $this->objectManager->getDocumentManager()->createQueryBuilder(User::class);
 
         $this->applyFilters($qb, $filters);
 
@@ -28,7 +28,7 @@ class DoctrineUserRepository implements UserRepositoryInterface
 
     public function findByFiltersPaginated(array $filters, int $page, int $limit, string $sort, string $order): array
     {
-        $qb = $this->documentManager->createQueryBuilder(User::class);
+        $qb = $this->objectManager->getDocumentManager()->createQueryBuilder(User::class);
 
         $this->applyFilters($qb, $filters);
 
@@ -42,7 +42,7 @@ class DoctrineUserRepository implements UserRepositoryInterface
 
     public function countByFilters(array $filters = []): int
     {
-        $qb = $this->documentManager->createQueryBuilder(User::class);
+        $qb = $this->objectManager->getDocumentManager()->createQueryBuilder(User::class);
 
         $this->applyFilters($qb, $filters);
 
@@ -56,24 +56,24 @@ class DoctrineUserRepository implements UserRepositoryInterface
             $searchIds[] = new ObjectId($id);
         }
 
-        return $this->documentManager->getRepository(User::class)->findBy(['_id' => ['$in' => $searchIds]]);
+        return $this->objectManager->getDocumentManager()->getRepository(User::class)->findBy(['_id' => ['$in' => $searchIds]]);
     }
 
     public function find(string $id): ?User
     {
-        return $this->documentManager->getRepository(User::class)->find(new ObjectId($id));
+        return $this->objectManager->getDocumentManager()->getRepository(User::class)->find(new ObjectId($id));
     }
 
     public function save(User $user): void
     {
-        $this->documentManager->persist($user);
-        $this->documentManager->flush();
+        $this->objectManager->getDocumentManager()->persist($user);
+        $this->objectManager->getDocumentManager()->flush();
     }
 
     public function delete(User $user): void
     {
-        $this->documentManager->remove($user);
-        $this->documentManager->flush();
+        $this->objectManager->getDocumentManager()->remove($user);
+        $this->objectManager->getDocumentManager()->flush();
     }
 
     private function applyFilters($qb, array $filters): void

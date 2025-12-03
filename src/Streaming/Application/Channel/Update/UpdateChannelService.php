@@ -7,13 +7,13 @@ namespace App\Streaming\Application\Channel\Update;
 use App\Streaming\Domain\Event\ChannelUpdatedEvent;
 use App\Streaming\Domain\Exception\ChannelNotFoundException;
 use App\Streaming\Domain\Repository\ChannelRepositoryInterface;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use App\Shared\Domain\EventBusInterface;
 
 final class UpdateChannelService
 {
     public function __construct(
         private readonly ChannelRepositoryInterface $repository,
-        private readonly EventDispatcherInterface $eventDispatcher
+        private readonly EventBusInterface $eventBus
     ) {}
 
     public function __invoke(UpdateChannelRequest $request): UpdateChannelResponse
@@ -48,7 +48,7 @@ final class UpdateChannelService
 
         $this->repository->save($channel);
 
-        $this->eventDispatcher->dispatch(
+        $this->eventBus->dispatch(
             new ChannelUpdatedEvent($channel),
             ChannelUpdatedEvent::NAME
         );

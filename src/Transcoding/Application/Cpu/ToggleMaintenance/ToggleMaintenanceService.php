@@ -9,14 +9,14 @@ use App\Transcoding\Domain\Event\CpuMaintenanceDeactivatedEvent;
 use App\Transcoding\Domain\Exception\CpuNotFoundException;
 use App\Transcoding\Domain\Repository\CpuRepositoryInterface;
 use Pumukit\EncoderBundle\Document\CpuStatus;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use App\Shared\Domain\EventBusInterface;
 
 final class ToggleMaintenanceService
 {
     public function __construct(
         private readonly array $cpus,
         private readonly CpuRepositoryInterface $cpuRepository,
-        private readonly EventDispatcherInterface $eventDispatcher
+        private readonly EventBusInterface $eventBus
     ) {}
 
     public function __invoke(ToggleMaintenanceRequest $request): ToggleMaintenanceResponse
@@ -27,13 +27,13 @@ final class ToggleMaintenanceService
 
         if ($request->activate) {
             $this->activateMaintenance($request->cpuName);
-            $this->eventDispatcher->dispatch(
+            $this->eventBus->dispatch(
                 new CpuMaintenanceActivatedEvent($request->cpuName),
                 CpuMaintenanceActivatedEvent::NAME
             );
         } else {
             $this->deactivateMaintenance($request->cpuName);
-            $this->eventDispatcher->dispatch(
+            $this->eventBus->dispatch(
                 new CpuMaintenanceDeactivatedEvent($request->cpuName),
                 CpuMaintenanceDeactivatedEvent::NAME
             );

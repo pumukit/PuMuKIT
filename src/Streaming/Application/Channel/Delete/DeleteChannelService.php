@@ -7,13 +7,13 @@ namespace App\Streaming\Application\Channel\Delete;
 use App\Streaming\Domain\Event\ChannelDeletedEvent;
 use App\Streaming\Domain\Exception\ChannelNotFoundException;
 use App\Streaming\Domain\Repository\ChannelRepositoryInterface;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use App\Shared\Domain\EventBusInterface;
 
 final class DeleteChannelService
 {
     public function __construct(
         private readonly ChannelRepositoryInterface $repository,
-        private readonly EventDispatcherInterface $eventDispatcher
+        private readonly EventBusInterface $eventBus
     ) {}
 
     public function __invoke(DeleteChannelRequest $request): DeleteChannelResponse
@@ -28,7 +28,7 @@ final class DeleteChannelService
 
         $this->repository->delete($channel);
 
-        $this->eventDispatcher->dispatch(
+        $this->eventBus->dispatch(
             new ChannelDeletedEvent($channelId),
             ChannelDeletedEvent::NAME
         );

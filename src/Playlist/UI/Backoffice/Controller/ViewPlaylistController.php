@@ -5,6 +5,7 @@ namespace App\Playlist\UI\Backoffice\Controller;
 use App\Playlist\Domain\Repository\PlaylistRepositoryInterface;
 use App\Playlist\UI\Backoffice\Event\PlaylistFormBuildEvent;
 use App\Playlist\UI\Backoffice\Event\PlaylistViewTabsEvent;
+use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,8 @@ final class ViewPlaylistController extends AbstractController
 {
     public function __construct(
         private PlaylistRepositoryInterface $playlistRepository,
-        private EventDispatcherInterface $eventDispatcher
+        private EventDispatcherInterface $eventDispatcher,
+        private TranslatorInterface $translator
     ) {}
 
     public function __invoke(Request $request, string $id, string $tab = 'general'): Response
@@ -22,7 +24,7 @@ final class ViewPlaylistController extends AbstractController
         $playlist = $this->playlistRepository->find($id);
 
         if (!$playlist) {
-            $this->addFlash('danger', 'Playlist not found');
+            $this->addFlash('danger', $this->translator->trans('playlist.error.not_found', [], 'playlist'));
 
             return $this->redirectToRoute('playlist_list');
         }

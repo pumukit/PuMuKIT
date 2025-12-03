@@ -5,23 +5,23 @@ declare(strict_types=1);
 namespace App\MultimediaObject\Infrastructure\Persistence;
 
 use App\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use App\Shared\Infrastructure\Persistence\DoctrineObjectManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 final class DoctrineMultimediaObjectRepository implements MultimediaObjectRepositoryInterface
 {
-    public function __construct(private readonly DocumentManager $documentManager) {}
+    public function __construct(private DoctrineObjectManager $objectManager) {}
 
     public function find(string $id): ?MultimediaObject
     {
-        return $this->documentManager
+        return $this->objectManager->getDocumentManager()
             ->getRepository(MultimediaObject::class)
             ->find($id);
     }
 
     public function findAll(int $page = 1, int $limit = 10, ?array $sort = null, ?array $filters = []): iterable
     {
-        $qb = $this->documentManager
+        $qb = $this->objectManager->getDocumentManager()
             ->getRepository(MultimediaObject::class)
             ->createQueryBuilder();
 
@@ -52,7 +52,7 @@ final class DoctrineMultimediaObjectRepository implements MultimediaObjectReposi
 
     public function countAll(?array $filters = []): int
     {
-        $qb = $this->documentManager
+        $qb = $this->objectManager->getDocumentManager()
             ->getRepository(MultimediaObject::class)
             ->createQueryBuilder();
 
@@ -76,14 +76,14 @@ final class DoctrineMultimediaObjectRepository implements MultimediaObjectReposi
 
     public function save(MultimediaObject $multimediaObject): void
     {
-        $this->documentManager->persist($multimediaObject);
-        $this->documentManager->flush();
+        $this->objectManager->getDocumentManager()->persist($multimediaObject);
+        $this->objectManager->getDocumentManager()->flush();
     }
 
     public function delete(MultimediaObject $multimediaObject): void
     {
-        $this->documentManager->remove($multimediaObject);
-        $this->documentManager->flush();
+        $this->objectManager->getDocumentManager()->remove($multimediaObject);
+        $this->objectManager->getDocumentManager()->flush();
     }
 
     private function convertSortToMongoFormat(array $sort): array

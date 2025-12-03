@@ -7,13 +7,13 @@ namespace App\Taxonomy\Application\UpdateTag;
 use App\Taxonomy\Domain\Event\TagUpdated;
 use App\Taxonomy\Domain\Exception\TagNotFoundException;
 use App\Taxonomy\Domain\Repository\TagRepositoryInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use App\Shared\Domain\EventBusInterface;
 
 final readonly class UpdateTagService
 {
     public function __construct(
         private TagRepositoryInterface $tagRepository,
-        private EventDispatcherInterface $eventDispatcher
+        private EventBusInterface $eventBus
     ) {}
 
     public function __invoke(UpdateTagRequest $request): UpdateTagResponse
@@ -46,7 +46,7 @@ final readonly class UpdateTagService
             $tag->getCod(),
             $tag->getI18nTitle()
         );
-        $this->eventDispatcher->dispatch($event);
+        $this->eventBus->dispatch($event);
 
         return new UpdateTagResponse($tag);
     }

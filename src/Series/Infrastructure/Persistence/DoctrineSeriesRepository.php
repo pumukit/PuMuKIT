@@ -3,7 +3,7 @@
 namespace App\Series\Infrastructure\Persistence;
 
 use App\Series\Domain\Repository\SeriesRepositoryInterface;
-use Doctrine\ODM\MongoDB\DocumentManager;
+use App\Shared\Infrastructure\Persistence\DoctrineObjectManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -15,21 +15,21 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
         'oneSeries.publicDate' => 'public_date',
     ];
 
-    public function __construct(private DocumentManager $documentManager) {}
+    public function __construct(private DoctrineObjectManager $objectManager) {}
 
     public function findAll(): iterable
     {
-        return $this->documentManager->getRepository(Series::class)->findAll();
+        return $this->objectManager->getRepository(Series::class)->findAll();
     }
 
     public function find(string $id): ?Series
     {
-        return $this->documentManager->getRepository(Series::class)->find($id);
+        return $this->objectManager->find(Series::class, $id);
     }
 
     public function findByFilters(array $filters = []): array
     {
-        $qb = $this->documentManager->createQueryBuilder(Series::class);
+        $qb = $this->objectManager->getDocumentManager()->createQueryBuilder(Series::class);
 
         if (!empty($filters['title'])) {
             $qb->field('title.es')->equals($filters['title']);
@@ -40,7 +40,7 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
 
     public function countMultimediaObjects(string $seriesId): int
     {
-        return $this->documentManager->getRepository(MultimediaObject::class)
+        return $this->objectManager->getDocumentManager()->getRepository(MultimediaObject::class)
             ->createQueryBuilder()
             ->field('series')->equals(new ObjectId($seriesId))
             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
@@ -53,7 +53,7 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
 
     public function countEventMultimediaObjects(string $seriesId): int
     {
-        return $this->documentManager->getRepository(MultimediaObject::class)
+        return $this->objectManager->getDocumentManager()->getRepository(MultimediaObject::class)
             ->createQueryBuilder()
             ->field('series')->equals(new ObjectId($seriesId))
             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
@@ -66,7 +66,7 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
 
     public function findByFiltersPaginated(array $filters, int $page, int $limit, ?string $sort = null, ?string $order = null): array
     {
-        $qb = $this->documentManager->createQueryBuilder(Series::class);
+        $qb = $this->objectManager->getDocumentManager()->createQueryBuilder(Series::class);
 
         foreach ($filters as $field => $value) {
             $qb->field($field)->equals($value);
@@ -84,7 +84,7 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
 
     public function countByFilters(array $filters): int
     {
-        $qb = $this->documentManager->createQueryBuilder(Series::class);
+        $qb = $this->objectManager->getDocumentManager()->createQueryBuilder(Series::class);
 
         foreach ($filters as $field => $value) {
             $qb->field($field)->equals($value);
@@ -104,7 +104,7 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
         $sortField = $fieldMapping[$sort] ?? 'title';
         $sortDirection = 'asc' === strtolower($order) ? 1 : -1;
 
-        $qb = $this->documentManager
+        $qb = $this->objectManager->getDocumentManager()
             ->getRepository(MultimediaObject::class)
             ->createQueryBuilder()
             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
@@ -129,7 +129,7 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
         $sortField = $fieldMapping[$sort] ?? 'title';
         $sortDirection = 'asc' === strtolower($order) ? 1 : -1;
 
-        $qb = $this->documentManager
+        $qb = $this->objectManager->getDocumentManager()
             ->getRepository(MultimediaObject::class)
             ->createQueryBuilder()
             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
@@ -145,13 +145,13 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
 
     public function delete(Series $series): void
     {
-        $this->documentManager->remove($series);
-        $this->documentManager->flush();
+        $this->objectManager->getDocumentManager()->remove($series);
+        $this->objectManager->getDocumentManager()->flush();
     }
 
     public function countEvents(string $seriesId): int
     {
-        return $this->documentManager->getRepository(MultimediaObject::class)
+        return $this->objectManager->getDocumentManager()->getRepository(MultimediaObject::class)
             ->createQueryBuilder()
             ->field('series')->equals(new ObjectId($seriesId))
             ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
@@ -164,7 +164,7 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
 
     public function save(Series $series): void
     {
-        $this->documentManager->persist($series);
-        $this->documentManager->flush();
+        $this->objectManager->getDocumentManager()->persist($series);
+        $this->objectManager->getDocumentManager()->flush();
     }
 }

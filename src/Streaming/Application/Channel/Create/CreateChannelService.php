@@ -7,13 +7,13 @@ namespace App\Streaming\Application\Channel\Create;
 use App\Streaming\Domain\Event\ChannelCreatedEvent;
 use App\Streaming\Domain\Repository\ChannelRepositoryInterface;
 use Pumukit\SchemaBundle\Document\Live;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use App\Shared\Domain\EventBusInterface;
 
 final class CreateChannelService
 {
     public function __construct(
         private readonly ChannelRepositoryInterface $repository,
-        private readonly EventDispatcherInterface $eventDispatcher
+        private readonly EventBusInterface $eventBus
     ) {}
 
     public function __invoke(CreateChannelRequest $request): CreateChannelResponse
@@ -43,7 +43,7 @@ final class CreateChannelService
 
         $this->repository->save($channel);
 
-        $this->eventDispatcher->dispatch(
+        $this->eventBus->dispatch(
             new ChannelCreatedEvent($channel),
             ChannelCreatedEvent::NAME
         );

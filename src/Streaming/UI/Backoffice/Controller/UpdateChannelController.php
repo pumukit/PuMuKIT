@@ -8,6 +8,7 @@ use App\Streaming\Application\Channel\Update\UpdateChannelRequest;
 use App\Streaming\Application\Channel\Update\UpdateChannelService;
 use App\Streaming\Application\Channel\View\ViewChannelRequest;
 use App\Streaming\Application\Channel\View\ViewChannelService;
+use App\Shared\Domain\TranslatorInterface;
 use Pumukit\SchemaBundle\Document\Live;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,8 @@ final class UpdateChannelController extends AbstractController
 {
     public function __construct(
         private readonly ViewChannelService $viewService,
-        private readonly UpdateChannelService $updateService
+        private readonly UpdateChannelService $updateService,
+        private readonly TranslatorInterface $translator
     ) {}
 
     public function __invoke(Request $request, string $id): Response
@@ -45,7 +47,7 @@ final class UpdateChannelController extends AbstractController
 
             ($this->updateService)($updateRequest);
 
-            $this->addFlash('success', 'Canal actualizado correctamente');
+            $this->addFlash('success', $this->translator->trans('streaming.flash.channel_updated', [], 'streaming'));
 
             return $this->redirectToRoute('streaming_channel_view', ['id' => $id]);
         }

@@ -10,6 +10,7 @@ use App\Taxonomy\Application\UpdateTag\UpdateTagRequest;
 use App\Taxonomy\Application\UpdateTag\UpdateTagService;
 use App\Taxonomy\Application\ViewTag\ViewTagRequest;
 use App\Taxonomy\Application\ViewTag\ViewTagService;
+use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,8 @@ final class UpdateTagController extends AbstractController
     public function __construct(
         private ViewTagService $viewTagService,
         private UpdateTagService $updateTagService,
-        private ListTagsService $listTagsService
+        private ListTagsService $listTagsService,
+        private TranslatorInterface $translator
     ) {}
 
     public function __invoke(string $id, Request $request): Response
@@ -47,11 +49,19 @@ final class UpdateTagController extends AbstractController
 
                 ($this->updateTagService)($updateTagRequest);
 
-                $this->addFlash('success', sprintf('Tag "%s" updated successfully.', $tag->getCod()));
+                $this->addFlash('success', $this->translator->trans(
+                    'taxonomy.flash.updated',
+                    ['%cod%' => $tag->getCod()],
+                    'taxonomy'
+                ));
 
                 return $this->redirectToRoute('taxonomy_tag_index');
             } catch (\Exception $e) {
-                $this->addFlash('error', sprintf('Error updating tag: %s', $e->getMessage()));
+                $this->addFlash('error', $this->translator->trans(
+                    'taxonomy.error.update_failed',
+                    ['%message%' => $e->getMessage()],
+                    'taxonomy'
+                ));
             }
         }
 
