@@ -20,6 +20,11 @@ services:
     autowire: true
     autoconfigure: true
 
+  App\MultimediaObject\UI\Backoffice\Presenter\:
+    resource: '../../Presenter'
+    autowire: true
+    autoconfigure: true
+
   App\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface: '@App\MultimediaObject\Infrastructure\Persistence\DoctrineMultimediaObjectRepository'
 
   App\MultimediaObject\Infrastructure\Persistence\DoctrineMultimediaObjectRepository:

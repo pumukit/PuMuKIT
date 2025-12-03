@@ -27,16 +27,6 @@ final class MultimediaObjectBulkOperationsSubscriber implements EventSubscriberI
             confirmMessage: 'Are you sure you want to delete the selected multimedia objects? This action cannot be undone.',
             priority: 100
         );
-
-        $event->addOperation(
-            key: 'toggle_announce',
-            label: 'Toggle Announce',
-            handler: 'multimedia_object_bulk_toggle_announce',
-            type: 'route',
-            icon: 'fa-eye',
-            confirmMessage: 'Toggle publish/hide status for selected multimedia objects?',
-            priority: 90
-        );
     }
 }
 

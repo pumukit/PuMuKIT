@@ -1,16 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\MultimediaObject\Domain\Repository;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 interface MultimediaObjectRepositoryInterface
 {
-    public function find(string $id): ?object;
+    public function find(string $id): ?MultimediaObject;
 
-    public function findBySeriesId(string $seriesId): iterable;
+    public function findAll(int $page = 1, int $limit = 10, ?array $sort = null, ?array $filters = []): iterable;
+
+    public function countAll(?array $filters = []): int;
 
     public function save(MultimediaObject $multimediaObject): void;
 
     public function delete(MultimediaObject $multimediaObject): void;
 }
+

@@ -1,28 +1,77 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\MultimediaObject\Infrastructure\Persistence;
 
 use App\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 final class DoctrineMultimediaObjectRepository implements MultimediaObjectRepositoryInterface
 {
-    public function __construct(private DocumentManager $documentManager) {}
+    public function __construct(private readonly DocumentManager $documentManager) {}
 
     public function find(string $id): ?MultimediaObject
     {
-        return $this->documentManager->getRepository(MultimediaObject::class)->find($id);
+        return $this->documentManager
+            ->getRepository(MultimediaObject::class)
+            ->find($id);
     }
 
-    public function findBySeriesId(string $seriesId): iterable
+    public function findAll(int $page = 1, int $limit = 10, ?array $sort = null, ?array $filters = []): iterable
     {
-        return $this->documentManager->createQueryBuilder(MultimediaObject::class)
-            ->field('series')->equals(new ObjectId($seriesId))
-            ->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE)
-            ->getQuery()->execute()->toArray()
-        ;
+        $qb = $this->documentManager
+            ->getRepository(MultimediaObject::class)
+            ->createQueryBuilder();
+
+        $qb->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE);
+        if (!empty($filters)) {
+            foreach ($filters as $field => $value) {
+                if ($field === 'series') {
+                    $qb->field('series')->equals($value);
+                } elseif ($field === 'status') {
+                    $qb->field('status')->equals((int) $value);
+                } elseif ($field === 'search') {
+                    $qb->addOr($qb->expr()->field('title.en')->equals(new \MongoDB\BSON\Regex($value, 'i')));
+                    $qb->addOr($qb->expr()->field('title.es')->equals(new \MongoDB\BSON\Regex($value, 'i')));
+                }
+            }
+        }
+
+        if ($sort) {
+            $mongoSort = $this->convertSortToMongoFormat($sort);
+            $qb->sort($mongoSort);
+        }
+
+        $qb->skip(($page - 1) * $limit)
+            ->limit($limit);
+
+        return $qb->getQuery()->execute();
+    }
+
+    public function countAll(?array $filters = []): int
+    {
+        $qb = $this->documentManager
+            ->getRepository(MultimediaObject::class)
+            ->createQueryBuilder();
+
+        if (!empty($filters)) {
+            foreach ($filters as $field => $value) {
+                if ($field === 'series') {
+                    $qb->field('series')->equals($value);
+                } elseif ($field === 'status') {
+                    $qb->field('status')->equals((int) $value);
+                } elseif ($field === 'search') {
+                    $qb->addOr($qb->expr()->field('title.en')->equals(new \MongoDB\BSON\Regex($value, 'i')));
+                    $qb->addOr($qb->expr()->field('title.es')->equals(new \MongoDB\BSON\Regex($value, 'i')));
+                }
+            }
+        }
+
+        return $qb->count()
+            ->getQuery()
+            ->execute();
     }
 
     public function save(MultimediaObject $multimediaObject): void
@@ -36,4 +85,20 @@ final class DoctrineMultimediaObjectRepository implements MultimediaObjectReposi
         $this->documentManager->remove($multimediaObject);
         $this->documentManager->flush();
     }
+
+    private function convertSortToMongoFormat(array $sort): array
+    {
+        $mongoSort = [];
+        foreach ($sort as $field => $direction) {
+            if (is_string($direction)) {
+                $mongoSort[$field] = strtolower($direction) === 'asc' ? 1 : -1;
+            } elseif (is_int($direction)) {
+                $mongoSort[$field] = $direction >= 0 ? 1 : -1;
+            } else {
+                $mongoSort[$field] = -1;
+            }
+        }
+        return $mongoSort;
+    }
 }
+

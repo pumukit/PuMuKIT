@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\MultimediaObject\Domain\Exception;
 
-final class MultimediaObjectNotFoundException extends \DomainException
+use RuntimeException;
+
+final class MultimediaObjectNotFoundException extends RuntimeException
 {
-    public function __construct(string $multimediaObjectId)
+    public static function withId(string $id): self
     {
-        parent::__construct(sprintf("Multimedia Object with id '%s' not found", $multimediaObjectId));
+        return new self(sprintf('MultimediaObject with ID "%s" not found', $id));
     }
 }
+

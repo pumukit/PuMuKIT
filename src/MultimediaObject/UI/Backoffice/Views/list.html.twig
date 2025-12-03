@@ -1,0 +1,27 @@
+{% extends '@Shared/UI/Backoffice/Views/layout/layout.html.twig' %}
+
+{% block body %}
+<div class="container-fluid mt-3">
+    {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'Multimedia Objects'} %}
+
+    {% include '@Shared/UI/Backoffice/Views/components/table/_table.html.twig' with {
+        id: 'multimediaObjectsTable',
+        title: 'Multimedia Objects',
+        server_side: true,
+        ajax_url: path('multimedia_objects_list_data'),
+        checkbox: true,
+        bulk_operations_template: '@MultimediaObject/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
+        columns: [
+            {'field': 'id', 'label': 'ID', 'visible': false},
+            {'field': 'thumbnail', 'label': 'Thumbnail', 'sortable': false},
+            {'field': 'title', 'label': 'Title', 'sortable': true},
+            {'field': 'series', 'label': 'Series', 'sortable': false},
+            {'field': 'status', 'label': 'Status', 'sortable': true},
+            {'field': 'public_date', 'label': 'Publication Date', 'sortable': true},
+            {'field': 'duration', 'label': 'Duration', 'sortable': false},
+            {'field': 'actions', 'label': 'Actions', 'align': 'right'}
+        ]
+    } %}
+</div>
+{% endblock %}
+

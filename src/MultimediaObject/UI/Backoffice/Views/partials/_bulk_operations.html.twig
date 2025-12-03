@@ -1,53 +1,35 @@
 <div id="bulk-action-toolbar" class="d-flex gap-2 mb-2">
     <select id="bulk-action-select" class="form-select" data-operations='{{ bulk_operations_config|default('{}')|raw }}'>
-        <option value="">{{ "Select an operation..."|trans }}</option>
-        {% for operation in multimediaObjectBulkOperations %}
-            <option
-                value="{{ operation.key }}"
-                data-type="{{ operation.type }}"
-                data-handler="{{ operation.handler }}"
-                {% if operation.icon %}data-icon="{{ operation.icon }}"{% endif %}
-                {% if operation.confirm_message %}data-confirm="{{ operation.confirm_message|trans }}"{% endif %}>
-                {% if operation.icon %}<i class="fa {{ operation.icon }}"></i> {% endif %}
-                {{ operation.label|trans }}
-            </option>
-        {% endfor %}
+        <option value="">Select an option...</option>
+        {% if bulkOperations is defined and bulkOperations is not empty %}
+            {% for operation in bulkOperations %}
+                <option
+                    value="{{ operation.key }}"
+                    data-type="{{ operation.type }}"
+                    data-handler="{{ operation.handler }}"
+                    {% if operation.icon %}data-icon="{{ operation.icon }}"{% endif %}
+                    {% if operation.confirm_message %}data-confirm="{{ operation.confirm_message }}"{% endif %}>
+                    {% if operation.icon %}<i class="fa {{ operation.icon }}"></i> {% endif %}
+                    {{ operation.label }}
+                </option>
+            {% endfor %}
+        {% endif %}
     </select>
-    <button id="multimedia-bulk-action-apply" class="btn btn-pumukit">
-        {{ "Apply"|trans }}
-    </button>
+    <button id="bulk-action-apply" class="btn btn-sm btn-primary">Apply</button>
 </div>
 
 <script>
+(function() {
+    'use strict';
+
     document.addEventListener('DOMContentLoaded', function() {
-        const selectElement = document.getElementById('multimedia-bulk-action-select');
-        const applyButton = document.getElementById('multimedia-bulk-action-apply');
-        const tableElement = document.getElementById('multimediaObjectsTable');
+        const selectElement = document.getElementById('bulk-action-select');
+        const applyButton = document.getElementById('bulk-action-apply');
+        const tableElement = document.querySelector('[data-toolbar="#bulk-action-toolbar"]');
 
         if (!selectElement || !applyButton || !tableElement) {
-            console.error('Multimedia bulk operations: Required elements not found');
+            console.error('Bulk operations: Required elements not found');
             return;
-        }
-
-        function showFlashMessage(type, message) {
-            const container = document.querySelector('.flash-container');
-            if (!container) {
-                console.error('Flash container not found');
-                return;
-            }
-
-            const alertDiv = document.createElement('div');
-            alertDiv.className = `custom-flash ${type === 'success' ? 'success-flash' : 'danger-flash'} alert-dismissible fade show mb-2 shadow-lg rounded-3`;
-            alertDiv.setAttribute('role', 'alert');
-            alertDiv.textContent = message;
-
-            container.appendChild(alertDiv);
-
-            // Auto-dismiss after 3 seconds
-            setTimeout(() => {
-                const bsAlert = bootstrap.Alert.getOrCreateInstance(alertDiv);
-                bsAlert.close();
-            }, 3000);
         }
 
         applyButton.addEventListener('click', function() {
@@ -55,59 +37,70 @@
             const operation = selectedOption.value;
 
             if (!operation) {
-                showFlashMessage('danger', '{{ "Please select an operation"|trans }}');
+                alert('Please select an operation');
                 return;
             }
 
             const selectedRows = $(tableElement).bootstrapTable('getSelections');
 
             if (selectedRows.length === 0) {
-                showFlashMessage('danger', '{{ "Please select at least one item"|trans }}');
+                alert('Please select at least one item');
                 return;
             }
 
             const selectedIds = selectedRows.map(row => row.id);
-            const confirmMessage = selectedOption.dataset.confirm;
+            const handler = selectedOption.getAttribute('data-handler');
+            const type = selectedOption.getAttribute('data-type');
+            const confirmMessage = selectedOption.getAttribute('data-confirm');
 
             if (confirmMessage && !confirm(confirmMessage)) {
                 return;
             }
 
-            const operationType = selectedOption.dataset.type;
-            const handler = selectedOption.dataset.handler;
-
-            console.log('Multimedia bulk operation:', operation, 'IDs:', selectedIds);
-
-            if (operationType === 'url') {
-                fetch(handler, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ ids: selectedIds })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            showFlashMessage('success', data.message || '{{ "Operation completed successfully"|trans }}');
-                            $(tableElement).bootstrapTable('refresh');
-                            selectElement.selectedIndex = 0;
-                        } else {
-                            showFlashMessage('danger', data.message || '{{ "Operation failed"|trans }}');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        showFlashMessage('danger', '{{ "An error occurred"|trans }}');
-                    });
-            } else if (operationType === 'js') {
+            if (type === 'url') {
+                executeBulkOperation(handler, selectedIds, tableElement);
+            } else if (type === 'js') {
                 if (typeof window[handler] === 'function') {
                     window[handler](selectedIds);
                 } else {
-                    console.error('Handler function not found:', handler);
-                    showFlashMessage('danger', '{{ "Handler function not found"|trans }}');
+                    console.error('Bulk operation handler not found:', handler);
+                    alert('Error: Operation handler not found');
                 }
             }
+
+            selectElement.selectedIndex = 0;
         });
+
+        function executeBulkOperation(url, ids, tableElement) {
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ids: ids })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message || 'Operation completed successfully');
+                    $(tableElement).bootstrapTable('refresh');
+                } else {
+                    let errorMsg = data.message || 'Error executing operation';
+                    if (data.errors && data.errors.length > 0) {
+                        errorMsg += '\n\nErrors:\n' + data.errors.join('\n');
+                    }
+                    alert(errorMsg);
+                    if (data.deleted_count > 0) {
+                        $(tableElement).bootstrapTable('refresh');
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error executing bulk operation:', error);
+                alert('Error executing operation');
+            });
+        }
     });
+})();
 </script>
+

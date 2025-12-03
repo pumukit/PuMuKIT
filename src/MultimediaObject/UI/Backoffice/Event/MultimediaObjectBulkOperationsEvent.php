@@ -12,18 +12,6 @@ final class MultimediaObjectBulkOperationsEvent extends Event
 
     private array $operations = [];
 
-    /**
-     * Add a bulk operation for multimedia objects
-     *
-     * @param string $key Unique identifier for the operation
-     * @param string $label Label to show in the dropdown
-     * @param string $handler JavaScript handler function name, URL endpoint, or Symfony route name
-     * @param string $type Type of handler: 'js', 'url', or 'route'
-     * @param string $icon Font Awesome icon class (optional)
-     * @param string $confirmMessage Confirmation message before executing (optional)
-     * @param array $routeParams Route parameters if type is 'route' (optional)
-     * @param int $priority Higher priority renders first (default: 0)
-     */
     public function addOperation(
         string $key,
         string $label,
@@ -48,7 +36,7 @@ final class MultimediaObjectBulkOperationsEvent extends Event
 
     public function getOperations(): array
     {
-        usort($this->operations, fn($a, $b) => $a['priority'] <=> $b['priority']);
+        usort($this->operations, fn ($a, $b) => $b['priority'] <=> $a['priority']);
 
         return $this->operations;
     }

@@ -22,7 +22,7 @@ final class MultimediaObjectMenuSubscriber implements EventSubscriberInterface
         $event->addItem(
             key: 'multimedia_object_catalog',
             label: 'Media',
-            route: 'transcoding_index',
+            route: 'multimedia_objects_list',
             parent: 'media_manager',
             icon: 'fa-photo-video',
             priority: 100,
