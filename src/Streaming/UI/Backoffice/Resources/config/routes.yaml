@@ -36,6 +36,6 @@ streaming_channel_delete:
 
 streaming_channels_bulk_delete:
   path: /admin/backend/streaming/channels/bulk/delete
-  controller: App\Streaming\UI\Backoffice\Controller\BulkDeleteChannelsController
+  controller: App\Streaming\UI\Backoffice\Controller\BulkDeleteChannelController
   methods: [POST]
 

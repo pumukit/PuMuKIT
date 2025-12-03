@@ -9,14 +9,14 @@ use App\Streaming\Application\Channel\Delete\DeleteChannelRequest;
 use App\Streaming\Application\Channel\Delete\DeleteChannelService;
 use App\Streaming\Domain\Exception\ChannelNotFoundException;
 
-final class BulkDeleteChannelsService
+final class BulkDeleteChannelService
 {
     public function __construct(
         private readonly DeleteChannelService $deleteChannelService,
         private readonly LoggerInterface $logger
     ) {}
 
-    public function __invoke(BulkDeleteChannelsRequest $request): BulkDeleteChannelsResponse
+    public function __invoke(BulkDeleteChannelRequest $request): BulkDeleteChannelResponse
     {
         $deletedCount = 0;
         $failedIds = [];
@@ -47,7 +47,7 @@ final class BulkDeleteChannelsService
             }
         }
 
-        return new BulkDeleteChannelsResponse(
+        return new BulkDeleteChannelResponse(
             deletedCount: $deletedCount,
             failedIds: $failedIds,
             errors: $errors

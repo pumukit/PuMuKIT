@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\MultimediaObject\Application\BulkDelete;
+namespace App\Streaming\Application\Channel\BulkDelete;
 
-final class BulkDeleteMultimediaObjectsResponse
+final class BulkDeleteChannelResponse
 {
     public function __construct(
         public readonly int $deletedCount,
@@ -44,13 +44,13 @@ final class BulkDeleteMultimediaObjectsResponse
     {
         if ($this->isFullySuccessful()) {
             return sprintf(
-                'Successfully deleted %d multimedia object(s)',
+                'Se eliminaron correctamente %d canal(es)',
                 $this->deletedCount
             );
         }
 
         return sprintf(
-            'Deleted %d multimedia object(s) of %d. %d failed',
+            'Se eliminaron %d canal(es) de %d. %d fallaron',
             $this->deletedCount,
             $this->deletedCount + count($this->failedIds),
             count($this->failedIds)
@@ -61,7 +61,7 @@ final class BulkDeleteMultimediaObjectsResponse
     {
         $formatted = [];
         foreach ($this->errors as $id => $error) {
-            $formatted[] = sprintf('MultimediaObject %s: %s', $id, $error);
+            $formatted[] = sprintf('Canal %s: %s', $id, $error);
         }
 
         return $formatted;

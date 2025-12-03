@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Streaming\Application\Channel\BulkDelete;
 
-final class BulkDeleteChannelsRequest
+final class BulkDeleteChannelRequest
 {
     public function __construct(
         public readonly array $channelIds
     ) {
-        BulkDeleteChannelsValidator::validate($this);
+        BulkDeleteChannelValidator::validate($this);
     }
 }
 

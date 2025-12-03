@@ -6,9 +6,9 @@ namespace App\Streaming\Application\Channel\BulkDelete;
 
 use InvalidArgumentException;
 
-final class BulkDeleteChannelsValidator
+final class BulkDeleteChannelValidator
 {
-    public static function validate(BulkDeleteChannelsRequest $request): void
+    public static function validate(BulkDeleteChannelRequest $request): void
     {
         if (empty($request->channelIds)) {
             throw new InvalidArgumentException('At least one channel ID must be provided');

@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace App\Streaming\UI\Backoffice\Controller;
 
 use App\Shared\Domain\LoggerInterface;
-use App\Streaming\Application\Channel\BulkDelete\BulkDeleteChannelsRequest;
-use App\Streaming\Application\Channel\BulkDelete\BulkDeleteChannelsService;
+use App\Streaming\Application\Channel\BulkDelete\BulkDeleteChannelRequest;
+use App\Streaming\Application\Channel\BulkDelete\BulkDeleteChannelService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-final class BulkDeleteChannelsController extends AbstractController
+final class BulkDeleteChannelController extends AbstractController
 {
     public function __construct(
-        private readonly BulkDeleteChannelsService $bulkDeleteChannelsService,
+        private readonly BulkDeleteChannelService $bulkDeleteChannelService,
         private readonly LoggerInterface $logger
     ) {}
 
@@ -24,8 +24,8 @@ final class BulkDeleteChannelsController extends AbstractController
         $ids = $data['ids'] ?? [];
 
         try {
-            $dto = new BulkDeleteChannelsRequest($ids);
-            $response = ($this->bulkDeleteChannelsService)($dto);
+            $dto = new BulkDeleteChannelRequest($ids);
+            $response = ($this->bulkDeleteChannelService)($dto);
 
             $statusCode = $response->isFullySuccessful() ? 200 : 207;
 
