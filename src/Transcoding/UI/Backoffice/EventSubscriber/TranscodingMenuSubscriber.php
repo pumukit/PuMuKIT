@@ -22,7 +22,7 @@ final class TranscodingMenuSubscriber implements EventSubscriberInterface
         $event->addItem(
             key: 'transcoding_jobs',
             label: 'Jobs',
-            route: 'transcoding_index',
+            route: 'transcoding_jobs_list',
             parent: 'transcoding',
             icon: 'fa-cogs',
             priority: 100,

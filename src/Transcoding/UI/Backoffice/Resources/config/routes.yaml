@@ -1,3 +1,28 @@
 transcoding_index:
   path: /admin/backend/transcoding
   controller: App\Transcoding\UI\Backoffice\Controller\IndexController
+
+transcoding_jobs_list:
+  path: /admin/backend/transcoding/jobs
+  controller: App\Transcoding\UI\Backoffice\Controller\ListJobsController
+  methods: [GET]
+
+transcoding_jobs_list_data:
+  path: /admin/backend/transcoding/jobs/data
+  controller: App\Transcoding\UI\Backoffice\Controller\ListJobsDataController
+  methods: [GET]
+
+transcoding_job_view:
+  path: /admin/backend/transcoding/jobs/{id}
+  controller: App\Transcoding\UI\Backoffice\Controller\ViewJobController
+  methods: [GET]
+  requirements:
+    id: '[a-f0-9]{24}'
+
+transcoding_job_cancel:
+  path: /admin/backend/transcoding/jobs/{id}/cancel
+  controller: App\Transcoding\UI\Backoffice\Controller\CancelJobController
+  methods: [POST]
+  requirements:
+    id: '[a-f0-9]{24}'
+

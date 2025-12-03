@@ -1,0 +1,59 @@
+{% extends '@Shared/UI/Backoffice/Views/layout/layout.html.twig' %}
+
+{% block body %}
+<div class="container-fluid mt-3">
+    {% include '@Shared/UI/Backoffice/Views/partials/_title.html.twig' with {'page_title': 'Jobs de Transcodificación'} %}
+
+    {% include '@Shared/UI/Backoffice/Views/components/table/_table.html.twig' with {
+        id: 'jobsTable',
+        title: 'Jobs',
+        server_side: true,
+        ajax_url: path('transcoding_jobs_list_data'),
+        checkbox: false,
+        columns: [
+            {'field': 'id', 'label': 'ID', 'visible': false},
+            {'field': 'mm_id', 'label': 'Multimedia Object', 'sortable': true},
+            {'field': 'profile', 'label': 'Profile', 'sortable': true},
+            {'field': 'status_text', 'label': 'Status', 'sortable': true},
+            {'field': 'priority', 'label': 'Priority', 'sortable': true},
+            {'field': 'cpu', 'label': 'CPU'},
+            {'field': 'timeini', 'label': 'Created', 'sortable': true},
+            {'field': 'timestart', 'label': 'Started', 'sortable': true},
+            {'field': 'timeend', 'label': 'Finished', 'sortable': true},
+            {'field': 'actions', 'label': 'Actions', 'align': 'right'}
+        ]
+    } %}
+</div>
+
+<script>
+function cancelJob(jobId) {
+    if (!confirm('¿Está seguro de que desea cancelar este job?')) {
+        return;
+    }
+
+    const cancelUrl = `/admin/backend/transcoding/jobs/${jobId}/cancel`;
+
+    fetch(cancelUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            $('#jobsTable').bootstrapTable('refresh');
+            alert('Job cancelado correctamente');
+        } else {
+            alert('Error al cancelar el job');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al cancelar el job');
+    });
+}
+</script>
+{% endblock %}
+
+

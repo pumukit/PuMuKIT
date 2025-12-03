@@ -1,0 +1,131 @@
+{% extends '@Shared/UI/Backoffice/Views/layout/layout.html.twig' %}
+
+{% block body %}
+<div class="container-fluid mt-3">
+    <div class="row mb-3">
+        <div class="col">
+            <h1>Job: {{ job.profile }}</h1>
+            <a href="{{ path('transcoding_jobs_list') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Volver al listado
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Información General</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">ID:</dt>
+                        <dd class="col-sm-8">{{ job.id }}</dd>
+
+                        <dt class="col-sm-4">Multimedia Object:</dt>
+                        <dd class="col-sm-8">{{ job.mmId }}</dd>
+
+                        <dt class="col-sm-4">Profile:</dt>
+                        <dd class="col-sm-8">{{ job.profile }}</dd>
+
+                        <dt class="col-sm-4">Status:</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge bg-{{ job.status == 3 ? 'success' : (job.status == -1 ? 'danger' : 'warning') }}">
+                                {{ job.statusText }}
+                            </span>
+                        </dd>
+
+                        <dt class="col-sm-4">Priority:</dt>
+                        <dd class="col-sm-8">{{ job.priority }}</dd>
+
+                        <dt class="col-sm-4">CPU:</dt>
+                        <dd class="col-sm-8">{{ job.cpu ?? 'N/A' }}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Tiempos</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Creado:</dt>
+                        <dd class="col-sm-8">{{ job.timeini ? job.timeini|date('Y-m-d H:i:s') : 'N/A' }}</dd>
+
+                        <dt class="col-sm-4">Iniciado:</dt>
+                        <dd class="col-sm-8">{{ job.timestart ? job.timestart|date('Y-m-d H:i:s') : 'N/A' }}</dd>
+
+                        <dt class="col-sm-4">Finalizado:</dt>
+                        <dd class="col-sm-8">{{ job.timeend ? job.timeend|date('Y-m-d H:i:s') : 'N/A' }}</dd>
+
+                        <dt class="col-sm-4">Duración:</dt>
+                        <dd class="col-sm-8">{{ job.duration }} segundos</dd>
+                    </dl>
+                </div>
+            </div>
+
+            {% if job.status in [0, 1, 2] %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Acciones</h5>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-warning" onclick="cancelJob('{{ job.id }}')">
+                        <i class="fas fa-stop"></i> Cancelar Job
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if job.output %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Output</h5>
+                </div>
+                <div class="card-body">
+                    <pre class="bg-dark text-light p-3">{{ job.output }}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function cancelJob(jobId) {
+    if (!confirm('¿Está seguro de que desea cancelar este job?')) {
+        return;
+    }
+
+    const cancelUrl = `/admin/backend/transcoding/jobs/${jobId}/cancel`;
+
+    fetch(cancelUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Job cancelado correctamente');
+            location.reload();
+        } else {
+            alert('Error al cancelar el job');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al cancelar el job');
+    });
+}
+</script>
+{% endblock %}
+
