@@ -20,7 +20,10 @@
     {% if id == 'tagsTreeTable' %}
         <div class="row">
             <div class="col-2">
-                {% include '@Taxonomy/UI/Backoffice/Views/partials/_bulk_operations.html.twig' %}
+                {% include '@Shared/UI/Backoffice/Views/partials/_bulk_operations.html.twig' with {
+                    translation_domain: 'taxonomy',
+                    selection_mode: 'checkbox'
+                } %}
             </div>
             <div class="col">
                 <div class="d-flex justify-content-end gap-2">

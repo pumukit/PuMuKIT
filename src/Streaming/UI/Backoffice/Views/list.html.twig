@@ -10,7 +10,10 @@
         server_side: true,
         ajax_url: path('streaming_channels_list_data'),
         checkbox: true,
-        bulk_operations_template: '@Streaming/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
+        bulk_operations_template: '@Shared/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
+        bulk_operations_config: {
+            translation_domain: 'streaming'
+        },
         columns: [
             {'field': 'id', 'label': 'ID', 'visible': false},
             {'field': 'name', 'label': 'streaming.table.name'|trans({}, 'streaming'), 'sortable': true},

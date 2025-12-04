@@ -11,7 +11,10 @@
             server_side: true,
             ajax_url: path('users_list_data'),
             checkbox: true,
-            bulk_operations_template: '@User/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
+            bulk_operations_template: '@Shared/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
+            bulk_operations_config: {
+                translation_domain: 'user'
+            },
             columns: [
                 {'field': 'fullName', 'label': 'user.table.full_name'|trans({}, 'user'), 'sortable': true},
                 {'field': 'username', 'label': 'user.table.username'|trans({}, 'user'), 'sortable': true},

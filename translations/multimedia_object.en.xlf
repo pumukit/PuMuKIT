@@ -53,6 +53,48 @@
                 <source>multimedia_object.button.back_to_series</source>
                 <target>Back to Series</target>
             </trans-unit>
+
+            <!-- Bulk Operations -->
+            <trans-unit id="bulk.select_option">
+                <source>bulk.select_option</source>
+                <target>Select an option...</target>
+            </trans-unit>
+            <trans-unit id="bulk.apply">
+                <source>bulk.apply</source>
+                <target>Apply</target>
+            </trans-unit>
+            <trans-unit id="bulk.select_operation_required">
+                <source>bulk.select_operation_required</source>
+                <target>Please select an operation</target>
+            </trans-unit>
+            <trans-unit id="bulk.select_items_required">
+                <source>bulk.select_items_required</source>
+                <target>Please select at least one item</target>
+            </trans-unit>
+            <trans-unit id="bulk.operation_success">
+                <source>bulk.operation_success</source>
+                <target>Operation completed successfully</target>
+            </trans-unit>
+            <trans-unit id="bulk.operation_failed">
+                <source>bulk.operation_failed</source>
+                <target>Operation failed</target>
+            </trans-unit>
+            <trans-unit id="bulk.error_occurred">
+                <source>bulk.error_occurred</source>
+                <target>An error occurred</target>
+            </trans-unit>
+            <trans-unit id="bulk.handler_not_found">
+                <source>bulk.handler_not_found</source>
+                <target>Handler function not found</target>
+            </trans-unit>
+            <trans-unit id="bulk.operation_not_implemented">
+                <source>bulk.operation_not_implemented</source>
+                <target>Operation not yet implemented</target>
+            </trans-unit>
+            <trans-unit id="bulk.errors">
+                <source>bulk.errors</source>
+                <target>Errors</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -3,7 +3,10 @@
     server_side: true,
     ajax_url: path('series_events_data', {id: series.id}),
     checkbox: true,
-    bulk_operations_template: '@MultimediaObject/UI/Backoffice/Views/partials/_bulk_operations_events.html.twig',
+    bulk_operations_template: '@Shared/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
+    bulk_operations_config: {
+        translation_domain: 'multimedia_object'
+    },
     columns: [
         {'field': 'thumbnail', 'label': 'series.events.table.thumbnail'|trans({}, 'series')},
         {'field': 'title', 'label': 'series.events.table.title'|trans({}, 'series'), 'sortable': true, 'truncate': true},

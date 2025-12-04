@@ -10,7 +10,10 @@
         server_side: true,
         ajax_url: path('playlist_list_data'),
         checkbox: true,
-        bulk_operations_template: '@Playlist/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
+        bulk_operations_template: '@Shared/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
+        bulk_operations_config: {
+            translation_domain: 'playlist'
+        },
         columns: [
             {'field': 'thumbnail', 'label': 'playlist.table.thumbnail'|trans({}, 'playlist')},
             {'field': 'title', 'label': 'playlist.table.title_column'|trans({}, 'playlist'), 'sortable': true},

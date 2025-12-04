@@ -1,0 +1,227 @@
+{% set translation_domain = translation_domain|default('messages') %}
+{% set table_selector = table_selector|default('[data-toolbar="#bulk-action-toolbar"]') %}
+{% set selection_mode = selection_mode|default('bootstrap-table') %}
+
+<div id="bulk-action-toolbar" class="d-flex gap-2 mb-2">
+    <label for="bulk-action-select" style="display:none"></label>
+    <select id="bulk-action-select" class="form-select">
+        <option value="">{{ 'bulk.select_option'|trans({}, translation_domain) }}</option>
+        {% if bulkOperations is defined and bulkOperations is not empty %}
+            {% for operation in bulkOperations %}
+                <option
+                    value="{{ operation.key }}"
+                    data-type="{{ operation.type }}"
+                    data-handler="{{ operation.handler }}"
+                    {% if operation.icon is defined and operation.icon %}data-icon="{{ operation.icon }}"{% endif %}
+                    {% if operation.confirm_message is defined and operation.confirm_message %}data-confirm="{{ operation.confirm_message|trans({}, translation_domain) }}"{% endif %}>
+                    {% if operation.icon is defined and operation.icon %}<i class="fa {{ operation.icon }}"></i> {% endif %}
+                    {{ operation.label|trans({}, translation_domain) }}
+                </option>
+            {% endfor %}
+        {% endif %}
+    </select>
+    <button id="bulk-action-apply" class="btn btn-sm btn-pumukit">{{ 'bulk.apply'|trans({}, translation_domain) }}</button>
+</div>
+
+<script>
+if (typeof PumukitBulkOperations === 'undefined') {
+    window.PumukitBulkOperations = (function() {
+        'use strict';
+
+        const instances = new Map();
+
+        function init(config) {
+            const {
+                selectElementId = 'bulk-action-select',
+                applyButtonId = 'bulk-action-apply',
+                tableSelector = '[data-toolbar="#bulk-action-toolbar"]',
+                selectionMode = 'bootstrap-table',
+                translationDomain = 'messages'
+            } = config;
+
+            const instanceKey = `${selectElementId}-${applyButtonId}`;
+
+            if (instances.has(instanceKey)) {
+                return;
+            }
+
+            const selectElement = document.getElementById(selectElementId);
+            const applyButton = document.getElementById(applyButtonId);
+
+            let tableElement;
+            if (selectionMode === 'bootstrap-table') {
+                tableElement = document.querySelector(tableSelector);
+            } else if (selectionMode === 'checkbox') {
+                tableElement = document.getElementById('tagsTreeTable');
+            }
+
+            if (!selectElement || !applyButton || !tableElement) {
+                console.error('Bulk operations: Required elements not found', {
+                    selectElement: !!selectElement,
+                    applyButton: !!applyButton,
+                    tableElement: !!tableElement
+                });
+                return;
+            }
+
+            applyButton.addEventListener('click', function() {
+                handleApplyClick(selectElement, tableElement, selectionMode);
+            });
+
+            instances.set(instanceKey, true);
+        }
+
+        function handleApplyClick(selectElement, tableElement, selectionMode) {
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            const operation = selectedOption.value;
+
+            if (!operation) {
+                showAlert('{{ 'bulk.select_operation_required'|trans({}, translation_domain) }}');
+                return;
+            }
+
+            const selectedIds = getSelectedIds(tableElement, selectionMode);
+
+            if (selectedIds.length === 0) {
+                showAlert('{{ 'bulk.select_items_required'|trans({}, translation_domain) }}');
+                return;
+            }
+
+            const confirmMessage = selectedOption.dataset.confirm;
+
+            if (confirmMessage && !confirm(confirmMessage)) {
+                return;
+            }
+
+            const operationType = selectedOption.dataset.type;
+            const handler = selectedOption.dataset.handler;
+
+            console.log('Bulk operation:', operation, 'Type:', operationType, 'IDs:', selectedIds);
+
+            if (operationType === 'url') {
+                handleUrlOperation(handler, selectedIds, tableElement, selectElement, selectionMode);
+            } else if (operationType === 'js') {
+                handleJsOperation(handler, selectedIds, tableElement, selectElement, selectionMode);
+            } else if (operationType === 'core') {
+                handleCoreOperation(operation, selectedIds, tableElement, selectElement, selectionMode);
+            }
+        }
+
+        function getSelectedIds(tableElement, selectionMode) {
+            if (selectionMode === 'checkbox') {
+                const selectedRows = document.querySelectorAll('.row-checkbox:checked');
+                return Array.from(selectedRows).map(checkbox => checkbox.value);
+            } else {
+                const selectedRows = $(tableElement).bootstrapTable('getSelections');
+                return selectedRows.map(row => row.id);
+            }
+        }
+
+        function handleCoreOperation(operation, ids, tableElement, selectElement, selectionMode) {
+            console.log('Core operation:', operation, 'not implemented');
+            showAlert('{{ 'bulk.operation_not_implemented'|trans({}, translation_domain) }}');
+        }
+
+        function handleUrlOperation(url, ids, tableElement, selectElement, selectionMode) {
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ids: ids })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showFlashMessage('success', data.message || '{{ 'bulk.operation_success'|trans({}, translation_domain) }}');
+                    refreshTable(tableElement, selectionMode);
+                    selectElement.selectedIndex = 0;
+                } else {
+                    let errorMsg = data.message || '{{ 'bulk.operation_failed'|trans({}, translation_domain) }}';
+                    if (data.errors && data.errors.length > 0) {
+                        errorMsg += '\n\n{{ 'bulk.errors'|trans({}, translation_domain) }}:\n' + data.errors.join('\n');
+                    }
+                    showFlashMessage('danger', errorMsg);
+
+                    if (data.deleted_count > 0) {
+                        refreshTable(tableElement, selectionMode);
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error executing bulk operation:', error);
+                showFlashMessage('danger', '{{ 'bulk.error_occurred'|trans({}, translation_domain) }}');
+            });
+        }
+
+        function handleJsOperation(functionName, ids, tableElement, selectElement, selectionMode) {
+            if (typeof window[functionName] === 'function') {
+                window[functionName](ids, function(success, message) {
+                    if (success) {
+                        showFlashMessage('success', message || '{{ 'bulk.operation_success'|trans({}, translation_domain) }}');
+                        refreshTable(tableElement, selectionMode);
+                        selectElement.selectedIndex = 0;
+                    } else {
+                        showFlashMessage('danger', message || '{{ 'bulk.operation_failed'|trans({}, translation_domain) }}');
+                    }
+                });
+            } else {
+                console.error('Function not found:', functionName);
+                showFlashMessage('danger', '{{ 'bulk.handler_not_found'|trans({}, translation_domain) }}');
+            }
+        }
+
+        function refreshTable(tableElement, selectionMode) {
+            if (selectionMode === 'checkbox') {
+                location.reload();
+            } else {
+                $(tableElement).bootstrapTable('refresh');
+            }
+        }
+
+        function showAlert(message) {
+            alert(message);
+        }
+
+        function showFlashMessage(type, message) {
+            const container = document.querySelector('.flash-container');
+            if (!container) {
+                console.warn('Flash container not found, using alert fallback');
+                alert(message);
+                return;
+            }
+
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `custom-flash ${type === 'success' ? 'success-flash' : 'danger-flash'} alert-dismissible fade show mb-2 shadow-lg rounded-3`;
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.textContent = message;
+
+            container.appendChild(alertDiv);
+
+            setTimeout(() => {
+                if (typeof bootstrap !== 'undefined' && bootstrap.Alert) {
+                    const bsAlert = bootstrap.Alert.getOrCreateInstance(alertDiv);
+                    bsAlert.close();
+                } else {
+                    alertDiv.remove();
+                }
+            }, 3000);
+        }
+
+        return {
+            init: init
+        };
+    })();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    PumukitBulkOperations.init({
+        selectElementId: 'bulk-action-select',
+        applyButtonId: 'bulk-action-apply',
+        tableSelector: '{{ table_selector|e('js') }}',
+        selectionMode: '{{ selection_mode|e('js') }}',
+        translationDomain: '{{ translation_domain|e('js') }}'
+    });
+});
+</script>
+

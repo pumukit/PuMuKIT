@@ -104,7 +104,12 @@
 </table>
 
 {% if bulk_operations_template is defined and bulk_operations_template %}
-    {% include bulk_operations_template %}
+    {% set bulk_config = bulk_operations_config|default({}) %}
+    {% include bulk_operations_template with {
+        translation_domain: bulk_config.translation_domain|default('messages'),
+        table_selector: bulk_config.table_selector|default('[data-toolbar="#bulk-action-toolbar"]'),
+        selection_mode: bulk_config.selection_mode|default('bootstrap-table')
+    } %}
 {% endif %}
 
 {% if server_side %}

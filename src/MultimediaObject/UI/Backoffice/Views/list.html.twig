@@ -10,7 +10,10 @@
         server_side: true,
         ajax_url: path('multimedia_objects_list_data'),
         checkbox: true,
-        bulk_operations_template: '@MultimediaObject/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
+        bulk_operations_template: '@Shared/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
+        bulk_operations_config: {
+            translation_domain: 'multimedia_object'
+        },
         columns: [
             {'field': 'id', 'label': 'ID', 'visible': false},
             {'field': 'thumbnail', 'label': 'multimedia_object.table.thumbnail'|trans({}, 'multimedia_object'), 'sortable': false},

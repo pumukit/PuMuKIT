@@ -10,7 +10,10 @@
         server_side: true,
         ajax_url: path('series_list_data'),
         checkbox: true,
-        bulk_operations_template: '@Series/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
+        bulk_operations_template: '@Shared/UI/Backoffice/Views/partials/_bulk_operations.html.twig',
+        bulk_operations_config: {
+            translation_domain: 'series'
+        },
         columns: [
             {'field': 'thumbnail', 'label': 'series.table.thumbnail'|trans({}, 'series')},
             {'field': 'title', 'label': 'series.table.title_column'|trans({}, 'series'), 'sortable': true},

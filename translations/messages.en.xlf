@@ -2,46 +2,6 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
         <body>
-            <!-- Pages -->
-            <trans-unit id="user.page.list">
-                <source>user.page.list</source>
-                <target>User List</target>
-            </trans-unit>
-
-            <!-- Table -->
-            <trans-unit id="user.table.title">
-                <source>user.table.title</source>
-                <target>Users</target>
-            </trans-unit>
-            <trans-unit id="user.table.full_name">
-                <source>user.table.full_name</source>
-                <target>Full Name</target>
-            </trans-unit>
-            <trans-unit id="user.table.username">
-                <source>user.table.username</source>
-                <target>Username</target>
-            </trans-unit>
-            <trans-unit id="user.table.email">
-                <source>user.table.email</source>
-                <target>Email</target>
-            </trans-unit>
-            <trans-unit id="user.table.origin">
-                <source>user.table.origin</source>
-                <target>Origin</target>
-            </trans-unit>
-            <trans-unit id="user.table.last_login">
-                <source>user.table.last_login</source>
-                <target>Last Login</target>
-            </trans-unit>
-            <trans-unit id="user.table.enabled">
-                <source>user.table.enabled</source>
-                <target>Enabled</target>
-            </trans-unit>
-            <trans-unit id="user.table.actions">
-                <source>user.table.actions</source>
-                <target>Actions</target>
-            </trans-unit>
-
             <!-- Bulk Operations -->
             <trans-unit id="bulk.select_option">
                 <source>bulk.select_option</source>
