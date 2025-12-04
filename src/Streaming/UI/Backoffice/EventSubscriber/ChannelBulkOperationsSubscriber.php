@@ -29,4 +29,3 @@ final class ChannelBulkOperationsSubscriber implements EventSubscriberInterface
         );
     }
 }
-

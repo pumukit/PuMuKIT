@@ -61,4 +61,3 @@ final class TagListActionsEvent extends Event
         return !empty($this->actions);
     }
 }
-

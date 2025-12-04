@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Taxonomy\Domain;
 
-use DateTimeImmutable;
-
 final class Tag
 {
     private ?string $id;
@@ -23,8 +21,8 @@ final class Tag
     private ?string $path;
     private ?int $level;
     private array $properties;
-    private DateTimeImmutable $createdAt;
-    private DateTimeImmutable $updatedAt;
+    private \DateTimeImmutable $createdAt;
+    private \DateTimeImmutable $updatedAt;
 
     private function __construct(
         string $cod,
@@ -52,8 +50,8 @@ final class Tag
         $this->path = null;
         $this->level = null;
         $this->properties = $properties;
-        $this->createdAt = new DateTimeImmutable();
-        $this->updatedAt = new DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public static function create(
@@ -96,20 +94,20 @@ final class Tag
         $this->metatag = $metatag;
         $this->display = $display;
         $this->properties = $properties;
-        $this->updatedAt = new DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function setParent(?Tag $parent): void
     {
         $this->parent = $parent;
-        $this->updatedAt = new DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function addChild(Tag $child): void
     {
         $this->children[] = $child;
         ++$this->numberChildren;
-        $this->updatedAt = new DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function increaseNumberMultimediaObjects(): void
@@ -222,12 +220,12 @@ final class Tag
         return $this->properties[$key] ?? null;
     }
 
-    public function createdAt(): DateTimeImmutable
+    public function createdAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function updatedAt(): DateTimeImmutable
+    public function updatedAt(): \DateTimeImmutable
     {
         return $this->updatedAt;
     }
@@ -258,14 +256,13 @@ final class Tag
         $this->numberChildren = $count;
     }
 
-    public function setCreatedAt(DateTimeImmutable $createdAt): void
+    public function setCreatedAt(\DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    public function setUpdatedAt(DateTimeImmutable $updatedAt): void
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 }
-

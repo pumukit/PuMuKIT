@@ -36,13 +36,12 @@ final class BulkDeleteMultimediaObjectService
                 $deleteRequest = new DeleteMultimediaObjectRequest($id);
                 ($this->deleteMultimediaObjectService)($deleteRequest);
 
-                $deletedCount++;
+                ++$deletedCount;
 
                 $this->logger->info('Multimedia object deleted successfully', [
                     'id' => $id,
-                    'title' => $multimediaObject->getTitle()
+                    'title' => $multimediaObject->getTitle(),
                 ]);
-
             } catch (MultimediaObjectNotFoundException $e) {
                 $failedIds[] = $id;
                 $errors[$id] = 'Multimedia object not found';
@@ -53,7 +52,7 @@ final class BulkDeleteMultimediaObjectService
                 $this->logger->error('Error deleting multimedia object', [
                     'id' => $id,
                     'error' => $e->getMessage(),
-                    'trace' => $e->getTraceAsString()
+                    'trace' => $e->getTraceAsString(),
                 ]);
             }
         }
@@ -65,4 +64,3 @@ final class BulkDeleteMultimediaObjectService
         );
     }
 }
-

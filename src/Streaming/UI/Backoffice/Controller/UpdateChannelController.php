@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Streaming\UI\Backoffice\Controller;
 
+use App\Shared\Domain\TranslatorInterface;
 use App\Streaming\Application\Channel\Update\UpdateChannelRequest;
 use App\Streaming\Application\Channel\Update\UpdateChannelService;
 use App\Streaming\Application\Channel\View\ViewChannelRequest;
 use App\Streaming\Application\Channel\View\ViewChannelService;
-use App\Shared\Domain\TranslatorInterface;
 use Pumukit\SchemaBundle\Document\Live;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,4 +57,3 @@ final class UpdateChannelController extends AbstractController
         ]);
     }
 }
-

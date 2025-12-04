@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Streaming\Application\Channel\Update;
 
+use App\Shared\Domain\EventBusInterface;
 use App\Streaming\Domain\Event\ChannelUpdatedEvent;
 use App\Streaming\Domain\Exception\ChannelNotFoundException;
 use App\Streaming\Domain\Repository\ChannelRepositoryInterface;
-use App\Shared\Domain\EventBusInterface;
 
 final class UpdateChannelService
 {
@@ -29,7 +29,7 @@ final class UpdateChannelService
         $channel->setUrl($request->url);
         $channel->setSourceName($request->sourceName);
 
-        if ($request->passwd !== null) {
+        if (null !== $request->passwd) {
             $channel->setPasswd($request->passwd);
         }
 
@@ -37,7 +37,7 @@ final class UpdateChannelService
             $channel->setLiveType($request->liveType);
         }
 
-        if ($request->ipSource !== null) {
+        if (null !== $request->ipSource) {
             $channel->setIpSource($request->ipSource);
         }
 
@@ -56,4 +56,3 @@ final class UpdateChannelService
         return new UpdateChannelResponse($channel);
     }
 }
-

@@ -37,17 +37,17 @@ final class MenuBuilder
         $processed = [];
 
         foreach ($items as $item) {
-            if ($item['permission'] !== null && !$this->authorizationChecker->isGranted($item['permission'])) {
+            if (null !== $item['permission'] && !$this->authorizationChecker->isGranted($item['permission'])) {
                 continue;
             }
 
             $item['children'] = $this->processHierarchy($item['children'], $currentRoute);
 
-            if (empty($item['children']) && $item['route'] === null) {
+            if (empty($item['children']) && null === $item['route']) {
                 continue;
             }
 
-            if ($item['route'] !== null) {
+            if (null !== $item['route']) {
                 $item['url'] = $this->urlGenerator->generate($item['route'], $item['route_params']);
                 $item['is_active'] = $currentRoute === $item['route'];
             } else {
@@ -75,4 +75,3 @@ final class MenuBuilder
         return false;
     }
 }
-

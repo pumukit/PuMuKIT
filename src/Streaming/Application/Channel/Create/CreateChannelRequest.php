@@ -20,5 +20,3 @@ final class CreateChannelRequest
         public readonly bool $chat = false
     ) {}
 }
-
-

@@ -26,4 +26,3 @@ interface TagRepositoryInterface
 
     public function nextId(): string;
 }
-

@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace App\Taxonomy\Domain\Exception;
 
-use RuntimeException;
-
-final class TagAlreadyExistsException extends RuntimeException
+final class TagAlreadyExistsException extends \RuntimeException
 {
     public static function withCod(string $cod): self
     {
         return new self(sprintf('Tag with cod "%s" already exists', $cod));
     }
 }
-

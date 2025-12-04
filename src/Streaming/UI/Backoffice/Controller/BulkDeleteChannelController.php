@@ -48,4 +48,3 @@ final class BulkDeleteChannelController extends AbstractController
         }
     }
 }
-

@@ -20,4 +20,3 @@ final class MenuExtension extends AbstractExtension implements GlobalsInterface
         ];
     }
 }
-

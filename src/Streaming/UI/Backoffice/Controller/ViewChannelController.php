@@ -23,4 +23,3 @@ final class ViewChannelController extends AbstractController
         ]);
     }
 }
-

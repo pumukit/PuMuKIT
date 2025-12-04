@@ -29,7 +29,7 @@ final class ListTagChildrenDataController extends AbstractController
         $children = $this->tagRepository->findChildren($parentTag);
 
         $data = array_map(
-            fn($tag) => $this->presenter->present($tag),
+            fn ($tag) => $this->presenter->present($tag),
             $children
         );
 
@@ -39,4 +39,3 @@ final class ListTagChildrenDataController extends AbstractController
         ]);
     }
 }
-

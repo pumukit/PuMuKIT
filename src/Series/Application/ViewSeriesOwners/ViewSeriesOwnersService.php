@@ -33,4 +33,3 @@ final class ViewSeriesOwnersService
         return new ViewSeriesOwnersResponse($owners);
     }
 }
-

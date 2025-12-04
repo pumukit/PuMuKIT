@@ -16,7 +16,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Presenter for MultimediaObject data table in Series context
- * Separates presentation logic from controller
+ * Separates presentation logic from controller.
  */
 final class MultimediaObjectDataTablePresenter
 {
@@ -61,4 +61,3 @@ final class MultimediaObjectDataTablePresenter
         );
     }
 }
-

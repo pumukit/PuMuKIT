@@ -56,5 +56,3 @@ final class ListChannelsController extends AbstractController
         ]);
     }
 }
-
-

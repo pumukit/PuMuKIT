@@ -16,4 +16,3 @@ interface JobRepositoryInterface
 
     public function save(Job $job): void;
 }
-

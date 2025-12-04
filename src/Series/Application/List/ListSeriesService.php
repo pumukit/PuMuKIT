@@ -12,7 +12,6 @@ final class ListSeriesService
 
     public function __invoke(ListSeriesRequest $request): ListSeriesResponse
     {
-
         $series = $this->repository->findByFiltersPaginated(
             $request->filters,
             $request->page,

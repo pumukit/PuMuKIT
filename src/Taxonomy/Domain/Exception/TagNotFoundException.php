@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Taxonomy\Domain\Exception;
 
-use RuntimeException;
-
-final class TagNotFoundException extends RuntimeException
+final class TagNotFoundException extends \RuntimeException
 {
     public static function withId(string $id): self
     {
@@ -18,4 +16,3 @@ final class TagNotFoundException extends RuntimeException
         return new self(sprintf('Tag with cod "%s" not found', $cod));
     }
 }
-

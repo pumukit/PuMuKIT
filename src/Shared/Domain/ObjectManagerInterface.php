@@ -61,7 +61,7 @@ interface ObjectManagerInterface
      * Finds an object by its identifier.
      *
      * @param string $className The class name of the object to find
-     * @param mixed $id The identity of the object to find
+     * @param mixed  $id        The identity of the object to find
      *
      * @return object|null The found object or null if not found
      */
@@ -76,4 +76,3 @@ interface ObjectManagerInterface
      */
     public function getRepository(string $className): object;
 }
-

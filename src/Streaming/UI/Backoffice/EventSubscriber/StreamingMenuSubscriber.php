@@ -30,4 +30,3 @@ final class StreamingMenuSubscriber implements EventSubscriberInterface
         );
     }
 }
-

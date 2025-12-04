@@ -17,5 +17,3 @@ final class ChannelCreatedEvent
         return $this->channel;
     }
 }
-
-

@@ -20,4 +20,3 @@ final class SymfonyEventBus implements EventBusInterface
         // This will be implemented when the event system is fully integrated
     }
 }
-

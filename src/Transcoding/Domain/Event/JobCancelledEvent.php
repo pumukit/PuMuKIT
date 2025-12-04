@@ -17,4 +17,3 @@ final class JobCancelledEvent
         return $this->job;
     }
 }
-

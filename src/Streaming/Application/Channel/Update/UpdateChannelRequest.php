@@ -21,5 +21,3 @@ final class UpdateChannelRequest
         public readonly bool $chat = false
     ) {}
 }
-
-

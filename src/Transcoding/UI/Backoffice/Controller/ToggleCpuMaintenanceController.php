@@ -16,7 +16,7 @@ final class ToggleCpuMaintenanceController extends AbstractController
 
     public function __invoke(string $cpuName, string $action): Response
     {
-        $activate = $action === 'activate';
+        $activate = 'activate' === $action;
 
         $request = new ToggleMaintenanceRequest(
             cpuName: $cpuName,
@@ -32,4 +32,3 @@ final class ToggleCpuMaintenanceController extends AbstractController
         ]);
     }
 }
-

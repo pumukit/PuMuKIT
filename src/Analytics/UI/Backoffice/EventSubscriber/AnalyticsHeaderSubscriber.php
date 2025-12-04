@@ -9,7 +9,7 @@ use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Example: Analytics module adding a custom header button
+ * Example: Analytics module adding a custom header button.
  */
 final class AnalyticsHeaderSubscriber implements EventSubscriberInterface
 {
@@ -22,17 +22,16 @@ final class AnalyticsHeaderSubscriber implements EventSubscriberInterface
 
     public function onHeaderBuild(HeaderBuildEvent $event): void
     {
-//        $event->addItem(
-//            key: 'analytics_stats',
-//            type: 'button',
-//            icon: 'fa-solid fa-chart-line',
-//            route: 'analytics_index',
-//            badge: '5',
-//            badgeClass: 'bg-info',
-//            priority: 150,
-//            permission: Permission::ACCESS_DASHBOARD,
-//            class: 'btn btn-default'
-//        );
+        //        $event->addItem(
+        //            key: 'analytics_stats',
+        //            type: 'button',
+        //            icon: 'fa-solid fa-chart-line',
+        //            route: 'analytics_index',
+        //            badge: '5',
+        //            badgeClass: 'bg-info',
+        //            priority: 150,
+        //            permission: Permission::ACCESS_DASHBOARD,
+        //            class: 'btn btn-default'
+        //        );
     }
 }
-

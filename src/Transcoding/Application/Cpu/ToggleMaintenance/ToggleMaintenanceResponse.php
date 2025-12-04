@@ -11,4 +11,3 @@ final class ToggleMaintenanceResponse
         public readonly bool $inMaintenance
     ) {}
 }
-

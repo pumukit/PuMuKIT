@@ -16,4 +16,3 @@ interface CpuRepositoryInterface
 
     public function delete(CpuStatus $cpuStatus): void;
 }
-

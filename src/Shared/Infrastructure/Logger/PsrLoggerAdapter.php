@@ -9,7 +9,7 @@ use Psr\Log\LoggerInterface as PsrLoggerInterface;
 
 /**
  * Adapter for PSR-3 Logger
- * Bridges our domain LoggerInterface with PSR LoggerInterface
+ * Bridges our domain LoggerInterface with PSR LoggerInterface.
  */
 final class PsrLoggerAdapter implements LoggerInterface
 {
@@ -62,4 +62,3 @@ final class PsrLoggerAdapter implements LoggerInterface
         $this->psrLogger->log($level, $message, $context);
     }
 }
-

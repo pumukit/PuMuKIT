@@ -12,4 +12,3 @@ final class MultimediaObjectUpdatedEvent
         public readonly MultimediaObject $multimediaObject
     ) {}
 }
-

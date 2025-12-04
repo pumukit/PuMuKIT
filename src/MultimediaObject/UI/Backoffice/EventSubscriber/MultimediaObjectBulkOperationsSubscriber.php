@@ -29,4 +29,3 @@ final class MultimediaObjectBulkOperationsSubscriber implements EventSubscriberI
         );
     }
 }
-

@@ -24,4 +24,3 @@ final class BulkToggleAnnounceMultimediaObjectResponse
         return !empty($this->errors);
     }
 }
-

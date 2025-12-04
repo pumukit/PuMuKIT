@@ -18,7 +18,6 @@ final class BulkDeleteSeriesService
 
     public function __invoke(BulkDeleteSeriesRequest $request): BulkDeleteSeriesResponse
     {
-
         $deletedCount = 0;
         $failedIds = [];
         $errors = [];
@@ -36,6 +35,7 @@ final class BulkDeleteSeriesService
                         'id' => $seriesId,
                         'reason' => $deleteResponse->message,
                     ]);
+
                     continue;
                 }
 

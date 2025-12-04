@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Taxonomy\UI\Backoffice\Controller;
 
+use App\Shared\Domain\TranslatorInterface;
 use App\Taxonomy\Application\CreateTag\CreateTagRequest;
 use App\Taxonomy\Application\CreateTag\CreateTagService;
 use App\Taxonomy\Application\ListTags\ListTagsRequest;
 use App\Taxonomy\Application\ListTags\ListTagsService;
-use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,4 +68,3 @@ final class CreateTagController extends AbstractController
         ]);
     }
 }
-

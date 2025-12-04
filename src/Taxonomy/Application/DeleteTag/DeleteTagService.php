@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Taxonomy\Application\DeleteTag;
 
+use App\Shared\Domain\EventBusInterface;
 use App\Taxonomy\Domain\Event\TagDeleted;
 use App\Taxonomy\Domain\Exception\TagNotFoundException;
 use App\Taxonomy\Domain\Repository\TagRepositoryInterface;
-use App\Shared\Domain\EventBusInterface;
 
 final readonly class DeleteTagService
 {
@@ -33,4 +33,3 @@ final readonly class DeleteTagService
         $this->tagRepository->delete($tag);
     }
 }
-

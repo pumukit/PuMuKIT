@@ -12,4 +12,3 @@ final readonly class CreateTagResponse
         public Tag $tag
     ) {}
 }
-

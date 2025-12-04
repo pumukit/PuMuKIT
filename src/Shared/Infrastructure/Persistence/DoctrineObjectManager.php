@@ -63,12 +63,9 @@ final class DoctrineObjectManager implements ObjectManagerInterface
      * WARNING: This method should ONLY be used in Infrastructure layer
      * when you absolutely need access to Doctrine-specific functionality.
      * Avoid using this in Application or Domain layers.
-     *
-     * @return DocumentManager
      */
     public function getDocumentManager(): DocumentManager
     {
         return $this->documentManager;
     }
 }
-

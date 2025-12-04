@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Transcoding\Infrastructure\Persistence;
 
-use App\Transcoding\Domain\Repository\CpuRepositoryInterface;
 use App\Shared\Infrastructure\Persistence\DoctrineObjectManager;
+use App\Transcoding\Domain\Repository\CpuRepositoryInterface;
 use Pumukit\EncoderBundle\Document\CpuStatus;
 
 final class DoctrineCpuRepository implements CpuRepositoryInterface
@@ -16,14 +16,16 @@ final class DoctrineCpuRepository implements CpuRepositoryInterface
     {
         return $this->objectManager->getDocumentManager()
             ->getRepository(CpuStatus::class)
-            ->findOneBy(['name' => $name]);
+            ->findOneBy(['name' => $name])
+        ;
     }
 
     public function findInMaintenance(): array
     {
         return $this->objectManager->getDocumentManager()
             ->getRepository(CpuStatus::class)
-            ->findBy(['status' => CpuStatus::STATUS_MAINTENANCE]);
+            ->findBy(['status' => CpuStatus::STATUS_MAINTENANCE])
+        ;
     }
 
     public function save(CpuStatus $cpuStatus): void
@@ -38,4 +40,3 @@ final class DoctrineCpuRepository implements CpuRepositoryInterface
         $this->objectManager->getDocumentManager()->flush();
     }
 }
-

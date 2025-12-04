@@ -36,13 +36,12 @@ final readonly class TagDataTablePresenter
 
         return sprintf(
             '<div class="d-flex gap-1 justify-content-end"> '.
-            '<a href="%s" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> Update</a> ' .
+            '<a href="%s" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> Update</a> '.
             '<button class="btn btn-sm btn-danger" onclick="deleteTag(\'%s\', \'%s\')" title="Delete"><i class="fa fa-trash"></i> Delete</button>'
-            . '</div>',
+            .'</div>',
             $updateUrl,
             $tag->getId(),
             $deleteUrl
         );
     }
 }
-

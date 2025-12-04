@@ -22,7 +22,6 @@ final class UpdateSeriesService
 
     public function __invoke(UpdateSeriesRequest $request): UpdateSeriesResponse
     {
-
         $series = $this->seriesRepository->find($request->id);
 
         if (!$series) {

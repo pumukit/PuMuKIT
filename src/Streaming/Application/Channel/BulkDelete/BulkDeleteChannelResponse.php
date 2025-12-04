@@ -67,4 +67,3 @@ final class BulkDeleteChannelResponse
         return $formatted;
     }
 }
-

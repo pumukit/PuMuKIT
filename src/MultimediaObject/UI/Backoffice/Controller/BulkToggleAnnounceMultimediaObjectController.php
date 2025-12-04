@@ -24,7 +24,7 @@ final class BulkToggleAnnounceMultimediaObjectController extends AbstractControl
         if (empty($ids)) {
             return new JsonResponse([
                 'success' => false,
-                'message' => 'No multimedia object IDs provided'
+                'message' => 'No multimedia object IDs provided',
             ], 400);
         }
 
@@ -43,7 +43,7 @@ final class BulkToggleAnnounceMultimediaObjectController extends AbstractControl
                     ),
                     'updated_count' => $response->updatedCount,
                     'announced_count' => $response->announcedCount,
-                    'un_announced_count' => $response->unAnnouncedCount
+                    'un_announced_count' => $response->unAnnouncedCount,
                 ]);
             }
 
@@ -67,20 +67,18 @@ final class BulkToggleAnnounceMultimediaObjectController extends AbstractControl
                 'un_announced_count' => $response->unAnnouncedCount,
                 'failed_count' => count($response->failedIds),
                 'failed_ids' => $response->failedIds,
-                'errors' => $errorMessages
+                'errors' => $errorMessages,
             ], 207);
-
         } catch (\InvalidArgumentException $e) {
             return new JsonResponse([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 400);
         } catch (\Exception $e) {
             return new JsonResponse([
                 'success' => false,
-                'message' => 'An error occurred while toggling announce: ' . $e->getMessage()
+                'message' => 'An error occurred while toggling announce: '.$e->getMessage(),
             ], 500);
         }
     }
 }
-

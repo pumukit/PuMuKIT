@@ -10,4 +10,3 @@ final class BulkDeleteMultimediaObjectRequest
         public readonly array $multimediaObjectIds
     ) {}
 }
-

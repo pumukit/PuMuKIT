@@ -10,4 +10,3 @@ final class FindJobResponse
 {
     public function __construct(public readonly Job $job) {}
 }
-

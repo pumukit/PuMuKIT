@@ -19,7 +19,7 @@ final class ListCpusService
     public function __invoke(ListCpusRequest $request): ListCpusResponse
     {
         $cpusInMaintenance = array_map(
-            fn($cpu) => $cpu->getName(),
+            fn ($cpu) => $cpu->getName(),
             $this->cpuRepository->findInMaintenance()
         );
 
@@ -56,6 +56,7 @@ final class ListCpusService
                 $jobsByCpu[$cpuName] = ($jobsByCpu[$cpuName] ?? 0) + 1;
             }
         }
+
         return $jobsByCpu;
     }
 
@@ -69,13 +70,14 @@ final class ListCpusService
                 'in_maintenance' => in_array($name, $cpusInMaintenance),
             ]);
         }
+
         return $enriched;
     }
 
     private function isLocalCpu(array $cpu): bool
     {
         $host = $cpu['host'] ?? '';
+
         return in_array($host, ['localhost', '127.0.0.1', '::1']) || str_starts_with($host, '192.168.');
     }
 }
-

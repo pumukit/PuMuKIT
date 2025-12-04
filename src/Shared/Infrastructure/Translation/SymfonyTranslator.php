@@ -31,4 +31,3 @@ final class SymfonyTranslator implements TranslatorInterface
         return $this->symfonyTranslator->getLocale();
     }
 }
-

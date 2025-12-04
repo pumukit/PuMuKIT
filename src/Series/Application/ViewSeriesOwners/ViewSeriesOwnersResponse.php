@@ -10,4 +10,3 @@ final class ViewSeriesOwnersResponse
         public readonly array $owners
     ) {}
 }
-

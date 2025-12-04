@@ -33,8 +33,8 @@ final class UserDataTablePresenter
 
     private function renderActions(User $user): string
     {
-        $viewUrl = '#'; //$this->router->generate('user_view', ['id' => $user->getId()]);
-        $deleteUrl = '#'; //$this->router->generate('user_delete', ['id' => $user->getId()]);
+        $viewUrl = '#'; // $this->router->generate('user_view', ['id' => $user->getId()]);
+        $deleteUrl = '#'; // $this->router->generate('user_delete', ['id' => $user->getId()]);
 
         return sprintf(
             '<div class="d-flex gap-1 justify-content-end">
@@ -50,4 +50,3 @@ final class UserDataTablePresenter
         );
     }
 }
-

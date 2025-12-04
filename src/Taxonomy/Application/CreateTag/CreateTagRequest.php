@@ -17,4 +17,3 @@ final readonly class CreateTagRequest
         public array $properties = []
     ) {}
 }
-

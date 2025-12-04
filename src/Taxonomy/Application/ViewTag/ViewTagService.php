@@ -23,4 +23,3 @@ final readonly class ViewTagService
         return new ViewTagResponse($tag);
     }
 }
-

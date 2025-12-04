@@ -13,5 +13,3 @@ final class ListChannelsRequest
         public readonly string $order = 'asc'
     ) {}
 }
-
-

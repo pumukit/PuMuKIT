@@ -37,6 +37,7 @@ final class DoctrineTagRepository implements TagRepositoryInterface
     public function findByParent(?LegacyTag $parent): array
     {
         $parentId = $parent ? $parent->getId() : null;
+
         return $this->repository->findBy(['parent' => $parentId]);
     }
 
@@ -53,6 +54,7 @@ final class DoctrineTagRepository implements TagRepositoryInterface
         }
 
         $legacyChildren = $legacyParent->getChildren();
+
         return iterator_to_array($legacyChildren);
     }
 
@@ -73,4 +75,3 @@ final class DoctrineTagRepository implements TagRepositoryInterface
         return uniqid('tag_', true);
     }
 }
-

@@ -10,4 +10,3 @@ final class BulkToggleAnnounceMultimediaObjectRequest
         public readonly array $multimediaObjectIds
     ) {}
 }
-

@@ -11,10 +11,3 @@ final class ToggleMaintenanceRequest
         public readonly string $cpuName,
     ) {}
 }
-
-
-
-
-
-
-

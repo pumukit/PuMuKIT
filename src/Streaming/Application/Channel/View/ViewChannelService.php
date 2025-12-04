@@ -22,4 +22,3 @@ final class ViewChannelService
         return new ViewChannelResponse($channel);
     }
 }
-

@@ -24,7 +24,7 @@ final class BulkDeleteMultimediaObjectController extends AbstractController
         if (empty($ids)) {
             return new JsonResponse([
                 'success' => false,
-                'message' => 'No multimedia object IDs provided'
+                'message' => 'No multimedia object IDs provided',
             ], 400);
         }
 
@@ -39,7 +39,7 @@ final class BulkDeleteMultimediaObjectController extends AbstractController
                         'Successfully deleted %d multimedia objects',
                         $response->deletedCount
                     ),
-                    'deleted_count' => $response->deletedCount
+                    'deleted_count' => $response->deletedCount,
                 ]);
             }
 
@@ -59,20 +59,18 @@ final class BulkDeleteMultimediaObjectController extends AbstractController
                 'deleted_count' => $response->deletedCount,
                 'failed_count' => count($response->failedIds),
                 'failed_ids' => $response->failedIds,
-                'errors' => $errorMessages
+                'errors' => $errorMessages,
             ], 207);
-
         } catch (\InvalidArgumentException $e) {
             return new JsonResponse([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 400);
         } catch (\Exception $e) {
             return new JsonResponse([
                 'success' => false,
-                'message' => 'An error occurred while deleting multimedia objects: ' . $e->getMessage()
+                'message' => 'An error occurred while deleting multimedia objects: '.$e->getMessage(),
             ], 500);
         }
     }
 }
-

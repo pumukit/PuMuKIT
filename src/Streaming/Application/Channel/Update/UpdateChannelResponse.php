@@ -10,4 +10,3 @@ final class UpdateChannelResponse
 {
     public function __construct(public readonly Live $channel) {}
 }
-

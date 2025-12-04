@@ -13,4 +13,3 @@ final class ListChannelsResponse
         public readonly int $limit
     ) {}
 }
-

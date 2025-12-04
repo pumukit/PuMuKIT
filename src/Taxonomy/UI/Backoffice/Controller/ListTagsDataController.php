@@ -30,8 +30,9 @@ final class ListTagsDataController extends AbstractController
         $allTags = $this->tagRepository->findAll();
         $rootTag = null;
         foreach ($allTags as $tag) {
-            if ($tag->getParent() === null) {
+            if (null === $tag->getParent()) {
                 $rootTag = $tag;
+
                 break;
             }
         }
@@ -56,7 +57,7 @@ final class ListTagsDataController extends AbstractController
         }
 
         $data = array_map(
-            fn($tag) => $this->presenter->present($tag),
+            fn ($tag) => $this->presenter->present($tag),
             $tags
         );
 
@@ -68,4 +69,3 @@ final class ListTagsDataController extends AbstractController
         ]);
     }
 }
-

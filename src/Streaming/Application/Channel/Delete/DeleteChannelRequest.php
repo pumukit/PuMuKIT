@@ -8,5 +8,3 @@ final class DeleteChannelRequest
 {
     public function __construct(public readonly string $id) {}
 }
-
-

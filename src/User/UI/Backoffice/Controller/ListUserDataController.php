@@ -2,9 +2,9 @@
 
 namespace App\User\UI\Backoffice\Controller;
 
-use App\User\UI\Backoffice\Presenter\UserDataTablePresenter;
 use App\User\Application\List\ListUserRequest;
 use App\User\Application\List\ListUserService;
+use App\User\UI\Backoffice\Presenter\UserDataTablePresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

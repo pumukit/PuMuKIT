@@ -45,7 +45,7 @@ final class JobDataTablePresenter
             );
         }
 
-        return '<div class="d-flex gap-1 justify-content-end">' . $actions . '</div>';
+        return '<div class="d-flex gap-1 justify-content-end">'.$actions.'</div>';
     }
 
     private function renderStatusBadge(int $status, string $statusText): string
@@ -62,4 +62,3 @@ final class JobDataTablePresenter
         return sprintf('<span class="badge bg-%s">%s</span>', $badgeClass, $statusText);
     }
 }
-

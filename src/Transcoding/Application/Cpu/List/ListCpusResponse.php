@@ -13,4 +13,3 @@ final class ListCpusResponse
         public readonly array $remoteCpus
     ) {}
 }
-

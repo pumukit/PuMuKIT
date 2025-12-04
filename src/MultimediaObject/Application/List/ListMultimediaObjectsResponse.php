@@ -13,4 +13,3 @@ final class ListMultimediaObjectsResponse
         public readonly int $limit
     ) {}
 }
-

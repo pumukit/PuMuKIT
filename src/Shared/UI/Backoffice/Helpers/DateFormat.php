@@ -4,8 +4,8 @@ namespace App\Shared\UI\Backoffice\Helpers;
 
 final class DateFormat
 {
-    private CONST FORMAT_COMPLETE = 'Y-m-d H:i:s';
-    private CONST FORMAT_DATE = 'Y-m-d';
+    private const FORMAT_COMPLETE = 'Y-m-d H:i:s';
+    private const FORMAT_DATE = 'Y-m-d';
 
     public static function format(\DateTimeInterface $date, string $format = self::FORMAT_DATE): string
     {

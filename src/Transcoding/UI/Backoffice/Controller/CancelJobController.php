@@ -28,4 +28,3 @@ final class CancelJobController extends AbstractController
         ]);
     }
 }
-

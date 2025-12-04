@@ -16,4 +16,3 @@ final readonly class UpdateTagRequest
         public array $properties
     ) {}
 }
-

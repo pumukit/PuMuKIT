@@ -15,4 +15,3 @@ final class CpuMaintenanceDeactivatedEvent
         return $this->cpuName;
     }
 }
-

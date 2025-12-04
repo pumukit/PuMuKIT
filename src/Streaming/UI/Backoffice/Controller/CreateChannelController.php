@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Streaming\UI\Backoffice\Controller;
 
+use App\Shared\Domain\TranslatorInterface;
 use App\Streaming\Application\Channel\Create\CreateChannelRequest;
 use App\Streaming\Application\Channel\Create\CreateChannelService;
-use App\Shared\Domain\TranslatorInterface;
 use Pumukit\SchemaBundle\Document\Live;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,4 +48,3 @@ final class CreateChannelController extends AbstractController
         return $this->render('@Streaming/UI/Backoffice/Views/create.html.twig');
     }
 }
-

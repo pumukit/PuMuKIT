@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Streaming\Application\Channel\Delete;
 
+use App\Shared\Domain\EventBusInterface;
 use App\Streaming\Domain\Event\ChannelDeletedEvent;
 use App\Streaming\Domain\Exception\ChannelNotFoundException;
 use App\Streaming\Domain\Repository\ChannelRepositoryInterface;
-use App\Shared\Domain\EventBusInterface;
 
 final class DeleteChannelService
 {
@@ -36,4 +36,3 @@ final class DeleteChannelService
         return new DeleteChannelResponse($channelId);
     }
 }
-

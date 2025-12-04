@@ -56,8 +56,8 @@ final class ListTagsController extends AbstractController
         $rootParentId = $rootTag ? $rootTag->getId() : null;
 
         // Log para debug (remover después de verificar)
-        error_log("ROOT Tag found: " . ($rootTag ? 'YES' : 'NO'));
-        error_log("ROOT Tag ID: " . ($rootParentId ?? 'NULL'));
+        error_log('ROOT Tag found: '.($rootTag ? 'YES' : 'NO'));
+        error_log('ROOT Tag ID: '.($rootParentId ?? 'NULL'));
 
         return $this->render('@Taxonomy/UI/Backoffice/Views/list.html.twig', [
             'bulkOperationsEvent' => $bulkOperationsEvent,
@@ -68,4 +68,3 @@ final class ListTagsController extends AbstractController
         ]);
     }
 }
-

@@ -13,4 +13,3 @@ final class ViewSeriesOwnersValidator
         IdValidator::validate($request->seriesId, 'Series ID');
     }
 }
-

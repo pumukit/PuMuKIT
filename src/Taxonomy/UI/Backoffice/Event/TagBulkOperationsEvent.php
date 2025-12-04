@@ -58,4 +58,3 @@ final class TagBulkOperationsEvent extends Event
         return !empty($this->operations);
     }
 }
-

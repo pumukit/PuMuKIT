@@ -16,14 +16,16 @@ final class DoctrineJobRepository implements JobRepositoryInterface
     {
         return $this->documentManager
             ->getRepository(Job::class)
-            ->find($id);
+            ->find($id)
+        ;
     }
 
     public function findAll(int $page = 1, int $limit = 10, ?array $sort = null): iterable
     {
         $qb = $this->documentManager
             ->getRepository(Job::class)
-            ->createQueryBuilder();
+            ->createQueryBuilder()
+        ;
 
         if ($sort) {
             $mongoSort = $this->convertSortToMongoFormat($sort);
@@ -31,24 +33,10 @@ final class DoctrineJobRepository implements JobRepositoryInterface
         }
 
         $qb->skip(($page - 1) * $limit)
-            ->limit($limit);
+            ->limit($limit)
+        ;
 
         return $qb->getQuery()->execute();
-    }
-
-    private function convertSortToMongoFormat(array $sort): array
-    {
-        $mongoSort = [];
-        foreach ($sort as $field => $direction) {
-            if (is_string($direction)) {
-                $mongoSort[$field] = strtolower($direction) === 'asc' ? 1 : -1;
-            } elseif (is_int($direction)) {
-                $mongoSort[$field] = $direction >= 0 ? 1 : -1;
-            } else {
-                $mongoSort[$field] = -1;
-            }
-        }
-        return $mongoSort;
     }
 
     public function countAll(): int
@@ -58,7 +46,8 @@ final class DoctrineJobRepository implements JobRepositoryInterface
             ->createQueryBuilder()
             ->count()
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 
     public function save(Job $job): void
@@ -66,5 +55,20 @@ final class DoctrineJobRepository implements JobRepositoryInterface
         $this->documentManager->persist($job);
         $this->documentManager->flush();
     }
-}
 
+    private function convertSortToMongoFormat(array $sort): array
+    {
+        $mongoSort = [];
+        foreach ($sort as $field => $direction) {
+            if (is_string($direction)) {
+                $mongoSort[$field] = 'asc' === strtolower($direction) ? 1 : -1;
+            } elseif (is_int($direction)) {
+                $mongoSort[$field] = $direction >= 0 ? 1 : -1;
+            } else {
+                $mongoSort[$field] = -1;
+            }
+        }
+
+        return $mongoSort;
+    }
+}

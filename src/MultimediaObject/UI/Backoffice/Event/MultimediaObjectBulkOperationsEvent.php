@@ -46,4 +46,3 @@ final class MultimediaObjectBulkOperationsEvent extends Event
         return !empty($this->operations);
     }
 }
-

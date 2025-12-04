@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Transcoding\Application\Job\Cancel;
 
+use App\Shared\Domain\EventBusInterface;
 use App\Transcoding\Domain\Event\JobCancelledEvent;
 use App\Transcoding\Domain\Exception\JobNotFoundException;
 use App\Transcoding\Domain\Repository\JobRepositoryInterface;
 use Pumukit\EncoderBundle\Document\Job;
-use App\Shared\Domain\EventBusInterface;
 
 final class CancelJobService
 {
@@ -37,4 +37,3 @@ final class CancelJobService
         return new CancelJobResponse($job);
     }
 }
-

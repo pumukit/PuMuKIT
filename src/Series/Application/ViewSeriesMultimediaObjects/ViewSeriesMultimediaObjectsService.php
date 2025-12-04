@@ -12,7 +12,6 @@ final class ViewSeriesMultimediaObjectsService
 
     public function __invoke(ViewSeriesMultimediaObjectsRequest $request): ViewSeriesMultimediaObjectsResponse
     {
-
         $offset = ($request->page - 1) * $request->limit;
 
         // Support both 'series.id' and 'series_id' keys for backwards compatibility

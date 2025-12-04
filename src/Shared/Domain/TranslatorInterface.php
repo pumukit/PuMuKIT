@@ -17,10 +17,10 @@ interface TranslatorInterface
     /**
      * Translates the given message.
      *
-     * @param string $id The message id (translation key)
+     * @param string               $id         The message id (translation key)
      * @param array<string, mixed> $parameters An array of parameters for the message
-     * @param string|null $domain The translation domain (e.g., 'series', 'user')
-     * @param string|null $locale The locale (e.g., 'en', 'es', 'gl') or null to use the default
+     * @param string|null          $domain     The translation domain (e.g., 'series', 'user')
+     * @param string|null          $locale     The locale (e.g., 'en', 'es', 'gl') or null to use the default
      *
      * @return string The translated string
      */
@@ -33,4 +33,3 @@ interface TranslatorInterface
      */
     public function getLocale(): string;
 }
-

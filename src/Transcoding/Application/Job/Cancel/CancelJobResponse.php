@@ -10,4 +10,3 @@ final class CancelJobResponse
 {
     public function __construct(public readonly Job $job) {}
 }
-

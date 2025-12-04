@@ -46,5 +46,3 @@ final class ChannelBulkOperationsEvent extends Event
         return !empty($this->operations);
     }
 }
-
-

@@ -2,8 +2,8 @@
 
 namespace App\User\Infrastructure\Persistence;
 
-use App\User\Domain\Repository\UserRepositoryInterface;
 use App\Shared\Infrastructure\Persistence\DoctrineObjectManager;
+use App\User\Domain\Repository\UserRepositoryInterface;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\User;

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Analytics\UI\Backoffice\EventSubscriber;
 
 use App\Shared\UI\Backoffice\Menu\Event\MenuBuildEvent;
-use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class AnalyticsMenuSubscriber implements EventSubscriberInterface
@@ -29,4 +28,3 @@ final class AnalyticsMenuSubscriber implements EventSubscriberInterface
         );
     }
 }
-

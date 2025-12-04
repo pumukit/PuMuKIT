@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Taxonomy\Application\UpdateTag;
 
+use App\Shared\Domain\EventBusInterface;
 use App\Taxonomy\Domain\Event\TagUpdated;
 use App\Taxonomy\Domain\Exception\TagNotFoundException;
 use App\Taxonomy\Domain\Repository\TagRepositoryInterface;
-use App\Shared\Domain\EventBusInterface;
 
 final readonly class UpdateTagService
 {
@@ -34,7 +34,7 @@ final readonly class UpdateTagService
         $tag->setMetatag($request->metatag);
         $tag->setDisplay($request->display);
 
-        if ($request->properties !== null) {
+        if (null !== $request->properties) {
             $tag->setProperties($request->properties);
         }
 
@@ -51,4 +51,3 @@ final readonly class UpdateTagService
         return new UpdateTagResponse($tag);
     }
 }
-

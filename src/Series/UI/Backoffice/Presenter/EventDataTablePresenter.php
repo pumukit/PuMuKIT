@@ -10,7 +10,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Presenter for Event (Live MultimediaObject) data table in Series context
- * Separates presentation logic from controller
+ * Separates presentation logic from controller.
  */
 final class EventDataTablePresenter
 {
@@ -48,4 +48,3 @@ final class EventDataTablePresenter
         );
     }
 }
-

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Taxonomy\UI\Backoffice\Controller;
 
+use App\Shared\Domain\TranslatorInterface;
 use App\Taxonomy\Application\ListTags\ListTagsRequest;
 use App\Taxonomy\Application\ListTags\ListTagsService;
 use App\Taxonomy\Application\UpdateTag\UpdateTagRequest;
 use App\Taxonomy\Application\UpdateTag\UpdateTagService;
 use App\Taxonomy\Application\ViewTag\ViewTagRequest;
 use App\Taxonomy\Application\ViewTag\ViewTagService;
-use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -75,5 +75,3 @@ final class UpdateTagController extends AbstractController
         ]);
     }
 }
-
-

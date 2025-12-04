@@ -12,7 +12,6 @@ final class ViewSeriesEventsService
 
     public function __invoke(ViewSeriesEventsRequest $request): ViewSeriesEventsResponse
     {
-
         $offset = ($request->page - 1) * $request->limit;
 
         // Support both 'series.id' and 'series_id' keys for backwards compatibility

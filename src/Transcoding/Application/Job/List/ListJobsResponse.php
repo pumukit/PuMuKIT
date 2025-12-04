@@ -13,4 +13,3 @@ final class ListJobsResponse
         public readonly int $limit
     ) {}
 }
-

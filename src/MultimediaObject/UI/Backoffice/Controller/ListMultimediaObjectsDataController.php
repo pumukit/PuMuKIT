@@ -54,4 +54,3 @@ final class ListMultimediaObjectsDataController extends AbstractController
         ]);
     }
 }
-

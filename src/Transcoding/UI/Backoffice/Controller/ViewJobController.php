@@ -23,4 +23,3 @@ final class ViewJobController extends AbstractController
         ]);
     }
 }
-

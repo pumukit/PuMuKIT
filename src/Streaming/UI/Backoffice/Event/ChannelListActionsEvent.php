@@ -48,4 +48,3 @@ final class ChannelListActionsEvent extends Event
         return !empty($this->actions);
     }
 }
-

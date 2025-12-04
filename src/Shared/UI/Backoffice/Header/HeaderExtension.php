@@ -20,4 +20,3 @@ final class HeaderExtension extends AbstractExtension implements GlobalsInterfac
         ];
     }
 }
-

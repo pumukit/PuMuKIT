@@ -22,4 +22,3 @@ final class FindJobService
         return new FindJobResponse($job);
     }
 }
-

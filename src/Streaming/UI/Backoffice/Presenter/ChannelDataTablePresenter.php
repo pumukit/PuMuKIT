@@ -57,4 +57,3 @@ final class ChannelDataTablePresenter
         return '<span class="badge bg-secondary"><i class="fa fa-times"></i> No</span>';
     }
 }
-

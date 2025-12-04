@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Taxonomy\Application\CreateTag;
 
+use App\Shared\Domain\EventBusInterface;
 use App\Taxonomy\Domain\Event\TagCreated;
 use App\Taxonomy\Domain\Exception\TagAlreadyExistsException;
 use App\Taxonomy\Domain\Exception\TagNotFoundException;
 use App\Taxonomy\Domain\Repository\TagRepositoryInterface;
 use Pumukit\SchemaBundle\Document\Tag;
-use App\Shared\Domain\EventBusInterface;
 
 final readonly class CreateTagService
 {
@@ -68,4 +68,3 @@ final readonly class CreateTagService
         return new CreateTagResponse($tag);
     }
 }
-

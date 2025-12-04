@@ -29,4 +29,3 @@ final class ChannelListActionsSubscriber implements EventSubscriberInterface
         );
     }
 }
-

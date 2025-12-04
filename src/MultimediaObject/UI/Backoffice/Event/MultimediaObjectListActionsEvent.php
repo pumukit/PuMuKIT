@@ -61,4 +61,3 @@ final class MultimediaObjectListActionsEvent extends Event
         return !empty($this->actions);
     }
 }
-

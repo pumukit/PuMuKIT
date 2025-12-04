@@ -40,4 +40,3 @@ final class TranscodingMenuSubscriber implements EventSubscriberInterface
         );
     }
 }
-

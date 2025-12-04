@@ -10,4 +10,3 @@ final readonly class ListTagsResponse
         public array $tags
     ) {}
 }
-

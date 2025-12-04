@@ -45,15 +45,14 @@ final class BulkToggleAnnounceMultimediaObjectService
 
                 $this->eventBus->dispatch(new MultimediaObjectUpdatedEvent($multimediaObject));
 
-                $updatedCount++;
+                ++$updatedCount;
 
                 $this->logger->info('Multimedia object announce toggled successfully', [
                     'id' => $id,
                     'title' => $multimediaObject->getTitle(),
                     'status' => $multimediaObject->getStatus(),
-                    'was_published' => true
+                    'was_published' => true,
                 ]);
-
             } catch (MultimediaObjectNotFoundException $e) {
                 $failedIds[] = $id;
                 $errors[$id] = 'Multimedia object not found';
@@ -64,7 +63,7 @@ final class BulkToggleAnnounceMultimediaObjectService
                 $this->logger->error('Error toggling announce for multimedia object', [
                     'id' => $id,
                     'error' => $e->getMessage(),
-                    'trace' => $e->getTraceAsString()
+                    'trace' => $e->getTraceAsString(),
                 ]);
             }
         }
@@ -78,4 +77,3 @@ final class BulkToggleAnnounceMultimediaObjectService
         );
     }
 }
-

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Taxonomy\UI\Backoffice\Controller;
 
+use App\Shared\Domain\TranslatorInterface;
 use App\Taxonomy\Application\DeleteTag\DeleteTagRequest;
 use App\Taxonomy\Application\DeleteTag\DeleteTagService;
 use App\Taxonomy\Application\ViewTag\ViewTagRequest;
 use App\Taxonomy\Application\ViewTag\ViewTagService;
-use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -46,4 +46,3 @@ final class DeleteTagController extends AbstractController
         return $this->redirectToRoute('taxonomy_tag_index');
     }
 }
-

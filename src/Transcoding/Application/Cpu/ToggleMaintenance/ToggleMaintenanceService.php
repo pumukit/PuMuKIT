@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Transcoding\Application\Cpu\ToggleMaintenance;
 
+use App\Shared\Domain\EventBusInterface;
 use App\Transcoding\Domain\Event\CpuMaintenanceActivatedEvent;
 use App\Transcoding\Domain\Event\CpuMaintenanceDeactivatedEvent;
 use App\Transcoding\Domain\Exception\CpuNotFoundException;
 use App\Transcoding\Domain\Repository\CpuRepositoryInterface;
 use Pumukit\EncoderBundle\Document\CpuStatus;
-use App\Shared\Domain\EventBusInterface;
 
 final class ToggleMaintenanceService
 {
@@ -53,7 +53,7 @@ final class ToggleMaintenanceService
             $cpuStatus = new CpuStatus();
             $cpuStatus->setName($cpuName);
             $cpuStatus->setStatus(CpuStatus::STATUS_MAINTENANCE);
-        } elseif ($cpuStatus->getStatus() !== CpuStatus::STATUS_MAINTENANCE) {
+        } elseif (CpuStatus::STATUS_MAINTENANCE !== $cpuStatus->getStatus()) {
             $cpuStatus->setStatus(CpuStatus::STATUS_MAINTENANCE);
         }
 
@@ -69,4 +69,3 @@ final class ToggleMaintenanceService
         }
     }
 }
-

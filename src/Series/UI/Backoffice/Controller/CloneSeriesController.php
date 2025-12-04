@@ -32,7 +32,7 @@ final class CloneSeriesController extends AbstractController
                 'series.flash.cloned',
                 [
                     '%title%' => $response->clonedSeries->getTitle(),
-                    '%count%' => $response->multimediaObjectsCloned
+                    '%count%' => $response->multimediaObjectsCloned,
                 ],
                 'series'
             ));

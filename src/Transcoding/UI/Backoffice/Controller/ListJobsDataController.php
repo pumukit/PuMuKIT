@@ -47,4 +47,3 @@ final class ListJobsDataController extends AbstractController
         ]);
     }
 }
-

@@ -28,4 +28,3 @@ class DashboardMenuSubscriber implements EventSubscriberInterface
         );
     }
 }
-

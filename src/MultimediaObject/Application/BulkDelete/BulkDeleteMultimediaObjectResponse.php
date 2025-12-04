@@ -22,4 +22,3 @@ final class BulkDeleteMultimediaObjectResponse
         return !empty($this->errors);
     }
 }
-

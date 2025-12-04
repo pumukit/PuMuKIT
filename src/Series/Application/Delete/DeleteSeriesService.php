@@ -20,7 +20,6 @@ final class DeleteSeriesService
 
     public function __invoke(DeleteSeriesRequest $request): DeleteSeriesResponse
     {
-
         $series = $this->repository->find($request->id);
 
         if (null === $series) {

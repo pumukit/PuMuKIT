@@ -8,10 +8,3 @@ final class ListCpusRequest
 {
     public function __construct() {}
 }
-
-
-
-
-
-
-

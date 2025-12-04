@@ -10,4 +10,3 @@ final readonly class ViewTagRequest
         public string $id
     ) {}
 }
-

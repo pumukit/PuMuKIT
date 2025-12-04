@@ -18,4 +18,3 @@ interface ChannelRepositoryInterface
 
     public function delete(Live $channel): void;
 }
-

@@ -12,4 +12,3 @@ final class BulkDeleteChannelRequest
         BulkDeleteChannelValidator::validate($this);
     }
 }
-

@@ -19,14 +19,14 @@ final class MenuBuildEvent extends Event
     }
 
     /**
-     * @param string      $key        Unique identifier for the menu item
-     * @param string      $label      Label to display
-     * @param string      $route      Symfony route name
-     * @param string|null $parent     Parent menu key (null for top level)
-     * @param string|null $icon       Font Awesome icon class
-     * @param int         $priority   Higher priority renders first (default: 0)
+     * @param string      $key         Unique identifier for the menu item
+     * @param string      $label       Label to display
+     * @param string      $route       Symfony route name
+     * @param string|null $parent      Parent menu key (null for top level)
+     * @param string|null $icon        Font Awesome icon class
+     * @param int         $priority    Higher priority renders first (default: 0)
      * @param array       $routeParams Route parameters
-     * @param string|null $permission Required permission to show this item
+     * @param string|null $permission  Required permission to show this item
      */
     public function addItem(
         string $key,
@@ -84,7 +84,7 @@ final class MenuBuildEvent extends Event
     public function buildHierarchy(): array
     {
         // Sort by priority
-        usort($this->items, fn($a, $b) => $a['priority'] <=> $b['priority']);
+        usort($this->items, fn ($a, $b) => $a['priority'] <=> $b['priority']);
 
         $hierarchy = [];
         $itemsMap = [];
@@ -94,7 +94,7 @@ final class MenuBuildEvent extends Event
         }
 
         foreach ($this->items as $item) {
-            if ($item['parent'] === null) {
+            if (null === $item['parent']) {
                 $hierarchy[] = &$itemsMap[$item['key']];
             } else {
                 if (isset($itemsMap[$item['parent']])) {
@@ -106,4 +106,3 @@ final class MenuBuildEvent extends Event
         return $hierarchy;
     }
 }
-

@@ -18,4 +18,3 @@ interface MultimediaObjectRepositoryInterface
 
     public function delete(MultimediaObject $multimediaObject): void;
 }
-

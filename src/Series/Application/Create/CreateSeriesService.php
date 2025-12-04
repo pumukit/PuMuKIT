@@ -18,7 +18,6 @@ final class CreateSeriesService
 
     public function __invoke(CreateSeriesRequest $request): CreateSeriesResponse
     {
-
         $userId = UserId::fromString($request->ownerId);
 
         $title = $request->title ?? ['es' => 'New', 'en' => 'New'];

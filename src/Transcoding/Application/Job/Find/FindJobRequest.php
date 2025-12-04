@@ -6,14 +6,5 @@ namespace App\Transcoding\Application\Job\Find;
 
 final class FindJobRequest
 {
-    public function __construct(public readonly string $id)
-    {
-    }
+    public function __construct(public readonly string $id) {}
 }
-
-
-
-
-
-
-

@@ -14,4 +14,3 @@ final class ListMultimediaObjectsRequest
         public readonly array $filters = []
     ) {}
 }
-

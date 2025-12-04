@@ -24,7 +24,7 @@ final class BulkDeleteTagsController extends AbstractController
         if (empty($ids)) {
             return new JsonResponse([
                 'success' => false,
-                'message' => 'No tags selected for deletion'
+                'message' => 'No tags selected for deletion',
             ], 400);
         }
 
@@ -36,31 +36,31 @@ final class BulkDeleteTagsController extends AbstractController
             try {
                 $deleteTagRequest = new DeleteTagRequest($id);
                 ($this->deleteTagService)($deleteTagRequest);
-                $deleted++;
+                ++$deleted;
             } catch (\Exception $e) {
-                $failed++;
+                ++$failed;
                 $errors[] = sprintf('Tag %s: %s', $id, $e->getMessage());
             }
         }
 
-        if ($deleted > 0 && $failed === 0) {
+        if ($deleted > 0 && 0 === $failed) {
             return new JsonResponse([
                 'success' => true,
-                'message' => sprintf('%d tag(s) deleted successfully', $deleted)
+                'message' => sprintf('%d tag(s) deleted successfully', $deleted),
             ]);
-        } elseif ($deleted > 0 && $failed > 0) {
+        }
+        if ($deleted > 0 && $failed > 0) {
             return new JsonResponse([
                 'success' => true,
                 'message' => sprintf('%d tag(s) deleted, %d failed', $deleted, $failed),
-                'errors' => $errors
+                'errors' => $errors,
             ]);
-        } else {
-            return new JsonResponse([
-                'success' => false,
-                'message' => 'Failed to delete tags',
-                'errors' => $errors
-            ], 500);
         }
+
+        return new JsonResponse([
+            'success' => false,
+            'message' => 'Failed to delete tags',
+            'errors' => $errors,
+        ], 500);
     }
 }
-

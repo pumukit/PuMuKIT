@@ -8,4 +8,3 @@ final class DeleteChannelResponse
 {
     public function __construct(public readonly string $deletedId) {}
 }
-

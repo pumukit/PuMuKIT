@@ -10,4 +10,3 @@ final class ViewChannelResponse
 {
     public function __construct(public readonly Live $channel) {}
 }
-

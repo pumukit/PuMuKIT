@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Streaming\Application\Channel\Create;
 
+use App\Shared\Domain\EventBusInterface;
 use App\Streaming\Domain\Event\ChannelCreatedEvent;
 use App\Streaming\Domain\Repository\ChannelRepositoryInterface;
 use Pumukit\SchemaBundle\Document\Live;
-use App\Shared\Domain\EventBusInterface;
 
 final class CreateChannelService
 {
@@ -51,4 +51,3 @@ final class CreateChannelService
         return new CreateChannelResponse($channel);
     }
 }
-
