@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Transcoding\Infrastructure\Security\Permission;
 
-use App\Shared\Infrastructure\Security\Permission\PermissionRegistryInterface;
+use App\Shared\Domain\PermissionRegistryInterface;
 
 final class TranscodingPermissionRegister
 {

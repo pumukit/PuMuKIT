@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Infrastructure\Security\ValueObject;
+namespace App\Shared\Infrastructure\Security\Permission\ValueObject;
 
 enum PermissionType: string
 {

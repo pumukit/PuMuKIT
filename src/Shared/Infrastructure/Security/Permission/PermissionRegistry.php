@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Shared\Infrastructure\Security\Permission;
 
 use App\Shared\Domain\PermissionRegistryInterface;
-use App\Shared\Infrastructure\Security\ValueObject\PermissionType;
-use App\Shared\Infrastructure\Security\ValueObject\RegisteredPermission;
+use App\Shared\Infrastructure\Security\Permission\ValueObject\PermissionType;
+use App\Shared\Infrastructure\Security\Permission\ValueObject\RegisteredPermission;
 
 final class PermissionRegistry implements PermissionRegistryInterface
 {
