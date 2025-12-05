@@ -7,6 +7,7 @@
 {% set sort_name = sort_name is defined ? sort_name : (columns|first).field ?? '' %}
 {% set sort_order = sort_order is defined ? sort_order : 'asc' %}
 {% set server_side = server_side is defined ? server_side : false %}
+{% set toolbar_selector = toolbar is defined ? toolbar : '#bulk-action-toolbar' %}
 
 <table
     id="{{ table_id }}"
@@ -14,7 +15,7 @@
     data-locale="{{ app.request.getLocale() }}"
     data-show-refresh="true"
     data-icons-prefix="fa"
-    data-toolbar="#bulk-action-toolbar"
+    data-toolbar="{{ toolbar_selector }}"
     data-search="{{ enable_search ? 'true' : 'false' }}"
     data-pagination="{{ enable_pagination ? 'true' : 'false' }}"
     data-page-size="{{ page_size }}"
@@ -105,9 +106,12 @@
 
 {% if bulk_operations_template is defined and bulk_operations_template %}
     {% set bulk_config = bulk_operations_config|default({}) %}
+    {% set toolbar_id_value = toolbar_selector|replace({'#': ''}) %}
     {% include bulk_operations_template with {
+        bulkOperations: bulkOperations|default([]),
+        toolbar_id: toolbar_id_value,
         translation_domain: bulk_config.translation_domain|default('messages'),
-        table_selector: bulk_config.table_selector|default('[data-toolbar="#bulk-action-toolbar"]'),
+        table_selector: bulk_config.table_selector|default('[data-toolbar="' ~ toolbar_selector ~ '"]'),
         selection_mode: bulk_config.selection_mode|default('bootstrap-table')
     } %}
 {% endif %}

@@ -1,10 +1,11 @@
 {% set translation_domain = translation_domain|default('messages') %}
-{% set table_selector = table_selector|default('[data-toolbar="#bulk-action-toolbar"]') %}
+{% set toolbar_id = toolbar_id|default('bulk-action-toolbar') %}
+{% set table_selector = table_selector|default('[data-toolbar="#' ~ toolbar_id ~ '"]') %}
 {% set selection_mode = selection_mode|default('bootstrap-table') %}
 
-<div id="bulk-action-toolbar" class="d-flex gap-2 mb-2">
-    <label for="bulk-action-select" style="display:none"></label>
-    <select id="bulk-action-select" class="form-select">
+<div id="{{ toolbar_id }}" class="d-flex gap-2 mb-2">
+    <label for="{{ toolbar_id }}-select" style="display:none"></label>
+    <select id="{{ toolbar_id }}-select" class="form-select">
         <option value="">{{ 'bulk.select_option'|trans({}, translation_domain) }}</option>
         {% if bulkOperations is defined and bulkOperations is not empty %}
             {% for operation in bulkOperations %}
@@ -20,7 +21,7 @@
             {% endfor %}
         {% endif %}
     </select>
-    <button id="bulk-action-apply" class="btn btn-sm btn-pumukit">{{ 'bulk.apply'|trans({}, translation_domain) }}</button>
+    <button id="{{ toolbar_id }}-apply" class="btn btn-sm btn-pumukit">{{ 'bulk.apply'|trans({}, translation_domain) }}</button>
 </div>
 
 <script>
@@ -216,8 +217,8 @@ if (typeof PumukitBulkOperations === 'undefined') {
 
 document.addEventListener('DOMContentLoaded', function() {
     PumukitBulkOperations.init({
-        selectElementId: 'bulk-action-select',
-        applyButtonId: 'bulk-action-apply',
+        selectElementId: '{{ toolbar_id|e('js') }}-select',
+        applyButtonId: '{{ toolbar_id|e('js') }}-apply',
         tableSelector: '{{ table_selector|e('js') }}',
         selectionMode: '{{ selection_mode|e('js') }}',
         translationDomain: '{{ translation_domain|e('js') }}'
