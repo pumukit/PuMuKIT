@@ -1,0 +1,169 @@
+{% extends '@Shared/Views//layout/layout.html.twig' %}
+
+{% block body %}
+<div class="container-fluid mt-3">
+    {% include '@Shared/Views//partials/_title.html.twig' with {'page_title': 'taxonomy.page.update'|trans({'%cod%': tag.cod}, 'taxonomy')} %}
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">{{ 'taxonomy.form.tag_information'|trans({}, 'taxonomy') }}</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{{ path('taxonomy_tag_update', {'id': tag.id}) }}" class="form-horizontal">
+                        <div class="mb-3">
+                            <label for="cod" class="form-label">{{ 'taxonomy.form.code'|trans({}, 'taxonomy') }}</label>
+                            <input type="text"
+                                   id="cod"
+                                   name="cod"
+                                   class="form-control"
+                                   value="{{ tag.cod }}"
+                                   readonly
+                                   disabled>
+                            <small class="form-text text-muted">{{ 'taxonomy.form.code_readonly_help'|trans({}, 'taxonomy') }}</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="form-label">{{ 'taxonomy.form.title_json'|trans({}, 'taxonomy') }} *</label>
+                            <textarea id="title"
+                                      name="title"
+                                      class="form-control"
+                                      rows="3"
+                                      required>{{ tag.i18nTitle|json_encode }}</textarea>
+                            <small class="form-text text-muted">{{ 'taxonomy.form.title_json_help'|trans({}, 'taxonomy') }}</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">{{ 'taxonomy.form.description_json'|trans({}, 'taxonomy') }}</label>
+                            <textarea id="description"
+                                      name="description"
+                                      class="form-control"
+                                      rows="3">{{ tag.i18nDescription|json_encode }}</textarea>
+                            <small class="form-text text-muted">{{ 'taxonomy.form.description_json_help'|trans({}, 'taxonomy') }}</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="slug" class="form-label">{{ 'taxonomy.form.slug'|trans({}, 'taxonomy') }}</label>
+                            <input type="text"
+                                   id="slug"
+                                   name="slug"
+                                   class="form-control"
+                                   value="{{ tag.slug }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="parent" class="form-label">{{ 'taxonomy.form.parent'|trans({}, 'taxonomy') }}</label>
+                            <select id="parent" name="parent" class="form-control" disabled>
+                                <option value="">{{ 'taxonomy.form.no_parent'|trans({}, 'taxonomy') }}</option>
+                                {% for t in tags %}
+                                    {% if t.id != tag.id %}
+                                        <option value="{{ t.id }}" {{ tag.parent and tag.parent.id == t.id ? 'selected' : '' }}>
+                                            {{ '&nbsp;&nbsp;'|raw }}{{ t.getTitle('en') }} ({{ t.cod }})
+                                        </option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <small class="form-text text-muted">{{ 'taxonomy.form.parent_readonly_help'|trans({}, 'taxonomy') }}</small>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox"
+                                   id="display"
+                                   name="display"
+                                   class="form-check-input"
+                                   value="1"
+                                   {{ tag.display ? 'checked' : '' }}>
+                            <label for="display" class="form-check-label">{{ 'taxonomy.form.display'|trans({}, 'taxonomy') }}</label>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox"
+                                   id="metatag"
+                                   name="metatag"
+                                   class="form-check-input"
+                                   value="1"
+                                   {{ tag.metatag ? 'checked' : '' }}>
+                            <label for="metatag" class="form-check-label">Is Metatag</label>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="properties" class="form-label">Properties (JSON)</label>
+                            <textarea id="properties"
+                                      name="properties"
+                                      class="form-control"
+                                      rows="3">{{ tag.properties|json_encode }}</textarea>
+                            <small class="form-text text-muted">Enter additional properties in JSON format</small>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-save"></i> Update Tag
+                            </button>
+                            <a href="{{ path('taxonomy_tag_index') }}" class="btn btn-secondary">
+                                <i class="fa fa-times"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Tag Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">ID:</dt>
+                        <dd class="col-sm-8"><code>{{ tag.id }}</code></dd>
+
+                        <dt class="col-sm-4">Code:</dt>
+                        <dd class="col-sm-8"><code>{{ tag.cod }}</code></dd>
+
+                        <dt class="col-sm-4">Level:</dt>
+                        <dd class="col-sm-8">{{ tag.level }}</dd>
+
+                        <dt class="col-sm-4">Path:</dt>
+                        <dd class="col-sm-8"><small>{{ tag.path }}</small></dd>
+
+                        <dt class="col-sm-4">Children:</dt>
+                        <dd class="col-sm-8">{{ tag.numberOfChildren ?? 0 }}</dd>
+
+                        <dt class="col-sm-4">MM Objects:</dt>
+                        <dd class="col-sm-8">{{ tag.numberMultimediaObjects }}</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Help</h5>
+                </div>
+                <div class="card-body">
+                    <h6>JSON Format Examples</h6>
+                    <p><strong>Title:</strong></p>
+                    <pre class="bg-light p-2"><code>{
+  "en": "PuMuKIT HD",
+  "es": "PuMuKIT HD"
+}</code></pre>
+
+                    <p><strong>Description:</strong></p>
+                    <pre class="bg-light p-2"><code>{
+  "en": "High Definition Channel",
+  "es": "Canal HD"
+}</code></pre>
+
+                    <p><strong>Properties:</strong></p>
+                    <pre class="bg-light p-2"><code>{
+  "color": "#FF0000",
+  "priority": 10
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

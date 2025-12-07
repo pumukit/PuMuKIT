@@ -1,0 +1,40 @@
+transcoding_index:
+  path: /admin/backend/transcoding
+  controller: App\UI\Backoffice\MediaProcessing\Controller\IndexController
+
+transcoding_jobs_list:
+  path: /admin/backend/transcoding/jobs
+  controller: App\UI\Backoffice\MediaProcessing\Controller\ListJobsController
+  methods: [GET]
+
+transcoding_jobs_list_data:
+  path: /admin/backend/transcoding/jobs/data
+  controller: App\UI\Backoffice\MediaProcessing\Controller\ListJobsDataController
+  methods: [GET]
+
+transcoding_job_view:
+  path: /admin/backend/transcoding/jobs/{id}
+  controller: App\UI\Backoffice\MediaProcessing\Controller\ViewJobController
+  methods: [GET]
+  requirements:
+    id: '[a-f0-9]{24}'
+
+transcoding_job_cancel:
+  path: /admin/backend/transcoding/jobs/{id}/cancel
+  controller: App\UI\Backoffice\MediaProcessing\Controller\CancelJobController
+  methods: [POST]
+  requirements:
+    id: '[a-f0-9]{24}'
+
+transcoding_cpus_list:
+  path: /admin/backend/transcoding/cpus
+  controller: App\UI\Backoffice\MediaProcessing\Controller\ListCpusController
+  methods: [GET]
+
+transcoding_cpu_toggle_maintenance:
+  path: /admin/backend/transcoding/cpus/{cpuName}/maintenance/{action}
+  controller: App\UI\Backoffice\MediaProcessing\Controller\ToggleCpuMaintenanceController
+  methods: [POST]
+  requirements:
+    action: 'activate|deactivate'
+

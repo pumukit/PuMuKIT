@@ -1,0 +1,41 @@
+services:
+  App\MediaProcessing\Infrastructure\Persistence\DoctrineJobRepository:
+    autowire: true
+
+  App\MediaProcessing\Domain\Repository\JobRepositoryInterface:
+    alias: App\MediaProcessing\Infrastructure\Persistence\DoctrineJobRepository
+
+  App\MediaProcessing\Infrastructure\Persistence\DoctrineCpuRepository:
+    autowire: true
+
+  App\MediaProcessing\Domain\Repository\CpuRepositoryInterface:
+    alias: App\MediaProcessing\Infrastructure\Persistence\DoctrineCpuRepository
+
+  App\MediaProcessing\Application\:
+    resource: '../../MediaProcessing/Application/*'
+    exclude:
+      - '../../MediaProcessing/Application/*/*Query.php'
+      - '../../MediaProcessing/Application/*/*Request.php'
+      - '../../MediaProcessing/Application/*/*Response.php'
+    autowire: true
+    autoconfigure: true
+    bind:
+      $cpus: '%pumukitencode.cpulist%'
+
+  App\UI\Backoffice\MediaProcessing\Controller\:
+    resource: '../../UI/Backoffice/MediaProcessing/Controller'
+    tags: [ 'controller.service_arguments' ]
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\MediaProcessing\EventSubscriber\:
+    resource: '../../UI/Backoffice/MediaProcessing/EventSubscriber'
+    tags: [ 'kernel.event_subscriber' ]
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\MediaProcessing\Presenter\:
+    resource: '../../UI/Backoffice/MediaProcessing/Presenter'
+    autowire: true
+    autoconfigure: true
+

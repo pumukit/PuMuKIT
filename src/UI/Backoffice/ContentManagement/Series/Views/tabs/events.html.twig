@@ -1,0 +1,16 @@
+{% include '@Shared/Views//components/table/_table.html.twig' with {
+    id: 'eventsTable',
+    server_side: true,
+    ajax_url: path('series_events_data', {id: series.id}),
+    checkbox: true,
+    bulkOperations: multimediaObjectBulkOperations|default([]),
+    bulk_operations_template: '@Shared/Views//partials/_bulk_operations.html.twig',
+    bulk_operations_config: {
+        translation_domain: 'multimedia_object'
+    },
+    columns: [
+        {'field': 'thumbnail', 'label': 'series.events.table.thumbnail'|trans({}, 'series')},
+        {'field': 'title', 'label': 'series.events.table.title'|trans({}, 'series'), 'sortable': true, 'truncate': true},
+        {'field': 'actions', 'label': 'series.events.table.actions'|trans({}, 'series'), 'align': 'right'}
+    ]
+} %}

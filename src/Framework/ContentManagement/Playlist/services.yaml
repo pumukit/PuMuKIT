@@ -1,0 +1,49 @@
+services:
+  App\ContentManagement\Playlist\Application\:
+    resource: '../../../ContentManagement/Playlist/Application/*'
+    exclude:
+      - '../../../ContentManagement/Playlist/Application/*/*Query.php'
+      - '../../../ContentManagement/Playlist/Application/*/*Request.php'
+      - '../../../ContentManagement/Playlist/Application/*/*Response.php'
+      - '../../../ContentManagement/Playlist/Application/*/*Validator.php'
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\ContentManagement\Playlist\Controller\:
+    resource: '../../../UI/Backoffice/ContentManagement/Playlist/Controller'
+    tags: [ 'controller.service_arguments' ]
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\ContentManagement\Playlist\Presenter\:
+    resource: '../../../UI/Backoffice/ContentManagement/Playlist/Presenter'
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\ContentManagement\Playlist\FormHandler\:
+    resource: '../../../UI/Backoffice/ContentManagement/Playlist/FormHandler'
+    autowire: true
+    autoconfigure: true
+
+  App\ContentManagement\Playlist\Domain\Repository\PlaylistRepositoryInterface: '@App\ContentManagement\Playlist\Infrastructure\Persistence\DoctrinePlaylistRepository'
+
+  App\ContentManagement\Playlist\Infrastructure\Persistence\DoctrinePlaylistRepository:
+    autowire: true
+    autoconfigure: true
+    public: false
+    tags: [ 'doctrine.repository' ]
+
+  App\ContentManagement\Playlist\Domain\Factory\PlaylistFactoryInterface:
+    alias: App\ContentManagement\Playlist\Infrastructure\Factory\PlaylistFactoryAdapter
+
+  App\ContentManagement\Playlist\Infrastructure\Factory\PlaylistFactoryAdapter:
+    arguments:
+      $factoryService: '@Pumukit\SchemaBundle\Services\FactoryService'
+      $userRepository: '@App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface'
+
+  App\UI\Backoffice\ContentManagement\Playlist\EventSubscriber\:
+    resource: '../../../UI/Backoffice/ContentManagement/Playlist/EventSubscriber'
+    tags: [ 'kernel.event_subscriber' ]
+    autowire: true
+    autoconfigure: true
+

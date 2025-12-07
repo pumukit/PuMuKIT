@@ -1,0 +1,33 @@
+services:
+  App\Streaming\Infrastructure\Persistence\DoctrineChannelRepository:
+    autowire: true
+
+  App\Streaming\Domain\Repository\ChannelRepositoryInterface:
+    alias: App\Streaming\Infrastructure\Persistence\DoctrineChannelRepository
+
+  App\Streaming\Application\:
+    resource: '../../Streaming/Application/*'
+    exclude:
+      - '../../Streaming/Application/*/*Query.php'
+      - '../../Streaming/Application/*/*Request.php'
+      - '../../Streaming/Application/*/*Response.php'
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\Streaming\Controller\:
+    resource: '../../UI/Backoffice/Streaming/Controller'
+    tags: [ 'controller.service_arguments' ]
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\Streaming\EventSubscriber\:
+    resource: '../../UI/Backoffice/Streaming/EventSubscriber'
+    tags: [ 'kernel.event_subscriber' ]
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\Streaming\Presenter\:
+    resource: '../../UI/Backoffice/Streaming/Presenter'
+    autowire: true
+    autoconfigure: true
+

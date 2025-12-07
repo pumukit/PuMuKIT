@@ -1,0 +1,112 @@
+{% extends '@Shared/Views//layout/layout.html.twig' %}
+
+{% block body %}
+<div class="container-fluid mt-3">
+    <div class="row mb-3">
+        <div class="col">
+            <h1>{{ 'streaming.page.create'|trans({}, 'streaming') }}</h1>
+            <a href="{{ path('streaming_channels_list') }}" class="btn btn-secondary">
+                <i class="fa fa-arrow-left"></i> {{ 'streaming.button.back_to_list'|trans({}, 'streaming') }}
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="name_en" class="form-label">{{ 'streaming.form.name'|trans({}, 'streaming') }} (EN) *</label>
+                            <input type="text" class="form-control" id="name_en" name="name[en]" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="name_es" class="form-label">{{ 'streaming.form.name'|trans({}, 'streaming') }} (ES)</label>
+                            <input type="text" class="form-control" id="name_es" name="name[es]">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description_en" class="form-label">{{ 'streaming.form.description'|trans({}, 'streaming') }} (EN)</label>
+                            <textarea class="form-control" id="description_en" name="description[en]" rows="3"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description_es" class="form-label">{{ 'streaming.form.description'|trans({}, 'streaming') }} (ES)</label>
+                            <textarea class="form-control" id="description_es" name="description[es]" rows="3"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="url" class="form-label">{{ 'streaming.form.url'|trans({}, 'streaming') }} *</label>
+                            <input type="url" class="form-control" id="url" name="url" required placeholder="rtmp://...">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="source_name" class="form-label">{{ 'streaming.form.source_name'|trans({}, 'streaming') }} *</label>
+                            <input type="text" class="form-control" id="source_name" name="source_name" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="live_type" class="form-label">{{ 'streaming.form.live_type'|trans({}, 'streaming') }}</label>
+                            <select class="form-control" id="live_type" name="live_type">
+                                <option value="WOWZA">WOWZA</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ip_source" class="form-label">{{ 'streaming.form.ip_source'|trans({}, 'streaming') }}</label>
+                            <input type="text" class="form-control" id="ip_source" name="ip_source" placeholder="192.168.1.1">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="passwd" class="form-label">{{ 'streaming.form.password'|trans({}, 'streaming') }}</label>
+                            <input type="password" class="form-control" id="passwd" name="passwd">
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="index_play" name="index_play">
+                                <label class="form-check-label" for="index_play">
+                                    {{ 'streaming.form.index_play'|trans({}, 'streaming') }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="broadcasting" name="broadcasting">
+                                <label class="form-check-label" for="broadcasting">
+                                    {{ 'streaming.form.broadcasting'|trans({}, 'streaming') }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="chat" name="chat">
+                                <label class="form-check-label" for="chat">
+                                    {{ 'streaming.form.chat'|trans({}, 'streaming') }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="debug" name="debug">
+                                <label class="form-check-label" for="debug">
+                                    {{ 'streaming.form.debug'|trans({}, 'streaming') }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-save"></i> {{ 'streaming.button.create'|trans({}, 'streaming') }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

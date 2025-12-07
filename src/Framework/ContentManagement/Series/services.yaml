@@ -1,0 +1,68 @@
+services:
+  App\ContentManagement\Series\Application\:
+    resource: '../../../ContentManagement/Series/Application/*'
+    exclude:
+      - '../../../ContentManagement/Series/Application/*/*Query.php'
+      - '../../../ContentManagement/Series/Application/*/*Request.php'
+      - '../../../ContentManagement/Series/Application/*/*Response.php'
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\ContentManagement\Series\Controller\:
+    resource: '../../../UI/Backoffice/ContentManagement/Series/Controller'
+    tags: [ 'controller.service_arguments' ]
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\ContentManagement\Series\Presenter\:
+    resource: '../../../UI/Backoffice/ContentManagement/Series/Presenter'
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\ContentManagement\Series\FormHandler\:
+    resource: '../../../UI/Backoffice/ContentManagement/Series/FormHandler'
+    autowire: true
+    autoconfigure: true
+
+  App\ContentManagement\Series\Domain\Repository\SeriesRepositoryInterface: '@App\ContentManagement\Series\Infrastructure\Persistence\DoctrineSeriesRepository'
+  App\ContentManagement\Series\Domain\Repository\SeriesTypeRepositoryInterface: '@App\ContentManagement\Series\Infrastructure\Persistence\DoctrineSeriesTypeRepository'
+  App\ContentManagement\Series\Domain\Repository\SeriesStyleRepositoryInterface: '@App\ContentManagement\Series\Infrastructure\Persistence\DoctrineSeriesStyleRepository'
+
+  App\ContentManagement\Series\Infrastructure\Persistence\DoctrineSeriesTypeRepository:
+    autowire: true
+    autoconfigure: true
+
+  App\ContentManagement\Series\Infrastructure\Persistence\DoctrineSeriesStyleRepository:
+    autowire: true
+    autoconfigure: true
+
+  App\ContentManagement\Series\Application\List\ListSeriesService:
+    arguments:
+      $repository: '@App\ContentManagement\Series\Domain\Repository\SeriesRepositoryInterface'
+
+  App\ContentManagement\Series\Infrastructure\Persistence\DoctrineSeriesRepository:
+    autowire: true
+    autoconfigure: true
+    public: false
+    tags: [ 'doctrine.repository' ]
+
+  App\UI\Backoffice\ContentManagement\Series\Twig\SeriesExtension:
+    arguments:
+      $picService: '@Pumukit\SchemaBundle\Services\PicService'
+      $viewSeriesOwnersService: '@App\ContentManagement\Series\Application\ViewSeriesOwners\ViewSeriesOwnersService'
+    tags:
+      - { name: twig.extension }
+
+  App\ContentManagement\Series\Domain\Factory\SeriesFactoryInterface:
+    alias: App\ContentManagement\Series\Infrastructure\Factory\SeriesFactoryAdapter
+
+  App\ContentManagement\Series\Infrastructure\Factory\SeriesFactoryAdapter:
+    arguments:
+      $factoryService: '@Pumukit\SchemaBundle\Services\FactoryService'
+      $userRepository: '@App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface'
+
+  App\UI\Backoffice\ContentManagement\Series\EventSubscriber\:
+    resource: '../../../UI/Backoffice/ContentManagement/Series/EventSubscriber'
+    tags: [ 'kernel.event_subscriber' ]
+    autowire: true
+    autoconfigure: true

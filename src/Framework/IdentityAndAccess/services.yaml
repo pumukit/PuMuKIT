@@ -1,0 +1,38 @@
+services:
+  App\IdentityAndAccess\Application\:
+    resource: '../../IdentityAndAccess/Application/*'
+    exclude:
+      - '../../IdentityAndAccess/Application/*/*Query.php'
+      - '../../IdentityAndAccess/Application/*/*Request.php'
+      - '../../IdentityAndAccess/Application/*/*Response.php'
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\IdentityAndAccess\Controller\:
+    resource: '../../UI/Backoffice/IdentityAndAccess/Controller'
+    tags: [ 'controller.service_arguments' ]
+    autowire: true
+    autoconfigure: true
+
+  App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface: '@App\IdentityAndAccess\Infrastructure\Persistence\DoctrineUserRepository'
+
+  App\IdentityAndAccess\Application\List\ListUserService:
+    arguments:
+      $repository: '@App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface'
+
+  App\UI\Backoffice\IdentityAndAccess\Presenter\:
+    resource: '../../UI/Backoffice/IdentityAndAccess/Presenter'
+    autowire: true
+    autoconfigure: true
+
+  App\IdentityAndAccess\Infrastructure\Persistence\DoctrineUserRepository:
+    autowire: true
+    autoconfigure: true
+    public: false
+    tags: [ 'doctrine.repository' ]
+
+  App\UI\Backoffice\IdentityAndAccess\EventSubscriber\:
+    resource: '../../UI/Backoffice/IdentityAndAccess/EventSubscriber'
+    tags: [ 'kernel.event_subscriber' ]
+    autowire: true
+    autoconfigure: true

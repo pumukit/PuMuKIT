@@ -1,0 +1,54 @@
+series_create:
+  path: /admin/backend/series/new
+  controller: App\UI\Backoffice\ContentManagement\Series\Controller\CreateSeriesController
+
+series_list:
+  path: /admin/backend/series
+  controller: App\UI\Backoffice\ContentManagement\Series\Controller\ListSeriesController
+
+series_list_data:
+  path: /admin/backend/series/data
+  controller: App\UI\Backoffice\ContentManagement\Series\Controller\ListSeriesDataController
+
+# Bulk operations first
+series_bulk_delete:
+  path: /admin/backend/series/bulk/delete
+  controller: App\UI\Backoffice\ContentManagement\Series\Controller\BulkDeleteSeriesController
+  methods: [POST]
+
+series_bulk_toggle_announce:
+  path: /admin/backend/series/bulk/toggle-announce
+  controller: App\UI\Backoffice\ContentManagement\Series\Controller\BulkToggleAnnounceSeriesController
+  methods: [POST]
+
+series_multimedia_object_data:
+  path: /admin/backend/series/{id}/multimedia/data
+  controller: App\UI\Backoffice\ContentManagement\Series\Controller\ViewSeriesMultimediaObjectsDataController
+
+series_events_data:
+  path: /admin/backend/series/{id}/events/data
+  controller: App\UI\Backoffice\ContentManagement\Series\Controller\ViewSeriesEventsDataController
+
+series_delete:
+  path: /admin/backend/series/{id}/delete
+  controller: App\UI\Backoffice\ContentManagement\Series\Controller\DeleteSeriesController
+
+series_clone:
+  path: /admin/backend/series/{id}/clone
+  controller: App\UI\Backoffice\ContentManagement\Series\Controller\CloneSeriesController
+  methods: [POST]
+
+series_update:
+  path: /admin/backend/series/{id}/update
+  controller: App\UI\Backoffice\ContentManagement\Series\Controller\UpdateSeriesController
+  methods: [POST]
+
+# Generic view route MUST be last to avoid conflicts
+series_view:
+  path: /admin/backend/series/{id}/{tab}
+  controller: App\UI\Backoffice\ContentManagement\Series\Controller\ViewSeriesController
+  defaults:
+    tab: 'general'
+  requirements:
+    tab: '[a-zA-Z0-9_-]+'
+

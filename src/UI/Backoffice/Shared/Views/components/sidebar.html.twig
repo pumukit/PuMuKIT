@@ -1,0 +1,11 @@
+<nav id="sidebar" class="sidebar d-flex flex-column text-white">
+    <div class="sidebar-header py-3 border-bottom border-secondary">
+        <h4 class="d-flex justify-content-center align-items-center gap-2 m-0">
+            <img src="{{ asset('bundles/pumukitnewadmin/images/icon.png') }}" alt="Logo" height="30">
+            <span style="margin-top:4px;">PuMuKIT</span>
+        </h4>
+    </div>
+    <div class="sidebar-body flex-grow-1 overflow-auto">
+        {% include '@Shared/Views//components/_menu.html.twig' %}
+    </div>
+</nav>

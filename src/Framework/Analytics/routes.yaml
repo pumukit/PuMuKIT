@@ -1,0 +1,3 @@
+analytics_index:
+  path: /admin/backend/analytics
+  controller: App\UI\Backoffice\Analytics\Controller\IndexController

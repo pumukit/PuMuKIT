@@ -1,0 +1,34 @@
+services:
+  App\ContentManagement\MultimediaObject\Application\:
+    resource: '../../../ContentManagement/MultimediaObject/Application/*'
+    exclude:
+      - '../../../ContentManagement/MultimediaObject/Application/*/*Query.php'
+      - '../../../ContentManagement/MultimediaObject/Application/*/*Request.php'
+      - '../../../ContentManagement/MultimediaObject/Application/*/*Response.php'
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\ContentManagement\MultimediaObject\Controller\:
+    resource: '../../../UI/Backoffice/ContentManagement/MultimediaObject/Controller'
+    tags: [ 'controller.service_arguments' ]
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\ContentManagement\MultimediaObject\EventSubscriber\:
+    resource: '../../../UI/Backoffice/ContentManagement/MultimediaObject/EventSubscriber'
+    tags: [ 'kernel.event_subscriber' ]
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\ContentManagement\MultimediaObject\Presenter\:
+    resource: '../../../UI/Backoffice/ContentManagement/MultimediaObject/Presenter'
+    autowire: true
+    autoconfigure: true
+
+  App\ContentManagement\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface: '@App\ContentManagement\MultimediaObject\Infrastructure\Persistence\DoctrineMultimediaObjectRepository'
+
+  App\ContentManagement\MultimediaObject\Infrastructure\Persistence\DoctrineMultimediaObjectRepository:
+    autowire: true
+    autoconfigure: true
+    public: false
+    tags: [ 'doctrine.repository' ]

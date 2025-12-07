@@ -1,29 +1,26 @@
 analytics_routes:
-  resource: ../src/Analytics/UI/Backoffice/Resources/config/routes.yaml
+  resource: ../src/Framework/Analytics/routes.yaml
 
 dashboard_routes:
-  resource: ../src/Dashboard/UI/Backoffice/Resources/config/routes.yaml
+  resource: ../src/Framework/Dashboard/routes.yaml
 
 multimedia_object_routes:
-  resource: ../src/MultimediaObject/UI/Backoffice/Resources/config/routes.yaml
-
-#notification_routes:
-#  resource: ../src/Notification/UI/Backoffice/Resources/config/routes.yaml
+  resource: ../src/Framework/ContentManagement/MultimediaObject/routes.yaml
 
 playlist_routes:
-  resource: ../src/Playlist/UI/Backoffice/Resources/config/routes.yaml
+  resource: ../src/Framework/ContentManagement/Playlist/routes.yaml
 
 series_routes:
-  resource: ../src/Series/UI/Backoffice/Resources/config/routes.yaml
+  resource: ../src/Framework/ContentManagement/Series/routes.yaml
 
 streaming_routes:
-  resource: ../src/Streaming/UI/Backoffice/Resources/config/routes.yaml
+  resource: ../src/Framework/Streaming/routes.yaml
 
 taxonomy_routes:
-  resource: ../src/Taxonomy/UI/Backoffice/Resources/config/routes.yaml
+  resource: ../src/Framework/ContentManagement/Taxonomy/routes.yaml
 
 transcoding_routes:
-  resource: ../src/Transcoding/UI/Backoffice/Resources/config/routes.yaml
+  resource: ../src/Framework/MediaProcessing/routes.yaml
 
 user_routes:
-  resource: ../src/User/UI/Backoffice/Resources/config/routes.yaml
+  resource: ../src/Framework/IdentityAndAccess/routes.yaml
