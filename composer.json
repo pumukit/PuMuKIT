@@ -25,9 +25,11 @@
         "phpdocumentor/reflection-docblock": "^5.3",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/amqp-messenger": "^5.0",
+        "symfony/messenger": "^5.0",
+        "symfony/doctrine-messenger": "^5.0",
+        "teltek/pumukit-youtube-bundle": "5.0.x-dev",
         "symfony/asset": "^5.0",
         "symfony/css-selector": "^5.0",
-        "symfony/doctrine-messenger": "^5.0",
         "symfony/dotenv": "^5.0",
         "symfony/event-dispatcher": "^5.0",
         "symfony/expression-language": "^5.0",
@@ -36,7 +38,6 @@
         "symfony/framework-bundle": "^5.0",
         "symfony/http-kernel": "^5.0",
         "symfony/intl": "^5.0",
-        "symfony/messenger": "^6.0",
         "symfony/monolog-bundle": "^3.0",
         "symfony/routing": "^5.0",
         "symfony/security-bundle": "^5.0",
@@ -125,6 +126,13 @@
     "config": {
         "platform": {
             "ext-mongo": "1.6.16"
+        },
+        "audit": {
+            "block-insecure": false,
+            "ignore": [
+                "PKSA-gs8r-6kz6-pp56",
+                "PKSA-gnn4-pxdg-q76m"
+            ]
         },
         "preferred-install": {
             "*": "dist"

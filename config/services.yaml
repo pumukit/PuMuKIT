@@ -46,6 +46,21 @@ parameters:
 pumukit_core:
   inboxUploadURL: "%env(string:PUMUKIT_SCHEME)%://%env(string:PUMUKIT_FRONTEND_HOST)%/tus"
 
+pumukit_youtube:
+  playlist_privacy_status: public
+  playlists_master: pumukit
+  delete_playlists: false
+  pub_channels_tags:
+    - PUCHYOUTUBE
+  sync_status: true
+  default_track_upload: youtube
+  allowed_caption_mimetypes:
+    - vtt
+  generate_sbs: true
+  upload_removed_videos: false
+  sbs_profile_name: sbs
+  account_storage: '/srv/pumukit/config/youtube_accounts/stg'
+
 services:
   _defaults:
     autowire:      true
@@ -73,6 +88,4 @@ services:
         arguments:
           - '@annotation_reader'
 
-  App\Command\SendTestMessageCommand:
-    tags: ['console.command']
 
