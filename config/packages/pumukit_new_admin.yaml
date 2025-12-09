@@ -1,6 +1,9 @@
 parameters:
   pumukit_ldap.ldap: false
 
+pumukit_new_admin:
+  enable_playlist: true
+
 services:
   _defaults:
     autowire:      true
