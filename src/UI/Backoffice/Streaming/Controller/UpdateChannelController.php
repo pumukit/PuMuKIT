@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\UI\Backoffice\Streaming\Controller;
 
 use App\Shared\Domain\TranslatorInterface;
-use App\Streaming\Application\Channel\Update\UpdateChannelRequest;
-use App\Streaming\Application\Channel\Update\UpdateChannelService;
-use App\Streaming\Application\Channel\View\ViewChannelRequest;
-use App\Streaming\Application\Channel\View\ViewChannelService;
+use App\Streaming\Channel\Application\Update\UpdateChannelRequest;
+use App\Streaming\Channel\Application\Update\UpdateChannelService;
+use App\Streaming\Channel\Application\View\ViewChannelRequest;
+use App\Streaming\Channel\Application\View\ViewChannelService;
 use Pumukit\SchemaBundle\Document\Live;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\UI\Backoffice\Streaming\Controller;
 
 use App\Shared\Domain\TranslatorInterface;
-use App\Streaming\Application\Channel\Delete\DeleteChannelRequest;
-use App\Streaming\Application\Channel\Delete\DeleteChannelService;
+use App\Streaming\Channel\Application\Delete\DeleteChannelRequest;
+use App\Streaming\Channel\Application\Delete\DeleteChannelService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 

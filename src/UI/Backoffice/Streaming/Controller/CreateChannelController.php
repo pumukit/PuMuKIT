@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\UI\Backoffice\Streaming\Controller;
 
 use App\Shared\Domain\TranslatorInterface;
-use App\Streaming\Application\Channel\Create\CreateChannelRequest;
-use App\Streaming\Application\Channel\Create\CreateChannelService;
+use App\Streaming\Channel\Application\Create\CreateChannelRequest;
+use App\Streaming\Channel\Application\Create\CreateChannelService;
 use Pumukit\SchemaBundle\Document\Live;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

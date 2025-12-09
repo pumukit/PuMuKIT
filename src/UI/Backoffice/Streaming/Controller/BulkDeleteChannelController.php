@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\UI\Backoffice\Streaming\Controller;
 
 use App\Shared\Domain\LoggerInterface;
-use App\Streaming\Application\Channel\BulkDelete\BulkDeleteChannelRequest;
-use App\Streaming\Application\Channel\BulkDelete\BulkDeleteChannelService;
+use App\Streaming\Channel\Application\BulkDelete\BulkDeleteChannelRequest;
+use App\Streaming\Channel\Application\BulkDelete\BulkDeleteChannelService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

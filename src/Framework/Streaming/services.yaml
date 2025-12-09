@@ -1,16 +1,17 @@
 services:
-  App\Streaming\Infrastructure\Persistence\DoctrineChannelRepository:
+  # Channel Context
+  App\Streaming\Channel\Infrastructure\Persistence\DoctrineChannelRepository:
     autowire: true
 
-  App\Streaming\Domain\Repository\ChannelRepositoryInterface:
-    alias: App\Streaming\Infrastructure\Persistence\DoctrineChannelRepository
+  App\Streaming\Channel\Domain\Repository\ChannelRepositoryInterface:
+    alias: App\Streaming\Channel\Infrastructure\Persistence\DoctrineChannelRepository
 
-  App\Streaming\Application\:
-    resource: '../../Streaming/Application/*'
+  App\Streaming\Channel\Application\:
+    resource: '../../Streaming/Channel/Application/*'
     exclude:
-      - '../../Streaming/Application/*/*Query.php'
-      - '../../Streaming/Application/*/*Request.php'
-      - '../../Streaming/Application/*/*Response.php'
+      - '../../Streaming/Channel/Application/*/*Query.php'
+      - '../../Streaming/Channel/Application/*/*Request.php'
+      - '../../Streaming/Channel/Application/*/*Response.php'
     autowire: true
     autoconfigure: true
 
