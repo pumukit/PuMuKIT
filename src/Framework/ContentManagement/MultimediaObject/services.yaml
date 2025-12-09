@@ -1,4 +1,9 @@
 services:
+  _defaults:
+    bind:
+      $scheme: '%router.request_context.scheme%'
+      $host: '%router.request_context.host%'
+
   App\ContentManagement\MultimediaObject\Application\:
     resource: '../../../ContentManagement/MultimediaObject/Application/*'
     exclude:

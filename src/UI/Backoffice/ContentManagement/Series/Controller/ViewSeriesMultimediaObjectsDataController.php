@@ -48,11 +48,7 @@ final class ViewSeriesMultimediaObjectsDataController extends AbstractController
 
         $rows = [];
         foreach ($response->multimediaObjects as $multimediaObject) {
-            $rows[] = $this->presenter->present(
-                $multimediaObject,
-                $request->getScheme(),
-                $request->getHost()
-            );
+            $rows[] = $this->presenter->present($multimediaObject);
         }
 
         return $this->json([

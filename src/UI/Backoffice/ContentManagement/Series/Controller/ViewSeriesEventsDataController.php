@@ -29,7 +29,7 @@ final class ViewSeriesEventsDataController extends AbstractController
         $page = (int) floor($offset / $limit) + 1;
 
         $filters = [
-            'series_id' => $id,  // Pass as string, let Application layer handle conversion
+            'series_id' => $id,
         ];
         if ($search) {
             $filters['title'] = $search;
@@ -48,11 +48,7 @@ final class ViewSeriesEventsDataController extends AbstractController
 
         $rows = [];
         foreach ($response->multimediaObjects as $event) {
-            $rows[] = $this->presenter->present(
-                $event,
-                $request->getScheme(),
-                $request->getHost()
-            );
+            $rows[] = $this->presenter->present($event);
         }
 
         return $this->json([

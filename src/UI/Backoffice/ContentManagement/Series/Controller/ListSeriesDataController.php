@@ -44,12 +44,7 @@ final class ListSeriesDataController extends AbstractController
 
         $rows = [];
         foreach ($seriesResponse->series as $series) {
-            $rows[] = $this->presenter->present(
-                $series,
-                $request->getScheme(),
-                $request->getHost(),
-                $request->getLocale()
-            );
+            $rows[] = $this->presenter->present($series);
         }
 
         return $this->json([

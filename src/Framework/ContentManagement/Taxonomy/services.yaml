@@ -3,38 +3,31 @@ services:
         autowire: true
         autoconfigure: true
 
-    # Domain Repositories
     App\ContentManagement\Taxonomy\Domain\Repository\TagRepositoryInterface:
         class: App\ContentManagement\Taxonomy\Infrastructure\Persistence\DoctrineTagRepository
 
-    # Application Services
     App\ContentManagement\Taxonomy\Application\CreateTag\CreateTagService: ~
     App\ContentManagement\Taxonomy\Application\UpdateTag\UpdateTagService: ~
     App\ContentManagement\Taxonomy\Application\ViewTag\ViewTagService: ~
     App\ContentManagement\Taxonomy\Application\ListTags\ListTagsService: ~
     App\ContentManagement\Taxonomy\Application\DeleteTag\DeleteTagService: ~
 
-    # Infrastructure
     App\ContentManagement\Taxonomy\Infrastructure\Persistence\DoctrineTagRepository: ~
 
-
-    # Backoffice Controllers
     App\UI\Backoffice\ContentManagement\Taxonomy\Controller\:
         resource: '../../../UI/Backoffice/ContentManagement/Taxonomy/Controller'
         tags: ['controller.service_arguments']
 
-    # Backoffice Services
     App\UI\Backoffice\ContentManagement\Taxonomy\Presenter\TagDataTablePresenter: ~
 
-    # Event Subscribers
     App\UI\Backoffice\ContentManagement\Taxonomy\EventSubscriber\:
-      resource: '../../../UI/Backoffice/ContentManagement/Taxonomy/EventSubscriber'
-      tags: [ 'kernel.event_subscriber' ]
-      autowire: true
-      autoconfigure: true
+        resource: '../../../UI/Backoffice/ContentManagement/Taxonomy/EventSubscriber'
+        tags: [ 'kernel.event_subscriber' ]
+        autowire: true
+        autoconfigure: true
 
     App\ContentManagement\Taxonomy\Infrastructure\EventSubscriber\TagEventSubscriber:
-      tags: [ 'kernel.event_subscriber' ]
-      autowire: true
-      autoconfigure: true
+        tags: [ 'kernel.event_subscriber' ]
+        autowire: true
+        autoconfigure: true
 

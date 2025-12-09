@@ -4,47 +4,62 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\ContentManagement\Series\Presenter;
 
-use App\UI\Backoffice\Shared\Helpers\Thumbnail;
+use App\UI\Backoffice\Shared\Helpers\TextTruncate;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
 
-/**
- * Presenter for Event (Live MultimediaObject) data table in Series context
- * Separates presentation logic from controller.
- */
 final class EventDataTablePresenter
 {
     public function __construct(
-        private RouterInterface $router
+        private RouterInterface $router,
+        private Environment $twig,
+        private string $scheme,
+        private string $host,
     ) {}
 
-    public function present(MultimediaObject $event, string $scheme, string $host): array
+    public function present(MultimediaObject $event): array
     {
         return [
             'id' => $event->getId(),
-            'thumbnail' => Thumbnail::convert($event->getMainThumbnail($scheme, $host)),
-            'title' => $event->getTitle(),
+            'thumbnail' => $this->renderThumbnail($event),
+            'title' => TextTruncate::long($event->getTitle()),
             'actions' => $this->renderActions($event),
         ];
     }
 
+    private function renderThumbnail(MultimediaObject $event): string
+    {
+        $thumbnail = $event->getMainThumbnail($this->scheme, $this->host);
+
+        return $this->twig->render('@Shared/Views/components/table/_thumbnail.html.twig', [
+            'thumbnail' => htmlspecialchars($thumbnail),
+            'defaultImage' => 'images/default_streaming.svg',
+            'title' => htmlspecialchars($event->getTitle()),
+        ]);
+    }
+
     private function renderActions(MultimediaObject $event): string
     {
-        // TODO: Update URLs when routes are available for live events
-        $viewUrl = '#'; // $this->router->generate('live_event_view', ['id' => $event->getId()]);
-        $deleteUrl = '#'; // $this->router->generate('live_event_delete', ['id' => $event->getId()]);
-
-        return sprintf(
-            '<div class="d-flex gap-1 justify-content-end">
-                <a href="%s" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> View</a>
-                <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to delete this event?\');">
-                    <button type="submit" class="btn btn-sm btn-danger">
-                        <i class="fa fa-trash"></i> Delete
-                    </button>
-                </form>
-            </div>',
-            $viewUrl,
-            $deleteUrl
-        );
+        return $this->twig->render('@Shared/Views/components/table/_datatable_actions.html.twig', [
+            'actions' => [
+                [
+                    'type' => 'link',
+                    'url' => $this->router->generate('multimedia_object_view', ['id' => $event->getId()]),
+                    'style' => 'info',
+                    'icon' => 'eye',
+                    'title' => 'View',
+                ],
+                ['type' => 'link', 'url' => '#', 'style' => 'warning', 'icon' => 'edit', 'title' => 'Edit'],
+                [
+                    'type' => 'form',
+                    'url' => $this->router->generate('multimedia_object_delete', ['id' => $event->getId()]),
+                    'style' => 'danger',
+                    'icon' => 'trash',
+                    'title' => 'Delete',
+                    'confirm' => 'Are you sure you want to delete this multimedia object?',
+                ],
+            ],
+        ]);
     }
 }

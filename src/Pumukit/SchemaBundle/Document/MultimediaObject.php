@@ -1551,7 +1551,7 @@ class MultimediaObject
             }
         }
 
-        return $this->makeAbsoluteUrl('/bundles/pumukitnewadmin/images/none.jpg', $scheme, $host);
+        return '';
     }
 
     /**

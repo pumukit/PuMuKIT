@@ -8,18 +8,21 @@ use App\ContentManagement\Series\Domain\Repository\SeriesRepositoryInterface;
 use App\UI\Backoffice\Shared\Helpers\BooleanIcon;
 use App\UI\Backoffice\Shared\Helpers\DateFormat;
 use App\UI\Backoffice\Shared\Helpers\TextTruncate;
-use App\UI\Backoffice\Shared\Helpers\Thumbnail;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
 
 final class SeriesDataTablePresenter
 {
     public function __construct(
         private RouterInterface $router,
-        private SeriesRepositoryInterface $seriesRepository
+        private Environment $twig,
+        private SeriesRepositoryInterface $seriesRepository,
+        private string $scheme,
+        private string $host,
     ) {}
 
-    public function present(Series $series, string $scheme, string $host, string $locale): array
+    public function present(Series $series): array
     {
         return [
             'id' => $series->getId(),
@@ -27,36 +30,51 @@ final class SeriesDataTablePresenter
             'hide' => BooleanIcon::convert($series->getHide()),
             'announce' => BooleanIcon::convert($series->getAnnounce()),
             'public_date' => DateFormat::format($series->getPublicDate()),
-            'thumbnail' => Thumbnail::convert($series->getMainThumbnail($scheme, $host)),
+            'thumbnail' => $this->renderThumbnail($series),
             'objectCount' => $this->seriesRepository->countMultimediaObjects($series->getId()),
             'eventCount' => $this->seriesRepository->countEventMultimediaObjects($series->getId()),
             'actions' => $this->renderActions($series),
         ];
     }
 
+    private function renderThumbnail(Series $series): string
+    {
+        $thumbnail = $series->getMainThumbnail($this->scheme, $this->host);
+
+        return $this->twig->render('@Shared/Views/components/table/_thumbnail.html.twig', [
+            'thumbnail' => htmlspecialchars($thumbnail),
+            'defaultImage' => 'images/default_series.svg',
+            'title' => htmlspecialchars($series->getTitle()),
+        ]);
+    }
+
     private function renderActions(Series $series): string
     {
-        $viewUrl = $this->router->generate('series_view', ['id' => $series->getId()]);
-        $cloneUrl = $this->router->generate('series_clone', ['id' => $series->getId()]);
-        $deleteUrl = $this->router->generate('series_delete', ['id' => $series->getId()]);
-
-        return sprintf(
-            '<div class="d-flex gap-1 justify-content-end">
-                <a href="%s" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> View</a>
-                <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to clone this series?\');">
-                    <button type="submit" class="btn btn-sm btn-warning">
-                        <i class="fa fa-copy"></i> Clone
-                    </button>
-                </form>
-                <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to delete this series?\');">
-                    <button type="submit" class="btn btn-sm btn-danger">
-                        <i class="fa fa-trash"></i> Delete
-                    </button>
-                </form>
-            </div>',
-            $viewUrl,
-            $cloneUrl,
-            $deleteUrl
-        );
+        return $this->twig->render('@Shared/Views/components/table/_datatable_actions.html.twig', [
+            'actions' => [
+                [
+                    'type' => 'link',
+                    'url' => $this->router->generate('series_view', ['id' => $series->getId()]),
+                    'style' => 'info',
+                    'icon' => 'eye',
+                    'title' => 'View',
+                ],
+                [
+                    'type' => 'link',
+                    'url' => $this->router->generate('series_clone', ['id' => $series->getId()]),
+                    'style' => 'warning',
+                    'icon' => 'edit',
+                    'title' => 'Edit',
+                ],
+                [
+                    'type' => 'form',
+                    'url' => $this->router->generate('series_delete', ['id' => $series->getId()]),
+                    'style' => 'danger',
+                    'icon' => 'trash',
+                    'title' => 'Delete',
+                    'confirm' => 'Are you sure you want to delete this series?',
+                ],
+            ],
+        ]);
     }
 }

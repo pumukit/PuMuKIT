@@ -10,25 +10,24 @@ use App\UI\Backoffice\ContentManagement\MultimediaObject\Helpers\TypeIcon;
 use App\UI\Backoffice\Shared\Helpers\BooleanIcon;
 use App\UI\Backoffice\Shared\Helpers\DateFormat;
 use App\UI\Backoffice\Shared\Helpers\TextTruncate;
-use App\UI\Backoffice\Shared\Helpers\Thumbnail;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
 
-/**
- * Presenter for MultimediaObject data table in Series context
- * Separates presentation logic from controller.
- */
 final class MultimediaObjectDataTablePresenter
 {
     public function __construct(
-        private RouterInterface $router
+        private RouterInterface $router,
+        private Environment $twig,
+        private string $scheme,
+        private string $host,
     ) {}
 
-    public function present(MultimediaObject $multimediaObject, string $scheme, string $host): array
+    public function present(MultimediaObject $multimediaObject): array
     {
         return [
             'id' => $multimediaObject->getId(),
-            'thumbnail' => Thumbnail::convert($multimediaObject->getMainThumbnail($scheme, $host)),
+            'thumbnail' => $this->renderThumbnail($multimediaObject),
             'title' => TextTruncate::long($multimediaObject->getTitle()),
             'status' => StatusIcon::convert($multimediaObject->getStatus()),
             'public_date' => DateFormat::format($multimediaObject->getPublicDate()),
@@ -42,22 +41,38 @@ final class MultimediaObjectDataTablePresenter
         ];
     }
 
+    private function renderThumbnail(MultimediaObject $multimediaObject): string
+    {
+        $thumbnail = $multimediaObject->getMainThumbnail($this->scheme, $this->host);
+
+        return $this->twig->render('@Shared/Views/components/table/_thumbnail.html.twig', [
+            'thumbnail' => htmlspecialchars($thumbnail),
+            'defaultImage' => 'images/no_image.svg',
+            'title' => htmlspecialchars($multimediaObject->getTitle()),
+        ]);
+    }
+
     private function renderActions(MultimediaObject $multimediaObject): string
     {
-        $viewUrl = $this->router->generate('multimedia_object_view', ['id' => $multimediaObject->getId()]);
-        $deleteUrl = $this->router->generate('multimedia_object_delete', ['id' => $multimediaObject->getId()]);
-
-        return sprintf(
-            '<div class="d-flex gap-1 justify-content-end">
-                <a href="%s" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> View</a>
-                <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to delete this multimedia object?\');">
-                    <button type="submit" class="btn btn-sm btn-danger">
-                        <i class="fa fa-trash"></i> Delete
-                    </button>
-                </form>
-            </div>',
-            $viewUrl,
-            $deleteUrl
-        );
+        return $this->twig->render('@Shared/Views/components/table/_datatable_actions.html.twig', [
+            'actions' => [
+                [
+                    'type' => 'link',
+                    'url' => $this->router->generate('multimedia_object_view', ['id' => $multimediaObject->getId()]),
+                    'style' => 'info',
+                    'icon' => 'eye',
+                    'title' => 'View',
+                ],
+                ['type' => 'link', 'url' => '#', 'style' => 'warning', 'icon' => 'edit', 'title' => 'Edit'],
+                [
+                    'type' => 'form',
+                    'url' => $this->router->generate('multimedia_object_delete', ['id' => $multimediaObject->getId()]),
+                    'style' => 'danger',
+                    'icon' => 'trash',
+                    'title' => 'Delete',
+                    'confirm' => 'Are you sure you want to delete this multimedia object?',
+                ],
+            ],
+        ]);
     }
 }

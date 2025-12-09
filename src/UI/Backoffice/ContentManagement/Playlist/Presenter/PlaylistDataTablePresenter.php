@@ -8,18 +8,21 @@ use App\ContentManagement\Playlist\Domain\Repository\PlaylistRepositoryInterface
 use App\UI\Backoffice\Shared\Helpers\BooleanIcon;
 use App\UI\Backoffice\Shared\Helpers\DateFormat;
 use App\UI\Backoffice\Shared\Helpers\TextTruncate;
-use App\UI\Backoffice\Shared\Helpers\Thumbnail;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
 
 final class PlaylistDataTablePresenter
 {
     public function __construct(
         private RouterInterface $router,
-        private PlaylistRepositoryInterface $playlistRepository
+        private PlaylistRepositoryInterface $playlistRepository,
+        private Environment $twig,
+        private string $scheme,
+        private string $host,
     ) {}
 
-    public function present(Series $playlist, string $scheme, string $host, string $locale): array
+    public function present(Series $playlist): array
     {
         return [
             'id' => $playlist->getId(),
@@ -27,28 +30,44 @@ final class PlaylistDataTablePresenter
             'hide' => BooleanIcon::convert($playlist->getHide()),
             'announce' => BooleanIcon::convert($playlist->getAnnounce()),
             'public_date' => DateFormat::format($playlist->getPublicDate()),
-            'thumbnail' => Thumbnail::convert($playlist->getMainThumbnail($scheme, $host)),
+            'thumbnail' => $this->renderThumbnail($playlist),
             'objectCount' => $this->playlistRepository->countMultimediaObjects($playlist->getId()),
             'actions' => $this->renderActions($playlist),
         ];
     }
 
+    private function renderThumbnail(Series $playlist): string
+    {
+        $thumbnail = $playlist->getMainThumbnail($this->scheme, $this->host);
+
+        return $this->twig->render('@Shared/Views/components/table/_thumbnail.html.twig', [
+            'thumbnail' => htmlspecialchars($thumbnail),
+            'defaultImage' => 'images/default_playlist.svg',
+            'title' => htmlspecialchars($playlist->getTitle()),
+        ]);
+    }
+
     private function renderActions(Series $playlist): string
     {
-        $viewUrl = $this->router->generate('playlist_view', ['id' => $playlist->getId()]);
-        $deleteUrl = $this->router->generate('playlist_delete', ['id' => $playlist->getId()]);
-
-        return sprintf(
-            '<div class="d-flex gap-1 justify-content-end">
-                <a href="%s" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> View</a>
-                <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'Are you sure you want to delete this playlist?\');">
-                    <button type="submit" class="btn btn-sm btn-danger">
-                        <i class="fa fa-trash"></i> Delete
-                    </button>
-                </form>
-            </div>',
-            $viewUrl,
-            $deleteUrl
-        );
+        return $this->twig->render('@Shared/Views/components/table/_datatable_actions.html.twig', [
+            'actions' => [
+                [
+                    'type' => 'link',
+                    'url' => $this->router->generate('multimedia_object_view', ['id' => $playlist->getId()]),
+                    'style' => 'info',
+                    'icon' => 'eye',
+                    'title' => 'View',
+                ],
+                ['type' => 'link', 'url' => '#', 'style' => 'warning', 'icon' => 'edit', 'title' => 'Edit'],
+                [
+                    'type' => 'form',
+                    'url' => $this->router->generate('multimedia_object_delete', ['id' => $playlist->getId()]),
+                    'style' => 'danger',
+                    'icon' => 'trash',
+                    'title' => 'Delete',
+                    'confirm' => 'Are you sure you want to delete this playlist?',
+                ],
+            ],
+        ]);
     }
 }

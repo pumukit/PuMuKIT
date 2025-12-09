@@ -18,7 +18,9 @@ final readonly class MultimediaObjectDataTablePresenter
 {
     public function __construct(
         private RouterInterface $router,
-        private Environment     $twig
+        private Environment $twig,
+        private string $scheme,
+        private string $host,
     ) {}
 
     public function present(MultimediaObject $multimediaObject): array
@@ -42,11 +44,11 @@ final readonly class MultimediaObjectDataTablePresenter
 
     private function renderThumbnail(MultimediaObject $multimediaObject): string
     {
-        $picUrl = $multimediaObject->getPic() ? $multimediaObject->getPic()->getUrl() : '';
+        $thumbnail = $multimediaObject->getMainThumbnail($this->scheme, $this->host);
 
         return $this->twig->render('@Shared/Views/components/table/_thumbnail.html.twig', [
-            'thumbnail' => htmlspecialchars($picUrl),
-            'defaultImage' => 'images/no_image.svg',
+            'thumbnail' => htmlspecialchars($thumbnail),
+            'defaultImage' => 'images/default_multimedia_object.svg',
             'title' => htmlspecialchars($multimediaObject->getTitle()),
         ]);
     }
@@ -60,7 +62,7 @@ final readonly class MultimediaObjectDataTablePresenter
                     'url' => $this->router->generate('multimedia_object_view', ['id' => $multimediaObject->getId()]),
                     'style' => 'info',
                     'icon' => 'eye',
-                    'title' => 'View'
+                    'title' => 'View',
                 ],
                 ['type' => 'link', 'url' => '#', 'style' => 'warning', 'icon' => 'edit', 'title' => 'Edit'],
                 [

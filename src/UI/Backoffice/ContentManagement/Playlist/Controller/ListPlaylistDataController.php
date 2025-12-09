@@ -44,12 +44,7 @@ final class ListPlaylistDataController extends AbstractController
 
         $rows = [];
         foreach ($playlistResponse->playlists as $playlist) {
-            $rows[] = $this->presenter->present(
-                $playlist,
-                $request->getScheme(),
-                $request->getHost(),
-                $request->getLocale()
-            );
+            $rows[] = $this->presenter->present($playlist);
         }
 
         return $this->json([
