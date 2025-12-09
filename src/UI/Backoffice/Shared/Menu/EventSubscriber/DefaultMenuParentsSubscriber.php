@@ -35,8 +35,8 @@ final class DefaultMenuParentsSubscriber implements EventSubscriberInterface
         );
 
         $event->addParent(
-            key: 'transcoding',
-            label: 'Transcoding',
+            key: 'media_processing',
+            label: 'Media Processing',
             icon: 'fa-tasks',
             priority: 200,
             permission: null

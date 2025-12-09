@@ -9,34 +9,34 @@
             </h5>
             {% if inMaintenance %}
                 <span class="badge bg-warning text-dark">
-                    <i class="fa fa-tools"></i> {{ 'transcoding.cpu.maintenance'|trans({}, 'transcoding') }}
+                    <i class="fa fa-tools"></i> {{ 'media_processing.cpu.maintenance'|trans({}, 'media_processing') }}
                 </span>
             {% else %}
                 <span class="badge bg-success">
-                    <i class="fa fa-check-circle"></i> {{ 'transcoding.cpu.active'|trans({}, 'transcoding') }}
+                    <i class="fa fa-check-circle"></i> {{ 'media_processing.cpu.active'|trans({}, 'media_processing') }}
                 </span>
             {% endif %}
         </div>
         <div class="card-body">
             <dl class="row mb-0">
-                <dt class="col-sm-5">{{ 'transcoding.cpu.host'|trans({}, 'transcoding') }}:</dt>
+                <dt class="col-sm-5">{{ 'media_processing.cpu.host'|trans({}, 'media_processing') }}:</dt>
                 <dd class="col-sm-7">
                     <small class="text-muted">{{ cpu.host }}</small>
                 </dd>
 
-                <dt class="col-sm-5">{{ 'transcoding.cpu.type'|trans({}, 'transcoding') }}:</dt>
+                <dt class="col-sm-5">{{ 'media_processing.cpu.type'|trans({}, 'media_processing') }}:</dt>
                 <dd class="col-sm-7">
                     <span class="badge bg-info">{{ cpu.type }}</span>
                 </dd>
 
-                <dt class="col-sm-5">{{ 'transcoding.cpu.description'|trans({}, 'transcoding') }}:</dt>
+                <dt class="col-sm-5">{{ 'media_processing.cpu.description'|trans({}, 'media_processing') }}:</dt>
                 <dd class="col-sm-7">
-                    <small>{{ cpu.description|default('transcoding.cpu.no_description'|trans({}, 'transcoding')) }}</small>
+                    <small>{{ cpu.description|default('media_processing.cpu.no_description'|trans({}, 'media_processing')) }}</small>
                 </dd>
 
 
                 {% if cpu.profiles is defined and cpu.profiles is not empty %}
-                    <dt class="col-sm-5">{{ 'transcoding.cpu.profiles'|trans({}, 'transcoding') }}:</dt>
+                    <dt class="col-sm-5">{{ 'media_processing.cpu.profiles'|trans({}, 'media_processing') }}:</dt>
                     <dd class="col-sm-7">
                         <small class="text-muted">
                             {% for profile in cpu.profiles %}

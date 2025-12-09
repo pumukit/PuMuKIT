@@ -2,36 +2,36 @@
 
 {% block body %}
 <div class="container-fluid mt-3">
-    {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'transcoding.page.list'|trans({}, 'transcoding')} %}
+    {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'media_processing.page.list'|trans({}, 'media_processing')} %}
 
     {% include '@Shared/Views/components/table/_table.html.twig' with {
         id: 'jobsTable',
-        title: 'transcoding.table.title'|trans({}, 'transcoding'),
+        title: 'media_processing.table.title'|trans({}, 'media_processing'),
         server_side: true,
-        ajax_url: path('transcoding_jobs_list_data'),
+        ajax_url: path('media_processing_jobs_list_data'),
         checkbox: false,
         columns: [
             {'field': 'id', 'label': 'ID', 'visible': false},
-            {'field': 'mm_id', 'label': 'transcoding.table.multimedia_object'|trans({}, 'transcoding'), 'sortable': true},
-            {'field': 'profile', 'label': 'transcoding.table.profile'|trans({}, 'transcoding'), 'sortable': true},
-            {'field': 'status_text', 'label': 'transcoding.table.status'|trans({}, 'transcoding'), 'sortable': true},
-            {'field': 'priority', 'label': 'transcoding.table.priority'|trans({}, 'transcoding'), 'sortable': true},
-            {'field': 'cpu', 'label': 'transcoding.table.cpu'|trans({}, 'transcoding')},
-            {'field': 'timeini', 'label': 'transcoding.table.created'|trans({}, 'transcoding'), 'sortable': true},
-            {'field': 'timestart', 'label': 'transcoding.table.started'|trans({}, 'transcoding'), 'sortable': true},
-            {'field': 'timeend', 'label': 'transcoding.table.finished'|trans({}, 'transcoding'), 'sortable': true},
-            {'field': 'actions', 'label': 'transcoding.table.actions'|trans({}, 'transcoding'), 'align': 'right'}
+            {'field': 'mm_id', 'label': 'media_processing.table.multimedia_object'|trans({}, 'media_processing'), 'sortable': true},
+            {'field': 'profile', 'label': 'media_processing.table.profile'|trans({}, 'media_processing'), 'sortable': true},
+            {'field': 'status_text', 'label': 'media_processing.table.status'|trans({}, 'media_processing'), 'sortable': true},
+            {'field': 'priority', 'label': 'media_processing.table.priority'|trans({}, 'media_processing'), 'sortable': true},
+            {'field': 'cpu', 'label': 'media_processing.table.cpu'|trans({}, 'media_processing')},
+            {'field': 'timeini', 'label': 'media_processing.table.created'|trans({}, 'media_processing'), 'sortable': true},
+            {'field': 'timestart', 'label': 'media_processing.table.started'|trans({}, 'media_processing'), 'sortable': true},
+            {'field': 'timeend', 'label': 'media_processing.table.finished'|trans({}, 'media_processing'), 'sortable': true},
+            {'field': 'actions', 'label': 'media_processing.table.actions'|trans({}, 'media_processing'), 'align': 'right'}
         ]
     } %}
 </div>
 
 <script>
 function cancelJob(jobId) {
-    if (!confirm('{{ 'transcoding.confirm.cancel_job'|trans({}, 'transcoding') }}')) {
+    if (!confirm('{{ 'media_processing.confirm.cancel_job'|trans({}, 'media_processing') }}')) {
         return;
     }
 
-    const cancelUrl = `/admin/backend/transcoding/jobs/${jobId}/cancel`;
+    const cancelUrl = `/admin/backend/media_processing/jobs/${jobId}/cancel`;
 
     fetch(cancelUrl, {
         method: 'POST',
@@ -43,14 +43,14 @@ function cancelJob(jobId) {
     .then(data => {
         if (data.success) {
             $('#jobsTable').bootstrapTable('refresh');
-            alert('{{ 'transcoding.flash.job_cancelled'|trans({}, 'transcoding') }}');
+            alert('{{ 'media_processing.flash.job_cancelled'|trans({}, 'media_processing') }}');
         } else {
-            alert('{{ 'transcoding.error.cancel_failed'|trans({}, 'transcoding') }}');
+            alert('{{ 'media_processing.error.cancel_failed'|trans({}, 'media_processing') }}');
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('{{ 'transcoding.error.cancel_failed'|trans({}, 'transcoding') }}');
+        alert('{{ 'media_processing.error.cancel_failed'|trans({}, 'media_processing') }}');
     });
 }
 </script>

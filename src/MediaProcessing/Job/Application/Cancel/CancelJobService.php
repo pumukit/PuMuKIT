@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\MediaProcessing\Job\Application\Cancel;
 
-use App\Shared\Domain\EventBusInterface;
 use App\MediaProcessing\Job\Domain\Event\JobCancelledEvent;
 use App\MediaProcessing\Job\Domain\Exception\JobNotFoundException;
 use App\MediaProcessing\Job\Domain\Repository\JobRepositoryInterface;
+use App\Shared\Domain\EventBusInterface;
 use Pumukit\EncoderBundle\Document\Job;
 
 final class CancelJobService

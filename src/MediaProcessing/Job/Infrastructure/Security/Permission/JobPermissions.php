@@ -6,8 +6,8 @@ namespace App\MediaProcessing\Job\Infrastructure\Security\Permission;
 
 final class JobPermissions
 {
-    public const VIEW   = 'job.view';
-    public const STOP   = 'job.stop';
+    public const VIEW = 'job.view';
+    public const STOP = 'job.stop';
 
     public static function all(): array
     {
@@ -17,5 +17,3 @@ final class JobPermissions
         ];
     }
 }
-
-

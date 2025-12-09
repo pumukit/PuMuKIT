@@ -12,9 +12,8 @@ final class CpuPermissions
     public static function all(): array
     {
         return [
-            self::VIEW        => 'View CPU status',
+            self::VIEW => 'View CPU status',
             self::MAINTENANCE => 'Enable CPU maintenance mode',
         ];
     }
 }
-

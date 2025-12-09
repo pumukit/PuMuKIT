@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <!-- Pages -->
+            <trans-unit id="media_processing.page.list">
+                <source>media_processing.page.list</source>
+                <target>Transcoding Jobs</target>
+            </trans-unit>
+            <trans-unit id="media_processing.page.cpus">
+                <source>media_processing.page.cpus</source>
+                <target>Transcoding CPUs</target>
+            </trans-unit>
+
+            <!-- Table -->
+            <trans-unit id="media_processing.table.title">
+                <source>media_processing.table.title</source>
+                <target>Jobs</target>
+            </trans-unit>
+            <trans-unit id="media_processing.table.multimedia_object">
+                <source>media_processing.table.multimedia_object</source>
+                <target>Multimedia Object</target>
+            </trans-unit>
+            <trans-unit id="media_processing.table.profile">
+                <source>media_processing.table.profile</source>
+                <target>Profile</target>
+            </trans-unit>
+            <trans-unit id="media_processing.table.status">
+                <source>media_processing.table.status</source>
+                <target>Status</target>
+            </trans-unit>
+            <trans-unit id="media_processing.table.priority">
+                <source>media_processing.table.priority</source>
+                <target>Priority</target>
+            </trans-unit>
+            <trans-unit id="media_processing.table.cpu">
+                <source>media_processing.table.cpu</source>
+                <target>CPU</target>
+            </trans-unit>
+            <trans-unit id="media_processing.table.created">
+                <source>media_processing.table.created</source>
+                <target>Created</target>
+            </trans-unit>
+            <trans-unit id="media_processing.table.started">
+                <source>media_processing.table.started</source>
+                <target>Started</target>
+            </trans-unit>
+            <trans-unit id="media_processing.table.finished">
+                <source>media_processing.table.finished</source>
+                <target>Finished</target>
+            </trans-unit>
+            <trans-unit id="media_processing.table.actions">
+                <source>media_processing.table.actions</source>
+                <target>Actions</target>
+            </trans-unit>
+
+            <!-- CPUs -->
+            <trans-unit id="media_processing.cpus.local">
+                <source>media_processing.cpus.local</source>
+                <target>Local CPUs</target>
+            </trans-unit>
+            <trans-unit id="media_processing.cpus.remote">
+                <source>media_processing.cpus.remote</source>
+                <target>Remote CPUs</target>
+            </trans-unit>
+
+            <!-- CPU Details -->
+            <trans-unit id="media_processing.cpu.maintenance">
+                <source>media_processing.cpu.maintenance</source>
+                <target>Maintenance</target>
+            </trans-unit>
+            <trans-unit id="media_processing.cpu.active">
+                <source>media_processing.cpu.active</source>
+                <target>Active</target>
+            </trans-unit>
+            <trans-unit id="media_processing.cpu.host">
+                <source>media_processing.cpu.host</source>
+                <target>Host</target>
+            </trans-unit>
+            <trans-unit id="media_processing.cpu.type">
+                <source>media_processing.cpu.type</source>
+                <target>Type</target>
+            </trans-unit>
+            <trans-unit id="media_processing.cpu.description">
+                <source>media_processing.cpu.description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="media_processing.cpu.no_description">
+                <source>media_processing.cpu.no_description</source>
+                <target>No description</target>
+            </trans-unit>
+            <trans-unit id="media_processing.cpu.profiles">
+                <source>media_processing.cpu.profiles</source>
+                <target>Profiles</target>
+            </trans-unit>
+
+            <!-- View -->
+            <trans-unit id="media_processing.view.job_title">
+                <source>media_processing.view.job_title</source>
+                <target>Job: %profile%</target>
+            </trans-unit>
+            <trans-unit id="media_processing.view.general_info">
+                <source>media_processing.view.general_info</source>
+                <target>General Information</target>
+            </trans-unit>
+            <trans-unit id="media_processing.view.id">
+                <source>media_processing.view.id</source>
+                <target>ID</target>
+            </trans-unit>
+            <trans-unit id="media_processing.view.multimedia_object">
+                <source>media_processing.view.multimedia_object</source>
+                <target>Multimedia Object</target>
+            </trans-unit>
+            <trans-unit id="media_processing.view.profile">
+                <source>media_processing.view.profile</source>
+                <target>Profile</target>
+            </trans-unit>
+            <trans-unit id="media_processing.view.status">
+                <source>media_processing.view.status</source>
+                <target>Status</target>
+            </trans-unit>
+            <trans-unit id="media_processing.view.priority">
+                <source>media_processing.view.priority</source>
+                <target>Priority</target>
+            </trans-unit>
+            <trans-unit id="media_processing.view.cpu">
+                <source>media_processing.view.cpu</source>
+                <target>CPU</target>
+            </trans-unit>
+            <trans-unit id="media_processing.view.times">
+                <source>media_processing.view.times</source>
+                <target>Times</target>
+            </trans-unit>
+            <trans-unit id="media_processing.view.created">
+                <source>media_processing.view.created</source>
+                <target>Created</target>
+            </trans-unit>
+            <trans-unit id="media_processing.view.started">
+                <source>media_processing.view.started</source>
+                <target>Started</target>
+            </trans-unit>
+            <trans-unit id="media_processing.view.finished">
+                <source>media_processing.view.finished</source>
+                <target>Finished</target>
+            </trans-unit>
+            <trans-unit id="media_processing.view.duration">
+                <source>media_processing.view.duration</source>
+                <target>Duration</target>
+            </trans-unit>
+            <trans-unit id="media_processing.view.duration_seconds">
+                <source>media_processing.view.duration_seconds</source>
+                <target>%seconds% seconds</target>
+            </trans-unit>
+            <trans-unit id="media_processing.view.actions">
+                <source>media_processing.view.actions</source>
+                <target>Actions</target>
+            </trans-unit>
+
+            <!-- Buttons -->
+            <trans-unit id="media_processing.button.back_to_list">
+                <source>media_processing.button.back_to_list</source>
+                <target>Back to List</target>
+            </trans-unit>
+            <trans-unit id="media_processing.button.cancel_job">
+                <source>media_processing.button.cancel_job</source>
+                <target>Cancel Job</target>
+            </trans-unit>
+
+            <!-- Confirmations -->
+            <trans-unit id="media_processing.confirm.cancel_job">
+                <source>media_processing.confirm.cancel_job</source>
+                <target>Are you sure you want to cancel this job?</target>
+            </trans-unit>
+
+            <!-- Flash Messages -->
+            <trans-unit id="media_processing.flash.job_cancelled">
+                <source>media_processing.flash.job_cancelled</source>
+                <target>Job cancelled successfully</target>
+            </trans-unit>
+
+            <!-- Errors -->
+            <trans-unit id="media_processing.error.cancel_failed">
+                <source>media_processing.error.cancel_failed</source>
+                <target>Failed to cancel job</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
+

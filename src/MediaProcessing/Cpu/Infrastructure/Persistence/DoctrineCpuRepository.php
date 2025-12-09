@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\MediaProcessing\Cpu\Infrastructure\Persistence;
 
-use App\Shared\Infrastructure\Persistence\DoctrineObjectManager;
 use App\MediaProcessing\Cpu\Domain\Repository\CpuRepositoryInterface;
+use App\Shared\Infrastructure\Persistence\DoctrineObjectManager;
 use Pumukit\EncoderBundle\Document\CpuStatus;
 
 final class DoctrineCpuRepository implements CpuRepositoryInterface

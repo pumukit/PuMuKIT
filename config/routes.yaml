@@ -19,7 +19,7 @@ streaming_routes:
 taxonomy_routes:
   resource: ../src/Framework/ContentManagement/Taxonomy/routes.yaml
 
-transcoding_routes:
+media_processing_routes:
   resource: ../src/Framework/MediaProcessing/routes.yaml
 
 user_routes:

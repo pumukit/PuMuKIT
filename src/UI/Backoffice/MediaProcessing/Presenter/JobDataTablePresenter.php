@@ -31,7 +31,7 @@ final class JobDataTablePresenter
 
     private function renderActions(Job $job): string
     {
-        $viewUrl = $this->router->generate('transcoding_job_view', ['id' => $job->getId()]);
+        $viewUrl = $this->router->generate('media_processing_job_view', ['id' => $job->getId()]);
 
         $actions = sprintf(
             '<a href="%s" class="btn btn-sm btn-info" title="Ver"><i class="fa fa-eye"></i> View</a>',

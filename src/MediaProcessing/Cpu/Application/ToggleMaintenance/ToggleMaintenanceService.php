@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\MediaProcessing\Cpu\Application\ToggleMaintenance;
 
-use App\Shared\Domain\EventBusInterface;
 use App\MediaProcessing\Cpu\Domain\Event\CpuMaintenanceActivatedEvent;
 use App\MediaProcessing\Cpu\Domain\Event\CpuMaintenanceDeactivatedEvent;
 use App\MediaProcessing\Cpu\Domain\Exception\CpuNotFoundException;
 use App\MediaProcessing\Cpu\Domain\Repository\CpuRepositoryInterface;
+use App\Shared\Domain\EventBusInterface;
 use Pumukit\EncoderBundle\Document\CpuStatus;
 
 final class ToggleMaintenanceService
