@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Series\Application\Clone;
 
-use App\Series\Application\Clone\CloneSeriesRequest;
-use App\Series\Application\Clone\CloneSeriesResponse;
-use App\Series\Application\Clone\CloneSeriesService;
-use App\Series\Domain\Exception\SeriesNotFoundException;
-use App\Series\Domain\Repository\SeriesRepositoryInterface;
+use App\ContentManagement\Series\Application\Clone\CloneSeriesRequest;
+use App\ContentManagement\Series\Application\Clone\CloneSeriesResponse;
+use App\ContentManagement\Series\Application\Clone\CloneSeriesService;
+use App\ContentManagement\Series\Domain\Exception\SeriesNotFoundException;
+use App\ContentManagement\Series\Domain\Repository\SeriesRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;

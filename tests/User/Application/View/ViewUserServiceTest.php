@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\User\Application\View;
 
-use App\User\Application\Find\FindUserService;
-use App\User\Application\View\ViewUserRequest;
-use App\User\Application\View\ViewUserResponse;
-use App\User\Application\View\ViewUserService;
-use App\User\Domain\Exception\UserNotFoundException;
-use App\User\Domain\Repository\UserRepositoryInterface;
+use App\IdentityAndAccess\Application\Find\FindUserService;
+use App\IdentityAndAccess\Application\View\ViewUserRequest;
+use App\IdentityAndAccess\Application\View\ViewUserResponse;
+use App\IdentityAndAccess\Application\View\ViewUserService;
+use App\IdentityAndAccess\Domain\Exception\UserNotFoundException;
+use App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\User;
 

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Series\Application\View;
 
-use App\Series\Application\Find\FindSeriesService;
-use App\Series\Application\View\ViewSeriesRequest;
-use App\Series\Application\View\ViewSeriesResponse;
-use App\Series\Application\View\ViewSeriesService;
-use App\Series\Domain\Exception\SeriesNotFoundException;
-use App\Series\Domain\Repository\SeriesRepositoryInterface;
+use App\ContentManagement\Series\Application\Find\FindSeriesService;
+use App\ContentManagement\Series\Application\View\ViewSeriesRequest;
+use App\ContentManagement\Series\Application\View\ViewSeriesResponse;
+use App\ContentManagement\Series\Application\View\ViewSeriesService;
+use App\ContentManagement\Series\Domain\Exception\SeriesNotFoundException;
+use App\ContentManagement\Series\Domain\Repository\SeriesRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Series;
 

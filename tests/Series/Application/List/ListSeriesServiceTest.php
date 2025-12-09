@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Series\Application\List;
 
-use App\Series\Application\List\ListSeriesRequest;
-use App\Series\Application\List\ListSeriesResponse;
-use App\Series\Application\List\ListSeriesService;
-use App\Series\Domain\Repository\SeriesRepositoryInterface;
+use App\ContentManagement\Series\Application\List\ListSeriesRequest;
+use App\ContentManagement\Series\Application\List\ListSeriesResponse;
+use App\ContentManagement\Series\Application\List\ListSeriesService;
+use App\ContentManagement\Series\Domain\Repository\SeriesRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Series;
 

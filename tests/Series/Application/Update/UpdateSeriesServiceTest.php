@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Series\Application\Update;
 
-use App\Series\Application\Update\UpdateSeriesRequest;
-use App\Series\Application\Update\UpdateSeriesResponse;
-use App\Series\Application\Update\UpdateSeriesService;
-use App\Series\Domain\Event\SeriesUpdatedEvent;
-use App\Series\Domain\Exception\SeriesNotFoundException;
-use App\Series\Domain\Repository\SeriesRepositoryInterface;
+use App\ContentManagement\Series\Application\Update\UpdateSeriesRequest;
+use App\ContentManagement\Series\Application\Update\UpdateSeriesResponse;
+use App\ContentManagement\Series\Application\Update\UpdateSeriesService;
+use App\ContentManagement\Series\Domain\Event\SeriesUpdatedEvent;
+use App\ContentManagement\Series\Domain\Exception\SeriesNotFoundException;
+use App\ContentManagement\Series\Domain\Repository\SeriesRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\MultimediaObject\Application\View;
 
-use App\MultimediaObject\Application\Find\FindMultimediaObjectService;
-use App\MultimediaObject\Application\View\ViewMultimediaObjectRequest;
-use App\MultimediaObject\Application\View\ViewMultimediaObjectResponse;
-use App\MultimediaObject\Application\View\ViewMultimediaObjectService;
-use App\MultimediaObject\Domain\Exception\MultimediaObjectNotFoundException;
-use App\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
+use App\ContentManagement\MultimediaObject\Application\Find\FindMultimediaObjectService;
+use App\ContentManagement\MultimediaObject\Application\View\ViewMultimediaObjectRequest;
+use App\ContentManagement\MultimediaObject\Application\View\ViewMultimediaObjectResponse;
+use App\ContentManagement\MultimediaObject\Application\View\ViewMultimediaObjectService;
+use App\ContentManagement\MultimediaObject\Domain\Exception\MultimediaObjectNotFoundException;
+use App\ContentManagement\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 

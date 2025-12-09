@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Series\Application\Create;
 
-use App\Series\Application\Create\CreateSeriesRequest;
-use App\Series\Application\Create\CreateSeriesResponse;
-use App\Series\Application\Create\CreateSeriesService;
-use App\Series\Domain\Event\SeriesCreatedEvent;
-use App\Series\Domain\Factory\SeriesFactoryInterface;
+use App\ContentManagement\Series\Application\Create\CreateSeriesRequest;
+use App\ContentManagement\Series\Application\Create\CreateSeriesResponse;
+use App\ContentManagement\Series\Application\Create\CreateSeriesService;
+use App\ContentManagement\Series\Domain\Event\SeriesCreatedEvent;
+use App\ContentManagement\Series\Domain\Factory\SeriesFactoryInterface;
 use App\Shared\Domain\EventBusInterface;
-use App\User\Domain\ValueObject\UserId;
+use App\IdentityAndAccess\Domain\ValueObject\UserId;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Series;
 

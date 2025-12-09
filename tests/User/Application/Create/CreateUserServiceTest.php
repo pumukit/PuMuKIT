@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\User\Application\Create;
 
-use App\User\Application\Create\CreateUserRequest;
-use App\User\Application\Create\CreateUserResponse;
-use App\User\Application\Create\CreateUserService;
-use App\User\Domain\Repository\UserRepositoryInterface;
+use App\IdentityAndAccess\Application\Create\CreateUserRequest;
+use App\IdentityAndAccess\Application\Create\CreateUserResponse;
+use App\IdentityAndAccess\Application\Create\CreateUserService;
+use App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;

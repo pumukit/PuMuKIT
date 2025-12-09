@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\User\Application\Delete;
 
-use App\User\Application\Delete\DeleteUserRequest;
-use App\User\Application\Delete\DeleteUserResponse;
-use App\User\Application\Delete\DeleteUserService;
-use App\User\Domain\Repository\UserRepositoryInterface;
+use App\IdentityAndAccess\Application\Delete\DeleteUserRequest;
+use App\IdentityAndAccess\Application\Delete\DeleteUserResponse;
+use App\IdentityAndAccess\Application\Delete\DeleteUserService;
+use App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\User;
 

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\MultimediaObject\Application\Find;
 
-use App\MultimediaObject\Application\Find\FindMultimediaObjectRequest;
-use App\MultimediaObject\Application\Find\FindMultimediaObjectResponse;
-use App\MultimediaObject\Application\Find\FindMultimediaObjectService;
-use App\MultimediaObject\Domain\Exception\MultimediaObjectNotFoundException;
-use App\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
+use App\ContentManagement\MultimediaObject\Application\Find\FindMultimediaObjectRequest;
+use App\ContentManagement\MultimediaObject\Application\Find\FindMultimediaObjectResponse;
+use App\ContentManagement\MultimediaObject\Application\Find\FindMultimediaObjectService;
+use App\ContentManagement\MultimediaObject\Domain\Exception\MultimediaObjectNotFoundException;
+use App\ContentManagement\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 

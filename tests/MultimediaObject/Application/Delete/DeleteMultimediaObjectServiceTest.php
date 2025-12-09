@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\MultimediaObject\Application\Delete;
 
-use App\MultimediaObject\Application\Delete\DeleteMultimediaObjectRequest;
-use App\MultimediaObject\Application\Delete\DeleteMultimediaObjectResponse;
-use App\MultimediaObject\Application\Delete\DeleteMultimediaObjectService;
-use App\MultimediaObject\Domain\Event\MultimediaObjectDeletedEvent;
-use App\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
+use App\ContentManagement\MultimediaObject\Application\Delete\DeleteMultimediaObjectRequest;
+use App\ContentManagement\MultimediaObject\Application\Delete\DeleteMultimediaObjectResponse;
+use App\ContentManagement\MultimediaObject\Application\Delete\DeleteMultimediaObjectService;
+use App\ContentManagement\MultimediaObject\Domain\Event\MultimediaObjectDeletedEvent;
+use App\ContentManagement\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;

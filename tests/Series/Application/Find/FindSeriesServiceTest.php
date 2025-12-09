@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Series\Application\Find;
 
-use App\Series\Application\Find\FindSeriesRequest;
-use App\Series\Application\Find\FindSeriesResponse;
-use App\Series\Application\Find\FindSeriesService;
-use App\Series\Domain\Exception\SeriesNotFoundException;
-use App\Series\Domain\Repository\SeriesRepositoryInterface;
+use App\ContentManagement\Series\Application\Find\FindSeriesRequest;
+use App\ContentManagement\Series\Application\Find\FindSeriesResponse;
+use App\ContentManagement\Series\Application\Find\FindSeriesService;
+use App\ContentManagement\Series\Domain\Exception\SeriesNotFoundException;
+use App\ContentManagement\Series\Domain\Repository\SeriesRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Series;
 

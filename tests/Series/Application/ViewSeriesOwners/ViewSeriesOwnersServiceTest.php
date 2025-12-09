@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Series\Application\ViewSeriesOwners;
 
-use App\Series\Application\ViewSeriesOwners\GetSeriesOwnersRequest;
-use App\Series\Application\ViewSeriesOwners\GetSeriesOwnersResponse;
-use App\Series\Application\ViewSeriesOwners\GetSeriesOwnersService;
-use App\Series\Domain\Exception\SeriesNotFoundException;
-use App\Series\Domain\Repository\SeriesRepositoryInterface;
-use App\User\Domain\Repository\UserRepositoryInterface;
+use App\ContentManagement\Series\Application\ViewSeriesOwners\GetSeriesOwnersRequest;
+use App\ContentManagement\Series\Application\ViewSeriesOwners\GetSeriesOwnersResponse;
+use App\ContentManagement\Series\Application\ViewSeriesOwners\GetSeriesOwnersService;
+use App\ContentManagement\Series\Domain\Exception\SeriesNotFoundException;
+use App\ContentManagement\Series\Domain\Repository\SeriesRepositoryInterface;
+use App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;

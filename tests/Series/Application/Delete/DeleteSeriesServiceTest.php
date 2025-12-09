@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Series\Application\Delete;
 
-use App\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
-use App\Series\Application\Delete\DeleteSeriesRequest;
-use App\Series\Application\Delete\DeleteSeriesResponse;
-use App\Series\Application\Delete\DeleteSeriesService;
-use App\Series\Domain\Repository\SeriesRepositoryInterface;
+use App\ContentManagement\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
+use App\ContentManagement\Series\Application\Delete\DeleteSeriesRequest;
+use App\ContentManagement\Series\Application\Delete\DeleteSeriesResponse;
+use App\ContentManagement\Series\Application\Delete\DeleteSeriesService;
+use App\ContentManagement\Series\Domain\Repository\SeriesRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
