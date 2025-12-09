@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Series\Application\BulkToggleAnnounce;
 
-use App\Shared\Domain\Validator\IdValidator;
+use App\Shared\Domain\Validator\UuidValidator;
 
 final class BulkToggleAnnounceSeriesValidator
 {
     public static function validate(BulkToggleAnnounceSeriesRequest $request): void
     {
-        IdValidator::validateArray($request->seriesIds, 'Series ID');
+        UuidValidator::validateArray($request->seriesIds, 'Series ID');
 
         $uniqueIds = array_unique($request->seriesIds);
         if (count($uniqueIds) !== count($request->seriesIds)) {

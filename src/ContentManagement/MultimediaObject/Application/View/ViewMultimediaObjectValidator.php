@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\MultimediaObject\Application\View;
 
-use App\Shared\Domain\Validator\IdValidator;
+use App\Shared\Domain\Validator\UuidValidator;
 
 final class ViewMultimediaObjectValidator
 {
     public static function validate(ViewMultimediaObjectRequest $request): void
     {
-        IdValidator::validate($request->id, 'MultimediaObject ID');
+        UuidValidator::validate($request->id, 'MultimediaObject ID');
 
         $validTabs = ['general', 'media', 'metadata', 'owners', 'people', 'publication', 'tags'];
 

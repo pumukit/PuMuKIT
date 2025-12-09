@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Series\Application\BulkDelete;
 
-use App\Shared\Domain\Validator\IdValidator;
+use App\Shared\Domain\Validator\UuidValidator;
 
 final class BulkDeleteSeriesValidator
 {
     public static function validate(BulkDeleteSeriesRequest $request): void
     {
-        IdValidator::validateArray($request->seriesIds, 'Series ID');
+        UuidValidator::validateArray($request->seriesIds, 'Series ID');
 
         $uniqueIds = array_unique($request->seriesIds);
         if (count($uniqueIds) !== count($request->seriesIds)) {

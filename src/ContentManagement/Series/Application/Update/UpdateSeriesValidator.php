@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Series\Application\Update;
 
-use App\Shared\Domain\Validator\IdValidator;
+use App\Shared\Domain\Validator\UuidValidator;
 
 final class UpdateSeriesValidator
 {
     public static function validate(UpdateSeriesRequest $request): void
     {
-        IdValidator::validate($request->id, 'Series ID');
+        UuidValidator::validate($request->id, 'Series ID');
 
         if (null !== $request->title) {
             if (!is_array($request->title)) {
@@ -116,11 +116,11 @@ final class UpdateSeriesValidator
         }
 
         if (null !== $request->seriesTypeId) {
-            IdValidator::validate($request->seriesTypeId, 'Series Type ID');
+            UuidValidator::validate($request->seriesTypeId, 'Series Type ID');
         }
 
         if (null !== $request->seriesStyleId) {
-            IdValidator::validate($request->seriesStyleId, 'Series Style ID');
+            UuidValidator::validate($request->seriesStyleId, 'Series Style ID');
         }
 
         if (null !== $request->properties) {

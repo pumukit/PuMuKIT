@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Series\Application\Create;
 
-use App\Shared\Domain\Validator\IdValidator;
+use App\Shared\Domain\Validator\UuidValidator;
 
 final class CreateSeriesValidator
 {
     public static function validate(CreateSeriesRequest $request): void
     {
-        IdValidator::validate($request->ownerId, 'Owner ID');
+        UuidValidator::validate($request->ownerId, 'Owner ID');
     }
 }

@@ -6,6 +6,7 @@ namespace App\IdentityAndAccess\Domain\ValueObject;
 
 use App\Shared\Domain\ValueObject\Uuid;
 
-final class UserId extends Uuid
+final class GroupId extends Uuid
 {
 }
+
