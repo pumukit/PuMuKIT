@@ -23,19 +23,19 @@ class Uuid
 
     public static function fromObjectId(ObjectId $id): static
     {
-        return new static($id);
+        return new self($id);
     }
 
     public static function fromString(string $id): static
     {
         UuidValidator::validate($id, 'UUID');
 
-        return new static(new ObjectId($id));
+        return new self(new ObjectId($id));
     }
 
     public static function generate(): static
     {
-        return new static(new ObjectId());
+        return new self(new ObjectId());
     }
 
     public static function isValid(string $id): bool
