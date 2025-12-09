@@ -18,7 +18,7 @@ final class ListCpusController extends AbstractController
         $request = new ListCpusRequest();
         $response = ($this->service)($request);
 
-        return $this->render('@MediaProcessing/Views//cpus.html.twig', [
+        return $this->render('@MediaProcessing/Views/cpus.html.twig', [
             'cpusInMaintenance' => $response->cpusInMaintenance,
             'remoteCpus' => $response->remoteCpus,
             'localCpus' => $response->localCpus,

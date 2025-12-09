@@ -11,6 +11,6 @@ final class IndexController extends AbstractController
 {
     public function __invoke(): Response
     {
-        return $this->render('@Analytics/Views//index.html.twig');
+        return $this->render('@Analytics/Views/index.html.twig');
     }
 }

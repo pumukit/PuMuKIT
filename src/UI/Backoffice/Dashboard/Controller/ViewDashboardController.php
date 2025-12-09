@@ -60,6 +60,6 @@ class ViewDashboardController extends AbstractController
         $data['multimedia_object_video'] = count($this->documentManager->getRepository(MultimediaObject::class)->findBy(['type' => MultimediaObject::TYPE_VIDEO, 'status' => ['$ne' => MultimediaObject::STATUS_PROTOTYPE]]));
         $data['multimedia_object'] = $data['multimedia_object_audio'] + $data['multimedia_object_document'] + $data['multimedia_object_image'] + $data['multimedia_object_external'] + $data['multimedia_object_video'];
 
-        return $this->render('@Dashboard/Views//dashboard.html.twig', ['data' => $data]);
+        return $this->render('@Dashboard/Views/dashboard.html.twig', ['data' => $data]);
     }
 }

@@ -46,7 +46,7 @@ final class ListSeriesController extends AbstractController
             }
         }
 
-        return $this->render('@Series/Views//list.html.twig', [
+        return $this->render('@Series/Views/list.html.twig', [
             'bulkOperationsEvent' => $bulkOperationsEvent,
             'bulkOperations' => $operations,
             'listActionsEvent' => $listActionsEvent,

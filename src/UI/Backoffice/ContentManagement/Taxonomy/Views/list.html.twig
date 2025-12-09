@@ -1,10 +1,10 @@
-{% extends '@Shared/Views//layout/layout.html.twig' %}
+{% extends '@Shared/Views/layout/layout.html.twig' %}
 
 {% block body %}
     <div class="container-fluid mt-3">
-        {% include '@Shared/Views//partials/_title.html.twig' with {'page_title': 'taxonomy.page.list'|trans({}, 'taxonomy')} %}
+        {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'taxonomy.page.list'|trans({}, 'taxonomy')} %}
 
-        {% include '@Shared/Views//components/table/_tree_grid_table.html.twig' with {
+        {% include '@Shared/Views/components/table/_tree_grid_table.html.twig' with {
             id: 'tagsTreeTable',
             ajax_url: path('taxonomy_tag_list_data'),
             checkbox: true,
@@ -23,7 +23,7 @@
             ]
         } %}
 
-        {% include '@Shared/Views//partials/_actions.html.twig' with {
+        {% include '@Shared/Views/partials/_actions.html.twig' with {
             translationDomain: 'taxonomy'
         } %}
     </div>

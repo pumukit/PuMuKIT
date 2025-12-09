@@ -1,16 +1,16 @@
-{% extends '@Shared/Views//layout/layout.html.twig' %}
+{% extends '@Shared/Views/layout/layout.html.twig' %}
 
 {% block body %}
 <div class="container-fluid mt-3">
-    {% include '@Shared/Views//partials/_title.html.twig' with {'page_title': 'multimedia_object.page.list'|trans({}, 'multimedia_object')} %}
+    {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'multimedia_object.page.list'|trans({}, 'multimedia_object')} %}
 
-    {% include '@Shared/Views//components/table/_table.html.twig' with {
+    {% include '@Shared/Views/components/table/_table.html.twig' with {
         id: 'multimediaObjectsTable',
         title: 'multimedia_object.table.title'|trans({}, 'multimedia_object'),
         server_side: true,
         ajax_url: path('multimedia_objects_list_data'),
         checkbox: true,
-        bulk_operations_template: '@Shared/Views//partials/_bulk_operations.html.twig',
+        bulk_operations_template: '@Shared/Views/partials/_bulk_operations.html.twig',
         bulk_operations_config: {
             translation_domain: 'multimedia_object'
         },

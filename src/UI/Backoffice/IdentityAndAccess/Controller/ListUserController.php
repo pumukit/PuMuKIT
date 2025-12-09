@@ -46,7 +46,7 @@ class ListUserController extends AbstractController
             }
         }
 
-        return $this->render('@User/Views//list.html.twig', [
+        return $this->render('@User/Views/list.html.twig', [
             'bulkOperationsEvent' => $bulkOperationsEvent,
             'bulkOperations' => $operations,
             'listActionsEvent' => $listActionsEvent,

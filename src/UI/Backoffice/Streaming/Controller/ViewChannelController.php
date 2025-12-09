@@ -18,7 +18,7 @@ final class ViewChannelController extends AbstractController
         $request = new ViewChannelRequest($id);
         $response = ($this->service)($request);
 
-        return $this->render('@Streaming/Views//view.html.twig', [
+        return $this->render('@Streaming/Views/view.html.twig', [
             'channel' => $response->channel,
         ]);
     }

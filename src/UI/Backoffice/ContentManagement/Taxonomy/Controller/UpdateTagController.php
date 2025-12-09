@@ -69,7 +69,7 @@ final class UpdateTagController extends AbstractController
         $listTagsRequest = new ListTagsRequest(onlyRoots: false);
         $tagsResponse = ($this->listTagsService)($listTagsRequest);
 
-        return $this->render('@Taxonomy/Views//update.html.twig', [
+        return $this->render('@Taxonomy/Views/update.html.twig', [
             'tag' => $tag,
             'tags' => $tagsResponse->tags,
         ]);

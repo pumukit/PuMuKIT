@@ -45,6 +45,6 @@ final class CreateChannelController extends AbstractController
             return $this->redirectToRoute('streaming_channel_view', ['id' => $response->channel->getId()]);
         }
 
-        return $this->render('@Streaming/Views//create.html.twig');
+        return $this->render('@Streaming/Views/create.html.twig');
     }
 }

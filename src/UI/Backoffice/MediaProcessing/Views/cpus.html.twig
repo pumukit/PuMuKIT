@@ -1,8 +1,8 @@
-{% extends '@Shared/Views//layout/layout.html.twig' %}
+{% extends '@Shared/Views/layout/layout.html.twig' %}
 
 {% block body %}
 <div class="container-fluid mt-3">
-    {% include '@Shared/Views//partials/_title.html.twig' with {'page_title': 'transcoding.page.cpus'|trans({}, 'transcoding')} %}
+    {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'transcoding.page.cpus'|trans({}, 'transcoding')} %}
 
     {% if localCpus is not empty %}
         <div class="row mb-4">
@@ -12,7 +12,7 @@
                 </h3>
             </div>
             {% for name, cpu in localCpus %}
-                {% include '@MediaProcessing/Views//partials/_cpu_card.html.twig' with {
+                {% include '@MediaProcessing/Views/partials/_cpu_card.html.twig' with {
                     'name': name,
                     'cpu': cpu,
                     'cpusInMaintenance': cpusInMaintenance
@@ -29,7 +29,7 @@
                 </h3>
             </div>
             {% for name, cpu in remoteCpus %}
-                {% include '@MediaProcessing/Views//partials/_cpu_card.html.twig' with {
+                {% include '@MediaProcessing/Views/partials/_cpu_card.html.twig' with {
                     'name': name,
                     'cpu': cpu,
                     'cpusInMaintenance': cpusInMaintenance

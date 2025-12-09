@@ -1,11 +1,11 @@
-{% include '@Shared/Views//components/table/_table.html.twig' with {
+{% include '@Shared/Views/components/table/_table.html.twig' with {
     id: 'multimediaObjectsTable',
     server_side: true,
     ajax_url: path('series_multimedia_object_data', {id: series.id}),
     checkbox: true,
     toolbar: '#multimedia-bulk-action-toolbar',
     bulkOperations: multimediaObjectBulkOperations|default([]),
-    bulk_operations_template: '@Shared/Views//partials/_bulk_operations.html.twig',
+    bulk_operations_template: '@Shared/Views/partials/_bulk_operations.html.twig',
     bulk_operations_config: {
         translation_domain: 'multimedia_object'
     },
@@ -24,7 +24,7 @@
 
 {% if multimediaObjectCustomActions is defined and multimediaObjectCustomActions is not empty %}
     <div class="mb-3">
-        {% include '@Shared/Views//partials/_actions.html.twig' with {
+        {% include '@Shared/Views/partials/_actions.html.twig' with {
             customActions: multimediaObjectCustomActions,
             translationDomain: 'multimedia_object'
         } %}

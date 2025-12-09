@@ -84,7 +84,7 @@ final class ViewSeriesController extends AbstractController
             }
         }
 
-        return $this->render('@Series/Views//view.html.twig', [
+        return $this->render('@Series/Views/view.html.twig', [
             'series' => $seriesResponse->series,
             'tab' => $tab,
             'formBuildEvent' => $formBuildEvent,

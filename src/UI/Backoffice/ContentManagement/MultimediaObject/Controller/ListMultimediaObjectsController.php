@@ -34,7 +34,7 @@ final class ListMultimediaObjectsController extends AbstractController
             }
         }
 
-        return $this->render('@MultimediaObject/Views//list.html.twig', [
+        return $this->render('@MultimediaObject/Views/list.html.twig', [
             'bulkOperationsEvent' => $bulkOperationsEvent,
             'bulkOperations' => $operations,
         ]);

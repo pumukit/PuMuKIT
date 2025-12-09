@@ -35,10 +35,10 @@
 <body class="layout-body">
 
     <div class="layout-wrapper d-flex">
-        {% include '@Shared/Views//components/sidebar.html.twig' %}
+        {% include '@Shared/Views/components/sidebar.html.twig' %}
 
         <div class="layout-content flex-grow-1 d-flex flex-column">
-            {% include('@Shared/Views//components/header.html.twig') %}
+            {% include('@Shared/Views/components/header.html.twig') %}
 
             <main class="content p-4 flex-grow-1">
                 {% block body %}{% endblock %}
@@ -46,9 +46,9 @@
         </div>
     </div>
 
-    {% include '@Shared/Views//partials/_modal.html.twig' %}
-    {% include '@Shared/Views//partials/_alerts.html.twig' %}
-    {% include '@Shared/Views//partials/_footer.html.twig' %}
+    {% include '@Shared/Views/partials/_modal.html.twig' %}
+    {% include '@Shared/Views/partials/_alerts.html.twig' %}
+    {% include '@Shared/Views/partials/_footer.html.twig' %}
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

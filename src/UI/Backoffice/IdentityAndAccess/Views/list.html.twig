@@ -1,17 +1,17 @@
-{% extends '@Shared/Views//layout/layout.html.twig' %}
+{% extends '@Shared/Views/layout/layout.html.twig' %}
 
 {% block body %}
 
     <div class="container-fluid mt-3">
-        {% include '@Shared/Views//partials/_title.html.twig' with {'page_title': 'user.page.list'|trans({}, 'user')} %}
+        {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'user.page.list'|trans({}, 'user')} %}
 
-        {% include '@Shared/Views//components/table/_table.html.twig' with {
+        {% include '@Shared/Views/components/table/_table.html.twig' with {
             id: 'usersTable',
             title: 'user.table.title'|trans({}, 'user'),
             server_side: true,
             ajax_url: path('users_list_data'),
             checkbox: true,
-            bulk_operations_template: '@Shared/Views//partials/_bulk_operations.html.twig',
+            bulk_operations_template: '@Shared/Views/partials/_bulk_operations.html.twig',
             bulk_operations_config: {
                 translation_domain: 'user'
             },
@@ -26,7 +26,7 @@
             ],
         } %}
 
-        {% include '@Shared/Views//partials/_actions.html.twig' with {
+        {% include '@Shared/Views/partials/_actions.html.twig' with {
             translationDomain: 'user'
         } %}
 

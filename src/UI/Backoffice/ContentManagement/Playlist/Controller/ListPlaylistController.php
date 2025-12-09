@@ -46,7 +46,7 @@ final class ListPlaylistController extends AbstractController
             }
         }
 
-        return $this->render('@Playlist/Views//list.html.twig', [
+        return $this->render('@Playlist/Views/list.html.twig', [
             'bulkOperationsEvent' => $bulkOperationsEvent,
             'bulkOperations' => $operations,
             'listActionsEvent' => $listActionsEvent,

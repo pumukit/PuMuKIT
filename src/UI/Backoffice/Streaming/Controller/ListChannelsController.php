@@ -48,7 +48,7 @@ final class ListChannelsController extends AbstractController
             }
         }
 
-        return $this->render('@Streaming/Views//list.html.twig', [
+        return $this->render('@Streaming/Views/list.html.twig', [
             'bulkOperationsEvent' => $bulkOperationsEvent,
             'bulkOperations' => $operations,
             'listActionsEvent' => $listActionsEvent,

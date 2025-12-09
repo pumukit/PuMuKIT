@@ -18,7 +18,7 @@ final class ViewJobController extends AbstractController
         $request = new FindJobRequest($id);
         $response = ($this->service)($request);
 
-        return $this->render('@MediaProcessing/Views//view.html.twig', [
+        return $this->render('@MediaProcessing/Views/view.html.twig', [
             'job' => $response->job,
         ]);
     }

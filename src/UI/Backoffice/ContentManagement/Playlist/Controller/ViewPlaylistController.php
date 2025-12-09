@@ -47,7 +47,7 @@ final class ViewPlaylistController extends AbstractController
             $this->eventDispatcher->dispatch($formBuildEvent, PlaylistFormBuildEvent::NAME);
         }
 
-        return $this->render('@Playlist/Views//view.html.twig', [
+        return $this->render('@Playlist/Views/view.html.twig', [
             'playlist' => $playlist,
             'tab' => $tab,
             'formBuildEvent' => $formBuildEvent,

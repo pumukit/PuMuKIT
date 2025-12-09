@@ -15,9 +15,9 @@ final class PlaylistViewTabsEvent
     public function __construct(
         private Series $playlist
     ) {
-        $this->addTab('general', 'General', 'fa-solid fa-info-circle', '@Playlist/Views//tabs/general.html.twig', 100);
-        $this->addTab('edit', 'Edit', 'fa-solid fa-edit', '@Playlist/Views//tabs/edit.html.twig', 90);
-        $this->addTab('objects', 'Objects', 'fa-solid fa-video', '@Playlist/Views//tabs/objects.html.twig', 80);
+        $this->addTab('general', 'General', 'fa-solid fa-info-circle', '@Playlist/Views/tabs/general.html.twig', 100);
+        $this->addTab('edit', 'Edit', 'fa-solid fa-edit', '@Playlist/Views/tabs/edit.html.twig', 90);
+        $this->addTab('objects', 'Objects', 'fa-solid fa-video', '@Playlist/Views/tabs/objects.html.twig', 80);
     }
 
     public function addTab(string $key, string $label, string $icon, string $template, int $priority = 0): void

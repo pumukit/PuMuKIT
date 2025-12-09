@@ -52,7 +52,7 @@ final class UpdateChannelController extends AbstractController
             return $this->redirectToRoute('streaming_channel_view', ['id' => $id]);
         }
 
-        return $this->render('@Streaming/Views//edit.html.twig', [
+        return $this->render('@Streaming/Views/edit.html.twig', [
             'channel' => $viewResponse->channel,
         ]);
     }

@@ -1,8 +1,8 @@
-{% extends '@Shared/Views//layout/layout.html.twig' %}
+{% extends '@Shared/Views/layout/layout.html.twig' %}
 
 {% block body %}
 <div class="container-fluid mt-3">
-    {% include '@Shared/Views//partials/_title.html.twig' with {'page_title': 'taxonomy.page.update'|trans({'%cod%': tag.cod}, 'taxonomy')} %}
+    {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'taxonomy.page.update'|trans({'%cod%': tag.cod}, 'taxonomy')} %}
 
     <div class="row">
         <div class="col-md-8">

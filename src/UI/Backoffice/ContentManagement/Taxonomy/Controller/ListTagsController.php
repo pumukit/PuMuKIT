@@ -59,7 +59,7 @@ final class ListTagsController extends AbstractController
         error_log('ROOT Tag found: '.($rootTag ? 'YES' : 'NO'));
         error_log('ROOT Tag ID: '.($rootParentId ?? 'NULL'));
 
-        return $this->render('@Taxonomy/Views//list.html.twig', [
+        return $this->render('@Taxonomy/Views/list.html.twig', [
             'bulkOperationsEvent' => $bulkOperationsEvent,
             'bulkOperations' => $operations,
             'listActionsEvent' => $listActionsEvent,

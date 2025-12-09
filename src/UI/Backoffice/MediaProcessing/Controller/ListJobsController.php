@@ -11,6 +11,6 @@ final class ListJobsController extends AbstractController
 {
     public function __invoke(): Response
     {
-        return $this->render('@MediaProcessing/Views//list.html.twig');
+        return $this->render('@MediaProcessing/Views/list.html.twig');
     }
 }

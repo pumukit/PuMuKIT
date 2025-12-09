@@ -1,10 +1,10 @@
-{% extends '@Shared/Views//layout/layout.html.twig' %}
+{% extends '@Shared/Views/layout/layout.html.twig' %}
 
 {% block body %}
 <div class="container-fluid mt-3">
-    {% include '@Shared/Views//partials/_title.html.twig' with {'page_title': 'transcoding.page.list'|trans({}, 'transcoding')} %}
+    {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'transcoding.page.list'|trans({}, 'transcoding')} %}
 
-    {% include '@Shared/Views//components/table/_table.html.twig' with {
+    {% include '@Shared/Views/components/table/_table.html.twig' with {
         id: 'jobsTable',
         title: 'transcoding.table.title'|trans({}, 'transcoding'),
         server_side: true,
