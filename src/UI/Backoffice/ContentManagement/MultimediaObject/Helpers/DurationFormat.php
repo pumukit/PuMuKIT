@@ -4,8 +4,6 @@ namespace App\UI\Backoffice\ContentManagement\MultimediaObject\Helpers;
 
 final class DurationFormat
 {
-    private const ICON = '<i class="fas fa-clock"></i>';
-
     public static function convert(int $duration): string
     {
         if ($duration <= 0) {
