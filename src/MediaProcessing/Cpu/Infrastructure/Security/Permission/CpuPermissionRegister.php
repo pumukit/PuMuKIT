@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\MediaProcessing\Job\Infrastructure\Security\Permission;
+namespace App\MediaProcessing\Cpu\Infrastructure\Security\Permission;
 
 use App\Shared\Domain\PermissionRegistryInterface;
 
-final class TranscodingPermissionRegister
+final class CpuPermissionRegister
 {
     public function __construct(
         private readonly PermissionRegistryInterface $registry
@@ -16,7 +16,6 @@ final class TranscodingPermissionRegister
     public function register(): void
     {
         $this->registry->register(CpuPermissions::all(), 'cpu');
-        $this->registry->register(JobPermissions::all(), 'job');
     }
 }
 
