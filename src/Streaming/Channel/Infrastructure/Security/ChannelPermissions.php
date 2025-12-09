@@ -6,10 +6,10 @@ namespace App\Streaming\Channel\Infrastructure\Security\Permission;
 
 final class ChannelPermissions
 {
-    public const VIEW   = 'channel.view';
-    public const CREATE   = 'channel.create';
-    public const EDIT   = 'channel.edit';
-    public const DELETE   = 'channel.delete';
+    public const VIEW = 'channel.view';
+    public const CREATE = 'channel.create';
+    public const EDIT = 'channel.edit';
+    public const DELETE = 'channel.delete';
 
     public static function all(): array
     {
@@ -21,5 +21,3 @@ final class ChannelPermissions
         ];
     }
 }
-
-

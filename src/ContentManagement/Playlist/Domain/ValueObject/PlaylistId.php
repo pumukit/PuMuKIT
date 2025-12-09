@@ -6,7 +6,4 @@ namespace App\ContentManagement\Playlist\Domain\ValueObject;
 
 use App\Shared\Domain\ValueObject\Uuid;
 
-final class PlaylistId extends Uuid
-{
-}
-
+final class PlaylistId extends Uuid {}

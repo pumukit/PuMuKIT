@@ -3,9 +3,9 @@
 namespace App\UI\Backoffice\ContentManagement\Playlist\Controller;
 
 use App\ContentManagement\Playlist\Domain\Repository\PlaylistRepositoryInterface;
+use App\Shared\Domain\TranslatorInterface;
 use App\UI\Backoffice\ContentManagement\Playlist\Event\PlaylistFormBuildEvent;
 use App\UI\Backoffice\ContentManagement\Playlist\Event\PlaylistViewTabsEvent;
-use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Taxonomy\Application\CreateTag;
 
-use App\Shared\Domain\EventBusInterface;
 use App\ContentManagement\Taxonomy\Domain\Event\TagCreated;
 use App\ContentManagement\Taxonomy\Domain\Exception\TagAlreadyExistsException;
 use App\ContentManagement\Taxonomy\Domain\Exception\TagNotFoundException;
 use App\ContentManagement\Taxonomy\Domain\Repository\TagRepositoryInterface;
+use App\Shared\Domain\EventBusInterface;
 use Pumukit\SchemaBundle\Document\Tag;
 
 final readonly class CreateTagService

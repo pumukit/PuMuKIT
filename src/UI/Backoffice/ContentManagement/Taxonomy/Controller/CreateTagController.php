@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\ContentManagement\Taxonomy\Controller;
 
-use App\Shared\Domain\TranslatorInterface;
 use App\ContentManagement\Taxonomy\Application\CreateTag\CreateTagRequest;
 use App\ContentManagement\Taxonomy\Application\CreateTag\CreateTagService;
 use App\ContentManagement\Taxonomy\Application\ListTags\ListTagsRequest;
 use App\ContentManagement\Taxonomy\Application\ListTags\ListTagsService;
+use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

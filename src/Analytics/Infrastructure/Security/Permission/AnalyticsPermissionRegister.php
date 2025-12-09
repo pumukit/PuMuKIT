@@ -10,8 +10,7 @@ final class AnalyticsPermissionRegister
 {
     public function __construct(
         private readonly PermissionRegistryInterface $registry
-    ) {
-    }
+    ) {}
 
     public function register(): void
     {

@@ -30,7 +30,7 @@ final class PermissionRegistry implements PermissionRegistryInterface
     {
         return array_values(array_filter(
             $this->permissions,
-            fn(RegisteredPermission $p) => $p->context === $context
+            fn (RegisteredPermission $p) => $p->context === $context
         ));
     }
 
@@ -38,7 +38,7 @@ final class PermissionRegistry implements PermissionRegistryInterface
     {
         return array_values(array_filter(
             $this->permissions,
-            fn(RegisteredPermission $p) => $p->type === $type
+            fn (RegisteredPermission $p) => $p->type === $type
         ));
     }
 

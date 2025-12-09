@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\IdentityAndAccess\Presenter;
 
+use App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface;
 use App\UI\Backoffice\Shared\Helpers\BooleanIcon;
 use App\UI\Backoffice\Shared\Helpers\DateFormat;
-use App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface;
 use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\Routing\RouterInterface;
 

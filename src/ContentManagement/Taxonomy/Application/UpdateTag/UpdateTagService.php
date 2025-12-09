@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Taxonomy\Application\UpdateTag;
 
-use App\Shared\Domain\EventBusInterface;
 use App\ContentManagement\Taxonomy\Domain\Event\TagUpdated;
 use App\ContentManagement\Taxonomy\Domain\Exception\TagNotFoundException;
 use App\ContentManagement\Taxonomy\Domain\Repository\TagRepositoryInterface;
+use App\Shared\Domain\EventBusInterface;
 
 final readonly class UpdateTagService
 {

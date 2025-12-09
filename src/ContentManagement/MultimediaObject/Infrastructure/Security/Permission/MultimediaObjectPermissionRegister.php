@@ -10,12 +10,10 @@ final class MultimediaObjectPermissionRegister
 {
     public function __construct(
         private readonly PermissionRegistryInterface $registry
-    ) {
-    }
+    ) {}
 
     public function register(): void
     {
         $this->registry->register(MultimediaObjectPermissions::all(), 'multimedia_object');
     }
 }
-

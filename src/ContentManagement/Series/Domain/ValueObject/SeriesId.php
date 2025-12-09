@@ -6,6 +6,4 @@ namespace App\ContentManagement\Series\Domain\ValueObject;
 
 use App\Shared\Domain\ValueObject\Uuid;
 
-final class SeriesId extends Uuid
-{
-}
+final class SeriesId extends Uuid {}

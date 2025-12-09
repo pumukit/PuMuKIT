@@ -7,5 +7,5 @@ namespace App\Shared\Infrastructure\Security\Permission\ValueObject;
 enum PermissionType: string
 {
     case DOMAIN = 'domain';
-    case UI     = 'ui';
+    case UI = 'ui';
 }

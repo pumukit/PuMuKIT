@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\ContentManagement\Taxonomy\Controller;
 
-use App\Shared\Domain\TranslatorInterface;
 use App\ContentManagement\Taxonomy\Application\DeleteTag\DeleteTagRequest;
 use App\ContentManagement\Taxonomy\Application\DeleteTag\DeleteTagService;
 use App\ContentManagement\Taxonomy\Application\ViewTag\ViewTagRequest;
 use App\ContentManagement\Taxonomy\Application\ViewTag\ViewTagService;
+use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 

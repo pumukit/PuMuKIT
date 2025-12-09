@@ -10,12 +10,10 @@ final class PlaylistPermissionRegister
 {
     public function __construct(
         private readonly PermissionRegistryInterface $registry
-    ) {
-    }
+    ) {}
 
     public function register(): void
     {
         $this->registry->register(PlaylistPermissions::all(), 'playlist');
     }
 }
-

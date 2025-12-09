@@ -16,6 +16,11 @@ class Uuid
         $this->id = $id;
     }
 
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
+
     public static function fromObjectId(ObjectId $id): static
     {
         return new static($id);
@@ -48,11 +53,6 @@ class Uuid
         return (string) $this->id;
     }
 
-    public function __toString(): string
-    {
-        return $this->toString();
-    }
-
     public function equals(self $other): bool
     {
         return $this->toString() === $other->toString();
@@ -63,4 +63,3 @@ class Uuid
         return $this->id;
     }
 }
-

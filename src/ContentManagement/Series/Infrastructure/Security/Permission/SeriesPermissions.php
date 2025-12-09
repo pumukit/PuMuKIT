@@ -6,10 +6,10 @@ namespace App\ContentManagement\Series\Infrastructure\Security\Permission;
 
 final class SeriesPermissions
 {
-    public const VIEW   = 'series.view';
-    public const CREATE   = 'series.create';
-    public const EDIT   = 'series.edit';
-    public const DELETE   = 'series.delete';
+    public const VIEW = 'series.view';
+    public const CREATE = 'series.create';
+    public const EDIT = 'series.edit';
+    public const DELETE = 'series.delete';
 
     public static function all(): array
     {
@@ -21,4 +21,3 @@ final class SeriesPermissions
         ];
     }
 }
-
