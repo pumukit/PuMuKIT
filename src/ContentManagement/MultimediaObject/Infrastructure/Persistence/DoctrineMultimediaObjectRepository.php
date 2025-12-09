@@ -29,6 +29,8 @@ final class DoctrineMultimediaObjectRepository implements MultimediaObjectReposi
         ;
 
         $qb->field('status')->notEqual(MultimediaObject::STATUS_PROTOTYPE);
+        $qb->field('type')->notEqual(MultimediaObject::TYPE_LIVE);
+
         if (!empty($filters)) {
             foreach ($filters as $field => $value) {
                 if ('series' === $field) {

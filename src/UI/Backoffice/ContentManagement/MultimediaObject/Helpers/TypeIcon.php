@@ -6,10 +6,9 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 final class TypeIcon
 {
-    public static function convert(int $type)
+    public static function convert(int $type): string
     {
         return match ($type) {
-            MultimediaObject::TYPE_UNKNOWN => '<i class="fas fa-question text-warning"></i>',
             MultimediaObject::TYPE_VIDEO => '<i class="fas fa-video text-primary"></i>',
             MultimediaObject::TYPE_AUDIO => '<i class="fas fa-music text-info"></i>',
             MultimediaObject::TYPE_EXTERNAL => '<i class="fas fa-link"></i>',

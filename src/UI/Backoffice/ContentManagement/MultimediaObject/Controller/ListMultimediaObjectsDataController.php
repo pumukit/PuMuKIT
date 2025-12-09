@@ -45,7 +45,7 @@ final class ListMultimediaObjectsDataController extends AbstractController
 
         $rows = [];
         foreach ($multimediaObjectsResponse->multimediaObjects as $multimediaObject) {
-            $rows[] = $this->presenter->present($multimediaObject, $request->getLocale());
+            $rows[] = $this->presenter->present($multimediaObject);
         }
 
         return $this->json([

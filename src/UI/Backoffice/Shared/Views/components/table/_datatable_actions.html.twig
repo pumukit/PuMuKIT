@@ -1,0 +1,16 @@
+<div class="d-flex gap-1 justify-content-end">
+    {% for action in actions %}
+        {% if action.type == 'link' %}
+            <a href="{{ action.url }}" class="btn btn-sm btn-{{ action.style }}" title="{{ action.title|trans }}">
+                <i class="fa fa-{{ action.icon }}"></i> {{ action.title|trans }}
+            </a>
+        {% elseif action.type == 'form' %}
+            <form action="{{ action.url }}" method="POST" style="display:inline;"
+                  {% if action.confirm %}onsubmit="return confirm('{{ action.confirm|trans }}');"{% endif %}>
+                <button type="submit" class="btn btn-sm btn-{{ action.style }}" title="{{ action.title|trans }}">
+                    <i class="fa fa-{{ action.icon }}"></i> {{ action.title|trans }}
+                </button>
+            </form>
+        {% endif %}
+    {% endfor %}
+</div>

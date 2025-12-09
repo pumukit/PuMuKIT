@@ -15,11 +15,12 @@
             translation_domain: 'multimedia_object'
         },
         columns: [
-            {'field': 'id', 'label': 'ID', 'visible': false},
             {'field': 'thumbnail', 'label': 'multimedia_object.table.thumbnail'|trans({}, 'multimedia_object'), 'sortable': false},
             {'field': 'title', 'label': 'multimedia_object.table.title_column'|trans({}, 'multimedia_object'), 'sortable': true},
-            {'field': 'series', 'label': 'multimedia_object.table.series'|trans({}, 'multimedia_object'), 'sortable': false},
+            {'field': 'series', 'label': 'multimedia_object.table.series'|trans({}, 'multimedia_object'), 'sortable': true},
+            {'field': 'type', 'label': 'multimedia_object.table.type'|trans({}, 'multimedia_object'), 'sortable': false},
             {'field': 'status', 'label': 'multimedia_object.table.status'|trans({}, 'multimedia_object'), 'sortable': true},
+            {'field': 'hide', 'label': 'multimedia_object.table.hide'|trans({}, 'multimedia_object'), 'sortable': true},
             {'field': 'public_date', 'label': 'multimedia_object.table.public_date'|trans({}, 'multimedia_object'), 'sortable': true},
             {'field': 'duration', 'label': 'multimedia_object.table.duration'|trans({}, 'multimedia_object'), 'sortable': false},
             {'field': 'actions', 'label': 'multimedia_object.table.actions'|trans({}, 'multimedia_object'), 'align': 'right'}

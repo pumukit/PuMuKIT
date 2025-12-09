@@ -41,6 +41,14 @@
                 <source>multimedia_object.table.actions</source>
                 <target>Actions</target>
             </trans-unit>
+            <trans-unit id="multimedia_object.table.type">
+                <source>multimedia_object.table.type</source>
+                <target>Type</target>
+            </trans-unit>
+            <trans-unit id="multimedia_object.table.hide">
+                <source>multimedia_object.table.hide</source>
+                <target>Hide</target>
+            </trans-unit>
 
             <!-- View -->
             <trans-unit id="multimedia_object.view.details">
