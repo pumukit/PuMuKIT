@@ -6,6 +6,7 @@ namespace App\MediaProcessing\Cpu\Application\List;
 
 use App\MediaProcessing\Cpu\Domain\Repository\CpuRepositoryInterface;
 use App\MediaProcessing\Job\Domain\Repository\JobRepositoryInterface;
+use Pumukit\EncoderBundle\Document\CpuStatus;
 use Pumukit\EncoderBundle\Document\Job;
 
 final class ListCpusService
@@ -19,7 +20,7 @@ final class ListCpusService
     public function __invoke(ListCpusRequest $request): ListCpusResponse
     {
         $cpusInMaintenance = array_map(
-            fn ($cpu) => $cpu->getName(),
+            fn (CpuStatus $cpu) => $cpu->getName(),
             $this->cpuRepository->findInMaintenance()
         );
 
