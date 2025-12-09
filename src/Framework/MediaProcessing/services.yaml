@@ -1,22 +1,33 @@
 services:
-  App\MediaProcessing\Infrastructure\Persistence\DoctrineJobRepository:
+  # Job Context
+  App\MediaProcessing\Job\Infrastructure\Persistence\DoctrineJobRepository:
     autowire: true
 
-  App\MediaProcessing\Domain\Repository\JobRepositoryInterface:
-    alias: App\MediaProcessing\Infrastructure\Persistence\DoctrineJobRepository
+  App\MediaProcessing\Job\Domain\Repository\JobRepositoryInterface:
+    alias: App\MediaProcessing\Job\Infrastructure\Persistence\DoctrineJobRepository
 
-  App\MediaProcessing\Infrastructure\Persistence\DoctrineCpuRepository:
-    autowire: true
-
-  App\MediaProcessing\Domain\Repository\CpuRepositoryInterface:
-    alias: App\MediaProcessing\Infrastructure\Persistence\DoctrineCpuRepository
-
-  App\MediaProcessing\Application\:
-    resource: '../../MediaProcessing/Application/*'
+  App\MediaProcessing\Job\Application\:
+    resource: '../../MediaProcessing/Job/Application/*'
     exclude:
-      - '../../MediaProcessing/Application/*/*Query.php'
-      - '../../MediaProcessing/Application/*/*Request.php'
-      - '../../MediaProcessing/Application/*/*Response.php'
+      - '../../MediaProcessing/Job/Application/*/*Query.php'
+      - '../../MediaProcessing/Job/Application/*/*Request.php'
+      - '../../MediaProcessing/Job/Application/*/*Response.php'
+    autowire: true
+    autoconfigure: true
+
+  # Cpu Context
+  App\MediaProcessing\Cpu\Infrastructure\Persistence\DoctrineCpuRepository:
+    autowire: true
+
+  App\MediaProcessing\Cpu\Domain\Repository\CpuRepositoryInterface:
+    alias: App\MediaProcessing\Cpu\Infrastructure\Persistence\DoctrineCpuRepository
+
+  App\MediaProcessing\Cpu\Application\:
+    resource: '../../MediaProcessing/Cpu/Application/*'
+    exclude:
+      - '../../MediaProcessing/Cpu/Application/*/*Query.php'
+      - '../../MediaProcessing/Cpu/Application/*/*Request.php'
+      - '../../MediaProcessing/Cpu/Application/*/*Response.php'
     autowire: true
     autoconfigure: true
     bind:

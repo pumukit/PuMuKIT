@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\MediaProcessing\Controller;
 
-use App\MediaProcessing\Application\Job\Find\FindJobRequest;
-use App\MediaProcessing\Application\Job\Find\FindJobService;
+use App\MediaProcessing\Job\Application\Find\FindJobRequest;
+use App\MediaProcessing\Job\Application\Find\FindJobService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 

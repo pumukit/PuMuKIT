@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\MediaProcessing\Controller;
 
-use App\MediaProcessing\Application\Cpu\List\ListCpusRequest;
-use App\MediaProcessing\Application\Cpu\List\ListCpusService;
+use App\MediaProcessing\Cpu\Application\List\ListCpusRequest;
+use App\MediaProcessing\Cpu\Application\List\ListCpusService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 

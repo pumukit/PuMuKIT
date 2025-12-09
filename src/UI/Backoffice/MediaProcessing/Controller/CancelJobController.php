@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\MediaProcessing\Controller;
 
-use App\MediaProcessing\Application\Job\Cancel\CancelJobRequest;
-use App\MediaProcessing\Application\Job\Cancel\CancelJobService;
+use App\MediaProcessing\Job\Application\Cancel\CancelJobRequest;
+use App\MediaProcessing\Job\Application\Cancel\CancelJobService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

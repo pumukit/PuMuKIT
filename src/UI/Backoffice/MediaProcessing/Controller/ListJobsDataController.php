@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\MediaProcessing\Controller;
 
-use App\MediaProcessing\Application\Job\List\ListJobsRequest;
-use App\MediaProcessing\Application\Job\List\ListJobsService;
+use App\MediaProcessing\Job\Application\List\ListJobsRequest;
+use App\MediaProcessing\Job\Application\List\ListJobsService;
 use App\UI\Backoffice\MediaProcessing\Presenter\JobDataTablePresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

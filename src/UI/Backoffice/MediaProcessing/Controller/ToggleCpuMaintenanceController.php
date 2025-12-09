@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\MediaProcessing\Controller;
 
-use App\MediaProcessing\Application\Cpu\ToggleMaintenance\ToggleMaintenanceRequest;
-use App\MediaProcessing\Application\Cpu\ToggleMaintenance\ToggleMaintenanceService;
+use App\MediaProcessing\Cpu\Application\ToggleMaintenance\ToggleMaintenanceRequest;
+use App\MediaProcessing\Cpu\Application\ToggleMaintenance\ToggleMaintenanceService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
