@@ -53,15 +53,21 @@ final class PlaylistDataTablePresenter
             'actions' => [
                 [
                     'type' => 'link',
-                    'url' => $this->router->generate('multimedia_object_view', ['id' => $playlist->getId()]),
+                    'url' => $this->router->generate('playlist_view', ['id' => $playlist->getId()]),
                     'style' => 'info',
                     'icon' => 'eye',
                     'title' => 'View',
                 ],
-                ['type' => 'link', 'url' => '#', 'style' => 'warning', 'icon' => 'edit', 'title' => 'Edit'],
+                [
+                    'type' => 'link',
+                    'url' => $this->router->generate('playlist_view', ['id' => $playlist->getId(), 'tab' => 'edit']),
+                    'style' => 'warning',
+                    'icon' => 'edit',
+                    'title' => 'Edit'
+                ],
                 [
                     'type' => 'form',
-                    'url' => $this->router->generate('multimedia_object_delete', ['id' => $playlist->getId()]),
+                    'url' => $this->router->generate('playlist_delete', ['id' => $playlist->getId()]),
                     'style' => 'danger',
                     'icon' => 'trash',
                     'title' => 'Delete',
