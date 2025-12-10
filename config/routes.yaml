@@ -19,8 +19,11 @@ streaming_routes:
 taxonomy_routes:
   resource: ../src/Framework/ContentManagement/Taxonomy/routes.yaml
 
-media_processing_routes:
-  resource: ../src/Framework/MediaProcessing/routes.yaml
+job_routes:
+  resource: ../src/Framework/MediaProcessing/Job/routes.yaml
+
+cpu_routes:
+  resource: ../src/Framework/MediaProcessing/Cpu/routes.yaml
 
 user_routes:
   resource: ../src/Framework/IdentityAndAccess/routes.yaml

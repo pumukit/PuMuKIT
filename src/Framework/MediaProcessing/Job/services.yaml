@@ -1,0 +1,15 @@
+services:
+  App\MediaProcessing\Job\Infrastructure\Persistence\DoctrineJobRepository:
+    autowire: true
+
+  App\MediaProcessing\Job\Domain\Repository\JobRepositoryInterface:
+    alias: App\MediaProcessing\Job\Infrastructure\Persistence\DoctrineJobRepository
+
+  App\MediaProcessing\Job\Application\:
+    resource: '../../../MediaProcessing/Job/Application/*'
+    exclude:
+      - '../../../MediaProcessing/Job/Application/*/*Query.php'
+      - '../../../MediaProcessing/Job/Application/*/*Request.php'
+      - '../../../MediaProcessing/Job/Application/*/*Response.php'
+    autowire: true
+    autoconfigure: true

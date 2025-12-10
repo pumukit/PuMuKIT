@@ -82,5 +82,6 @@ imports:
   - { resource: '../src/Framework/ContentManagement/Taxonomy/services.yaml' }
   - { resource: '../src/Framework/Shared/services.yaml' }
   - { resource: '../src/Framework/Streaming/services.yaml' }
-  - { resource: '../src/Framework/MediaProcessing/services.yaml' }
+  - { resource: '../src/Framework/MediaProcessing/Job/services.yaml' }
+  - { resource: '../src/Framework/MediaProcessing/Cpu/services.yaml' }
   - { resource: '../src/Framework/IdentityAndAccess/services.yaml' }

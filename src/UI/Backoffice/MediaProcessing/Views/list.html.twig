@@ -9,51 +9,17 @@
         title: 'media_processing.table.title'|trans({}, 'media_processing'),
         server_side: true,
         ajax_url: path('media_processing_jobs_list_data'),
-        checkbox: false,
+        checkbox: true,
         columns: [
-            {'field': 'id', 'label': 'ID', 'visible': false},
             {'field': 'mm_id', 'label': 'media_processing.table.multimedia_object'|trans({}, 'media_processing'), 'sortable': true},
             {'field': 'profile', 'label': 'media_processing.table.profile'|trans({}, 'media_processing'), 'sortable': true},
-            {'field': 'status_text', 'label': 'media_processing.table.status'|trans({}, 'media_processing'), 'sortable': true},
+            {'field': 'status', 'label': 'media_processing.table.status'|trans({}, 'media_processing'), 'sortable': true},
             {'field': 'priority', 'label': 'media_processing.table.priority'|trans({}, 'media_processing'), 'sortable': true},
             {'field': 'cpu', 'label': 'media_processing.table.cpu'|trans({}, 'media_processing')},
             {'field': 'timeini', 'label': 'media_processing.table.created'|trans({}, 'media_processing'), 'sortable': true},
-            {'field': 'timestart', 'label': 'media_processing.table.started'|trans({}, 'media_processing'), 'sortable': true},
-            {'field': 'timeend', 'label': 'media_processing.table.finished'|trans({}, 'media_processing'), 'sortable': true},
+            {'field': 'duration', 'label': 'media_processing.table.duration'|trans({}, 'media_processing'), 'sortable': true},
             {'field': 'actions', 'label': 'media_processing.table.actions'|trans({}, 'media_processing'), 'align': 'right'}
         ]
     } %}
 </div>
-
-<script>
-function cancelJob(jobId) {
-    if (!confirm('{{ 'media_processing.confirm.cancel_job'|trans({}, 'media_processing') }}')) {
-        return;
-    }
-
-    const cancelUrl = `/admin/backend/media_processing/jobs/${jobId}/cancel`;
-
-    fetch(cancelUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            $('#jobsTable').bootstrapTable('refresh');
-            alert('{{ 'media_processing.flash.job_cancelled'|trans({}, 'media_processing') }}');
-        } else {
-            alert('{{ 'media_processing.error.cancel_failed'|trans({}, 'media_processing') }}');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('{{ 'media_processing.error.cancel_failed'|trans({}, 'media_processing') }}');
-    });
-}
-</script>
 {% endblock %}
-
-
