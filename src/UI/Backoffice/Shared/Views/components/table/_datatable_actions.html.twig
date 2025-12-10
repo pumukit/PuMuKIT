@@ -5,8 +5,7 @@
                 <i class="fa fa-{{ action.icon }}"></i> {{ action.title|trans }}
             </a>
         {% elseif action.type == 'form' %}
-            <form action="{{ action.url }}" method="POST" style="display:inline;"
-                  {% if action.confirm %}onsubmit="return confirm('{{ action.confirm|trans }}');"{% endif %}>
+            <form action="{{ action.url }}" method="POST" {% if action.confirm %}onsubmit="return confirm('{{ action.confirm|trans }}');"{% endif %} style="display:inline;" >
                 <button type="submit" class="btn btn-sm btn-{{ action.style }}" title="{{ action.title|trans }}">
                     <i class="fa fa-{{ action.icon }}"></i> {{ action.title|trans }}
                 </button>

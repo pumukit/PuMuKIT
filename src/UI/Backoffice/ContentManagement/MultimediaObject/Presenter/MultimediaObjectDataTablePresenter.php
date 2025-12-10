@@ -64,7 +64,13 @@ final readonly class MultimediaObjectDataTablePresenter
                     'icon' => 'eye',
                     'title' => 'View',
                 ],
-                ['type' => 'link', 'url' => '#', 'style' => 'warning', 'icon' => 'edit', 'title' => 'Edit'],
+                [
+                    'type' => 'link',
+                    'url' => $this->router->generate('multimedia_object_view', ['id' => $multimediaObject->getId(), 'tab' => 'publication']),
+                    'style' => 'warning',
+                    'icon' => 'edit',
+                    'title' => 'Edit'
+                ],
                 [
                     'type' => 'form',
                     'url' => $this->router->generate('multimedia_object_delete', ['id' => $multimediaObject->getId()]),
