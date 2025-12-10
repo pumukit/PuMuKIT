@@ -1,0 +1,7 @@
+<a href="{{  path('media_processing_jobs_list') }}" class="btn btn-sm btn-primary btn-pumukit">
+    <i class="fa-solid fa-arrow-left"></i> {{ 'media_processing.button.back_to_list'|trans({}, 'media_processing') }}
+</a>
+
+<hr />
+
+<h4 class="mb-4">{{ 'media_processing.view.job_title'|trans({'%profile%': object.profile}, 'media_processing') }} - {{ object.id }}</h4>

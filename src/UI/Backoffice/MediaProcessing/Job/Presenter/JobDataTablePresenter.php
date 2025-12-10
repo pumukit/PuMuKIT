@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\MediaProcessing\Presenter;
+namespace App\UI\Backoffice\MediaProcessing\Job\Presenter;
 
-use App\UI\Backoffice\MediaProcessing\Helpers\CalcDuration;
-use App\UI\Backoffice\MediaProcessing\Helpers\StatusIcon;
+use App\UI\Backoffice\MediaProcessing\Job\Helpers\CalcDuration;
+use App\UI\Backoffice\MediaProcessing\Job\Helpers\StatusIcon;
 use App\UI\Backoffice\Shared\Helpers\DateFormat;
 use App\UI\Backoffice\Shared\Helpers\LinkFormat;
 use Pumukit\EncoderBundle\Document\Job;

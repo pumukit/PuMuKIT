@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\MediaProcessing\Controller;
+namespace App\UI\Backoffice\MediaProcessing\Job\Controller;
 
 use App\MediaProcessing\Job\Application\Find\FindJobRequest;
 use App\MediaProcessing\Job\Application\Find\FindJobService;
@@ -18,7 +18,7 @@ final class ViewJobController extends AbstractController
         $request = new FindJobRequest($id);
         $response = ($this->service)($request);
 
-        return $this->render('@MediaProcessing/Views/view.html.twig', [
+        return $this->render('@Job/Views/view.html.twig', [
             'job' => $response->job,
         ]);
     }

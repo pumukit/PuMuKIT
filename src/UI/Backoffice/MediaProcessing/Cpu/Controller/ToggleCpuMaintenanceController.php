@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\MediaProcessing\Controller;
+namespace App\UI\Backoffice\MediaProcessing\Cpu\Controller;
 
 use App\MediaProcessing\Cpu\Application\ToggleMaintenance\ToggleMaintenanceRequest;
 use App\MediaProcessing\Cpu\Application\ToggleMaintenance\ToggleMaintenanceService;
@@ -19,8 +19,8 @@ final class ToggleCpuMaintenanceController extends AbstractController
         $activate = 'activate' === $action;
 
         $request = new ToggleMaintenanceRequest(
-            cpuName: $cpuName,
-            activate: $activate
+            activate: $activate,
+            cpuName: $cpuName
         );
 
         $response = ($this->service)($request);

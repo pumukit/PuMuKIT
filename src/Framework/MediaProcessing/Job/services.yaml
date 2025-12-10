@@ -13,3 +13,20 @@ services:
       - '../../../MediaProcessing/Job/Application/*/*Response.php'
     autowire: true
     autoconfigure: true
+
+  App\UI\Backoffice\MediaProcessing\Job\Controller\:
+    resource: '../../../UI/Backoffice/MediaProcessing/Job/Controller'
+    tags: [ 'controller.service_arguments' ]
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\MediaProcessing\Job\Presenter\:
+    resource: '../../../UI/Backoffice/MediaProcessing/Job/Presenter'
+    autowire: true
+    autoconfigure: true
+
+  App\UI\Backoffice\MediaProcessing\Job\EventSubscriber\:
+    resource: '../../../UI/Backoffice/MediaProcessing/Job/EventSubscriber'
+    tags: [ 'kernel.event_subscriber' ]
+    autowire: true
+    autoconfigure: true

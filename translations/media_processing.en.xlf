@@ -159,6 +159,10 @@
                 <source>media_processing.view.actions</source>
                 <target>Actions</target>
             </trans-unit>
+            <trans-unit id="media_processing.view.output">
+                <source>media_processing.view.output</source>
+                <target>Output</target>
+            </trans-unit>
 
             <!-- Buttons -->
             <trans-unit id="media_processing.button.back_to_list">

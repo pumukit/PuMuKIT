@@ -11,7 +11,8 @@ twig:
     '%kernel.project_dir%/src/UI/Backoffice/Shared': Shared
     '%kernel.project_dir%/src/UI/Backoffice/Streaming': Streaming
     '%kernel.project_dir%/src/UI/Backoffice/ContentManagement/Taxonomy': Taxonomy
-    '%kernel.project_dir%/src/UI/Backoffice/MediaProcessing': MediaProcessing
+    '%kernel.project_dir%/src/UI/Backoffice/MediaProcessing/Job': Job
+    '%kernel.project_dir%/src/UI/Backoffice/MediaProcessing/Cpu': Cpu
     '%kernel.project_dir%/src/UI/Backoffice/IdentityAndAccess': User
   globals:
     pumukit_info:  "%pumukit.info%"

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\MediaProcessing\Controller;
+namespace App\UI\Backoffice\MediaProcessing\Cpu\Controller;
 
 use App\MediaProcessing\Cpu\Application\List\ListCpusRequest;
 use App\MediaProcessing\Cpu\Application\List\ListCpusService;
@@ -18,7 +18,7 @@ final class ListCpusController extends AbstractController
         $request = new ListCpusRequest();
         $response = ($this->service)($request);
 
-        return $this->render('@MediaProcessing/Views/cpus.html.twig', [
+        return $this->render('@Cpu/Views/cpus.html.twig', [
             'cpusInMaintenance' => $response->cpusInMaintenance,
             'remoteCpus' => $response->remoteCpus,
             'localCpus' => $response->localCpus,

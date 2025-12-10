@@ -12,7 +12,7 @@
                 </h3>
             </div>
             {% for name, cpu in localCpus %}
-                {% include '@MediaProcessing/Views/partials/_cpu_card.html.twig' with {
+                {% include '@Cpu/Views/partials/_cpu_card.html.twig' with {
                     'name': name,
                     'cpu': cpu,
                     'cpusInMaintenance': cpusInMaintenance
@@ -29,7 +29,7 @@
                 </h3>
             </div>
             {% for name, cpu in remoteCpus %}
-                {% include '@MediaProcessing/Views/partials/_cpu_card.html.twig' with {
+                {% include '@Cpu/Views/partials/_cpu_card.html.twig' with {
                     'name': name,
                     'cpu': cpu,
                     'cpusInMaintenance': cpusInMaintenance
@@ -49,7 +49,7 @@
 <script>
 function toggleMaintenance(cpuName, isChecked) {
     const action = isChecked ? 'deactivate' : 'activate';
-    const url = `/admin/backend/media_processing/cpus/${cpuName}/maintenance/${action}`;
+    const url = `/admin/backend/cpus/${cpuName}/maintenance/${action}`;
 
     fetch(url, {
         method: 'POST',

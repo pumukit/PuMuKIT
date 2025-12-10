@@ -1,0 +1,83 @@
+{% extends '@Shared/Views/layout/layout.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid mt-3">
+
+        {% include '@Job/Views/partials/_job_header.html.twig' with {
+            object: job
+        } %}
+
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5>{{ 'media_processing.view.general_info'|trans({}, 'media_processing') }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">{{ 'media_processing.view.id'|trans({}, 'media_processing') }}:</dt>
+                            <dd class="col-sm-8">{{ job.id }}</dd>
+
+                            <dt class="col-sm-4">{{ 'media_processing.view.multimedia_object'|trans({}, 'media_processing') }}:</dt>
+                            <dd class="col-sm-8">{{ job.mmId }}</dd>
+
+                            <dt class="col-sm-4">{{ 'media_processing.view.profile'|trans({}, 'media_processing') }}:</dt>
+                            <dd class="col-sm-8">{{ job.profile }}</dd>
+
+                            <dt class="col-sm-4">{{ 'media_processing.view.status'|trans({}, 'media_processing') }}:</dt>
+                            <dd class="col-sm-8">
+                            <span class="badge bg-{{ job.status == 3 ? 'success' : (job.status == -1 ? 'danger' : 'warning') }}">
+                                {{ job.statusText }}
+                            </span>
+                            </dd>
+
+                            <dt class="col-sm-4">{{ 'media_processing.view.priority'|trans({}, 'media_processing') }}:</dt>
+                            <dd class="col-sm-8">{{ job.priority }}</dd>
+
+                            <dt class="col-sm-4">{{ 'media_processing.view.cpu'|trans({}, 'media_processing') }}:</dt>
+                            <dd class="col-sm-8">{{ job.cpu ?? 'N/A' }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5>{{ 'media_processing.view.times'|trans({}, 'media_processing') }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">{{ 'media_processing.view.created'|trans({}, 'media_processing') }}:</dt>
+                            <dd class="col-sm-8">{{ job.timeini ? job.timeini|date('Y-m-d H:i:s') : 'N/A' }}</dd>
+
+                            <dt class="col-sm-4">{{ 'media_processing.view.started'|trans({}, 'media_processing') }}:</dt>
+                            <dd class="col-sm-8">{{ job.timestart ? job.timestart|date('Y-m-d H:i:s') : 'N/A' }}</dd>
+
+                            <dt class="col-sm-4">{{ 'media_processing.view.finished'|trans({}, 'media_processing') }}:</dt>
+                            <dd class="col-sm-8">{{ job.timeend ? job.timeend|date('Y-m-d H:i:s') : 'N/A' }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if job.getOutput() %}
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>{{ 'media_processing.view.output'|trans({}, 'media_processing') }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <pre class="bg-dark text-light p-3">
+                                {{ job.getOutput() }}
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock %}

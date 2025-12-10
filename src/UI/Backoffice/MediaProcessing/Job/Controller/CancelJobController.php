@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\MediaProcessing\Controller;
+namespace App\UI\Backoffice\MediaProcessing\Job\Controller;
 
 use App\MediaProcessing\Job\Application\Cancel\CancelJobRequest;
 use App\MediaProcessing\Job\Application\Cancel\CancelJobService;

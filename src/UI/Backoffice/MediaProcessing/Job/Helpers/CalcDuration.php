@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\MediaProcessing\Helpers;
+namespace App\UI\Backoffice\MediaProcessing\Job\Helpers;
 
 final class CalcDuration
 {
