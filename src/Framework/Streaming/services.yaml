@@ -15,20 +15,20 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\UI\Backoffice\Streaming\Controller\:
-    resource: '../../UI/Backoffice/Streaming/Controller'
+  App\UI\Backoffice\Streaming\Channel\Controller\:
+    resource: '../../UI/Backoffice/Streaming/Channel/Controller'
     tags: [ 'controller.service_arguments' ]
     autowire: true
     autoconfigure: true
 
-  App\UI\Backoffice\Streaming\EventSubscriber\:
-    resource: '../../UI/Backoffice/Streaming/EventSubscriber'
+  App\UI\Backoffice\Streaming\Channel\EventSubscriber\:
+    resource: '../../UI/Backoffice/Streaming/Channel/EventSubscriber'
     tags: [ 'kernel.event_subscriber' ]
     autowire: true
     autoconfigure: true
 
-  App\UI\Backoffice\Streaming\Presenter\:
-    resource: '../../UI/Backoffice/Streaming/Presenter'
+  App\UI\Backoffice\Streaming\Channel\Presenter\:
+    resource: '../../UI/Backoffice/Streaming/Channel/Presenter'
     autowire: true
     autoconfigure: true
 

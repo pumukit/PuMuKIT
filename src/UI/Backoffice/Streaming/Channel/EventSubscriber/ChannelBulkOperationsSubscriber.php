@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\EventSubscriber;
+namespace App\UI\Backoffice\Streaming\Channel\EventSubscriber;
 
-use App\UI\Backoffice\Streaming\Event\ChannelBulkOperationsEvent;
+use App\UI\Backoffice\Streaming\Channel\Event\ChannelBulkOperationsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class ChannelBulkOperationsSubscriber implements EventSubscriberInterface

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\Controller;
+namespace App\UI\Backoffice\Streaming\Channel\Controller;
 
-use App\UI\Backoffice\Streaming\Event\ChannelBulkOperationsEvent;
-use App\UI\Backoffice\Streaming\Event\ChannelListActionsEvent;
+use App\UI\Backoffice\Streaming\Channel\Event\ChannelBulkOperationsEvent;
+use App\UI\Backoffice\Streaming\Channel\Event\ChannelListActionsEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;

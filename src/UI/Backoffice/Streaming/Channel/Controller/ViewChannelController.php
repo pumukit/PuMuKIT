@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\Controller;
+namespace App\UI\Backoffice\Streaming\Channel\Controller;
 
 use App\Streaming\Channel\Application\View\ViewChannelRequest;
 use App\Streaming\Channel\Application\View\ViewChannelService;

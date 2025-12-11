@@ -1,41 +1,35 @@
 streaming_channels_list:
   path: /admin/backend/streaming/channels
-  controller: App\UI\Backoffice\Streaming\Controller\ListChannelsController
+  controller: App\UI\Backoffice\Streaming\Channel\Controller\ListChannelsController
   methods: [GET]
 
 streaming_channels_list_data:
   path: /admin/backend/streaming/channels/data
-  controller: App\UI\Backoffice\Streaming\Controller\ListChannelsDataController
+  controller: App\UI\Backoffice\Streaming\Channel\Controller\ListChannelsDataController
   methods: [GET]
 
 streaming_channel_view:
   path: /admin/backend/streaming/channels/{id}
-  controller: App\UI\Backoffice\Streaming\Controller\ViewChannelController
+  controller: App\UI\Backoffice\Streaming\Channel\Controller\ViewChannelController
   methods: [GET]
-  requirements:
-    id: '[a-f0-9]{24}'
 
 streaming_channel_create:
   path: /admin/backend/streaming/channels/new
-  controller: App\UI\Backoffice\Streaming\Controller\CreateChannelController
+  controller: App\UI\Backoffice\Streaming\Channel\Controller\CreateChannelController
   methods: [GET, POST]
 
 streaming_channel_edit:
   path: /admin/backend/streaming/channels/{id}/edit
-  controller: App\UI\Backoffice\Streaming\Controller\UpdateChannelController
+  controller: App\UI\Backoffice\Streaming\Channel\Controller\UpdateChannelController
   methods: [GET, POST]
-  requirements:
-    id: '[a-f0-9]{24}'
 
 streaming_channel_delete:
   path: /admin/backend/streaming/channels/{id}/delete
-  controller: App\UI\Backoffice\Streaming\Controller\DeleteChannelController
+  controller: App\UI\Backoffice\Streaming\Channel\Controller\DeleteChannelController
   methods: [POST]
-  requirements:
-    id: '[a-f0-9]{24}'
 
 streaming_channels_bulk_delete:
   path: /admin/backend/streaming/channels/bulk/delete
-  controller: App\UI\Backoffice\Streaming\Controller\BulkDeleteChannelController
+  controller: App\UI\Backoffice\Streaming\Channel\Controller\BulkDeleteChannelController
   methods: [POST]
 

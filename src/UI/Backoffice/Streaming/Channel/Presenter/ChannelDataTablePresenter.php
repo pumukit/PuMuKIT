@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\Presenter;
+namespace App\UI\Backoffice\Streaming\Channel\Presenter;
 
-use App\UI\Backoffice\Streaming\Helpers\StatusText;
+use App\UI\Backoffice\Streaming\Channel\Helpers\StatusText;
 use Pumukit\SchemaBundle\Document\Live;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;

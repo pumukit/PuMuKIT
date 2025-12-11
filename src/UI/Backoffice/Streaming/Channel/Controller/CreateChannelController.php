@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\Controller;
+namespace App\UI\Backoffice\Streaming\Channel\Controller;
 
 use App\Shared\Domain\TranslatorInterface;
 use App\Streaming\Channel\Application\Create\CreateChannelRequest;

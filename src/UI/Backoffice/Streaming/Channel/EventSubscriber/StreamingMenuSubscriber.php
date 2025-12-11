@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\EventSubscriber;
+namespace App\UI\Backoffice\Streaming\Channel\EventSubscriber;
 
 use App\UI\Backoffice\Shared\Menu\Event\MenuBuildEvent;
 use Pumukit\SchemaBundle\Security\Permission;

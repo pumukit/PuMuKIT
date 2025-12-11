@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\Controller;
+namespace App\UI\Backoffice\Streaming\Channel\Controller;
 
 use App\Streaming\Channel\Application\List\ListChannelsRequest;
 use App\Streaming\Channel\Application\List\ListChannelsService;
-use App\UI\Backoffice\Streaming\Presenter\ChannelDataTablePresenter;
+use App\UI\Backoffice\Streaming\Channel\Presenter\ChannelDataTablePresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
