@@ -21,7 +21,7 @@ final class StreamingMenuSubscriber implements EventSubscriberInterface
     {
         $event->addItem(
             key: 'streaming_channels',
-            label: 'Canales',
+            label: 'Channels',
             route: 'streaming_channels_list',
             parent: 'streaming',
             icon: 'fa-broadcast-tower',
