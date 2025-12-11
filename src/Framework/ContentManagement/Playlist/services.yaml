@@ -44,7 +44,7 @@ services:
   App\ContentManagement\Playlist\Infrastructure\Factory\PlaylistFactoryAdapter:
     arguments:
       $factoryService: '@Pumukit\SchemaBundle\Services\FactoryService'
-      $userRepository: '@App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface'
+      $userRepository: '@App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface'
 
   App\UI\Backoffice\ContentManagement\Playlist\EventSubscriber\:
     resource: '../../../UI/Backoffice/ContentManagement/Playlist/EventSubscriber'

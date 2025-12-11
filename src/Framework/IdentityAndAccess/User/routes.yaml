@@ -1,0 +1,23 @@
+user_create:
+  path: /admin/backend/users
+  controller: App\UI\Backoffice\IdentityAndAccess\User\Controller\ListUserController
+
+user_list:
+  path: /admin/backend/users
+  controller: App\UI\Backoffice\IdentityAndAccess\User\Controller\ListUserController
+
+users_list_data:
+  path: /admin/backend/users/data
+  controller: App\UI\Backoffice\IdentityAndAccess\User\Controller\ListUserDataController
+
+user_update:
+  path: /admin/backend/users/{id}/update
+  controller: App\UI\Backoffice\IdentityAndAccess\User\Controller\ListUserController
+
+user_delete:
+  path: /admin/backend/users/{id}/update
+  controller: App\UI\Backoffice\IdentityAndAccess\User\Controller\ListUserController
+
+user_view:
+  path: /admin/backend/users/{id}
+  controller: App\UI\Backoffice\IdentityAndAccess\User\Controller\ListUserController

@@ -64,7 +64,7 @@ services:
   App\ContentManagement\Series\Infrastructure\Factory\SeriesFactoryAdapter:
     arguments:
       $factoryService: '@Pumukit\SchemaBundle\Services\FactoryService'
-      $userRepository: '@App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface'
+      $userRepository: '@App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface'
 
   App\UI\Backoffice\ContentManagement\Series\EventSubscriber\:
     resource: '../../../UI/Backoffice/ContentManagement/Series/EventSubscriber'

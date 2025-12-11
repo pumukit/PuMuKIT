@@ -13,7 +13,7 @@ twig:
     '%kernel.project_dir%/src/UI/Backoffice/ContentManagement/Taxonomy': Taxonomy
     '%kernel.project_dir%/src/UI/Backoffice/MediaProcessing/Job': Job
     '%kernel.project_dir%/src/UI/Backoffice/MediaProcessing/Cpu': Cpu
-    '%kernel.project_dir%/src/UI/Backoffice/IdentityAndAccess': User
+    '%kernel.project_dir%/src/UI/Backoffice/IdentityAndAccess/User': User
   globals:
     pumukit_info:  "%pumukit.info%"
     locales:       "%pumukit.locales%"

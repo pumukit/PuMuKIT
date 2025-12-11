@@ -6,7 +6,7 @@ namespace App\ContentManagement\Series\Application\ViewSeriesOwners;
 
 use App\ContentManagement\Series\Domain\Exception\SeriesNotFoundException;
 use App\ContentManagement\Series\Domain\Repository\SeriesRepositoryInterface;
-use App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface;
+use App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface;
 
 final class ViewSeriesOwnersService
 {

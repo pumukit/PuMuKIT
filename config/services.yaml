@@ -84,4 +84,4 @@ imports:
   - { resource: '../src/Framework/Streaming/Channel/services.yaml' }
   - { resource: '../src/Framework/MediaProcessing/Job/services.yaml' }
   - { resource: '../src/Framework/MediaProcessing/Cpu/services.yaml' }
-  - { resource: '../src/Framework/IdentityAndAccess/services.yaml' }
+  - { resource: '../src/Framework/IdentityAndAccess/User/services.yaml' }
