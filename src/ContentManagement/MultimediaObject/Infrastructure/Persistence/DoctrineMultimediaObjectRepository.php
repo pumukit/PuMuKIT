@@ -6,6 +6,7 @@ namespace App\ContentManagement\MultimediaObject\Infrastructure\Persistence;
 
 use App\ContentManagement\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
 use App\Shared\Infrastructure\Persistence\DoctrineObjectManager;
+use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
@@ -92,6 +93,17 @@ final class DoctrineMultimediaObjectRepository implements MultimediaObjectReposi
     {
         $this->objectManager->getDocumentManager()->remove($multimediaObject);
         $this->objectManager->getDocumentManager()->flush();
+    }
+
+    public function findById(string $id): null|object
+    {
+        return $this->objectManager->getDocumentManager()
+            ->getRepository(MultimediaObject::class)
+            ->createQueryBuilder()
+            ->field('_id')->equals(new ObjectId($id))
+            ->getQuery()
+            ->getSingleResult()
+        ;
     }
 
     private function convertSortToMongoFormat(array $sort): array

@@ -1,12 +1,24 @@
 <div class="d-flex gap-1 justify-content-end">
     {% for action in actions %}
+        {% set extraClasses = action.extraClasses ?? '' %}
+        {% set isDisabled = action.disabled ?? false %}
+
         {% if action.type == 'link' %}
-            <a href="{{ action.url }}" class="btn btn-sm btn-{{ action.style }}" title="{{ action.title|trans }}">
+            <a href="{{ action.url }}"
+               class="btn btn-sm btn-{{ action.style }} {{ extraClasses }}"
+               title="{{ action.title|trans }}"
+               {% if isDisabled %}disabled aria-disabled="true" tabindex="-1"{% endif %}>
                 <i class="fa fa-{{ action.icon }}"></i> {{ action.title|trans }}
             </a>
         {% elseif action.type == 'form' %}
-            <form action="{{ action.url }}" method="POST" {% if action.confirm %}onsubmit="return confirm('{{ action.confirm|trans }}');"{% endif %} style="display:inline;">
-                <button type="submit" class="btn btn-sm btn-{{ action.style }}" title="{{ action.title|trans }}">
+            <form action="{{ action.url }}"
+                  method="POST"
+                  {% if action.confirm and not isDisabled %}onsubmit="return confirm('{{ action.confirm|trans }}');"{% endif %}
+                  style="display:inline;">
+                <button type="submit"
+                        class="btn btn-sm btn-{{ action.style }} {{ extraClasses }}"
+                        title="{{ action.title|trans }}"
+                        {% if isDisabled %}disabled{% endif %}>
                     <i class="fa fa-{{ action.icon }}"></i> {{ action.title|trans }}
                 </button>
             </form>

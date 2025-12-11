@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\MediaProcessing\Job\Presenter;
 
+use App\ContentManagement\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
 use App\UI\Backoffice\MediaProcessing\Job\Helpers\CalcDuration;
 use App\UI\Backoffice\MediaProcessing\Job\Helpers\StatusIcon;
 use App\UI\Backoffice\Shared\Helpers\DateFormat;
 use App\UI\Backoffice\Shared\Helpers\LinkFormat;
+use App\UI\Backoffice\Shared\Helpers\TextTruncate;
 use Pumukit\EncoderBundle\Document\Job;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
@@ -15,15 +17,17 @@ use Twig\Environment;
 final class JobDataTablePresenter
 {
     public function __construct(
+        private MultimediaObjectRepositoryInterface $multimediaObjectRepository,
         private RouterInterface $router,
         private Environment $twig,
     ) {}
 
     public function present(Job $job): array
     {
+        $multimediaObject = $this->multimediaObjectRepository->findById($job->getMmid());
         return [
             'id' => $job->getId(),
-            'mm_id' => LinkFormat::generate($this->router->generate('multimedia_object_view', ['id' => $job->getMmId()]), $job->getMmId()),
+            'mm_id' => LinkFormat::generate($this->router->generate('multimedia_object_view', ['id' => $job->getMmId(), 'tab' => 'media']), TextTruncate::long($multimediaObject->getTitle())),
             'profile' => $job->getProfile(),
             'status' => StatusIcon::convert($job->getStatus()) . ' ' . $job->getStatusText(),
             'priority' => $job->getPriority(),
@@ -52,6 +56,7 @@ final class JobDataTablePresenter
                     'icon' => 'cancel',
                     'title' => 'Stop',
                     'confirm' => 'Are you sure you want to stop this job?',
+                    'disabled' => !in_array($job->getStatus(), [Job::STATUS_EXECUTING, Job::STATUS_WAITING], true),
                 ],
             ],
         ]);
