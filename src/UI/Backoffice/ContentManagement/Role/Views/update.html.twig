@@ -1,0 +1,102 @@
+{% extends '@Shared/Views/layout/layout.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid mt-3">
+        {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'role.page.update'|trans({}, 'role')} %}
+
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="{{ path('role_update', {'id': role.id}) }}">
+                    <div class="mb-3">
+                        <label for="cod" class="form-label">{{ 'role.form.code'|trans({}, 'role') }}</label>
+                        <input type="text" class="form-control" id="cod" name="cod" value="{{ role.cod }}" disabled>
+                        <small class="form-text text-muted">{{ 'role.form.code_readonly'|trans({}, 'role') }}</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">{{ 'role.form.name'|trans({}, 'role') }}</label>
+                        <div id="nameFields">
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">EN</span>
+                                <input type="text" class="form-control" name="name_en" data-locale="en"
+                                       value="{{ role.i18nName['en']|default('') }}" required>
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">ES</span>
+                                <input type="text" class="form-control" name="name_es" data-locale="es"
+                                       value="{{ role.i18nName['es']|default('') }}">
+                            </div>
+                        </div>
+                        <input type="hidden" id="name" name="name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">{{ 'role.form.text'|trans({}, 'role') }}</label>
+                        <div id="textFields">
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">EN</span>
+                                <textarea class="form-control" name="text_en" data-locale="en" rows="3">{{ role.i18nText['en']|default('') }}</textarea>
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">ES</span>
+                                <textarea class="form-control" name="text_es" data-locale="es" rows="3">{{ role.i18nText['es']|default('') }}</textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" id="text" name="text">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="xml" class="form-label">{{ 'role.form.xml'|trans({}, 'role') }}</label>
+                        <input type="text" class="form-control" id="xml" name="xml" value="{{ role.xml|default('') }}">
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="display" name="display" value="1"
+                               {% if role.display %}checked{% endif %}>
+                        <label class="form-check-label" for="display">{{ 'role.form.display'|trans({}, 'role') }}</label>
+                    </div>
+
+                    {% if role.readOnly %}
+                    <div class="alert alert-warning">
+                        {{ 'role.form.read_only_warning'|trans({}, 'role') }}
+                    </div>
+                    {% endif %}
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-pumukit">{{ 'role.form.update'|trans({}, 'role') }}</button>
+                        <a href="{{ path('role_list') }}" class="btn btn-secondary">{{ 'role.form.cancel'|trans({}, 'role') }}</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', function(e) {
+                // Collect i18n name fields
+                const nameFields = {};
+                document.querySelectorAll('#nameFields input').forEach(input => {
+                    const locale = input.dataset.locale;
+                    if (input.value) {
+                        nameFields[locale] = input.value;
+                    }
+                });
+                document.getElementById('name').value = JSON.stringify(nameFields);
+
+                // Collect i18n text fields
+                const textFields = {};
+                document.querySelectorAll('#textFields textarea').forEach(textarea => {
+                    const locale = textarea.dataset.locale;
+                    if (textarea.value) {
+                        textFields[locale] = textarea.value;
+                    }
+                });
+                document.getElementById('text').value = JSON.stringify(textFields);
+            });
+        });
+    </script>
+{% endblock %}
+

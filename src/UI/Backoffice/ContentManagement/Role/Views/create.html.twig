@@ -1,0 +1,97 @@
+{% extends '@Shared/Views/layout/layout.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid mt-3">
+        {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'role.page.create'|trans({}, 'role')} %}
+
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="{{ path('role_create') }}">
+                    <div class="mb-3">
+                        <label for="cod" class="form-label">{{ 'role.form.code'|trans({}, 'role') }}</label>
+                        <input type="text" class="form-control" id="cod" name="cod" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">{{ 'role.form.name'|trans({}, 'role') }}</label>
+                        <div id="nameFields">
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">EN</span>
+                                <input type="text" class="form-control" name="name_en" data-locale="en" required>
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">ES</span>
+                                <input type="text" class="form-control" name="name_es" data-locale="es">
+                            </div>
+                        </div>
+                        <input type="hidden" id="name" name="name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">{{ 'role.form.text'|trans({}, 'role') }}</label>
+                        <div id="textFields">
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">EN</span>
+                                <textarea class="form-control" name="text_en" data-locale="en" rows="3"></textarea>
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text">ES</span>
+                                <textarea class="form-control" name="text_es" data-locale="es" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" id="text" name="text">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="xml" class="form-label">{{ 'role.form.xml'|trans({}, 'role') }}</label>
+                        <input type="text" class="form-control" id="xml" name="xml">
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="display" name="display" value="1" checked>
+                        <label class="form-check-label" for="display">{{ 'role.form.display'|trans({}, 'role') }}</label>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="readOnly" name="readOnly" value="1">
+                        <label class="form-check-label" for="readOnly">{{ 'role.form.read_only'|trans({}, 'role') }}</label>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-pumukit">{{ 'role.form.create'|trans({}, 'role') }}</button>
+                        <a href="{{ path('role_list') }}" class="btn btn-secondary">{{ 'role.form.cancel'|trans({}, 'role') }}</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', function(e) {
+                // Collect i18n name fields
+                const nameFields = {};
+                document.querySelectorAll('#nameFields input').forEach(input => {
+                    const locale = input.dataset.locale;
+                    if (input.value) {
+                        nameFields[locale] = input.value;
+                    }
+                });
+                document.getElementById('name').value = JSON.stringify(nameFields);
+
+                // Collect i18n text fields
+                const textFields = {};
+                document.querySelectorAll('#textFields textarea').forEach(textarea => {
+                    const locale = textarea.dataset.locale;
+                    if (textarea.value) {
+                        textFields[locale] = textarea.value;
+                    }
+                });
+                document.getElementById('text').value = JSON.stringify(textFields);
+            });
+        });
+    </script>
+{% endblock %}
+

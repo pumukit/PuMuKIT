@@ -1,0 +1,27 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\ContentManagement\Role\Domain\Repository\RoleRepositoryInterface:
+        class: App\ContentManagement\Role\Infrastructure\Persistence\DoctrineRoleRepository
+
+    App\ContentManagement\Role\Application\CreateRole\CreateRoleService: ~
+    App\ContentManagement\Role\Application\UpdateRole\UpdateRoleService: ~
+    App\ContentManagement\Role\Application\ViewRole\ViewRoleService: ~
+    App\ContentManagement\Role\Application\ListRoles\ListRolesService: ~
+    App\ContentManagement\Role\Application\DeleteRole\DeleteRoleService: ~
+
+    App\ContentManagement\Role\Infrastructure\Persistence\DoctrineRoleRepository: ~
+
+    App\UI\Backoffice\ContentManagement\Role\Controller\:
+        resource: '../../../UI/Backoffice/ContentManagement/Role/Controller'
+        tags: ['controller.service_arguments']
+
+    App\UI\Backoffice\ContentManagement\Role\Presenter\RoleDataTablePresenter: ~
+
+    App\UI\Backoffice\ContentManagement\Role\EventSubscriber\:
+        resource: '../../../UI/Backoffice/ContentManagement/Role/EventSubscriber'
+        tags: [ 'kernel.event_subscriber' ]
+        autowire: true
+        autoconfigure: true

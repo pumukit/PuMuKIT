@@ -19,6 +19,9 @@ channel_routes:
 taxonomy_routes:
   resource: ../src/Framework/ContentManagement/Taxonomy/routes.yaml
 
+role_routes:
+  resource: ../src/Framework/ContentManagement/Role/routes.yaml
+
 job_routes:
   resource: ../src/Framework/MediaProcessing/Job/routes.yaml
 

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <header>
+            <tool tool-id="symfony" tool-name="Symfony"/>
+        </header>
+        <body>
+            <!-- Pages -->
+            <trans-unit id="role.page.list">
+                <source>role.page.list</source>
+                <target>Roles</target>
+            </trans-unit>
+            <trans-unit id="role.page.create">
+                <source>role.page.create</source>
+                <target>Create Role</target>
+            </trans-unit>
+            <trans-unit id="role.page.view">
+                <source>role.page.view</source>
+                <target>View Role</target>
+            </trans-unit>
+            <trans-unit id="role.page.update">
+                <source>role.page.update</source>
+                <target>Update Role</target>
+            </trans-unit>
+
+            <!-- Table -->
+            <trans-unit id="bulk.select_option">
+                <source>bulk.select_option</source>
+                <target>Select an option...</target>
+            </trans-unit>
+            <trans-unit id="bulk.apply">
+                <source>bulk.apply</source>
+                <target>Apply</target>
+            </trans-unit>
+            <trans-unit id="role.table.code">
+                <source>role.table.code</source>
+                <target>Code</target>
+            </trans-unit>
+            <trans-unit id="role.table.name">
+                <source>role.table.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="role.table.text">
+                <source>role.table.text</source>
+                <target>Text</target>
+            </trans-unit>
+            <trans-unit id="role.table.display">
+                <source>role.table.display</source>
+                <target>Display</target>
+            </trans-unit>
+            <trans-unit id="role.table.rank">
+                <source>role.table.rank</source>
+                <target>Rank</target>
+            </trans-unit>
+            <trans-unit id="role.table.people">
+                <source>role.table.people</source>
+                <target>People</target>
+            </trans-unit>
+            <trans-unit id="role.table.actions">
+                <source>role.table.actions</source>
+                <target>Actions</target>
+            </trans-unit>
+
+            <!-- Form -->
+            <trans-unit id="role.form.code">
+                <source>role.form.code</source>
+                <target>Code</target>
+            </trans-unit>
+            <trans-unit id="role.form.name">
+                <source>role.form.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="role.form.text">
+                <source>role.form.text</source>
+                <target>Text</target>
+            </trans-unit>
+            <trans-unit id="role.form.xml">
+                <source>role.form.xml</source>
+                <target>XML</target>
+            </trans-unit>
+            <trans-unit id="role.form.display">
+                <source>role.form.display</source>
+                <target>Display</target>
+            </trans-unit>
+            <trans-unit id="role.form.read_only">
+                <source>role.form.read_only</source>
+                <target>Read Only</target>
+            </trans-unit>
+            <trans-unit id="role.form.create">
+                <source>role.form.create</source>
+                <target>Create</target>
+            </trans-unit>
+            <trans-unit id="role.form.update">
+                <source>role.form.update</source>
+                <target>Update</target>
+            </trans-unit>
+            <trans-unit id="role.form.cancel">
+                <source>role.form.cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
+            <trans-unit id="role.form.edit">
+                <source>role.form.edit</source>
+                <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="role.form.back">
+                <source>role.form.back</source>
+                <target>Back</target>
+            </trans-unit>
+            <trans-unit id="role.form.yes">
+                <source>role.form.yes</source>
+                <target>Yes</target>
+            </trans-unit>
+            <trans-unit id="role.form.no">
+                <source>role.form.no</source>
+                <target>No</target>
+            </trans-unit>
+            <trans-unit id="role.form.code_readonly">
+                <source>role.form.code_readonly</source>
+                <target>Code cannot be changed</target>
+            </trans-unit>
+            <trans-unit id="role.form.read_only_warning">
+                <source>role.form.read_only_warning</source>
+                <target>This role is marked as read-only</target>
+            </trans-unit>
+
+            <!-- Flash Messages -->
+            <trans-unit id="role.flash.created">
+                <source>role.flash.created</source>
+                <target>Role "%cod%" has been created successfully</target>
+            </trans-unit>
+            <trans-unit id="role.flash.updated">
+                <source>role.flash.updated</source>
+                <target>Role "%cod%" has been updated successfully</target>
+            </trans-unit>
+            <trans-unit id="role.flash.deleted">
+                <source>role.flash.deleted</source>
+                <target>Role "%cod%" has been deleted successfully</target>
+            </trans-unit>
+
+            <!-- Errors -->
+            <trans-unit id="role.error.create_failed">
+                <source>role.error.create_failed</source>
+                <target>Failed to create role: %message%</target>
+            </trans-unit>
+            <trans-unit id="role.error.update_failed">
+                <source>role.error.update_failed</source>
+                <target>Failed to update role: %message%</target>
+            </trans-unit>
+            <trans-unit id="role.error.delete_failed">
+                <source>role.error.delete_failed</source>
+                <target>Failed to delete role: %message%</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
+

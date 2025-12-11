@@ -1,0 +1,63 @@
+{% extends '@Shared/Views/layout/layout.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid mt-3">
+        {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'role.page.view'|trans({}, 'role')} %}
+
+        <div class="card">
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">{{ 'role.form.code'|trans({}, 'role') }}</dt>
+                    <dd class="col-sm-9">{{ role.cod }}</dd>
+
+                    <dt class="col-sm-3">{{ 'role.form.name'|trans({}, 'role') }}</dt>
+                    <dd class="col-sm-9">
+                        {% for locale, name in role.i18nName %}
+                            <div><strong>{{ locale|upper }}:</strong> {{ name }}</div>
+                        {% endfor %}
+                    </dd>
+
+                    <dt class="col-sm-3">{{ 'role.form.text'|trans({}, 'role') }}</dt>
+                    <dd class="col-sm-9">
+                        {% for locale, text in role.i18nText %}
+                            <div><strong>{{ locale|upper }}:</strong> {{ text }}</div>
+                        {% endfor %}
+                    </dd>
+
+                    <dt class="col-sm-3">{{ 'role.form.xml'|trans({}, 'role') }}</dt>
+                    <dd class="col-sm-9">{{ role.xml|default('-') }}</dd>
+
+                    <dt class="col-sm-3">{{ 'role.form.display'|trans({}, 'role') }}</dt>
+                    <dd class="col-sm-9">
+                        {% if role.display %}
+                            <span class="badge bg-success">{{ 'role.form.yes'|trans({}, 'role') }}</span>
+                        {% else %}
+                            <span class="badge bg-danger">{{ 'role.form.no'|trans({}, 'role') }}</span>
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-3">{{ 'role.form.read_only'|trans({}, 'role') }}</dt>
+                    <dd class="col-sm-9">
+                        {% if role.readOnly %}
+                            <span class="badge bg-warning">{{ 'role.form.yes'|trans({}, 'role') }}</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ 'role.form.no'|trans({}, 'role') }}</span>
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-3">{{ 'role.table.rank'|trans({}, 'role') }}</dt>
+                    <dd class="col-sm-9">{{ role.rank }}</dd>
+
+                    <dt class="col-sm-3">{{ 'role.table.people'|trans({}, 'role') }}</dt>
+                    <dd class="col-sm-9">{{ role.numberPeopleInMultimediaObject }}</dd>
+                </dl>
+
+                <div class="d-flex gap-2">
+                    <a href="{{ path('role_update', {'id': role.id}) }}" class="btn btn-warning">{{ 'role.form.edit'|trans({}, 'role') }}</a>
+                    <a href="{{ path('role_list') }}" class="btn btn-secondary">{{ 'role.form.back'|trans({}, 'role') }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

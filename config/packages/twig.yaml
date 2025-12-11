@@ -11,6 +11,7 @@ twig:
     '%kernel.project_dir%/src/UI/Backoffice/Shared': Shared
     '%kernel.project_dir%/src/UI/Backoffice/Streaming/Channel': Streaming
     '%kernel.project_dir%/src/UI/Backoffice/ContentManagement/Taxonomy': Taxonomy
+    '%kernel.project_dir%/src/UI/Backoffice/ContentManagement/Role': Role
     '%kernel.project_dir%/src/UI/Backoffice/MediaProcessing/Job': Job
     '%kernel.project_dir%/src/UI/Backoffice/MediaProcessing/Cpu': Cpu
     '%kernel.project_dir%/src/UI/Backoffice/IdentityAndAccess/User': User

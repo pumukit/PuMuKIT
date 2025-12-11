@@ -1,0 +1,28 @@
+{% extends '@Shared/Views/layout/layout.html.twig' %}
+
+{% block body %}
+<div class="container-fluid mt-3">
+    {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'role.page.list'|trans({}, 'role')} %}
+
+    {% include '@Shared/Views/components/table/_table.html.twig' with {
+        id: 'rolesTable',
+        title: 'role.table.title'|trans({}, 'role'),
+        server_side: true,
+        ajax_url: path('role_list_data'),
+        checkbox: true,
+        bulk_operations_template: '@Shared/Views/partials/_bulk_operations.html.twig',
+        bulk_operations_config: {
+            translation_domain: 'role'
+        },
+        columns: [
+            {'field': 'cod', 'label': 'role.table.code'|trans({}, 'role'), 'sortable': true},
+            {'field': 'name', 'label': 'role.table.name'|trans({}, 'role'), 'sortable': true},
+            {'field': 'text', 'label': 'role.table.text'|trans({}, 'role'), 'sortable': false},
+            {'field': 'display', 'label': 'role.table.display'|trans({}, 'role')},
+            {'field': 'rank', 'label': 'role.table.rank'|trans({}, 'role'), 'sortable': true},
+            {'field': 'number_people', 'label': 'role.table.people'|trans({}, 'role'), 'formatter': 'badgeFormatter'},
+            {'field': 'actions', 'label': 'role.table.actions'|trans({}, 'role')},
+        ],
+    } %}
+</div>
+{% endblock %}
