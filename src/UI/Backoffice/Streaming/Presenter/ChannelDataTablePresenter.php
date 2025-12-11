@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\Streaming\Presenter;
 
+use App\UI\Backoffice\Streaming\Helpers\StatusText;
 use Pumukit\SchemaBundle\Document\Live;
 use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
 
 final class ChannelDataTablePresenter
 {
-    public function __construct(private readonly RouterInterface $router) {}
+    public function __construct(
+        private RouterInterface $router,
+        private Environment $twig,
+    ) {}
 
     public function present(Live $channel, string $locale = 'en'): array
     {
@@ -19,41 +24,38 @@ final class ChannelDataTablePresenter
             'url' => $channel->getUrl(),
             'source_name' => $channel->getSourceName(),
             'live_type' => $channel->getLiveType(),
-            'broadcasting' => $this->renderBooleanBadge($channel->getBroadcasting()),
-            'index_play' => $this->renderBooleanBadge($channel->getIndexPlay()),
-            'chat' => $this->renderBooleanBadge($channel->isChat()),
+            'broadcasting' => StatusText::convert($channel->getBroadcasting()),
             'actions' => $this->renderActions($channel),
         ];
     }
 
     private function renderActions(Live $channel): string
     {
-        $viewUrl = $this->router->generate('streaming_channel_view', ['id' => $channel->getId()]);
-        $editUrl = $this->router->generate('streaming_channel_edit', ['id' => $channel->getId()]);
-        $deleteUrl = $this->router->generate('streaming_channel_delete', ['id' => $channel->getId()]);
-
-        return sprintf(
-            '<div class="d-flex gap-1 justify-content-end">
-                <a href="%s" class="btn btn-sm btn-info" title="Ver"><i class="fa fa-eye"></i> View</a>
-                <a href="%s" class="btn btn-sm btn-warning" title="Editar"><i class="fa fa-edit"></i> Update</a>
-                <form action="%s" method="POST" style="display:inline;" onsubmit="return confirm(\'¿Está seguro de que desea eliminar este canal?\');">
-                    <button type="submit" class="btn btn-sm btn-danger" title="Eliminar">
-                        <i class="fa fa-trash"></i> Delete
-                    </button>
-                </form>
-            </div>',
-            $viewUrl,
-            $editUrl,
-            $deleteUrl
-        );
-    }
-
-    private function renderBooleanBadge(bool $value): string
-    {
-        if ($value) {
-            return '<span class="badge bg-success"><i class="fa fa-check"></i> Sí</span>';
-        }
-
-        return '<span class="badge bg-secondary"><i class="fa fa-times"></i> No</span>';
+        return $this->twig->render('@Shared/Views/components/table/_datatable_actions.html.twig', [
+            'actions' => [
+                [
+                    'type' => 'link',
+                    'url' => $this->router->generate('streaming_channel_view', ['id' => $channel->getId()]),
+                    'style' => 'info',
+                    'icon' => 'eye',
+                    'title' => 'View',
+                ],
+                [
+                    'type' => 'link',
+                    'url' => $this->router->generate('streaming_channel_edit', ['id' => $channel->getId()]),
+                    'style' => 'warning',
+                    'icon' => 'edit',
+                    'title' => 'Edit',
+                ],
+                [
+                    'type' => 'form',
+                    'url' => $this->router->generate('streaming_channel_delete', ['id' => $channel->getId()]),
+                    'style' => 'danger',
+                    'icon' => 'trash',
+                    'title' => 'Delete',
+                    'confirm' => 'Are you sure you want to delete this channel?',
+                ],
+            ],
+        ]);
     }
 }

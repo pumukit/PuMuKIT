@@ -20,11 +20,11 @@ final class ChannelBulkOperationsSubscriber implements EventSubscriberInterface
     {
         $event->addOperation(
             key: 'delete',
-            label: 'Eliminar',
+            label: 'Delete',
             handler: 'streaming_channels_bulk_delete',
             type: 'route',
             icon: 'fa-trash',
-            confirmMessage: '¿Está seguro de que desea eliminar los canales seleccionados? Esta acción no se puede deshacer.',
+            confirmMessage: 'Are you sure you want to delete the selected channels? This action cannot be undone.',
             priority: 100
         );
     }
