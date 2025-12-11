@@ -21,6 +21,10 @@
                 <source>media_processing.table.multimedia_object</source>
                 <target>Multimedia Object</target>
             </trans-unit>
+            <trans-unit id="media_processing.table.multimedia_object.type">
+                <source>media_processing.table.multimedia_object.type</source>
+                <target>Type</target>
+            </trans-unit>
             <trans-unit id="media_processing.table.profile">
                 <source>media_processing.table.profile</source>
                 <target>Profile</target>

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\UI\Backoffice\MediaProcessing\Job\Presenter;
 
 use App\ContentManagement\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
+use App\UI\Backoffice\ContentManagement\MultimediaObject\Helpers\TypeIcon;
 use App\UI\Backoffice\MediaProcessing\Job\Helpers\CalcDuration;
 use App\UI\Backoffice\MediaProcessing\Job\Helpers\StatusIcon;
 use App\UI\Backoffice\Shared\Helpers\DateFormat;
@@ -28,6 +29,7 @@ final class JobDataTablePresenter
         return [
             'id' => $job->getId(),
             'mm_id' => LinkFormat::generate($this->router->generate('multimedia_object_view', ['id' => $job->getMmId(), 'tab' => 'media']), TextTruncate::long($multimediaObject->getTitle())),
+            'mm_type' => TypeIcon::convert($multimediaObject->getType()),
             'profile' => $job->getProfile(),
             'status' => StatusIcon::convert($job->getStatus()) . ' ' . $job->getStatusText(),
             'priority' => $job->getPriority(),
