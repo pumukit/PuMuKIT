@@ -18,6 +18,11 @@ taxonomy_tag_create:
     controller: App\UI\Backoffice\ContentManagement\Taxonomy\Controller\CreateTagController
     methods: [GET, POST]
 
+taxonomy_tag_view:
+  path: /admin/backend/taxonomy/tags/{id}/update
+  controller: App\UI\Backoffice\ContentManagement\Taxonomy\Controller\UpdateTagController
+  methods: [GET, POST]
+
 taxonomy_tag_update:
     path: /admin/backend/taxonomy/tags/{id}/update
     controller: App\UI\Backoffice\ContentManagement\Taxonomy\Controller\UpdateTagController

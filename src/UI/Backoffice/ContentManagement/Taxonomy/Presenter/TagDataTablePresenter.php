@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\UI\Backoffice\ContentManagement\Taxonomy\Presenter;
 
 use Pumukit\SchemaBundle\Document\Tag;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
 
 final readonly class TagDataTablePresenter
 {
     public function __construct(
-        private UrlGeneratorInterface $urlGenerator
+        private RouterInterface $router,
+        private Environment $twig,
     ) {}
 
     public function present(Tag $tag): array
@@ -25,23 +27,37 @@ final readonly class TagDataTablePresenter
             'level' => $tag->getLevel() ?? 0,
             'number_multimedia_objects' => $tag->getNumberMultimediaObjects(),
             'number_children' => $tag->getNumberOfChildren() ?? 0,
-            'actions' => $this->generateActions($tag),
+            'actions' => $this->renderActions($tag),
         ];
     }
 
-    private function generateActions(Tag $tag): string
+    private function renderActions(Tag $tag): string
     {
-        $updateUrl = $this->urlGenerator->generate('taxonomy_tag_update', ['id' => $tag->getId()]);
-        $deleteUrl = $this->urlGenerator->generate('taxonomy_tag_delete', ['id' => $tag->getId()]);
-
-        return sprintf(
-            '<div class="d-flex gap-1 justify-content-end"> '.
-            '<a href="%s" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i> Update</a> '.
-            '<button class="btn btn-sm btn-danger" onclick="deleteTag(\'%s\', \'%s\')" title="Delete"><i class="fa fa-trash"></i> Delete</button>'
-            .'</div>',
-            $updateUrl,
-            $tag->getId(),
-            $deleteUrl
-        );
+        return $this->twig->render('@Shared/Views/components/table/_datatable_actions.html.twig', [
+            'actions' => [
+                [
+                    'type' => 'link',
+                    'url' => $this->router->generate('taxonomy_tag_view', ['id' => $tag->getId()]),
+                    'style' => 'info',
+                    'icon' => 'eye',
+                    'title' => 'View',
+                ],
+                [
+                    'type' => 'link',
+                    'url' => $this->router->generate('taxonomy_tag_update', ['id' => $tag->getId()]),
+                    'style' => 'warning',
+                    'icon' => 'edit',
+                    'title' => 'Edit'
+                ],
+                [
+                    'type' => 'form',
+                    'url' => $this->router->generate('taxonomy_tag_delete', ['id' => $tag->getId()]),
+                    'style' => 'danger',
+                    'icon' => 'trash',
+                    'title' => 'Delete',
+                    'confirm' => 'Are you sure you want to remove this tag?',
+                ],
+            ],
+        ]);
     }
 }
