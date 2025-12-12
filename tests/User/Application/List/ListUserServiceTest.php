@@ -7,7 +7,7 @@ namespace Tests\User\Application\List;
 use App\IdentityAndAccess\Application\List\ListUserRequest;
 use App\IdentityAndAccess\Application\List\ListUserResponse;
 use App\IdentityAndAccess\Application\List\ListUserService;
-use App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface;
+use App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\User;
 

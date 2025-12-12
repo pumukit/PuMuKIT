@@ -14,6 +14,9 @@ interface MultimediaObjectRepositoryInterface
 
     public function findById(string $id): mixed;
 
+
+    public function findBySeriesId(string $seriesId): array;
+
     public function countAll(?array $filters = []): int;
 
     public function save(MultimediaObject $multimediaObject): void;

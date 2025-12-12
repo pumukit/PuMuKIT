@@ -28,10 +28,7 @@ final class DeleteChannelService
 
         $this->repository->delete($channel);
 
-        $this->eventBus->dispatch(
-            new ChannelDeletedEvent($channelId),
-            ChannelDeletedEvent::NAME
-        );
+        $this->eventBus->dispatch(new ChannelDeletedEvent($channelId));
 
         return new DeleteChannelResponse($channelId);
     }

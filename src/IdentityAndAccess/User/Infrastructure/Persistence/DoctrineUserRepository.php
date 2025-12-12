@@ -23,7 +23,8 @@ class DoctrineUserRepository implements UserRepositoryInterface
 
         $this->applyFilters($qb, $filters);
 
-        return $qb->getQuery()->execute()->toArray();
+        $result = $qb->getQuery()->execute();
+        return is_array($result) ? $result : (is_iterable($result) ? iterator_to_array($result) : []);
     }
 
     public function findByFiltersPaginated(array $filters, int $page, int $limit, string $sort, string $order): array
@@ -37,7 +38,8 @@ class DoctrineUserRepository implements UserRepositoryInterface
             ->sort($sort, $order)
         ;
 
-        return $qb->getQuery()->execute()->toArray();
+        $result = $qb->getQuery()->execute();
+        return is_array($result) ? $result : (is_iterable($result) ? iterator_to_array($result) : []);
     }
 
     public function countByFilters(array $filters = []): int

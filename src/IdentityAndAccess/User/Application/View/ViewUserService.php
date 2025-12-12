@@ -2,8 +2,8 @@
 
 namespace App\IdentityAndAccess\User\Application\View;
 
-use App\IdentityAndAccess\Application\Find\FindUserRequest;
-use App\IdentityAndAccess\Application\Find\FindUserService;
+use App\IdentityAndAccess\User\Application\Find\FindUserRequest;
+use App\IdentityAndAccess\User\Application\Find\FindUserService;
 
 final class ViewUserService
 {

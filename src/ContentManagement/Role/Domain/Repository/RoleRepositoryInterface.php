@@ -14,6 +14,8 @@ interface RoleRepositoryInterface
 
     public function findAll(int $page = 1, int $limit = 10, ?array $sort = null, ?array $filters = []): iterable;
 
+    public function countAll(): int;
+
     public function save(Role $role): void;
 
     public function delete(Role $role): void;

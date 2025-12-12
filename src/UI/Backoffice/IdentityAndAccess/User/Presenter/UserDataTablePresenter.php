@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\IdentityAndAccess\User\Presenter;
 
-use App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface;
 use App\UI\Backoffice\Shared\Helpers\BooleanIcon;
 use App\UI\Backoffice\Shared\Helpers\DateFormat;
 use Pumukit\SchemaBundle\Document\User;
@@ -14,7 +13,6 @@ use Twig\Environment;
 final class UserDataTablePresenter
 {
     public function __construct(
-        private UserRepositoryInterface $userRepository,
         private RouterInterface $router,
         private Environment $twig,
     ) {}

@@ -21,11 +21,17 @@ class Uuid
         return $this->toString();
     }
 
+    /**
+     * @phpstan-return static
+     */
     public static function fromObjectId(ObjectId $id): static
     {
         return new self($id);
     }
 
+    /**
+     * @phpstan-return static
+     */
     public static function fromString(string $id): static
     {
         UuidValidator::validate($id, 'UUID');
@@ -33,6 +39,9 @@ class Uuid
         return new self(new ObjectId($id));
     }
 
+    /**
+     * @phpstan-return static
+     */
     public static function generate(): static
     {
         return new self(new ObjectId());

@@ -3,8 +3,8 @@
 namespace App\ContentManagement\Playlist\Infrastructure\Factory;
 
 use App\ContentManagement\Playlist\Domain\Factory\PlaylistFactoryInterface;
-use App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface;
-use App\IdentityAndAccess\Domain\ValueObject\UserId;
+use App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface;
+use App\IdentityAndAccess\User\Domain\ValueObject\UserId;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\FactoryService;
 

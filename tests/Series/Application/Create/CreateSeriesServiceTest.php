@@ -10,7 +10,7 @@ use App\ContentManagement\Series\Application\Create\CreateSeriesService;
 use App\ContentManagement\Series\Domain\Event\SeriesCreatedEvent;
 use App\ContentManagement\Series\Domain\Factory\SeriesFactoryInterface;
 use App\Shared\Domain\EventBusInterface;
-use App\IdentityAndAccess\Domain\ValueObject\UserId;
+use App\IdentityAndAccess\User\Domain\ValueObject\UserId;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Series;
 

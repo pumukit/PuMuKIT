@@ -6,7 +6,7 @@ namespace App\ContentManagement\Series\Application\Create;
 
 use App\ContentManagement\Series\Domain\Event\SeriesCreatedEvent;
 use App\ContentManagement\Series\Domain\Factory\SeriesFactoryInterface;
-use App\IdentityAndAccess\Domain\ValueObject\UserId;
+use App\IdentityAndAccess\User\Domain\ValueObject\UserId;
 use App\Shared\Domain\EventBusInterface;
 
 final class CreateSeriesService

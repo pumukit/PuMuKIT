@@ -14,6 +14,7 @@ final class StatusIcon
             Job::STATUS_FINISHED => '<i class="fas fa-check-circle text-success"></i>',
             Job::STATUS_PAUSED => '<i class="fas fa-pause-circle text-warning"></i>',
             Job::STATUS_WAITING => '<i class="fas fa-clock text-info"></i>',
+            default => '<i class="fas fa-question-circle text-secondary"></i>',
         };
     }
 }

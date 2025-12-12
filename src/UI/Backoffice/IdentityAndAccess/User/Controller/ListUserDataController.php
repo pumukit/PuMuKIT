@@ -21,12 +21,11 @@ class ListUserDataController extends AbstractController
         Request $request,
         RouterInterface $router
     ): JsonResponse {
-        $offset = (int) $request->query->get('offset', 0);
-        $limit = (int) $request->query->get('limit', 10);
+        $page = (int) $request->query->get('page', '1');
+        $limit = (int) $request->query->get('limit', '10');
         $sort = $request->query->get('sort', 'fullName');
         $order = $request->query->get('order', 'asc');
 
-        $page = (int) floor($offset / $limit) + 1;
 
         $filters = [];
 
@@ -46,12 +45,7 @@ class ListUserDataController extends AbstractController
 
         $rows = [];
         foreach ($userResponse->users as $user) {
-            $rows[] = $this->presenter->present(
-                $user,
-                $request->getScheme(),
-                $request->getHost(),
-                $request->getLocale()
-            );
+            $rows[] = $this->presenter->present($user);
         }
 
         return $this->json([

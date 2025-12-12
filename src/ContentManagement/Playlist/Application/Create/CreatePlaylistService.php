@@ -6,7 +6,7 @@ namespace App\ContentManagement\Playlist\Application\Create;
 
 use App\ContentManagement\Playlist\Domain\Event\PlaylistCreatedEvent;
 use App\ContentManagement\Playlist\Domain\Factory\PlaylistFactoryInterface;
-use App\IdentityAndAccess\Domain\ValueObject\UserId;
+use App\IdentityAndAccess\User\Domain\ValueObject\UserId;
 use App\Shared\Domain\EventBusInterface;
 
 final class CreatePlaylistService

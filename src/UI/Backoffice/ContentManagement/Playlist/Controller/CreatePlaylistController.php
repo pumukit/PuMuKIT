@@ -24,6 +24,10 @@ final class CreatePlaylistController extends AbstractController
         try {
             $user = $this->getUser();
 
+            if (!$user instanceof \Pumukit\SchemaBundle\Document\User) {
+                throw new \RuntimeException('Invalid user type');
+            }
+
             $request = new CreatePlaylistRequest($user->getId());
 
             $response = ($this->createPlaylistService)($request);

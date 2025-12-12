@@ -29,10 +29,7 @@ final class CancelJobService
 
         $this->repository->save($job);
 
-        $this->eventBus->dispatch(
-            new JobCancelledEvent($job),
-            JobCancelledEvent::NAME
-        );
+        $this->eventBus->dispatch(new JobCancelledEvent($job));
 
         return new CancelJobResponse($job);
     }

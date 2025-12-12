@@ -8,7 +8,7 @@ use App\IdentityAndAccess\Application\Find\FindUserRequest;
 use App\IdentityAndAccess\Application\Find\FindUserResponse;
 use App\IdentityAndAccess\Application\Find\FindUserService;
 use App\IdentityAndAccess\Domain\Exception\UserNotFoundException;
-use App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface;
+use App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\User;
 

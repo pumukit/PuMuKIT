@@ -48,10 +48,7 @@ final class UpdateChannelService
 
         $this->repository->save($channel);
 
-        $this->eventBus->dispatch(
-            new ChannelUpdatedEvent($channel),
-            ChannelUpdatedEvent::NAME
-        );
+        $this->eventBus->dispatch(new ChannelUpdatedEvent($channel));
 
         return new UpdateChannelResponse($channel);
     }

@@ -2,7 +2,7 @@
 
 namespace App\ContentManagement\Series\Domain\Factory;
 
-use App\IdentityAndAccess\Domain\ValueObject\UserId;
+use App\IdentityAndAccess\User\Domain\ValueObject\UserId;
 use Pumukit\SchemaBundle\Document\Series;
 
 interface SeriesFactoryInterface

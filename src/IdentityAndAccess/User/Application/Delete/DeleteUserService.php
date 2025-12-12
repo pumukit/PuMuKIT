@@ -2,7 +2,7 @@
 
 namespace App\IdentityAndAccess\User\Application\Delete;
 
-use App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface;
+use App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface;
 
 final class DeleteUserService
 {

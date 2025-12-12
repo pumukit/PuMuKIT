@@ -35,8 +35,8 @@ final class JobDataTablePresenter
             'status' => StatusIcon::convert($job->getStatus()).' '.$job->getStatusText(),
             'priority' => $job->getPriority(),
             'cpu' => $job->getCpu(),
-            'duration' => CalcDuration::obtain($job->getTimeini(), $job->getTimeend()) ?? '---',
-            'timeini' => DateFormat::formatComplete($job->getTimeini()) ?? '---',
+            'duration' => CalcDuration::obtain($job->getTimeini(), $job->getTimeend()),
+            'timeini' => DateFormat::formatComplete($job->getTimeini()),
             'actions' => $this->renderActions($job),
         ];
     }

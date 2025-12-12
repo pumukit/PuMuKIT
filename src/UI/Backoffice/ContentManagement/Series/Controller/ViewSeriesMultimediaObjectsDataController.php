@@ -20,13 +20,12 @@ final class ViewSeriesMultimediaObjectsDataController extends AbstractController
         Request $request,
         string $id,
     ): JsonResponse {
-        $offset = (int) $request->query->get('offset', 0);
-        $limit = (int) $request->query->get('limit', 10);
+        $page = (int) $request->query->get('page', '1');
+        $limit = (int) $request->query->get('limit', '10');
         $sort = $request->query->get('sort', 'title');
         $order = $request->query->get('order', 'asc');
         $search = $request->query->get('search', '');
 
-        $page = (int) floor($offset / $limit) + 1;
 
         $filters = [
             'series_id' => $id,

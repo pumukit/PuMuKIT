@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\ContentManagement\Role\Controller;
 
-use App\ContentManagement\Role\Domain\Repository\RoleRepositoryInterface;
 use App\UI\Backoffice\ContentManagement\Role\Event\RoleBulkOperationsEvent;
 use App\UI\Backoffice\ContentManagement\Role\Event\RoleListActionsEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,8 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class ListRolesController extends AbstractController
 {
     public function __construct(
-        private EventDispatcherInterface $eventDispatcher,
-        private RoleRepositoryInterface $roleRepository
+        private EventDispatcherInterface $eventDispatcher
     ) {}
 
     public function __invoke(): Response

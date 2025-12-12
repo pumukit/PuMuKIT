@@ -35,7 +35,8 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
             $qb->field('title.es')->equals($filters['title']);
         }
 
-        return $qb->getQuery()->execute()->toArray();
+        $result = $qb->getQuery()->execute();
+        return is_array($result) ? $result : (is_iterable($result) ? iterator_to_array($result) : []);
     }
 
     public function countMultimediaObjects(string $seriesId): int
@@ -79,7 +80,8 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
 
         $qb->skip(($page - 1) * $limit)->limit($limit);
 
-        return $qb->getQuery()->execute()->toArray();
+        $result = $qb->getQuery()->execute();
+        return is_array($result) ? $result : (is_iterable($result) ? iterator_to_array($result) : []);
     }
 
     public function countByFilters(array $filters): int
@@ -115,7 +117,8 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
             ->sort($sortField, $sortDirection)
         ;
 
-        return $qb->getQuery()->execute()->toArray();
+        $result = $qb->getQuery()->execute();
+        return is_array($result) ? $result : (is_iterable($result) ? iterator_to_array($result) : []);
     }
 
     public function findEventsBySeries(string $seriesId, int $offset = 0, int $limit = 10, string $sort = 'title', string $order = 'asc'): array
@@ -140,7 +143,8 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
             ->sort($sortField, $sortDirection)
         ;
 
-        return $qb->getQuery()->execute()->toArray();
+        $result = $qb->getQuery()->execute();
+        return is_array($result) ? $result : (is_iterable($result) ? iterator_to_array($result) : []);
     }
 
     public function delete(Series $series): void

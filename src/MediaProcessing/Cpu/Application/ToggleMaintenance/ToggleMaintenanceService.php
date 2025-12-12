@@ -27,16 +27,10 @@ final class ToggleMaintenanceService
 
         if ($request->activate) {
             $this->activateMaintenance($request->cpuName);
-            $this->eventBus->dispatch(
-                new CpuMaintenanceActivatedEvent($request->cpuName),
-                CpuMaintenanceActivatedEvent::NAME
-            );
+            $this->eventBus->dispatch(new CpuMaintenanceActivatedEvent($request->cpuName));
         } else {
             $this->deactivateMaintenance($request->cpuName);
-            $this->eventBus->dispatch(
-                new CpuMaintenanceDeactivatedEvent($request->cpuName),
-                CpuMaintenanceDeactivatedEvent::NAME
-            );
+            $this->eventBus->dispatch(new CpuMaintenanceDeactivatedEvent($request->cpuName));
         }
 
         return new ToggleMaintenanceResponse(

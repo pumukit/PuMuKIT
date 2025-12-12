@@ -3,8 +3,8 @@
 namespace App\ContentManagement\Series\Infrastructure\Factory;
 
 use App\ContentManagement\Series\Domain\Factory\SeriesFactoryInterface;
-use App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface;
-use App\IdentityAndAccess\Domain\ValueObject\UserId;
+use App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface;
+use App\IdentityAndAccess\User\Domain\ValueObject\UserId;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\FactoryService;
 

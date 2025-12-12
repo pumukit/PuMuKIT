@@ -76,7 +76,8 @@ final class DoctrinePlaylistRepository implements PlaylistRepositoryInterface
             ->limit($limit)
         ;
 
-        return $qb->getQuery()->execute()->toArray();
+        $result = $qb->getQuery()->execute();
+        return is_array($result) ? $result : (is_iterable($result) ? iterator_to_array($result) : []);
     }
 
     public function countByFilters(array $filters): int
@@ -94,11 +95,10 @@ final class DoctrinePlaylistRepository implements PlaylistRepositoryInterface
                 continue;
             }
             if (is_array($value)) {
-                $orX = [];
+                $expr = $qb->expr();
                 foreach ($value as $v) {
-                    $orX[] = $qb->expr()->field($field)->equals(new \MongoRegex('/.*'.$v.'.*/i'));
+                    $expr->addOr($expr->field($field)->equals(new \MongoRegex('/.*'.$v.'.*/i')));
                 }
-                $qb->addOr($orX);
             } else {
                 $qb->field($field)->equals(new \MongoRegex('/.*'.$value.'.*/i'));
             }

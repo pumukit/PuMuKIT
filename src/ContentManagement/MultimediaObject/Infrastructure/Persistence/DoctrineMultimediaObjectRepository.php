@@ -95,6 +95,13 @@ final class DoctrineMultimediaObjectRepository implements MultimediaObjectReposi
         $this->objectManager->getDocumentManager()->flush();
     }
 
+    public function findBySeriesId(string $seriesId): array
+    {
+        return $this->objectManager->getDocumentManager()
+            ->getRepository(MultimediaObject::class)
+            ->findBy(['series' => $seriesId]);
+    }
+
     public function findById(string $id): null|object
     {
         return $this->objectManager->getDocumentManager()

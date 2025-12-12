@@ -9,7 +9,7 @@ use App\ContentManagement\Series\Application\ViewSeriesOwners\GetSeriesOwnersRes
 use App\ContentManagement\Series\Application\ViewSeriesOwners\GetSeriesOwnersService;
 use App\ContentManagement\Series\Domain\Exception\SeriesNotFoundException;
 use App\ContentManagement\Series\Domain\Repository\SeriesRepositoryInterface;
-use App\IdentityAndAccess\Domain\Repository\UserRepositoryInterface;
+use App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;

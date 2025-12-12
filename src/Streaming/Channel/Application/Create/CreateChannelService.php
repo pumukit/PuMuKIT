@@ -43,10 +43,7 @@ final class CreateChannelService
 
         $this->repository->save($channel);
 
-        $this->eventBus->dispatch(
-            new ChannelCreatedEvent($channel),
-            ChannelCreatedEvent::NAME
-        );
+        $this->eventBus->dispatch(new ChannelCreatedEvent($channel));
 
         return new CreateChannelResponse($channel);
     }

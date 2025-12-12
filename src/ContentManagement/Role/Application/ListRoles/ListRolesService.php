@@ -23,7 +23,7 @@ final readonly class ListRolesService
             $request->filters
         );
 
-        $count = $this->roleRepository->countAll($request->filters);
+        $count = $this->roleRepository->countAll();
 
         return new ListRolesResponse(
             roles: $roles,

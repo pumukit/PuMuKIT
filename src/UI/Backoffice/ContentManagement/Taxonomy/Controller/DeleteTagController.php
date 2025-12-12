@@ -25,7 +25,7 @@ final class DeleteTagController extends AbstractController
         try {
             $viewTagRequest = new ViewTagRequest($id);
             $tagResponse = ($this->viewTagService)($viewTagRequest);
-            $cod = $tagResponse->tag->cod();
+            $cod = $tagResponse->tag->getCod();
 
             $deleteTagRequest = new DeleteTagRequest($id);
             ($this->deleteTagService)($deleteTagRequest);

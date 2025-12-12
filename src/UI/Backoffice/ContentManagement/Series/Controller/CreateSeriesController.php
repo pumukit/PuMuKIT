@@ -24,6 +24,10 @@ final class CreateSeriesController extends AbstractController
         try {
             $user = $this->getUser();
 
+            if (!$user instanceof \Pumukit\SchemaBundle\Document\User) {
+                throw new \RuntimeException('Invalid user type');
+            }
+
             $request = new CreateSeriesRequest($user->getId());
 
             $response = ($this->createSeriesService)($request);
