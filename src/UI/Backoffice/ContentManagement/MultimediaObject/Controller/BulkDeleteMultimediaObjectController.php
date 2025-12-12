@@ -43,7 +43,6 @@ final class BulkDeleteMultimediaObjectController extends AbstractController
                 ]);
             }
 
-            // Partial success
             $errorMessages = [];
             foreach ($response->errors as $id => $error) {
                 $errorMessages[] = sprintf('ID %s: %s', $id, $error);

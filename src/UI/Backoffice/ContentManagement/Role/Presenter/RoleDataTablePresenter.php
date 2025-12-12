@@ -46,6 +46,6 @@ final readonly class RoleDataTablePresenter
             'confirm' => 'Are you sure you want to delete this role?',
         ]);
 
-        return $viewButton . $editButton . $deleteButton;
+        return $viewButton.$editButton.$deleteButton;
     }
 }

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Role\Domain\Exception;
 
-use Exception;
-
-final class RoleNotFoundException extends Exception
+final class RoleNotFoundException extends \Exception
 {
     public static function withId(string $id): self
     {
@@ -18,4 +16,3 @@ final class RoleNotFoundException extends Exception
         return new self(sprintf('Role with cod "%s" not found', $cod));
     }
 }
-

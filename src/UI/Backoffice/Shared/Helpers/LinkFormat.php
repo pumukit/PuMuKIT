@@ -8,6 +8,6 @@ class LinkFormat
 {
     public static function generate(string $url, string $text): string
     {
-        return '<a href="' . $url . '" target="_blank" style="text-decoration:none;">' . $text . '</a>';
+        return '<a href="'.$url.'" target="_blank" style="text-decoration:none;">'.$text.'</a>';
     }
 }

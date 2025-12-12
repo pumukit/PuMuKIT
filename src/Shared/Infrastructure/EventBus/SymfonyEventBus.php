@@ -1,22 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Shared\Infrastructure\EventBus;
 
 use App\Shared\Domain\EventBusInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Symfony adapter for the event bus interface.
- *
- * This adapter wraps Symfony's event dispatcher to keep the Domain and Application
- * layers independent from the framework.
- *
- * This is the ONLY place where Symfony's EventDispatcher is used directly.
- */
-final class SymfonyEventBus implements EventBusInterface
+final readonly class SymfonyEventBus implements EventBusInterface
 {
+    public function __construct(
+        private EventDispatcherInterface $eventDispatcher
+    ) {}
+
     public function dispatch(object $event): void
     {
-        // TODO: Implement event dispatching using Symfony's EventDispatcher
-        // This will be implemented when the event system is fully integrated
+        $this->eventDispatcher->dispatch($event, $event::class);
     }
 }

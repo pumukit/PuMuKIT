@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\UI\Backoffice\ContentManagement\Person\EventSubscriber;
 
 use App\UI\Backoffice\Shared\Menu\Event\MenuBuildEvent;
-use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class PersonMenuSubscriber implements EventSubscriberInterface

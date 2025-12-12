@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace App\ContentManagement\Role\Application\CreateRole;
 
 final readonly class CreateRoleRequest

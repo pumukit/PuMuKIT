@@ -25,7 +25,6 @@ final class CreateTagController extends AbstractController
     {
         if ($request->isMethod('POST')) {
             try {
-                // Parse JSON fields
                 $title = json_decode($request->request->get('title', '{}'), true) ?: [];
                 $description = json_decode($request->request->get('description', '{}'), true) ?: [];
                 $properties = json_decode($request->request->get('properties', '{}'), true) ?: [];
@@ -59,7 +58,6 @@ final class CreateTagController extends AbstractController
             }
         }
 
-        // Get all tags for parent selection
         $listTagsRequest = new ListTagsRequest(onlyRoots: false);
         $tagsResponse = ($this->listTagsService)($listTagsRequest);
 

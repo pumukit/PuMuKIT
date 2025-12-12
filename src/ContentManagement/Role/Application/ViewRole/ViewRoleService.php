@@ -23,4 +23,3 @@ final readonly class ViewRoleService
         return new ViewRoleResponse($role);
     }
 }
-

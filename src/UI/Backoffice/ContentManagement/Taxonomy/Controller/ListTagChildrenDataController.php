@@ -18,14 +18,12 @@ final class ListTagChildrenDataController extends AbstractController
 
     public function __invoke(string $parentId): JsonResponse
     {
-        // Buscar el tag padre
         $parentTag = $this->tagRepository->find($parentId);
 
         if (!$parentTag) {
             return new JsonResponse(['error' => 'Parent tag not found'], 404);
         }
 
-        // Obtener hijos directos
         $children = $this->tagRepository->findChildren($parentTag);
 
         $data = array_map(

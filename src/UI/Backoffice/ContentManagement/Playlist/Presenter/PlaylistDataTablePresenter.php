@@ -62,6 +62,6 @@ final class PlaylistDataTablePresenter
             'confirm' => 'Are you sure you want to delete this playlist?',
         ]);
 
-        return $viewButton . $editButton . $deleteButton;
+        return $viewButton.$editButton.$deleteButton;
     }
 }

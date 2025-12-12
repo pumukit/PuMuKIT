@@ -25,7 +25,7 @@ final readonly class UpdateRoleService
         $role->setI18nName($request->name);
         $role->setI18nText($request->text);
 
-        if ($request->xml !== null) {
+        if (null !== $request->xml) {
             $role->setXml($request->xml);
         }
 
@@ -33,8 +33,6 @@ final readonly class UpdateRoleService
 
         $this->roleRepository->save($role);
 
-
         return new UpdateRoleResponse($role);
     }
 }
-

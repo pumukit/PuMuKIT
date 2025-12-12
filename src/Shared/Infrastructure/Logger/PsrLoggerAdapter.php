@@ -7,10 +7,6 @@ namespace App\Shared\Infrastructure\Logger;
 use App\Shared\Domain\LoggerInterface;
 use Psr\Log\LoggerInterface as PsrLoggerInterface;
 
-/**
- * Adapter for PSR-3 Logger
- * Bridges our domain LoggerInterface with PSR LoggerInterface.
- */
 final class PsrLoggerAdapter implements LoggerInterface
 {
     public function __construct(

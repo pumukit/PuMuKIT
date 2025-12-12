@@ -6,8 +6,6 @@ namespace App\ContentManagement\Role\Infrastructure\Persistence;
 
 use App\ContentManagement\Role\Domain\Repository\RoleRepositoryInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use MongoDB\BSON\Regex;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 
 final readonly class DoctrineRoleRepository implements RoleRepositoryInterface
@@ -51,9 +49,11 @@ final readonly class DoctrineRoleRepository implements RoleRepositoryInterface
             ->getRepository(Role::class)
             ->createQueryBuilder()
         ;
+
         return $qb->count()
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 
     public function save(Role $role): void
@@ -84,4 +84,3 @@ final readonly class DoctrineRoleRepository implements RoleRepositoryInterface
         return $mongoSort;
     }
 }
-

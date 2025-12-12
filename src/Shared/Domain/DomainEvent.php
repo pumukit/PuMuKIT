@@ -23,4 +23,3 @@ abstract readonly class DomainEvent
         return $this->occurredOn;
     }
 }
-

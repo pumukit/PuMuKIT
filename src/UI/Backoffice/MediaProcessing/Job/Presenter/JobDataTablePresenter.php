@@ -26,12 +26,13 @@ final class JobDataTablePresenter
     public function present(Job $job): array
     {
         $multimediaObject = $this->multimediaObjectRepository->findById($job->getMmid());
+
         return [
             'id' => $job->getId(),
             'mm_id' => LinkFormat::generate($this->router->generate('multimedia_object_view', ['id' => $job->getMmId(), 'tab' => 'media']), TextTruncate::long($multimediaObject->getTitle())),
             'mm_type' => TypeIcon::convert($multimediaObject->getType()),
             'profile' => $job->getProfile(),
-            'status' => StatusIcon::convert($job->getStatus()) . ' ' . $job->getStatusText(),
+            'status' => StatusIcon::convert($job->getStatus()).' '.$job->getStatusText(),
             'priority' => $job->getPriority(),
             'cpu' => $job->getCpu(),
             'duration' => CalcDuration::obtain($job->getTimeini(), $job->getTimeend()) ?? '---',
@@ -53,9 +54,9 @@ final class JobDataTablePresenter
             'title' => 'Stop',
             'type' => 'form',
             'confirm' => 'Are you sure you want to stop this job?',
-            'disabled' => !in_array($job->getStatus(), [Job::STATUS_EXECUTING, Job::STATUS_WAITING], true)
+            'disabled' => !in_array($job->getStatus(), [Job::STATUS_EXECUTING, Job::STATUS_WAITING], true),
         ]);
 
-        return $viewButton . $stopButton;
+        return $viewButton.$stopButton;
     }
 }

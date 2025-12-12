@@ -23,7 +23,6 @@ final class UpdateSeriesFormHandler
         $sorting = $request->request->get('sorting');
         $publicDate = $request->request->get('publicDate');
 
-        // Clean empty arrays
         $title = !empty($title) ? $title : null;
         $subtitle = !empty($subtitle) ? $subtitle : null;
         $description = !empty($description) ? $description : null;

@@ -29,7 +29,6 @@ final class UpdateRoleController extends AbstractController
 
         if ($request->isMethod('POST')) {
             try {
-                // Parse JSON fields
                 $name = json_decode($request->request->get('name', '{}'), true) ?: [];
                 $text = json_decode($request->request->get('text', '{}'), true) ?: [];
 
@@ -64,4 +63,3 @@ final class UpdateRoleController extends AbstractController
         ]);
     }
 }
-

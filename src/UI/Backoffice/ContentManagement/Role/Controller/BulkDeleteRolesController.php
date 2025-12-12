@@ -64,4 +64,3 @@ final class BulkDeleteRolesController extends AbstractController
         ], 500);
     }
 }
-

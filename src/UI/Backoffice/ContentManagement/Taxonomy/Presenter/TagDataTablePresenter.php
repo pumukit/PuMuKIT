@@ -46,6 +46,6 @@ final readonly class TagDataTablePresenter
             'confirm' => 'Are you sure you want to remove this tag?',
         ]);
 
-        return $viewButton . $editButton . $deleteButton;
+        return $viewButton.$editButton.$deleteButton;
     }
 }

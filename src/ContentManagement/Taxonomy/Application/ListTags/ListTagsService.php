@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Taxonomy\Application\ListTags;
 
-use App\ContentManagement\Taxonomy\Domain\Exception\TagNotFoundException;
 use App\ContentManagement\Taxonomy\Domain\Repository\TagRepositoryInterface;
 
 final readonly class ListTagsService

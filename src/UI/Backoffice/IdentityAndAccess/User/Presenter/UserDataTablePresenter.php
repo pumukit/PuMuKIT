@@ -7,7 +7,6 @@ namespace App\UI\Backoffice\IdentityAndAccess\User\Presenter;
 use App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface;
 use App\UI\Backoffice\Shared\Helpers\BooleanIcon;
 use App\UI\Backoffice\Shared\Helpers\DateFormat;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
@@ -49,6 +48,6 @@ final class UserDataTablePresenter
             'confirm' => 'Are you sure you want to delete this user?',
         ]);
 
-        return $viewButton . $editButton . $deleteButton;
+        return $viewButton.$editButton.$deleteButton;
     }
 }

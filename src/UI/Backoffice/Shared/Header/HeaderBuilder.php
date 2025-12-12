@@ -31,12 +31,10 @@ final class HeaderBuilder
         $processed = [];
 
         foreach ($items as $item) {
-            // Check permission
             if (null !== $item['permission'] && !$this->authorizationChecker->isGranted($item['permission'])) {
                 continue;
             }
 
-            // Generate URL if route is provided
             if (null !== $item['route']) {
                 $item['url'] = $this->urlGenerator->generate($item['route'], $item['route_params']);
             } else {

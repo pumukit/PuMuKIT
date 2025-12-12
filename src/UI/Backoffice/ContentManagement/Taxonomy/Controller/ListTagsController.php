@@ -29,7 +29,7 @@ final class ListTagsController extends AbstractController
                 if ('#' === $operation['handler']) {
                     continue;
                 }
-                // Generar URL para operaciones bulk (sin parámetros dinámicos)
+
                 $operation['handler'] = $this->generateUrl(
                     $operation['handler'],
                     $operation['route_params'] ?? []
@@ -51,11 +51,9 @@ final class ListTagsController extends AbstractController
             }
         }
 
-        // Buscar el tag ROOT para obtener su ID
         $rootTag = $this->tagRepository->findByCod('ROOT');
         $rootParentId = $rootTag ? $rootTag->getId() : null;
 
-        // Log para debug (remover después de verificar)
         error_log('ROOT Tag found: '.($rootTag ? 'YES' : 'NO'));
         error_log('ROOT Tag ID: '.($rootParentId ?? 'NULL'));
 

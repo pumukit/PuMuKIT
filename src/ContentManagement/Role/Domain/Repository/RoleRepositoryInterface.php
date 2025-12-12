@@ -18,4 +18,3 @@ interface RoleRepositoryInterface
 
     public function delete(Role $role): void;
 }
-

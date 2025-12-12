@@ -18,17 +18,6 @@ final class MenuBuildEvent extends Event
         $this->currentRoute = $currentRoute;
     }
 
-    /**
-     * @param string      $key          Unique identifier for the menu item
-     * @param string      $label        Label to display
-     * @param string      $route        Symfony route name
-     * @param string|null $parent       Parent menu key (null for top level)
-     * @param string|null $icon         Font Awesome icon class
-     * @param int         $priority     Higher priority renders first (default: 0)
-     * @param array       $routeParams  Route parameters
-     * @param string|null $permission   Required permission to show this item
-     * @param array       $activeRoutes Additional routes that should mark this item as active
-     */
     public function addItem(
         string $key,
         string $label,
@@ -86,7 +75,6 @@ final class MenuBuildEvent extends Event
 
     public function buildHierarchy(): array
     {
-        // Sort by priority
         usort($this->items, fn ($a, $b) => $a['priority'] <=> $b['priority']);
 
         $hierarchy = [];

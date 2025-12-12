@@ -26,4 +26,3 @@ final class ViewRoleController extends AbstractController
         ]);
     }
 }
-

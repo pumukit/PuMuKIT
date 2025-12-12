@@ -47,7 +47,6 @@ final class BulkToggleAnnounceMultimediaObjectController extends AbstractControl
                 ]);
             }
 
-            // Partial success
             $errorMessages = [];
             foreach ($response->errors as $id => $error) {
                 $errorMessages[] = sprintf('ID %s: %s', $id, $error);

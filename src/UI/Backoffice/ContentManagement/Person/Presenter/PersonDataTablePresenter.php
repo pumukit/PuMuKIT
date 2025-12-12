@@ -45,6 +45,6 @@ final readonly class PersonDataTablePresenter
             'confirm' => 'Are you sure you want to remove this person?',
         ]);
 
-        return $viewButton . $editButton . $deleteButton;
+        return $viewButton.$editButton.$deleteButton;
     }
 }

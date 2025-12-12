@@ -7,14 +7,6 @@ namespace App\Shared\Infrastructure\Translation;
 use App\Shared\Domain\TranslatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface as SymfonyTranslatorInterface;
 
-/**
- * Symfony adapter for the translation interface.
- *
- * This adapter wraps Symfony's translator to keep the Domain and Application
- * layers independent from the framework.
- *
- * This is the ONLY place where Symfony's TranslatorInterface is used directly.
- */
 final class SymfonyTranslator implements TranslatorInterface
 {
     public function __construct(

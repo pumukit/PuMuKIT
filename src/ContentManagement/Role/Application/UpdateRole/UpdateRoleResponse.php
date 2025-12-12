@@ -12,4 +12,3 @@ final readonly class UpdateRoleResponse
         public Role $role
     ) {}
 }
-

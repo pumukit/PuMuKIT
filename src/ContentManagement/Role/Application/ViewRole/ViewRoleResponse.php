@@ -12,4 +12,3 @@ final readonly class ViewRoleResponse
         public Role $role
     ) {}
 }
-

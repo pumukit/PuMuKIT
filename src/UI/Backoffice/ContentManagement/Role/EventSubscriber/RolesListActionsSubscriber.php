@@ -29,4 +29,3 @@ class RolesListActionsSubscriber implements EventSubscriberInterface
         );
     }
 }
-

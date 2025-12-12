@@ -63,6 +63,6 @@ final class SeriesDataTablePresenter
             'confirm' => 'Are you sure you want to delete this series?',
         ]);
 
-        return $viewButton . $editButton . $deleteButton;
+        return $viewButton.$editButton.$deleteButton;
     }
 }

@@ -22,7 +22,6 @@ final class CreateRoleController extends AbstractController
     {
         if ($request->isMethod('POST')) {
             try {
-                // Parse JSON fields
                 $name = json_decode($request->request->get('name', '{}'), true) ?: [];
                 $text = json_decode($request->request->get('text', '{}'), true) ?: [];
 
@@ -56,4 +55,3 @@ final class CreateRoleController extends AbstractController
         return $this->render('@Role/Views/create.html.twig');
     }
 }
-

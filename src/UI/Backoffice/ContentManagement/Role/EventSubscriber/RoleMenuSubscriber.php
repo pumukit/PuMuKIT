@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\UI\Backoffice\ContentManagement\Role\EventSubscriber;
 
 use App\UI\Backoffice\Shared\Menu\Event\MenuBuildEvent;
-use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class RoleMenuSubscriber implements EventSubscriberInterface

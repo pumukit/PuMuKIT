@@ -22,11 +22,10 @@ final class ListTagsDataController extends AbstractController
 
     public function __invoke(Request $request): JsonResponse
     {
-        $lazyLoad = $request->query->getBoolean('lazy', true); // Por defecto activar lazy loading
+        $lazyLoad = $request->query->getBoolean('lazy', true);
         $onlyRoots = $request->query->getBoolean('only_roots', false);
         $parentId = $request->query->get('parent_id');
 
-        // Encontrar el tag ROOT primero
         $allTags = $this->tagRepository->findAll();
         $rootTag = null;
         foreach ($allTags as $tag) {
@@ -39,15 +38,12 @@ final class ListTagsDataController extends AbstractController
 
         $rootParentId = $rootTag ? $rootTag->getId() : null;
 
-        // Si lazy loading está activado, solo devolver tags de primer nivel
         if ($lazyLoad) {
             $tags = [];
             if ($rootTag) {
-                // Solo hijos directos del ROOT
                 $tags = $this->tagRepository->findChildren($rootTag);
             }
         } else {
-            // Modo legacy: devolver todos los tags
             $listTagsRequest = new ListTagsRequest(
                 parentId: $parentId,
                 onlyRoots: $onlyRoots

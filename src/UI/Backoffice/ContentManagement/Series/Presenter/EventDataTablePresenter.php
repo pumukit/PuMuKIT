@@ -58,6 +58,6 @@ final class EventDataTablePresenter
             'confirm' => 'Are you sure you want to delete this multimedia object?',
         ]);
 
-        return $viewButton . $editButton . $deleteButton;
+        return $viewButton.$editButton.$deleteButton;
     }
 }

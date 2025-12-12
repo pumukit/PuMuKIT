@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Role\Application\DeleteRole;
 
-use App\ContentManagement\Role\Domain\Event\RoleDeletedEvent;
 use App\ContentManagement\Role\Domain\Exception\RoleNotFoundException;
 use App\ContentManagement\Role\Domain\Repository\RoleRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
@@ -25,4 +24,3 @@ final readonly class DeleteRoleService
         $this->roleRepository->delete($role);
     }
 }
-

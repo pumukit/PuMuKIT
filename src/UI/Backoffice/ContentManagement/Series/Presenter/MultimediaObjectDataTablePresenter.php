@@ -61,7 +61,7 @@ final class MultimediaObjectDataTablePresenter
         $editButton = $this->twig->render('@Shared/Views/components/table/buttons/_edit_button.html.twig', [
             'url' => $this->router->generate('multimedia_object_view', [
                 'id' => $multimediaObject->getId(),
-                'tab' => 'publication'
+                'tab' => 'publication',
             ]),
         ]);
 
@@ -70,6 +70,6 @@ final class MultimediaObjectDataTablePresenter
             'confirm' => 'Are you sure you want to delete this multimedia object?',
         ]);
 
-        return $viewButton . $editButton . $deleteButton;
+        return $viewButton.$editButton.$deleteButton;
     }
 }

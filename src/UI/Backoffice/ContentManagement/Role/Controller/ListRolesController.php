@@ -58,5 +58,3 @@ final class ListRolesController extends AbstractController
         ]);
     }
 }
-
-

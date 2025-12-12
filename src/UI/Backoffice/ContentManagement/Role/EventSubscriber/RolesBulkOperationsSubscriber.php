@@ -29,4 +29,3 @@ final class RolesBulkOperationsSubscriber implements EventSubscriberInterface
         );
     }
 }
-

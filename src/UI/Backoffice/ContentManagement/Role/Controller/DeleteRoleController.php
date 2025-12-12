@@ -46,4 +46,3 @@ final class DeleteRoleController extends AbstractController
         return $this->redirectToRoute('role_list');
     }
 }
-

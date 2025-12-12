@@ -40,4 +40,3 @@ final readonly class CreateRoleService
         return new CreateRoleResponse($role);
     }
 }
-

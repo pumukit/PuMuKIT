@@ -13,4 +13,3 @@ final readonly class ListRolesResponse
         public readonly int $limit
     ) {}
 }
-
