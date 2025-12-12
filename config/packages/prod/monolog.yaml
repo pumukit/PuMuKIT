@@ -10,6 +10,6 @@ monolog:
     debug_log:
       type: rotating_file
       path: '%kernel.logs_dir%/%kernel.environment%_debug.log'
-      level: warning
+      level: error
       max_files: 20
       channels: ['!event', '!deprecation']
