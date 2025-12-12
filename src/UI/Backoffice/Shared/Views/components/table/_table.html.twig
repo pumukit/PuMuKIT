@@ -62,39 +62,11 @@
                 {% for col in columns %}
                     {% if col.field == 'actions' %}
                         <td class="text-end">
-                            {% for key, url in row.actions %}
-                                {% if key == 'edit' %}
-                                    <a href="{{ url }}" class="btn btn-sm btn-warning">Edit</a>
-                                {% elseif key == 'view' %}
-                                    <a href="{{ url }}" class="btn btn-sm btn-primary">View</a>
-                                {% elseif key == 'delete' %}
-                                    <a href="{{ url }}" class="btn btn-sm btn-danger">Delete</a>
-                                {% endif %}
-                            {% endfor %}
+                            {% include '@Shared/Views/components/table/_table_cell_actions.html.twig' with {row: row} %}
                         </td>
                     {% else %}
-                        {% set fieldPath = col.field|split('.') %}
-                        {% set value = row %}
-                        {% for part in fieldPath %}
-                            {% if value is not empty %}
-                                {% set value = attribute(value, part)|default('') %}
-                            {% else %}
-                                {% set value = '' %}
-                            {% endif %}
-                        {% endfor %}
                         <td class="{% if col.truncate|default(false) %}text-truncate{% endif %}" style="{% if col.truncate|default(false) %}max-width: 15em;{% endif %}">
-                            {% set formatter = col.formatter|default(null) %}
-                            {% if formatter == 'date' and value is not empty %}
-                                {{ value|date('Y-m-d') }}
-                            {% elseif formatter == 'boolean' %}
-                                {% if value %}
-                                    <i class="fa fa-check"></i>
-                                {% else %}
-                                    <i class="fa fa-times"></i>
-                                {% endif %}
-                            {% else %}
-                                {{ value }}
-                            {% endif %}
+                            {% include '@Shared/Views/components/table/_table_cell_value.html.twig' with {column: col, row: row} %}
                         </td>
                     {% endif %}
                 {% endfor %}

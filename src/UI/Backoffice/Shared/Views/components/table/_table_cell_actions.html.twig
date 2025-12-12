@@ -1,0 +1,10 @@
+{% for key, url in row.actions %}
+    {% if key == 'edit' %}
+        <a href="{{ url }}" class="btn btn-sm btn-warning">Edit</a>
+    {% elseif key == 'view' %}
+        <a href="{{ url }}" class="btn btn-sm btn-primary">View</a>
+    {% elseif key == 'delete' %}
+        <a href="{{ url }}" class="btn btn-sm btn-danger">Delete</a>
+    {% endif %}
+{% endfor %}
+

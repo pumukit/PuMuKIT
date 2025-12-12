@@ -1,0 +1,23 @@
+{% set fieldPath = column.field|split('.') %}
+{% set value = row %}
+{% for part in fieldPath %}
+    {% if value is not empty %}
+        {% set value = attribute(value, part)|default('') %}
+    {% else %}
+        {% set value = '' %}
+    {% endif %}
+{% endfor %}
+
+{% set formatter = column.formatter|default(null) %}
+{% if formatter == 'date' and value is not empty %}
+    {{ value|date('Y-m-d') }}
+{% elseif formatter == 'boolean' %}
+    {% if value %}
+        <i class="fa fa-check"></i>
+    {% else %}
+        <i class="fa fa-times"></i>
+    {% endif %}
+{% else %}
+    {{ value }}
+{% endif %}
+
