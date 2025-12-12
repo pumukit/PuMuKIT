@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace App\MediaProcessing\Job\Domain\Event;
 
+use App\Shared\Domain\DomainEvent;
 use Pumukit\EncoderBundle\Document\Job;
 
-final class JobCreatedEvent
+final readonly class JobCreatedEvent extends DomainEvent
 {
-    public const NAME = 'job.created';
+    public function __construct(
+        public Job $job
+    ) {
+        parent::__construct();
+    }
 
-    public function __construct(private Job $job) {}
-
-    public function getJob(): Job
+    public function eventName(): string
     {
-        return $this->job;
+        return 'job.created';
     }
 }

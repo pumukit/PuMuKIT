@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\ContentManagement\Taxonomy\Domain\Event;
+
+use App\Shared\Domain\DomainEvent;
+
+final readonly class TagDeletedEvent extends DomainEvent
+{
+    public function __construct(
+        public string $tagId,
+        public string $cod
+    ) {
+        parent::__construct();
+    }
+
+    public static function fromTag(string $tagId, string $cod): self
+    {
+        return new self($tagId, $cod);
+    }
+
+    public function eventName(): string
+    {
+        return 'tag.deleted';
+    }
+}

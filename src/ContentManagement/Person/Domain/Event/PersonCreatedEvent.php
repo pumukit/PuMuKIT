@@ -6,7 +6,7 @@ namespace App\ContentManagement\Person\Domain\Event;
 
 use App\Shared\Domain\DomainEvent;
 
-final readonly class PersonUpdated extends DomainEvent
+final readonly class PersonCreatedEvent extends DomainEvent
 {
     public function __construct(
         public string $id,
@@ -21,6 +21,6 @@ final readonly class PersonUpdated extends DomainEvent
 
     public function eventName(): string
     {
-        return 'person.updated';
+        return 'person.created';
     }
 }

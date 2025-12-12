@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Taxonomy\Application\DeleteTag;
 
-use App\ContentManagement\Taxonomy\Domain\Event\TagDeleted;
+use App\ContentManagement\Taxonomy\Domain\Event\TagDeletedEvent;
 use App\ContentManagement\Taxonomy\Domain\Exception\TagNotFoundException;
 use App\ContentManagement\Taxonomy\Domain\Repository\TagRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
@@ -23,8 +23,7 @@ final readonly class DeleteTagService
             throw TagNotFoundException::withId($request->id);
         }
 
-        // Lanzar evento de dominio antes de eliminar
-        $event = TagDeleted::fromTag(
+        $event = TagDeletedEvent::fromTag(
             $tag->getId(),
             $tag->getCod()
         );

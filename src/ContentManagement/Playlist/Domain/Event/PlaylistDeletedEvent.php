@@ -1,19 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ContentManagement\Playlist\Domain\Event;
 
+use App\Shared\Domain\DomainEvent;
 use Pumukit\SchemaBundle\Document\Series;
 
-final class PlaylistDeletedEvent
+final readonly class PlaylistDeletedEvent extends DomainEvent
 {
-    public const NAME = 'playlist.deleted';
-
     public function __construct(
-        private Series $playlist
-    ) {}
+        public Series $playlist
+    ) {
+        parent::__construct();
+    }
 
-    public function getPlaylist(): Series
+    public function eventName(): string
     {
-        return $this->playlist;
+        return 'playlist.deleted';
     }
 }

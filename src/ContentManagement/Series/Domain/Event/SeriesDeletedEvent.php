@@ -1,19 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ContentManagement\Series\Domain\Event;
 
+use App\Shared\Domain\DomainEvent;
 use Pumukit\SchemaBundle\Document\Series;
 
-final class SeriesDeletedEvent
+final readonly class SeriesDeletedEvent extends DomainEvent
 {
-    public const NAME = 'series.deleted';
-
     public function __construct(
-        private Series $series
-    ) {}
+        public Series $series
+    ) {
+        parent::__construct();
+    }
 
-    public function getSeries(): Series
+    public function eventName(): string
     {
-        return $this->series;
+        return 'series.deleted';
     }
 }

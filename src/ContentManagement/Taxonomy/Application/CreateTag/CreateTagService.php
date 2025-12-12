@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Taxonomy\Application\CreateTag;
 
-use App\ContentManagement\Taxonomy\Domain\Event\TagCreated;
+use App\ContentManagement\Taxonomy\Domain\Event\TagCreatedEvent;
 use App\ContentManagement\Taxonomy\Domain\Exception\TagAlreadyExistsException;
 use App\ContentManagement\Taxonomy\Domain\Exception\TagNotFoundException;
 use App\ContentManagement\Taxonomy\Domain\Repository\TagRepositoryInterface;
@@ -20,13 +20,11 @@ final readonly class CreateTagService
 
     public function __invoke(CreateTagRequest $request): CreateTagResponse
     {
-        // Validar que el cod no exista
         $existingTag = $this->tagRepository->findByCod($request->cod);
         if ($existingTag) {
             throw TagAlreadyExistsException::withCod($request->cod);
         }
 
-        // Buscar el parent si se especifica
         $parent = null;
         if ($request->parentId) {
             $parent = $this->tagRepository->find($request->parentId);
@@ -35,7 +33,6 @@ final readonly class CreateTagService
             }
         }
 
-        // Crear el tag usando la entidad Legacy
         $tag = new Tag();
         $tag->setCod($request->cod);
         $tag->setI18nTitle($request->title);
@@ -53,11 +50,9 @@ final readonly class CreateTagService
             $tag->setParent($parent);
         }
 
-        // Persistir
         $this->tagRepository->save($tag);
 
-        // Lanzar evento de dominio
-        $event = TagCreated::fromTag(
+        $event = TagCreatedEvent::fromTag(
             $tag->getId(),
             $tag->getCod(),
             $tag->getI18nTitle(),

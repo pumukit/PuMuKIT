@@ -1,19 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ContentManagement\Playlist\Domain\Event;
 
+use App\Shared\Domain\DomainEvent;
 use Pumukit\SchemaBundle\Document\Series;
 
-final class PlaylistUpdatedEvent
+final readonly class PlaylistUpdatedEvent extends DomainEvent
 {
-    public const NAME = 'playlist.updated';
-
     public function __construct(
-        private Series $playlist
-    ) {}
+        public Series $playlist
+    ) {
+        parent::__construct();
+    }
 
-    public function getPlaylist(): Series
+    public function eventName(): string
     {
-        return $this->playlist;
+        return 'playlist.updated';
     }
 }

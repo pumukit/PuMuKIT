@@ -1,21 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ContentManagement\Role\Domain\Event;
 
-use Pumukit\SchemaBundle\Document\MultimediaObject;
+use App\Shared\Domain\DomainEvent;
 use Pumukit\SchemaBundle\Document\Role;
-use Symfony\Contracts\EventDispatcher\Event;
 
-final class RoleCreatedEvent extends Event
+final readonly class RoleCreatedEvent extends DomainEvent
 {
-    public const NAME = 'role.created';
-
     public function __construct(
-        private Role $role
-    ) {}
+        public Role $role
+    ) {
+        parent::__construct();
+    }
 
-    public function getRole(): Role
+    public function eventName(): string
     {
-        return $this->role;
+        return 'role.created';
     }
 }

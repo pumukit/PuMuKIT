@@ -6,12 +6,14 @@ namespace App\ContentManagement\Person\Domain\Event;
 
 use App\Shared\Domain\DomainEvent;
 
-final readonly class PersonDeleted extends DomainEvent
+final readonly class PersonDeletedEvent extends DomainEvent
 {
     public function __construct(
         public string $id,
         public string $name
-    ) {}
+    ) {
+        parent::__construct();
+    }
 
     public static function fromPerson(string $id, string $name): self
     {

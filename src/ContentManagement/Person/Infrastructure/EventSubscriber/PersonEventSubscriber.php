@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Person\Infrastructure\EventSubscriber;
 
-use App\ContentManagement\Person\Domain\Event\PersonCreated;
-use App\ContentManagement\Person\Domain\Event\PersonDeleted;
-use App\ContentManagement\Person\Domain\Event\PersonUpdated;
+use App\ContentManagement\Person\Domain\Event\PersonCreatedEvent;
+use App\ContentManagement\Person\Domain\Event\PersonDeletedEvent;
+use App\ContentManagement\Person\Domain\Event\PersonUpdatedEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -19,13 +19,13 @@ final readonly class PersonEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            PersonCreated::class => 'onPersonCreated',
-            PersonUpdated::class => 'onPersonUpdated',
-            PersonDeleted::class => 'onPersonDeleted',
+            PersonCreatedEvent::class => 'onPersonCreated',
+            PersonUpdatedEvent::class => 'onPersonUpdated',
+            PersonDeletedEvent::class => 'onPersonDeleted',
         ];
     }
 
-    public function onPersonCreated(PersonCreated $event): void
+    public function onPersonCreated(PersonCreatedEvent $event): void
     {
         $this->logger->info('Person created', [
             'id' => $event->id,
@@ -33,7 +33,7 @@ final readonly class PersonEventSubscriber implements EventSubscriberInterface
         ]);
     }
 
-    public function onPersonUpdated(PersonUpdated $event): void
+    public function onPersonUpdated(PersonUpdatedEvent $event): void
     {
         $this->logger->info('Person updated', [
             'id' => $event->id,
@@ -41,7 +41,7 @@ final readonly class PersonEventSubscriber implements EventSubscriberInterface
         ]);
     }
 
-    public function onPersonDeleted(PersonDeleted $event): void
+    public function onPersonDeleted(PersonDeletedEvent $event): void
     {
         $this->logger->info('Person deleted', [
             'id' => $event->id,

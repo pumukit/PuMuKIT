@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace App\Streaming\Channel\Domain\Event;
 
-final class ChannelDeletedEvent
+use App\Shared\Domain\DomainEvent;
+
+final readonly class ChannelDeletedEvent extends DomainEvent
 {
-    public const NAME = 'channel.deleted';
+    public function __construct(
+        public string $channelId
+    ) {
+        parent::__construct();
+    }
 
-    public function __construct(private string $channelId) {}
-
-    public function getChannelId(): string
+    public function eventName(): string
     {
-        return $this->channelId;
+        return 'channel.deleted';
     }
 }

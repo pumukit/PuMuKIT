@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Person\Application\DeletePerson;
 
-use App\ContentManagement\Person\Domain\Event\PersonDeleted;
+use App\ContentManagement\Person\Domain\Event\PersonDeletedEvent;
 use App\ContentManagement\Person\Domain\Exception\PersonNotFoundException;
 use App\ContentManagement\Person\Domain\Repository\PersonRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
@@ -28,7 +28,7 @@ final readonly class DeletePersonService
 
         $this->personRepository->delete($person);
 
-        $event = PersonDeleted::fromPerson($personId, $personName);
+        $event = PersonDeletedEvent::fromPerson($personId, $personName);
         $this->eventBus->dispatch($event);
     }
 }

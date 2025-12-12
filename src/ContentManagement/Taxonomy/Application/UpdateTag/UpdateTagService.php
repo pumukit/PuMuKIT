@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Taxonomy\Application\UpdateTag;
 
-use App\ContentManagement\Taxonomy\Domain\Event\TagUpdated;
+use App\ContentManagement\Taxonomy\Domain\Event\TagUpdatedEvent;
 use App\ContentManagement\Taxonomy\Domain\Exception\TagNotFoundException;
 use App\ContentManagement\Taxonomy\Domain\Repository\TagRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
@@ -23,7 +23,6 @@ final readonly class UpdateTagService
             throw TagNotFoundException::withId($request->id);
         }
 
-        // Actualizar usando métodos de la entidad Legacy
         $tag->setI18nTitle($request->title);
         $tag->setI18nDescription($request->description);
 
@@ -40,8 +39,7 @@ final readonly class UpdateTagService
 
         $this->tagRepository->save($tag);
 
-        // Lanzar evento de dominio
-        $event = TagUpdated::fromTag(
+        $event = TagUpdatedEvent::fromTag(
             $tag->getId(),
             $tag->getCod(),
             $tag->getI18nTitle()

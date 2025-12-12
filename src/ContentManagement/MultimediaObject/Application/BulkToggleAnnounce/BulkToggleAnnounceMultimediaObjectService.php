@@ -37,10 +37,6 @@ final class BulkToggleAnnounceMultimediaObjectService
                 $findResponse = ($this->findMultimediaObjectService)($findRequest);
                 $multimediaObject = $findResponse->multimediaObject;
 
-                // TODO: Announce is publishing decision Tag.
-                // First: Implement use case Find on Tag context
-                // Second: Check if Multimedia Object have this tag
-                // Third: Add or remove tag on MultimediaObject
                 $this->multimediaObjectRepository->save($multimediaObject);
 
                 $this->eventBus->dispatch(new MultimediaObjectUpdatedEvent($multimediaObject));

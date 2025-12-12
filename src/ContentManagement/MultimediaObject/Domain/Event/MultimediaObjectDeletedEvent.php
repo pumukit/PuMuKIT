@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ContentManagement\MultimediaObject\Domain\Event;
 
+use App\Shared\Domain\DomainEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Symfony\Contracts\EventDispatcher\Event;
 
-final class MultimediaObjectDeletedEvent extends Event
+final readonly class MultimediaObjectDeletedEvent extends DomainEvent
 {
-    public const NAME = 'multimedia.deleted';
-
     public function __construct(
-        private MultimediaObject $multimediaObject
-    ) {}
+        public MultimediaObject $multimediaObject
+    ) {
+        parent::__construct();
+    }
 
-    public function getMultimediaObject(): MultimediaObject
+    public function eventName(): string
     {
-        return $this->multimediaObject;
+        return 'multimedia.deleted';
     }
 }

@@ -120,7 +120,6 @@ final class Tag
         --$this->numberMultimediaObjects;
     }
 
-    // Getters
     public function id(): ?string
     {
         return $this->id;
@@ -230,7 +229,6 @@ final class Tag
         return $this->updatedAt;
     }
 
-    // Internal setters para reconstrucción desde persistencia
     public function setId(string $id): void
     {
         $this->id = $id;

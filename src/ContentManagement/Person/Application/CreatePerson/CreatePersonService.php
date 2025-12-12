@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Person\Application\CreatePerson;
 
-use App\ContentManagement\Person\Domain\Event\PersonCreated;
+use App\ContentManagement\Person\Domain\Event\PersonCreatedEvent;
 use App\ContentManagement\Person\Domain\Repository\PersonRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
 use Pumukit\SchemaBundle\Document\Person;
@@ -42,7 +42,7 @@ final readonly class CreatePersonService
 
         $this->personRepository->save($person);
 
-        $event = PersonCreated::fromPerson(
+        $event = PersonCreatedEvent::fromPerson(
             $person->getId(),
             $person->getName(),
             $person->getEmail()

@@ -14,7 +14,6 @@ final class ViewSeriesMultimediaObjectsService
     {
         $offset = ($request->page - 1) * $request->limit;
 
-        // Support both 'series.id' and 'series_id' keys for backwards compatibility
         $seriesId = $request->filters['series_id'] ?? $request->filters['series.id'] ?? null;
 
         if (!$seriesId) {

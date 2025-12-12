@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Person\Application\UpdatePerson;
 
-use App\ContentManagement\Person\Domain\Event\PersonUpdated;
+use App\ContentManagement\Person\Domain\Event\PersonUpdatedEvent;
 use App\ContentManagement\Person\Domain\Exception\PersonNotFoundException;
 use App\ContentManagement\Person\Domain\Repository\PersonRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
@@ -34,7 +34,7 @@ final readonly class UpdatePersonService
 
         $this->personRepository->save($person);
 
-        $event = PersonUpdated::fromPerson(
+        $event = PersonUpdatedEvent::fromPerson(
             $person->getId(),
             $person->getName(),
             $person->getEmail()

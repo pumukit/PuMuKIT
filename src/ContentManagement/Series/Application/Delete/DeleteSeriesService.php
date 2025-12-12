@@ -29,10 +29,8 @@ final class DeleteSeriesService
             );
         }
 
-        // Get series title before deletion for response message
         $seriesTitle = $series->getTitle();
 
-        // Find and delete all multimedia objects in this series
         $multimediaObjects = $this->multimediaRepository->findBySeriesId($series->getId());
 
         foreach ($multimediaObjects as $mo) {
@@ -40,7 +38,6 @@ final class DeleteSeriesService
             $this->eventBus->dispatch(new MultimediaObjectDeletedEvent($mo));
         }
 
-        // Delete the series
         $this->repository->delete($series);
         $this->eventBus->dispatch(new SeriesDeletedEvent($series));
 

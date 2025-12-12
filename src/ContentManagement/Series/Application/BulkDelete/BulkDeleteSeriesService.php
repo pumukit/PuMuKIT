@@ -24,7 +24,6 @@ final class BulkDeleteSeriesService
 
         foreach ($request->seriesIds as $seriesId) {
             try {
-                // Just try to delete directly - DeleteSeriesService will handle MM objects
                 $deleteRequest = new DeleteSeriesRequest($seriesId);
                 $deleteResponse = ($this->deleteSeriesService)($deleteRequest);
 

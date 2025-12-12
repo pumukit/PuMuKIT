@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace App\MediaProcessing\Cpu\Domain\Event;
 
-final class CpuMaintenanceDeactivatedEvent
+use App\Shared\Domain\DomainEvent;
+
+final readonly class CpuMaintenanceDeactivatedEvent extends DomainEvent
 {
-    public const NAME = 'cpu.maintenance.deactivated';
+    public function __construct(
+        public string $cpuName
+    ) {
+        parent::__construct();
+    }
 
-    public function __construct(private string $cpuName) {}
-
-    public function getCpuName(): string
+    public function eventName(): string
     {
-        return $this->cpuName;
+        return 'cpu.maintenance.deactivated';
     }
 }
