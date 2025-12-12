@@ -7,6 +7,6 @@ namespace App\ContentManagement\MultimediaObject\Application\Delete;
 final class DeleteMultimediaObjectRequest
 {
     public function __construct(
-        public readonly string $id
+        public string $id
     ) {}
 }

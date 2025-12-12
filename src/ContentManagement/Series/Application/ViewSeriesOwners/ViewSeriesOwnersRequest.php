@@ -7,7 +7,7 @@ namespace App\ContentManagement\Series\Application\ViewSeriesOwners;
 final class ViewSeriesOwnersRequest
 {
     public function __construct(
-        public readonly string $seriesId
+        public string $seriesId
     ) {
         ViewSeriesOwnersValidator::validate($this);
     }

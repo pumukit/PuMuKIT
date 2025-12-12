@@ -7,11 +7,11 @@ namespace App\ContentManagement\MultimediaObject\Application\BulkToggleAnnounce;
 final class BulkToggleAnnounceMultimediaObjectResponse
 {
     public function __construct(
-        public readonly int $updatedCount,
-        public readonly int $announcedCount,
-        public readonly int $unAnnouncedCount,
-        public readonly array $failedIds = [],
-        public readonly array $errors = []
+        public int $updatedCount,
+        public int $announcedCount,
+        public int $unAnnouncedCount,
+        public array $failedIds = [],
+        public array $errors = []
     ) {}
 
     public function isFullySuccessful(): bool

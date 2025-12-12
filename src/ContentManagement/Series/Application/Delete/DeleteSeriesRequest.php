@@ -7,7 +7,7 @@ namespace App\ContentManagement\Series\Application\Delete;
 final class DeleteSeriesRequest
 {
     public function __construct(
-        public readonly string $id
+        public string $id
     ) {
         DeleteSeriesValidator::validate($this);
     }

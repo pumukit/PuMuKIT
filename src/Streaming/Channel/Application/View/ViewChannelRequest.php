@@ -6,5 +6,5 @@ namespace App\Streaming\Channel\Application\View;
 
 final class ViewChannelRequest
 {
-    public function __construct(public readonly string $id) {}
+    public function __construct(public string $id) {}
 }

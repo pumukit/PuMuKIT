@@ -7,7 +7,7 @@ namespace App\ContentManagement\Series\Application\BulkDelete;
 final class BulkDeleteSeriesRequest
 {
     public function __construct(
-        public readonly array $seriesIds
+        public array $seriesIds
     ) {
         BulkDeleteSeriesValidator::validate($this);
     }

@@ -7,9 +7,9 @@ namespace App\ContentManagement\MultimediaObject\Application\BulkDelete;
 final class BulkDeleteMultimediaObjectResponse
 {
     public function __construct(
-        public readonly int $deletedCount,
-        public readonly array $failedIds = [],
-        public readonly array $errors = []
+        public int $deletedCount,
+        public array $failedIds = [],
+        public array $errors = []
     ) {}
 
     public function isFullySuccessful(): bool

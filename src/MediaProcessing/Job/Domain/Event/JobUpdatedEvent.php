@@ -7,7 +7,7 @@ namespace App\MediaProcessing\Job\Domain\Event;
 use App\Shared\Domain\DomainEvent;
 use Pumukit\EncoderBundle\Document\Job;
 
-final readonly class JobUpdatedEvent extends DomainEvent
+final class JobUpdatedEvent extends DomainEvent
 {
     public function __construct(
         public Job $job

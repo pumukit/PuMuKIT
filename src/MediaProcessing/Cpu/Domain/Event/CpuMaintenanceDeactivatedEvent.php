@@ -6,7 +6,7 @@ namespace App\MediaProcessing\Cpu\Domain\Event;
 
 use App\Shared\Domain\DomainEvent;
 
-final readonly class CpuMaintenanceDeactivatedEvent extends DomainEvent
+final class CpuMaintenanceDeactivatedEvent extends DomainEvent
 {
     public function __construct(
         public string $cpuName

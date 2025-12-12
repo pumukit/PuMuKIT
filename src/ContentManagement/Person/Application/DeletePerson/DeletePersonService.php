@@ -4,22 +4,23 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Person\Application\DeletePerson;
 
+use Pumukit\SchemaBundle\Document\Person;
 use App\ContentManagement\Person\Domain\Event\PersonDeletedEvent;
 use App\ContentManagement\Person\Domain\Exception\PersonNotFoundException;
 use App\ContentManagement\Person\Domain\Repository\PersonRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
 
-final readonly class DeletePersonService
+final class DeletePersonService
 {
     public function __construct(
-        private PersonRepositoryInterface $personRepository,
-        private EventBusInterface $eventBus
+        private readonly PersonRepositoryInterface $personRepository,
+        private readonly EventBusInterface $eventBus
     ) {}
 
     public function __invoke(DeletePersonRequest $request): void
     {
         $person = $this->personRepository->find($request->id);
-        if (!$person) {
+        if (!$person instanceof Person) {
             throw PersonNotFoundException::withId($request->id);
         }
 

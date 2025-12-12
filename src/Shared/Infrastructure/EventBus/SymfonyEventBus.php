@@ -7,10 +7,10 @@ namespace App\Shared\Infrastructure\EventBus;
 use App\Shared\Domain\EventBusInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-final readonly class SymfonyEventBus implements EventBusInterface
+final class SymfonyEventBus implements EventBusInterface
 {
     public function __construct(
-        private EventDispatcherInterface $eventDispatcher
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {}
 
     public function dispatch(object $event): void

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Role\Application\ListRoles;
 
-final readonly class ListRolesResponse
+final class ListRolesResponse
 {
     public function __construct(
         public readonly iterable $roles,

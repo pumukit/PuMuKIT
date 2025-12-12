@@ -11,24 +11,24 @@ use App\ContentManagement\Taxonomy\Domain\Repository\TagRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
 use Pumukit\SchemaBundle\Document\Tag;
 
-final readonly class CreateTagService
+final class CreateTagService
 {
     public function __construct(
-        private TagRepositoryInterface $tagRepository,
-        private EventBusInterface $eventBus
+        private readonly TagRepositoryInterface $tagRepository,
+        private readonly EventBusInterface $eventBus
     ) {}
 
     public function __invoke(CreateTagRequest $request): CreateTagResponse
     {
         $existingTag = $this->tagRepository->findByCod($request->cod);
-        if ($existingTag) {
+        if ($existingTag !== null) {
             throw TagAlreadyExistsException::withCod($request->cod);
         }
 
         $parent = null;
         if ($request->parentId) {
             $parent = $this->tagRepository->find($request->parentId);
-            if (!$parent) {
+            if (!$parent instanceof Tag) {
                 throw TagNotFoundException::withId($request->parentId);
             }
         }
@@ -46,7 +46,7 @@ final readonly class CreateTagService
         $tag->setDisplay($request->display);
         $tag->setProperties($request->properties ?? []);
 
-        if ($parent) {
+        if ($parent !== null) {
             $tag->setParent($parent);
         }
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Person\Application\ListPersons;
 
-final readonly class ListPersonsRequest
+final class ListPersonsRequest
 {
     public function __construct(
         public readonly int $page = 1,

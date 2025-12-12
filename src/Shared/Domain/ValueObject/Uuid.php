@@ -7,13 +7,10 @@ namespace App\Shared\Domain\ValueObject;
 use App\Shared\Domain\Validator\UuidValidator;
 use MongoDB\BSON\ObjectId;
 
-class Uuid
+class Uuid implements \Stringable
 {
-    protected ObjectId $id;
-
-    protected function __construct(ObjectId $id)
+    protected function __construct(protected ObjectId $id)
     {
-        $this->id = $id;
     }
 
     public function __toString(): string

@@ -11,11 +11,9 @@ final class MenuBuildEvent extends Event
     public const NAME = 'shared.menu.build';
 
     private array $items = [];
-    private ?string $currentRoute = null;
 
-    public function __construct(?string $currentRoute = null)
+    public function __construct(private readonly ?string $currentRoute = null)
     {
-        $this->currentRoute = $currentRoute;
     }
 
     public function addItem(
@@ -87,10 +85,8 @@ final class MenuBuildEvent extends Event
         foreach ($this->items as $item) {
             if (null === $item['parent']) {
                 $hierarchy[] = &$itemsMap[$item['key']];
-            } else {
-                if (isset($itemsMap[$item['parent']])) {
-                    $itemsMap[$item['parent']]['children'][] = &$itemsMap[$item['key']];
-                }
+            } elseif (isset($itemsMap[$item['parent']])) {
+                $itemsMap[$item['parent']]['children'][] = &$itemsMap[$item['key']];
             }
         }
 

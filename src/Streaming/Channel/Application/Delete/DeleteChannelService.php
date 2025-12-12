@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Streaming\Channel\Application\Delete;
 
+use Pumukit\SchemaBundle\Document\Live;
 use App\Shared\Domain\EventBusInterface;
 use App\Streaming\Channel\Domain\Event\ChannelDeletedEvent;
 use App\Streaming\Channel\Domain\Exception\ChannelNotFoundException;
@@ -20,7 +21,7 @@ final class DeleteChannelService
     {
         $channel = $this->repository->find($request->id);
 
-        if (!$channel) {
+        if (!$channel instanceof Live) {
             throw new ChannelNotFoundException($request->id);
         }
 

@@ -7,7 +7,7 @@ namespace App\ContentManagement\Series\Application\BulkToggleAnnounce;
 final class BulkToggleAnnounceSeriesRequest
 {
     public function __construct(
-        public readonly array $seriesIds
+        public array $seriesIds
     ) {
         BulkToggleAnnounceSeriesValidator::validate($this);
     }

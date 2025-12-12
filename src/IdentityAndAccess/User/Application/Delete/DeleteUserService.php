@@ -2,6 +2,7 @@
 
 namespace App\IdentityAndAccess\User\Application\Delete;
 
+use Pumukit\SchemaBundle\Document\User;
 use App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface;
 
 final class DeleteUserService
@@ -16,7 +17,7 @@ final class DeleteUserService
 
         $user = $this->repository->find($request->id);
 
-        if (null === $user) {
+        if (!$user instanceof User) {
             return new DeleteUserResponse(
                 success: false,
                 message: sprintf('User with id "%s" not found.', $request->id)

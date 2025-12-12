@@ -7,7 +7,7 @@ namespace App\ContentManagement\Role\Domain\Event;
 use App\Shared\Domain\DomainEvent;
 use Pumukit\SchemaBundle\Document\Role;
 
-final readonly class RoleCreatedEvent extends DomainEvent
+final class RoleCreatedEvent extends DomainEvent
 {
     public function __construct(
         public Role $role

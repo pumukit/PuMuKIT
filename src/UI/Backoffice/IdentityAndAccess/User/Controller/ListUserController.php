@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ListUserController extends AbstractController
 {
     public function __construct(
-        private EventDispatcherInterface $eventDispatcher
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {}
 
     public function __invoke(): Response

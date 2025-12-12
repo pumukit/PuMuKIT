@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\ContentManagement\Taxonomy\Controller;
 
+use Pumukit\SchemaBundle\Document\Tag;
 use App\ContentManagement\Taxonomy\Domain\Repository\TagRepositoryInterface;
 use App\UI\Backoffice\ContentManagement\Taxonomy\Presenter\TagDataTablePresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +21,7 @@ final class ListTagChildrenDataController extends AbstractController
     {
         $parentTag = $this->tagRepository->find($parentId);
 
-        if (!$parentTag) {
+        if (!$parentTag instanceof Tag) {
             return new JsonResponse(['error' => 'Parent tag not found'], 404);
         }
 

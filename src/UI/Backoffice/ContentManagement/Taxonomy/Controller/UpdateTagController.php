@@ -32,9 +32,9 @@ final class UpdateTagController extends AbstractController
 
         if ($request->isMethod('POST')) {
             try {
-                $title = json_decode($request->request->get('title', '{}'), true) ?: [];
-                $description = json_decode($request->request->get('description', '{}'), true) ?: [];
-                $properties = json_decode($request->request->get('properties', '{}'), true) ?: [];
+                $title = json_decode((string) $request->request->get('title', '{}'), true, 512, JSON_THROW_ON_ERROR) ?: [];
+                $description = json_decode((string) $request->request->get('description', '{}'), true, 512, JSON_THROW_ON_ERROR) ?: [];
+                $properties = json_decode((string) $request->request->get('properties', '{}'), true, 512, JSON_THROW_ON_ERROR) ?: [];
 
                 $updateTagRequest = new UpdateTagRequest(
                     id: $id,

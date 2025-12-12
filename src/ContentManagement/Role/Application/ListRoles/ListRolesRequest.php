@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Role\Application\ListRoles;
 
-final readonly class ListRolesRequest
+final class ListRolesRequest
 {
     public function __construct(
         public readonly int $page = 1,

@@ -9,6 +9,6 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 final class FindMultimediaObjectResponse
 {
     public function __construct(
-        public readonly MultimediaObject $multimediaObject
+        public MultimediaObject $multimediaObject
     ) {}
 }

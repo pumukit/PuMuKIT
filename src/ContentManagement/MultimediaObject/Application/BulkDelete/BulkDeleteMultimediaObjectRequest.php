@@ -7,6 +7,6 @@ namespace App\ContentManagement\MultimediaObject\Application\BulkDelete;
 final class BulkDeleteMultimediaObjectRequest
 {
     public function __construct(
-        public readonly array $multimediaObjectIds
+        public array $multimediaObjectIds
     ) {}
 }

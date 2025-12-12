@@ -7,6 +7,6 @@ namespace App\ContentManagement\MultimediaObject\Application\Find;
 final class FindMultimediaObjectRequest
 {
     public function __construct(
-        public readonly string $id
+        public string $id
     ) {}
 }

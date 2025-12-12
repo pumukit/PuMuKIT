@@ -13,7 +13,7 @@ final class PlaylistViewTabsEvent
     private array $tabs = [];
 
     public function __construct(
-        private Series $playlist
+        private readonly Series $playlist
     ) {
         $this->addTab('general', 'General', 'fa-solid fa-info-circle', '@Playlist/Views/tabs/general.html.twig', 100);
         $this->addTab('edit', 'Edit', 'fa-solid fa-edit', '@Playlist/Views/tabs/edit.html.twig', 90);

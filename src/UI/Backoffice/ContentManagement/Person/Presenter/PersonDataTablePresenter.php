@@ -8,11 +8,11 @@ use Pumukit\SchemaBundle\Document\Person;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
-final readonly class PersonDataTablePresenter
+final class PersonDataTablePresenter
 {
     public function __construct(
-        private RouterInterface $router,
-        private Environment $twig,
+        private readonly RouterInterface $router,
+        private readonly Environment $twig,
     ) {}
 
     public function present(Person $person): array

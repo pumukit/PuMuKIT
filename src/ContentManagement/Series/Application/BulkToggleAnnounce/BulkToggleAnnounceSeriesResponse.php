@@ -7,12 +7,12 @@ namespace App\ContentManagement\Series\Application\BulkToggleAnnounce;
 final class BulkToggleAnnounceSeriesResponse
 {
     public function __construct(
-        public readonly int $updatedCount,
-        public readonly int $announcedCount,
-        public readonly int $unAnnouncedCount,
-        public readonly array $failedIds = [],
-        public readonly array $errors = [],
-        public readonly string $message = ''
+        public int $updatedCount,
+        public int $announcedCount,
+        public int $unAnnouncedCount,
+        public array $failedIds = [],
+        public array $errors = [],
+        public string $message = ''
     ) {}
 
     public function isFullySuccessful(): bool

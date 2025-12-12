@@ -22,8 +22,8 @@ final class CreateRoleController extends AbstractController
     {
         if ($request->isMethod('POST')) {
             try {
-                $name = json_decode($request->request->get('name', '{}'), true) ?: [];
-                $text = json_decode($request->request->get('text', '{}'), true) ?: [];
+                $name = json_decode((string) $request->request->get('name', '{}'), true, 512, JSON_THROW_ON_ERROR) ?: [];
+                $text = json_decode((string) $request->request->get('text', '{}'), true, 512, JSON_THROW_ON_ERROR) ?: [];
 
                 $createRoleRequest = new CreateRoleRequest(
                     cod: $request->request->get('cod'),

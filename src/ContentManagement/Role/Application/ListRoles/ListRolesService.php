@@ -6,10 +6,10 @@ namespace App\ContentManagement\Role\Application\ListRoles;
 
 use App\ContentManagement\Role\Domain\Repository\RoleRepositoryInterface;
 
-final readonly class ListRolesService
+final class ListRolesService
 {
     public function __construct(
-        private RoleRepositoryInterface $roleRepository
+        private readonly RoleRepositoryInterface $roleRepository
     ) {}
 
     public function __invoke(ListRolesRequest $request): ListRolesResponse

@@ -13,8 +13,8 @@ use Symfony\Component\Routing\RouterInterface;
 class ListUserDataController extends AbstractController
 {
     public function __construct(
-        private ListUserService $listUserService,
-        private UserDataTablePresenter $presenter
+        private readonly ListUserService $listUserService,
+        private readonly UserDataTablePresenter $presenter
     ) {}
 
     public function __invoke(

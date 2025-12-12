@@ -6,10 +6,10 @@ namespace App\ContentManagement\Person\Application\ListPersons;
 
 use App\ContentManagement\Person\Domain\Repository\PersonRepositoryInterface;
 
-final readonly class ListPersonsService
+final class ListPersonsService
 {
     public function __construct(
-        private PersonRepositoryInterface $personRepository
+        private readonly PersonRepositoryInterface $personRepository
     ) {}
 
     public function __invoke(ListPersonsRequest $request): ListPersonsResponse

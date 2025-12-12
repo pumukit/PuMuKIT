@@ -22,10 +22,10 @@ final class CreatePersonController extends AbstractController
     {
         if ($request->isMethod('POST')) {
             try {
-                $honorific = json_decode($request->request->get('honorific', '{}'), true) ?: [];
-                $firm = json_decode($request->request->get('firm', '{}'), true) ?: [];
-                $post = json_decode($request->request->get('post', '{}'), true) ?: [];
-                $bio = json_decode($request->request->get('bio', '{}'), true) ?: [];
+                $honorific = json_decode((string) $request->request->get('honorific', '{}'), true, 512, JSON_THROW_ON_ERROR) ?: [];
+                $firm = json_decode((string) $request->request->get('firm', '{}'), true, 512, JSON_THROW_ON_ERROR) ?: [];
+                $post = json_decode((string) $request->request->get('post', '{}'), true, 512, JSON_THROW_ON_ERROR) ?: [];
+                $bio = json_decode((string) $request->request->get('bio', '{}'), true, 512, JSON_THROW_ON_ERROR) ?: [];
                 $createPersonRequest = new CreatePersonRequest(
                     name: $request->request->get('name'),
                     email: $request->request->get('email') ?: null,

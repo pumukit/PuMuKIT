@@ -7,6 +7,6 @@ namespace App\IdentityAndAccess\User\Application\Find;
 final class FindUserRequest
 {
     public function __construct(
-        public readonly string $id
+        public string $id
     ) {}
 }

@@ -6,5 +6,5 @@ namespace App\Streaming\Channel\Application\Delete;
 
 final class DeleteChannelResponse
 {
-    public function __construct(public readonly string $deletedId) {}
+    public function __construct(public string $deletedId) {}
 }

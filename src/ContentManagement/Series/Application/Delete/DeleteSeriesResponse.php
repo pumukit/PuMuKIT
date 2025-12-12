@@ -5,8 +5,8 @@ namespace App\ContentManagement\Series\Application\Delete;
 final class DeleteSeriesResponse
 {
     public function __construct(
-        public readonly bool $success,
-        public readonly string $message
+        public bool $success,
+        public string $message
     ) {}
 
     public function toArray(): array

@@ -7,10 +7,10 @@ namespace App\ContentManagement\MultimediaObject\Application\List;
 final class ListMultimediaObjectsRequest
 {
     public function __construct(
-        public readonly int $page = 1,
-        public readonly int $limit = 10,
-        public readonly string $sort = 'public_date',
-        public readonly string $order = 'desc',
-        public readonly array $filters = []
+        public int $page = 1,
+        public int $limit = 10,
+        public string $sort = 'public_date',
+        public string $order = 'desc',
+        public array $filters = []
     ) {}
 }

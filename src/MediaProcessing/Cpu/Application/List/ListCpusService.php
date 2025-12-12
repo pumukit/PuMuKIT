@@ -79,6 +79,6 @@ final class ListCpusService
     {
         $host = $cpu['host'] ?? '';
 
-        return in_array($host, ['localhost', '127.0.0.1', '::1']) || str_starts_with($host, '192.168.');
+        return in_array($host, ['localhost', '127.0.0.1', '::1']) || str_starts_with((string) $host, '192.168.');
     }
 }

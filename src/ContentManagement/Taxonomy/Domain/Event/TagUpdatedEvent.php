@@ -6,7 +6,7 @@ namespace App\ContentManagement\Taxonomy\Domain\Event;
 
 use App\Shared\Domain\DomainEvent;
 
-final readonly class TagUpdatedEvent extends DomainEvent
+final class TagUpdatedEvent extends DomainEvent
 {
     public function __construct(
         public string $tagId,

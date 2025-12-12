@@ -8,5 +8,5 @@ use Pumukit\EncoderBundle\Document\Job;
 
 final class CancelJobResponse
 {
-    public function __construct(public readonly Job $job) {}
+    public function __construct(public Job $job) {}
 }

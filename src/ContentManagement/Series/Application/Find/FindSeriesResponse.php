@@ -6,5 +6,5 @@ use Pumukit\SchemaBundle\Document\Series;
 
 final class FindSeriesResponse
 {
-    public function __construct(public readonly Series $series) {}
+    public function __construct(public Series $series) {}
 }

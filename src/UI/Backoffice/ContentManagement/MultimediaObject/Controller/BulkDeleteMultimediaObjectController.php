@@ -18,7 +18,7 @@ final class BulkDeleteMultimediaObjectController extends AbstractController
 
     public function __invoke(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
+        $data = json_decode((string) $request->getContent(), true, 512, JSON_THROW_ON_ERROR);
         $ids = $data['ids'] ?? [];
 
         if (empty($ids)) {

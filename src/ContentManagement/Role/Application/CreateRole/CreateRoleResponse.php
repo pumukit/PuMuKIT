@@ -6,7 +6,7 @@ namespace App\ContentManagement\Role\Application\CreateRole;
 
 use Pumukit\SchemaBundle\Document\Role;
 
-final readonly class CreateRoleResponse
+final class CreateRoleResponse
 {
     public function __construct(
         public Role $role

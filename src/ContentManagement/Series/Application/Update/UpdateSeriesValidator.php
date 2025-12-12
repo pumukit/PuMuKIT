@@ -122,11 +122,12 @@ final class UpdateSeriesValidator
         if (null !== $request->seriesStyleId) {
             UuidValidator::validate($request->seriesStyleId, 'Series Style ID');
         }
-
-        if (null !== $request->properties) {
-            if (!is_array($request->properties)) {
-                throw new \InvalidArgumentException('Properties must be an array');
-            }
+        if (null === $request->properties) {
+            return;
         }
+        if (is_array($request->properties)) {
+            return;
+        }
+        throw new \InvalidArgumentException('Properties must be an array');
     }
 }

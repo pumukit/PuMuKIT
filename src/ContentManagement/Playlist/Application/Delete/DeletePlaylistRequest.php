@@ -7,7 +7,7 @@ namespace App\ContentManagement\Playlist\Application\Delete;
 final class DeletePlaylistRequest
 {
     public function __construct(
-        public readonly string $id
+        public string $id
     ) {
         DeletePlaylistValidator::validate($this);
     }

@@ -9,11 +9,11 @@ use App\ContentManagement\Person\Domain\Repository\PersonRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
 use Pumukit\SchemaBundle\Document\Person;
 
-final readonly class CreatePersonService
+final class CreatePersonService
 {
     public function __construct(
-        private PersonRepositoryInterface $personRepository,
-        private EventBusInterface $eventBus
+        private readonly PersonRepositoryInterface $personRepository,
+        private readonly EventBusInterface $eventBus
     ) {}
 
     public function __invoke(CreatePersonRequest $request): CreatePersonResponse

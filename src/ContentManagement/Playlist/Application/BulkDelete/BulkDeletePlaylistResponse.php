@@ -7,9 +7,9 @@ namespace App\ContentManagement\Playlist\Application\BulkDelete;
 final class BulkDeletePlaylistResponse
 {
     public function __construct(
-        public readonly int $deletedCount,
-        public readonly array $failedIds,
-        public readonly array $errors
+        public int $deletedCount,
+        public array $failedIds,
+        public array $errors
     ) {}
 
     public function isFullySuccessful(): bool

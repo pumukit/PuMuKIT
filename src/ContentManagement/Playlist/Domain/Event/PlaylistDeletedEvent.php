@@ -7,7 +7,7 @@ namespace App\ContentManagement\Playlist\Domain\Event;
 use App\Shared\Domain\DomainEvent;
 use Pumukit\SchemaBundle\Document\Series;
 
-final readonly class PlaylistDeletedEvent extends DomainEvent
+final class PlaylistDeletedEvent extends DomainEvent
 {
     public function __construct(
         public Series $playlist

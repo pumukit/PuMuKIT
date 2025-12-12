@@ -10,10 +10,10 @@ use App\ContentManagement\Person\Domain\Event\PersonUpdatedEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final readonly class PersonEventSubscriber implements EventSubscriberInterface
+final class PersonEventSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private LoggerInterface $logger
+        private readonly LoggerInterface $logger
     ) {}
 
     public static function getSubscribedEvents(): array

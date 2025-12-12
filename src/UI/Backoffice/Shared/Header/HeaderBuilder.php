@@ -35,11 +35,7 @@ final class HeaderBuilder
                 continue;
             }
 
-            if (null !== $item['route']) {
-                $item['url'] = $this->urlGenerator->generate($item['route'], $item['route_params']);
-            } else {
-                $item['url'] = null;
-            }
+            $item['url'] = null !== $item['route'] ? $this->urlGenerator->generate($item['route'], $item['route_params']) : null;
 
             $processed[] = $item;
         }

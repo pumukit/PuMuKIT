@@ -8,10 +8,10 @@ use App\ContentManagement\Role\Domain\Repository\RoleRepositoryInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Role;
 
-final readonly class DoctrineRoleRepository implements RoleRepositoryInterface
+final class DoctrineRoleRepository implements RoleRepositoryInterface
 {
     public function __construct(
-        private DocumentManager $documentManager
+        private readonly DocumentManager $documentManager
     ) {}
 
     public function find(string $id): ?Role

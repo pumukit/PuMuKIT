@@ -7,7 +7,7 @@ namespace App\ContentManagement\Playlist\Application\Delete;
 final class DeletePlaylistResponse
 {
     public function __construct(
-        public readonly bool $success,
-        public readonly string $message
+        public bool $success,
+        public string $message
     ) {}
 }

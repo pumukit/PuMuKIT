@@ -9,6 +9,6 @@ use Pumukit\SchemaBundle\Document\Series;
 final class CreateSeriesResponse
 {
     public function __construct(
-        public readonly Series $series
+        public Series $series
     ) {}
 }

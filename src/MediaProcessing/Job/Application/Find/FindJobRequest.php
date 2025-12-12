@@ -6,5 +6,5 @@ namespace App\MediaProcessing\Job\Application\Find;
 
 final class FindJobRequest
 {
-    public function __construct(public readonly string $id) {}
+    public function __construct(public string $id) {}
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Series\Application\View;
 
-final readonly class ViewSeriesRequest
+final class ViewSeriesRequest
 {
     public function __construct(public string $id, public string $tab)
     {

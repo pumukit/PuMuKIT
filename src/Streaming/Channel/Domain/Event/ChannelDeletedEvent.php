@@ -6,7 +6,7 @@ namespace App\Streaming\Channel\Domain\Event;
 
 use App\Shared\Domain\DomainEvent;
 
-final readonly class ChannelDeletedEvent extends DomainEvent
+final class ChannelDeletedEvent extends DomainEvent
 {
     public function __construct(
         public string $channelId

@@ -9,6 +9,6 @@ use Pumukit\SchemaBundle\Document\Series;
 final class CreatePlaylistResponse
 {
     public function __construct(
-        public readonly Series $playlist
+        public Series $playlist
     ) {}
 }

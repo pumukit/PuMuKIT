@@ -7,7 +7,7 @@ namespace App\ContentManagement\Series\Domain\Event;
 use App\Shared\Domain\DomainEvent;
 use Pumukit\SchemaBundle\Document\Series;
 
-final readonly class SeriesCreatedEvent extends DomainEvent
+final class SeriesCreatedEvent extends DomainEvent
 {
     public function __construct(
         public Series $series

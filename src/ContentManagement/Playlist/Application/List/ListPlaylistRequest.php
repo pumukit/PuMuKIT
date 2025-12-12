@@ -7,11 +7,11 @@ namespace App\ContentManagement\Playlist\Application\List;
 final class ListPlaylistRequest
 {
     public function __construct(
-        public readonly int $page = 1,
-        public readonly int $limit = 10,
-        public readonly array $filters = [],
-        public readonly ?string $sort = null,
-        public readonly ?string $order = null
+        public int $page = 1,
+        public int $limit = 10,
+        public array $filters = [],
+        public ?string $sort = null,
+        public ?string $order = null
     ) {
         ListPlaylistValidator::validate($this);
     }

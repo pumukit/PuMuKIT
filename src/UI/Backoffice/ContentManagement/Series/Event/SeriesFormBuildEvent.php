@@ -14,7 +14,7 @@ final class SeriesFormBuildEvent extends Event
     private array $formFields = [];
 
     public function __construct(
-        private Series $series
+        private readonly Series $series
     ) {}
 
     public function getSeries(): Series

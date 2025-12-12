@@ -4,22 +4,23 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Person\Application\UpdatePerson;
 
+use Pumukit\SchemaBundle\Document\Person;
 use App\ContentManagement\Person\Domain\Event\PersonUpdatedEvent;
 use App\ContentManagement\Person\Domain\Exception\PersonNotFoundException;
 use App\ContentManagement\Person\Domain\Repository\PersonRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
 
-final readonly class UpdatePersonService
+final class UpdatePersonService
 {
     public function __construct(
-        private PersonRepositoryInterface $personRepository,
-        private EventBusInterface $eventBus
+        private readonly PersonRepositoryInterface $personRepository,
+        private readonly EventBusInterface $eventBus
     ) {}
 
     public function __invoke(UpdatePersonRequest $request): UpdatePersonResponse
     {
         $person = $this->personRepository->find($request->id);
-        if (!$person) {
+        if (!$person instanceof Person) {
             throw PersonNotFoundException::withId($request->id);
         }
 

@@ -13,8 +13,8 @@ final class PlaylistFormSubmitEvent
     private array $errors = [];
 
     public function __construct(
-        private Series $playlist,
-        private array $formData
+        private readonly Series $playlist,
+        private readonly array $formData
     ) {}
 
     public function addError(string $field, string $message): void

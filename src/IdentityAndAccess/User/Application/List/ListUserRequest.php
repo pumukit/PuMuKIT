@@ -7,10 +7,10 @@ namespace App\IdentityAndAccess\User\Application\List;
 final class ListUserRequest
 {
     public function __construct(
-        public readonly ?int $page = 1,
-        public readonly ?int $limit = 20,
-        public readonly array $filters = [],
-        public readonly string $sort = 'username',
-        public readonly string $order = 'asc'
+        public ?int $page = 1,
+        public ?int $limit = 20,
+        public array $filters = [],
+        public string $sort = 'username',
+        public string $order = 'asc'
     ) {}
 }

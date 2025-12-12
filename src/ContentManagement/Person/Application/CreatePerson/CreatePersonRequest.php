@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Person\Application\CreatePerson;
 
-final readonly class CreatePersonRequest
+final class CreatePersonRequest
 {
     public function __construct(
         public string $name,

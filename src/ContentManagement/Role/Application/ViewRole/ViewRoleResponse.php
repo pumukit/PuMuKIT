@@ -6,7 +6,7 @@ namespace App\ContentManagement\Role\Application\ViewRole;
 
 use Pumukit\SchemaBundle\Document\Role;
 
-final readonly class ViewRoleResponse
+final class ViewRoleResponse
 {
     public function __construct(
         public Role $role

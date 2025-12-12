@@ -7,7 +7,7 @@ namespace App\Streaming\Channel\Application\BulkDelete;
 final class BulkDeleteChannelRequest
 {
     public function __construct(
-        public readonly array $channelIds
+        public array $channelIds
     ) {
         BulkDeleteChannelValidator::validate($this);
     }

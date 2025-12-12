@@ -6,7 +6,7 @@ namespace App\ContentManagement\Person\Application\CreatePerson;
 
 use Pumukit\SchemaBundle\Document\Person;
 
-final readonly class CreatePersonResponse
+final class CreatePersonResponse
 {
     public function __construct(
         public Person $person

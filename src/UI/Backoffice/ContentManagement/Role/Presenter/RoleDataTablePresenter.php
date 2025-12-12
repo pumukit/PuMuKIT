@@ -9,11 +9,11 @@ use Pumukit\SchemaBundle\Document\Role;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
-final readonly class RoleDataTablePresenter
+final class RoleDataTablePresenter
 {
     public function __construct(
-        private RouterInterface $router,
-        private Environment $twig,
+        private readonly RouterInterface $router,
+        private readonly Environment $twig,
     ) {}
 
     public function present(Role $role): array

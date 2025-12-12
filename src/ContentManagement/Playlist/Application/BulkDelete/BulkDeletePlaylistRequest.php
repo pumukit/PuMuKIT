@@ -7,7 +7,7 @@ namespace App\ContentManagement\Playlist\Application\BulkDelete;
 final class BulkDeletePlaylistRequest
 {
     public function __construct(
-        public readonly array $playlistIds
+        public array $playlistIds
     ) {
         BulkDeletePlaylistValidator::validate($this);
     }

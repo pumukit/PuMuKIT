@@ -13,7 +13,7 @@ final class PlaylistFormBuildEvent
     private array $fields = [];
 
     public function __construct(
-        private Series $playlist
+        private readonly Series $playlist
     ) {}
 
     public function addField(string $name, array $config): void

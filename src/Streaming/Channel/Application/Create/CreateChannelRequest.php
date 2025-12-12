@@ -7,16 +7,16 @@ namespace App\Streaming\Channel\Application\Create;
 final class CreateChannelRequest
 {
     public function __construct(
-        public readonly array $name,
-        public readonly array $description,
-        public readonly string $url,
-        public readonly string $sourceName,
-        public readonly ?string $passwd = null,
-        public readonly ?string $liveType = null,
-        public readonly ?string $ipSource = null,
-        public readonly bool $indexPlay = false,
-        public readonly bool $broadcasting = false,
-        public readonly bool $debug = false,
-        public readonly bool $chat = false
+        public array $name,
+        public array $description,
+        public string $url,
+        public string $sourceName,
+        public ?string $passwd = null,
+        public ?string $liveType = null,
+        public ?string $ipSource = null,
+        public bool $indexPlay = false,
+        public bool $broadcasting = false,
+        public bool $debug = false,
+        public bool $chat = false
     ) {}
 }

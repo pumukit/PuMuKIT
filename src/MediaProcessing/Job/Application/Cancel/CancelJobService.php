@@ -21,7 +21,7 @@ final class CancelJobService
     {
         $job = $this->repository->find($request->id);
 
-        if (!$job) {
+        if (!$job instanceof Job) {
             throw new JobNotFoundException($request->id);
         }
 

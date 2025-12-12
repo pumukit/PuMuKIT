@@ -6,7 +6,7 @@ namespace App\ContentManagement\Person\Application\ViewPerson;
 
 use Pumukit\SchemaBundle\Document\Person;
 
-final readonly class ViewPersonResponse
+final class ViewPersonResponse
 {
     public function __construct(
         public Person $person

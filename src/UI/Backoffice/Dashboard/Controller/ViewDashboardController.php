@@ -36,15 +36,9 @@ class ViewDashboardController extends AbstractController
         $seriesRepo = $this->documentManager->getRepository(Series::class);
 
         $data['num_series'] = $seriesRepo->count();
-        $data['num_mm'] = array_sum(array_map(function ($e) {
-            return $e['num'];
-        }, $stats));
-        $data['duration'] = array_sum(array_map(function ($e) {
-            return $e['duration'];
-        }, $stats));
-        $data['size'] = array_sum(array_map(function ($e) {
-            return $e['size'];
-        }, $stats));
+        $data['num_mm'] = array_sum(array_map(fn($e) => $e['num'], $stats));
+        $data['duration'] = array_sum(array_map(fn($e) => $e['duration'], $stats));
+        $data['size'] = array_sum(array_map(fn($e) => $e['size'], $stats));
 
         $data['num_users'] = count($this->documentManager->getRepository(User::class)->findAll());
 

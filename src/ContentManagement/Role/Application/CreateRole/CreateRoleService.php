@@ -8,16 +8,16 @@ use App\ContentManagement\Role\Domain\Exception\RoleAlreadyExistsException;
 use App\ContentManagement\Role\Domain\Repository\RoleRepositoryInterface;
 use Pumukit\SchemaBundle\Document\Role;
 
-final readonly class CreateRoleService
+final class CreateRoleService
 {
     public function __construct(
-        private RoleRepositoryInterface $roleRepository,
+        private readonly RoleRepositoryInterface $roleRepository,
     ) {}
 
     public function __invoke(CreateRoleRequest $request): CreateRoleResponse
     {
         $existingRole = $this->roleRepository->findByCod($request->cod);
-        if ($existingRole) {
+        if ($existingRole !== null) {
             throw RoleAlreadyExistsException::withCod($request->cod);
         }
 

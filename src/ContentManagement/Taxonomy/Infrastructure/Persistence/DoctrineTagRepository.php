@@ -36,7 +36,7 @@ final class DoctrineTagRepository implements TagRepositoryInterface
 
     public function findByParent(?LegacyTag $parent): array
     {
-        $parentId = $parent ? $parent->getId() : null;
+        $parentId = $parent !== null ? $parent->getId() : null;
 
         return $this->repository->findBy(['parent' => $parentId]);
     }

@@ -13,7 +13,7 @@ final class SeriesViewTabsEvent extends Event
 
     private array $tabs = [];
 
-    public function __construct(private Series $series) {}
+    public function __construct(private readonly Series $series) {}
 
     public function addTab(
         string $key,

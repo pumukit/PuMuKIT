@@ -7,7 +7,7 @@ namespace App\ContentManagement\MultimediaObject\Domain\Event;
 use App\Shared\Domain\DomainEvent;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
-final readonly class MultimediaObjectDeletedEvent extends DomainEvent
+final class MultimediaObjectDeletedEvent extends DomainEvent
 {
     public function __construct(
         public MultimediaObject $multimediaObject

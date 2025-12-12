@@ -7,6 +7,6 @@ namespace App\ContentManagement\MultimediaObject\Application\BulkToggleAnnounce;
 final class BulkToggleAnnounceMultimediaObjectRequest
 {
     public function __construct(
-        public readonly array $multimediaObjectIds
+        public array $multimediaObjectIds
     ) {}
 }

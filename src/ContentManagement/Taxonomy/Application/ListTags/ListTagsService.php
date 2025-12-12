@@ -6,10 +6,10 @@ namespace App\ContentManagement\Taxonomy\Application\ListTags;
 
 use App\ContentManagement\Taxonomy\Domain\Repository\TagRepositoryInterface;
 
-final readonly class ListTagsService
+final class ListTagsService
 {
     public function __construct(
-        private TagRepositoryInterface $tagRepository
+        private readonly TagRepositoryInterface $tagRepository
     ) {}
 
     public function __invoke(ListTagsRequest $request): ListTagsResponse

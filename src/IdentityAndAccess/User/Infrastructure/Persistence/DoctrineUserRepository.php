@@ -10,7 +10,7 @@ use Pumukit\SchemaBundle\Document\User;
 
 class DoctrineUserRepository implements UserRepositoryInterface
 {
-    public function __construct(private DoctrineObjectManager $objectManager) {}
+    public function __construct(private readonly DoctrineObjectManager $objectManager) {}
 
     public function findAllUsers(): array
     {

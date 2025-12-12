@@ -7,6 +7,6 @@ namespace App\IdentityAndAccess\User\Application\Delete;
 final class DeleteUserRequest
 {
     public function __construct(
-        public readonly string $id
+        public string $id
     ) {}
 }

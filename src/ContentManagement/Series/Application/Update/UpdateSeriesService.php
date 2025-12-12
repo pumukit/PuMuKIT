@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Series\Application\Update;
 
+use Pumukit\SchemaBundle\Document\SeriesType;
+use Pumukit\SchemaBundle\Document\SeriesStyle;
 use App\ContentManagement\Series\Domain\Event\SeriesUpdatedEvent;
 use App\ContentManagement\Series\Domain\Exception\SeriesNotFoundException;
 use App\ContentManagement\Series\Domain\Repository\SeriesRepositoryInterface;
@@ -74,7 +76,7 @@ final class UpdateSeriesService
 
         if (null !== $request->seriesTypeId) {
             $seriesType = $this->seriesTypeRepository->find($request->seriesTypeId);
-            if (!$seriesType) {
+            if (!$seriesType instanceof SeriesType) {
                 throw new \InvalidArgumentException(
                     sprintf('Series Type with ID %s not found', $request->seriesTypeId)
                 );
@@ -84,7 +86,7 @@ final class UpdateSeriesService
 
         if (null !== $request->seriesStyleId) {
             $seriesStyle = $this->seriesStyleRepository->find($request->seriesStyleId);
-            if (!$seriesStyle) {
+            if (!$seriesStyle instanceof SeriesStyle) {
                 throw new \InvalidArgumentException(
                     sprintf('Series Style with ID %s not found', $request->seriesStyleId)
                 );

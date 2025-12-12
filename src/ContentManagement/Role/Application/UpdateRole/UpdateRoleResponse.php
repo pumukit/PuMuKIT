@@ -6,7 +6,7 @@ namespace App\ContentManagement\Role\Application\UpdateRole;
 
 use Pumukit\SchemaBundle\Document\Role;
 
-final readonly class UpdateRoleResponse
+final class UpdateRoleResponse
 {
     public function __construct(
         public Role $role

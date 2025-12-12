@@ -8,10 +8,10 @@ use App\ContentManagement\Person\Domain\Repository\PersonRepositoryInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Person;
 
-final readonly class DoctrinePersonRepository implements PersonRepositoryInterface
+final class DoctrinePersonRepository implements PersonRepositoryInterface
 {
     public function __construct(
-        private DocumentManager $documentManager
+        private readonly DocumentManager $documentManager
     ) {}
 
     public function find(string $id): ?Person

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Person\Application\UpdatePerson;
 
-final readonly class UpdatePersonRequest
+final class UpdatePersonRequest
 {
     public function __construct(
         public string $id,

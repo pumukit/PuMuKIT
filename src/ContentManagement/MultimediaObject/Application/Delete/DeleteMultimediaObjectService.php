@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\MultimediaObject\Application\Delete;
 
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use App\ContentManagement\MultimediaObject\Domain\Event\MultimediaObjectDeletedEvent;
 use App\ContentManagement\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
@@ -21,7 +22,7 @@ final class DeleteMultimediaObjectService
 
         $multimediaObject = $this->repository->find($request->id);
 
-        if (null === $multimediaObject) {
+        if (!$multimediaObject instanceof MultimediaObject) {
             return new DeleteMultimediaObjectResponse(
                 success: false,
                 message: sprintf('MultimediaObject with id "%s" not found.', $request->id),

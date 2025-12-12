@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\MultimediaObject\Application\Find;
 
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use App\ContentManagement\MultimediaObject\Domain\Exception\MultimediaObjectNotFoundException;
 use App\ContentManagement\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
 
@@ -19,7 +20,7 @@ final class FindMultimediaObjectService
 
         $multimediaObject = $this->repository->find($request->id);
 
-        if (!$multimediaObject) {
+        if (!$multimediaObject instanceof MultimediaObject) {
             throw new MultimediaObjectNotFoundException($request->id);
         }
 

@@ -9,7 +9,7 @@ use Pumukit\SchemaBundle\Document\Series;
 final class CloneSeriesResponse
 {
     public function __construct(
-        public readonly Series $clonedSeries,
-        public readonly int $multimediaObjectsCloned
+        public Series $clonedSeries,
+        public int $multimediaObjectsCloned
     ) {}
 }

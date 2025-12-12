@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Role\Application\DeleteRole;
 
+use Pumukit\SchemaBundle\Document\Role;
 use App\ContentManagement\Role\Domain\Exception\RoleNotFoundException;
 use App\ContentManagement\Role\Domain\Repository\RoleRepositoryInterface;
 
-final readonly class DeleteRoleService
+final class DeleteRoleService
 {
     public function __construct(
-        private RoleRepositoryInterface $roleRepository,
+        private readonly RoleRepositoryInterface $roleRepository,
     ) {}
 
     public function __invoke(DeleteRoleRequest $request): DeleteRoleResponse
     {
         $role = $this->roleRepository->find($request->id);
-        if (!$role) {
+        if (!$role instanceof Role) {
             throw RoleNotFoundException::withId($request->id);
         }
 

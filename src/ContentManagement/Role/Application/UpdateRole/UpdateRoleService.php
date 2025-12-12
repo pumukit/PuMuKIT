@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Role\Application\UpdateRole;
 
+use Pumukit\SchemaBundle\Document\Role;
 use App\ContentManagement\Role\Domain\Exception\RoleNotFoundException;
 use App\ContentManagement\Role\Domain\Repository\RoleRepositoryInterface;
 
-final readonly class UpdateRoleService
+final class UpdateRoleService
 {
     public function __construct(
-        private RoleRepositoryInterface $roleRepository,
+        private readonly RoleRepositoryInterface $roleRepository,
     ) {}
 
     public function __invoke(UpdateRoleRequest $request): UpdateRoleResponse
     {
         $role = $this->roleRepository->find($request->id);
-        if (!$role) {
+        if (!$role instanceof Role) {
             throw RoleNotFoundException::withId($request->id);
         }
 

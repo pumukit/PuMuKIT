@@ -9,7 +9,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 final class ViewMultimediaObjectResponse
 {
     public function __construct(
-        public readonly MultimediaObject $multimediaObject,
-        public readonly string $tab
+        public MultimediaObject $multimediaObject,
+        public string $tab
     ) {}
 }

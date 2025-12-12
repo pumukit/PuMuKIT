@@ -8,5 +8,5 @@ use Pumukit\SchemaBundle\Document\Live;
 
 final class UpdateChannelResponse
 {
-    public function __construct(public readonly Live $channel) {}
+    public function __construct(public Live $channel) {}
 }

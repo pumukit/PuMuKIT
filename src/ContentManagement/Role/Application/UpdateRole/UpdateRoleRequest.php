@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Role\Application\UpdateRole;
 
-final readonly class UpdateRoleRequest
+final class UpdateRoleRequest
 {
     public function __construct(
         public string $id,

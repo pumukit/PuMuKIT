@@ -7,9 +7,9 @@ namespace App\ContentManagement\MultimediaObject\Application\Delete;
 final class DeleteMultimediaObjectResponse
 {
     public function __construct(
-        public readonly bool $success,
-        public readonly string $message,
-        public readonly ?string $series
+        public bool $success,
+        public string $message,
+        public ?string $series
     ) {}
 
     public function toArray(): array

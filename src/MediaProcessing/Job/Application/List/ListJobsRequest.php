@@ -7,9 +7,9 @@ namespace App\MediaProcessing\Job\Application\List;
 final class ListJobsRequest
 {
     public function __construct(
-        public readonly int $page = 1,
-        public readonly int $limit = 10,
-        public readonly string $sort = 'timeini',
-        public readonly string $order = 'desc'
+        public int $page = 1,
+        public int $limit = 10,
+        public string $sort = 'timeini',
+        public string $order = 'desc'
     ) {}
 }

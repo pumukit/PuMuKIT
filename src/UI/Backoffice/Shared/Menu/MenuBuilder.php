@@ -67,9 +67,13 @@ final class MenuBuilder
             if ($child['is_active'] ?? false) {
                 return true;
             }
-            if (!empty($child['children']) && $this->hasActiveChild($child['children'])) {
-                return true;
+            if (empty($child['children'])) {
+                continue;
             }
+            if (!$this->hasActiveChild($child['children'])) {
+                continue;
+            }
+            return true;
         }
 
         return false;

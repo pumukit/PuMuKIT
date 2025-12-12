@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\ContentManagement\Series\Controller;
 
+use Pumukit\SchemaBundle\Document\User;
 use App\ContentManagement\Series\Application\Create\CreateSeriesRequest;
 use App\ContentManagement\Series\Application\Create\CreateSeriesService;
 use App\Shared\Domain\LoggerInterface;
@@ -24,7 +25,7 @@ final class CreateSeriesController extends AbstractController
         try {
             $user = $this->getUser();
 
-            if (!$user instanceof \Pumukit\SchemaBundle\Document\User) {
+            if (!$user instanceof User) {
                 throw new \RuntimeException('Invalid user type');
             }
 

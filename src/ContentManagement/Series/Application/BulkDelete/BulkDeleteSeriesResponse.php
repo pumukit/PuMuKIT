@@ -7,10 +7,10 @@ namespace App\ContentManagement\Series\Application\BulkDelete;
 final class BulkDeleteSeriesResponse
 {
     public function __construct(
-        public readonly int $deletedCount,
-        public readonly array $failedIds = [],
-        public readonly array $errors = [],
-        public readonly string $message = ''
+        public int $deletedCount,
+        public array $failedIds = [],
+        public array $errors = [],
+        public string $message = ''
     ) {}
 
     public function isFullySuccessful(): bool

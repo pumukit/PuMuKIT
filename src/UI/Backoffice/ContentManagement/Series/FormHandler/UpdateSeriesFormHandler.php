@@ -23,12 +23,12 @@ final class UpdateSeriesFormHandler
         $sorting = $request->request->get('sorting');
         $publicDate = $request->request->get('publicDate');
 
-        $title = !empty($title) ? $title : null;
-        $subtitle = !empty($subtitle) ? $subtitle : null;
-        $description = !empty($description) ? $description : null;
-        $header = !empty($header) ? $header : null;
-        $footer = !empty($footer) ? $footer : null;
-        $keywords = !empty($keywords) ? $keywords : null;
+        $title = empty($title) ? null : $title;
+        $subtitle = empty($subtitle) ? null : $subtitle;
+        $description = empty($description) ? null : $description;
+        $header = empty($header) ? null : $header;
+        $footer = empty($footer) ? null : $footer;
+        $keywords = empty($keywords) ? null : $keywords;
 
         return new UpdateSeriesRequest(
             id: $id,

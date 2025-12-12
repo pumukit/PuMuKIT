@@ -7,11 +7,11 @@ namespace App\IdentityAndAccess\User\Application\Create;
 final class CreateUserRequest
 {
     public function __construct(
-        public readonly string $username,
-        public readonly string $email,
-        public readonly ?string $fullName = null,
-        public readonly ?string $password = null,
-        public readonly bool $enabled = false,
-        public readonly string $origin = 'local'
+        public string $username,
+        public string $email,
+        public ?string $fullName = null,
+        public ?string $password = null,
+        public bool $enabled = false,
+        public string $origin = 'local'
     ) {}
 }

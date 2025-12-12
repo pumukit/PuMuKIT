@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\MediaProcessing\Job\Application\Find;
 
+use Pumukit\EncoderBundle\Document\Job;
 use App\MediaProcessing\Job\Domain\Exception\JobNotFoundException;
 use App\MediaProcessing\Job\Domain\Repository\JobRepositoryInterface;
 
@@ -15,7 +16,7 @@ final class FindJobService
     {
         $job = $this->repository->find($request->id);
 
-        if (!$job) {
+        if (!$job instanceof Job) {
             throw new JobNotFoundException($request->id);
         }
 

@@ -14,7 +14,7 @@ use Pumukit\EncoderBundle\Document\CpuStatus;
 final class ToggleMaintenanceService
 {
     public function __construct(
-        private readonly array $cpus,
+        private array $cpus,
         private readonly CpuRepositoryInterface $cpuRepository,
         private readonly EventBusInterface $eventBus
     ) {}
@@ -43,7 +43,7 @@ final class ToggleMaintenanceService
     {
         $cpuStatus = $this->cpuRepository->findByName($cpuName);
 
-        if (!$cpuStatus) {
+        if (!$cpuStatus instanceof CpuStatus) {
             $cpuStatus = new CpuStatus();
             $cpuStatus->setName($cpuName);
             $cpuStatus->setStatus(CpuStatus::STATUS_MAINTENANCE);
@@ -58,7 +58,7 @@ final class ToggleMaintenanceService
     {
         $cpuStatus = $this->cpuRepository->findByName($cpuName);
 
-        if ($cpuStatus) {
+        if ($cpuStatus !== null) {
             $this->cpuRepository->delete($cpuStatus);
         }
     }

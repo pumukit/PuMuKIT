@@ -7,9 +7,9 @@ namespace App\Shared\Infrastructure\Security\Permission\ValueObject;
 final class RegisteredPermission
 {
     public function __construct(
-        public readonly string $id,
-        public readonly string $description,
-        public readonly string $context,
-        public readonly PermissionType $type = PermissionType::DOMAIN
+        public string $id,
+        public string $description,
+        public string $context,
+        public PermissionType $type = PermissionType::DOMAIN
     ) {}
 }

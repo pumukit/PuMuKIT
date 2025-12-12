@@ -6,5 +6,4 @@ namespace App\MediaProcessing\Cpu\Application\List;
 
 final class ListCpusRequest
 {
-    public function __construct() {}
 }

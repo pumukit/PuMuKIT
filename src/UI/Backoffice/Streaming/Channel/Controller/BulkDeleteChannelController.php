@@ -20,7 +20,7 @@ final class BulkDeleteChannelController extends AbstractController
 
     public function __invoke(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
+        $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
         $ids = $data['ids'] ?? [];
 
         try {

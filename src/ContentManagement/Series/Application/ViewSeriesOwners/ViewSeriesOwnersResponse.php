@@ -7,6 +7,6 @@ namespace App\ContentManagement\Series\Application\ViewSeriesOwners;
 final class ViewSeriesOwnersResponse
 {
     public function __construct(
-        public readonly array $owners
+        public array $owners
     ) {}
 }

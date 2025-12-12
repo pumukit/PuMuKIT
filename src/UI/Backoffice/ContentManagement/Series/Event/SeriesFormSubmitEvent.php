@@ -14,7 +14,7 @@ final class SeriesFormSubmitEvent extends Event
     private array $errors = [];
 
     public function __construct(
-        private Series $series,
+        private readonly Series $series,
         private array $formData
     ) {}
 

@@ -6,7 +6,7 @@ namespace App\ContentManagement\Taxonomy\Application\CreateTag;
 
 use Pumukit\SchemaBundle\Document\Tag;
 
-final readonly class CreateTagResponse
+final class CreateTagResponse
 {
     public function __construct(
         public Tag $tag

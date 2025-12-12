@@ -10,10 +10,10 @@ use App\ContentManagement\Taxonomy\Domain\Event\TagUpdatedEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final readonly class TagEventSubscriber implements EventSubscriberInterface
+final class TagEventSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private LoggerInterface $logger
+        private readonly LoggerInterface $logger
     ) {}
 
     public static function getSubscribedEvents(): array

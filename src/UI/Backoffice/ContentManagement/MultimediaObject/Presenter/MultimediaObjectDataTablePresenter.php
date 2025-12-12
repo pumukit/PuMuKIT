@@ -14,13 +14,13 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
-final readonly class MultimediaObjectDataTablePresenter
+final class MultimediaObjectDataTablePresenter
 {
     public function __construct(
-        private RouterInterface $router,
-        private Environment $twig,
-        private string $scheme,
-        private string $host,
+        private readonly RouterInterface $router,
+        private readonly Environment $twig,
+        private readonly string $scheme,
+        private readonly string $host,
     ) {}
 
     public function present(MultimediaObject $multimediaObject): array

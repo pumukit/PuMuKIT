@@ -14,8 +14,8 @@ use Twig\TwigFilter;
 class SeriesExtension extends AbstractExtension
 {
     public function __construct(
-        private PicService $picService,
-        private ViewSeriesOwnersService $viewSeriesOwnersService
+        private readonly PicService $picService,
+        private readonly ViewSeriesOwnersService $viewSeriesOwnersService
     ) {}
 
     public function getFilters(): array

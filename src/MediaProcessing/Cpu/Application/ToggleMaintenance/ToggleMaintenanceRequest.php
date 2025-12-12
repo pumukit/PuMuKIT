@@ -7,7 +7,7 @@ namespace App\MediaProcessing\Cpu\Application\ToggleMaintenance;
 final class ToggleMaintenanceRequest
 {
     public function __construct(
-        public readonly bool $activate,
-        public readonly string $cpuName,
+        public bool $activate,
+        public string $cpuName,
     ) {}
 }

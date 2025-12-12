@@ -7,8 +7,8 @@ use Pumukit\SchemaBundle\Document\Series;
 final class ViewSeriesResponse
 {
     public function __construct(
-        public readonly Series $series,
-        public readonly array $multimediaObjects = [],
-        public readonly array $owners = []
+        public Series $series,
+        public array $multimediaObjects = [],
+        public array $owners = []
     ) {}
 }

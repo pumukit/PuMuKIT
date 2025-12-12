@@ -2,6 +2,7 @@
 
 namespace App\IdentityAndAccess\User\Application\Find;
 
+use Pumukit\SchemaBundle\Document\User;
 use App\IdentityAndAccess\User\Domain\Exception\UserNotFoundException;
 use App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface;
 
@@ -15,7 +16,7 @@ final class FindUserService
 
         $user = $this->repository->find($request->id);
 
-        if (!$user) {
+        if (!$user instanceof User) {
             throw new UserNotFoundException($request->id);
         }
 

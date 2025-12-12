@@ -6,50 +6,26 @@ namespace App\ContentManagement\Taxonomy\Domain;
 
 final class Tag
 {
-    private ?string $id;
-    private string $cod;
-    private array $title;
-    private array $label;
-    private array $description;
-    private ?string $slug;
-    private bool $metatag;
-    private bool $display;
-    private int $numberMultimediaObjects;
-    private ?Tag $parent;
-    private array $children;
-    private int $numberChildren;
-    private ?string $path;
-    private ?int $level;
-    private array $properties;
+    private ?string $id = null;
+    private int $numberMultimediaObjects = 0;
+    private array $children = [];
+    private int $numberChildren = 0;
+    private ?string $path = null;
+    private ?int $level = null;
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
 
     private function __construct(
-        string $cod,
-        array $title,
-        array $label,
-        array $description,
-        ?string $slug,
-        bool $metatag,
-        bool $display,
-        ?Tag $parent,
-        array $properties
+        private readonly string $cod,
+        private array $title,
+        private array $label,
+        private array $description,
+        private ?string $slug,
+        private bool $metatag,
+        private bool $display,
+        private ?\App\ContentManagement\Taxonomy\Domain\Tag $parent,
+        private array $properties
     ) {
-        $this->id = null;
-        $this->cod = $cod;
-        $this->title = $title;
-        $this->label = $label;
-        $this->description = $description;
-        $this->slug = $slug;
-        $this->metatag = $metatag;
-        $this->display = $display;
-        $this->numberMultimediaObjects = 0;
-        $this->parent = $parent;
-        $this->children = [];
-        $this->numberChildren = 0;
-        $this->path = null;
-        $this->level = null;
-        $this->properties = $properties;
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
     }
@@ -142,10 +118,12 @@ final class Tag
 
     public function label(string $locale = 'en'): string
     {
-        if (!isset($this->label[$locale]) || '' === $this->label[$locale]) {
+        if (!isset($this->label[$locale])) {
             return $this->title($locale);
         }
-
+        if ('' === $this->label[$locale]) {
+            return $this->title($locale);
+        }
         return $this->label[$locale];
     }
 

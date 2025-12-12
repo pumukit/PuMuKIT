@@ -26,12 +26,13 @@ final class DoctrinePlaylistRepository implements PlaylistRepositoryInterface
             ->getRepository(Series::class)
             ->find($id)
         ;
-
-        if ($playlist && $playlist->isPlaylist()) {
-            return $playlist;
+        if ($playlist === null) {
+            return null;
         }
-
-        return null;
+        if (!$playlist->isPlaylist()) {
+            return null;
+        }
+        return $playlist;
     }
 
     public function findByFilters(array $filters = []): iterable

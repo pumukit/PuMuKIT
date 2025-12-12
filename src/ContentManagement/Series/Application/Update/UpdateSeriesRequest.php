@@ -7,21 +7,21 @@ namespace App\ContentManagement\Series\Application\Update;
 final class UpdateSeriesRequest
 {
     public function __construct(
-        public readonly string $id,
-        public readonly ?array $title = null,
-        public readonly ?array $subtitle = null,
-        public readonly ?array $description = null,
-        public readonly ?array $header = null,
-        public readonly ?array $footer = null,
-        public readonly ?string $comments = null,
-        public readonly ?array $keywords = null,
-        public readonly ?bool $announce = null,
-        public readonly ?bool $hide = null,
-        public readonly ?\DateTimeInterface $publicDate = null,
-        public readonly ?int $sorting = null,
-        public readonly ?string $seriesTypeId = null,
-        public readonly ?string $seriesStyleId = null,
-        public readonly ?array $properties = null
+        public string $id,
+        public ?array $title = null,
+        public ?array $subtitle = null,
+        public ?array $description = null,
+        public ?array $header = null,
+        public ?array $footer = null,
+        public ?string $comments = null,
+        public ?array $keywords = null,
+        public ?bool $announce = null,
+        public ?bool $hide = null,
+        public ?\DateTimeInterface $publicDate = null,
+        public ?int $sorting = null,
+        public ?string $seriesTypeId = null,
+        public ?string $seriesStyleId = null,
+        public ?array $properties = null
     ) {
         UpdateSeriesValidator::validate($this);
     }
