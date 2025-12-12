@@ -1,0 +1,16 @@
+{% set buttonTitle = title|trans %}
+{% set buttonStyle = style|default('primary') %}
+{% set buttonType = type|default('link') %}
+{% set isDisabled = disabled|default(false) %}
+
+{% if buttonType == 'form' %}
+    <form method="{{ method|default('POST') }}" action="{{ url }}" style="display: inline;" {% if confirm is defined and not isDisabled %}onsubmit="return confirm('{{ confirm|trans|escape('js') }}');"{% endif %}>
+        <button type="submit" class="btn btn-sm btn-{{ buttonStyle }}" title="{{ buttonTitle }}" data-bs-toggle="tooltip" {% if isDisabled %}disabled{% endif %}>
+            <i class="fa {{ icon }}"></i> {{ buttonTitle }}
+        </button>
+    </form>
+{% else %}
+    <a href="{{ url }}" class="btn btn-sm btn-{{ buttonStyle }}{% if isDisabled %} disabled{% endif %}" title="{{ buttonTitle }}" {% if target is defined %}target="{{ target }}"{% endif %} {% if isDisabled %}aria-disabled="true" tabindex="-1"{% endif %} data-bs-toggle="tooltip">
+        <i class="fa {{ icon }}"></i> {{ buttonTitle }}
+    </a>
+{% endif %}

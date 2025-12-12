@@ -41,25 +41,23 @@ final class EventDataTablePresenter
 
     private function renderActions(MultimediaObject $event): string
     {
-        return $this->twig->render('@Shared/Views/components/table/_datatable_actions.html.twig', [
-            'actions' => [
-                [
-                    'type' => 'link',
-                    'url' => $this->router->generate('multimedia_object_view', ['id' => $event->getId()]),
-                    'style' => 'info',
-                    'icon' => 'eye',
-                    'title' => 'View',
-                ],
-                ['type' => 'link', 'url' => '#', 'style' => 'warning', 'icon' => 'edit', 'title' => 'Edit'],
-                [
-                    'type' => 'form',
-                    'url' => $this->router->generate('multimedia_object_delete', ['id' => $event->getId()]),
-                    'style' => 'danger',
-                    'icon' => 'trash',
-                    'title' => 'Delete',
-                    'confirm' => 'Are you sure you want to delete this multimedia object?',
-                ],
-            ],
+        $viewButton = $this->twig->render('@Shared/Views/components/table/buttons/_view_button.html.twig', [
+            'url' => $this->router->generate('multimedia_object_view', ['id' => $event->getId()]),
         ]);
+
+        $editButton = $this->twig->render('@Shared/Views/components/table/buttons/_custom_button.html.twig', [
+            'url' => '#',
+            'icon' => 'fa-edit',
+            'style' => 'warning',
+            'title' => 'Edit',
+            'type' => 'link',
+        ]);
+
+        $deleteButton = $this->twig->render('@Shared/Views/components/table/buttons/_delete_button.html.twig', [
+            'url' => $this->router->generate('multimedia_object_delete', ['id' => $event->getId()]),
+            'confirm' => 'Are you sure you want to delete this multimedia object?',
+        ]);
+
+        return $viewButton . $editButton . $deleteButton;
     }
 }

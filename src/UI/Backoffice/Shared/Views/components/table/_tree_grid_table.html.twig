@@ -131,7 +131,7 @@
                 {% endif %}
 
                 {% for column in columns %}
-                row += '<td>';
+                row += '<td{% if column.align is defined %} style="text-align: {{ column.align }}"{% endif %}>';
                 var value = item['{{ column.field }}'];
 
                 {% if loop.first %}
@@ -271,7 +271,7 @@
                     thead += '<th><input type="checkbox" id="select-all-{{ table_id }}"></th>';
                     {% endif %}
                     {% for column in columns %}
-                    thead += '<th>{{ column.label }}</th>';
+                    thead += '<th{% if column.align is defined %} style="text-align: {{ column.align }}"{% endif %}>{{ column.label }}</th>';
                     {% endfor %}
                     thead += '</tr></thead>';
 

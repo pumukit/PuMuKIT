@@ -1,0 +1,12 @@
+{#
+    Edit button template
+    Parameters:
+    - url: Edit URL
+#}
+{% include '@Shared/Views/components/table/buttons/_custom_button.html.twig' with {
+    url: url,
+    icon: 'fa-edit',
+    style: 'warning',
+    title: 'Edit',
+    type: 'link'
+} %}

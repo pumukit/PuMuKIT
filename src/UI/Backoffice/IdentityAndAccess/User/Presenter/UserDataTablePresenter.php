@@ -36,31 +36,19 @@ final class UserDataTablePresenter
 
     private function renderActions(User $user): string
     {
-        return $this->twig->render('@Shared/Views/components/table/_datatable_actions.html.twig', [
-            'actions' => [
-                [
-                    'type' => 'link',
-                    'url' => $this->router->generate('user_view', ['id' => $user->getId()]),
-                    'style' => 'info',
-                    'icon' => 'eye',
-                    'title' => 'View',
-                ],
-                [
-                    'type' => 'link',
-                    'url' => $this->router->generate('user_update', ['id' => $user->getId()]),
-                    'style' => 'warning',
-                    'icon' => 'edit',
-                    'title' => 'Edit'
-                ],
-                [
-                    'type' => 'form',
-                    'url' => $this->router->generate('user_delete', ['id' => $user->getId()]),
-                    'style' => 'danger',
-                    'icon' => 'trash',
-                    'title' => 'Delete',
-                    'confirm' => 'Are you sure you want to delete this user?',
-                ],
-            ],
+        $viewButton = $this->twig->render('@Shared/Views/components/table/buttons/_view_button.html.twig', [
+            'url' => $this->router->generate('user_view', ['id' => $user->getId()]),
         ]);
+
+        $editButton = $this->twig->render('@Shared/Views/components/table/buttons/_edit_button.html.twig', [
+            'url' => $this->router->generate('user_update', ['id' => $user->getId()]),
+        ]);
+
+        $deleteButton = $this->twig->render('@Shared/Views/components/table/buttons/_delete_button.html.twig', [
+            'url' => $this->router->generate('user_delete', ['id' => $user->getId()]),
+            'confirm' => 'Are you sure you want to delete this user?',
+        ]);
+
+        return $viewButton . $editButton . $deleteButton;
     }
 }

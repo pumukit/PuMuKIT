@@ -32,31 +32,19 @@ final readonly class PersonDataTablePresenter
 
     private function renderActions(Person $person): string
     {
-        return $this->twig->render('@Shared/Views/components/table/_datatable_actions.html.twig', [
-            'actions' => [
-                [
-                    'type' => 'link',
-                    'url' => $this->router->generate('person_view', ['id' => $person->getId()]),
-                    'style' => 'info',
-                    'icon' => 'eye',
-                    'title' => 'View',
-                ],
-                [
-                    'type' => 'link',
-                    'url' => $this->router->generate('person_update', ['id' => $person->getId()]),
-                    'style' => 'warning',
-                    'icon' => 'edit',
-                    'title' => 'Edit',
-                ],
-                [
-                    'type' => 'form',
-                    'url' => $this->router->generate('person_delete', ['id' => $person->getId()]),
-                    'style' => 'danger',
-                    'icon' => 'trash',
-                    'title' => 'Delete',
-                    'confirm' => 'Are you sure you want to remove this person?',
-                ],
-            ],
+        $viewButton = $this->twig->render('@Shared/Views/components/table/buttons/_view_button.html.twig', [
+            'url' => $this->router->generate('person_view', ['id' => $person->getId()]),
         ]);
+
+        $editButton = $this->twig->render('@Shared/Views/components/table/buttons/_edit_button.html.twig', [
+            'url' => $this->router->generate('person_update', ['id' => $person->getId()]),
+        ]);
+
+        $deleteButton = $this->twig->render('@Shared/Views/components/table/buttons/_delete_button.html.twig', [
+            'url' => $this->router->generate('person_delete', ['id' => $person->getId()]),
+            'confirm' => 'Are you sure you want to remove this person?',
+        ]);
+
+        return $viewButton . $editButton . $deleteButton;
     }
 }

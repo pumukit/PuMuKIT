@@ -50,31 +50,19 @@ final class SeriesDataTablePresenter
 
     private function renderActions(Series $series): string
     {
-        return $this->twig->render('@Shared/Views/components/table/_datatable_actions.html.twig', [
-            'actions' => [
-                [
-                    'type' => 'link',
-                    'url' => $this->router->generate('series_view', ['id' => $series->getId()]),
-                    'style' => 'info',
-                    'icon' => 'eye',
-                    'title' => 'View',
-                ],
-                [
-                    'type' => 'link',
-                    'url' => $this->router->generate('series_clone', ['id' => $series->getId()]),
-                    'style' => 'warning',
-                    'icon' => 'edit',
-                    'title' => 'Edit',
-                ],
-                [
-                    'type' => 'form',
-                    'url' => $this->router->generate('series_delete', ['id' => $series->getId()]),
-                    'style' => 'danger',
-                    'icon' => 'trash',
-                    'title' => 'Delete',
-                    'confirm' => 'Are you sure you want to delete this series?',
-                ],
-            ],
+        $viewButton = $this->twig->render('@Shared/Views/components/table/buttons/_view_button.html.twig', [
+            'url' => $this->router->generate('series_view', ['id' => $series->getId()]),
         ]);
+
+        $editButton = $this->twig->render('@Shared/Views/components/table/buttons/_edit_button.html.twig', [
+            'url' => $this->router->generate('series_clone', ['id' => $series->getId()]),
+        ]);
+
+        $deleteButton = $this->twig->render('@Shared/Views/components/table/buttons/_delete_button.html.twig', [
+            'url' => $this->router->generate('series_delete', ['id' => $series->getId()]),
+            'confirm' => 'Are you sure you want to delete this series?',
+        ]);
+
+        return $viewButton . $editButton . $deleteButton;
     }
 }

@@ -49,31 +49,19 @@ final class PlaylistDataTablePresenter
 
     private function renderActions(Series $playlist): string
     {
-        return $this->twig->render('@Shared/Views/components/table/_datatable_actions.html.twig', [
-            'actions' => [
-                [
-                    'type' => 'link',
-                    'url' => $this->router->generate('playlist_view', ['id' => $playlist->getId()]),
-                    'style' => 'info',
-                    'icon' => 'eye',
-                    'title' => 'View',
-                ],
-                [
-                    'type' => 'link',
-                    'url' => $this->router->generate('playlist_view', ['id' => $playlist->getId(), 'tab' => 'edit']),
-                    'style' => 'warning',
-                    'icon' => 'edit',
-                    'title' => 'Edit'
-                ],
-                [
-                    'type' => 'form',
-                    'url' => $this->router->generate('playlist_delete', ['id' => $playlist->getId()]),
-                    'style' => 'danger',
-                    'icon' => 'trash',
-                    'title' => 'Delete',
-                    'confirm' => 'Are you sure you want to delete this playlist?',
-                ],
-            ],
+        $viewButton = $this->twig->render('@Shared/Views/components/table/buttons/_view_button.html.twig', [
+            'url' => $this->router->generate('playlist_view', ['id' => $playlist->getId()]),
         ]);
+
+        $editButton = $this->twig->render('@Shared/Views/components/table/buttons/_edit_button.html.twig', [
+            'url' => $this->router->generate('playlist_view', ['id' => $playlist->getId(), 'tab' => 'edit']),
+        ]);
+
+        $deleteButton = $this->twig->render('@Shared/Views/components/table/buttons/_delete_button.html.twig', [
+            'url' => $this->router->generate('playlist_delete', ['id' => $playlist->getId()]),
+            'confirm' => 'Are you sure you want to delete this playlist?',
+        ]);
+
+        return $viewButton . $editButton . $deleteButton;
     }
 }

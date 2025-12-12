@@ -31,31 +31,19 @@ final class ChannelDataTablePresenter
 
     private function renderActions(Live $channel): string
     {
-        return $this->twig->render('@Shared/Views/components/table/_datatable_actions.html.twig', [
-            'actions' => [
-                [
-                    'type' => 'link',
-                    'url' => $this->router->generate('streaming_channel_view', ['id' => $channel->getId()]),
-                    'style' => 'info',
-                    'icon' => 'eye',
-                    'title' => 'View',
-                ],
-                [
-                    'type' => 'link',
-                    'url' => $this->router->generate('streaming_channel_edit', ['id' => $channel->getId()]),
-                    'style' => 'warning',
-                    'icon' => 'edit',
-                    'title' => 'Edit',
-                ],
-                [
-                    'type' => 'form',
-                    'url' => $this->router->generate('streaming_channel_delete', ['id' => $channel->getId()]),
-                    'style' => 'danger',
-                    'icon' => 'trash',
-                    'title' => 'Delete',
-                    'confirm' => 'Are you sure you want to delete this channel?',
-                ],
-            ],
+        $viewButton = $this->twig->render('@Shared/Views/components/table/buttons/_view_button.html.twig', [
+            'url' => $this->router->generate('streaming_channel_view', ['id' => $channel->getId()]),
         ]);
+
+        $editButton = $this->twig->render('@Shared/Views/components/table/buttons/_edit_button.html.twig', [
+            'url' => $this->router->generate('streaming_channel_edit', ['id' => $channel->getId()]),
+        ]);
+
+        $deleteButton = $this->twig->render('@Shared/Views/components/table/buttons/_delete_button.html.twig', [
+            'url' => $this->router->generate('streaming_channel_delete', ['id' => $channel->getId()]),
+            'confirm' => 'Are you sure you want to delete this channel?',
+        ]);
+
+        return $viewButton . $editButton . $deleteButton;
     }
 }

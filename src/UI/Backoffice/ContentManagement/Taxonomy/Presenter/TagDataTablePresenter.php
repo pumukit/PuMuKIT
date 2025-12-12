@@ -33,31 +33,19 @@ final readonly class TagDataTablePresenter
 
     private function renderActions(Tag $tag): string
     {
-        return $this->twig->render('@Shared/Views/components/table/_datatable_actions.html.twig', [
-            'actions' => [
-                [
-                    'type' => 'link',
-                    'url' => $this->router->generate('taxonomy_tag_view', ['id' => $tag->getId()]),
-                    'style' => 'info',
-                    'icon' => 'eye',
-                    'title' => 'View',
-                ],
-                [
-                    'type' => 'link',
-                    'url' => $this->router->generate('taxonomy_tag_update', ['id' => $tag->getId()]),
-                    'style' => 'warning',
-                    'icon' => 'edit',
-                    'title' => 'Edit'
-                ],
-                [
-                    'type' => 'form',
-                    'url' => $this->router->generate('taxonomy_tag_delete', ['id' => $tag->getId()]),
-                    'style' => 'danger',
-                    'icon' => 'trash',
-                    'title' => 'Delete',
-                    'confirm' => 'Are you sure you want to remove this tag?',
-                ],
-            ],
+        $viewButton = $this->twig->render('@Shared/Views/components/table/buttons/_view_button.html.twig', [
+            'url' => $this->router->generate('taxonomy_tag_view', ['id' => $tag->getId()]),
         ]);
+
+        $editButton = $this->twig->render('@Shared/Views/components/table/buttons/_edit_button.html.twig', [
+            'url' => $this->router->generate('taxonomy_tag_update', ['id' => $tag->getId()]),
+        ]);
+
+        $deleteButton = $this->twig->render('@Shared/Views/components/table/buttons/_delete_button.html.twig', [
+            'url' => $this->router->generate('taxonomy_tag_delete', ['id' => $tag->getId()]),
+            'confirm' => 'Are you sure you want to remove this tag?',
+        ]);
+
+        return $viewButton . $editButton . $deleteButton;
     }
 }

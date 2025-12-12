@@ -54,31 +54,22 @@ final class MultimediaObjectDataTablePresenter
 
     private function renderActions(MultimediaObject $multimediaObject): string
     {
-        return $this->twig->render('@Shared/Views/components/table/_datatable_actions.html.twig', [
-            'actions' => [
-                [
-                    'type' => 'link',
-                    'url' => $this->router->generate('multimedia_object_view', ['id' => $multimediaObject->getId()]),
-                    'style' => 'info',
-                    'icon' => 'eye',
-                    'title' => 'View',
-                ],
-                [
-                    'type' => 'link',
-                    'url' => $this->router->generate('multimedia_object_view', ['id' => $multimediaObject->getId(), 'tab' => 'publication']),
-                    'style' => 'warning',
-                    'icon' => 'edit',
-                    'title' => 'Edit'
-                ],
-                [
-                    'type' => 'form',
-                    'url' => $this->router->generate('multimedia_object_delete', ['id' => $multimediaObject->getId()]),
-                    'style' => 'danger',
-                    'icon' => 'trash',
-                    'title' => 'Delete',
-                    'confirm' => 'Are you sure you want to delete this multimedia object?',
-                ],
-            ],
+        $viewButton = $this->twig->render('@Shared/Views/components/table/buttons/_view_button.html.twig', [
+            'url' => $this->router->generate('multimedia_object_view', ['id' => $multimediaObject->getId()]),
         ]);
+
+        $editButton = $this->twig->render('@Shared/Views/components/table/buttons/_edit_button.html.twig', [
+            'url' => $this->router->generate('multimedia_object_view', [
+                'id' => $multimediaObject->getId(),
+                'tab' => 'publication'
+            ]),
+        ]);
+
+        $deleteButton = $this->twig->render('@Shared/Views/components/table/buttons/_delete_button.html.twig', [
+            'url' => $this->router->generate('multimedia_object_delete', ['id' => $multimediaObject->getId()]),
+            'confirm' => 'Are you sure you want to delete this multimedia object?',
+        ]);
+
+        return $viewButton . $editButton . $deleteButton;
     }
 }

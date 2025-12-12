@@ -42,25 +42,20 @@ final class JobDataTablePresenter
 
     private function renderActions(Job $job): string
     {
-        return $this->twig->render('@Shared/Views/components/table/_datatable_actions.html.twig', [
-            'actions' => [
-                [
-                    'type' => 'link',
-                    'url' => $this->router->generate('media_processing_job_view', ['id' => $job->getId()]),
-                    'style' => 'info',
-                    'icon' => 'eye',
-                    'title' => 'View',
-                ],
-                [
-                    'type' => 'form',
-                    'url' => '#',
-                    'style' => 'danger',
-                    'icon' => 'cancel',
-                    'title' => 'Stop',
-                    'confirm' => 'Are you sure you want to stop this job?',
-                    'disabled' => !in_array($job->getStatus(), [Job::STATUS_EXECUTING, Job::STATUS_WAITING], true),
-                ],
-            ],
+        $viewButton = $this->twig->render('@Shared/Views/components/table/buttons/_view_button.html.twig', [
+            'url' => $this->router->generate('media_processing_job_view', ['id' => $job->getId()]),
         ]);
+
+        $stopButton = $this->twig->render('@Shared/Views/components/table/buttons/_custom_button.html.twig', [
+            'url' => $this->router->generate('media_processing_job_cancel', ['id' => $job->getId()]),
+            'icon' => 'fa-cancel',
+            'style' => 'danger',
+            'title' => 'Stop',
+            'type' => 'form',
+            'confirm' => 'Are you sure you want to stop this job?',
+            'disabled' => !in_array($job->getStatus(), [Job::STATUS_EXECUTING, Job::STATUS_WAITING], true)
+        ]);
+
+        return $viewButton . $stopButton;
     }
 }
