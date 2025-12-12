@@ -26,7 +26,8 @@ final class UserMenuSubscriber implements EventSubscriberInterface
             parent: 'management',
             icon: 'fa-user',
             priority: 100,
-            permission: Permission::ACCESS_ADMIN_USERS
+            permission: Permission::ACCESS_ADMIN_USERS,
+            activeRoutes: ['user_create', 'user_view', 'user_update', 'user_delete', 'users_list_data']
         );
     }
 }

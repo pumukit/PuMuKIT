@@ -49,7 +49,7 @@ final class MenuBuilder
 
             if (null !== $item['route']) {
                 $item['url'] = $this->urlGenerator->generate($item['route'], $item['route_params']);
-                $item['is_active'] = $currentRoute === $item['route'];
+                $item['is_active'] = $this->isActiveRoute($currentRoute, $item['route'], $item['active_routes'] ?? []);
             } else {
                 $item['url'] = '#';
                 $item['is_active'] = $this->hasActiveChild($item['children']);
@@ -73,5 +73,14 @@ final class MenuBuilder
         }
 
         return false;
+    }
+
+    private function isActiveRoute(?string $currentRoute, string $mainRoute, array $activeRoutes): bool
+    {
+        if ($currentRoute === $mainRoute) {
+            return true;
+        }
+
+        return in_array($currentRoute, $activeRoutes, true);
     }
 }
