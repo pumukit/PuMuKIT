@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <header>
+            <tool tool-id="symfony" tool-name="Symfony"/>
+        </header>
+        <body>
+            <trans-unit id="person.page.list">
+                <source>person.page.list</source>
+                <target>Persons</target>
+            </trans-unit>
+            <trans-unit id="person.page.create">
+                <source>person.page.create</source>
+                <target>Create Person</target>
+            </trans-unit>
+            <trans-unit id="person.page.view">
+                <source>person.page.view</source>
+                <target>View Person</target>
+            </trans-unit>
+            <trans-unit id="person.page.update">
+                <source>person.page.update</source>
+                <target>Update Person</target>
+            </trans-unit>
+            <trans-unit id="person.table.name">
+                <source>person.table.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="person.table.email">
+                <source>person.table.email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="person.table.phone">
+                <source>person.table.phone</source>
+                <target>Phone</target>
+            </trans-unit>
+            <trans-unit id="person.table.honorific">
+                <source>person.table.honorific</source>
+                <target>Honorific</target>
+            </trans-unit>
+            <trans-unit id="person.table.firm">
+                <source>person.table.firm</source>
+                <target>Firm</target>
+            </trans-unit>
+            <trans-unit id="person.table.post">
+                <source>person.table.post</source>
+                <target>Post</target>
+            </trans-unit>
+            <trans-unit id="person.table.actions">
+                <source>person.table.actions</source>
+                <target>Actions</target>
+            </trans-unit>
+            <trans-unit id="person.form.name">
+                <source>person.form.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="person.form.email">
+                <source>person.form.email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="person.form.web">
+                <source>person.form.web</source>
+                <target>Web</target>
+            </trans-unit>
+            <trans-unit id="person.form.phone">
+                <source>person.form.phone</source>
+                <target>Phone</target>
+            </trans-unit>
+            <trans-unit id="person.form.honorific">
+                <source>person.form.honorific</source>
+                <target>Honorific</target>
+            </trans-unit>
+            <trans-unit id="person.form.firm">
+                <source>person.form.firm</source>
+                <target>Firm</target>
+            </trans-unit>
+            <trans-unit id="person.form.post">
+                <source>person.form.post</source>
+                <target>Post</target>
+            </trans-unit>
+            <trans-unit id="person.form.bio">
+                <source>person.form.bio</source>
+                <target>Biography</target>
+            </trans-unit>
+            <trans-unit id="person.form.create">
+                <source>person.form.create</source>
+                <target>Create</target>
+            </trans-unit>
+            <trans-unit id="person.form.update">
+                <source>person.form.update</source>
+                <target>Update</target>
+            </trans-unit>
+            <trans-unit id="person.form.cancel">
+                <source>person.form.cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
+            <trans-unit id="person.form.edit">
+                <source>person.form.edit</source>
+                <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="person.form.back">
+                <source>person.form.back</source>
+                <target>Back</target>
+            </trans-unit>
+            <trans-unit id="person.flash.created">
+                <source>person.flash.created</source>
+                <target>Person "%name%" has been created successfully</target>
+            </trans-unit>
+            <trans-unit id="person.flash.updated">
+                <source>person.flash.updated</source>
+                <target>Person "%name%" has been updated successfully</target>
+            </trans-unit>
+            <trans-unit id="person.flash.deleted">
+                <source>person.flash.deleted</source>
+                <target>Person "%name%" has been deleted successfully</target>
+            </trans-unit>
+            <trans-unit id="person.error.create_failed">
+                <source>person.error.create_failed</source>
+                <target>Failed to create person: %message%</target>
+            </trans-unit>
+            <trans-unit id="person.error.update_failed">
+                <source>person.error.update_failed</source>
+                <target>Failed to update person: %message%</target>
+            </trans-unit>
+            <trans-unit id="person.error.delete_failed">
+                <source>person.error.delete_failed</source>
+                <target>Failed to delete person: %message%</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
+

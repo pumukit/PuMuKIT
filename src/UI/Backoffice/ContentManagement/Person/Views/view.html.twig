@@ -1,0 +1,81 @@
+{% extends '@Shared/Views/layout/layout.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid mt-3">
+        {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'person.page.view'|trans({}, 'person')} %}
+
+        <div class="card">
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">{{ 'person.form.name'|trans({}, 'person') }}</dt>
+                    <dd class="col-sm-9">{{ person.name }}</dd>
+
+                    <dt class="col-sm-3">{{ 'person.form.email'|trans({}, 'person') }}</dt>
+                    <dd class="col-sm-9">{{ person.email|default('-') }}</dd>
+
+                    <dt class="col-sm-3">{{ 'person.form.web'|trans({}, 'person') }}</dt>
+                    <dd class="col-sm-9">
+                        {% if person.web %}
+                            <a href="{{ person.web }}" target="_blank">{{ person.web }}</a>
+                        {% else %}
+                            -
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-3">{{ 'person.form.phone'|trans({}, 'person') }}</dt>
+                    <dd class="col-sm-9">{{ person.phone|default('-') }}</dd>
+
+                    <dt class="col-sm-3">{{ 'person.form.honorific'|trans({}, 'person') }}</dt>
+                    <dd class="col-sm-9">
+                        {% for locale, honorific in person.i18nHonorific %}
+                            {% if honorific %}
+                                <div><strong>{{ locale|upper }}:</strong> {{ honorific }}</div>
+                            {% endif %}
+                        {% else %}
+                            -
+                        {% endfor %}
+                    </dd>
+
+                    <dt class="col-sm-3">{{ 'person.form.firm'|trans({}, 'person') }}</dt>
+                    <dd class="col-sm-9">
+                        {% for locale, firm in person.i18nFirm %}
+                            {% if firm %}
+                                <div><strong>{{ locale|upper }}:</strong> {{ firm }}</div>
+                            {% endif %}
+                        {% else %}
+                            -
+                        {% endfor %}
+                    </dd>
+
+                    <dt class="col-sm-3">{{ 'person.form.post'|trans({}, 'person') }}</dt>
+                    <dd class="col-sm-9">
+                        {% for locale, post in person.i18nPost %}
+                            {% if post %}
+                                <div><strong>{{ locale|upper }}:</strong> {{ post }}</div>
+                            {% endif %}
+                        {% else %}
+                            -
+                        {% endfor %}
+                    </dd>
+
+                    <dt class="col-sm-3">{{ 'person.form.bio'|trans({}, 'person') }}</dt>
+                    <dd class="col-sm-9">
+                        {% for locale, bio in person.i18nBio %}
+                            {% if bio %}
+                                <div><strong>{{ locale|upper }}:</strong> {{ bio }}</div>
+                            {% endif %}
+                        {% else %}
+                            -
+                        {% endfor %}
+                    </dd>
+                </dl>
+
+                <div class="d-flex gap-2">
+                    <a href="{{ path('person_update', {'id': person.id}) }}" class="btn btn-warning">{{ 'person.form.edit'|trans({}, 'person') }}</a>
+                    <a href="{{ path('person_index') }}" class="btn btn-secondary">{{ 'person.form.back'|trans({}, 'person') }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

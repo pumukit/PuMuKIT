@@ -1,0 +1,33 @@
+{% extends '@Shared/Views/layout/layout.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid mt-3">
+        {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'person.page.list'|trans({}, 'person')} %}
+
+        {% include '@Shared/Views/components/table/_table.html.twig' with {
+            id: 'personsTable',
+            title: 'person.table.title'|trans({}, 'person'),
+            server_side: true,
+            ajax_url: path('person_list_data'),
+            checkbox: true,
+            bulk_operations_template: '@Shared/Views/partials/_bulk_operations.html.twig',
+            bulk_operations_config: {
+                translation_domain: 'person'
+            },
+            columns: [
+                {'field': 'name', 'label': 'person.table.name'|trans({}, 'person'), 'sortable': true},
+                {'field': 'email', 'label': 'person.table.email'|trans({}, 'person'), 'sortable': true},
+                {'field': 'phone', 'label': 'person.table.phone'|trans({}, 'person'), 'sortable': false},
+                {'field': 'honorific', 'label': 'person.table.honorific'|trans({}, 'person'), 'sortable': false},
+                {'field': 'firm', 'label': 'person.table.firm'|trans({}, 'person'), 'sortable': false},
+                {'field': 'post', 'label': 'person.table.post'|trans({}, 'person'), 'sortable': false},
+                {'field': 'actions', 'label': 'person.table.actions'|trans({}, 'person')}
+            ]
+        } %}
+
+        {% include '@Shared/Views/partials/_actions.html.twig' with {
+            translationDomain: 'person'
+        } %}
+    </div>
+{% endblock %}
+

@@ -22,6 +22,9 @@ taxonomy_routes:
 role_routes:
   resource: ../src/Framework/ContentManagement/Role/routes.yaml
 
+person_routes:
+  resource: ../src/Framework/ContentManagement/Person/routes.yaml
+
 job_routes:
   resource: ../src/Framework/MediaProcessing/Job/routes.yaml
 
