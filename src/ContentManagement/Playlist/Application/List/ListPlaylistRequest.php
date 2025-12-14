@@ -12,7 +12,6 @@ final class ListPlaylistRequest
         public array $filters = [],
         public ?string $sort = null,
         public ?string $order = null
-    ) {
-        ListPlaylistValidator::validate($this);
+    ) {}
     }
 }

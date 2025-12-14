@@ -16,6 +16,8 @@ final class ViewTagService
 
     public function __invoke(ViewTagRequest $request): ViewTagResponse
     {
+        ViewTagValidator::validate($request);
+
         $tag = $this->tagRepository->find($request->id);
         if (!$tag instanceof Tag) {
             throw TagNotFoundException::withId($request->id);

@@ -16,6 +16,8 @@ final class DeleteRoleService
 
     public function __invoke(DeleteRoleRequest $request): DeleteRoleResponse
     {
+        DeleteRoleValidator::validate($request);
+
         $role = $this->roleRepository->find($request->id);
         if (!$role instanceof Role) {
             throw RoleNotFoundException::withId($request->id);

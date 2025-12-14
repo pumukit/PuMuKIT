@@ -23,6 +23,8 @@ final class BulkToggleAnnounceSeriesService
 
     public function __invoke(BulkToggleAnnounceSeriesRequest $request): BulkToggleAnnounceSeriesResponse
     {
+        BulkToggleAnnounceSeriesValidator::validate($request);
+
         $updatedCount = 0;
         $announcedCount = 0;
         $unAnnouncedCount = 0;

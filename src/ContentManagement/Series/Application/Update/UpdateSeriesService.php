@@ -24,6 +24,8 @@ final class UpdateSeriesService
 
     public function __invoke(UpdateSeriesRequest $request): UpdateSeriesResponse
     {
+        UpdateSeriesValidator::validate($request);
+
         $series = $this->seriesRepository->find($request->id);
 
         if (!$series) {

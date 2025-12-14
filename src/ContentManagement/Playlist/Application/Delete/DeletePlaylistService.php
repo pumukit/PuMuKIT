@@ -17,6 +17,8 @@ final class DeletePlaylistService
 
     public function __invoke(DeletePlaylistRequest $request): DeletePlaylistResponse
     {
+        DeletePlaylistValidator::validate($request);
+
         $playlist = $this->repository->find($request->id);
 
         if (null === $playlist) {

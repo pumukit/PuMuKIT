@@ -21,6 +21,8 @@ final class ToggleMaintenanceService
 
     public function __invoke(ToggleMaintenanceRequest $request): ToggleMaintenanceResponse
     {
+        ToggleMaintenanceValidator::validate($request);
+
         if (!isset($this->cpus[$request->cpuName])) {
             throw new CpuNotFoundException($request->cpuName);
         }

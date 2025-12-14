@@ -13,6 +13,8 @@ final class FindSeriesService
 
     public function __invoke(FindSeriesRequest $request): FindSeriesResponse
     {
+        FindSeriesValidator::validate($request);
+
         $series = $this->repository->find($request->id);
 
         if (!$series) {

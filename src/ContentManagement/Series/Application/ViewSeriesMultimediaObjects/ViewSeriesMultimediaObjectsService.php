@@ -12,6 +12,8 @@ final class ViewSeriesMultimediaObjectsService
 
     public function __invoke(ViewSeriesMultimediaObjectsRequest $request): ViewSeriesMultimediaObjectsResponse
     {
+        ViewSeriesMultimediaObjectsValidator::validate($request);
+
         $offset = ($request->page - 1) * $request->limit;
 
         $seriesId = $request->filters['series_id'] ?? $request->filters['series.id'] ?? null;

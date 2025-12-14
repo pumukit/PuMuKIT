@@ -12,7 +12,6 @@ final class ViewSeriesEventsRequest
         public array $filters = [],
         public ?string $sort = 'title',
         public ?string $order = 'asc',
-    ) {
-        ViewSeriesEventsValidator::validate($this);
+    ) {}
     }
 }

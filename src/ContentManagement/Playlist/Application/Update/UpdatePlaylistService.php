@@ -18,6 +18,8 @@ final class UpdatePlaylistService
 
     public function __invoke(UpdatePlaylistRequest $request): UpdatePlaylistResponse
     {
+        UpdatePlaylistValidator::validate($request);
+
         $playlist = $this->playlistRepository->find($request->id);
 
         if (!$playlist) {

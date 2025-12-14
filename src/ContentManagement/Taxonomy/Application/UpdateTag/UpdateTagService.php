@@ -19,6 +19,8 @@ final class UpdateTagService
 
     public function __invoke(UpdateTagRequest $request): UpdateTagResponse
     {
+        UpdateTagValidator::validate($request);
+
         $tag = $this->tagRepository->find($request->id);
         if (!$tag instanceof Tag) {
             throw TagNotFoundException::withId($request->id);

@@ -20,6 +20,8 @@ final class DeleteSeriesService
 
     public function __invoke(DeleteSeriesRequest $request): DeleteSeriesResponse
     {
+        DeleteSeriesValidator::validate($request);
+
         $series = $this->repository->find($request->id);
 
         if (null === $series) {

@@ -18,6 +18,8 @@ final class CreateChannelService
 
     public function __invoke(CreateChannelRequest $request): CreateChannelResponse
     {
+        CreateChannelValidator::validate($request);
+
         $channel = new Live();
         $channel->setName($request->name);
         $channel->setDescription($request->description);

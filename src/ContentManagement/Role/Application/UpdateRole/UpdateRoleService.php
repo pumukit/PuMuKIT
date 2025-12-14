@@ -16,6 +16,8 @@ final class UpdateRoleService
 
     public function __invoke(UpdateRoleRequest $request): UpdateRoleResponse
     {
+        UpdateRoleValidator::validate($request);
+
         $role = $this->roleRepository->find($request->id);
         if (!$role instanceof Role) {
             throw RoleNotFoundException::withId($request->id);

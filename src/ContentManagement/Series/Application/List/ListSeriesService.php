@@ -12,6 +12,8 @@ final class ListSeriesService
 
     public function __invoke(ListSeriesRequest $request): ListSeriesResponse
     {
+        ListSeriesValidator::validate($request);
+
         $series = $this->repository->findByFiltersPaginated(
             $request->filters,
             $request->page,

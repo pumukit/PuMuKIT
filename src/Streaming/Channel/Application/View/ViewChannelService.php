@@ -14,6 +14,8 @@ final class ViewChannelService
 
     public function __invoke(ViewChannelRequest $request): ViewChannelResponse
     {
+        ViewChannelValidator::validate($request);
+
         $channel = $this->repository->find($request->id);
 
         if (!$channel instanceof Live) {

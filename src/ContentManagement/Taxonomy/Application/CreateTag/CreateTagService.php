@@ -20,6 +20,8 @@ final class CreateTagService
 
     public function __invoke(CreateTagRequest $request): CreateTagResponse
     {
+        CreateTagValidator::validate($request);
+
         $existingTag = $this->tagRepository->findByCod($request->cod);
         if ($existingTag !== null) {
             throw TagAlreadyExistsException::withCod($request->cod);

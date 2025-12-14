@@ -16,6 +16,8 @@ final class ViewRoleService
 
     public function __invoke(ViewRoleRequest $request): ViewRoleResponse
     {
+        ViewRoleValidator::validate($request);
+
         $role = $this->roleRepository->find($request->id);
         if (!$role instanceof Role) {
             throw RoleNotFoundException::withId($request->id);

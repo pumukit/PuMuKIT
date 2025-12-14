@@ -8,7 +8,6 @@ final class DeleteSeriesRequest
 {
     public function __construct(
         public string $id
-    ) {
-        DeleteSeriesValidator::validate($this);
+    ) {}
     }
 }

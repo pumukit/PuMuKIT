@@ -14,6 +14,8 @@ final class ListMultimediaObjectsService
 
     public function __invoke(ListMultimediaObjectsRequest $request): ListMultimediaObjectsResponse
     {
+        ListMultimediaObjectsValidator::validate($request);
+
         $sort = [$request->sort => $request->order];
 
         $multimediaObjects = $this->repository->findAll(

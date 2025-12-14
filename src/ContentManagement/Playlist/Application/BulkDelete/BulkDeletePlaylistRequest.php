@@ -8,7 +8,6 @@ final class BulkDeletePlaylistRequest
 {
     public function __construct(
         public array $playlistIds
-    ) {
-        BulkDeletePlaylistValidator::validate($this);
+    ) {}
     }
 }

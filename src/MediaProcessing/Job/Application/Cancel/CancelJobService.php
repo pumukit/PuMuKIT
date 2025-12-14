@@ -19,6 +19,8 @@ final class CancelJobService
 
     public function __invoke(CancelJobRequest $request): CancelJobResponse
     {
+        CancelJobValidator::validate($request);
+
         $job = $this->repository->find($request->id);
 
         if (!$job instanceof Job) {

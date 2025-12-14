@@ -17,6 +17,8 @@ final class CloneSeriesService
 
     public function __invoke(CloneSeriesRequest $request): CloneSeriesResponse
     {
+        CloneSeriesValidator::validate($request);
+
         $originalSeries = $this->repository->find($request->seriesId);
 
         if (!$originalSeries) {

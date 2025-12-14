@@ -18,6 +18,8 @@ final class CreatePersonService
 
     public function __invoke(CreatePersonRequest $request): CreatePersonResponse
     {
+        CreatePersonValidator::validate($request);
+
         $person = new Person();
         $person->setName($request->name);
         $person->setEmail($request->email);

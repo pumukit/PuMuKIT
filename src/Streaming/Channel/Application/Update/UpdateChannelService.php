@@ -19,6 +19,8 @@ final class UpdateChannelService
 
     public function __invoke(UpdateChannelRequest $request): UpdateChannelResponse
     {
+        UpdateChannelValidator::validate($request);
+
         $channel = $this->repository->find($request->id);
 
         if (!$channel instanceof Live) {

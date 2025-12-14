@@ -12,6 +12,8 @@ final class ListJobsService
 
     public function __invoke(ListJobsRequest $request): ListJobsResponse
     {
+        ListJobsValidator::validate($request);
+
         $sort = [$request->sort => $request->order];
 
         $jobs = $this->repository->findAll($request->page, $request->limit, $sort);

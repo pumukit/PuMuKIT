@@ -19,6 +19,8 @@ final class DeletePersonService
 
     public function __invoke(DeletePersonRequest $request): void
     {
+        DeletePersonValidator::validate($request);
+
         $person = $this->personRepository->find($request->id);
         if (!$person instanceof Person) {
             throw PersonNotFoundException::withId($request->id);

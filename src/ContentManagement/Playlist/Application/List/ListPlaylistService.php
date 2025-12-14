@@ -12,6 +12,8 @@ final class ListPlaylistService
 
     public function __invoke(ListPlaylistRequest $request): ListPlaylistResponse
     {
+        ListPlaylistValidator::validate($request);
+
         $playlists = $this->repository->findByFiltersPaginated(
             $request->filters,
             $request->page,

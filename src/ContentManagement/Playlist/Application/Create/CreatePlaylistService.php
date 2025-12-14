@@ -18,6 +18,8 @@ final class CreatePlaylistService
 
     public function __invoke(CreatePlaylistRequest $request): CreatePlaylistResponse
     {
+        CreatePlaylistValidator::validate($request);
+
         $userId = UserId::fromString($request->ownerId);
 
         $title = $request->title ?? ['es' => 'New Playlist', 'en' => 'New Playlist'];

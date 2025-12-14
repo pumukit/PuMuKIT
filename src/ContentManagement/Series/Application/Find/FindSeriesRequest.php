@@ -8,6 +8,5 @@ final class FindSeriesRequest
 {
     public function __construct(public string $id)
     {
-        FindSeriesValidator::validate($this);
     }
 }

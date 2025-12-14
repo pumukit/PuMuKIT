@@ -18,6 +18,8 @@ final class BulkDeletePlaylistService
 
     public function __invoke(BulkDeletePlaylistRequest $request): BulkDeletePlaylistResponse
     {
+        BulkDeletePlaylistValidator::validate($request);
+
         $deletedCount = 0;
         $failedIds = [];
         $errors = [];

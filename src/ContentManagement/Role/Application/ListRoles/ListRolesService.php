@@ -14,6 +14,8 @@ final class ListRolesService
 
     public function __invoke(ListRolesRequest $request): ListRolesResponse
     {
+        ListRolesValidator::validate($request);
+
         $sort = [$request->sort => $request->order];
 
         $roles = $this->roleRepository->findAll(

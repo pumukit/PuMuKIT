@@ -14,6 +14,8 @@ final class ListPersonsService
 
     public function __invoke(ListPersonsRequest $request): ListPersonsResponse
     {
+        ListPersonsValidator::validate($request);
+
         $persons = $this->personRepository->findAll();
 
         return new ListPersonsResponse($persons);

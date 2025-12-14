@@ -12,6 +12,8 @@ final class ListChannelsService
 
     public function __invoke(ListChannelsRequest $request): ListChannelsResponse
     {
+        ListChannelsValidator::validate($request);
+
         $sort = [$request->sort => $request->order];
 
         $channels = $this->repository->findAll($request->page, $request->limit, $sort);

@@ -12,6 +12,8 @@ final class ViewSeriesEventsService
 
     public function __invoke(ViewSeriesEventsRequest $request): ViewSeriesEventsResponse
     {
+        ViewSeriesEventsValidator::validate($request);
+
         $offset = ($request->page - 1) * $request->limit;
 
         $seriesId = $request->filters['series_id'] ?? $request->filters['series.id'] ?? null;

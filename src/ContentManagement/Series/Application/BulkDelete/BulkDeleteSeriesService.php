@@ -18,6 +18,8 @@ final class BulkDeleteSeriesService
 
     public function __invoke(BulkDeleteSeriesRequest $request): BulkDeleteSeriesResponse
     {
+        BulkDeleteSeriesValidator::validate($request);
+
         $deletedCount = 0;
         $failedIds = [];
         $errors = [];

@@ -18,6 +18,8 @@ final class BulkDeleteChannelService
 
     public function __invoke(BulkDeleteChannelRequest $request): BulkDeleteChannelResponse
     {
+        BulkDeleteChannelValidator::validate($request);
+
         $deletedCount = 0;
         $failedIds = [];
         $errors = [];

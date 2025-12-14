@@ -9,7 +9,6 @@ final class CreatePlaylistRequest
     public function __construct(
         public string $ownerId,
         public ?array $title = null
-    ) {
-        CreatePlaylistValidator::validate($this);
+    ) {}
     }
 }

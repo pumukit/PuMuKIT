@@ -8,6 +8,5 @@ final class ViewSeriesRequest
 {
     public function __construct(public string $id, public string $tab)
     {
-        ViewSeriesValidator::validate($this);
     }
 }

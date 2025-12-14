@@ -14,6 +14,8 @@ final class ListTagsService
 
     public function __invoke(ListTagsRequest $request): ListTagsResponse
     {
+        ListTagsValidator::validate($request);
+
         $tags = $this->tagRepository->findAll();
 
         return new ListTagsResponse($tags);

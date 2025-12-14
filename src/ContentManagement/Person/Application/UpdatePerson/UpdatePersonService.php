@@ -19,6 +19,8 @@ final class UpdatePersonService
 
     public function __invoke(UpdatePersonRequest $request): UpdatePersonResponse
     {
+        UpdatePersonValidator::validate($request);
+
         $person = $this->personRepository->find($request->id);
         if (!$person instanceof Person) {
             throw PersonNotFoundException::withId($request->id);

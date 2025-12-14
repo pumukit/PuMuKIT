@@ -19,6 +19,8 @@ final class DeleteChannelService
 
     public function __invoke(DeleteChannelRequest $request): DeleteChannelResponse
     {
+        DeleteChannelValidator::validate($request);
+
         $channel = $this->repository->find($request->id);
 
         if (!$channel instanceof Live) {

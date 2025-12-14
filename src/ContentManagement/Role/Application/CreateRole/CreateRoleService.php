@@ -16,6 +16,8 @@ final class CreateRoleService
 
     public function __invoke(CreateRoleRequest $request): CreateRoleResponse
     {
+        CreateRoleValidator::validate($request);
+
         $existingRole = $this->roleRepository->findByCod($request->cod);
         if ($existingRole !== null) {
             throw RoleAlreadyExistsException::withCod($request->cod);

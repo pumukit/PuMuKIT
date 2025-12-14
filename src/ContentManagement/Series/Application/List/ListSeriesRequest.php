@@ -12,7 +12,6 @@ final class ListSeriesRequest
         public array $filters = [],
         public string $sort = 'rank',
         public string $order = 'asc'
-    ) {
-        ListSeriesValidator::validate($this);
+    ) {}
     }
 }

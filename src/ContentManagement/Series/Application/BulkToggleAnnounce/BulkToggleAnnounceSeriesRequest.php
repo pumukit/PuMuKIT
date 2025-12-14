@@ -8,7 +8,6 @@ final class BulkToggleAnnounceSeriesRequest
 {
     public function __construct(
         public array $seriesIds
-    ) {
-        BulkToggleAnnounceSeriesValidator::validate($this);
+    ) {}
     }
 }

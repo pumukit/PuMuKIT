@@ -16,6 +16,8 @@ final class ViewPersonService
 
     public function __invoke(ViewPersonRequest $request): ViewPersonResponse
     {
+        ViewPersonValidator::validate($request);
+
         $person = $this->personRepository->find($request->id);
         if (!$person instanceof Person) {
             throw PersonNotFoundException::withId($request->id);

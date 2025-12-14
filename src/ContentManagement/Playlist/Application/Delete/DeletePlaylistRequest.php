@@ -8,7 +8,6 @@ final class DeletePlaylistRequest
 {
     public function __construct(
         public string $id
-    ) {
-        DeletePlaylistValidator::validate($this);
+    ) {}
     }
 }

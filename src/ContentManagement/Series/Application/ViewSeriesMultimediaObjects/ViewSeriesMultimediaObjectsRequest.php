@@ -12,7 +12,6 @@ final class ViewSeriesMultimediaObjectsRequest
         public array $filters = [],
         public ?string $sort = 'title',
         public ?string $order = 'asc',
-    ) {
-        ViewSeriesMultimediaObjectsValidator::validate($this);
+    ) {}
     }
 }

@@ -9,7 +9,5 @@ final class CreateSeriesRequest
     public function __construct(
         public string $ownerId,
         public ?array $title = null
-    ) {
-        CreateSeriesValidator::validate($this);
-    }
+    ) {}
 }

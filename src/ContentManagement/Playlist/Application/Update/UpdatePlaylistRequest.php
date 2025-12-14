@@ -19,7 +19,6 @@ final class UpdatePlaylistRequest
         public ?bool $hide = null,
         public ?\DateTimeInterface $publicDate = null,
         public ?array $properties = null
-    ) {
-        UpdatePlaylistValidator::validate($this);
+    ) {}
     }
 }

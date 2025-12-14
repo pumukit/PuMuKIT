@@ -14,6 +14,8 @@ final class FindJobService
 
     public function __invoke(FindJobRequest $request): FindJobResponse
     {
+        FindJobValidator::validate($request);
+
         $job = $this->repository->find($request->id);
 
         if (!$job instanceof Job) {

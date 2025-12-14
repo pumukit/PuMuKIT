@@ -19,6 +19,8 @@ final class ListCpusService
 
     public function __invoke(ListCpusRequest $request): ListCpusResponse
     {
+        ListCpusValidator::validate($request);
+
         $cpusInMaintenance = array_map(
             fn (CpuStatus $cpu) => $cpu->getName(),
             $this->cpuRepository->findInMaintenance()

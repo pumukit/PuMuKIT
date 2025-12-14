@@ -17,6 +17,8 @@ final class ViewSeriesOwnersService
 
     public function __invoke(ViewSeriesOwnersRequest $request): ViewSeriesOwnersResponse
     {
+        ViewSeriesOwnersValidator::validate($request);
+
         $series = $this->seriesRepository->find($request->seriesId);
 
         if (!$series) {

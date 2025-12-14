@@ -19,6 +19,8 @@ final class DeleteTagService
 
     public function __invoke(DeleteTagRequest $request): void
     {
+        DeleteTagValidator::validate($request);
+
         $tag = $this->tagRepository->find($request->id);
         if (!$tag instanceof Tag) {
             throw TagNotFoundException::withId($request->id);
