@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\IdentityAndAccess\User\Presenter;
+namespace App\IdentityAndAccess\User\Infrastructure\Ui\Backoffice\Http\Presenter;
 
 use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\BooleanIcon;
 use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\DateFormat;

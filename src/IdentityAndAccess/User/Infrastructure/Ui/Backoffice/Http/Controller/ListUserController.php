@@ -1,9 +1,11 @@
 <?php
 
-namespace App\UI\Backoffice\IdentityAndAccess\User\Controller;
+declare(strict_types=1);
 
-use App\UI\Backoffice\IdentityAndAccess\User\Event\UserBulkOperationsEvent;
-use App\UI\Backoffice\IdentityAndAccess\User\Event\UserListActionsEvent;
+namespace App\IdentityAndAccess\User\Infrastructure\Ui\Backoffice\Http\Controller;
+
+use App\IdentityAndAccess\User\Infrastructure\Ui\Backoffice\Http\Event\UserBulkOperationsEvent;
+use App\IdentityAndAccess\User\Infrastructure\Ui\Backoffice\Http\Event\UserListActionsEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;

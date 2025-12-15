@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\IdentityAndAccess\User\Event;
+namespace App\IdentityAndAccess\User\Infrastructure\Ui\Backoffice\Http\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 

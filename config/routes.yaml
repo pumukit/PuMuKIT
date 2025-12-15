@@ -21,6 +21,3 @@ job_routes:
 
 cpu_routes:
   resource: ../src/Framework/MediaProcessing/Cpu/routes.yaml
-
-user_routes:
-  resource: ../src/Framework/IdentityAndAccess/User/routes.yaml

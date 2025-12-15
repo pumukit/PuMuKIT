@@ -82,4 +82,3 @@ imports:
   - { resource: '../src/Framework/ContentManagement/Person/services.yaml' }
   - { resource: '../src/Framework/MediaProcessing/Job/services.yaml' }
   - { resource: '../src/Framework/MediaProcessing/Cpu/services.yaml' }
-  - { resource: '../src/Framework/IdentityAndAccess/User/services.yaml' }

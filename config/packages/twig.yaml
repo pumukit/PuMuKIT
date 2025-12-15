@@ -6,6 +6,7 @@ twig:
     '%kernel.project_dir%/src/Analytics/Infrastructure/Ui/Backoffice/Http': Analytics
     '%kernel.project_dir%/src/Streaming/Channel/Infrastructure/Ui/Backoffice/Http': Channel
     '%kernel.project_dir%/src/Shared/Infrastructure/Ui/Backoffice/Http': Shared
+    '%kernel.project_dir%/src/IdentityAndAccess/User/Infrastructure/Ui/Backoffice/Http': User
     '%kernel.project_dir%/src/UI/Backoffice/ContentManagement/MultimediaObject': MultimediaObject
     '%kernel.project_dir%/src/UI/Backoffice/ContentManagement/Playlist': Playlist
     '%kernel.project_dir%/src/UI/Backoffice/ContentManagement/Series': Series
@@ -14,7 +15,6 @@ twig:
     '%kernel.project_dir%/src/UI/Backoffice/ContentManagement/Person': Person
     '%kernel.project_dir%/src/UI/Backoffice/MediaProcessing/Job': Job
     '%kernel.project_dir%/src/UI/Backoffice/MediaProcessing/Cpu': Cpu
-    '%kernel.project_dir%/src/UI/Backoffice/IdentityAndAccess/User': User
   globals:
     pumukit_info:  "%pumukit.info%"
     locales:       "%pumukit.locales%"

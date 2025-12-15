@@ -1,10 +1,12 @@
 <?php
 
-namespace App\UI\Backoffice\IdentityAndAccess\User\Controller;
+declare(strict_types=1);
+
+namespace App\IdentityAndAccess\User\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use App\IdentityAndAccess\User\Application\List\ListUserRequest;
 use App\IdentityAndAccess\User\Application\List\ListUserService;
-use App\UI\Backoffice\IdentityAndAccess\User\Presenter\UserDataTablePresenter;
+use App\IdentityAndAccess\User\Infrastructure\Ui\Backoffice\Http\Presenter\UserDataTablePresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
