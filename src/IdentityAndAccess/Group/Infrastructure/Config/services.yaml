@@ -1,0 +1,33 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  # --- DOMAIN & APPLICATION ---
+  App\IdentityAndAccess\Group\Application\:
+    resource: '../../Application/'
+    exclude: '../../Application/**/*{Query,Request,Response,Validator}.php'
+
+  # --- INFRASTRUCTURE: PERSISTENCE ---
+  App\IdentityAndAccess\Group\Infrastructure\Persistence\DoctrineGroupRepository:
+    tags: ['doctrine.repository']
+
+  App\IdentityAndAccess\Group\Domain\Repository\GroupRepositoryInterface:
+    alias: App\IdentityAndAccess\Group\Infrastructure\Persistence\DoctrineGroupRepository
+
+  App\IdentityAndAccess\Group\Infrastructure\:
+    resource: '../'
+    exclude: '../{Config,Ui,Persistence}'
+
+  # --- INFRASTRUCTURE: UI ---
+  App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\:
+    resource: '../Ui/Backoffice/Http/Controller/'
+    tags: ['controller.service_arguments']
+
+  App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Presenter\:
+    resource: '../Ui/Backoffice/Http/Presenter/'
+
+  App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
+    resource: '../Ui/Backoffice/Http/EventSubscriber/'
+

@@ -1,0 +1,35 @@
+{% extends '@Shared/Views/layout/layout.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid mt-3">
+        {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'group.page.list'|trans({}, 'group')} %}
+
+        {% include '@Shared/Views/components/table/_table.html.twig' with {
+            id: 'groupsTable',
+            title: 'group.table.title'|trans({}, 'group'),
+            server_side: true,
+            ajax_url: path('groups_list_data'),
+            checkbox: true,
+            bulk_operations_template: '@Shared/Views/partials/_bulk_operations.html.twig',
+            bulk_operations_config: {
+                translation_domain: 'group'
+            },
+            columns: [
+                {'field': 'key', 'label': 'group.table.key'|trans({}, 'group'), 'sortable': true},
+                {'field': 'name', 'label': 'group.table.name'|trans({}, 'group'), 'sortable': true},
+                {'field': 'origin', 'label': 'group.table.origin'|trans({}, 'group'), 'sortable': true},
+                {'field': 'comments', 'label': 'group.table.comments'|trans({}, 'group'), 'sortable': true},
+                {'field': 'created_at', 'label': 'group.table.created_at'|trans({}, 'group'), 'sortable': true},
+                {'field': 'updated_at', 'label': 'group.table.updated_at'|trans({}, 'group'), 'sortable': true},
+                {'field': 'actions', 'label': 'group.table.actions'|trans({}, 'group'), 'align': 'right'}
+            ],
+        } %}
+
+        {% include '@Shared/Views/partials/_actions.html.twig' with {
+            translationDomain: 'group'
+        } %}
+
+    </div>
+{% endblock %}
+

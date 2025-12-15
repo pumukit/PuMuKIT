@@ -7,6 +7,7 @@ twig:
     '%kernel.project_dir%/src/Streaming/Channel/Infrastructure/Ui/Backoffice/Http': Channel
     '%kernel.project_dir%/src/Shared/Infrastructure/Ui/Backoffice/Http': Shared
     '%kernel.project_dir%/src/IdentityAndAccess/User/Infrastructure/Ui/Backoffice/Http': User
+    '%kernel.project_dir%/src/IdentityAndAccess/Group/Infrastructure/Ui/Backoffice/Http': Group
     '%kernel.project_dir%/src/MediaProcessing/Job/Infrastructure/Ui/Backoffice/Http': Job
     '%kernel.project_dir%/src/MediaProcessing/Cpu/Infrastructure/Ui/Backoffice/Http': Cpu
     '%kernel.project_dir%/src/Taxonomy/Tag/Infrastructure/Ui/Backoffice/Http': Tag

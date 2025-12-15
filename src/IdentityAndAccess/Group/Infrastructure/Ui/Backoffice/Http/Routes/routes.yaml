@@ -1,0 +1,23 @@
+group_create:
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ListGroupController
+  path: /admin/backend/group/new
+
+group_view:
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ListGroupController
+  path: /admin/backend/group/{id}
+
+group_delete:
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ListGroupController
+  path: /admin/backend/group/{id}/delete
+
+group_update:
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ListGroupController
+  path: /admin/backend/group/{id}/update
+
+groups_list_data:
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ListGroupDataController
+  path: /admin/backend/groups/data
+
+group_list:
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ListGroupController
+  path: /admin/backend/groups
