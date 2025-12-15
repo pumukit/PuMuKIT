@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\Channel\Controller;
+namespace App\Streaming\Channel\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use App\Shared\Domain\TranslatorInterface;
 use App\Streaming\Channel\Application\Update\UpdateChannelRequest;
@@ -49,10 +49,10 @@ final class UpdateChannelController extends AbstractController
 
             $this->addFlash('success', $this->translator->trans('streaming.flash.channel_updated', [], 'streaming'));
 
-            return $this->redirectToRoute('streaming_channel_view', ['id' => $id]);
+            return $this->redirectToRoute('backoffice_streaming_channel_view', ['id' => $id]);
         }
 
-        return $this->render('@Streaming/Views/edit.html.twig', [
+        return $this->render('@Channel/Views/edit.html.twig', [
             'channel' => $viewResponse->channel,
         ]);
     }

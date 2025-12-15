@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\Channel\EventSubscriber;
+namespace App\Streaming\Channel\Infrastructure\Ui\Backoffice\Http\EventSubscriber;
 
 use App\Shared\Infrastructure\Ui\Backoffice\Menu\Event\MenuBuildEvent;
 use Pumukit\SchemaBundle\Security\Permission;
@@ -22,7 +22,7 @@ final class StreamingMenuSubscriber implements EventSubscriberInterface
         $event->addItem(
             key: 'streaming_channels',
             label: 'Channels',
-            route: 'streaming_channels_list',
+            route: 'backoffice_streaming_channels_list',
             parent: 'streaming',
             icon: 'fa-broadcast-tower',
             priority: 100,

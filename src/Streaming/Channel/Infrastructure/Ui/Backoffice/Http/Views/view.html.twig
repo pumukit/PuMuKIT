@@ -6,13 +6,13 @@
         <div class="col">
             <h1>{{ channel.name }}</h1>
             <div class="btn-group">
-                <a href="{{ path('streaming_channels_list') }}" class="btn btn-secondary">
+                <a href="{{ path('backoffice_streaming_channels_list') }}" class="btn btn-secondary">
                     <i class="fa fa-arrow-left"></i> {{ 'streaming.button.back_to_list'|trans({}, 'streaming') }}
                 </a>
-                <a href="{{ path('streaming_channel_edit', {id: channel.id}) }}" class="btn btn-warning">
+                <a href="{{ path('backoffice_streaming_channel_edit', {id: channel.id}) }}" class="btn btn-warning">
                     <i class="fa fa-edit"></i> {{ 'streaming.button.edit'|trans({}, 'streaming') }}
                 </a>
-                <form action="{{ path('streaming_channel_delete', {id: channel.id}) }}" method="POST" style="display:inline;" onsubmit="return confirm('{{ 'streaming.confirm.delete'|trans({}, 'streaming') }}');">
+                <form action="{{ path('backoffice_streaming_channel_delete', {id: channel.id}) }}" method="POST" style="display:inline;" onsubmit="return confirm('{{ 'streaming.confirm.delete'|trans({}, 'streaming') }}');">
                     <button type="submit" class="btn btn-danger">
                         <i class="fa fa-trash"></i> {{ 'streaming.button.delete'|trans({}, 'streaming') }}
                     </button>

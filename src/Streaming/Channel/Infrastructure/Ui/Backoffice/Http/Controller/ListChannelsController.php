@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\Channel\Controller;
+namespace App\Streaming\Channel\Infrastructure\Ui\Backoffice\Http\Controller;
 
-use App\UI\Backoffice\Streaming\Channel\Event\ChannelBulkOperationsEvent;
-use App\UI\Backoffice\Streaming\Channel\Event\ChannelListActionsEvent;
+use App\Streaming\Channel\Infrastructure\Ui\Backoffice\Http\Event\ChannelBulkOperationsEvent;
+use App\Streaming\Channel\Infrastructure\Ui\Backoffice\Http\Event\ChannelListActionsEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -48,7 +48,7 @@ final class ListChannelsController extends AbstractController
             }
         }
 
-        return $this->render('@Streaming/Views/list.html.twig', [
+        return $this->render('@Channel/Views/list.html.twig', [
             'bulkOperationsEvent' => $bulkOperationsEvent,
             'bulkOperations' => $operations,
             'listActionsEvent' => $listActionsEvent,

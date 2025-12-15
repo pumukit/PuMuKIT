@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\Channel\EventSubscriber;
+namespace App\Streaming\Channel\Infrastructure\Ui\Backoffice\Http\EventSubscriber;
 
-use App\UI\Backoffice\Streaming\Channel\Event\ChannelBulkOperationsEvent;
+use App\Streaming\Channel\Infrastructure\Ui\Backoffice\Http\Event\ChannelBulkOperationsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class ChannelBulkOperationsSubscriber implements EventSubscriberInterface
@@ -21,7 +21,7 @@ final class ChannelBulkOperationsSubscriber implements EventSubscriberInterface
         $event->addOperation(
             key: 'delete',
             label: 'Delete',
-            handler: 'streaming_channels_bulk_delete',
+            handler: 'backoffice_streaming_channels_bulk_delete',
             type: 'route',
             icon: 'fa-trash',
             confirmMessage: 'Are you sure you want to delete the selected channels? This action cannot be undone.',

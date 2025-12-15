@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\Channel\Controller;
+namespace App\Streaming\Channel\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use App\Shared\Domain\TranslatorInterface;
 use App\Streaming\Channel\Application\Delete\DeleteChannelRequest;
@@ -24,6 +24,6 @@ final class DeleteChannelController extends AbstractController
 
         $this->addFlash('success', $this->translator->trans('streaming.flash.channel_deleted', [], 'streaming'));
 
-        return $this->redirectToRoute('streaming_channels_list');
+        return $this->redirectToRoute('backoffice_streaming_channels_list');
     }
 }

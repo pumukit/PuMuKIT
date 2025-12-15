@@ -13,9 +13,6 @@ playlist_routes:
 series_routes:
   resource: ../src/Framework/ContentManagement/Series/routes.yaml
 
-channel_routes:
-  resource: ../src/Framework/Streaming/Channel/routes.yaml
-
 taxonomy_routes:
   resource: ../src/Framework/ContentManagement/Taxonomy/routes.yaml
 

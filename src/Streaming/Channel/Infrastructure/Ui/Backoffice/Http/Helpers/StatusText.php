@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\Channel\Helpers;
+namespace App\Streaming\Channel\Infrastructure\Ui\Backoffice\Http\Helpers;
 
 class StatusText
 {

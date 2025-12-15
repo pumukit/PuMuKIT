@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\Channel\EventSubscriber;
+namespace App\Streaming\Channel\Infrastructure\Ui\Backoffice\Http\EventSubscriber;
 
-use App\UI\Backoffice\Streaming\Channel\Event\ChannelListActionsEvent;
+use App\Streaming\Channel\Infrastructure\Ui\Backoffice\Http\Event\ChannelListActionsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class ChannelListActionsSubscriber implements EventSubscriberInterface
@@ -20,8 +20,8 @@ final class ChannelListActionsSubscriber implements EventSubscriberInterface
     {
         $event->addAction(
             key: 'channel_create',
-            label: 'Crear',
-            url: 'streaming_channel_create',
+            label: 'Create',
+            url: 'backoffice_streaming_channel_create',
             type: 'route',
             icon: 'fa-plus',
             class: 'btn btn-pumukit',

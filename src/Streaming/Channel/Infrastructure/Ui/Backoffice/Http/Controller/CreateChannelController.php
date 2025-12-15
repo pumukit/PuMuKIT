@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\Channel\Controller;
+namespace App\Streaming\Channel\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use App\Shared\Domain\TranslatorInterface;
 use App\Streaming\Channel\Application\Create\CreateChannelRequest;
@@ -21,6 +21,7 @@ final class CreateChannelController extends AbstractController
 
     public function __invoke(Request $request): Response
     {
+
         if ($request->isMethod('POST')) {
             $data = $request->request->all();
 
@@ -42,9 +43,9 @@ final class CreateChannelController extends AbstractController
 
             $this->addFlash('success', $this->translator->trans('streaming.flash.channel_created', [], 'streaming'));
 
-            return $this->redirectToRoute('streaming_channel_view', ['id' => $response->channel->getId()]);
+            return $this->redirectToRoute('backoffice_streaming_channel_view', ['id' => $response->channel->getId()]);
         }
 
-        return $this->render('@Streaming/Views/create.html.twig');
+        return $this->render('@Channel/Views/create.html.twig');
     }
 }

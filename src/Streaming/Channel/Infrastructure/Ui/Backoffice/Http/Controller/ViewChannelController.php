@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\Channel\Controller;
+namespace App\Streaming\Channel\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use App\Streaming\Channel\Application\View\ViewChannelRequest;
 use App\Streaming\Channel\Application\View\ViewChannelService;
@@ -18,7 +18,7 @@ final class ViewChannelController extends AbstractController
         $request = new ViewChannelRequest($id);
         $response = ($this->service)($request);
 
-        return $this->render('@Streaming/Views/view.html.twig', [
+        return $this->render('@Channel/Views/view.html.twig', [
             'channel' => $response->channel,
         ]);
     }

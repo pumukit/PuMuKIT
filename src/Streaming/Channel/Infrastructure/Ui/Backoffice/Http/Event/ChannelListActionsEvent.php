@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\Channel\Event;
+namespace App\Streaming\Channel\Infrastructure\Ui\Backoffice\Http\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Streaming\Channel\Controller;
+namespace App\Streaming\Channel\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use App\Shared\Domain\LoggerInterface;
 use App\Streaming\Channel\Application\BulkDelete\BulkDeleteChannelRequest;
