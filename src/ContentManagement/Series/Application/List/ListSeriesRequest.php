@@ -13,5 +13,4 @@ final class ListSeriesRequest
         public string $sort = 'rank',
         public string $order = 'asc'
     ) {}
-    }
 }

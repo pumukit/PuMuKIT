@@ -13,5 +13,4 @@ final class ViewSeriesEventsRequest
         public ?string $sort = 'title',
         public ?string $order = 'asc',
     ) {}
-    }
 }

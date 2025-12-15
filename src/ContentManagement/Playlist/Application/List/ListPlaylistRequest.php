@@ -13,5 +13,4 @@ final class ListPlaylistRequest
         public ?string $sort = null,
         public ?string $order = null
     ) {}
-    }
 }
