@@ -1,6 +1,3 @@
-analytics_routes:
-  resource: ../src/Framework/Analytics/routes.yaml
-
 dashboard_routes:
   resource: ../src/Framework/Dashboard/routes.yaml
 

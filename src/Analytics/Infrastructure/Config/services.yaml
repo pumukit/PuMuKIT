@@ -1,0 +1,25 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  # --- DOMAIN & APPLICATION ---
+  App\Analytics\Application\:
+    resource: '../../Application/'
+    exclude: '../../Application/**/*{Query,Request,Response}.php'
+
+  # --- INFRASTRUCTURE: GENERAL ---
+  App\Analytics\Infrastructure\:
+    resource: '../'
+    exclude:
+      - '../Config/'
+      - '../Ui/'
+
+  # --- INFRASTRUCTURE: UI ---
+  App\Analytics\Infrastructure\Ui\Backoffice\Http\Controller\:
+    resource: '../Ui/Backoffice/Http/Controller/'
+    tags: ['controller.service_arguments']
+
+  App\Analytics\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
+    resource: '../Ui/Backoffice/Http/EventSubscriber/'
