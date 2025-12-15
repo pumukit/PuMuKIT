@@ -15,7 +15,7 @@ class Uuid implements \Stringable
 
     public function __toString(): string
     {
-        return $this->toString();
+        return (string) $this->id;
     }
 
     /**
@@ -23,7 +23,7 @@ class Uuid implements \Stringable
      */
     public static function fromObjectId(ObjectId $id): static
     {
-        return new self($id);
+        return new static($id);
     }
 
     /**
@@ -33,7 +33,7 @@ class Uuid implements \Stringable
     {
         UuidValidator::validate($id, 'UUID');
 
-        return new self(new ObjectId($id));
+        return new static(new ObjectId($id));
     }
 
     /**
@@ -41,12 +41,7 @@ class Uuid implements \Stringable
      */
     public static function generate(): static
     {
-        return new self(new ObjectId());
-    }
-
-    public static function isValid(string $id): bool
-    {
-        return UuidValidator::isValid($id);
+        return new static(new ObjectId());
     }
 
     public function toObjectId(): ObjectId

@@ -9,7 +9,7 @@ services:
   # --- DOMAIN & APPLICATION ---
   App\MediaProcessing\Cpu\Application\:
     resource: '../../Application/'
-    exclude: '../../Application/**/*{Query,Request,Response}.php'
+    exclude: '../../Application/**/*{Query,Request,Response,Validator}.php'
 
   # --- INFRASTRUCTURE: PERSISTENCE ---
   App\MediaProcessing\Cpu\Domain\Repository\CpuRepositoryInterface:

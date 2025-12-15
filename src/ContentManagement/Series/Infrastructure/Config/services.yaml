@@ -10,7 +10,7 @@ services:
   # --- DOMAIN & APPLICATION ---
   App\ContentManagement\Series\Application\:
     resource: '../../Application/'
-    exclude: '../../Application/**/*{Query,Request,Response}.php'
+    exclude: '../../Application/**/*{Query,Request,Response,Validator}.php'
 
   # --- INFRASTRUCTURE: PERSISTENCE ---
   App\ContentManagement\Series\Infrastructure\Persistence\DoctrineSeriesRepository:
