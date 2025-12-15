@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\Role\Controller;
+namespace App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use App\ContentManagement\Role\Application\ListRoles\ListRolesRequest;
 use App\ContentManagement\Role\Application\ListRoles\ListRolesService;
-use App\UI\Backoffice\ContentManagement\Role\Presenter\RoleDataTablePresenter;
+use App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Presenter\RoleDataTablePresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

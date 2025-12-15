@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\Role\Presenter;
+namespace App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Presenter;
 
 use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\BooleanIcon;
 use Pumukit\SchemaBundle\Document\Role;

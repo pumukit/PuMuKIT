@@ -75,4 +75,3 @@ services:
 
 imports:
   - { resource: '../src/Framework/ContentManagement/Series/services.yaml' }
-  - { resource: '../src/Framework/ContentManagement/Role/services.yaml' }

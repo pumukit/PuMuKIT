@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\Role\Controller;
+namespace App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use App\ContentManagement\Role\Application\DeleteRole\DeleteRoleRequest;
 use App\ContentManagement\Role\Application\DeleteRole\DeleteRoleService;

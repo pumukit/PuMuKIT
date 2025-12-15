@@ -1,0 +1,34 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  # --- DOMAIN & APPLICATION ---
+  App\ContentManagement\Role\Application\:
+    resource: '../../Application/'
+    exclude: '../../Application/**/*{Query,Request,Response}.php'
+
+  # --- INFRASTRUCTURE: PERSISTENCE ---
+  App\ContentManagement\Role\Infrastructure\Persistence\DoctrineRoleRepository: ~
+
+  App\ContentManagement\Role\Domain\Repository\RoleRepositoryInterface:
+    alias: App\ContentManagement\Role\Infrastructure\Persistence\DoctrineRoleRepository
+
+  App\ContentManagement\Role\Infrastructure\:
+    resource: '../'
+    exclude:
+      - '../Config/'
+      - '../Ui/'
+      - '../Persistence/DoctrineRoleRepository.php'
+
+  # --- INFRASTRUCTURE: UI (BACKOFFICE HTTP) ---
+  App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Controller\:
+    resource: '../Ui/Backoffice/Http/Controller/'
+    tags: ['controller.service_arguments']
+
+  App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Presenter\:
+    resource: '../Ui/Backoffice/Http/Presenter/'
+
+  App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
+    resource: '../Ui/Backoffice/Http/EventSubscriber/'

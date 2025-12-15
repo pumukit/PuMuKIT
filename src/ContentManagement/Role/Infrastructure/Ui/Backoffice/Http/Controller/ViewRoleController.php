@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\Role\Controller;
+namespace App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use App\ContentManagement\Role\Application\ViewRole\ViewRoleRequest;
 use App\ContentManagement\Role\Application\ViewRole\ViewRoleService;

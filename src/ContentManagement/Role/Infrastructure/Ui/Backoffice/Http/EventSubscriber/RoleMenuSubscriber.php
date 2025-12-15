@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\Role\EventSubscriber;
+namespace App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\EventSubscriber;
 
 use App\Shared\Infrastructure\Ui\Backoffice\Http\Event\MenuBuildEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

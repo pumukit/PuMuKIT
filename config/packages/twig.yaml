@@ -14,7 +14,7 @@ twig:
     '%kernel.project_dir%/src/ContentManagement/MultimediaObject/Infrastructure/Ui/Backoffice/Http': MultimediaObject
     '%kernel.project_dir%/src/ContentManagement/Person/Infrastructure/Ui/Backoffice/Http': Person
     '%kernel.project_dir%/src/UI/Backoffice/ContentManagement/Series': Series
-    '%kernel.project_dir%/src/UI/Backoffice/ContentManagement/Role': Role
+    '%kernel.project_dir%/src/ContentManagement/Role/Infrastructure/Ui/Backoffice/Http': Role
   globals:
     pumukit_info:  "%pumukit.info%"
     locales:       "%pumukit.locales%"

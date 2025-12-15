@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\Role\Event;
+namespace App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 

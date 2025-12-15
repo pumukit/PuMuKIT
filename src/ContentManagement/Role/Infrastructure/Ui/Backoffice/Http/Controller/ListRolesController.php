@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\Role\Controller;
+namespace App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Controller;
 
-use App\UI\Backoffice\ContentManagement\Role\Event\RoleBulkOperationsEvent;
-use App\UI\Backoffice\ContentManagement\Role\Event\RoleListActionsEvent;
+use App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Event\RoleBulkOperationsEvent;
+use App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Event\RoleListActionsEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;

@@ -1,0 +1,36 @@
+role_list:
+    path: /admin/backend/roles
+    controller: App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Controller\ListRolesController
+    methods: [GET]
+
+role_list_data:
+    path: /admin/backend/roles/data
+    controller: App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Controller\ListRolesDataController
+    methods: [GET]
+
+role_create:
+    path: /admin/backend/roles/create
+    controller: App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Controller\CreateRoleController
+    methods: [GET, POST]
+
+role_view:
+  path: /admin/backend/roles/{id}/view
+  controller: App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Controller\ViewRoleController
+  methods: [GET]
+
+role_update:
+    path: /admin/backend/roles/{id}/update
+    controller: App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Controller\UpdateRoleController
+    methods: [GET, POST]
+
+role_delete:
+    path: /admin/backend/roles/{id}/delete
+    controller: App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Controller\DeleteRoleController
+    methods: [POST]
+
+role_bulk_delete:
+    path: /admin/backend/roles/bulk-delete
+    controller: App\ContentManagement\Role\Infrastructure\Ui\Backoffice\Http\Controller\BulkDeleteRolesController
+    methods: [POST]
+
+
