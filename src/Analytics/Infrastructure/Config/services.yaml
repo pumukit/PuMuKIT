@@ -5,9 +5,9 @@ services:
     public: false
 
   # --- DOMAIN & APPLICATION ---
-  App\Analytics\Application\:
-    resource: '../../Application/'
-    exclude: '../../Application/**/*{Query,Request,Response,Validator}.php'
+#  App\Analytics\Application\:
+#    resource: '../../Application/'
+#    exclude: '../../Application/**/*{Query,Request,Response,Validator}.php'
 
   # --- INFRASTRUCTURE: GENERAL ---
   App\Analytics\Infrastructure\:
