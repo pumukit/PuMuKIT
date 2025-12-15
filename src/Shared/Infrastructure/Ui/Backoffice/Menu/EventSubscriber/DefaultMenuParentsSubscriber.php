@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Shared\Menu\EventSubscriber;
+namespace App\Shared\Infrastructure\Ui\Backoffice\Menu\EventSubscriber;
 
-use App\UI\Backoffice\Shared\Menu\Event\MenuBuildEvent;
+use App\Shared\Infrastructure\Ui\Backoffice\Menu\Event\MenuBuildEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class DefaultMenuParentsSubscriber implements EventSubscriberInterface

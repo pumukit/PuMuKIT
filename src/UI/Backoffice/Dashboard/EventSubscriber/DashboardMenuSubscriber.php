@@ -2,7 +2,7 @@
 
 namespace App\UI\Backoffice\Dashboard\EventSubscriber;
 
-use App\UI\Backoffice\Shared\Menu\Event\MenuBuildEvent;
+use App\Shared\Infrastructure\Ui\Backoffice\Menu\Event\MenuBuildEvent;
 use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\IdentityAndAccess\User\Presenter;
 
-use App\UI\Backoffice\Shared\Helpers\BooleanIcon;
-use App\UI\Backoffice\Shared\Helpers\DateFormat;
+use App\Shared\Infrastructure\Ui\Backoffice\Helpers\BooleanIcon;
+use App\Shared\Infrastructure\Ui\Backoffice\Helpers\DateFormat;
 use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;

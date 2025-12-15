@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UI\Backoffice\Shared\Helpers;
+namespace App\Shared\Infrastructure\Ui\Backoffice\Helpers;
 
 final class TextTruncate
 {

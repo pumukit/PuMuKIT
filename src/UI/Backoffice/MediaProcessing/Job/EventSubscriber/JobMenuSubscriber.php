@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\MediaProcessing\Job\EventSubscriber;
 
-use App\UI\Backoffice\Shared\Menu\Event\MenuBuildEvent;
+use App\Shared\Infrastructure\Ui\Backoffice\Menu\Event\MenuBuildEvent;
 use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

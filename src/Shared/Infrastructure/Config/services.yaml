@@ -1,0 +1,66 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  # --- GLOBAL LOAD ---
+  App\Shared\Infrastructure\:
+    resource: '../'
+    exclude:
+      - '../Config/'
+      - '../Persistence'
+      - '../Ui'
+
+  # --- SHARED INTERFACES ---
+  App\Shared\Domain\EventBusInterface:
+    alias: App\Shared\Infrastructure\EventBus\SymfonyEventBus
+
+  App\Shared\Domain\LoggerInterface:
+    alias: App\Shared\Infrastructure\Logger\PsrLoggerAdapter
+
+  App\Shared\Domain\TranslatorInterface:
+    alias: App\Shared\Infrastructure\Translation\SymfonyTranslator
+
+  App\Shared\Domain\ObjectManagerInterface:
+    alias: App\Shared\Infrastructure\Persistence\DoctrineObjectManager
+
+  # --- SHARED ADAPTERS ---
+  App\Shared\Infrastructure\Logger\PsrLoggerAdapter:
+    arguments:
+      $psrLogger: '@monolog.logger'
+
+  App\Shared\Infrastructure\Translation\SymfonyTranslator:
+    arguments:
+      $symfonyTranslator: '@translator'
+
+  App\Shared\Infrastructure\Persistence\DoctrineObjectManager:
+    arguments:
+      $documentManager: '@doctrine_mongodb.odm.document_manager'
+
+  # --- UI SHARED COMPONENTS ---
+  App\Shared\Infrastructure\Ui\Backoffice\:
+    resource: '../Ui/Backoffice/'
+    exclude: '../Ui/Backoffice/{Menu/MenuBuilder.php,Header/HeaderBuilder.php}'
+
+  # Menu System
+  App\Shared\Infrastructure\Ui\Backoffice\Menu\MenuBuilder:
+    arguments:
+      $eventDispatcher: '@event_dispatcher'
+      $urlGenerator: '@router'
+      $authorizationChecker: '@security.authorization_checker'
+      $requestStack: '@request_stack'
+
+  # Header System
+  App\Shared\Infrastructure\Ui\Backoffice\Header\HeaderBuilder:
+    arguments:
+      $eventDispatcher: '@event_dispatcher'
+      $urlGenerator: '@router'
+      $authorizationChecker: '@security.authorization_checker'
+
+  # --- UI EVENT SUBSCRIBERS ---
+  App\Shared\Infrastructure\Ui\Backoffice\Menu\EventSubscriber\:
+    resource: '../Ui/Backoffice/Menu/EventSubscriber'
+
+  App\Shared\Infrastructure\Ui\Backoffice\Header\EventSubscriber\:
+    resource: '../Ui/Backoffice/Header/EventSubscriber'

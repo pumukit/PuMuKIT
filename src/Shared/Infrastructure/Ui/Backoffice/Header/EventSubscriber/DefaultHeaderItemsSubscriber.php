@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Shared\Header\EventSubscriber;
+namespace App\Shared\Infrastructure\Ui\Backoffice\Header\EventSubscriber;
 
-use App\UI\Backoffice\Shared\Header\Event\HeaderBuildEvent;
+use App\Shared\Infrastructure\Ui\Backoffice\Header\Event\HeaderBuildEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class DefaultHeaderItemsSubscriber implements EventSubscriberInterface

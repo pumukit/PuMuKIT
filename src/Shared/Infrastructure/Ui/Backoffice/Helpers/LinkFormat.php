@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Shared\Helpers;
+namespace App\Shared\Infrastructure\Ui\Backoffice\Helpers;
 
 class LinkFormat
 {

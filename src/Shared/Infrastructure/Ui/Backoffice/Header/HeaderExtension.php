@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Shared\Header;
+namespace App\Shared\Infrastructure\Ui\Backoffice\Header;
 
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;

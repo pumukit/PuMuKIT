@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Shared\Twig;
+namespace App\Shared\Infrastructure\Ui\Backoffice\Twig;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;

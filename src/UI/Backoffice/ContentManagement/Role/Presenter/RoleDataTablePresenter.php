@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\ContentManagement\Role\Presenter;
 
-use App\UI\Backoffice\Shared\Helpers\BooleanIcon;
+use App\Shared\Infrastructure\Ui\Backoffice\Helpers\BooleanIcon;
 use Pumukit\SchemaBundle\Document\Role;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;

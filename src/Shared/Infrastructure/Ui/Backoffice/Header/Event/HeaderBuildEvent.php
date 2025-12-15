@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\Shared\Header\Event;
+namespace App\Shared\Infrastructure\Ui\Backoffice\Header\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
