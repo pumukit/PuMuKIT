@@ -10,5 +10,4 @@ final class CreatePlaylistRequest
         public string $ownerId,
         public ?array $title = null
     ) {}
-    }
 }

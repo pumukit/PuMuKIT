@@ -9,5 +9,4 @@ final class BulkDeleteSeriesRequest
     public function __construct(
         public array $seriesIds
     ) {}
-    }
 }

@@ -9,5 +9,4 @@ final class DeletePlaylistRequest
     public function __construct(
         public string $id
     ) {}
-    }
 }

@@ -23,5 +23,4 @@ final class UpdateSeriesRequest
         public ?string $seriesStyleId = null,
         public ?array $properties = null
     ) {}
-    }
 }

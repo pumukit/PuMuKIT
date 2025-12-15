@@ -48,39 +48,35 @@ final class DoctrinePlaylistRepository implements PlaylistRepositoryInterface
 
     public function findByFiltersPaginated(array $filters, int $page, int $limit, ?string $sort = null, ?string $order = null): array
     {
-        $filters['type'] = Series::TYPE_PLAYLIST;
-
         $qb = $this->objectManager->getDocumentManager()
             ->createQueryBuilder(Series::class)
-            ->field('type')->equals(Series::TYPE_PLAYLIST)
-        ;
+            ->field('type')->equals(Series::TYPE_PLAYLIST);
 
         foreach ($filters as $field => $value) {
-            if ('type' === $field) {
+            if ('type' === $field || empty($value)) {
                 continue;
             }
+
             if (is_array($value)) {
-                $orX = [];
+                $orExpressions = [];
                 foreach ($value as $v) {
-                    $orX[] = $qb->expr()->field($field)->equals(new \MongoRegex('/.*'.$v.'.*/i'));
+                    $orExpressions[] = $qb->expr()->field($field)->equals(new \MongoDB\BSON\Regex('.*'.$v.'.*', 'i'));
                 }
-                $qb->addOr($orX);
+                $qb->addOr(...$orExpressions);
             } else {
-                $qb->field($field)->equals(new \MongoRegex('/.*'.$value.'.*/i'));
+                $qb->field($field)->equals(new \MongoDB\BSON\Regex('.*'.$value.'.*', 'i'));
             }
         }
 
         if ($sort) {
-            $qb->sort($sort, 'asc' === strtolower($order) ? 1 : -1);
+            $qb->sort($sort, 'asc' === strtolower($order ?? 'asc') ? 1 : -1);
         }
 
-        $qb->skip(($page - 1) * $limit)
-            ->limit($limit)
-        ;
+        $qb->skip(($page - 1) * $limit)->limit($limit);
 
         $result = $qb->getQuery()->execute();
 
-        return is_array($result) ? $result : (is_iterable($result) ? iterator_to_array($result) : []);
+        return $result instanceof \Traversable ? iterator_to_array($result) : (array) $result;
     }
 
     public function countByFilters(array $filters): int

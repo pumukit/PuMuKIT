@@ -9,5 +9,4 @@ final class BulkDeleteChannelRequest
     public function __construct(
         public array $channelIds
     ) {}
-    }
 }

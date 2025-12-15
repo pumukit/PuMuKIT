@@ -7,7 +7,7 @@ namespace App\Streaming\Channel\Domain\Event;
 use App\Shared\Domain\DomainEvent;
 use Pumukit\SchemaBundle\Document\Live;
 
-final readonly class ChannelUpdatedEvent extends DomainEvent
+final class ChannelUpdatedEvent extends DomainEvent
 {
     public function __construct(
         public Live $channel

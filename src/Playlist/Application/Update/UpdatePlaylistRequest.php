@@ -20,5 +20,4 @@ final class UpdatePlaylistRequest
         public ?\DateTimeInterface $publicDate = null,
         public ?array $properties = null
     ) {}
-    }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\ContentManagement\Series\Application\ViewSeriesEvents;
 
 final class ViewSeriesEventsValidator
@@ -9,9 +11,7 @@ final class ViewSeriesEventsValidator
         if (null !== $request->page && $request->page < 1) {
             throw new \InvalidArgumentException('Page must be greater than 0');
         }
-        if (null === $request->limit) {
-            return;
-        }
+
         if ($request->limit >= 1) {
             return;
         }

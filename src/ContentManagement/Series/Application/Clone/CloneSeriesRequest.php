@@ -9,5 +9,4 @@ final class CloneSeriesRequest
     public function __construct(
         public string $seriesId
     ) {}
-    }
 }

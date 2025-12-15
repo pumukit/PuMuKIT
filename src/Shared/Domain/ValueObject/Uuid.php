@@ -9,24 +9,18 @@ use MongoDB\BSON\ObjectId;
 
 class Uuid implements \Stringable
 {
-    protected function __construct(protected ObjectId $id) {}
+    final protected function __construct(protected ObjectId $id) {}
 
     public function __toString(): string
     {
         return (string) $this->id;
     }
 
-    /**
-     * @phpstan-return static
-     */
     public static function fromObjectId(ObjectId $id): static
     {
         return new static($id);
     }
 
-    /**
-     * @phpstan-return static
-     */
     public static function fromString(string $id): static
     {
         UuidValidator::validate($id, 'UUID');
@@ -34,9 +28,6 @@ class Uuid implements \Stringable
         return new static(new ObjectId($id));
     }
 
-    /**
-     * @phpstan-return static
-     */
     public static function generate(): static
     {
         return new static(new ObjectId());

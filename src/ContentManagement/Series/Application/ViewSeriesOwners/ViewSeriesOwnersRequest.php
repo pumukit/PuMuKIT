@@ -9,5 +9,4 @@ final class ViewSeriesOwnersRequest
     public function __construct(
         public string $seriesId
     ) {}
-    }
 }

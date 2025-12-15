@@ -12,11 +12,5 @@ parameters:
         objectManagerLoader: doc/object-manager.php
     ignoreErrors:
         -
-            message: '#Method App\\Shared\\Domain\\ValueObject\\Uuid::(fromObjectId|fromString|generate)\(\) should return static\(App\\Shared\\Domain\\ValueObject\\Uuid\) but returns App\\Shared\\Domain\\ValueObject\\Uuid#'
-            path: src/Shared/Domain/ValueObject/Uuid.php
-        -
-            message: '#Parameter \#1 \$user of method Symfony\\Component\\PasswordHasher\\Hasher\\UserPasswordHasherInterface::hashPassword\(\) expects Symfony\\Component\\Security\\Core\\User\\PasswordAuthenticatedUserInterface, Pumukit\\SchemaBundle\\Document\\User given#'
+            message: '#Parameter \#1 \$user of method Symfony\\Component\\PasswordHasher\\Hasher\\UserPasswordHasherInterface::hashPassword\(\) expects Symfony\\Component\\Security\\Core\\User\\PasswordAuthenticatedUserInterface, Pumukit\\SchemaBundle\\Document\\User given\.#'
             path: src/IdentityAndAccess/User/Application/Create/CreateUserService.php
-        -
-            message: '#Parameter \#1 \$expression of method Doctrine\\ODM\\MongoDB\\Query\\Builder::addOr\(\) expects array<string, mixed>\|Doctrine\\ODM\\MongoDB\\Query\\Expr, array<int<0, max>, Doctrine\\ODM\\MongoDB\\Query\\Expr> given#'
-            path: src/ContentManagement/Playlist/Infrastructure/Persistence/DoctrinePlaylistRepository.php

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Taxonomy\Tag\Application\Create;
 
 use App\Shared\Domain\EventBusInterface;
+use App\Taxonomy\Tag\Domain\Event\TagCreatedEvent;
 use App\Taxonomy\Tag\Domain\Exception\TagAlreadyExistsException;
 use App\Taxonomy\Tag\Domain\Exception\TagNotFoundException;
 use App\Taxonomy\Tag\Domain\Repository\TagRepositoryInterface;
