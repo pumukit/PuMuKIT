@@ -1,0 +1,19 @@
+media_processing_jobs_list:
+  path: /admin/backend/jobs
+  controller: App\MediaProcessing\Job\Infrastructure\Ui\Backoffice\Http\Controller\ListJobsController
+  methods: [GET]
+
+media_processing_jobs_list_data:
+  path: /admin/backend/jobs/data
+  controller: App\MediaProcessing\Job\Infrastructure\Ui\Backoffice\Http\Controller\ListJobsDataController
+  methods: [GET]
+
+media_processing_job_view:
+  path: /admin/backend/jobs/{id}
+  controller: App\MediaProcessing\Job\Infrastructure\Ui\Backoffice\Http\Controller\ViewJobController
+  methods: [GET]
+
+media_processing_job_cancel:
+  path: /admin/backend/jobs/{id}/cancel
+  controller: App\MediaProcessing\Job\Infrastructure\Ui\Backoffice\Http\Controller\CancelJobController
+  methods: [POST]

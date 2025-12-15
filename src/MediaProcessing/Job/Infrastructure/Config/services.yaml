@@ -1,0 +1,34 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  App\MediaProcessing\Job\Infrastructure\Persistence\DoctrineJobRepository: ~
+
+  # --- DOMAIN & APPLICATION ---
+  App\MediaProcessing\Job\Application\:
+    resource: '../../Application/'
+    exclude: '../../Application/**/*{Query,Request,Response}.php'
+
+  # --- INFRASTRUCTURE: PERSISTENCE ---
+  App\MediaProcessing\Job\Domain\Repository\JobRepositoryInterface:
+    alias: App\MediaProcessing\Job\Infrastructure\Persistence\DoctrineJobRepository
+
+  App\MediaProcessing\Job\Infrastructure\:
+    resource: '../'
+    exclude:
+      - '../Config/'
+      - '../Ui/'
+      - '../Persistence/DoctrineJobRepository.php'
+
+  # --- INFRASTRUCTURE: UI (BACKOFFICE HTTP) ---
+  App\MediaProcessing\Job\Infrastructure\Ui\Backoffice\Http\Controller\:
+    resource: '../Ui/Backoffice/Http/Controller/'
+    tags: ['controller.service_arguments']
+
+  App\MediaProcessing\Job\Infrastructure\Ui\Backoffice\Http\Presenter\:
+    resource: '../Ui/Backoffice/Http/Presenter/'
+
+  App\MediaProcessing\Job\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
+    resource: '../Ui/Backoffice/Http/EventSubscriber/'

@@ -1,0 +1,28 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+    bind:
+      $cpus: '%pumukitencode.cpulist%'
+
+  # --- DOMAIN & APPLICATION ---
+  App\MediaProcessing\Cpu\Application\:
+    resource: '../../Application/'
+    exclude: '../../Application/**/*{Query,Request,Response}.php'
+
+  # --- INFRASTRUCTURE: PERSISTENCE ---
+  App\MediaProcessing\Cpu\Domain\Repository\CpuRepositoryInterface:
+    alias: App\MediaProcessing\Cpu\Infrastructure\Persistence\DoctrineCpuRepository
+
+  App\MediaProcessing\Cpu\Infrastructure\:
+    resource: '../'
+    exclude: '../{Config,Ui}'
+
+  # --- INFRASTRUCTURE: UI (BACKOFFICE HTTP) ---
+  App\MediaProcessing\Cpu\Infrastructure\Ui\Backoffice\Http\Controller\:
+    resource: '../Ui/Backoffice/Http/Controller/'
+    tags: ['controller.service_arguments']
+
+  App\MediaProcessing\Cpu\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
+    resource: '../Ui/Backoffice/Http/EventSubscriber/'

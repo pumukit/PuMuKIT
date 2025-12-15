@@ -80,5 +80,3 @@ imports:
   - { resource: '../src/Framework/ContentManagement/Taxonomy/services.yaml' }
   - { resource: '../src/Framework/ContentManagement/Role/services.yaml' }
   - { resource: '../src/Framework/ContentManagement/Person/services.yaml' }
-  - { resource: '../src/Framework/MediaProcessing/Job/services.yaml' }
-  - { resource: '../src/Framework/MediaProcessing/Cpu/services.yaml' }

@@ -1,6 +1,8 @@
 <?php
 
-namespace App\UI\Backoffice\MediaProcessing\Job\Helpers;
+declare(strict_types=1);
+
+namespace App\MediaProcessing\Job\Infrastructure\Ui\Backoffice\Http\Helpers;
 
 use Pumukit\EncoderBundle\Document\Job;
 

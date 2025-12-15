@@ -15,9 +15,3 @@ role_routes:
 
 person_routes:
   resource: ../src/Framework/ContentManagement/Person/routes.yaml
-
-job_routes:
-  resource: ../src/Framework/MediaProcessing/Job/routes.yaml
-
-cpu_routes:
-  resource: ../src/Framework/MediaProcessing/Cpu/routes.yaml

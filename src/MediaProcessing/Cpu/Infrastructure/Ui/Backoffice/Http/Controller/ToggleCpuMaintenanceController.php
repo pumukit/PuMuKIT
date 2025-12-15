@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\MediaProcessing\Cpu\Controller;
+namespace App\MediaProcessing\Cpu\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use App\MediaProcessing\Cpu\Application\ToggleMaintenance\ToggleMaintenanceRequest;
 use App\MediaProcessing\Cpu\Application\ToggleMaintenance\ToggleMaintenanceService;

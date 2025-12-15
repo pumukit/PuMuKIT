@@ -1,12 +1,11 @@
 media_processing_cpus_list:
   path: /admin/backend/cpus
-  controller: App\UI\Backoffice\MediaProcessing\Cpu\Controller\ListCpusController
+  controller: App\MediaProcessing\Cpu\Infrastructure\Ui\Backoffice\Http\Controller\ListCpusController
   methods: [GET]
 
 media_processing_cpu_toggle_maintenance:
   path: /admin/backend/cpus/{cpuName}/maintenance/{action}
-  controller: App\UI\Backoffice\MediaProcessing\Cpu\Controller\ToggleCpuMaintenanceController
+  controller: App\MediaProcessing\Cpu\Infrastructure\Ui\Backoffice\Http\Controller\ToggleCpuMaintenanceController
   methods: [POST]
   requirements:
     action: 'activate|deactivate'
-
