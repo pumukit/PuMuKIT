@@ -1,8 +1,8 @@
 <?php
 
-namespace App\UI\Backoffice\Dashboard\EventSubscriber;
+namespace App\Shared\Infrastructure\Ui\Backoffice\Http\EventSubscriber;
 
-use App\Shared\Infrastructure\Ui\Backoffice\Menu\Event\MenuBuildEvent;
+use App\Shared\Infrastructure\Ui\Backoffice\Http\Event\MenuBuildEvent;
 use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

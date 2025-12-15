@@ -1,0 +1,11 @@
+{% extends '@Shared/Views/layout/layout.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        {% for widget in widgets %}
+            <div class="{{ widget.column_size }}">
+                {% include widget.template with widget.template_vars %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

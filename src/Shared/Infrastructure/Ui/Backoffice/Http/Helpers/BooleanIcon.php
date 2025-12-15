@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Shared\Infrastructure\Ui\Backoffice\Helpers;
+declare(strict_types=1);
+
+namespace App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers;
 
 final class BooleanIcon
 {

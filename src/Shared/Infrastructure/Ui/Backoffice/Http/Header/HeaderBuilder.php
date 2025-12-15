@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Infrastructure\Ui\Backoffice\Header;
+namespace App\Shared\Infrastructure\Ui\Backoffice\Http\Header;
 
-use App\Shared\Infrastructure\Ui\Backoffice\Header\Event\HeaderBuildEvent;
+use App\Shared\Infrastructure\Ui\Backoffice\Http\Event\HeaderBuildEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;

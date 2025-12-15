@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Infrastructure\Ui\Backoffice\Menu;
+namespace App\Shared\Infrastructure\Ui\Backoffice\Http\Menu;
 
-use App\Shared\Infrastructure\Ui\Backoffice\Menu\Event\MenuBuildEvent;
+use App\Shared\Infrastructure\Ui\Backoffice\Http\Event\MenuBuildEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

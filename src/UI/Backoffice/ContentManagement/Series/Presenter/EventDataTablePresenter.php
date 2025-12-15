@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\ContentManagement\Series\Presenter;
 
-use App\Shared\Infrastructure\Ui\Backoffice\Helpers\TextTruncate;
+use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\TextTruncate;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;

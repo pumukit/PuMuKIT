@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UI\Backoffice\Dashboard\Controller;
+namespace App\Shared\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Services\ProfileService;

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\MediaProcessing\Cpu\EventSubscriber;
+namespace App\Shared\Infrastructure\Ui\Backoffice\Http\EventSubscriber;
 
 use App\Shared\Infrastructure\Ui\Backoffice\Http\Event\MenuBuildEvent;
 use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class CpuMenuSubscriber implements EventSubscriberInterface
+class DashboardMenuSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
     {
@@ -20,13 +20,13 @@ final class CpuMenuSubscriber implements EventSubscriberInterface
     public function onMenuBuild(MenuBuildEvent $event): void
     {
         $event->addItem(
-            key: 'media_processing_cpus',
-            label: 'CPUs',
-            route: 'media_processing_cpus_list',
-            parent: 'media_processing',
-            icon: 'fa-microchip',
-            priority: 200,
-            permission: Permission::ACCESS_JOBS
+            key: 'dashboard',
+            label: 'Dashboard',
+            route: 'dashboard',
+            parent: 'home',
+            icon: 'fa-chart-line',
+            priority: 100,
+            permission: Permission::ACCESS_DASHBOARD
         );
     }
 }

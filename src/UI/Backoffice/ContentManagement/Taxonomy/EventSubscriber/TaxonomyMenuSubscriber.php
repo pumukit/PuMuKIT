@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\UI\Backoffice\ContentManagement\Taxonomy\EventSubscriber;
 
-use App\Shared\Infrastructure\Ui\Backoffice\Menu\Event\MenuBuildEvent;
+use App\Shared\Infrastructure\Ui\Backoffice\Http\Event\MenuBuildEvent;
 use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

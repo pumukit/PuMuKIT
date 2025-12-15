@@ -39,12 +39,12 @@ services:
       $documentManager: '@doctrine_mongodb.odm.document_manager'
 
   # --- UI SHARED COMPONENTS ---
-  App\Shared\Infrastructure\Ui\Backoffice\:
-    resource: '../Ui/Backoffice/'
-    exclude: '../Ui/Backoffice/{Menu/MenuBuilder.php,Header/HeaderBuilder.php}'
+  App\Shared\Infrastructure\Ui\Backoffice\Http\:
+    resource: '../Ui/Backoffice/Http/'
+    exclude: '../Ui/Backoffice/Http/{Menu/MenuBuilder.php,Header/HeaderBuilder.php}'
 
   # Menu System
-  App\Shared\Infrastructure\Ui\Backoffice\Menu\MenuBuilder:
+  App\Shared\Infrastructure\Ui\Backoffice\Http\Menu\MenuBuilder:
     arguments:
       $eventDispatcher: '@event_dispatcher'
       $urlGenerator: '@router'
@@ -52,15 +52,12 @@ services:
       $requestStack: '@request_stack'
 
   # Header System
-  App\Shared\Infrastructure\Ui\Backoffice\Header\HeaderBuilder:
+  App\Shared\Infrastructure\Ui\Backoffice\Http\Header\HeaderBuilder:
     arguments:
       $eventDispatcher: '@event_dispatcher'
       $urlGenerator: '@router'
       $authorizationChecker: '@security.authorization_checker'
 
   # --- UI EVENT SUBSCRIBERS ---
-  App\Shared\Infrastructure\Ui\Backoffice\Menu\EventSubscriber\:
-    resource: '../Ui/Backoffice/Menu/EventSubscriber'
-
-  App\Shared\Infrastructure\Ui\Backoffice\Header\EventSubscriber\:
-    resource: '../Ui/Backoffice/Header/EventSubscriber'
+  App\Shared\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
+    resource: '../Ui/Backoffice/Http/EventSubscriber'

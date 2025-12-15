@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Infrastructure\Ui\Backoffice\Menu;
+namespace App\Shared\Infrastructure\Ui\Backoffice\Http\Menu;
 
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;

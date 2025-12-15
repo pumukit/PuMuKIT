@@ -8,9 +8,9 @@ use App\ContentManagement\MultimediaObject\Domain\Repository\MultimediaObjectRep
 use App\UI\Backoffice\ContentManagement\MultimediaObject\Helpers\TypeIcon;
 use App\UI\Backoffice\MediaProcessing\Job\Helpers\CalcDuration;
 use App\UI\Backoffice\MediaProcessing\Job\Helpers\StatusIcon;
-use App\Shared\Infrastructure\Ui\Backoffice\Helpers\DateFormat;
-use App\Shared\Infrastructure\Ui\Backoffice\Helpers\LinkFormat;
-use App\Shared\Infrastructure\Ui\Backoffice\Helpers\TextTruncate;
+use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\DateFormat;
+use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\LinkFormat;
+use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\TextTruncate;
 use Pumukit\EncoderBundle\Document\Job;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;

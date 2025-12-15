@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\UI\Backoffice\ContentManagement\Series\Presenter;
 
 use App\ContentManagement\Series\Domain\Repository\SeriesRepositoryInterface;
-use App\Shared\Infrastructure\Ui\Backoffice\Helpers\BooleanIcon;
-use App\Shared\Infrastructure\Ui\Backoffice\Helpers\DateFormat;
-use App\Shared\Infrastructure\Ui\Backoffice\Helpers\TextTruncate;
+use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\BooleanIcon;
+use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\DateFormat;
+use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\TextTruncate;
 use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
