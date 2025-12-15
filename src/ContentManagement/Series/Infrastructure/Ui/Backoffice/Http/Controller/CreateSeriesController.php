@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Series\Infrastructure\Ui\Backoffice\Http\Controller;
 
-use Pumukit\SchemaBundle\Document\User;
 use App\ContentManagement\Series\Application\Create\CreateSeriesRequest;
 use App\ContentManagement\Series\Application\Create\CreateSeriesService;
 use App\Shared\Domain\LoggerInterface;
 use App\Shared\Domain\TranslatorInterface;
+use Pumukit\SchemaBundle\Document\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 

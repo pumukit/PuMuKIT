@@ -10,9 +10,8 @@ final class ListTagsValidator
 {
     public static function validate(ListTagsRequest $request): void
     {
-        if ($request->parentId !== null) {
+        if (null !== $request->parentId) {
             UuidValidator::validate($request->parentId, 'Parent ID');
         }
     }
 }
-

@@ -10,4 +10,3 @@ final class DeleteRoleResponse
         public string $id
     ) {}
 }
-

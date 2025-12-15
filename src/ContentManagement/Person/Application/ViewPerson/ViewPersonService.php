@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Person\Application\ViewPerson;
 
-use Pumukit\SchemaBundle\Document\Person;
 use App\ContentManagement\Person\Domain\Exception\PersonNotFoundException;
 use App\ContentManagement\Person\Domain\Repository\PersonRepositoryInterface;
+use Pumukit\SchemaBundle\Document\Person;
 
 final class ViewPersonService
 {

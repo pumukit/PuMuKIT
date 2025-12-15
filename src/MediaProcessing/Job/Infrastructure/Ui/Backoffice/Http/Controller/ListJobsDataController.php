@@ -25,7 +25,6 @@ final class ListJobsDataController extends AbstractController
         $sort = $request->query->get('sort', 'timeini');
         $order = $request->query->get('order', 'desc');
 
-
         $dto = new ListJobsRequest(
             page: $page,
             limit: $limit,

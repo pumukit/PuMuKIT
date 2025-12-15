@@ -12,9 +12,7 @@ final class MenuBuildEvent extends Event
 
     private array $items = [];
 
-    public function __construct(private readonly ?string $currentRoute = null)
-    {
-    }
+    public function __construct(private readonly ?string $currentRoute = null) {}
 
     public function addItem(
         string $key,

@@ -128,6 +128,7 @@ final class UpdateSeriesValidator
         if (is_array($request->properties)) {
             return;
         }
+
         throw new \InvalidArgumentException('Properties must be an array');
     }
 }

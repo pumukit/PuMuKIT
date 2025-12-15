@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Series\Application\Update;
 
-use Pumukit\SchemaBundle\Document\SeriesType;
-use Pumukit\SchemaBundle\Document\SeriesStyle;
 use App\ContentManagement\Series\Domain\Event\SeriesUpdatedEvent;
 use App\ContentManagement\Series\Domain\Exception\SeriesNotFoundException;
 use App\ContentManagement\Series\Domain\Repository\SeriesRepositoryInterface;
 use App\ContentManagement\Series\Domain\Repository\SeriesStyleRepositoryInterface;
 use App\ContentManagement\Series\Domain\Repository\SeriesTypeRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
+use Pumukit\SchemaBundle\Document\SeriesStyle;
+use Pumukit\SchemaBundle\Document\SeriesType;
 
 final class UpdateSeriesService
 {

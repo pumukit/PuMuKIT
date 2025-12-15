@@ -26,12 +26,13 @@ final class DoctrinePlaylistRepository implements PlaylistRepositoryInterface
             ->getRepository(Series::class)
             ->find($id)
         ;
-        if ($playlist === null) {
+        if (null === $playlist) {
             return null;
         }
         if (!$playlist->isPlaylist()) {
             return null;
         }
+
         return $playlist;
     }
 
@@ -78,6 +79,7 @@ final class DoctrinePlaylistRepository implements PlaylistRepositoryInterface
         ;
 
         $result = $qb->getQuery()->execute();
+
         return is_array($result) ? $result : (is_iterable($result) ? iterator_to_array($result) : []);
     }
 

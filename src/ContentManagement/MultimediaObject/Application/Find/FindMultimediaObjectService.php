@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\MultimediaObject\Application\Find;
 
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use App\ContentManagement\MultimediaObject\Domain\Exception\MultimediaObjectNotFoundException;
 use App\ContentManagement\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 final class FindMultimediaObjectService
 {

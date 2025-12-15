@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Person\Application\UpdatePerson;
 
-use Pumukit\SchemaBundle\Document\Person;
 use App\ContentManagement\Person\Domain\Event\PersonUpdatedEvent;
 use App\ContentManagement\Person\Domain\Exception\PersonNotFoundException;
 use App\ContentManagement\Person\Domain\Repository\PersonRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
+use Pumukit\SchemaBundle\Document\Person;
 
 final class UpdatePersonService
 {

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Streaming\Channel\Application\Update;
 
-use Pumukit\SchemaBundle\Document\Live;
 use App\Shared\Domain\EventBusInterface;
 use App\Streaming\Channel\Domain\Event\ChannelUpdatedEvent;
 use App\Streaming\Channel\Domain\Exception\ChannelNotFoundException;
 use App\Streaming\Channel\Domain\Repository\ChannelRepositoryInterface;
+use Pumukit\SchemaBundle\Document\Live;
 
 final class UpdateChannelService
 {

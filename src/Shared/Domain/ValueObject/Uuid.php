@@ -9,9 +9,7 @@ use MongoDB\BSON\ObjectId;
 
 class Uuid implements \Stringable
 {
-    protected function __construct(protected ObjectId $id)
-    {
-    }
+    protected function __construct(protected ObjectId $id) {}
 
     public function __toString(): string
     {

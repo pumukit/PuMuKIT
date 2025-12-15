@@ -26,7 +26,6 @@ final class ListPersonsDataController extends AbstractController
         $order = $request->query->get('order', 'desc');
         $search = $request->query->get('search', '');
 
-
         $filters = [];
         if (!empty($search)) {
             $filters['search'] = $search;

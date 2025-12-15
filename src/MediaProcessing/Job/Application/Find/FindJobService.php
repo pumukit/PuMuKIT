@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\MediaProcessing\Job\Application\Find;
 
-use Pumukit\EncoderBundle\Document\Job;
 use App\MediaProcessing\Job\Domain\Exception\JobNotFoundException;
 use App\MediaProcessing\Job\Domain\Repository\JobRepositoryInterface;
+use Pumukit\EncoderBundle\Document\Job;
 
 final class FindJobService
 {

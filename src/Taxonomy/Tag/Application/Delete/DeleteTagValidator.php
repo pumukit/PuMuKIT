@@ -13,4 +13,3 @@ final class DeleteTagValidator
         UuidValidator::validate($request->id, 'Tag ID');
     }
 }
-

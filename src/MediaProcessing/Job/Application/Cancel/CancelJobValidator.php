@@ -13,4 +13,3 @@ final class CancelJobValidator
         UuidValidator::validate($request->id, 'Job ID');
     }
 }
-

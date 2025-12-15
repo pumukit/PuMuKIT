@@ -60,7 +60,7 @@ final class ToggleMaintenanceService
     {
         $cpuStatus = $this->cpuRepository->findByName($cpuName);
 
-        if ($cpuStatus !== null) {
+        if (null !== $cpuStatus) {
             $this->cpuRepository->delete($cpuStatus);
         }
     }

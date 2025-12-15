@@ -2,9 +2,9 @@
 
 namespace App\Playlist\Infrastructure\Factory;
 
-use App\Playlist\Domain\Factory\PlaylistFactoryInterface;
 use App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface;
 use App\IdentityAndAccess\User\Domain\ValueObject\UserId;
+use App\Playlist\Domain\Factory\PlaylistFactoryInterface;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\FactoryService;
 

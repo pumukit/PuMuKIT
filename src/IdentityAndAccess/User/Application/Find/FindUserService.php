@@ -2,9 +2,9 @@
 
 namespace App\IdentityAndAccess\User\Application\Find;
 
-use Pumukit\SchemaBundle\Document\User;
 use App\IdentityAndAccess\User\Domain\Exception\UserNotFoundException;
 use App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface;
+use Pumukit\SchemaBundle\Document\User;
 
 final class FindUserService
 {

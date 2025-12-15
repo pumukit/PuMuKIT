@@ -36,6 +36,7 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
         }
 
         $result = $qb->getQuery()->execute();
+
         return is_array($result) ? $result : (is_iterable($result) ? iterator_to_array($result) : []);
     }
 
@@ -81,6 +82,7 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
         $qb->skip(($page - 1) * $limit)->limit($limit);
 
         $result = $qb->getQuery()->execute();
+
         return is_array($result) ? $result : (is_iterable($result) ? iterator_to_array($result) : []);
     }
 
@@ -118,6 +120,7 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
         ;
 
         $result = $qb->getQuery()->execute();
+
         return is_array($result) ? $result : (is_iterable($result) ? iterator_to_array($result) : []);
     }
 
@@ -144,6 +147,7 @@ final class DoctrineSeriesRepository implements SeriesRepositoryInterface
         ;
 
         $result = $qb->getQuery()->execute();
+
         return is_array($result) ? $result : (is_iterable($result) ? iterator_to_array($result) : []);
     }
 

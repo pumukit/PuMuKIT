@@ -25,7 +25,6 @@ final class ListChannelsDataController extends AbstractController
         $sort = $request->query->get('sort', 'name.en');
         $order = $request->query->get('order', 'asc');
 
-
         $dto = new ListChannelsRequest(
             page: $page,
             limit: $limit,

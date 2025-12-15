@@ -13,4 +13,3 @@ final class ViewChannelValidator
         UuidValidator::validate($request->id, 'Channel ID');
     }
 }
-

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Playlist\Application\Create;
 
+use App\IdentityAndAccess\User\Domain\ValueObject\UserId;
 use App\Playlist\Domain\Event\PlaylistCreatedEvent;
 use App\Playlist\Domain\Factory\PlaylistFactoryInterface;
-use App\IdentityAndAccess\User\Domain\ValueObject\UserId;
 use App\Shared\Domain\EventBusInterface;
 
 final class CreatePlaylistService

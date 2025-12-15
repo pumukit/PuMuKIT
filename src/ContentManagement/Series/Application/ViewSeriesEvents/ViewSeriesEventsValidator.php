@@ -15,6 +15,7 @@ final class ViewSeriesEventsValidator
         if ($request->limit >= 1) {
             return;
         }
+
         throw new \InvalidArgumentException('Limit must be greater than 0');
     }
 }

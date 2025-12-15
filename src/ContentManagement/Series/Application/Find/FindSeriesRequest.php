@@ -6,7 +6,5 @@ namespace App\ContentManagement\Series\Application\Find;
 
 final class FindSeriesRequest
 {
-    public function __construct(public string $id)
-    {
-    }
+    public function __construct(public string $id) {}
 }

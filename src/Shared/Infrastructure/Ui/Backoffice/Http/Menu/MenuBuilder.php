@@ -73,6 +73,7 @@ final class MenuBuilder
             if (!$this->hasActiveChild($child['children'])) {
                 continue;
             }
+
             return true;
         }
 

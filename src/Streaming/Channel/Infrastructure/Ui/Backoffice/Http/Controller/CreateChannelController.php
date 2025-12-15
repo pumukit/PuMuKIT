@@ -21,7 +21,6 @@ final class CreateChannelController extends AbstractController
 
     public function __invoke(Request $request): Response
     {
-
         if ($request->isMethod('POST')) {
             $data = $request->request->all();
 

@@ -24,6 +24,7 @@ class DoctrineUserRepository implements UserRepositoryInterface
         $this->applyFilters($qb, $filters);
 
         $result = $qb->getQuery()->execute();
+
         return is_array($result) ? $result : (is_iterable($result) ? iterator_to_array($result) : []);
     }
 
@@ -39,6 +40,7 @@ class DoctrineUserRepository implements UserRepositoryInterface
         ;
 
         $result = $qb->getQuery()->execute();
+
         return is_array($result) ? $result : (is_iterable($result) ? iterator_to_array($result) : []);
     }
 

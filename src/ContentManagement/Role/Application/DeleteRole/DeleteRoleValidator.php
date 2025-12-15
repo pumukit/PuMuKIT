@@ -13,4 +13,3 @@ final class DeleteRoleValidator
         UuidValidator::validate($request->id, 'Role ID');
     }
 }
-

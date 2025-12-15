@@ -13,4 +13,3 @@ final class ViewPersonValidator
         UuidValidator::validate($request->id, 'Person ID');
     }
 }
-

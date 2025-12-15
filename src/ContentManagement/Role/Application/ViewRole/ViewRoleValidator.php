@@ -13,4 +13,3 @@ final class ViewRoleValidator
         UuidValidator::validate($request->id, 'Role ID');
     }
 }
-

@@ -13,4 +13,3 @@ final class DeleteChannelValidator
         UuidValidator::validate($request->id, 'Channel ID');
     }
 }
-

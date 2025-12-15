@@ -13,4 +13,3 @@ final class FindJobValidator
         UuidValidator::validate($request->id, 'Job ID');
     }
 }
-

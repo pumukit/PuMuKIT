@@ -26,7 +26,6 @@ final class ViewSeriesEventsDataController extends AbstractController
         $order = $request->query->get('order', 'asc');
         $search = $request->query->get('search', '');
 
-
         $filters = [
             'series_id' => $id,
         ];

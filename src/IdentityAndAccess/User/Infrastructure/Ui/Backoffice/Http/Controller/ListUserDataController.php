@@ -28,7 +28,6 @@ class ListUserDataController extends AbstractController
         $sort = $request->query->get('sort', 'fullName');
         $order = $request->query->get('order', 'asc');
 
-
         $filters = [];
 
         if (str_starts_with($sort, 'user.')) {

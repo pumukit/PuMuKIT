@@ -2,8 +2,8 @@
 
 namespace App\IdentityAndAccess\User\Application\Delete;
 
-use Pumukit\SchemaBundle\Document\User;
 use App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface;
+use Pumukit\SchemaBundle\Document\User;
 
 final class DeleteUserService
 {

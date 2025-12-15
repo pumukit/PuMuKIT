@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Taxonomy\Tag\Infrastructure\Ui\Backoffice\Http\Controller;
 
+use App\Shared\Domain\TranslatorInterface;
 use App\Taxonomy\Tag\Application\List\ListTagsRequest;
 use App\Taxonomy\Tag\Application\List\ListTagsService;
 use App\Taxonomy\Tag\Application\Update\UpdateTagRequest;
 use App\Taxonomy\Tag\Application\Update\UpdateTagService;
 use App\Taxonomy\Tag\Application\View\ViewTagRequest;
 use App\Taxonomy\Tag\Application\View\ViewTagService;
-use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

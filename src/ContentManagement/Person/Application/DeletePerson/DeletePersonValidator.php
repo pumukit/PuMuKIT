@@ -13,4 +13,3 @@ final class DeletePersonValidator
         UuidValidator::validate($request->id, 'Person ID');
     }
 }
-

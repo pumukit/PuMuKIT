@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Taxonomy\Tag\Application\View;
 
-use Pumukit\SchemaBundle\Document\Tag;
 use App\Taxonomy\Tag\Domain\Exception\TagNotFoundException;
 use App\Taxonomy\Tag\Domain\Repository\TagRepositoryInterface;
+use Pumukit\SchemaBundle\Document\Tag;
 
 final class ViewTagService
 {

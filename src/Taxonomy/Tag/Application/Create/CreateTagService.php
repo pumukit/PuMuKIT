@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Taxonomy\Tag\Application\Create;
 
-use App\Taxonomy\Tag\Domain\Event\TagUpdatedEvent;
+use App\Shared\Domain\EventBusInterface;
 use App\Taxonomy\Tag\Domain\Exception\TagAlreadyExistsException;
 use App\Taxonomy\Tag\Domain\Exception\TagNotFoundException;
 use App\Taxonomy\Tag\Domain\Repository\TagRepositoryInterface;
-use App\Shared\Domain\EventBusInterface;
 use Pumukit\SchemaBundle\Document\Tag;
 
 final class CreateTagService
@@ -23,7 +22,7 @@ final class CreateTagService
         CreateTagValidator::validate($request);
 
         $existingTag = $this->tagRepository->findByCod($request->cod);
-        if ($existingTag !== null) {
+        if (null !== $existingTag) {
             throw TagAlreadyExistsException::withCod($request->cod);
         }
 
@@ -48,7 +47,7 @@ final class CreateTagService
         $tag->setDisplay($request->display);
         $tag->setProperties($request->properties ?? []);
 
-        if ($parent !== null) {
+        if (null !== $parent) {
             $tag->setParent($parent);
         }
 

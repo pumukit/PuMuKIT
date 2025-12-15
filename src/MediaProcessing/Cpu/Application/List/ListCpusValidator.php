@@ -6,8 +6,5 @@ namespace App\MediaProcessing\Cpu\Application\List;
 
 final class ListCpusValidator
 {
-    public static function validate(ListCpusRequest $request): void
-    {
-    }
+    public static function validate(ListCpusRequest $request): void {}
 }
-

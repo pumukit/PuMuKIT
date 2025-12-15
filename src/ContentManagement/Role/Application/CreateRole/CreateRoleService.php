@@ -19,7 +19,7 @@ final class CreateRoleService
         CreateRoleValidator::validate($request);
 
         $existingRole = $this->roleRepository->findByCod($request->cod);
-        if ($existingRole !== null) {
+        if (null !== $existingRole) {
             throw RoleAlreadyExistsException::withCod($request->cod);
         }
 

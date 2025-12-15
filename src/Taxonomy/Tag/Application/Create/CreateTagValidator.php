@@ -18,9 +18,8 @@ final class CreateTagValidator
             throw new \InvalidArgumentException('Tag title cannot be empty');
         }
 
-        if ($request->parentId !== null) {
+        if (null !== $request->parentId) {
             UuidValidator::validate($request->parentId, 'Parent ID');
         }
     }
 }
-

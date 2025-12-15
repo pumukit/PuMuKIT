@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Role\Application\UpdateRole;
 
-use Pumukit\SchemaBundle\Document\Role;
 use App\ContentManagement\Role\Domain\Exception\RoleNotFoundException;
 use App\ContentManagement\Role\Domain\Repository\RoleRepositoryInterface;
+use Pumukit\SchemaBundle\Document\Role;
 
 final class UpdateRoleService
 {

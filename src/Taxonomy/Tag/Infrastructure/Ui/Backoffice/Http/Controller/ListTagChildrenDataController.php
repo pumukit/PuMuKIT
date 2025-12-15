@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Taxonomy\Tag\Infrastructure\Ui\Backoffice\Http\Controller;
 
-use Pumukit\SchemaBundle\Document\Tag;
 use App\Taxonomy\Tag\Domain\Repository\TagRepositoryInterface;
 use App\Taxonomy\Tag\Infrastructure\Ui\Backoffice\Http\Presenter\TagDataTablePresenter;
+use Pumukit\SchemaBundle\Document\Tag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 

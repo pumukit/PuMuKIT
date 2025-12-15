@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\MultimediaObject\Application\Delete;
 
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use App\ContentManagement\MultimediaObject\Domain\Event\MultimediaObjectDeletedEvent;
 use App\ContentManagement\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
 use App\Shared\Domain\EventBusInterface;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 final class DeleteMultimediaObjectService
 {

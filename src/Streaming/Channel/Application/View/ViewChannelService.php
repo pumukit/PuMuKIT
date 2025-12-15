@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Streaming\Channel\Application\View;
 
-use Pumukit\SchemaBundle\Document\Live;
 use App\Streaming\Channel\Domain\Exception\ChannelNotFoundException;
 use App\Streaming\Channel\Domain\Repository\ChannelRepositoryInterface;
+use Pumukit\SchemaBundle\Document\Live;
 
 final class ViewChannelService
 {

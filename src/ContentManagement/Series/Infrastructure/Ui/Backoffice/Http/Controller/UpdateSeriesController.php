@@ -6,10 +6,10 @@ namespace App\ContentManagement\Series\Infrastructure\Ui\Backoffice\Http\Control
 
 use App\ContentManagement\Series\Application\Update\UpdateSeriesService;
 use App\ContentManagement\Series\Domain\Exception\SeriesNotFoundException;
-use App\Shared\Domain\LoggerInterface;
-use App\Shared\Domain\TranslatorInterface;
 use App\ContentManagement\Series\Infrastructure\Ui\Backoffice\Http\Event\SeriesFormSubmitEvent;
 use App\ContentManagement\Series\Infrastructure\Ui\Backoffice\Http\FormHandler\UpdateSeriesFormHandler;
+use App\Shared\Domain\LoggerInterface;
+use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;

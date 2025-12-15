@@ -52,9 +52,9 @@ final class ListTagsController extends AbstractController
         }
 
         $rootTag = $this->tagRepository->findByCod('ROOT');
-        $rootParentId = $rootTag !== null ? $rootTag->getId() : null;
+        $rootParentId = null !== $rootTag ? $rootTag->getId() : null;
 
-        error_log('ROOT Tag found: '.($rootTag !== null ? 'YES' : 'NO'));
+        error_log('ROOT Tag found: '.(null !== $rootTag ? 'YES' : 'NO'));
         error_log('ROOT Tag ID: '.($rootParentId ?? 'NULL'));
 
         return $this->render('@Tag/Views/list.html.twig', [

@@ -24,7 +24,6 @@ final class ListSeriesDataController extends AbstractController
         $order = $request->query->get('order', 'asc');
         $search = $request->query->get('search', '');
 
-
         $filters = [];
         if ($search) {
             $filters['title.'.$request->getLocale()] = $search;

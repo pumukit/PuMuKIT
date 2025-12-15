@@ -2,10 +2,10 @@
 
 namespace App\ContentManagement\Series\Infrastructure\Ui\Backoffice\Http\Controller;
 
-use App\ContentManagement\Series\Application\View\ViewSeriesRequest;
-use App\ContentManagement\Series\Application\View\ViewSeriesService;
 use App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Event\MultimediaObjectBulkOperationsEvent;
 use App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Event\MultimediaObjectListActionsEvent;
+use App\ContentManagement\Series\Application\View\ViewSeriesRequest;
+use App\ContentManagement\Series\Application\View\ViewSeriesService;
 use App\ContentManagement\Series\Infrastructure\Ui\Backoffice\Http\Event\SeriesFormBuildEvent;
 use App\ContentManagement\Series\Infrastructure\Ui\Backoffice\Http\Event\SeriesViewTabsEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

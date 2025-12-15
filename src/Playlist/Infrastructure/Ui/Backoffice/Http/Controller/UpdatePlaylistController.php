@@ -6,10 +6,10 @@ namespace App\Playlist\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use App\Playlist\Application\Update\UpdatePlaylistService;
 use App\Playlist\Domain\Exception\PlaylistNotFoundException;
-use App\Shared\Domain\LoggerInterface;
-use App\Shared\Domain\TranslatorInterface;
 use App\Playlist\Infrastructure\Ui\Backoffice\Http\Event\PlaylistFormSubmitEvent;
 use App\Playlist\Infrastructure\Ui\Backoffice\Http\FormHandler\UpdatePlaylistFormHandler;
+use App\Shared\Domain\LoggerInterface;
+use App\Shared\Domain\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;

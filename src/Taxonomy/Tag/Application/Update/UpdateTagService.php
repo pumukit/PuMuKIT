@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Taxonomy\Tag\Application\Update;
 
-use Pumukit\SchemaBundle\Document\Tag;
+use App\Shared\Domain\EventBusInterface;
 use App\Taxonomy\Tag\Domain\Event\TagUpdatedEvent;
 use App\Taxonomy\Tag\Domain\Exception\TagNotFoundException;
 use App\Taxonomy\Tag\Domain\Repository\TagRepositoryInterface;
-use App\Shared\Domain\EventBusInterface;
+use Pumukit\SchemaBundle\Document\Tag;
 
 final class UpdateTagService
 {
