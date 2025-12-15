@@ -1,3 +1,0 @@
-dashboard:
-  path: /admin/backend/dashboard
-  controller: App\UI\Backoffice\Dashboard\Controller\ViewDashboardController
