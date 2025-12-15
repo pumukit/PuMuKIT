@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shared\Domain;
 
-abstract readonly class DomainEvent
+abstract class DomainEvent
 {
     public function __construct(
         public string $eventId = '',

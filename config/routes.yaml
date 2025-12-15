@@ -7,9 +7,6 @@ playlist_routes:
 series_routes:
   resource: ../src/Framework/ContentManagement/Series/routes.yaml
 
-taxonomy_routes:
-  resource: ../src/Framework/ContentManagement/Taxonomy/routes.yaml
-
 role_routes:
   resource: ../src/Framework/ContentManagement/Role/routes.yaml
 

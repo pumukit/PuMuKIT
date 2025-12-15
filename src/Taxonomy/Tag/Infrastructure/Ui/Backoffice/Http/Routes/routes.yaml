@@ -1,0 +1,40 @@
+taxonomy_tag_index:
+    path: /admin/backend/taxonomy/tags
+    controller: App\Taxonomy\Tag\Infrastructure\Ui\Backoffice\Http\Controller\ListTagsController
+    methods: [GET]
+
+taxonomy_tag_list_data:
+    path: /admin/backend/taxonomy/tags/data
+    controller: App\Taxonomy\Tag\Infrastructure\Ui\Backoffice\Http\Controller\ListTagsDataController
+    methods: [GET]
+
+taxonomy_tag_children_data:
+    path: /admin/backend/taxonomy/tags/{parentId}/children
+    controller: App\Taxonomy\Tag\Infrastructure\Ui\Backoffice\Http\Controller\ListTagChildrenDataController
+    methods: [GET]
+
+taxonomy_tag_create:
+    path: /admin/backend/taxonomy/tags/create
+    controller: App\Taxonomy\Tag\Infrastructure\Ui\Backoffice\Http\Controller\CreateTagController
+    methods: [GET, POST]
+
+taxonomy_tag_view:
+  path: /admin/backend/taxonomy/tags/{id}/update
+  controller: App\Taxonomy\Tag\Infrastructure\Ui\Backoffice\Http\Controller\UpdateTagController
+  methods: [GET, POST]
+
+taxonomy_tag_update:
+    path: /admin/backend/taxonomy/tags/{id}/update
+    controller: App\Taxonomy\Tag\Infrastructure\Ui\Backoffice\Http\Controller\UpdateTagController
+    methods: [GET, POST]
+
+taxonomy_tag_delete:
+    path: /admin/backend/taxonomy/tags/{id}/delete
+    controller: App\Taxonomy\Tag\Infrastructure\Ui\Backoffice\Http\Controller\DeleteTagController
+    methods: [POST]
+
+taxonomy_tag_bulk_delete:
+    path: /admin/backend/taxonomy/tags/bulk-delete
+    controller: App\Taxonomy\Tag\Infrastructure\Ui\Backoffice\Http\Controller\BulkDeleteTagsController
+    methods: [POST]
+
