@@ -73,5 +73,3 @@ services:
         arguments:
           - '@annotation_reader'
 
-imports:
-  - { resource: '../src/Framework/ContentManagement/Series/services.yaml' }

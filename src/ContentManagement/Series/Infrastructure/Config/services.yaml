@@ -1,0 +1,66 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+    bind:
+      $scheme: '%router.request_context.scheme%'
+      $host: '%router.request_context.host%'
+
+  # --- DOMAIN & APPLICATION ---
+  App\ContentManagement\Series\Application\:
+    resource: '../../Application/'
+    exclude: '../../Application/**/*{Query,Request,Response}.php'
+
+  # --- INFRASTRUCTURE: PERSISTENCE ---
+  App\ContentManagement\Series\Infrastructure\Persistence\DoctrineSeriesRepository:
+    tags: ['doctrine.repository']
+
+  App\ContentManagement\Series\Infrastructure\Persistence\DoctrineSeriesTypeRepository: ~
+  App\ContentManagement\Series\Infrastructure\Persistence\DoctrineSeriesStyleRepository: ~
+
+  App\ContentManagement\Series\Domain\Repository\SeriesRepositoryInterface:
+    alias: App\ContentManagement\Series\Infrastructure\Persistence\DoctrineSeriesRepository
+
+  App\ContentManagement\Series\Domain\Repository\SeriesTypeRepositoryInterface:
+    alias: App\ContentManagement\Series\Infrastructure\Persistence\DoctrineSeriesTypeRepository
+
+  App\ContentManagement\Series\Domain\Repository\SeriesStyleRepositoryInterface:
+    alias: App\ContentManagement\Series\Infrastructure\Persistence\DoctrineSeriesStyleRepository
+
+  # --- INFRASTRUCTURE: FACTORY ---
+  App\ContentManagement\Series\Domain\Factory\SeriesFactoryInterface:
+    alias: App\ContentManagement\Series\Infrastructure\Factory\SeriesFactoryAdapter
+
+  App\ContentManagement\Series\Infrastructure\Factory\SeriesFactoryAdapter:
+    arguments:
+      $factoryService: '@Pumukit\SchemaBundle\Services\FactoryService'
+      $userRepository: '@App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface'
+
+  # --- INFRASTRUCTURE: GENERAL ---
+  App\ContentManagement\Series\Infrastructure\:
+    resource: '../'
+    exclude:
+      - '../Config/'
+      - '../Ui/'
+      - '../Persistence/DoctrineSeries*'
+      - '../Factory/SeriesFactoryAdapter.php'
+
+  # --- INFRASTRUCTURE: UI (BACKOFFICE HTTP) ---
+  App\ContentManagement\Series\Infrastructure\Ui\Backoffice\Http\Controller\:
+    resource: '../Ui/Backoffice/Http/Controller/'
+    tags: ['controller.service_arguments']
+
+  App\ContentManagement\Series\Infrastructure\Ui\Backoffice\Http\Presenter\:
+    resource: '../Ui/Backoffice/Http/Presenter/'
+
+  App\ContentManagement\Series\Infrastructure\Ui\Backoffice\Http\FormHandler\:
+    resource: '../Ui/Backoffice/Http/FormHandler/'
+
+  App\ContentManagement\Series\Infrastructure\Ui\Backoffice\Http\Twig\:
+    resource: '../Ui/Backoffice/Http/Twig/'
+    arguments:
+      $picService: '@Pumukit\SchemaBundle\Services\PicService'
+
+  App\ContentManagement\Series\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
+    resource: '../Ui/Backoffice/Http/EventSubscriber/'

@@ -1,3 +1,0 @@
-series_routes:
-  resource: ../src/Framework/ContentManagement/Series/routes.yaml
-
