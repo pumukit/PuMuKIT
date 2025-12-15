@@ -1,9 +1,6 @@
 multimedia_object_routes:
   resource: ../src/Framework/ContentManagement/MultimediaObject/routes.yaml
 
-playlist_routes:
-  resource: ../src/Framework/ContentManagement/Playlist/routes.yaml
-
 series_routes:
   resource: ../src/Framework/ContentManagement/Series/routes.yaml
 

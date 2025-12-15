@@ -1,0 +1,33 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Playlist\Infrastructure\Ui\Backoffice\Http\Event;
+
+use Pumukit\SchemaBundle\Document\Series;
+
+final class PlaylistFormBuildEvent
+{
+    public const NAME = 'playlist.form_build';
+
+    private array $fields = [];
+
+    public function __construct(
+        private readonly Series $playlist
+    ) {}
+
+    public function addField(string $name, array $config): void
+    {
+        $this->fields[$name] = $config;
+    }
+
+    public function getFields(): array
+    {
+        return $this->fields;
+    }
+
+    public function getPlaylist(): Series
+    {
+        return $this->playlist;
+    }
+}

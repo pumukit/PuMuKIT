@@ -1,0 +1,51 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+    bind:
+      $scheme: '%router.request_context.scheme%'
+      $host: '%router.request_context.host%'
+
+  # --- DOMAIN & APPLICATION ---
+  App\Playlist\Application\:
+    resource: '../../Application/'
+    exclude: '../../Application/**/*{Query,Request,Response,Validator}.php'
+
+  # --- INFRASTRUCTURE: PERSISTENCE & FACTORY ---
+  App\Playlist\Infrastructure\Persistence\DoctrinePlaylistRepository:
+    tags: ['doctrine.repository']
+
+  App\Playlist\Domain\Repository\PlaylistRepositoryInterface:
+    alias: App\Playlist\Infrastructure\Persistence\DoctrinePlaylistRepository
+
+  App\Playlist\Domain\Factory\PlaylistFactoryInterface:
+    alias: App\Playlist\Infrastructure\Factory\PlaylistFactoryAdapter
+
+  App\Playlist\Infrastructure\Factory\PlaylistFactoryAdapter:
+    arguments:
+      $factoryService: '@Pumukit\SchemaBundle\Services\FactoryService'
+      $userRepository: '@App\IdentityAndAccess\User\Domain\Repository\UserRepositoryInterface'
+
+  App\Playlist\Infrastructure\:
+    resource: '../'
+    exclude:
+      - '../Config/'
+      - '../Ui/'
+      - '../Persistence/DoctrinePlaylistRepository.php'
+      - '../Factory/PlaylistFactoryAdapter.php'
+
+  # --- INFRASTRUCTURE: UI (BACKOFFICE HTTP) ---
+
+  App\Playlist\Infrastructure\Ui\Backoffice\Http\Controller\:
+    resource: '../Ui/Backoffice/Http/Controller/'
+    tags: ['controller.service_arguments']
+
+  App\Playlist\Infrastructure\Ui\Backoffice\Http\Presenter\:
+    resource: '../Ui/Backoffice/Http/Presenter/'
+
+  App\Playlist\Infrastructure\Ui\Backoffice\Http\FormHandler\:
+    resource: '../Ui/Backoffice/Http/FormHandler/'
+
+  App\Playlist\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
+    resource: '../Ui/Backoffice/Http/EventSubscriber/'

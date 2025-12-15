@@ -1,0 +1,38 @@
+playlist_create:
+  path: /admin/backend/playlist/new
+  controller: App\Playlist\Infrastructure\Ui\Backoffice\Http\Controller\CreatePlaylistController
+  defaults:
+    tab: 'general'
+  requirements:
+    tab: '[a-zA-Z0-9_-]+'
+
+playlist_list:
+  path: /admin/backend/playlist
+  controller: App\Playlist\Infrastructure\Ui\Backoffice\Http\Controller\ListPlaylistController
+
+playlist_list_data:
+  path: /admin/backend/playlist/data
+  controller: App\Playlist\Infrastructure\Ui\Backoffice\Http\Controller\ListPlaylistDataController
+
+playlist_bulk_delete:
+  path: /admin/backend/playlist/bulk/delete
+  controller: App\Playlist\Infrastructure\Ui\Backoffice\Http\Controller\BulkDeletePlaylistController
+  methods: [POST]
+
+playlist_delete:
+  path: /admin/backend/playlist/{id}/delete
+  controller: App\Playlist\Infrastructure\Ui\Backoffice\Http\Controller\DeletePlaylistController
+
+playlist_update:
+  path: /admin/backend/playlist/{id}/update
+  controller: App\Playlist\Infrastructure\Ui\Backoffice\Http\Controller\UpdatePlaylistController
+  methods: [POST]
+
+playlist_view:
+  path: /admin/backend/playlist/{id}/{tab}
+  controller: App\Playlist\Infrastructure\Ui\Backoffice\Http\Controller\ViewPlaylistController
+  defaults:
+    tab: 'general'
+  requirements:
+    tab: '[a-zA-Z0-9_-]+'
+
