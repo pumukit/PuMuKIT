@@ -4,6 +4,7 @@ namespace App\Playlist\Infrastructure\Persistence;
 
 use App\Playlist\Domain\Repository\PlaylistRepositoryInterface;
 use App\Shared\Infrastructure\Persistence\DoctrineObjectManager;
+use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\Series;
 
 final class DoctrinePlaylistRepository implements PlaylistRepositoryInterface
@@ -50,7 +51,8 @@ final class DoctrinePlaylistRepository implements PlaylistRepositoryInterface
     {
         $qb = $this->objectManager->getDocumentManager()
             ->createQueryBuilder(Series::class)
-            ->field('type')->equals(Series::TYPE_PLAYLIST);
+            ->field('type')->equals(Series::TYPE_PLAYLIST)
+        ;
 
         foreach ($filters as $field => $value) {
             if ('type' === $field || empty($value)) {
@@ -60,11 +62,11 @@ final class DoctrinePlaylistRepository implements PlaylistRepositoryInterface
             if (is_array($value)) {
                 $orExpressions = [];
                 foreach ($value as $v) {
-                    $orExpressions[] = $qb->expr()->field($field)->equals(new \MongoDB\BSON\Regex('.*'.$v.'.*', 'i'));
+                    $orExpressions[] = $qb->expr()->field($field)->equals(new Regex('.*'.$v.'.*', 'i'));
                 }
                 $qb->addOr(...$orExpressions);
             } else {
-                $qb->field($field)->equals(new \MongoDB\BSON\Regex('.*'.$value.'.*', 'i'));
+                $qb->field($field)->equals(new Regex('.*'.$value.'.*', 'i'));
             }
         }
 
