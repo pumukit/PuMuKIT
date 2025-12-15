@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UI\Backoffice\ContentManagement\MultimediaObject\Helpers;
+namespace App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Helpers;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 

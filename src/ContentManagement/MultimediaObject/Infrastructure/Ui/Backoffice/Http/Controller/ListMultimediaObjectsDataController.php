@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\MultimediaObject\Controller;
+namespace App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use App\ContentManagement\MultimediaObject\Application\List\ListMultimediaObjectsRequest;
 use App\ContentManagement\MultimediaObject\Application\List\ListMultimediaObjectsService;
-use App\UI\Backoffice\ContentManagement\MultimediaObject\Presenter\MultimediaObjectDataTablePresenter;
+use App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Presenter\MultimediaObjectDataTablePresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

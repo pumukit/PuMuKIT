@@ -74,7 +74,6 @@ services:
           - '@annotation_reader'
 
 imports:
-  - { resource: '../src/Framework/ContentManagement/MultimediaObject/services.yaml' }
   - { resource: '../src/Framework/ContentManagement/Series/services.yaml' }
   - { resource: '../src/Framework/ContentManagement/Role/services.yaml' }
   - { resource: '../src/Framework/ContentManagement/Person/services.yaml' }

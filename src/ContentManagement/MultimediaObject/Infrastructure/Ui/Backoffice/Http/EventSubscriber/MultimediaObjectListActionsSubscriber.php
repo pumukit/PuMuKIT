@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\MultimediaObject\EventSubscriber;
+namespace App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\EventSubscriber;
 
-use App\UI\Backoffice\ContentManagement\MultimediaObject\Event\MultimediaObjectListActionsEvent;
+use App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Event\MultimediaObjectListActionsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class MultimediaObjectListActionsSubscriber implements EventSubscriberInterface

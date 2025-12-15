@@ -7,7 +7,7 @@ namespace App\MediaProcessing\Job\Infrastructure\Ui\Backoffice\Http\Presenter;
 use App\ContentManagement\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
 use App\MediaProcessing\Job\Infrastructure\Ui\Backoffice\Http\Helpers\CalcDuration;
 use App\MediaProcessing\Job\Infrastructure\Ui\Backoffice\Http\Helpers\StatusIcon;
-use App\UI\Backoffice\ContentManagement\MultimediaObject\Helpers\TypeIcon;
+use App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Helpers\TypeIcon;
 use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\DateFormat;
 use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\LinkFormat;
 use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\TextTruncate;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\MultimediaObject\Controller;
+namespace App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Controller;
 
-use App\UI\Backoffice\ContentManagement\MultimediaObject\Event\MultimediaObjectBulkOperationsEvent;
+use App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Event\MultimediaObjectBulkOperationsEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;

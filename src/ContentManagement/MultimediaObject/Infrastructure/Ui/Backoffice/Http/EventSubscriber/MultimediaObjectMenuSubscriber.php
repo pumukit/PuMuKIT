@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\MultimediaObject\EventSubscriber;
+namespace App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\EventSubscriber;
 
 use App\Shared\Infrastructure\Ui\Backoffice\Http\Event\MenuBuildEvent;
 use Pumukit\SchemaBundle\Security\Permission;

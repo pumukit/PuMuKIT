@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\MultimediaObject\Controller;
+namespace App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use App\ContentManagement\MultimediaObject\Application\Delete\DeleteMultimediaObjectRequest;
 use App\ContentManagement\MultimediaObject\Application\Delete\DeleteMultimediaObjectService;

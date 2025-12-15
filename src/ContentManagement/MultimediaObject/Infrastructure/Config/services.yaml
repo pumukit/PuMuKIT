@@ -1,0 +1,38 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+    bind:
+      $scheme: '%router.request_context.scheme%'
+      $host: '%router.request_context.host%'
+
+  # --- DOMAIN & APPLICATION ---
+  App\ContentManagement\MultimediaObject\Application\:
+    resource: '../../Application/'
+    exclude: '../../Application/**/*{Query,Request,Response}.php'
+
+  # --- INFRASTRUCTURE: PERSISTENCE ---
+  App\ContentManagement\MultimediaObject\Infrastructure\Persistence\DoctrineMultimediaObjectRepository:
+    tags: ['doctrine.repository']
+
+  App\ContentManagement\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface:
+    alias: App\ContentManagement\MultimediaObject\Infrastructure\Persistence\DoctrineMultimediaObjectRepository
+
+  App\ContentManagement\MultimediaObject\Infrastructure\:
+    resource: '../'
+    exclude:
+      - '../Config/'
+      - '../Ui/'
+      - '../Persistence/DoctrineMultimediaObjectRepository.php'
+
+  # --- INFRASTRUCTURE: UI (BACKOFFICE HTTP) ---
+  App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Controller\:
+    resource: '../Ui/Backoffice/Http/Controller/'
+    tags: ['controller.service_arguments']
+
+  App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Presenter\:
+    resource: '../Ui/Backoffice/Http/Presenter/'
+
+  App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
+    resource: '../Ui/Backoffice/Http/EventSubscriber/'

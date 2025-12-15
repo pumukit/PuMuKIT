@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\MultimediaObject\Event;
+namespace App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 

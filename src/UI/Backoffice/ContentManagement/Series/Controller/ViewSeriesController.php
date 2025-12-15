@@ -4,8 +4,8 @@ namespace App\UI\Backoffice\ContentManagement\Series\Controller;
 
 use App\ContentManagement\Series\Application\View\ViewSeriesRequest;
 use App\ContentManagement\Series\Application\View\ViewSeriesService;
-use App\UI\Backoffice\ContentManagement\MultimediaObject\Event\MultimediaObjectBulkOperationsEvent;
-use App\UI\Backoffice\ContentManagement\MultimediaObject\Event\MultimediaObjectListActionsEvent;
+use App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Event\MultimediaObjectBulkOperationsEvent;
+use App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Event\MultimediaObjectListActionsEvent;
 use App\UI\Backoffice\ContentManagement\Series\Event\SeriesFormBuildEvent;
 use App\UI\Backoffice\ContentManagement\Series\Event\SeriesViewTabsEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
