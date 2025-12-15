@@ -1,0 +1,35 @@
+person_list:
+    path: /admin/backend/persons
+    controller: App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Controller\ListPersonsController
+    methods: [GET]
+
+person_list_data:
+    path: /admin/backend/persons/data
+    controller: App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Controller\ListPersonsDataController
+    methods: [GET]
+
+person_create:
+    path: /admin/backend/persons/create
+    controller: App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Controller\CreatePersonController
+    methods: [GET, POST]
+
+person_view:
+  path: /admin/backend/persons/{id}/view
+  controller: App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Controller\ViewPersonController
+  methods: [GET]
+
+person_update:
+    path: /admin/backend/persons/{id}/update
+    controller: App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Controller\UpdatePersonController
+    methods: [GET, POST]
+
+person_delete:
+    path: /admin/backend/persons/{id}/delete
+    controller: App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Controller\DeletePersonController
+    methods: [POST]
+
+person_bulk_delete:
+    path: /admin/backend/persons/bulk-delete
+    controller: App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Controller\BulkDeletePersonsController
+    methods: [POST]
+

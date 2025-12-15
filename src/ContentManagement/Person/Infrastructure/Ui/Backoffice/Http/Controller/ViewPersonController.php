@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\Person\Controller;
+namespace App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use App\ContentManagement\Person\Application\ViewPerson\ViewPersonRequest;
 use App\ContentManagement\Person\Application\ViewPerson\ViewPersonService;

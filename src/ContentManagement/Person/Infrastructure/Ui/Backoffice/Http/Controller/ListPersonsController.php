@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\Person\Controller;
+namespace App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Controller;
 
-use App\UI\Backoffice\ContentManagement\Person\Event\PersonBulkOperationsEvent;
-use App\UI\Backoffice\ContentManagement\Person\Event\PersonListActionsEvent;
+use App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Event\PersonBulkOperationsEvent;
+use App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Event\PersonListActionsEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;

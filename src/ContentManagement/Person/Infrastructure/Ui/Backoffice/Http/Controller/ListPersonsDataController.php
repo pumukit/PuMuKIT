@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\Person\Controller;
+namespace App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use App\ContentManagement\Person\Application\ListPersons\ListPersonsRequest;
 use App\ContentManagement\Person\Application\ListPersons\ListPersonsService;
-use App\UI\Backoffice\ContentManagement\Person\Presenter\PersonDataTablePresenter;
+use App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Presenter\PersonDataTablePresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

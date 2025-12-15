@@ -2,29 +2,29 @@
 
 {% block body %}
     <div class="container-fluid mt-3">
-        {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'person.page.update'|trans({}, 'person')} %}
+        {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'person.page.create'|trans({}, 'person')} %}
 
         <div class="card">
             <div class="card-body">
-                <form method="post" action="{{ path('person_update', {'id': person.id}) }}">
+                <form method="post" action="{{ path('person_create') }}">
                     <div class="mb-3">
                         <label for="name" class="form-label">{{ 'person.form.name'|trans({}, 'person') }}</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ person.name }}" required>
+                        <input type="text" class="form-control" id="name" name="name" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">{{ 'person.form.email'|trans({}, 'person') }}</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ person.email|default('') }}">
+                        <input type="email" class="form-control" id="email" name="email">
                     </div>
 
                     <div class="mb-3">
                         <label for="web" class="form-label">{{ 'person.form.web'|trans({}, 'person') }}</label>
-                        <input type="url" class="form-control" id="web" name="web" value="{{ person.web|default('') }}">
+                        <input type="url" class="form-control" id="web" name="web">
                     </div>
 
                     <div class="mb-3">
                         <label for="phone" class="form-label">{{ 'person.form.phone'|trans({}, 'person') }}</label>
-                        <input type="tel" class="form-control" id="phone" name="phone" value="{{ person.phone|default('') }}">
+                        <input type="tel" class="form-control" id="phone" name="phone">
                     </div>
 
                     <div class="mb-3">
@@ -32,11 +32,11 @@
                         <div id="honorificFields">
                             <div class="input-group mb-2">
                                 <span class="input-group-text">EN</span>
-                                <input type="text" class="form-control" name="honorific_en" data-locale="en" value="{{ person.i18nHonorific['en']|default('') }}">
+                                <input type="text" class="form-control" name="honorific_en" data-locale="en">
                             </div>
                             <div class="input-group mb-2">
                                 <span class="input-group-text">ES</span>
-                                <input type="text" class="form-control" name="honorific_es" data-locale="es" value="{{ person.i18nHonorific['es']|default('') }}">
+                                <input type="text" class="form-control" name="honorific_es" data-locale="es">
                             </div>
                         </div>
                         <input type="hidden" id="honorific" name="honorific">
@@ -47,11 +47,11 @@
                         <div id="firmFields">
                             <div class="input-group mb-2">
                                 <span class="input-group-text">EN</span>
-                                <input type="text" class="form-control" name="firm_en" data-locale="en" value="{{ person.i18nFirm['en']|default('') }}">
+                                <input type="text" class="form-control" name="firm_en" data-locale="en">
                             </div>
                             <div class="input-group mb-2">
                                 <span class="input-group-text">ES</span>
-                                <input type="text" class="form-control" name="firm_es" data-locale="es" value="{{ person.i18nFirm['es']|default('') }}">
+                                <input type="text" class="form-control" name="firm_es" data-locale="es">
                             </div>
                         </div>
                         <input type="hidden" id="firm" name="firm">
@@ -62,11 +62,11 @@
                         <div id="postFields">
                             <div class="input-group mb-2">
                                 <span class="input-group-text">EN</span>
-                                <input type="text" class="form-control" name="post_en" data-locale="en" value="{{ person.i18nPost['en']|default('') }}">
+                                <input type="text" class="form-control" name="post_en" data-locale="en">
                             </div>
                             <div class="input-group mb-2">
                                 <span class="input-group-text">ES</span>
-                                <input type="text" class="form-control" name="post_es" data-locale="es" value="{{ person.i18nPost['es']|default('') }}">
+                                <input type="text" class="form-control" name="post_es" data-locale="es">
                             </div>
                         </div>
                         <input type="hidden" id="post" name="post">
@@ -77,19 +77,19 @@
                         <div id="bioFields">
                             <div class="input-group mb-2">
                                 <span class="input-group-text">EN</span>
-                                <textarea class="form-control" name="bio_en" data-locale="en" rows="3">{{ person.i18nBio['en']|default('') }}</textarea>
+                                <textarea class="form-control" name="bio_en" data-locale="en" rows="3"></textarea>
                             </div>
                             <div class="input-group mb-2">
                                 <span class="input-group-text">ES</span>
-                                <textarea class="form-control" name="bio_es" data-locale="es" rows="3">{{ person.i18nBio['es']|default('') }}</textarea>
+                                <textarea class="form-control" name="bio_es" data-locale="es" rows="3"></textarea>
                             </div>
                         </div>
                         <input type="hidden" id="bio" name="bio">
                     </div>
 
                     <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-pumukit">{{ 'person.form.update'|trans({}, 'person') }}</button>
-                        <a href="{{ path('person_index') }}" class="btn btn-secondary">{{ 'person.form.cancel'|trans({}, 'person') }}</a>
+                        <button type="submit" class="btn btn-pumukit">{{ 'person.form.create'|trans({}, 'person') }}</button>
+                        <a href="{{ path('person_list') }}" class="btn btn-secondary">{{ 'person.form.cancel'|trans({}, 'person') }}</a>
                     </div>
                 </form>
             </div>
@@ -120,4 +120,3 @@
         });
     </script>
 {% endblock %}
-

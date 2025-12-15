@@ -1,0 +1,34 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  # --- DOMAIN & APPLICATION ---
+  App\ContentManagement\Person\Application\:
+    resource: '../../Application/'
+    exclude: '../../Application/**/*{Query,Request,Response}.php'
+
+  # --- INFRASTRUCTURE: PERSISTENCE ---
+  App\ContentManagement\Person\Infrastructure\Persistence\DoctrinePersonRepository: ~
+
+  App\ContentManagement\Person\Domain\Repository\PersonRepositoryInterface:
+    alias: App\ContentManagement\Person\Infrastructure\Persistence\DoctrinePersonRepository
+
+  App\ContentManagement\Person\Infrastructure\:
+    resource: '../'
+    exclude:
+      - '../Config/'
+      - '../Ui/'
+      - '../Persistence/DoctrinePersonRepository.php'
+
+  # --- INFRASTRUCTURE: UI (BACKOFFICE HTTP) ---
+  App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Controller\:
+    resource: '../Ui/Backoffice/Http/Controller/'
+    tags: ['controller.service_arguments']
+
+  App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Presenter\:
+    resource: '../Ui/Backoffice/Http/Presenter/'
+
+  App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
+    resource: '../Ui/Backoffice/Http/EventSubscriber/'

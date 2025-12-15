@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\Person\Presenter;
+namespace App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Presenter;
 
 use Pumukit\SchemaBundle\Document\Person;
 use Symfony\Component\Routing\RouterInterface;

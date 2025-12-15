@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\Person\EventSubscriber;
+namespace App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\EventSubscriber;
 
-use App\UI\Backoffice\ContentManagement\Person\Event\PersonBulkOperationsEvent;
+use App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Event\PersonBulkOperationsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class PersonsBulkOperationsSubscriber implements EventSubscriberInterface

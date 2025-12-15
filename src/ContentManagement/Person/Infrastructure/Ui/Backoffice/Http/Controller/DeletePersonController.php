@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Backoffice\ContentManagement\Person\Controller;
+namespace App\ContentManagement\Person\Infrastructure\Ui\Backoffice\Http\Controller;
 
 use App\ContentManagement\Person\Application\DeletePerson\DeletePersonRequest;
 use App\ContentManagement\Person\Application\DeletePerson\DeletePersonService;
@@ -43,6 +43,6 @@ final class DeletePersonController extends AbstractController
             ));
         }
 
-        return $this->redirectToRoute('person_index');
+        return $this->redirectToRoute('person_list');
     }
 }

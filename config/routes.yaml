@@ -4,5 +4,3 @@ series_routes:
 role_routes:
   resource: ../src/Framework/ContentManagement/Role/routes.yaml
 
-person_routes:
-  resource: ../src/Framework/ContentManagement/Person/routes.yaml
