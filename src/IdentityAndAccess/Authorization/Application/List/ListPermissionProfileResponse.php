@@ -9,4 +9,3 @@ final class ListPermissionProfileResponse
         public int $total
     ) {}
 }
-

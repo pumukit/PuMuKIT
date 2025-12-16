@@ -21,7 +21,7 @@ final class CreatePermissionProfileValidator
         $validScopes = [
             PermissionProfile::SCOPE_GLOBAL,
             PermissionProfile::SCOPE_PERSONAL,
-            PermissionProfile::SCOPE_NONE
+            PermissionProfile::SCOPE_NONE,
         ];
 
         if (!in_array($request->scope, $validScopes, true)) {
@@ -35,4 +35,3 @@ final class CreatePermissionProfileValidator
         }
     }
 }
-

@@ -11,4 +11,3 @@ final class ViewPermissionProfileResponse
         public string $tab
     ) {}
 }
-

@@ -48,4 +48,3 @@ final class PermissionProfileListActionsEvent extends Event
         return !empty($this->actions);
     }
 }
-

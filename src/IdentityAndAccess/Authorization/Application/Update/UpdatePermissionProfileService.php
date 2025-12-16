@@ -24,23 +24,23 @@ final class UpdatePermissionProfileService
             throw new PermissionProfileNotFoundException($request->id);
         }
 
-        if ($request->name !== null) {
+        if (null !== $request->name) {
             $permissionProfile->setName($request->name);
         }
 
-        if ($request->permissions !== null) {
+        if (null !== $request->permissions) {
             $permissionProfile->setPermissions($request->permissions);
         }
 
-        if ($request->system !== null) {
+        if (null !== $request->system) {
             $permissionProfile->setSystem($request->system);
         }
 
-        if ($request->default !== null) {
+        if (null !== $request->default) {
             $permissionProfile->setDefault($request->default);
         }
 
-        if ($request->scope !== null) {
+        if (null !== $request->scope) {
             $permissionProfile->setScope($request->scope);
         }
 
@@ -49,4 +49,3 @@ final class UpdatePermissionProfileService
         return new UpdatePermissionProfileResponse($permissionProfile);
     }
 }
-

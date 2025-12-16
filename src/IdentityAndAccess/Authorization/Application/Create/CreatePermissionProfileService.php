@@ -29,4 +29,3 @@ final class CreatePermissionProfileService
         return new CreatePermissionProfileResponse($permissionProfile);
     }
 }
-

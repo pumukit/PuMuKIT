@@ -8,4 +8,3 @@ final class CreatePermissionProfileResponse
 {
     public function __construct(public PermissionProfile $permissionProfile) {}
 }
-

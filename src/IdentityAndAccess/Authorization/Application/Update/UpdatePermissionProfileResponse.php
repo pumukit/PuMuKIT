@@ -8,4 +8,3 @@ final class UpdatePermissionProfileResponse
 {
     public function __construct(public PermissionProfile $permissionProfile) {}
 }
-

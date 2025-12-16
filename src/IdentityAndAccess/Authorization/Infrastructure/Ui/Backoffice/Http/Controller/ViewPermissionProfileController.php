@@ -35,4 +35,3 @@ final class ViewPermissionProfileController extends AbstractController
         ]);
     }
 }
-

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Role\Infrastructure\Security\Permission;
 
-
 use App\Shared\Domain\PermissionRegistryInterface;
 use App\Shared\Infrastructure\Security\Permission\ValueObject\PermissionType;
 

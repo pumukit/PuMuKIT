@@ -9,4 +9,3 @@ final class DeletePermissionProfileResponse
         public string $message
     ) {}
 }
-

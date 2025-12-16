@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\IdentityAndAccess\Authorization\Application\Command;
 
+use App\Shared\Domain\PermissionRegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use App\Shared\Domain\PermissionRegistryInterface;
 
 final class DebugPermissionsCommand extends Command
 {
@@ -27,6 +27,7 @@ final class DebugPermissionsCommand extends Command
 
         if (empty($permissions)) {
             $io->warning('No permissions were registered. Check if the CompilerPass is running and services are tagged correctly.');
+
             return Command::FAILURE;
         }
 
@@ -51,7 +52,7 @@ final class DebugPermissionsCommand extends Command
                 $rows[] = [
                     $permission->id,
                     $permission->description,
-                    $permission->type->value
+                    $permission->type->value,
                 ];
             }
 

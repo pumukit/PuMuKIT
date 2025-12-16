@@ -113,4 +113,3 @@ class DoctrinePermissionProfileRepository implements PermissionProfileRepository
         }
     }
 }
-

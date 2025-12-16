@@ -25,4 +25,3 @@ final class ListPermissionProfileService
         return new ListPermissionProfileResponse($permissionProfiles, $total);
     }
 }
-

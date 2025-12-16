@@ -23,4 +23,3 @@ final class FindPermissionProfileService
         return new FindPermissionProfileResponse($permissionProfile);
     }
 }
-
