@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\IdentityAndAccess\Permission\Application\Command;
+namespace App\IdentityAndAccess\Authorization\Application\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

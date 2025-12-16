@@ -1,6 +1,6 @@
 services:
 
-  App\IdentityAndAccess\Permission\Application\Command\DebugPermissionsCommand:
+  App\IdentityAndAccess\Authorization\Application\Command\DebugPermissionsCommand:
     arguments:
       $permissionRegistry: '@App\Shared\Domain\PermissionRegistryInterface'
     tags:
