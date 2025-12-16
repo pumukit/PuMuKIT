@@ -24,8 +24,7 @@ final class RegisterPermissionsPass implements CompilerPassInterface
         $taggedServices = $container->findTaggedServiceIds(self::PERMISSION_REGISTER_TAG);
 
         foreach (array_keys($taggedServices) as $id) {
-            // Add a method call to the registry to register each permission registrar
-            $registry->addMethodCall('addRegistrar', [new Reference($id)]);
+            $registry->addMethodCall('addRegister', [new Reference($id)]);
         }
     }
 }

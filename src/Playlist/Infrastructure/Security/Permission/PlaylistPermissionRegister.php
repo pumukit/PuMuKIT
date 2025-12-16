@@ -15,7 +15,7 @@ final class PlaylistPermissionRegister
 
     public function register(): void
     {
-        $this->registry->register(PlaylistPermissions::all(), 'playlist');
+        $this->registry->register(PlaylistPermissions::all(), 'playlist', PermissionType::DOMAIN);
         $this->registry->register(PlaylistUIPermissions::all(), 'playlist', PermissionType::UI);
     }
 }

@@ -15,7 +15,7 @@ final class GroupPermissionRegister
 
     public function register(): void
     {
-        $this->registry->register(GroupPermissions::all(), 'group');
+        $this->registry->register(GroupPermissions::all(), 'group', PermissionType::DOMAIN);
         $this->registry->register(GroupUIPermissions::all(), 'group', PermissionType::UI);
     }
 }

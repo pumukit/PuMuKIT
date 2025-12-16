@@ -15,7 +15,7 @@ final class MultimediaObjectPermissionRegister
 
     public function register(): void
     {
-        $this->registry->register(MultimediaObjectPermissions::all(), 'multimedia_object');
+        $this->registry->register(MultimediaObjectPermissions::all(), 'multimedia_object', PermissionType::DOMAIN);
         $this->registry->register(MultimediaObjectUIPermissions::all(), 'multimedia_object', PermissionType::UI);
     }
 }

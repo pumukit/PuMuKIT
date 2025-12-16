@@ -15,7 +15,7 @@ final class ChannelPermissionRegister
 
     public function register(): void
     {
-        $this->registry->register(ChannelPermissions::all(), 'channel');
+        $this->registry->register(ChannelPermissions::all(), 'channel', PermissionType::DOMAIN);
         $this->registry->register(ChannelUIPermissions::all(), 'channel', PermissionType::UI);
     }
 }

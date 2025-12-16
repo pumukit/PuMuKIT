@@ -15,7 +15,7 @@ final class TagPermissionRegister
 
     public function register(): void
     {
-        $this->registry->register(TagPermissions::all(), 'tag');
+        $this->registry->register(TagPermissions::all(), 'tag', PermissionType::DOMAIN);
         $this->registry->register(TagUIPermissions::all(), 'tag', PermissionType::UI);
     }
 }

@@ -14,7 +14,7 @@ final class DebugPermissionsCommand extends Command
 {
     public function __construct(
         private readonly PermissionRegistryInterface $permissionRegistry,
-        string $name = null
+        string $name = 'pumukit:debug:permissions'
     ) {
         parent::__construct($name);
     }
@@ -34,7 +34,6 @@ final class DebugPermissionsCommand extends Command
         $io->title('PUMUKIT Permission Registry Debug');
         $io->text('Validating permission discovery via Compiler Pass...');
 
-        // Group permissions by context
         $groupedPermissions = [];
         foreach ($permissions as $permission) {
             $groupedPermissions[$permission->context][] = $permission;

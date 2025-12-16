@@ -15,7 +15,7 @@ final class JobPermissionRegister
 
     public function register(): void
     {
-        $this->registry->register(JobPermissions::all(), 'job');
+        $this->registry->register(JobPermissions::all(), 'job', PermissionType::DOMAIN);
         $this->registry->register(JobUIPermissions::all(), 'job', PermissionType::UI);
     }
 }

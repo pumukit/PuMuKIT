@@ -15,7 +15,7 @@ final class UserPermissionRegister
 
     public function register(): void
     {
-        $this->registry->register(UserPermissions::all(), 'user');
+        $this->registry->register(UserPermissions::all(), 'user', PermissionType::DOMAIN);
         $this->registry->register(UserUIPermissions::all(), 'user', PermissionType::UI);
     }
 }

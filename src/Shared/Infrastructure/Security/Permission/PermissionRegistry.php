@@ -11,23 +11,22 @@ use App\Shared\Infrastructure\Security\Permission\ValueObject\RegisteredPermissi
 final class PermissionRegistry implements PermissionRegistryInterface
 {
     private array $permissions = [];
-    private array $registrars = [];
+    private array $registers = [];
 
-    public function addRegistrar(object $registrar): void
+    public function addRegister(object $register): void
     {
-        $this->registrars[] = $registrar;
+        $this->registers[] = $register;
 
-        // Immediately call register() method if it exists
-        if (method_exists($registrar, 'register')) {
-            $registrar->register();
+        if (method_exists($register, 'register')) {
+            $register->register();
         }
     }
 
-    public function register(array $permissions, string $context, PermissionType $type = PermissionType::DOMAIN): void
+    public function register(array $permissions, string $context, PermissionType $permissionType): void
     {
         foreach ($permissions as $id => $description) {
             if (!isset($this->permissions[$id])) {
-                $this->permissions[$id] = new RegisteredPermission($id, $description, $context, $type);
+                $this->permissions[$id] = new RegisteredPermission($id, $description, $context, $permissionType);
             }
         }
     }
