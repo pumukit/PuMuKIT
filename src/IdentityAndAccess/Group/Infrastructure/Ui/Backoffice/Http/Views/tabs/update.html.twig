@@ -1,0 +1,78 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">
+            <i class="fa fa-edit me-2"></i>
+            Update Group Information
+        </h5>
+
+        <form action="{{ path('group_update', {id: group.id}) }}" method="post">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="group_key" class="form-label">
+                            Key <span class="text-danger">*</span>
+                        </label>
+                        <input type="text"
+                               class="form-control"
+                               id="group_key"
+                               name="key"
+                               value="{{ group.key }}"
+                               required
+                               pattern="[a-zA-Z0-9_-]+"
+                               title="Only alphanumeric characters, underscore and dash are allowed">
+                        <div class="form-text">Unique identifier for the group (alphanumeric, underscore, dash)</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="group_name" class="form-label">
+                            Name <span class="text-danger">*</span>
+                        </label>
+                        <input type="text"
+                               class="form-control"
+                               id="group_name"
+                               name="name"
+                               value="{{ group.name }}"
+                               required>
+                        <div class="form-text">Display name for the group</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="group_origin" class="form-label">Origin</label>
+                        <select class="form-select" id="group_origin" name="origin">
+                            <option value="local" {{ group.origin == 'local' ? 'selected' : '' }}>Local</option>
+                            <option value="cas" {{ group.origin == 'cas' ? 'selected' : '' }}>CAS</option>
+                            <option value="ldap" {{ group.origin == 'ldap' ? 'selected' : '' }}>LDAP</option>
+                        </select>
+                        <div class="form-text">Authentication origin</div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="group_comments" class="form-label">Comments</label>
+                        <textarea class="form-control"
+                                  id="group_comments"
+                                  name="comments"
+                                  rows="5">{{ group.comments }}</textarea>
+                        <div class="form-text">Additional information about the group</div>
+                    </div>
+
+                    <div class="alert alert-warning">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        <strong>Note:</strong> Changing the group key may affect permissions and user associations.
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save"></i> Save Changes
+                </button>
+                <a href="{{ path('group_view', {id: group.id, tab: 'general'}) }}" class="btn btn-secondary">
+                    <i class="fa fa-times"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+

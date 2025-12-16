@@ -3,8 +3,12 @@ group_create:
   path: /admin/backend/group/new
 
 group_view:
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ListGroupController
-  path: /admin/backend/group/{id}
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ViewGroupController
+  path: /admin/backend/group/{id}/{tab}
+  defaults:
+    tab: 'general'
+  requirements:
+    tab: '[a-z_-]+'
 
 group_delete:
   controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ListGroupController
@@ -21,3 +25,14 @@ groups_list_data:
 group_list:
   controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ListGroupController
   path: /admin/backend/groups
+
+group_add_user:
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\AddUserToGroupController
+  path: /admin/backend/group/{id}/add-user
+  methods: [POST]
+
+group_remove_user:
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\RemoveUserFromGroupController
+  path: /admin/backend/group/{id}/remove-user
+  methods: [POST]
+

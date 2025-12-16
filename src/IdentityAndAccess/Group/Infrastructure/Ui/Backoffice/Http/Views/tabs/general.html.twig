@@ -1,0 +1,72 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">
+            <i class="fa fa-info-circle me-2"></i>
+            General Information
+        </h5>
+
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th width="30%">ID</th>
+                            <td>{{ group.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Key</th>
+                            <td><code>{{ group.key }}</code></td>
+                        </tr>
+                        <tr>
+                            <th>Name</th>
+                            <td>{{ group.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Origin</th>
+                            <td>
+                                <span class="badge bg-info">
+                                    {{ group.origin ?? 'local' }}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Comments</th>
+                            <td>{{ group.comments|default('N/A') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Created At</th>
+                            <td>
+                                {% if group.createdAt %}
+                                    {{ group.createdAt|date('Y-m-d H:i:s') }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Updated At</th>
+                            <td>
+                                {% if group.updatedAt %}
+                                    {{ group.updatedAt|date('Y-m-d H:i:s') }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-6">
+                <div class="alert alert-info">
+                    <h6><i class="fa fa-info-circle"></i> About Groups</h6>
+                    <p class="mb-0">
+                        Groups are used to organize users and manage permissions collectively.
+                        Users belonging to this group will inherit the group's permissions and access rights.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
