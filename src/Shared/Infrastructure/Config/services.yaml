@@ -25,6 +25,12 @@ services:
   App\Shared\Domain\ObjectManagerInterface:
     alias: App\Shared\Infrastructure\Persistence\DoctrineObjectManager
 
+  App\Shared\Infrastructure\Security\Permission\PermissionRegistry:
+    shared: true
+    public: true
+
+  App\Shared\Domain\PermissionRegistryInterface: '@App\Shared\Infrastructure\Security\Permission\PermissionRegistry'
+
   # --- SHARED ADAPTERS ---
   App\Shared\Infrastructure\Logger\PsrLoggerAdapter:
     arguments:

@@ -64,3 +64,7 @@ services:
 
   App\ContentManagement\Series\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
     resource: '../Ui/Backoffice/Http/EventSubscriber/'
+
+  # --- INFRASTRUCTURE: PERMISSION ---
+  App\ContentManagement\Series\Infrastructure\Security\Permission\SeriesPermissionRegister:
+    tags: [ 'pumukit.permission_register' ]

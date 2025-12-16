@@ -15,5 +15,6 @@ final class CpuPermissionRegister
     public function register(): void
     {
         $this->registry->register(CpuPermissions::all(), 'cpu');
+        $this->registry->register(CpuUIPermissions::all(), 'cpu');
     }
 }

@@ -14,6 +14,6 @@ final class AnalyticsPermissionRegister
 
     public function register(): void
     {
-        $this->registry->register(StatsPermissions::all(), 'stats');
+        $this->registry->register(StatsUIPermissions::all(), 'stats');
     }
 }

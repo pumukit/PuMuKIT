@@ -15,5 +15,6 @@ final class SeriesPermissionRegister
     public function register(): void
     {
         $this->registry->register(SeriesPermissions::all(), 'series');
+        $this->registry->register(SeriesUIPermissions::all(), 'series');
     }
 }

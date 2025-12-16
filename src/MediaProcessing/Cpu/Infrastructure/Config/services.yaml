@@ -26,3 +26,8 @@ services:
 
   App\MediaProcessing\Cpu\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
     resource: '../Ui/Backoffice/Http/EventSubscriber/'
+
+  # --- INFRASTRUCTURE: PERMISSION ---
+  App\MediaProcessing\Cpu\Infrastructure\Security\Permission\CpuPermissionRegister:
+    public: true
+    tags: [ 'pumukit.permission_register' ]

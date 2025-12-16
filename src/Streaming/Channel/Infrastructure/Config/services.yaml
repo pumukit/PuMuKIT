@@ -30,3 +30,8 @@ services:
 
   App\Streaming\Channel\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
     resource: '../Ui/Backoffice/Http/EventSubscriber/'
+
+
+  # --- INFRASTRUCTURE: PERMISSION ---
+  App\Streaming\Channel\Infrastructure\Security\Permission\StreamingPermissionRegister:
+    tags: [ 'pumukit.permission_register' ]

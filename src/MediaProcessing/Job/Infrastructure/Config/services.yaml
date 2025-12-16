@@ -32,3 +32,7 @@ services:
 
   App\MediaProcessing\Job\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
     resource: '../Ui/Backoffice/Http/EventSubscriber/'
+
+  # --- INFRASTRUCTURE: PERMISSION ---
+  App\MediaProcessing\Job\Infrastructure\Security\Permission\JobPermissionRegister:
+    tags: [ 'pumukit.permission_register' ]

@@ -23,3 +23,7 @@ services:
 
   App\Analytics\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
     resource: '../Ui/Backoffice/Http/EventSubscriber/'
+
+  # --- INFRASTRUCTURE: PERMISSION ---
+  App\Analytics\Infrastructure\Security\Permission\AnalyticsPermissionRegister:
+    tags: [ 'pumukit.permission_register' ]

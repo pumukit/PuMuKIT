@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Taxonomy\Tag\Infrastructure\Security\Permission;
+namespace App\ContentManagement\Role\Infrastructure\Security\Permission;
+
 
 use App\Shared\Domain\PermissionRegistryInterface;
 
-final class TaxonomyPermissionRegister
+final class RolePermissionRegister
 {
     public function __construct(
         private readonly PermissionRegistryInterface $registry
@@ -14,7 +15,7 @@ final class TaxonomyPermissionRegister
 
     public function register(): void
     {
-        $this->registry->register(TagPermissions::all(), 'tag');
-        $this->registry->register(TagUIPermissions::all(), 'tag');
+        $this->registry->register(RolePermissions::all(), 'role');
+        $this->registry->register(RoleUIPermissions::all(), 'role');
     }
 }

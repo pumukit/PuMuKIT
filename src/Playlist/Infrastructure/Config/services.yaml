@@ -49,3 +49,8 @@ services:
 
   App\Playlist\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
     resource: '../Ui/Backoffice/Http/EventSubscriber/'
+
+
+  # --- INFRASTRUCTURE: PERMISSION ---
+  App\Playlist\Infrastructure\Security\Permission\PlaylistPermissionRegister:
+    tags: [ 'pumukit.permission_register' ]

@@ -1,0 +1,7 @@
+services:
+
+  App\IdentityAndAccess\Permission\Application\Command\DebugPermissionsCommand:
+    arguments:
+      $permissionRegistry: '@App\Shared\Domain\PermissionRegistryInterface'
+    tags:
+      - { name: 'console.command', command: 'pumukit:debug:permissions', description: 'Lists all registered permissions grouped by domain and layer (func, ui, web).' }

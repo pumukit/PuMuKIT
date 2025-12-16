@@ -15,5 +15,6 @@ final class StreamingPermissionRegister
     public function register(): void
     {
         $this->registry->register(ChannelPermissions::all(), 'channel');
+        $this->registry->register(ChannelUIPermissions::all(), 'channel');
     }
 }
