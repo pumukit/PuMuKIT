@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Streaming\Channel\Infrastructure\Security\Permission;
 
 use App\Shared\Domain\PermissionRegistryInterface;
+use App\Shared\Infrastructure\Security\Permission\ValueObject\PermissionType;
 
-final class StreamingPermissionRegister
+final class ChannelPermissionRegister
 {
     public function __construct(
         private readonly PermissionRegistryInterface $registry
@@ -15,6 +16,6 @@ final class StreamingPermissionRegister
     public function register(): void
     {
         $this->registry->register(ChannelPermissions::all(), 'channel');
-        $this->registry->register(ChannelUIPermissions::all(), 'channel');
+        $this->registry->register(ChannelUIPermissions::all(), 'channel', PermissionType::UI);
     }
 }

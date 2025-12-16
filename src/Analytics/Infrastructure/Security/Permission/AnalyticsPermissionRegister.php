@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Analytics\Infrastructure\Security\Permission;
 
 use App\Shared\Domain\PermissionRegistryInterface;
+use App\Shared\Infrastructure\Security\Permission\ValueObject\PermissionType;
 
 final class AnalyticsPermissionRegister
 {
@@ -14,6 +15,6 @@ final class AnalyticsPermissionRegister
 
     public function register(): void
     {
-        $this->registry->register(StatsUIPermissions::all(), 'stats');
+        $this->registry->register(StatsUIPermissions::all(), 'stats', PermissionType::UI);
     }
 }

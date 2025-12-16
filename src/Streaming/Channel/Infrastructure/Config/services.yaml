@@ -33,5 +33,5 @@ services:
 
 
   # --- INFRASTRUCTURE: PERMISSION ---
-  App\Streaming\Channel\Infrastructure\Security\Permission\StreamingPermissionRegister:
+  App\Streaming\Channel\Infrastructure\Security\Permission\ChannelPermissionRegister:
     tags: [ 'pumukit.permission_register' ]

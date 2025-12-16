@@ -33,26 +33,33 @@ final class DebugPermissionsCommand extends Command
         $io->title('PUMUKIT Permission Registry Debug');
         $io->text('Validating permission discovery via Compiler Pass...');
 
-        $headers = ['Permission Key', 'Description'];
+        // Group permissions by context
+        $groupedPermissions = [];
+        foreach ($permissions as $permission) {
+            $groupedPermissions[$permission->context][] = $permission;
+        }
 
-        ksort($permissions);
+        ksort($groupedPermissions);
 
-        foreach ($permissions as $groupKey => $groupPermissions) {
-            $parts = explode('.', $groupKey, 2);
-            $layer = count($parts) > 1 && in_array($parts[0], ['ui', 'web']) ? strtoupper($parts[0]) : 'FUNCTIONAL';
-            $domain = count($parts) > 1 ? $parts[1] : $parts[0];
+        $headers = ['Permission Key', 'Description', 'Type'];
 
-            $io->section(sprintf('Layer: %s | Entity/Domain: %s (%d permissions)', $layer, $domain, count($groupPermissions)));
+        foreach ($groupedPermissions as $context => $contextPermissions) {
+            $io->section(sprintf('Context: %s (%d permissions)', $context, count($contextPermissions)));
 
             $rows = [];
-            foreach ($groupPermissions as $key => $description) {
-                $rows[] = [$key, $description];
+            foreach ($contextPermissions as $permission) {
+                $rows[] = [
+                    $permission->id,
+                    $permission->description,
+                    $permission->type->value
+                ];
             }
 
             $io->table($headers, $rows);
         }
 
-        $io->success(sprintf('Permission discovery successful. Total unique permission groups found: %d', count($permissions)));
+        $totalPermissions = count($permissions);
+        $io->success(sprintf('Permission discovery successful. Total permissions found: %d in %d contexts', $totalPermissions, count($groupedPermissions)));
 
         return Command::SUCCESS;
     }

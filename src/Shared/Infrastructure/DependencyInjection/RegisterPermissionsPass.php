@@ -16,11 +16,16 @@ final class RegisterPermissionsPass implements CompilerPassInterface
 
     public function process(ContainerBuilder $container): void
     {
+        if (!$container->has(self::PERMISSION_REGISTRY_SERVICE_ID)) {
+            return;
+        }
+
+        $registry = $container->findDefinition(self::PERMISSION_REGISTRY_SERVICE_ID);
         $taggedServices = $container->findTaggedServiceIds(self::PERMISSION_REGISTER_TAG);
 
         foreach (array_keys($taggedServices) as $id) {
-            $register = $container->getDefinition($id);
-            $register->addMethodCall('register', []);
+            // Add a method call to the registry to register each permission registrar
+            $registry->addMethodCall('addRegistrar', [new Reference($id)]);
         }
     }
 }

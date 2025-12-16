@@ -11,6 +11,17 @@ use App\Shared\Infrastructure\Security\Permission\ValueObject\RegisteredPermissi
 final class PermissionRegistry implements PermissionRegistryInterface
 {
     private array $permissions = [];
+    private array $registrars = [];
+
+    public function addRegistrar(object $registrar): void
+    {
+        $this->registrars[] = $registrar;
+
+        // Immediately call register() method if it exists
+        if (method_exists($registrar, 'register')) {
+            $registrar->register();
+        }
+    }
 
     public function register(array $permissions, string $context, PermissionType $type = PermissionType::DOMAIN): void
     {

@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\Person\Infrastructure\Security\Permission;
 
-use App\ContentManagement\MultimediaObject\Infrastructure\Security\Permission\PersonPermissions;
-use App\ContentManagement\MultimediaObject\Infrastructure\Security\Permission\PersonUIPermissions;
 use App\Shared\Domain\PermissionRegistryInterface;
+use App\Shared\Infrastructure\Security\Permission\ValueObject\PermissionType;
 
 final class PersonPermissionRegister
 {
@@ -17,6 +16,6 @@ final class PersonPermissionRegister
     public function register(): void
     {
         $this->registry->register(PersonPermissions::all(), 'person');
-        $this->registry->register(PersonUIPermissions::all(), 'person');
+        $this->registry->register(PersonUIPermissions::all(), 'person', PermissionType::UI);
     }
 }

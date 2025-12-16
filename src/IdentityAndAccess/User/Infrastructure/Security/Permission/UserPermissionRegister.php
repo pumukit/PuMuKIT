@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\IdentityAndAccess\User\Infrastructure\Security\Permission;
 
 use App\Shared\Domain\PermissionRegistryInterface;
+use App\Shared\Infrastructure\Security\Permission\ValueObject\PermissionType;
 
 final class UserPermissionRegister
 {
@@ -15,6 +16,6 @@ final class UserPermissionRegister
     public function register(): void
     {
         $this->registry->register(UserPermissions::all(), 'user');
-        $this->registry->register(UserUIPermissions::all(), 'user');
+        $this->registry->register(UserUIPermissions::all(), 'user', PermissionType::UI);
     }
 }

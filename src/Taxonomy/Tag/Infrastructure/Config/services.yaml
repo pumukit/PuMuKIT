@@ -34,5 +34,5 @@ services:
     resource: '../Ui/Backoffice/Http/EventSubscriber/'
 
   # --- INFRASTRUCTURE: PERMISSION ---
-  App\Taxonomy\Tag\Infrastructure\Security\Permission\TaxonomyPermissionRegister:
+  App\Taxonomy\Tag\Infrastructure\Security\Permission\TagPermissionRegister:
     tags: [ 'pumukit.permission_register' ]

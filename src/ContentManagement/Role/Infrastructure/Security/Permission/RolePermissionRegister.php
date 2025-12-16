@@ -6,6 +6,7 @@ namespace App\ContentManagement\Role\Infrastructure\Security\Permission;
 
 
 use App\Shared\Domain\PermissionRegistryInterface;
+use App\Shared\Infrastructure\Security\Permission\ValueObject\PermissionType;
 
 final class RolePermissionRegister
 {
@@ -16,6 +17,6 @@ final class RolePermissionRegister
     public function register(): void
     {
         $this->registry->register(RolePermissions::all(), 'role');
-        $this->registry->register(RoleUIPermissions::all(), 'role');
+        $this->registry->register(RoleUIPermissions::all(), 'role', PermissionType::UI);
     }
 }
