@@ -5,7 +5,7 @@
             Multimedia Objects Associated with this Group
         </h5>
 
-        {% set multimediaObjects = group.multimediaObjects|default([]) %}
+        {% set multimediaObjects = tabData.multimedia_objects|default([]) %}
 
         {% if multimediaObjects is empty %}
             <div class="alert alert-info">
@@ -18,12 +18,9 @@
                     <thead>
                         <tr>
                             <th width="5%">#</th>
-                            <th width="10%">Thumbnail</th>
+                            <th width="30%">Id</th>
                             <th width="30%">Title</th>
-                            <th width="20%">Series</th>
-                            <th width="15%">Status</th>
-                            <th width="15%">Created</th>
-                            <th width="5%"></th>
+                            <th width="30%">Series</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,66 +28,14 @@
                             <tr>
                                 <td>{{ loop.index }}</td>
                                 <td>
-                                    {% if mmObject.pics|length > 0 %}
-                                        <img src="{{ mmObject.pics[0].url }}"
-                                             alt="{{ mmObject.title }}"
-                                             class="img-thumbnail"
-                                             style="max-width: 60px; max-height: 45px;">
-                                    {% else %}
-                                        <div class="bg-secondary text-white text-center p-2" style="width: 60px; height: 45px;">
-                                            <i class="fa fa-film"></i>
-                                        </div>
-                                    {% endif %}
+                                    {{ mmObject.id }}
                                 </td>
                                 <td>
-                                    <strong>{{ mmObject.title }}</strong>
-                                    {% if mmObject.subtitle %}
-                                        <br><small class="text-muted">{{ mmObject.subtitle }}</small>
-                                    {% endif %}
+                                    <strong>{{ mmObject.title[app.request.getLocale()] }}</strong>
                                 </td>
                                 <td>
-                                    {% if mmObject.series %}
-                                        <i class="fa fa-folder me-1"></i>
-                                        {{ mmObject.series.title }}
-                                    {% else %}
-                                        <span class="text-muted">N/A</span>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if mmObject.status == 0 %}
-                                        <span class="badge bg-warning">
-                                            <i class="fa fa-clock"></i> New
-                                        </span>
-                                    {% elseif mmObject.status == 1 %}
-                                        <span class="badge bg-secondary">
-                                            <i class="fa fa-pause"></i> Blocked
-                                        </span>
-                                    {% elseif mmObject.status == 2 %}
-                                        <span class="badge bg-success">
-                                            <i class="fa fa-check"></i> Published
-                                        </span>
-                                    {% elseif mmObject.status == 3 %}
-                                        <span class="badge bg-danger">
-                                            <i class="fa fa-eye-slash"></i> Hidden
-                                        </span>
-                                    {% else %}
-                                        <span class="badge bg-secondary">Unknown</span>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if mmObject.publicDate %}
-                                        {{ mmObject.publicDate|date('Y-m-d') }}
-                                    {% else %}
-                                        N/A
-                                    {% endif %}
-                                </td>
-                                <td class="text-end">
-                                    <a href="{{ path('multimedia_object_view', {id: mmObject.id}) }}"
-                                       class="btn btn-sm btn-info"
-                                       title="View details"
-                                       target="_blank">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
+                                    <i class="fa fa-folder me-1"></i>
+                                    {{ mmObject.series }}
                                 </td>
                             </tr>
                         {% endfor %}
@@ -104,23 +49,14 @@
                     <strong>Total:</strong> {{ multimediaObjects|length }} multimedia object(s) associated with this group
                 </p>
             </div>
-
-            <!-- Pagination would go here if needed -->
         {% endif %}
 
         <div class="alert alert-info mt-3">
             <h6><i class="fa fa-info-circle"></i> About Multimedia Objects</h6>
             <p class="mb-0">
                 This list shows all multimedia objects that have this group in their permissions or groups field.
-                Users in this group may have access to these multimedia objects depending on the permission profile.
+                Users in this group may have access to these multimedia objects depend ing on the permission profile.
             </p>
         </div>
     </div>
 </div>
-
-<style>
-#groupMultimediaObjectsTable img {
-    object-fit: cover;
-}
-</style>
-

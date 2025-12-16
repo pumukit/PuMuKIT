@@ -129,4 +129,43 @@ final class DoctrineMultimediaObjectRepository implements MultimediaObjectReposi
 
         return $mongoSort;
     }
+
+    public function findByGroupId(string $groupId): array
+    {
+        return $this->objectManager->getDocumentManager()
+            ->getRepository(MultimediaObject::class)
+            ->createQueryBuilder()
+            ->field('groups')->equals($groupId)
+            ->getQuery()
+            ->execute();
+    }
+
+    public function findIdsAndTitlesByGroupId(string $groupId): array
+    {
+        $qb = $this->objectManager->getDocumentManager()
+            ->getRepository(MultimediaObject::class)
+            ->createQueryBuilder()
+        ;
+
+        $qb->select('_id', 'title', 'series');
+        $qb->field('groups')->equals($groupId);
+        $qb->hydrate(false);
+        $query = $qb->getQuery();
+        $results = $query->execute();
+
+        $output = [];
+        foreach ($results as $documentData) {
+            $id = (string) $documentData['_id'];
+            $series = (string) $documentData['series'];
+            $title = $documentData['title'];
+
+            $output[] = [
+                'id' => $id,
+                'title' => $title,
+                'series' => $series,
+            ];
+        }
+
+        return $output;
+    }
 }

@@ -34,3 +34,10 @@ services:
   # --- INFRASTRUCTURE: PERMISSION ---
   App\IdentityAndAccess\Group\Infrastructure\Security\Permission\GroupPermissionRegister:
     tags: [ 'pumukit.permission_register' ]
+
+  # --- INFRASTRUCTURE: ACL ---
+  App\IdentityAndAccess\Group\Infrastructure\ACL\MultimediaObjectACL:
+
+  App\IdentityAndAccess\Group\Domain\Query\MultimediaObjectQueryInterface:
+    alias: App\IdentityAndAccess\Group\Infrastructure\ACL\MultimediaObjectACL
+    public: true

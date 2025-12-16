@@ -16,7 +16,6 @@ final class GroupViewTabsEvent extends Event
     public function __construct(
         private readonly Group $group
     ) {
-        // Add default tabs
         $this->addTab('general', 'General', 'fa-info-circle', 0);
         $this->addTab('update', 'Update', 'fa-edit', 10);
         $this->addTab('users', 'Users', 'fa-users', 20);

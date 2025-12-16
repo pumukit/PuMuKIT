@@ -40,3 +40,7 @@ services:
   # --- INFRASTRUCTURE: PERMISSION ---
   App\ContentManagement\MultimediaObject\Infrastructure\Security\Permission\MultimediaObjectPermissionRegister:
     tags: [ 'pumukit.permission_register' ]
+
+  # --- INFRASTRUCTURE: ACL ---
+  App\ContentManagement\MultimediaObject\Infrastructure\Query\MultimediaObjectReadService:
+    public: true

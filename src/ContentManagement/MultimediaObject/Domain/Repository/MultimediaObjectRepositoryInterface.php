@@ -21,4 +21,8 @@ interface MultimediaObjectRepositoryInterface
     public function save(MultimediaObject $multimediaObject): void;
 
     public function delete(MultimediaObject $multimediaObject): void;
+
+    public function findByGroupId(string $groupId): array;
+
+    public function findIdsAndTitlesByGroupId(string $groupId): array;
 }
