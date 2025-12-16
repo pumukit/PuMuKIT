@@ -1,0 +1,28 @@
+permission_profile_create:
+  path: /admin/backend/permission-profiles
+  controller: App\IdentityAndAccess\Authorization\Infrastructure\Ui\Backoffice\Http\Controller\ListPermissionProfileController
+
+permission_profile_list:
+  path: /admin/backend/permission-profiles
+  controller: App\IdentityAndAccess\Authorization\Infrastructure\Ui\Backoffice\Http\Controller\ListPermissionProfileController
+
+permission_profiles_list_data:
+  path: /admin/backend/permission-profiles/data
+  controller: App\IdentityAndAccess\Authorization\Infrastructure\Ui\Backoffice\Http\Controller\ListPermissionProfileDataController
+
+permission_profile_update:
+  path: /admin/backend/permission-profiles/{id}/update
+  controller: App\IdentityAndAccess\Authorization\Infrastructure\Ui\Backoffice\Http\Controller\ListPermissionProfileController
+
+permission_profile_delete:
+  path: /admin/backend/permission-profiles/{id}/delete
+  controller: App\IdentityAndAccess\Authorization\Infrastructure\Ui\Backoffice\Http\Controller\ListPermissionProfileController
+
+permission_profile_view:
+  path: /admin/backend/permission-profiles/{id}/{tab}
+  controller: App\IdentityAndAccess\Authorization\Infrastructure\Ui\Backoffice\Http\Controller\ViewPermissionProfileController
+  defaults:
+    tab: 'general'
+  requirements:
+    tab: '[a-z_-]+'
+

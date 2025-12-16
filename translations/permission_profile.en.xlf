@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <!-- Pages -->
+            <trans-unit id="permission_profile.page.list">
+                <source>permission_profile.page.list</source>
+                <target>Permission Profile List</target>
+            </trans-unit>
+
+            <!-- Table -->
+            <trans-unit id="permission_profile.table.title">
+                <source>permission_profile.table.title</source>
+                <target>Permission Profiles</target>
+            </trans-unit>
+            <trans-unit id="permission_profile.table.name">
+                <source>permission_profile.table.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="permission_profile.table.scope">
+                <source>permission_profile.table.scope</source>
+                <target>Scope</target>
+            </trans-unit>
+            <trans-unit id="permission_profile.table.permissions_count">
+                <source>permission_profile.table.permissions_count</source>
+                <target>Permissions</target>
+            </trans-unit>
+            <trans-unit id="permission_profile.table.system">
+                <source>permission_profile.table.system</source>
+                <target>System</target>
+            </trans-unit>
+            <trans-unit id="permission_profile.table.default">
+                <source>permission_profile.table.default</source>
+                <target>Default</target>
+            </trans-unit>
+            <trans-unit id="permission_profile.table.actions">
+                <source>permission_profile.table.actions</source>
+                <target>Actions</target>
+            </trans-unit>
+
+            <!-- Bulk Operations -->
+            <trans-unit id="bulk.select_option">
+                <source>bulk.select_option</source>
+                <target>Select an option...</target>
+            </trans-unit>
+            <trans-unit id="bulk.apply">
+                <source>bulk.apply</source>
+                <target>Apply</target>
+            </trans-unit>
+            <trans-unit id="bulk.select_operation_required">
+                <source>bulk.select_operation_required</source>
+                <target>Please select an operation</target>
+            </trans-unit>
+            <trans-unit id="bulk.select_items_required">
+                <source>bulk.select_items_required</source>
+                <target>Please select at least one item</target>
+            </trans-unit>
+            <trans-unit id="bulk.operation_success">
+                <source>bulk.operation_success</source>
+                <target>Operation completed successfully</target>
+            </trans-unit>
+            <trans-unit id="bulk.operation_failed">
+                <source>bulk.operation_failed</source>
+                <target>Operation failed</target>
+            </trans-unit>
+            <trans-unit id="bulk.error_occurred">
+                <source>bulk.error_occurred</source>
+                <target>An error occurred</target>
+            </trans-unit>
+            <trans-unit id="bulk.handler_not_found">
+                <source>bulk.handler_not_found</source>
+                <target>Handler function not found</target>
+            </trans-unit>
+            <trans-unit id="bulk.operation_not_implemented">
+                <source>bulk.operation_not_implemented</source>
+                <target>Operation not yet implemented</target>
+            </trans-unit>
+            <trans-unit id="bulk.errors">
+                <source>bulk.errors</source>
+                <target>Errors</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
+

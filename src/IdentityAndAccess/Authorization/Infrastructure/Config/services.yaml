@@ -1,7 +1,39 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
 
   App\IdentityAndAccess\Authorization\Application\Command\DebugPermissionsCommand:
     arguments:
       $permissionRegistry: '@App\Shared\Domain\PermissionRegistryInterface'
     tags:
       - { name: 'console.command', command: 'pumukit:debug:permissions', description: 'Lists all registered permissions grouped by domain and layer (func, ui, web).' }
+
+  # --- DOMAIN & APPLICATION ---
+  App\IdentityAndAccess\Authorization\Application\:
+    resource: '../../Application/'
+    exclude: '../../Application/**/*{Query,Request,Response,Validator}.php'
+
+  # --- INFRASTRUCTURE: PERSISTENCE ---
+  App\IdentityAndAccess\Authorization\Infrastructure\Persistence\DoctrinePermissionProfileRepository:
+    tags: ['doctrine.repository']
+
+  App\IdentityAndAccess\Authorization\Domain\Repository\PermissionProfileRepositoryInterface:
+    alias: App\IdentityAndAccess\Authorization\Infrastructure\Persistence\DoctrinePermissionProfileRepository
+
+  App\IdentityAndAccess\Authorization\Infrastructure\:
+    resource: '../'
+    exclude: '../{Config,Ui,Persistence}'
+
+  # --- INFRASTRUCTURE: UI ---
+  App\IdentityAndAccess\Authorization\Infrastructure\Ui\Backoffice\Http\Controller\:
+    resource: '../Ui/Backoffice/Http/Controller/'
+    tags: ['controller.service_arguments']
+
+  App\IdentityAndAccess\Authorization\Infrastructure\Ui\Backoffice\Http\Presenter\:
+    resource: '../Ui/Backoffice/Http/Presenter/'
+
+  App\IdentityAndAccess\Authorization\Infrastructure\Ui\Backoffice\Http\EventSubscriber\:
+    resource: '../Ui/Backoffice/Http/EventSubscriber/'
+

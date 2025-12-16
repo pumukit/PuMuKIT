@@ -1,0 +1,29 @@
+{% extends '@Shared/Views/layout/layout.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid mt-3">
+        {% include '@Shared/Views/partials/_title.html.twig' with {'page_title': 'permission_profile.page.list'|trans({}, 'permission_profile')} %}
+
+        {% include '@Shared/Views/components/table/_table.html.twig' with {
+            id: 'permissionProfilesTable',
+            title: 'permission_profile.table.title'|trans({}, 'permission_profile'),
+            server_side: true,
+            ajax_url: path('permission_profiles_list_data'),
+            checkbox: true,
+            columns: [
+                {'field': 'name', 'label': 'permission_profile.table.name'|trans({}, 'permission_profile'), 'sortable': true},
+                {'field': 'scope', 'label': 'permission_profile.table.scope'|trans({}, 'permission_profile'), 'sortable': true},
+                {'field': 'permissions_count', 'label': 'permission_profile.table.permissions_count'|trans({}, 'permission_profile'), 'sortable': false},
+                {'field': 'system', 'label': 'permission_profile.table.system'|trans({}, 'permission_profile'), 'formatter': 'boolean', 'sortable': true},
+                {'field': 'default', 'label': 'permission_profile.table.default'|trans({}, 'permission_profile'), 'formatter': 'boolean', 'sortable': true},
+                {'field': 'actions', 'label': 'permission_profile.table.actions'|trans({}, 'permission_profile'), 'align': 'right'}
+            ],
+        } %}
+
+        {% include '@Shared/Views/partials/_actions.html.twig' with {
+            translationDomain: 'permission_profile'
+        } %}
+
+    </div>
+{% endblock %}
