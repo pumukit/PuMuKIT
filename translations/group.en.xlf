@@ -83,6 +83,276 @@
                 <source>bulk.errors</source>
                 <target>Errors</target>
             </trans-unit>
+
+            <!-- View Header -->
+            <trans-unit id="group.button.back_to_list">
+                <source>group.button.back_to_list</source>
+                <target>Back to List</target>
+            </trans-unit>
+            <trans-unit id="group.view.details">
+                <source>group.view.details</source>
+                <target>Group Details</target>
+            </trans-unit>
+
+            <!-- Tabs -->
+            <trans-unit id="group.tab.general">
+                <source>group.tab.general</source>
+                <target>General</target>
+            </trans-unit>
+            <trans-unit id="group.tab.update">
+                <source>group.tab.update</source>
+                <target>Update</target>
+            </trans-unit>
+            <trans-unit id="group.tab.users">
+                <source>group.tab.users</source>
+                <target>Users</target>
+            </trans-unit>
+            <trans-unit id="group.tab.multimedia_objects">
+                <source>group.tab.multimedia_objects</source>
+                <target>Multimedia Objects</target>
+            </trans-unit>
+
+            <!-- General Tab -->
+            <trans-unit id="group.general.title">
+                <source>group.general.title</source>
+                <target>General Information</target>
+            </trans-unit>
+            <trans-unit id="group.general.field.id">
+                <source>group.general.field.id</source>
+                <target>ID</target>
+            </trans-unit>
+            <trans-unit id="group.general.field.key">
+                <source>group.general.field.key</source>
+                <target>Key</target>
+            </trans-unit>
+            <trans-unit id="group.general.field.name">
+                <source>group.general.field.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="group.general.field.origin">
+                <source>group.general.field.origin</source>
+                <target>Origin</target>
+            </trans-unit>
+            <trans-unit id="group.general.field.comments">
+                <source>group.general.field.comments</source>
+                <target>Comments</target>
+            </trans-unit>
+            <trans-unit id="group.general.field.created_at">
+                <source>group.general.field.created_at</source>
+                <target>Created At</target>
+            </trans-unit>
+            <trans-unit id="group.general.field.updated_at">
+                <source>group.general.field.updated_at</source>
+                <target>Updated At</target>
+            </trans-unit>
+            <trans-unit id="group.general.about_title">
+                <source>group.general.about_title</source>
+                <target>About Groups</target>
+            </trans-unit>
+            <trans-unit id="group.general.about_description">
+                <source>group.general.about_description</source>
+                <target>Groups are used to organize users and manage permissions collectively. Users belonging to this group will inherit the group's permissions and access rights.</target>
+            </trans-unit>
+
+            <!-- Update Tab -->
+            <trans-unit id="group.update.title">
+                <source>group.update.title</source>
+                <target>Update Group Information</target>
+            </trans-unit>
+            <trans-unit id="group.update.field.key">
+                <source>group.update.field.key</source>
+                <target>Key</target>
+            </trans-unit>
+            <trans-unit id="group.update.field.key_help">
+                <source>group.update.field.key_help</source>
+                <target>Unique identifier for the group (alphanumeric, underscore, dash)</target>
+            </trans-unit>
+            <trans-unit id="group.update.field.key_pattern">
+                <source>group.update.field.key_pattern</source>
+                <target>Only alphanumeric characters, underscore and dash are allowed</target>
+            </trans-unit>
+            <trans-unit id="group.update.field.name">
+                <source>group.update.field.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="group.update.field.name_help">
+                <source>group.update.field.name_help</source>
+                <target>Display name for the group</target>
+            </trans-unit>
+            <trans-unit id="group.update.field.origin">
+                <source>group.update.field.origin</source>
+                <target>Origin</target>
+            </trans-unit>
+            <trans-unit id="group.update.field.origin_help">
+                <source>group.update.field.origin_help</source>
+                <target>Authentication origin</target>
+            </trans-unit>
+            <trans-unit id="group.update.field.origin.local">
+                <source>group.update.field.origin.local</source>
+                <target>Local</target>
+            </trans-unit>
+            <trans-unit id="group.update.field.origin.cas">
+                <source>group.update.field.origin.cas</source>
+                <target>CAS</target>
+            </trans-unit>
+            <trans-unit id="group.update.field.origin.ldap">
+                <source>group.update.field.origin.ldap</source>
+                <target>LDAP</target>
+            </trans-unit>
+            <trans-unit id="group.update.field.comments">
+                <source>group.update.field.comments</source>
+                <target>Comments</target>
+            </trans-unit>
+            <trans-unit id="group.update.field.comments_help">
+                <source>group.update.field.comments_help</source>
+                <target>Additional information about the group</target>
+            </trans-unit>
+            <trans-unit id="group.update.warning_note">
+                <source>group.update.warning_note</source>
+                <target>Note:</target>
+            </trans-unit>
+            <trans-unit id="group.update.warning_message">
+                <source>group.update.warning_message</source>
+                <target>Changing the group key may affect permissions and user associations.</target>
+            </trans-unit>
+            <trans-unit id="group.update.button.save">
+                <source>group.update.button.save</source>
+                <target>Save Changes</target>
+            </trans-unit>
+            <trans-unit id="group.update.button.cancel">
+                <source>group.update.button.cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
+
+            <!-- Users Tab -->
+            <trans-unit id="group.users.title">
+                <source>group.users.title</source>
+                <target>Users in this Group</target>
+            </trans-unit>
+            <trans-unit id="group.users.button.add">
+                <source>group.users.button.add</source>
+                <target>Add User</target>
+            </trans-unit>
+            <trans-unit id="group.users.table.username">
+                <source>group.users.table.username</source>
+                <target>Username</target>
+            </trans-unit>
+            <trans-unit id="group.users.table.full_name">
+                <source>group.users.table.full_name</source>
+                <target>Full Name</target>
+            </trans-unit>
+            <trans-unit id="group.users.table.email">
+                <source>group.users.table.email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="group.users.table.enabled">
+                <source>group.users.table.enabled</source>
+                <target>Enabled</target>
+            </trans-unit>
+            <trans-unit id="group.users.table.last_login">
+                <source>group.users.table.last_login</source>
+                <target>Last Login</target>
+            </trans-unit>
+            <trans-unit id="group.users.table.origin">
+                <source>group.users.table.origin</source>
+                <target>Origin</target>
+            </trans-unit>
+            <trans-unit id="group.users.table.actions">
+                <source>group.users.table.actions</source>
+                <target>Actions</target>
+            </trans-unit>
+            <trans-unit id="group.users.modal.title">
+                <source>group.users.modal.title</source>
+                <target>Add User to Group</target>
+            </trans-unit>
+            <trans-unit id="group.users.modal.field.user">
+                <source>group.users.modal.field.user</source>
+                <target>Select User</target>
+            </trans-unit>
+            <trans-unit id="group.users.modal.field.user_placeholder">
+                <source>group.users.modal.field.user_placeholder</source>
+                <target>-- Select a user --</target>
+            </trans-unit>
+            <trans-unit id="group.users.modal.field.user_help">
+                <source>group.users.modal.field.user_help</source>
+                <target>Select a user to add to this group</target>
+            </trans-unit>
+            <trans-unit id="group.users.modal.info">
+                <source>group.users.modal.info</source>
+                <target>Only users not already in this group will be shown.</target>
+            </trans-unit>
+            <trans-unit id="group.users.modal.button.cancel">
+                <source>group.users.modal.button.cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
+            <trans-unit id="group.users.modal.button.add">
+                <source>group.users.modal.button.add</source>
+                <target>Add User</target>
+            </trans-unit>
+            <trans-unit id="group.users.confirm_remove">
+                <source>group.users.confirm_remove</source>
+                <target>Are you sure you want to remove user "%username%" from this group?</target>
+            </trans-unit>
+            <trans-unit id="group.users.search_placeholder">
+                <source>group.users.search_placeholder</source>
+                <target>Search for a user...</target>
+            </trans-unit>
+
+            <!-- Multimedia Objects Tab -->
+            <trans-unit id="group.multimedia_objects.title">
+                <source>group.multimedia_objects.title</source>
+                <target>Multimedia Objects Associated with this Group</target>
+            </trans-unit>
+            <trans-unit id="group.multimedia_objects.table.thumbnail">
+                <source>group.multimedia_objects.table.thumbnail</source>
+                <target>Thumbnail</target>
+            </trans-unit>
+            <trans-unit id="group.multimedia_objects.table.title">
+                <source>group.multimedia_objects.table.title</source>
+                <target>Title</target>
+            </trans-unit>
+            <trans-unit id="group.multimedia_objects.table.series">
+                <source>group.multimedia_objects.table.series</source>
+                <target>Series</target>
+            </trans-unit>
+            <trans-unit id="group.multimedia_objects.table.type">
+                <source>group.multimedia_objects.table.type</source>
+                <target>Type</target>
+            </trans-unit>
+            <trans-unit id="group.multimedia_objects.table.status">
+                <source>group.multimedia_objects.table.status</source>
+                <target>Status</target>
+            </trans-unit>
+            <trans-unit id="group.multimedia_objects.table.duration">
+                <source>group.multimedia_objects.table.duration</source>
+                <target>Duration</target>
+            </trans-unit>
+            <trans-unit id="group.multimedia_objects.table.published">
+                <source>group.multimedia_objects.table.published</source>
+                <target>Published</target>
+            </trans-unit>
+            <trans-unit id="group.multimedia_objects.table.actions">
+                <source>group.multimedia_objects.table.actions</source>
+                <target>Actions</target>
+            </trans-unit>
+            <trans-unit id="group.multimedia_objects.about_title">
+                <source>group.multimedia_objects.about_title</source>
+                <target>About Multimedia Objects</target>
+            </trans-unit>
+            <trans-unit id="group.multimedia_objects.about_description">
+                <source>group.multimedia_objects.about_description</source>
+                <target>This list shows all multimedia objects that have this group in their permissions or groups field. Users in this group may have access to these multimedia objects depending on the permission profile.</target>
+            </trans-unit>
+
+            <!-- Common -->
+            <trans-unit id="group.common.na">
+                <source>group.common.na</source>
+                <target>N/A</target>
+            </trans-unit>
+            <trans-unit id="group.common.required">
+                <source>group.common.required</source>
+                <target>*</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -1,19 +1,11 @@
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">
-            <i class="fa fa-photo-video me-2"></i>
-            Multimedia Objects Associated with this Group
-        </h5>
-        {% include '@Shared/Views/components/table/_table.html.twig' with {
-            id: 'groupMultimediaObjectsTable',
-            server_side: true,
-            ajax_url: path('group_multimedia_objects_data', {id: group.id}),
-            checkbox: true,
-            search: false,
-            columns: [
-                {'field': 'title', 'label': 'Title', 'sortable': true, 'truncate': true},
-                {'field': 'actions', 'label': 'Actions', 'align': 'right'}
-            ],
-        } %}
-    </div>
-</div>
+{% include '@Shared/Views/components/table/_table.html.twig' with {
+    id: 'groupMultimediaObjectsTable',
+    server_side: true,
+    ajax_url: path('group_multimedia_objects_data', {id: group.id}),
+    checkbox: true,
+    search: false,
+    columns: [
+        {'field': 'title', 'label': 'group.multimedia_objects.table.title'|trans({}, 'group'), 'sortable': true, 'truncate': true},
+        {'field': 'actions', 'label': 'group.multimedia_objects.table.actions'|trans({}, 'group'), 'align': 'right'}
+    ],
+} %}

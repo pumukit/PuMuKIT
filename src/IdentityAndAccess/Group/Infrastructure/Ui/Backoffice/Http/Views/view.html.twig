@@ -15,7 +15,7 @@
                         {% if tabItem.icon %}
                             <i class="fa {{ tabItem.icon }} me-1"></i>
                         {% endif %}
-                        {{ tabItem.label|trans }}
+                        {{ ('group.tab.' ~ tabItem.key)|trans({}, 'group') }}
                     </a>
                 </li>
             {% endfor %}

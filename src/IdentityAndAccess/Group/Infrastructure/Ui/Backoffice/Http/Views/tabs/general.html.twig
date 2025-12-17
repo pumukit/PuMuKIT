@@ -2,7 +2,7 @@
     <div class="card-body">
         <h5 class="card-title">
             <i class="fa fa-info-circle me-2"></i>
-            General Information
+            {{ 'group.general.title'|trans({}, 'group') }}
         </h5>
 
         <div class="row">
@@ -10,19 +10,19 @@
                 <table class="table table-striped">
                     <tbody>
                         <tr>
-                            <th width="30%">ID</th>
+                            <th width="30%">{{ 'group.general.field.id'|trans({}, 'group') }}</th>
                             <td>{{ group.id }}</td>
                         </tr>
                         <tr>
-                            <th>Key</th>
+                            <th>{{ 'group.general.field.key'|trans({}, 'group') }}</th>
                             <td><code>{{ group.key }}</code></td>
                         </tr>
                         <tr>
-                            <th>Name</th>
+                            <th>{{ 'group.general.field.name'|trans({}, 'group') }}</th>
                             <td>{{ group.name }}</td>
                         </tr>
                         <tr>
-                            <th>Origin</th>
+                            <th>{{ 'group.general.field.origin'|trans({}, 'group') }}</th>
                             <td>
                                 <span class="badge bg-info">
                                     {{ group.origin ?? 'local' }}
@@ -30,26 +30,26 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>Comments</th>
-                            <td>{{ group.comments|default('N/A') }}</td>
+                            <th>{{ 'group.general.field.comments'|trans({}, 'group') }}</th>
+                            <td>{{ group.comments|default('group.common.na'|trans({}, 'group')) }}</td>
                         </tr>
                         <tr>
-                            <th>Created At</th>
+                            <th>{{ 'group.general.field.created_at'|trans({}, 'group') }}</th>
                             <td>
                                 {% if group.createdAt %}
                                     {{ group.createdAt|date('Y-m-d H:i:s') }}
                                 {% else %}
-                                    N/A
+                                    {{ 'group.common.na'|trans({}, 'group') }}
                                 {% endif %}
                             </td>
                         </tr>
                         <tr>
-                            <th>Updated At</th>
+                            <th>{{ 'group.general.field.updated_at'|trans({}, 'group') }}</th>
                             <td>
                                 {% if group.updatedAt %}
                                     {{ group.updatedAt|date('Y-m-d H:i:s') }}
                                 {% else %}
-                                    N/A
+                                    {{ 'group.common.na'|trans({}, 'group') }}
                                 {% endif %}
                             </td>
                         </tr>
@@ -59,10 +59,9 @@
 
             <div class="col-md-6">
                 <div class="alert alert-info">
-                    <h6><i class="fa fa-info-circle"></i> About Groups</h6>
+                    <h6><i class="fa fa-info-circle"></i> {{ 'group.general.about_title'|trans({}, 'group') }}</h6>
                     <p class="mb-0">
-                        Groups are used to organize users and manage permissions collectively.
-                        Users belonging to this group will inherit the group's permissions and access rights.
+                        {{ 'group.general.about_description'|trans({}, 'group') }}
                     </p>
                 </div>
             </div>

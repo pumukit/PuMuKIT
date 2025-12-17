@@ -2,7 +2,7 @@
     <div class="card-body">
         <h5 class="card-title">
             <i class="fa fa-edit me-2"></i>
-            Update Group Information
+            {{ 'group.update.title'|trans({}, 'group') }}
         </h5>
 
         <form action="{{ path('group_update', {id: group.id}) }}" method="post">
@@ -10,7 +10,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="group_key" class="form-label">
-                            Key <span class="text-danger">*</span>
+                            {{ 'group.update.field.key'|trans({}, 'group') }} <span class="text-danger">{{ 'group.common.required'|trans({}, 'group') }}</span>
                         </label>
                         <input type="text"
                                class="form-control"
@@ -19,13 +19,13 @@
                                value="{{ group.key }}"
                                required
                                pattern="[a-zA-Z0-9_-]+"
-                               title="Only alphanumeric characters, underscore and dash are allowed">
-                        <div class="form-text">Unique identifier for the group (alphanumeric, underscore, dash)</div>
+                               title="{{ 'group.update.field.key_pattern'|trans({}, 'group') }}">
+                        <div class="form-text">{{ 'group.update.field.key_help'|trans({}, 'group') }}</div>
                     </div>
 
                     <div class="mb-3">
                         <label for="group_name" class="form-label">
-                            Name <span class="text-danger">*</span>
+                            {{ 'group.update.field.name'|trans({}, 'group') }} <span class="text-danger">{{ 'group.common.required'|trans({}, 'group') }}</span>
                         </label>
                         <input type="text"
                                class="form-control"
@@ -33,43 +33,43 @@
                                name="name"
                                value="{{ group.name }}"
                                required>
-                        <div class="form-text">Display name for the group</div>
+                        <div class="form-text">{{ 'group.update.field.name_help'|trans({}, 'group') }}</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="group_origin" class="form-label">Origin</label>
+                        <label for="group_origin" class="form-label">{{ 'group.update.field.origin'|trans({}, 'group') }}</label>
                         <select class="form-select" id="group_origin" name="origin">
-                            <option value="local" {{ group.origin == 'local' ? 'selected' : '' }}>Local</option>
-                            <option value="cas" {{ group.origin == 'cas' ? 'selected' : '' }}>CAS</option>
-                            <option value="ldap" {{ group.origin == 'ldap' ? 'selected' : '' }}>LDAP</option>
+                            <option value="local" {{ group.origin == 'local' ? 'selected' : '' }}>{{ 'group.update.field.origin.local'|trans({}, 'group') }}</option>
+                            <option value="cas" {{ group.origin == 'cas' ? 'selected' : '' }}>{{ 'group.update.field.origin.cas'|trans({}, 'group') }}</option>
+                            <option value="ldap" {{ group.origin == 'ldap' ? 'selected' : '' }}>{{ 'group.update.field.origin.ldap'|trans({}, 'group') }}</option>
                         </select>
-                        <div class="form-text">Authentication origin</div>
+                        <div class="form-text">{{ 'group.update.field.origin_help'|trans({}, 'group') }}</div>
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="group_comments" class="form-label">Comments</label>
+                        <label for="group_comments" class="form-label">{{ 'group.update.field.comments'|trans({}, 'group') }}</label>
                         <textarea class="form-control"
                                   id="group_comments"
                                   name="comments"
                                   rows="5">{{ group.comments }}</textarea>
-                        <div class="form-text">Additional information about the group</div>
+                        <div class="form-text">{{ 'group.update.field.comments_help'|trans({}, 'group') }}</div>
                     </div>
 
                     <div class="alert alert-warning">
                         <i class="fa fa-exclamation-triangle"></i>
-                        <strong>Note:</strong> Changing the group key may affect permissions and user associations.
+                        <strong>{{ 'group.update.warning_note'|trans({}, 'group') }}</strong> {{ 'group.update.warning_message'|trans({}, 'group') }}
                     </div>
                 </div>
             </div>
 
             <div class="mt-3">
                 <button type="submit" class="btn btn-primary">
-                    <i class="fa fa-save"></i> Save Changes
+                    <i class="fa fa-save"></i> {{ 'group.update.button.save'|trans({}, 'group') }}
                 </button>
                 <a href="{{ path('group_view', {id: group.id, tab: 'general'}) }}" class="btn btn-secondary">
-                    <i class="fa fa-times"></i> Cancel
+                    <i class="fa fa-times"></i> {{ 'group.update.button.cancel'|trans({}, 'group') }}
                 </a>
             </div>
         </form>

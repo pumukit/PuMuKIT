@@ -1,64 +1,47 @@
-<div class="card">
-    <div class="card-body">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="card-title mb-0">
-                <i class="fa fa-users me-2"></i>
-                Users in this Group
-            </h5>
-            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                <i class="fa fa-plus"></i> Add User
-            </button>
-        </div>
+{% include '@Shared/Views/components/table/_table.html.twig' with {
+    id: 'groupUsersTable',
+    server_side: true,
+    ajax_url: path('group_users_data', {id: group.id}),
+    checkbox: true,
+    search: false,
+    columns: [
+        {'field': 'username', 'label': 'group.users.table.username'|trans({}, 'group'), 'sortable': true},
+        {'field': 'full_name', 'label': 'group.users.table.full_name'|trans({}, 'group'), 'sortable': true},
+        {'field': 'email', 'label': 'group.users.table.email'|trans({}, 'group'), 'sortable': true},
+        {'field': 'actions', 'label': 'group.users.table.actions'|trans({}, 'group'), 'align': 'right'}
+    ],
+} %}
 
-        {% include '@Shared/Views/components/table/_table.html.twig' with {
-            id: 'groupUsersTable',
-            server_side: true,
-            ajax_url: path('group_users_data', {id: group.id}),
-            checkbox: false,
-            columns: [
-                {'field': 'username', 'label': 'Username', 'sortable': true},
-                {'field': 'full_name', 'label': 'Full Name', 'sortable': true},
-                {'field': 'email', 'label': 'Email', 'sortable': true},
-                {'field': 'enabled', 'label': 'Enabled', 'formatter': 'boolean', 'sortable': true},
-                {'field': 'last_login', 'label': 'Last Login', 'sortable': true},
-                {'field': 'origin', 'label': 'Origin', 'sortable': true},
-                {'field': 'actions', 'label': 'Actions', 'align': 'right'}
-            ],
-        } %}
-    </div>
-</div>
-
-<!-- Add User Modal -->
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addUserModalLabel">
-                    <i class="fa fa-user-plus"></i> Add User to Group
+                    <i class="fa fa-user-plus"></i> {{ 'group.users.modal.title'|trans({}, 'group') }}
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="addUserForm" action="{{ path('group_add_user', {id: group.id}) }}" method="post">
                     <div class="mb-3">
-                        <label for="user_select" class="form-label">Select User</label>
+                        <label for="user_select" class="form-label">{{ 'group.users.modal.field.user'|trans({}, 'group') }}</label>
                         <select class="form-select" id="user_select" name="user_id" required>
-                            <option value="">-- Select a user --</option>
+                            <option value="">{{ 'group.users.modal.field.user_placeholder'|trans({}, 'group') }}</option>
                         </select>
-                        <div class="form-text">Select a user to add to this group</div>
+                        <div class="form-text">{{ 'group.users.modal.field.user_help'|trans({}, 'group') }}</div>
                     </div>
                     <div class="alert alert-info">
                         <i class="fa fa-info-circle"></i>
-                        Only users not already in this group will be shown.
+                        {{ 'group.users.modal.info'|trans({}, 'group') }}
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    <i class="fa fa-times"></i> Cancel
+                    <i class="fa fa-times"></i> {{ 'group.users.modal.button.cancel'|trans({}, 'group') }}
                 </button>
                 <button type="submit" form="addUserForm" class="btn btn-success">
-                    <i class="fa fa-plus"></i> Add User
+                    <i class="fa fa-plus"></i> {{ 'group.users.modal.button.add'|trans({}, 'group') }}
                 </button>
             </div>
         </div>
@@ -75,7 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const userName = btn.dataset.userName;
             const groupId = btn.dataset.groupId;
 
-            if (!confirm('Are you sure you want to remove user "' + userName + '" from this group?')) {
+            const confirmMessage = '{{ 'group.users.confirm_remove'|trans({}, 'group') }}'.replace('%username%', userName);
+            if (!confirm(confirmMessage)) {
                 return;
             }
 
@@ -98,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const userSelect = document.getElementById('user_select');
     if (userSelect && typeof $ !== 'undefined' && $.fn.select2) {
         $(userSelect).select2({
-            placeholder: 'Search for a user...',
+            placeholder: '{{ 'group.users.search_placeholder'|trans({}, 'group') }}',
             ajax: {
                 url: '{{ path('users_list_data') }}',
                 dataType: 'json',
