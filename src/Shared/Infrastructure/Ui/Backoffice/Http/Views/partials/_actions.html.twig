@@ -4,6 +4,11 @@
             <a href="{{ action.url }}"
                class="{{ action.class }}"
                {% if action.target is defined and action.target %}target="{{ action.target }}"{% endif %}
+               {% if action.attributes is defined and action.attributes is iterable %}
+                   {% for attrName, attrValue in action.attributes %}
+                       {{ attrName }}="{{ attrValue }}"
+                   {% endfor %}
+               {% endif %}
                title="{{ action.label|trans({}, translationDomain|default('messages')) }}">
                 {% if action.icon is defined and action.icon %}<i class="fa {{ action.icon }}"></i> {% endif %}
                 {{ action.label|trans({}, translationDomain|default('messages')) }}

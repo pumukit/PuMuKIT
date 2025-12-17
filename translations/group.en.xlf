@@ -353,6 +353,50 @@
                 <source>group.common.required</source>
                 <target>*</target>
             </trans-unit>
+
+            <!-- Create Modal -->
+            <trans-unit id="group.create.modal.title">
+                <source>group.create.modal.title</source>
+                <target>Create New Group</target>
+            </trans-unit>
+            <trans-unit id="group.create.modal.field.name">
+                <source>group.create.modal.field.name</source>
+                <target>Group Name</target>
+            </trans-unit>
+            <trans-unit id="group.create.modal.field.name_help">
+                <source>group.create.modal.field.name_help</source>
+                <target>Enter the name of the group (the key will be generated automatically)</target>
+            </trans-unit>
+            <trans-unit id="group.create.modal.info">
+                <source>group.create.modal.info</source>
+                <target>The group key will be automatically generated from the name. You can modify it later in the update tab.</target>
+            </trans-unit>
+            <trans-unit id="group.create.modal.button.cancel">
+                <source>group.create.modal.button.cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
+            <trans-unit id="group.create.modal.button.create">
+                <source>group.create.modal.button.create</source>
+                <target>Create Group</target>
+            </trans-unit>
+
+            <!-- Flash Messages -->
+            <trans-unit id="group.create.success">
+                <source>group.create.success</source>
+                <target>Group created successfully.</target>
+            </trans-unit>
+            <trans-unit id="group.create.error.name_required">
+                <source>group.create.error.name_required</source>
+                <target>Group name is required.</target>
+            </trans-unit>
+            <trans-unit id="group.create.error.key_exists">
+                <source>group.create.error.key_exists</source>
+                <target>Cannot create group: key already exists.</target>
+            </trans-unit>
+            <trans-unit id="group.create.error.generic">
+                <source>group.create.error.generic</source>
+                <target>An error occurred while creating the group.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
