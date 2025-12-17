@@ -43,7 +43,7 @@ final class GroupDataTablePresenter
 
         $deleteButton = $this->twig->render('@Shared/Views/components/table/buttons/_delete_button.html.twig', [
             'url' => $this->router->generate('group_delete', ['id' => $group->getId()]),
-            'confirm' => 'Are you sure you want to delete this group?',
+            'confirm' => 'group.delete.confirm',
         ]);
 
         return $viewButton.$editButton.$deleteButton;

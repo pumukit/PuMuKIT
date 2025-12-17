@@ -397,6 +397,42 @@
                 <source>group.create.error.generic</source>
                 <target>An error occurred while creating the group.</target>
             </trans-unit>
+
+            <!-- Delete Messages -->
+            <trans-unit id="group.delete.success">
+                <source>group.delete.success</source>
+                <target>Group deleted successfully.</target>
+            </trans-unit>
+            <trans-unit id="group.delete.error">
+                <source>group.delete.error</source>
+                <target>An error occurred while deleting the group.</target>
+            </trans-unit>
+            <trans-unit id="group.delete.confirm">
+                <source>group.delete.confirm</source>
+                <target>Are you sure you want to delete this group?</target>
+            </trans-unit>
+
+            <!-- Bulk Delete Messages -->
+            <trans-unit id="group.bulk_delete.success">
+                <source>group.bulk_delete.success</source>
+                <target>All selected groups were deleted successfully.</target>
+            </trans-unit>
+            <trans-unit id="group.bulk_delete.partial_success">
+                <source>group.bulk_delete.partial_success</source>
+                <target>Some groups were deleted, but errors occurred with others.</target>
+            </trans-unit>
+            <trans-unit id="group.bulk_delete.error.no_ids">
+                <source>group.bulk_delete.error.no_ids</source>
+                <target>No groups were selected for deletion.</target>
+            </trans-unit>
+            <trans-unit id="group.bulk_delete.error.all_failed">
+                <source>group.bulk_delete.error.all_failed</source>
+                <target>Failed to delete all selected groups.</target>
+            </trans-unit>
+            <trans-unit id="group.bulk_delete.confirm">
+                <source>group.bulk_delete.confirm</source>
+                <target>Are you sure you want to delete the selected groups? This action cannot be undone.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

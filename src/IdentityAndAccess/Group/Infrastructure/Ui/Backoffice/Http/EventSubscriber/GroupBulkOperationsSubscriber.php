@@ -21,10 +21,10 @@ final class GroupBulkOperationsSubscriber implements EventSubscriberInterface
         $event->addOperation(
             key: 'delete',
             label: 'Delete',
-            handler: '#',
+            handler: 'group_bulk_delete',
             type: 'route',
             icon: 'fa-trash',
-            confirmMessage: 'Are you sure you want to delete the selected groups? This action cannot be undone.',
+            confirmMessage: 'group.bulk_delete.confirm',
             priority: 100
         );
     }
