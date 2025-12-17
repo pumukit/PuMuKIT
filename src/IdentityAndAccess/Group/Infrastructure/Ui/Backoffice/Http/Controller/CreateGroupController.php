@@ -22,6 +22,7 @@ final class CreateGroupController extends AbstractController
 
         if (empty($name)) {
             $this->addFlash('error', 'group.create.error.name_required');
+
             return $this->redirectToRoute('group_list');
         }
 
@@ -31,8 +32,8 @@ final class CreateGroupController extends AbstractController
             $dto = new CreateGroupRequest(
                 key: $key,
                 name: $name,
-                origin: 'local',
-                comments: ''
+                comments: '',
+                origin: 'local'
             );
 
             $response = ($this->createGroupService)($dto);
@@ -41,7 +42,7 @@ final class CreateGroupController extends AbstractController
 
             return $this->redirectToRoute('group_view', [
                 'id' => $response->group->getId(),
-                'tab' => 'update'
+                'tab' => 'edit',
             ]);
         } catch (\InvalidArgumentException $e) {
             if (str_contains($e->getMessage(), 'already exists')) {
@@ -62,9 +63,7 @@ final class CreateGroupController extends AbstractController
     {
         $key = strtolower($name);
         $key = preg_replace('/[^a-z0-9]+/', '_', $key);
-        $key = trim($key, '_');
 
-        return $key;
+        return trim($key, '_');
     }
 }
-

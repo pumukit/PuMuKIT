@@ -99,9 +99,9 @@
                 <source>group.tab.general</source>
                 <target>General</target>
             </trans-unit>
-            <trans-unit id="group.tab.update">
-                <source>group.tab.update</source>
-                <target>Update</target>
+            <trans-unit id="group.tab.edit">
+                <source>group.tab.edit</source>
+                <target>Edit</target>
             </trans-unit>
             <trans-unit id="group.tab.users">
                 <source>group.tab.users</source>

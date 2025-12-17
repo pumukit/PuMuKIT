@@ -25,6 +25,7 @@ final class RemoveUserFromGroupController extends AbstractController
 
         if (!$group instanceof Group) {
             $this->addFlash('error', 'Group not found.');
+
             return $this->redirectToRoute('group_list');
         }
 
@@ -32,6 +33,7 @@ final class RemoveUserFromGroupController extends AbstractController
 
         if (empty($userId)) {
             $this->addFlash('error', 'User ID is required.');
+
             return $this->redirectToRoute('group_view', ['id' => $id, 'tab' => 'users']);
         }
 
@@ -39,12 +41,14 @@ final class RemoveUserFromGroupController extends AbstractController
 
         if (!$user instanceof User) {
             $this->addFlash('error', 'User not found.');
+
             return $this->redirectToRoute('group_view', ['id' => $id, 'tab' => 'users']);
         }
 
         // Check if user is in the group
         if (!$user->getGroups()->contains($group)) {
             $this->addFlash('warning', sprintf('User "%s" is not in this group.', $user->getUsername()));
+
             return $this->redirectToRoute('group_view', ['id' => $id, 'tab' => 'users']);
         }
 
@@ -58,4 +62,3 @@ final class RemoveUserFromGroupController extends AbstractController
         return $this->redirectToRoute('group_view', ['id' => $id, 'tab' => 'users']);
     }
 }
-

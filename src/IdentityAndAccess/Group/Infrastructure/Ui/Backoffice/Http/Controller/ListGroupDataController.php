@@ -10,7 +10,6 @@ use App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Presenter\Grou
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
 
 class ListGroupDataController extends AbstractController
 {

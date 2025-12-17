@@ -1,6 +1,9 @@
 <?php
+
 declare(strict_types=1);
+
 namespace App\IdentityAndAccess\Group\Application\BulkDelete;
+
 final class BulkDeleteGroupValidator
 {
     public static function validate(BulkDeleteGroupRequest $request): void

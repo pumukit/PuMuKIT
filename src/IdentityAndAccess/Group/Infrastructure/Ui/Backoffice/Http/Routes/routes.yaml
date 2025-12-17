@@ -1,52 +1,50 @@
-group_create:
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\CreateGroupController
-  path: /admin/backend/group/new
-  methods: [POST]
-
-group_delete:
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\DeleteGroupController
-  path: /admin/backend/group/{id}/delete
-  methods: [POST, DELETE]
-
-group_bulk_delete:
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\BulkDeleteGroupController
-  path: /admin/backend/groups/bulk-delete
-  methods: [POST]
-
-group_update:
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ListGroupController
-  path: /admin/backend/group/{id}/update
-
 groups_list_data:
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ListGroupDataController
   path: /admin/backend/groups/data
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ListGroupDataController
 
 group_list:
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ListGroupController
   path: /admin/backend/groups
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ListGroupController
+
+group_bulk_delete:
+  path: /admin/backend/groups/bulk-delete
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\BulkDeleteGroupController
+  methods: [POST]
+
+group_create:
+  path: /admin/backend/group/new
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\CreateGroupController
+  methods: [POST]
 
 group_add_user:
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\AddUserToGroupController
   path: /admin/backend/group/{id}/add-user
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\AddUserToGroupController
   methods: [POST]
 
 group_remove_user:
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\RemoveUserFromGroupController
   path: /admin/backend/group/{id}/remove-user
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\RemoveUserFromGroupController
   methods: [POST]
 
 group_users_data:
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\GroupUsersDataController
   path: /admin/backend/group/{id}/users/data
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\GroupUsersDataController
 
 group_multimedia_objects_data:
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\GroupMultimediaObjectsDataController
   path: /admin/backend/group/{id}/multimedia-objects/data
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\GroupMultimediaObjectsDataController
+
+group_delete:
+  path: /admin/backend/group/{id}/delete
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\DeleteGroupController
+  methods: [POST, DELETE]
+
+group_update:
+  path: /admin/backend/group/{id}/update
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\UpdateGroupController
 
 group_view:
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ViewGroupController
   path: /admin/backend/group/{id}/{tab}
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ViewGroupController
   defaults:
     tab: 'general'
-  requirements:
-    tab: '[a-z_-]+'

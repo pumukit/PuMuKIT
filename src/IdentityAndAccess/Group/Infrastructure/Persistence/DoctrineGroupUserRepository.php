@@ -18,20 +18,20 @@ class DoctrineGroupUserRepository implements GroupUserRepositoryInterface
         int $limit,
         string $sort,
         string $order
-    ): array
-    {
+    ): array {
         $skip = ($page - 1) * $limit;
 
         $documents = $this->objectManager->getDocumentManager()->createQueryBuilder(User::class)
             ->field('groups')->equals($groupId->value())
-            ->sort($sort, $order === 'asc' ? 1 : -1)
+            ->sort($sort, 'asc' === $order ? 1 : -1)
             ->limit($limit)
             ->skip($skip)
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
 
         return array_map(
-            fn(User $doc) => new GroupUserListItem(
+            fn (User $doc) => new GroupUserListItem(
                 $doc->getId(),
                 $doc->getUsername(),
                 $doc->getEmail(),
@@ -47,6 +47,7 @@ class DoctrineGroupUserRepository implements GroupUserRepositoryInterface
             ->field('groups')->equals($groupId->value())
             ->count()
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 }

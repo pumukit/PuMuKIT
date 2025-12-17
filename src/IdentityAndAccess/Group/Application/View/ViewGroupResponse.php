@@ -11,4 +11,3 @@ final class ViewGroupResponse
         public string $tab
     ) {}
 }
-

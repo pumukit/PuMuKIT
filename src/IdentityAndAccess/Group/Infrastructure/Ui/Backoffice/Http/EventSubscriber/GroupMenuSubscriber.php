@@ -27,7 +27,7 @@ final class GroupMenuSubscriber implements EventSubscriberInterface
             icon: 'fa-users',
             priority: 90,
             permission: Permission::ACCESS_ADMIN_USERS,
-            activeRoutes: ['group_create', 'group_view', 'group_update', 'group_delete', 'groups_list_data']
+            activeRoutes: ['group_create', 'group_view', 'group_edit', 'group_delete', 'groups_list_data']
         );
     }
 }

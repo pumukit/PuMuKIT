@@ -32,11 +32,12 @@ final class BulkDeleteGroupService
                         'id' => $id,
                         'message' => 'Group not found',
                     ];
+
                     continue;
                 }
 
                 $this->repository->delete($group);
-                $deletedCount++;
+                ++$deletedCount;
             } catch (\Exception $e) {
                 $failedIds[] = $id;
                 $errors[] = [
@@ -58,4 +59,3 @@ final class BulkDeleteGroupService
         );
     }
 }
-

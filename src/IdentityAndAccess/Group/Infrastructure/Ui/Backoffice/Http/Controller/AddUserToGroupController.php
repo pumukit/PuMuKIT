@@ -25,6 +25,7 @@ final class AddUserToGroupController extends AbstractController
 
         if (!$group instanceof Group) {
             $this->addFlash('error', 'Group not found.');
+
             return $this->redirectToRoute('group_list');
         }
 
@@ -32,6 +33,7 @@ final class AddUserToGroupController extends AbstractController
 
         if (empty($userId)) {
             $this->addFlash('error', 'User ID is required.');
+
             return $this->redirectToRoute('group_view', ['id' => $id, 'tab' => 'users']);
         }
 
@@ -39,12 +41,14 @@ final class AddUserToGroupController extends AbstractController
 
         if (!$user instanceof User) {
             $this->addFlash('error', 'User not found.');
+
             return $this->redirectToRoute('group_view', ['id' => $id, 'tab' => 'users']);
         }
 
         // Check if user is already in the group
         if ($user->getGroups()->contains($group)) {
             $this->addFlash('warning', sprintf('User "%s" is already in this group.', $user->getUsername()));
+
             return $this->redirectToRoute('group_view', ['id' => $id, 'tab' => 'users']);
         }
 

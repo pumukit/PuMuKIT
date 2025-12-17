@@ -50,4 +50,3 @@ final class DeleteGroupController extends AbstractController
         }
     }
 }
-

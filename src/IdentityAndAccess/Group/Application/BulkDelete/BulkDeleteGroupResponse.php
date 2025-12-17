@@ -1,6 +1,9 @@
 <?php
+
 declare(strict_types=1);
+
 namespace App\IdentityAndAccess\Group\Application\BulkDelete;
+
 final class BulkDeleteGroupResponse
 {
     public function __construct(
@@ -9,14 +12,17 @@ final class BulkDeleteGroupResponse
         public array $errors = [],
         public string $message = ''
     ) {}
+
     public function isFullySuccessful(): bool
     {
         return empty($this->failedIds);
     }
+
     public function hasErrors(): bool
     {
         return !empty($this->errors);
     }
+
     public function toArray(): array
     {
         $data = [
@@ -31,16 +37,19 @@ final class BulkDeleteGroupResponse
         if (!empty($this->errors)) {
             $data['errors'] = $this->errors;
         }
+
         return $data;
     }
+
     private function generateMessage(): string
     {
-        if ($this->deletedCount === 0) {
+        if (0 === $this->deletedCount) {
             return 'group.bulk_delete.error.all_failed';
         }
         if (!empty($this->failedIds)) {
             return 'group.bulk_delete.partial_success';
         }
+
         return 'group.bulk_delete.success';
     }
 }

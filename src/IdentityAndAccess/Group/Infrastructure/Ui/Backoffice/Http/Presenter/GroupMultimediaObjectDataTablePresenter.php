@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Presenter;
 
-use App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Helpers\DurationFormat;
-use App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Helpers\StatusIcon;
-use App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Helpers\TypeIcon;
-use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\DateFormat;
 use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\TextTruncate;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -41,10 +36,9 @@ final class GroupMultimediaObjectDataTablePresenter
             'icon' => 'fa-eye',
             'style' => 'info',
             'title' => 'View Series',
-            'type' => 'link'
+            'type' => 'link',
         ]);
 
-        return $viewButton . $viewSeriesButton;
+        return $viewButton.$viewSeriesButton;
     }
 }
-

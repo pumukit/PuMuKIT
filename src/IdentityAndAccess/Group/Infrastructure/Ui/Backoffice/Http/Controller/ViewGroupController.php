@@ -36,7 +36,7 @@ final class ViewGroupController extends AbstractController
 
             $tabData = [
                 'total' => $total,
-                'data_url' => $this->generateUrl('group_multimedia_objects_data', ['id' => $id])
+                'data_url' => $this->generateUrl('group_multimedia_objects_data', ['id' => $id]),
             ];
         }
 

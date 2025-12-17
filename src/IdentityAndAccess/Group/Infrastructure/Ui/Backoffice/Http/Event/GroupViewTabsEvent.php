@@ -17,7 +17,7 @@ final class GroupViewTabsEvent extends Event
         private readonly Group $group
     ) {
         $this->addTab('general', 'General', 'fa-info-circle', 0);
-        $this->addTab('update', 'Update', 'fa-edit', 10);
+        $this->addTab('edit', 'Edit', 'fa-edit', 10);
         $this->addTab('users', 'Users', 'fa-users', 20);
         $this->addTab('multimedia_objects', 'Multimedia Objects', 'fa-photo-video', 30);
     }
@@ -50,4 +50,3 @@ final class GroupViewTabsEvent extends Event
         return $this->group;
     }
 }
-
