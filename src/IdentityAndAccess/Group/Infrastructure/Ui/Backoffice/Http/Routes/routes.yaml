@@ -36,3 +36,11 @@ group_remove_user:
   path: /admin/backend/group/{id}/remove-user
   methods: [POST]
 
+group_users_data:
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\GroupUsersDataController
+  path: /admin/backend/group/{id}/users/data
+
+group_multimedia_objects_data:
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\GroupMultimediaObjectsDataController
+  path: /admin/backend/group/{id}/multimedia-objects/data
+

@@ -19,11 +19,9 @@ class ListGroupDataController extends AbstractController
         private readonly GroupDataTablePresenter $presenter
     ) {}
 
-    public function __invoke(
-        Request $request,
-        RouterInterface $router
-    ): JsonResponse {
-        $page = (int) $request->query->get('page', '1');
+    public function __invoke(Request $request): JsonResponse
+    {
+        $offset = (int) $request->query->get('offset', '0');
         $limit = (int) $request->query->get('limit', '10');
         $sort = $request->query->get('sort', 'key');
         $order = $request->query->get('order', 'asc');
@@ -33,6 +31,8 @@ class ListGroupDataController extends AbstractController
         if (str_starts_with($sort, 'group.')) {
             $sort = substr($sort, 6);
         }
+
+        $page = (int) floor($offset / $limit) + 1;
 
         $dto = new ListGroupRequest(
             filters: $filters,

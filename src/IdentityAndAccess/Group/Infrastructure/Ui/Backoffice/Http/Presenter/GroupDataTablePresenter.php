@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Presenter;
 
 use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\DateFormat;
+use App\Shared\Infrastructure\Ui\Backoffice\Http\Helpers\TextTruncate;
 use Pumukit\SchemaBundle\Document\Group;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
@@ -23,7 +24,7 @@ final class GroupDataTablePresenter
             'key' => $group->getKey(),
             'name' => $group->getName(),
             'origin' => $group->getOrigin(),
-            'comments' => $group->getComments(),
+            'comments' => TextTruncate::medium($group->getComments() ?? ''),
             'created_at' => DateFormat::format($group->getCreatedAt()),
             'updated_at' => DateFormat::format($group->getUpdatedAt()),
             'actions' => $this->renderActions($group),

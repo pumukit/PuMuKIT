@@ -13,8 +13,13 @@ final class MultimediaObjectReadService
     {
     }
 
-    public function findIdsAndTitlesByGroupId(GroupId $groupId): array
+    public function findPaginatedByGroupId(string $groupId, int $page, int $limit, string $sort, string $order): array
     {
-        return $this->repository->findIdsAndTitlesByGroupId($groupId->toString());
+        return $this->repository->findPaginatedByGroupId($groupId, $page, $limit, $sort, $order);
+    }
+
+    public function countByGroupId(string $groupId): int
+    {
+        return $this->repository->countByGroupId($groupId);
     }
 }

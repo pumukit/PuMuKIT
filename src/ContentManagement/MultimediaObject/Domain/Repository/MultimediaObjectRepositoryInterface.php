@@ -24,5 +24,7 @@ interface MultimediaObjectRepositoryInterface
 
     public function findByGroupId(string $groupId): array;
 
-    public function findIdsAndTitlesByGroupId(string $groupId): array;
+    public function findPaginatedByGroupId(string $groupId, int $page, int $limit, string $sort, string $order): array;
+
+    public function countByGroupId(string $groupId): int;
 }

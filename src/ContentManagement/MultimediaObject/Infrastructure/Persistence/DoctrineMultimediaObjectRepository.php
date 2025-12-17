@@ -140,32 +140,31 @@ final class DoctrineMultimediaObjectRepository implements MultimediaObjectReposi
             ->execute();
     }
 
-    public function findIdsAndTitlesByGroupId(string $groupId): array
+    public function findPaginatedByGroupId(string $groupId, int $page, int $limit, string $sort, string $order): array
     {
         $qb = $this->objectManager->getDocumentManager()
             ->getRepository(MultimediaObject::class)
+            ->createQueryBuilder();
+
+        return $qb->field('groups')->equals($groupId)
+            ->sort($sort, $order)
+            ->skip(($page - 1) * $limit)
+            ->limit($limit)
+            ->hydrate(false)
+            ->select('_id', 'title', 'series')
+            ->getQuery()
+            ->execute()
+            ->toArray();
+    }
+
+    public function countByGroupId(string $groupId): int
+    {
+        return $this->objectManager->getDocumentManager()
+            ->getRepository(MultimediaObject::class)
             ->createQueryBuilder()
-        ;
-
-        $qb->select('_id', 'title', 'series');
-        $qb->field('groups')->equals($groupId);
-        $qb->hydrate(false);
-        $query = $qb->getQuery();
-        $results = $query->execute();
-
-        $output = [];
-        foreach ($results as $documentData) {
-            $id = (string) $documentData['_id'];
-            $series = (string) $documentData['series'];
-            $title = $documentData['title'];
-
-            $output[] = [
-                'id' => $id,
-                'title' => $title,
-                'series' => $series,
-            ];
-        }
-
-        return $output;
+            ->field('groups')->equals($groupId)
+            ->count()
+            ->getQuery()
+            ->execute();
     }
 }

@@ -31,9 +31,13 @@ final class ViewGroupController extends AbstractController
         $this->eventDispatcher->dispatch($tabsEvent, GroupViewTabsEvent::NAME);
 
         $tabData = [];
-        if('multimedia_objects' === $tab) {
-            $multimediaObjects = $this->multimediaObjectQuery->findIdsAndTitlesByGroupId(GroupId::fromString($id));
-            $tabData['multimedia_objects'] = $multimediaObjects;
+        if ('multimedia_objects' === $tab) {
+            $total = $this->multimediaObjectQuery->countByGroupId(GroupId::fromString($id));
+
+            $tabData = [
+                'total' => $total,
+                'data_url' => $this->generateUrl('group_multimedia_objects_data', ['id' => $id])
+            ];
         }
 
         return $this->render('@Group/Views/view.html.twig', [

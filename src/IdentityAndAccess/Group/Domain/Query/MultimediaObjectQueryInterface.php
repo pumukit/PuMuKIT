@@ -8,5 +8,13 @@ use App\IdentityAndAccess\Group\Domain\ValueObject\GroupId;
 
 interface MultimediaObjectQueryInterface
 {
-    public function findIdsAndTitlesByGroupId(GroupId $groupId): array;
+    public function findPaginatedByGroupId(
+        GroupId $groupId,
+        int $page,
+        int $limit,
+        string $sort,
+        string $order
+    ): array;
+
+    public function countByGroupId(GroupId $groupId): int;
 }

@@ -14,8 +14,13 @@ final class MultimediaObjectACL implements MultimediaObjectQueryInterface
     {
     }
 
-    public function findIdsAndTitlesByGroupId(GroupId $groupId): array
+    public function findPaginatedByGroupId(GroupId $groupId, int $page, int $limit, string $sort, string $order): array
     {
-        return $this->readService->findIdsAndTitlesByGroupId($groupId);
+        return $this->readService->findPaginatedByGroupId($groupId->toString(), $page, $limit, $sort, $order);
+    }
+
+    public function countByGroupId(GroupId $groupId): int
+    {
+        return $this->readService->countByGroupId($groupId->toString());
     }
 }
