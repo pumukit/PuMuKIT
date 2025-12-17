@@ -41,3 +41,6 @@ services:
   App\IdentityAndAccess\Group\Domain\Query\MultimediaObjectQueryInterface:
     alias: App\IdentityAndAccess\Group\Infrastructure\ACL\MultimediaObjectACL
     public: true
+
+  App\IdentityAndAccess\Group\Domain\Repository\GroupUserRepositoryInterface:
+    class: App\IdentityAndAccess\Group\Infrastructure\Persistence\DoctrineGroupUserRepository
