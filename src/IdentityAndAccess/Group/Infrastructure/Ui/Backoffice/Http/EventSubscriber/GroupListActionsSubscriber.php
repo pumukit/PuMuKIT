@@ -21,11 +21,12 @@ final class GroupListActionsSubscriber implements EventSubscriberInterface
         $event->addAction(
             key: 'group_create',
             label: 'Create',
-            url: 'group_create',
-            type: 'route',
+            url: '#',
+            type: 'modal',
             icon: 'fa-plus',
             class: 'btn btn-pumukit',
-            priority: 10
+            priority: 10,
+            routeParams: ['data-bs-toggle' => 'modal', 'data-bs-target' => '#createGroupModal']
         );
     }
 }

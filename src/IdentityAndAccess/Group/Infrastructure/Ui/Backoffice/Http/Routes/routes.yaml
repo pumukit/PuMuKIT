@@ -1,6 +1,7 @@
 group_create:
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ListGroupController
+  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\CreateGroupController
   path: /admin/backend/group/new
+  methods: [POST]
 
 group_view:
   controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\ViewGroupController

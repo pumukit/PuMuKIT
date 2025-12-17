@@ -17,6 +17,11 @@ final class CreateGroupService
     {
         CreateGroupValidator::validate($request);
 
+        $existingGroup = $this->repository->findByKey($request->key);
+        if ($existingGroup) {
+            throw new \InvalidArgumentException(sprintf('Group with key "%s" already exists.', $request->key));
+        }
+
         $group = new Group($request->key);
         $group->setName($request->name);
         $group->setOrigin($request->origin);

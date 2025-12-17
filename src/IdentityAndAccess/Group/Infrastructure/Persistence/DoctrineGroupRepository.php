@@ -68,6 +68,11 @@ class DoctrineGroupRepository implements GroupRepositoryInterface
         return $this->objectManager->getDocumentManager()->getRepository(Group::class)->find(new ObjectId($id));
     }
 
+    public function findByKey(string $key): ?Group
+    {
+        return $this->objectManager->getDocumentManager()->getRepository(Group::class)->findOneBy(['key' => $key]);
+    }
+
     public function save(Group $group): void
     {
         $this->objectManager->getDocumentManager()->persist($group);

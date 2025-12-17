@@ -45,6 +45,8 @@ class ListGroupController extends AbstractController
                     $action['url'],
                     $action['route_params'] ?? []
                 );
+            } elseif ('modal' === $action['type']) {
+                $action['attributes'] = $action['route_params'] ?? [];
             }
         }
 

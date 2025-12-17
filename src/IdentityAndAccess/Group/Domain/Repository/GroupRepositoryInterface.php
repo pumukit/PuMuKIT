@@ -18,9 +18,9 @@ interface GroupRepositoryInterface
 
     public function findByFiltersPaginated(array $filters, int $page, int $limit, string $sort, string $order): array;
 
-    public function findByFilters(array $filters = []): array;
+    public function find(string $id): ?Group;
+
+    public function findByKey(string $key): ?Group;
 
     public function findAllGroups(): array;
-
-    public function find(string $id): ?Group;
 }
