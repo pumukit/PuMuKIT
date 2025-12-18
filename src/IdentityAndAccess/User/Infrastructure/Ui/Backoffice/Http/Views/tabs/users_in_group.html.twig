@@ -1,7 +1,7 @@
 {% include '@Shared/Views/components/table/_table.html.twig' with {
     id: 'groupUsersTable',
     server_side: true,
-    ajax_url: path('group_users_data', {id: group.id}),
+    ajax_url: path('users_group_data', {id: group.id}),
     checkbox: true,
     search: false,
     columns: [
@@ -22,7 +22,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addUserForm" action="{{ path('group_add_user', {id: group.id}) }}" method="post">
+                <form id="addUserForm" action="{{ path('add_user_to_group', {id: group.id}) }}" method="post">
                     <div class="mb-3">
                         <label for="user_select" class="form-label">{{ 'group.users.modal.field.user'|trans({}, 'group') }}</label>
                         <select class="form-select" id="user_select" name="user_id" required>
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const form = document.createElement('form');
             form.method = 'POST';
-            form.action = '{{ path('group_remove_user', {id: group.id}) }}';
+            form.action = '{{ path('remove_user_to_group', {id: group.id}) }}';
 
             const input = document.createElement('input');
             input.type = 'hidden';

@@ -32,7 +32,6 @@
 
     </div>
 
-    <!-- Create Group Modal -->
     <div class="modal fade" id="createGroupModal" tabindex="-1" aria-labelledby="createGroupModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -43,22 +42,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="createGroupForm" action="{{ path('group_create') }}" method="post">
-                        <div class="mb-3">
-                            <label for="group_name" class="form-label">
-                                {{ 'group.create.modal.field.name'|trans({}, 'group') }} <span class="text-danger">*</span>
-                            </label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="group_name"
-                                   name="name"
-                                   required
-                                   minlength="3"
-                                   maxlength="100"
-                                   autofocus>
-                            <div class="form-text">{{ 'group.create.modal.field.name_help'|trans({}, 'group') }}</div>
-                        </div>
-                    </form>
+                    {{ form_start(create_form, {'attr': {'id': 'createGroupForm'}}) }}
+                    <div class="mb-3">
+                        {{ form_label(create_form.name, null, {'label_attr': {'class': 'form-label'}}) }}
+                        <span class="text-danger">*</span>
+                        {{ form_widget(create_form.name) }}
+                        {{ form_errors(create_form.name) }}
+                        <div class="form-text">{{ 'group.create.modal.field.name_help'|trans({}, 'group') }}</div>
+                    </div>
+                    {{ form_end(create_form) }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

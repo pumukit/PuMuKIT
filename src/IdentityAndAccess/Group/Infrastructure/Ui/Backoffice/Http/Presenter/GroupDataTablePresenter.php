@@ -38,7 +38,7 @@ final class GroupDataTablePresenter
         ]);
 
         $editButton = $this->twig->render('@Shared/Views/components/table/buttons/_edit_button.html.twig', [
-            'url' => $this->router->generate('group_update', ['id' => $group->getId()]),
+            'url' => $this->router->generate('group_view', ['id' => $group->getId(), 'tab' => 'edit']),
         ]);
 
         $deleteButton = $this->twig->render('@Shared/Views/components/table/buttons/_delete_button.html.twig', [

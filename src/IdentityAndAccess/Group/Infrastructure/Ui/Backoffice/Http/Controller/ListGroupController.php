@@ -6,6 +6,7 @@ namespace App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controll
 
 use App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Event\GroupBulkOperationsEvent;
 use App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Event\GroupListActionsEvent;
+use App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Form\GroupCreateType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,11 +51,17 @@ class ListGroupController extends AbstractController
             }
         }
 
+        $form = $this->createForm(GroupCreateType::class, null, [
+            'action' => $this->generateUrl('group_create'),
+            'method' => 'POST',
+        ]);
+
         return $this->render('@Group/Views/list.html.twig', [
             'bulkOperationsEvent' => $bulkOperationsEvent,
             'bulkOperations' => $operations,
             'listActionsEvent' => $listActionsEvent,
             'customActions' => $customActions,
+            'create_form' => $form->createView(),
         ]);
     }
 }

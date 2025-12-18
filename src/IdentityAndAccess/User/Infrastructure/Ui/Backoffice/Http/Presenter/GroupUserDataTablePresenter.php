@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Presenter;
+namespace App\IdentityAndAccess\User\Infrastructure\Ui\Backoffice\Http\Presenter;
 
-use App\IdentityAndAccess\Group\Domain\ValueObject\GroupUserListItem;
+use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
@@ -15,21 +15,21 @@ final class GroupUserDataTablePresenter
         private Environment $twig,
     ) {}
 
-    public function present(GroupUserListItem $user, string $groupId): array
+    public function present(User $user, string $groupId): array
     {
         return [
-            'id' => $user->id,
-            'username' => $user->username,
-            'full_name' => $user->fullName ?? 'N/A',
-            'email' => $user->email ?? 'N/A',
+            'id' => $user->getId(),
+            'username' => $user->getUsername(),
+            'full_name' => $user->getFullName() ?? 'N/A',
+            'email' => $user->getEmail() ?? 'N/A',
             'actions' => $this->renderActions($user, $groupId),
         ];
     }
 
-    private function renderActions(GroupUserListItem $user, string $groupId): string
+    private function renderActions(User $user, string $groupId): string
     {
         $viewButton = $this->twig->render('@Shared/Views/components/table/buttons/_view_button.html.twig', [
-            'url' => $this->router->generate('user_view', ['id' => $user->id]),
+            'url' => $this->router->generate('user_view', ['id' => $user->getId()]),
         ]);
 
         $removeButton = $this->twig->render('@Shared/Views/components/table/buttons/_delete_button.html.twig', [
@@ -39,8 +39,8 @@ final class GroupUserDataTablePresenter
             'icon' => 'fa-user-times',
             'class' => 'btn btn-danger btn-sm remove-user-btn',
             'data' => [
-                'user-id' => $user->id,
-                'user-name' => $user->username,
+                'user-id' => $user->getId(),
+                'user-name' => $user->getUsername(),
                 'group-id' => $groupId,
             ],
         ]);

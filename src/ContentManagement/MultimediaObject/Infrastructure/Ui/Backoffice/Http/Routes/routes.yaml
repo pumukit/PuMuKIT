@@ -33,3 +33,8 @@ multimedia_object_delete:
   path: /admin/backend/multimedia-object/{id}/delete
   controller: App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Controller\DeleteMultimediaObjectController
   methods: [POST]
+
+group_multimedia_objects_data:
+  path: /admin/backend/group/{id}/multimedia-object-data
+  controller: App\ContentManagement\MultimediaObject\Infrastructure\Ui\Backoffice\Http\Controller\GroupMultimediaObjectsDataController
+  methods: [GET]

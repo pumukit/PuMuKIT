@@ -1,78 +1,82 @@
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-white py-3">
+        <h5 class="card-title mb-0 text-primary">
             <i class="fa fa-edit me-2"></i>
             {{ 'group.update.title'|trans({}, 'group') }}
         </h5>
+    </div>
 
-        <form action="{{ path('group_update', {id: group.id}) }}" method="post">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="group_key" class="form-label">
-                            {{ 'group.update.field.key'|trans({}, 'group') }} <span class="text-danger">{{ 'group.common.required'|trans({}, 'group') }}</span>
-                        </label>
-                        <input type="text"
-                               class="form-control"
-                               id="group_key"
-                               name="key"
-                               value="{{ group.key }}"
-                               required
-                               pattern="[a-zA-Z0-9_-]+"
-                               title="{{ 'group.update.field.key_pattern'|trans({}, 'group') }}">
-                        <div class="form-text">{{ 'group.update.field.key_help'|trans({}, 'group') }}</div>
-                    </div>
+    <div class="card-body p-4">
+        {{ form_start(form, {
+            'action': path('group_update', {id: group.id}),
+            'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}
+        }) }}
 
-                    <div class="mb-3">
-                        <label for="group_name" class="form-label">
-                            {{ 'group.update.field.name'|trans({}, 'group') }} <span class="text-danger">{{ 'group.common.required'|trans({}, 'group') }}</span>
-                        </label>
-                        <input type="text"
-                               class="form-control"
-                               id="group_name"
-                               name="name"
-                               value="{{ group.name }}"
-                               required>
-                        <div class="form-text">{{ 'group.update.field.name_help'|trans({}, 'group') }}</div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="group_origin" class="form-label">{{ 'group.update.field.origin'|trans({}, 'group') }}</label>
-                        <select class="form-select" id="group_origin" name="origin">
-                            <option value="local" {{ group.origin == 'local' ? 'selected' : '' }}>{{ 'group.update.field.origin.local'|trans({}, 'group') }}</option>
-                            <option value="cas" {{ group.origin == 'cas' ? 'selected' : '' }}>{{ 'group.update.field.origin.cas'|trans({}, 'group') }}</option>
-                            <option value="ldap" {{ group.origin == 'ldap' ? 'selected' : '' }}>{{ 'group.update.field.origin.ldap'|trans({}, 'group') }}</option>
-                        </select>
-                        <div class="form-text">{{ 'group.update.field.origin_help'|trans({}, 'group') }}</div>
-                    </div>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    {{ form_label(form.key, 'group.update.field.key'|trans({}, 'group'), {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.key, {
+                        'attr': {
+                            'class': 'form-control',
+                            'placeholder': 'group.update.field.key_help'|trans({}, 'group')
+                        }
+                    }) }}
+                    <div class="form-text text-muted small">{{ 'group.update.field.key_help'|trans({}, 'group') }}</div>
+                    {{ form_errors(form.key) }}
                 </div>
 
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="group_comments" class="form-label">{{ 'group.update.field.comments'|trans({}, 'group') }}</label>
-                        <textarea class="form-control"
-                                  id="group_comments"
-                                  name="comments"
-                                  rows="5">{{ group.comments }}</textarea>
-                        <div class="form-text">{{ 'group.update.field.comments_help'|trans({}, 'group') }}</div>
-                    </div>
+                <div class="mb-3">
+                    {{ form_label(form.name, 'group.update.field.name'|trans({}, 'group'), {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.name) }}
+                </div>
 
-                    <div class="alert alert-warning">
-                        <i class="fa fa-exclamation-triangle"></i>
-                        <strong>{{ 'group.update.warning_note'|trans({}, 'group') }}</strong> {{ 'group.update.warning_message'|trans({}, 'group') }}
-                    </div>
+                <div class="mb-3">
+                    {{ form_label(form.origin, 'group.update.field.origin'|trans({}, 'group'), {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.origin, {'attr': {'class': 'form-select'}}) }}
+                    {{ form_errors(form.origin) }}
                 </div>
             </div>
 
-            <div class="mt-3">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fa fa-save"></i> {{ 'group.update.button.save'|trans({}, 'group') }}
+            <div class="col-md-6">
+                <div class="mb-3">
+                    {{ form_label(form.comments, 'group.update.field.comments'|trans({}, 'group'), {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(form.comments, {'attr': {'class': 'form-control', 'rows': 6}}) }}
+                    {{ form_errors(form.comments) }}
+                </div>
+
+                <div class="alert alert-light border-start border-warning border-4 shadow-sm" role="alert">
+                    <div class="d-flex">
+                        <div class="me-3">
+                            <i class="fa fa-exclamation-triangle text-warning fa-lg"></i>
+                        </div>
+                        <div>
+                            <strong class="d-block text-dark">{{ 'group.update.warning_note'|trans({}, 'group') }}</strong>
+                            <span class="small text-muted">{{ 'group.update.warning_message'|trans({}, 'group') }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-4 text-muted opacity-25">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <button type="submit" class="btn btn-primary px-4 shadow-sm">
+                    <i class="fa fa-save me-2"></i> {{ 'group.update.button.save'|trans({}, 'group') }}
                 </button>
-                <a href="{{ path('group_view', {id: group.id, tab: 'general'}) }}" class="btn btn-secondary">
-                    <i class="fa fa-times"></i> {{ 'group.update.button.cancel'|trans({}, 'group') }}
+                <a href="{{ path('group_view', {id: group.id, tab: 'general'}) }}" class="btn btn-outline-secondary px-4 ms-2">
+                    <i class="fa fa-times me-2"></i> {{ 'group.update.button.cancel'|trans({}, 'group') }}
                 </a>
             </div>
-        </form>
+
+            <small class="text-muted">
+                <span class="badge bg-light text-dark border">{{ group.id }}</span>
+            </small>
+        </div>
+
+        {{ form_end(form) }}
     </div>
 </div>
-

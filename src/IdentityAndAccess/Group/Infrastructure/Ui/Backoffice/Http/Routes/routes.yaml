@@ -16,24 +16,6 @@ group_create:
   controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\CreateGroupController
   methods: [POST]
 
-group_add_user:
-  path: /admin/backend/group/{id}/add-user
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\AddUserToGroupController
-  methods: [POST]
-
-group_remove_user:
-  path: /admin/backend/group/{id}/remove-user
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\RemoveUserFromGroupController
-  methods: [POST]
-
-group_users_data:
-  path: /admin/backend/group/{id}/users/data
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\GroupUsersDataController
-
-group_multimedia_objects_data:
-  path: /admin/backend/group/{id}/multimedia-objects/data
-  controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\GroupMultimediaObjectsDataController
-
 group_delete:
   path: /admin/backend/group/{id}/delete
   controller: App\IdentityAndAccess\Group\Infrastructure\Ui\Backoffice\Http\Controller\DeleteGroupController

@@ -2,6 +2,7 @@
 
 namespace App\IdentityAndAccess\User\Domain\Repository;
 
+use App\Shared\Domain\Criteria\Criteria;
 use Pumukit\SchemaBundle\Document\User;
 
 interface UserRepositoryInterface
@@ -21,4 +22,8 @@ interface UserRepositoryInterface
     public function save(User $user): void;
 
     public function delete(User $user): void;
+
+    public function matching(Criteria $criteria): array;
+
+    public function totalMatching(Criteria $criteria): int;
 }

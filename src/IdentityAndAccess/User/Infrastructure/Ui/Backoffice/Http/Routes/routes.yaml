@@ -21,3 +21,17 @@ user_delete:
 user_view:
   path: /admin/backend/users/{id}
   controller: App\IdentityAndAccess\User\Infrastructure\Ui\Backoffice\Http\Controller\ListUserController
+
+add_user_to_group:
+  path: /admin/backend/group/{id}/add-user
+  controller: App\IdentityAndAccess\User\Infrastructure\Ui\Backoffice\Http\Controller\AddUserToGroupController
+  methods: [POST]
+
+remove_user_to_group:
+  path: /admin/backend/group/{id}/remove-user
+  controller: App\IdentityAndAccess\User\Infrastructure\Ui\Backoffice\Http\Controller\RemoveUserFromGroupController
+  methods: [POST]
+
+users_group_data:
+  path: /admin/backend/group/{id}/users/data
+  controller: App\IdentityAndAccess\User\Infrastructure\Ui\Backoffice\Http\Controller\GroupUsersDataController

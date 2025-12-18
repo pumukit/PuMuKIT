@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\ContentManagement\MultimediaObject\Domain\Repository;
 
+use App\Shared\Domain\Criteria\Criteria;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 interface MultimediaObjectRepositoryInterface
@@ -27,4 +28,9 @@ interface MultimediaObjectRepositoryInterface
     public function findPaginatedByGroupId(string $groupId, int $page, int $limit, string $sort, string $order): array;
 
     public function countByGroupId(string $groupId): int;
+
+    /** @return MultimediaObject[] */
+    public function matching(Criteria $criteria): array;
+
+    public function totalMatching(Criteria $criteria): int;
 }

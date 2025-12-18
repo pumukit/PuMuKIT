@@ -10,7 +10,18 @@ final class UpdateGroupRequest
         public string $id,
         public ?string $key = null,
         public ?string $name = null,
-        public ?string $comments = null,
-        public ?string $origin = null
+        public ?string $origin = null,
+        public ?string $comments = null
     ) {}
+
+    public static function fromGroup($group): self
+    {
+        return new self(
+            $group->getId(),
+            $group->getKey(),
+            $group->getName(),
+            $group->getOrigin(),
+            $group->getComments()
+        );
+    }
 }

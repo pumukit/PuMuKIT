@@ -10,24 +10,20 @@ use Symfony\Contracts\EventDispatcher\Event;
 final class GroupViewTabsEvent extends Event
 {
     public const NAME = 'group.view_tabs';
-
     private array $tabs = [];
 
     public function __construct(
-        private readonly Group $group
-    ) {
-        $this->addTab('general', 'General', 'fa-info-circle', 0);
-        $this->addTab('edit', 'Edit', 'fa-edit', 10);
-        $this->addTab('users', 'Users', 'fa-users', 20);
-        $this->addTab('multimedia_objects', 'Multimedia Objects', 'fa-photo-video', 30);
-    }
+        private readonly Group $group,
+        private readonly string $activeTab
+    ) {}
 
     public function addTab(
         string $key,
         string $label,
         string $icon = '',
         int $priority = 100,
-        ?string $template = null
+        ?string $template = null,
+        array $parameters = [],
     ): void {
         $this->tabs[$key] = [
             'key' => $key,
@@ -35,6 +31,7 @@ final class GroupViewTabsEvent extends Event
             'icon' => $icon,
             'priority' => $priority,
             'template' => $template ?? "@Group/Views/tabs/{$key}.html.twig",
+            'parameters' => $parameters,
         ];
     }
 
@@ -48,5 +45,10 @@ final class GroupViewTabsEvent extends Event
     public function getGroup(): Group
     {
         return $this->group;
+    }
+
+    public function getActiveTab(): string
+    {
+        return $this->activeTab;
     }
 }

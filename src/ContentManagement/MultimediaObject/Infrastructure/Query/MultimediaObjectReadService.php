@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace App\ContentManagement\MultimediaObject\Infrastructure\Query;
 
 use App\ContentManagement\MultimediaObject\Domain\Repository\MultimediaObjectRepositoryInterface;
-use App\IdentityAndAccess\Group\Domain\ValueObject\GroupId;
 
 final class MultimediaObjectReadService
 {
-    public function __construct(private readonly MultimediaObjectRepositoryInterface $repository)
-    {
-    }
+    public function __construct(private readonly MultimediaObjectRepositoryInterface $repository) {}
 
     public function findPaginatedByGroupId(string $groupId, int $page, int $limit, string $sort, string $order): array
     {
