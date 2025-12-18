@@ -12,6 +12,16 @@
     ],
 } %}
 
+<div class="d-flex justify-content-end mb-3">
+    <button type="button"
+            class="btn btn-success shadow-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#addUserModal">
+        <i class="fa fa-user-plus me-1"></i>
+        {{ 'group.users.button.add'|trans({}, 'group') }}
+    </button>
+</div>
+
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -22,7 +32,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addUserForm" action="{{ path('add_user_to_group', {id: group.id}) }}" method="post">
+                <form id="addUserForm" action="" method="post">
                     <div class="mb-3">
                         <label for="user_select" class="form-label">{{ 'group.users.modal.field.user'|trans({}, 'group') }}</label>
                         <select class="form-select" id="user_select" name="user_id" required>
@@ -47,61 +57,3 @@
         </div>
     </div>
 </div>
-
-<script>
-// Handle remove user click
-document.addEventListener('DOMContentLoaded', function() {
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('.remove-user-btn')) {
-            const btn = e.target.closest('.remove-user-btn');
-            const userId = btn.dataset.userId;
-            const userName = btn.dataset.userName;
-            const groupId = btn.dataset.groupId;
-
-            const confirmMessage = '{{ 'group.users.confirm_remove'|trans({}, 'group') }}'.replace('%username%', userName);
-            if (!confirm(confirmMessage)) {
-                return;
-            }
-
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = '{{ path('remove_user_to_group', {id: group.id}) }}';
-
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'user_id';
-            input.value = userId;
-
-            form.appendChild(input);
-            document.body.appendChild(form);
-            form.submit();
-        }
-    });
-
-    // Initialize Select2 for better user selection (if available)
-    const userSelect = document.getElementById('user_select');
-    if (userSelect && typeof $ !== 'undefined' && $.fn.select2) {
-        $(userSelect).select2({
-            placeholder: '{{ 'group.users.search_placeholder'|trans({}, 'group') }}',
-            ajax: {
-                url: '{{ path('users_list_data') }}',
-                dataType: 'json',
-                delay: 250,
-                processResults: function (data) {
-                    return {
-                        results: data.rows.map(function(user) {
-                            return {
-                                id: user.id,
-                                text: user.username + ' (' + user.email + ')'
-                            };
-                        })
-                    };
-                },
-                cache: true
-            },
-            minimumInputLength: 2
-        });
-    }
-});
-</script>
-

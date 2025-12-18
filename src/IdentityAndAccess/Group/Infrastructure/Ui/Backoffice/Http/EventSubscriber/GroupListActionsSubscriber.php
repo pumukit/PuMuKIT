@@ -23,10 +23,10 @@ final class GroupListActionsSubscriber implements EventSubscriberInterface
             label: 'Create',
             url: '#',
             type: 'modal',
+            routeParams: ['data-bs-toggle' => 'modal', 'data-bs-target' => '#createGroupModal'],
             icon: 'fa-plus',
             class: 'btn btn-pumukit',
-            priority: 10,
-            routeParams: ['data-bs-toggle' => 'modal', 'data-bs-target' => '#createGroupModal']
+            priority: 10
         );
     }
 }

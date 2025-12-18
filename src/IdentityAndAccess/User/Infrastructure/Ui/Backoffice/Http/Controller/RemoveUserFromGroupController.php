@@ -16,12 +16,10 @@ final class RemoveUserFromGroupController extends AbstractController
         private readonly RemoveUserFromGroupService $service
     ) {}
 
-    public function __invoke(Request $request, string $id): Response
+    public function __invoke(Request $request, string $groupId, string $userId): Response
     {
         try {
-            $userId = (string) $request->request->get('user_id');
-
-            $removeRequest = new RemoveUserFromGroupRequest($id, $userId);
+            $removeRequest = new RemoveUserFromGroupRequest($groupId, $userId);
             $response = ($this->service)($removeRequest);
 
             $this->addFlash('success', sprintf('User "%s" removed from the group.', $response->username));
@@ -29,6 +27,6 @@ final class RemoveUserFromGroupController extends AbstractController
             $this->addFlash('error', $e->getMessage());
         }
 
-        return $this->redirectToRoute('group_view', ['id' => $id, 'tab' => 'users']);
+        return $this->redirectToRoute('group_view', ['id' => $groupId, 'tab' => 'users']);
     }
 }

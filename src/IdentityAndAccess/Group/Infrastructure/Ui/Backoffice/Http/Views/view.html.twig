@@ -7,16 +7,18 @@
             group: group
         } %}
 
-        <ul class="nav nav-tabs">
-            {% for t in tabs %}
-                <li class="nav-item">
-                    <a class="nav-link {{ t.key == activeTab.key ? 'active' : '' }}"
-                       href="{{ path('group_view', {id: group.id, tab: t.key}) }}">
-                        <i class="fa {{ t.icon }}"></i> {{ t.label }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="tabs-scroll">
+            <ul class="nav nav-tabs modern-tabs text-uppercase small mobile-tabs">
+                {% for t in tabs %}
+                    <li class="nav-item">
+                        <a class="nav-link {{ t.key == activeTab.key ? 'active' : '' }}"
+                           href="{{ path('group_view', {id: group.id, tab: t.key}) }}">
+                            <i class="fa {{ t.icon }}"></i> {{ t.label|trans({}, 'group') }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
 
         <div class="tab-content mt-4">
             {% include activeTab.template with activeTab.parameters|merge({'group': group}) %}

@@ -95,20 +95,20 @@
             </trans-unit>
 
             <!-- Tabs -->
-            <trans-unit id="group.tab.general">
-                <source>group.tab.general</source>
+            <trans-unit id="group.view.tabs.general">
+                <source>group.view.tabs.general</source>
                 <target>General</target>
             </trans-unit>
-            <trans-unit id="group.tab.edit">
-                <source>group.tab.edit</source>
+            <trans-unit id="group.view.tabs.edit">
+                <source>group.view.tabs.edit</source>
                 <target>Edit</target>
             </trans-unit>
-            <trans-unit id="group.tab.users">
-                <source>group.tab.users</source>
+            <trans-unit id="group.view.tabs.users">
+                <source>group.view.tabs.users</source>
                 <target>Users</target>
             </trans-unit>
-            <trans-unit id="group.tab.multimedia_objects">
-                <source>group.tab.multimedia_objects</source>
+            <trans-unit id="group.view.tabs.multimedia_objects">
+                <source>group.view.tabs.multimedia_objects</source>
                 <target>Multimedia Objects</target>
             </trans-unit>
 

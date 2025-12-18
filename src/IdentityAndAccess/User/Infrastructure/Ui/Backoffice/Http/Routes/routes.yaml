@@ -23,12 +23,12 @@ user_view:
   controller: App\IdentityAndAccess\User\Infrastructure\Ui\Backoffice\Http\Controller\ListUserController
 
 add_user_to_group:
-  path: /admin/backend/group/{id}/add-user
+  path: /admin/backend/user/add-user-to-group/{groupId}/{userId}
   controller: App\IdentityAndAccess\User\Infrastructure\Ui\Backoffice\Http\Controller\AddUserToGroupController
   methods: [POST]
 
-remove_user_to_group:
-  path: /admin/backend/group/{id}/remove-user
+remove_user_from_group:
+  path: /admin/backend/user/remove-user-from-group/{groupId}/{userId}
   controller: App\IdentityAndAccess\User\Infrastructure\Ui\Backoffice\Http\Controller\RemoveUserFromGroupController
   methods: [POST]
 

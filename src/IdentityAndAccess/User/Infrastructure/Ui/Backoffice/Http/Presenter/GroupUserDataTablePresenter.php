@@ -33,16 +33,8 @@ final class GroupUserDataTablePresenter
         ]);
 
         $removeButton = $this->twig->render('@Shared/Views/components/table/buttons/_delete_button.html.twig', [
-            'url' => '#',
+            'url' => $this->router->generate('remove_user_from_group', ['groupId' => $groupId, 'userId' => $user->getId()]),
             'confirm' => 'Are you sure you want to remove this user from the group?',
-            'label' => 'Delete',
-            'icon' => 'fa-user-times',
-            'class' => 'btn btn-danger btn-sm remove-user-btn',
-            'data' => [
-                'user-id' => $user->getId(),
-                'user-name' => $user->getUsername(),
-                'group-id' => $groupId,
-            ],
         ]);
 
         return $viewButton.$removeButton;
