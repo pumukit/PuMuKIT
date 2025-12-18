@@ -24,8 +24,8 @@ final class GroupUsersDataController extends AbstractController
             filters: [['field' => 'groups', 'operator' => '=', 'value' => $id]],
             orderBy: $request->query->get('sort', 'name'),
             order: $request->query->get('order', 'asc'),
-            limit: (int) $request->query->get('limit', 10),
-            offset: (int) $request->query->get('offset', 0)
+            limit: (int) $request->query->get('limit', '10'),
+            offset: (int) $request->query->get('offset', '0')
         );
 
         $response = ($this->searchService)($searchRequest);

@@ -27,8 +27,8 @@ final class GroupMultimediaObjectsDataController extends AbstractController
             return $this->json(['total' => 0, 'rows' => []]);
         }
 
-        $offset = (int) $request->query->get('offset', 0);
-        $limit = (int) $request->query->get('limit', 10);
+        $offset = (int) $request->query->get('offset', '0');
+        $limit = (int) $request->query->get('limit', '10');
         $sort = $request->query->get('sort', 'title');
         $order = $request->query->get('order', 'asc');
 
