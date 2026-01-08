@@ -22,7 +22,13 @@ doctrine_mongodb:
         microsite:
           class:     Pumukit\CoreBundle\Filter\MicrositeFilter
           enabled:   false
-#      mappings:
+      mappings:
+        YoutubeBundle:
+          is_bundle: false
+          type: annotation
+          dir: '%kernel.project_dir%/src/Pumukit/YoutubeBundle/Domain/Model'
+          prefix: 'Pumukit\YoutubeBundle\Domain\Model'
+          alias: YoutubeBundle
 #        App:
 #          is_bundle: false
 #          type: annotation

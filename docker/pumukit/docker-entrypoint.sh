@@ -22,6 +22,11 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
 	    fi
         set -e
     fi
+
+    # Start Messenger workers in background
+    if [ "$1" = 'php-fpm' ]; then
+        bash /usr/local/bin/messenger-supervisor.sh 
+    fi
 fi
 
 exec docker-php-entrypoint "$@"

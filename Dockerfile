@@ -144,9 +144,11 @@ RUN set -eux \
     && bin/console a:i
 
 COPY docker/pumukit/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY docker/pumukit/messenger-supervisor.sh /usr/local/bin/messenger-supervisor.sh
 
 USER root
 RUN chmod +x /usr/local/bin/docker-entrypoint
+RUN chmod +x /usr/local/bin/messenger-supervisor.sh
 
 ## Add the wait script to the image
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.4.0/wait /wait

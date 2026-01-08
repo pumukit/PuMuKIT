@@ -1,0 +1,15 @@
+pumukit_youtube_quota_controller:
+    resource: ../../src/Pumukit/YoutubeBundle/Infrastructure/Controller/QuotaController.php
+    type: annotation
+
+pumukit_youtube_video_management_controller:
+    resource: ../../src/Pumukit/YoutubeBundle/Infrastructure/Controller/YoutubeVideoManagementController.php
+    type: annotation
+
+pumukit_youtube_playlist_controller:
+    resource: ../../src/Pumukit/YoutubeBundle/Infrastructure/Controller/YoutubePlaylistController.php
+    type: annotation
+
+pumukit_youtube_upload_controller:
+    resource: ../../src/Pumukit/YoutubeBundle/Infrastructure/Controller/YoutubeUploadController.php
+    type: annotation

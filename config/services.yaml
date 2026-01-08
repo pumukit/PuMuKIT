@@ -67,6 +67,16 @@ services:
     autoconfigure: true
     public:        true
 
+  # YouTube Quota Check Middleware
+  Pumukit\YoutubeBundle\Infrastructure\Middleware\QuotaCheckMiddleware:
+    arguments:
+      $quotaService: '@Pumukit\YoutubeBundle\Domain\Service\QuotaService'
+      $messageBus: '@messenger.bus.default'
+      $logger: '@logger'
+    tags:
+      - { name: 'monolog.logger', channel: 'messenger' }
+      - { name: 'messenger.middleware', bus: 'messenger.bus.default', priority: -100 }
+
   doctrine:
     alias: doctrine_mongodb
 
@@ -87,5 +97,62 @@ services:
       - method: setAnnotationReader
         arguments:
           - '@annotation_reader'
+    
+  App\Service\:
+        resource: '../src/Service'
+        autowire: true
+        autoconfigure: true
 
+  App\Command\:
+        resource: '../src/Command'
+        tags: ['console.command']
+        autoconfigure: true
 
+  # Commands
+  Pumukit\YoutubeBundle\Application\Command\:
+        resource: '../src/Pumukit/YoutubeBundle/Application/Command'
+        tags: ['console.command']
+        bind:
+          $projectDir: '%kernel.project_dir%'
+
+  # Message Handlers (Async only - from transport)
+  Pumukit\YoutubeBundle\Application\MessageHandler\:
+        resource: '../src/Pumukit/YoutubeBundle/Application/MessageHandler'
+        exclude:
+          - '../src/Pumukit/YoutubeBundle/Application/MessageHandler/WaitingMessageHandler.php'
+          - '../src/Pumukit/YoutubeBundle/Application/MessageHandler/EventMessageHandler.php'
+          - '../src/Pumukit/YoutubeBundle/Application/MessageHandler/NotificationMessageHandler.php'
+        autoconfigure: false
+        tags:
+          - { name: 'messenger.message_handler', from_transport: 'pumukit.youtube.events' }
+
+  # WaitingMessageHandler (different transport)
+  Pumukit\YoutubeBundle\Application\MessageHandler\WaitingMessageHandler:
+        autoconfigure: false
+        tags:
+          - { name: 'messenger.message_handler', from_transport: 'pumukit.youtube.quota.waiting' }
+
+  # Event and Notification handlers (sync - no from_transport)
+  Pumukit\YoutubeBundle\Application\MessageHandler\EventMessageHandler: ~
+  Pumukit\YoutubeBundle\Application\MessageHandler\NotificationMessageHandler: ~
+
+  # All other YouTube services (auto-discovered)
+  Pumukit\YoutubeBundle\:
+        resource: '../src/Pumukit/YoutubeBundle/{Application,Domain,Infrastructure}'
+        exclude:
+          - '../src/Pumukit/YoutubeBundle/Application/Command'
+          - '../src/Pumukit/YoutubeBundle/Application/Message'
+          - '../src/Pumukit/YoutubeBundle/Application/MessageHandler'
+          - '../src/Pumukit/YoutubeBundle/Application/Query/*Query.php'
+          - '../src/Pumukit/YoutubeBundle/Domain/Model'
+          - '../src/Pumukit/YoutubeBundle/Domain/Exception'
+          - '../src/Pumukit/YoutubeBundle/Infrastructure/Controller'
+
+  # Repository alias
+  Pumukit\YoutubeBundle\Domain\Repository\PublicationRepositoryInterface:
+        alias: Pumukit\YoutubeBundle\Infrastructure\Repository\DoctrinePublicationRepository
+
+  # Controllers need special tag
+  Pumukit\YoutubeBundle\Infrastructure\Controller\:
+        resource: '../src/Pumukit/YoutubeBundle/Infrastructure/Controller'
+        tags: ['controller.service_arguments']

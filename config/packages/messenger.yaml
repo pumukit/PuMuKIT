@@ -1,38 +1,51 @@
 framework:
   messenger:
+    failure_transport: failed
+
+    buses:
+      messenger.bus.default:
+        default_middleware: allow_no_handlers
+
     transports:
       pumukit.youtube.quota.waiting:
-        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-        options:
-          exchange:
-            name: pumukit.exchange
-            type: direct
-          queues:
-            pumukit.youtube.quota.waiting:
-              binding_keys: ['#']
+        dsn: '%env(MESSENGER_TRANSPORT_DSN)%/pumukit.youtube.quota.waiting'
+        serializer: 'messenger.transport.symfony_serializer'
+        retry_strategy:
+          max_retries: 3
+          delay: 1000
+          multiplier: 2
 
       pumukit.youtube.events:
-        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-        options:
-          exchange:
-            name: pumukit.exchange
-            type: direct
-          queues:
-            pumukit.youtube.events:
-              binding_keys: ['#']
+        dsn: '%env(MESSENGER_TRANSPORT_DSN)%/pumukit.youtube.events'
+        serializer: 'messenger.transport.symfony_serializer'
+        retry_strategy:
+          max_retries: 3
+          delay: 1000
+          multiplier: 2
 
-      pumukit.youtube.notifications:
-        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-        options:
-          exchange:
-            name: pumukit.exchange
-            type: direct
-          queues:
-            pumukit.youtube.notifications:
-              binding_keys: ['#']
+      failed:
+        dsn: 'doctrine://default?queue_name=failed'
 
     routing:
-      App\Message\WaitingMessage: pumukit.youtube.quota.waiting
-      App\Message\EventMessage: pumukit.youtube.events
-      App\Message\NotificationMessage: pumukit.youtube.notifications
-
+      # Quota Waiting
+      Pumukit\YoutubeBundle\Application\Message\WaitingMessage: pumukit.youtube.quota.waiting
+      
+      # Video Operations
+      Pumukit\YoutubeBundle\Application\Message\Video\UploadVideoMessage: pumukit.youtube.events
+      Pumukit\YoutubeBundle\Application\Message\Video\UploadYoutubeVideoMessage: pumukit.youtube.events
+      Pumukit\YoutubeBundle\Application\Message\Video\UpdateVideoMessage: pumukit.youtube.events
+      Pumukit\YoutubeBundle\Application\Message\Video\DeleteVideoMessage: pumukit.youtube.events
+      Pumukit\YoutubeBundle\Application\Message\Video\UpdatePublicationMessage: pumukit.youtube.events
+      
+      # Playlist Operations
+      Pumukit\YoutubeBundle\Application\Message\Playlist\AssignToPlaylistsMessage: pumukit.youtube.events
+      Pumukit\YoutubeBundle\Application\Message\Playlist\CreatePlaylistMessage: pumukit.youtube.events
+      Pumukit\YoutubeBundle\Application\Message\Playlist\UpdatePlaylistMessage: pumukit.youtube.events
+      Pumukit\YoutubeBundle\Application\Message\Playlist\DeletePlaylistMessage: pumukit.youtube.events
+      Pumukit\YoutubeBundle\Application\Message\Playlist\AddVideoToPlaylistMessage: pumukit.youtube.events
+      Pumukit\YoutubeBundle\Application\Message\Playlist\RemoveVideoFromPlaylistMessage: pumukit.youtube.events
+      Pumukit\YoutubeBundle\Application\Message\Playlist\SyncPlaylistsMessage: pumukit.youtube.events
+      Pumukit\YoutubeBundle\Application\Message\Playlist\UpdatePlaylistItemsMessage: pumukit.youtube.events
+      
+      # Captions
+      Pumukit\YoutubeBundle\Application\Message\Caption\UploadCaptionsMessage: pumukit.youtube.events
