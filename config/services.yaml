@@ -77,6 +77,16 @@ services:
       - { name: 'monolog.logger', channel: 'messenger' }
       - { name: 'messenger.middleware', bus: 'messenger.bus.default', priority: -100 }
 
+  # YouTube Queue Drain Service
+  Pumukit\YoutubeBundle\Infrastructure\Service\QueueDrainService:
+    arguments:
+      $messageBus: '@messenger.bus.default'
+      $documentManager: '@doctrine_mongodb.odm.document_manager'
+      $logger: '@logger'
+      $messengerTransportDsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+    tags:
+      - { name: 'monolog.logger', channel: 'messenger' }
+
   doctrine:
     alias: doctrine_mongodb
 
@@ -147,6 +157,7 @@ services:
           - '../src/Pumukit/YoutubeBundle/Domain/Model'
           - '../src/Pumukit/YoutubeBundle/Domain/Exception'
           - '../src/Pumukit/YoutubeBundle/Infrastructure/Controller'
+          - '../src/Pumukit/YoutubeBundle/Infrastructure/Service/QueueDrainService.php'
 
   # Repository alias
   Pumukit\YoutubeBundle\Domain\Repository\PublicationRepositoryInterface:
