@@ -176,8 +176,11 @@ class JobGeneratorListener
             return false;
         }
 
+        $puchYoutube = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUCHYOUTUBE']);
         if ($multimediaObject->getTracksWithAnyTag(['display'])) {
-            return false;
+            if ($puchYoutube && !$multimediaObject->containsTag($puchYoutube)) {
+                return false;
+            }
         }
 
         return $multimediaObject->getMaster() && !$multimediaObject->isMultistream();
