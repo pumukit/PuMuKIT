@@ -218,9 +218,9 @@ EOT
     {
         $originalName = $track['originalName'] ?? '';
         $description = i18nText::create($track['description']);
-        $language = $track['language'];
+        $language = is_null($track['language']) ? 'es' : $track['language'];
         $tags = Tags::create($track['tags']);
-        $hide = $track['hide'];
+        $hide = is_bool($track['hide']) && $track['hide'];
         $isDownloadable = is_bool($track['allowDownload']) && $track['allowDownload'];
         $views = $track['numview'] ?? 0;
 
