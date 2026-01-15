@@ -221,7 +221,7 @@ EOT
         $language = $track['language'];
         $tags = Tags::create($track['tags']);
         $hide = $track['hide'];
-        $isDownloadable = $track['allowDownload'];
+        $isDownloadable = is_bool($track['allowDownload']) && $track['allowDownload'];
         $views = $track['numview'] ?? 0;
 
         $url = StorageUrl::create($track['url'] ?? '');
