@@ -72,6 +72,7 @@ EOT
 
             if (0 === ++$count % 50) {
                 $this->documentManager->flush();
+                $this->documentManager->clear();
             }
         }
 

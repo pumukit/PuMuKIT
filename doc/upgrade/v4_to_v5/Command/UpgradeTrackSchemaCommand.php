@@ -160,8 +160,14 @@ EOT
             } catch (\Exception $exception) {
                 $this->errors[] = 'Multimedia object ('.$object->getId().') file not found';
             }
+
+            if($count % 100 == 0){
+                $this->documentManager->flush();
+                $this->documentManager->clear();
+            }
         }
 
+        $this->documentManager->flush();
         $this->documentManager->clear();
 
         $table = new Table($this->output);
