@@ -137,8 +137,8 @@ class APIController extends AbstractController implements NewAdminControllerInte
             }
             if (isset($criteria['public_date_init'], $criteria['public_date_finish'])) {
                 $qb->addAnd($qb->expr()->field('public_date')->range(
-                    new UTCDateTime(strtotime($criteria['public_date_init'])),
-                    new UTCDateTime(strtotime($criteria['public_date_finish']))
+                    new UTCDateTime(strtotime($criteria['public_date_init']) * 1000),
+                    new UTCDateTime(strtotime($criteria['public_date_finish']) * 1000)
                 ));
                 $tempCriteria['public_date_init'] = $criteria['public_date_init'];
                 $tempCriteria['public_date_finish'] = $criteria['public_date_finish'];
@@ -146,24 +146,24 @@ class APIController extends AbstractController implements NewAdminControllerInte
             } elseif (isset($criteria['public_date_init']) && !empty($criteria['public_date_init'])) {
                 $date = date($criteria['public_date_init'].'T23:59:59');
                 $qb->addAnd($qb->expr()->field('public_date')->range(
-                    new UTCDateTime(strtotime($criteria['public_date_init'])),
-                    new UTCDateTime(strtotime($date))
+                    new UTCDateTime(strtotime($criteria['public_date_init']) * 1000),
+                    new UTCDateTime(strtotime($date) * 1000)
                 ));
                 $tempCriteria['public_date_init'] = $criteria['public_date_init'];
                 unset($criteria['public_date_init']);
             } elseif (isset($criteria['public_date_finish']) && !empty($criteria['public_date_finish'])) {
                 $date = date($criteria['public_date_finish'].'T23:59:59');
                 $qb->addAnd($qb->expr()->field('public_date')->range(
-                    new UTCDateTime(strtotime($criteria['public_date_finish'])),
-                    new UTCDateTime(strtotime($date))
+                    new UTCDateTime(strtotime($criteria['public_date_finish']) * 1000),
+                    new UTCDateTime(strtotime($date) * 1000)
                 ));
                 $tempCriteria['public_date_finish'] = $criteria['public_date_finish'];
                 unset($criteria['public_date_finish']);
             }
             if (isset($criteria['record_date_init'], $criteria['record_date_finish'])) {
                 $qb->addAnd($qb->expr()->field('record_date')->range(
-                    new UTCDateTime(strtotime($criteria['record_date_init'])),
-                    new UTCDateTime(strtotime($criteria['record_date_finish']))
+                    new UTCDateTime(strtotime($criteria['record_date_init']) * 1000),
+                    new UTCDateTime(strtotime($criteria['record_date_finish']) * 1000)
                 ));
                 $tempCriteria['record_date_init'] = $criteria['record_date_init'];
                 $tempCriteria['record_date_finish'] = $criteria['record_date_finish'];
@@ -171,16 +171,16 @@ class APIController extends AbstractController implements NewAdminControllerInte
             } elseif (isset($criteria['record_date_init']) && !empty($criteria['record_date_init'])) {
                 $date = date($criteria['record_date_init'].'T23:59:59');
                 $qb->addAnd($qb->expr()->field('record_date')->range(
-                    new UTCDateTime(strtotime($criteria['record_date_init'])),
-                    new UTCDateTime(strtotime($date))
+                    new UTCDateTime(strtotime($criteria['record_date_init']) * 1000),
+                    new UTCDateTime(strtotime($date) * 1000)
                 ));
                 $tempCriteria['record_date_init'] = $criteria['record_date_init'];
                 unset($criteria['record_date_init']);
             } elseif (isset($criteria['record_date_finish']) && !empty($criteria['record_date_finish'])) {
                 $date = date($criteria['record_date_finish'].'T23:59:59');
                 $qb->addAnd($qb->expr()->field('record_date')->range(
-                    new UTCDateTime(strtotime($criteria['record_date_finish'])),
-                    new UTCDateTime(strtotime($date))
+                    new UTCDateTime(strtotime($criteria['record_date_finish']) * 1000),
+                    new UTCDateTime(strtotime($date) * 1000)
                 ));
                 $tempCriteria['record_date_finish'] = $criteria['record_date_finish'];
                 unset($criteria['record_date_finish']);
