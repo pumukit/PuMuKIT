@@ -70,7 +70,8 @@ EOT
             $this->upgradeMetadata($multimediaObject);
             $multimediaObject->setProperty('migrate_v5_metadata_extract', true);
 
-            if (0 === ++$count % 50) {
+            ++$count;
+            if (0 === $count % 50) {
                 $this->documentManager->flush();
                 $this->documentManager->clear();
             }
