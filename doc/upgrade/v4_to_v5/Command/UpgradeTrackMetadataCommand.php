@@ -52,21 +52,22 @@ EOT
     {
         if (!$input->getOption('force')) {
             $output->writeln('<error>ATTENTION:</error> You must use the --force option to execute this command.');
+
             return Command::FAILURE;
         }
 
         $total = $this->countMultimediaObjects();
 
-        if ($total === 0) {
+        if (0 === $total) {
             $output->writeln('No multimedia objects found.');
+
             return Command::SUCCESS;
         }
 
         $progressBar = new ProgressBar($output, $total);
         $progressBar->start();
 
-        while(true)
-        {
+        while (true) {
             $multimediaObjects = $this->multimediaObjectsTypeVideoAudio(100);
 
             if (empty($multimediaObjects)) {
@@ -127,7 +128,7 @@ EOT
         $qb->field('properties.migrate_v5')->exists(true);
         $qb->field('properties.migrate_v5_metadata_extract')->exists(false);
 
-        if($limit !== 0) {
+        if (0 !== $limit) {
             $qb->limit($limit);
         }
 
@@ -142,7 +143,7 @@ EOT
                 $mediaMetadata = VideoAudio::create($data);
                 $track->updateMetadata($mediaMetadata);
             } catch (\Exception $e) {
-                $this->errors[(string)$multimediaObject->getId()][] = $track;
+                $this->errors[(string) $multimediaObject->getId()][] = $track;
             }
         }
     }
