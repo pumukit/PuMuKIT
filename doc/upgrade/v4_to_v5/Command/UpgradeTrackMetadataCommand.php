@@ -20,9 +20,7 @@ final class UpgradeTrackMetadataCommand extends Command
 {
     protected DocumentManager $documentManager;
     protected InspectionFfprobeService $inspectionFfprobeService;
-
     protected MediaUpdater $mediaUpdater;
-
     protected array $errors;
 
     public function __construct(DocumentManager $documentManager, InspectionFfprobeService $inspectionFfprobeService, MediaUpdater $mediaUpdater)
@@ -52,35 +50,40 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $multimediaObjects = $this->multimediaObjectsTypeVideoAudio();
+        if (!$input->getOption('force')) {
+            $output->writeln('<error>ATTENTION:</error> You must use the --force option to execute this command.');
+            return Command::FAILURE;
+        }
 
-        if ((is_countable($multimediaObjects) ? count($multimediaObjects) : 0) === 0) {
+        $total = $this->countMultimediaObjects();
+
+        if ($total === 0) {
             $output->writeln('No multimedia objects found.');
-
             return Command::SUCCESS;
         }
 
-        $progressBar = new ProgressBar($output, is_countable($multimediaObjects) ? count($multimediaObjects) : 0);
+        $progressBar = new ProgressBar($output, $total);
         $progressBar->start();
 
-        $count = 0;
-        foreach ($multimediaObjects as $multimediaObject) {
-            $progressBar->advance();
+        while(true)
+        {
+            $multimediaObjects = $this->multimediaObjectsTypeVideoAudio(100);
 
-            $this->upgradeMetadata($multimediaObject);
-            $multimediaObject->setProperty('migrate_v5_metadata_extract', true);
-
-            ++$count;
-            if (0 === $count % 50) {
-                $this->documentManager->flush();
-                $this->documentManager->clear();
+            if (empty($multimediaObjects)) {
+                break;
             }
+
+            foreach ($multimediaObjects as $multimediaObject) {
+                $this->upgradeMetadata($multimediaObject);
+                $multimediaObject->setProperty('migrate_v5_metadata_extract', true);
+                $progressBar->advance();
+            }
+
+            $this->documentManager->flush();
+            $this->documentManager->clear();
         }
 
         $progressBar->finish();
-        $this->documentManager->flush();
-        $this->documentManager->clear();
-
         $output->writeln('');
 
         if ($this->errors) {
@@ -91,28 +94,42 @@ EOT
                     $table->addRow([$multimediaObjectId, $track->getId(), $track->storage()->path()]);
                 }
             }
-
             $table->render();
         }
 
         return Command::SUCCESS;
     }
 
-    private function multimediaObjectsTypeVideoAudio()
+    private function countMultimediaObjects(): int
+    {
+        $qb = $this->documentManager->createQueryBuilder(MultimediaObject::class);
+        $qb->field('type')->in([MultimediaObject::TYPE_VIDEO, MultimediaObject::TYPE_AUDIO]);
+        $qb->field('status')->notIn([MultimediaObject::STATUS_PROTOTYPE]);
+        $qb->field('properties.migrate_v5')->exists(true);
+        $qb->field('properties.migrate_v5_metadata_extract')->exists(false);
+
+        return (int) $qb->count()->getQuery()->execute();
+    }
+
+    private function multimediaObjectsTypeVideoAudio(int $limit = 50): array
     {
         $criteriaType = [MultimediaObject::TYPE_VIDEO, MultimediaObject::TYPE_AUDIO];
         $criteriaStatus = [MultimediaObject::STATUS_PROTOTYPE];
 
-        return $this->createQuery($criteriaType, $criteriaStatus);
+        return $this->createQuery($criteriaType, $criteriaStatus, $limit)->toArray();
     }
 
-    private function createQuery(array $criteriaType, array $criteriaStatus)
+    private function createQuery(array $criteriaType, array $criteriaStatus, int $limit = 50)
     {
         $qb = $this->documentManager->createQueryBuilder(MultimediaObject::class);
         $qb->field('type')->in($criteriaType);
         $qb->field('status')->notIn($criteriaStatus);
         $qb->field('properties.migrate_v5')->exists(true);
         $qb->field('properties.migrate_v5_metadata_extract')->exists(false);
+
+        if($limit !== 0) {
+            $qb->limit($limit);
+        }
 
         return $qb->getQuery()->execute();
     }
@@ -123,9 +140,9 @@ EOT
             try {
                 $data = $this->inspectionFfprobeService->getFileMetadataAsString($track->storage()->path());
                 $mediaMetadata = VideoAudio::create($data);
-                $this->mediaUpdater->updateMetadata($multimediaObject, $track, $mediaMetadata);
+                $track->updateMetadata($mediaMetadata);
             } catch (\Exception $e) {
-                $this->errors[$multimediaObject->getId()][] = $track;
+                $this->errors[(string)$multimediaObject->getId()][] = $track;
             }
         }
     }
