@@ -30,7 +30,6 @@ final class UpgradeTrackSchemaCommand extends Command
     protected int $countAudio;
     protected int $countUnknown;
 
-    private array $oldDataTracks;
     private MediaUpdater $mediaUpdater;
     private $output;
 
@@ -43,7 +42,6 @@ final class UpgradeTrackSchemaCommand extends Command
         $this->countVideo = 0;
         $this->countAudio = 0;
         $this->countUnknown = 0;
-        $this->oldDataTracks = [];
         $this->mediaUpdater = $mediaUpdater;
     }
 
@@ -67,176 +65,157 @@ EOT
     {
         $this->output = $output;
 
-        $multimediaObjects = $this->multimediaObjectsTypeVideoAudio();
-        if ((is_countable($multimediaObjects) ? count($multimediaObjects) : 0) === 0) {
-            $output->writeln('No multimedia objects type video or audio to migrate.');
+        if (!$input->getOption('force')) {
+            $this->output->writeln('<error>ATTENTION:</error> You must use the --force option to execute this command.');
+
+            return Command::FAILURE;
+        }
+
+        $this->migrateByType([MultimediaObject::TYPE_VIDEO, MultimediaObject::TYPE_AUDIO]);
+
+        $this->migrateByType([MultimediaObject::TYPE_UNKNOWN]);
+
+        if (!empty($this->errors)) {
+            $this->output->writeln("\n<error>There was error on migration command:</error>");
+            $table = new Table($this->output);
+            $table
+                ->setHeaders(['Multimedia Object ID', 'Error Message'])
+                ->setRows(array_map(function ($error) {
+                    return explode(': ', $error, 2);
+                }, $this->errors))
+            ;
+            $table->render();
         } else {
-            $this->convertMultimediaObjectsTypeVideoAudio($multimediaObjects);
+            $this->output->writeln("\n<info>Migration command without errors.</info>");
         }
-
-        $multimediaObjects = $this->multimediaObjectsUnknown();
-        if ((is_countable($multimediaObjects) ? count($multimediaObjects) : 0) === 0) {
-            $output->writeln('No multimedia objects type unknown to migrate.');
-
-            return Command::SUCCESS;
-        }
-        $this->convertMultimediaObjectsUnknownToVideo($multimediaObjects);
 
         return Command::SUCCESS;
     }
 
-    private function multimediaObjectsTypeVideoAudio()
+    private function migrateByType(array $types): void
     {
-        $criteriaType = [MultimediaObject::TYPE_VIDEO, MultimediaObject::TYPE_AUDIO];
-        $criteriaStatus = [MultimediaObject::STATUS_PROTOTYPE];
+        $total = $this->getTotalCount($types);
+        if (0 === $total) {
+            return;
+        }
 
-        return $this->createQuery($criteriaType, $criteriaStatus);
-    }
-
-    private function multimediaObjectsUnknown()
-    {
-        $criteriaType = [MultimediaObject::TYPE_UNKNOWN];
-        $criteriaStatus = [MultimediaObject::STATUS_PROTOTYPE];
-
-        return $this->createQuery($criteriaType, $criteriaStatus);
-    }
-
-    private function createQuery(array $criteriaType, array $criteriaStatus)
-    {
-        $qb = $this->documentManager->createQueryBuilder(MultimediaObject::class);
-        $qb->field('type')->in($criteriaType);
-        $qb->field('status')->notIn($criteriaStatus);
-        $qb->field('properties.migrate_v5')->exists(false);
-        $qb->hydrate(false);
-
-        return $qb->getQuery()->execute();
-    }
-
-    private function convertMultimediaObjectsTypeVideoAudio($multimediaObjects): void
-    {
-        $this->output->writeln('');
-
-        $progressBar = new ProgressBar($this->output, is_countable($multimediaObjects) ? count($multimediaObjects) : 0);
+        $this->output->writeln(sprintf("\nProcessing %s...", implode('/', $types)));
+        $progressBar = new ProgressBar($this->output, $total);
         $progressBar->start();
 
-        $count = 0;
-        foreach ($multimediaObjects as $multimediaObject) {
-            $newMedias = [];
-            $progressBar->advance();
-            $this->oldDataTracks = [];
-            $object = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => $multimediaObject['_id']]);
-            $tracks = $multimediaObject['tracks'] ?? null;
-            if (!$tracks) {
-                $object->setType(MultimediaObject::TYPE_VIDEO);
-                $this->saveDataOnProperty($object, 'No tracks');
-                if (0 === ++$count % 50) {
-                    $this->documentManager->flush();
-                }
+        while (true) {
+            $multimediaObjectsRaw = $this->fetchBatchRaw($types, 150);
 
+            if (empty($multimediaObjectsRaw)) {
+                break;
+            }
+
+            foreach ($multimediaObjectsRaw as $mmoArray) {
+                try {
+                    $object = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => $mmoArray['_id']]);
+                    if (!$object instanceof MultimediaObject) {
+                        continue;
+                    }
+
+                    if (MultimediaObject::TYPE_UNKNOWN === $object->getType()) {
+                        $object->setType(MultimediaObject::TYPE_VIDEO);
+                    }
+
+                    $this->upgradeTracksFromArray($object, $mmoArray);
+                    $progressBar->advance();
+                } catch (\Exception $e) {
+                    $this->errors[] = "Error en MMO {$mmoArray['_id']}: {$e->getMessage()}";
+                }
+            }
+
+            $this->documentManager->clear();
+        }
+
+        $progressBar->finish();
+        $this->output->writeln('');
+    }
+
+    private function getTotalCount(array $types): int
+    {
+        $qb = $this->documentManager->createQueryBuilder(MultimediaObject::class);
+        $qb->field('type')->in($types)
+            ->field('status')->notIn([MultimediaObject::STATUS_PROTOTYPE])
+            ->field('properties.migrate_v5')->exists(false)
+        ;
+
+        return (int) $qb->count()->getQuery()->execute();
+    }
+
+    private function fetchBatchRaw(array $types, int $limit): array
+    {
+        $qb = $this->documentManager->createQueryBuilder(MultimediaObject::class);
+        $qb->field('type')->in($types)
+            ->field('status')->notIn([MultimediaObject::STATUS_PROTOTYPE])
+            ->field('properties.migrate_v5')->exists(false)
+            ->limit($limit)
+            ->hydrate(false)
+        ;
+
+        return $qb->getQuery()->execute()->toArray();
+    }
+
+    private function upgradeTracksFromArray(MultimediaObject $object, array $mmoArray): void
+    {
+        $tracksRaw = $mmoArray['tracks'] ?? [];
+        if (empty($tracksRaw)) {
+            $object->setType(MultimediaObject::TYPE_VIDEO);
+            $object->setProperty('migrate_v5', 'No tracks');
+
+            return;
+        }
+
+        $newMedias = [];
+        $oldDataLog = [];
+
+        foreach ($tracksRaw as $trackArray) {
+            if (isset($trackArray['metadata'])) {
                 continue;
             }
 
-            try {
-                foreach ($tracks as $track) {
-                    if (isset($track['metadata'])) {
-                        continue;
-                    }
-                    $this->oldDataTracks[] = serialize($track);
-                    $newMedias[(string) $track['_id']] = $this->createMediaFromTrack($track);
-                }
+            $oldDataLog[] = serialize($trackArray);
 
-                $object->removeAllMedias();
-                foreach ($newMedias as $id => $media) {
-                    $object->addTrack($media);
-                }
-
-                $this->saveDataOnProperty($object, serialize($this->oldDataTracks));
-
-                $this->documentManager->flush();
-
-                foreach ($newMedias as $id => $media) {
-                    $this->mediaUpdater->updateId($object, $media, $id);
-                }
-            } catch (\Exception $exception) {
-                $this->errors[] = 'Multimedia object ('.$object->getId().') file not found';
-            }
-
-            if($count % 100 == 0){
-                $this->documentManager->flush();
-                $this->documentManager->clear();
-            }
+            $newMedia = $this->createMediaFromTrackArray($trackArray);
+            $newMedias[(string) $trackArray['_id']] = $newMedia;
         }
 
-        $this->documentManager->flush();
-        $this->documentManager->clear();
-
-        $table = new Table($this->output);
-        $table
-            ->setHeaders(['***** Multimedia Objects Tracks converted ***** '])
-            ->addRow([is_countable($multimediaObjects) ? count($multimediaObjects) : 0])
-        ;
-
-        $table->render();
-
-        $progressBar->finish();
-
-        foreach ($this->errors as $error) {
-            $this->output->writeln('<error>'.$error.'</error>');
+        $object->removeAllMedias();
+        foreach ($newMedias as $media) {
+            $object->addTrack($media);
         }
-    }
 
-    private function convertMultimediaObjectsUnknownToVideo($multimediaObjects): void
-    {
-        $this->output->writeln('');
-
-        $progressBar = new ProgressBar($this->output, is_countable($multimediaObjects) ? count($multimediaObjects) : 0);
-        $progressBar->start();
-        $count = 0;
-
-        foreach ($multimediaObjects as $multimediaObject) {
-            $object = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => $multimediaObject['_id']]);
-            $progressBar->advance();
-            $object->setType(MultimediaObject::TYPE_VIDEO);
-            if (0 === ++$count % 50) {
-                $this->documentManager->flush();
-            }
-        }
+        $object->setProperty('migrate_v5', serialize($oldDataLog));
 
         $this->documentManager->flush();
 
-        $table = new Table($this->output);
-        $table
-            ->setHeaders(['***** Multimedia Objects Type Unknown converted to video  ***** '])
-            ->addRow([is_countable($multimediaObjects) ? count($multimediaObjects) : 0])
-        ;
-
-        $table->render();
-
-        $progressBar->finish();
+        foreach ($newMedias as $oldId => $media) {
+            $this->mediaUpdater->updateId($object, $media, $oldId);
+        }
     }
 
-    private function saveDataOnProperty(MultimediaObject $multimediaObject, string $data): void
+    private function createMediaFromTrackArray(array $track): MediaInterface
     {
-        $multimediaObject->setProperty('migrate_v5', $data);
-    }
-
-    private function createMediaFromTrack(array $track): MediaInterface
-    {
-        $originalName = $track['originalName'] ?? '';
-        $description = i18nText::create($track['description']);
-        $language = is_null($track['language']) ? 'es' : $track['language'];
-        $tags = Tags::create($track['tags']);
-        $hide = is_bool($track['hide']) && $track['hide'];
-        $isDownloadable = is_bool($track['allowDownload']) && $track['allowDownload'];
-        $views = $track['numview'] ?? 0;
-
         $url = StorageUrl::create($track['url'] ?? '');
         $path = Path::create($track['path'] ?? '');
         $storage = Storage::create($url, $path);
 
         $mediaMetadata = VideoAudio::create('{"format":{"duration":"0"}}');
 
-        $media = Track::create($originalName, $description, $language, $tags, $hide, $isDownloadable, $views, $storage, $mediaMetadata);
+        $media = Track::create(
+            $track['originalName'] ?? '',
+            i18nText::create($track['description'] ?? []),
+            $track['language'] ?? 'es',
+            Tags::create($track['tags'] ?? []),
+            (bool) ($track['hide'] ?? false),
+            (bool) ($track['allowDownload'] ?? false),
+            (int) ($track['numview'] ?? 0),
+            $storage,
+            $mediaMetadata
+        );
 
         $this->documentManager->persist($media);
 
