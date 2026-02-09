@@ -44,6 +44,8 @@ class InboxController extends AbstractController
     }
 
     /**
+     * @Security("is_granted('ROLE_UPLOAD_INBOX')")
+     *
      * @Route("/upload", name="file_upload")
      *
      * @Template("@PumukitCore/Upload/upload_drag_and_drop.html.twig")
@@ -59,7 +61,8 @@ class InboxController extends AbstractController
         $inboxPath = $this->inboxService->inboxPath();
 
         $folder = trim($formData['folder']);
-        $urlUpload = $inboxPath.'/'.$formData['folder'];
+        $folder = $this->sanitizeFolderName($folder);
+        $urlUpload = $inboxPath.'/'.$folder;
 
         if (!$formData || empty($folder) || !$this->checkFolderAndCreateIfNotExist($folder)) {
             $folder = '';
@@ -123,5 +126,16 @@ class InboxController extends AbstractController
         }
 
         return new JsonResponse(['success' => true]);
+    }
+
+    private function sanitizeFolderName($folder): string
+    {
+        $clean = preg_replace('/[^a-zA-Z0-9_ -]/', '', $folder);
+
+        if (empty($clean)) {
+            throw new \Exception('Folder name must contain at least one valid character (letters, numbers, underscores, or dashes).');
+        }
+
+        return $clean;
     }
 }
