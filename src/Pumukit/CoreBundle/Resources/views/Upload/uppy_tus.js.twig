@@ -2,8 +2,10 @@
 
 {% if folder is defined %}
     var endpoint = "{{ inboxUploadURL }}" + "?series={{ folder }}";
+    var folder = "{{ folder }}";
 {% else %}
     var endpoint = "{{ inboxUploadURL }}" + "?series={{ series.id }}";
+    var folder = "{{ series.id }}";
 {% endif %}
 
 var locales = {
@@ -16,6 +18,9 @@ const uppyTUS = Uppy.Core({
     debug: {{ inbox_debug() }},
     autoProceed: true,
     locale: locales["{{ app.request.getLocale() }}"],
+    meta: {
+        series: {{ "folder" }}
+    },
     restrictions: {
         minFileSize: convertSizeToBytes("{{ inbox_min_file_size() }}"),
         maxFileSize: convertSizeToBytes("{{ inbox_max_file_size() }}"),

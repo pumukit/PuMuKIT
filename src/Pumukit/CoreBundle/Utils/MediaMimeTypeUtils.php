@@ -38,4 +38,31 @@ final class MediaMimeTypeUtils
     {
         return ['application/pdf'];
     }
+
+    public static function isAllowed(?string $declaredMimeType, ?string $extension): bool
+    {
+        $extension = strtolower((string) $extension);
+        $declaredMimeType = strtolower((string) $declaredMimeType);
+        $allowedMimes = self::allowedMimeTypes();
+
+        foreach ($allowedMimes as $allowed) {
+            $allowed = strtolower($allowed);
+            if (!empty($declaredMimeType)) {
+                $pattern = str_replace(['/', '*'], ['\/', '.*'], $allowed);
+                if (preg_match('/^' . $pattern . '$/', $declaredMimeType)) {
+                    return true;
+                }
+            }
+
+            if (str_contains($allowed, '*.' . $extension) || $allowed === $extension) {
+                return true;
+            }
+
+            if (!empty($extension) && str_contains($allowed, $extension)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
