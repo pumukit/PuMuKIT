@@ -37,10 +37,10 @@ class TUSUploadController extends AbstractController
     public function server(Request $request, Server $server)
     {
         if ($request->isMethod('DELETE')) {
-            throw new AccessDeniedHttpException("File deletion is not allowed.");
+            throw new AccessDeniedHttpException('File deletion is not allowed.');
         }
 
-        if($request->isMethod('POST')) {
+        if ($request->isMethod('POST')) {
             $this->validateFileExtension($request);
         }
 
@@ -51,10 +51,10 @@ class TUSUploadController extends AbstractController
                 $folder = $this->sanitizeFolderName($series);
 
                 $basePath = realpath($this->inboxService->inboxPath());
-                if(!$basePath) {
-                    throw new \Exception("Base upload directory does not exist.");
+                if (!$basePath) {
+                    throw new \Exception('Base upload directory does not exist.');
                 }
-                $path = $basePath . DIRECTORY_SEPARATOR . $folder;
+                $path = $basePath.DIRECTORY_SEPARATOR.$folder;
 
                 if (!file_exists($path)) {
                     mkdir($path, 0755, true);
@@ -64,11 +64,12 @@ class TUSUploadController extends AbstractController
                     $metadata = $request->headers->get('Upload-Metadata');
                     if ($metadata && preg_match('/filename (?P<name>[^\s,]+)/', $metadata, $matches)) {
                         $filename = base64_decode($matches['name']);
-                        $targetFile = $path . DIRECTORY_SEPARATOR . $filename;
+                        $targetFile = $path.DIRECTORY_SEPARATOR.$filename;
 
                         if (file_exists($targetFile)) {
-                            $this->logger->warning("TUS ERROR: File already exists: " . $targetFile);
-                            throw new ConflictHttpException("A file with the name '$filename' already exists in this folder.");
+                            $this->logger->warning('TUS ERROR: File already exists: '.$targetFile);
+
+                            throw new ConflictHttpException("A file with the name '{$filename}' already exists in this folder.");
                         }
                     }
                 }
@@ -77,11 +78,12 @@ class TUSUploadController extends AbstractController
             } catch (ConflictHttpException $e) {
                 throw $e;
             } catch (\Exception $e) {
-                throw new BadRequestHttpException("Invalid upload destination: " . $e->getMessage());
+                throw new BadRequestHttpException('Invalid upload destination: '.$e->getMessage());
             }
         }
 
         $server->middleware()->skip(Cors::class);
+
         return $server->serve();
     }
 
@@ -90,7 +92,7 @@ class TUSUploadController extends AbstractController
         $clean = preg_replace('/[^a-zA-Z0-9_ -]/', '', $folder);
 
         if (empty($clean)) {
-            throw new \Exception("Folder name must contain at least one valid character (letters, numbers, underscores, or dashes).");
+            throw new \Exception('Folder name must contain at least one valid character (letters, numbers, underscores, or dashes).');
         }
 
         return $clean;
@@ -100,7 +102,7 @@ class TUSUploadController extends AbstractController
     {
         $metadata = $request->headers->get('Upload-Metadata');
         if (!$metadata) {
-            throw new BadRequestHttpException("Missing file metadata.");
+            throw new BadRequestHttpException('Missing file metadata.');
         }
 
         $filename = '';
@@ -116,13 +118,15 @@ class TUSUploadController extends AbstractController
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
         if (BlackListExtensions::isBlackListed($extension)) {
-            $this->logger->error("TUS ERROR: Blocked malicious extension: $extension (File: $filename)");
-            throw new BadRequestHttpException("File type strictly forbidden for security reasons.");
+            $this->logger->error("TUS ERROR: Blocked malicious extension: {$extension} (File: {$filename})");
+
+            throw new BadRequestHttpException('File type strictly forbidden for security reasons.');
         }
 
         if (!MediaMimeTypeUtils::isAllowed($declaredMimeType, $extension)) {
-            $this->logger->warning("TUS ERROR: Mimetype not allowed: $filename ($declaredMimeType)");
-            throw new BadRequestHttpException("File type not allowed by policy.");
+            $this->logger->warning("TUS ERROR: Mimetype not allowed: {$filename} ({$declaredMimeType})");
+
+            throw new BadRequestHttpException('File type not allowed by policy.');
         }
     }
 }

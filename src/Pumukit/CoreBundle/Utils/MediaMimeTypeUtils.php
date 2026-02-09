@@ -49,12 +49,12 @@ final class MediaMimeTypeUtils
             $allowed = strtolower($allowed);
             if (!empty($declaredMimeType)) {
                 $pattern = str_replace(['/', '*'], ['\/', '.*'], $allowed);
-                if (preg_match('/^' . $pattern . '$/', $declaredMimeType)) {
+                if (preg_match('/^'.$pattern.'$/', $declaredMimeType)) {
                     return true;
                 }
             }
 
-            if (str_contains($allowed, '*.' . $extension) || $allowed === $extension) {
+            if (str_contains($allowed, '*.'.$extension) || $allowed === $extension) {
                 return true;
             }
 

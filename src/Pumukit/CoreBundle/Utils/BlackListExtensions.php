@@ -13,7 +13,7 @@ final class BlackListExtensions
             'sh', 'bash', 'bat', 'cmd', 'cgi', 'pl', 'py', 'pyc', 'pyo', 'rb', 'msi', 'vbs', 'vbe', 'js', 'jse', 'wsf', 'wsh', 'ps1',
             'exe', 'com', 'bin', 'app', 'elf', 'osx',
             'htaccess', 'htpasswd', 'config', 'conf', 'env', 'ini', 'log', 'sql', 'bak',
-            'html', 'htm', 'xhtml', 'svg', 'swf'
+            'html', 'htm', 'xhtml', 'svg', 'swf',
         ];
     }
 

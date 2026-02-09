@@ -133,7 +133,7 @@ class InboxController extends AbstractController
         $clean = preg_replace('/[^a-zA-Z0-9_ -]/', '', $folder);
 
         if (empty($clean)) {
-            throw new \Exception("Folder name must contain at least one valid character (letters, numbers, underscores, or dashes).");
+            throw new \Exception('Folder name must contain at least one valid character (letters, numbers, underscores, or dashes).');
         }
 
         return $clean;
