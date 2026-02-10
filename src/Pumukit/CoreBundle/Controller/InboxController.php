@@ -96,6 +96,8 @@ class InboxController extends AbstractController
     }
 
     /**
+     * @Security("is_granted('ROLE_UPLOAD_INBOX')")
+     *
      * @Route("/check_folder", name="check_folder_before_creating")
      */
     public function checkFolderBeforeCreating(Request $request): JsonResponse
@@ -110,6 +112,8 @@ class InboxController extends AbstractController
     }
 
     /**
+     * @Security("is_granted('ROLE_UPLOAD_INBOX')")
+     *
      * @Route("/dispatchImport", name="inbox_auto_import")
      */
     public function dispatchImport(Request $request): JsonResponse
