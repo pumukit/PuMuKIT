@@ -13,6 +13,7 @@ use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
+use Pumukit\SchemaBundle\Services\PicService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Pumukit\WebTVBundle\Services\ChapterMarkService;
@@ -38,6 +39,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
     protected $limitObjsPlayerSeries;
     protected $pumukitFullMagicUrl;
     protected $cinemaMode;
+    protected $picService;
 
     public function __construct(
         ChapterMarkService $chapterMarksService,
@@ -49,6 +51,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         EmbeddedBroadcastService $embeddedBroadcastService,
         BreadcrumbsService $breadcrumbsService,
         EventDispatcherInterface $dispatcher,
+        PicService $picService,
         $limitObjsPlayerSeries,
         $pumukitFullMagicUrl,
         $cinemaMode
@@ -65,6 +68,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         $this->pumukitFullMagicUrl = $pumukitFullMagicUrl;
         $this->cinemaMode = $cinemaMode;
         $this->eventDispatcher = $dispatcher;
+        $this->picService = $picService;
     }
 
     /**
@@ -111,6 +115,20 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
      * @Route("/iframe/{id}", name="pumukit_webtv_multimediaobject_iframe" )
      */
     public function iframeAction(Request $request, MultimediaObject $multimediaObject): Response
+    {
+        $thumbnailUrl = $this->picService->getFirstUrlPic($multimediaObject, true, true);
+
+        return $this->render('@PumukitWebTV/MultimediaObject/iframe_thumbnail.html.twig', [
+            'multimediaObject' => $multimediaObject,
+            'thumbnail_url' => $thumbnailUrl,
+            'is_magic' => false,
+        ]);
+    }
+
+    /**
+     * @Route("/player_iframe/{id}", name="pumukit_webtv_multimediaobject_player_iframe" )
+     */
+    public function playerIframeAction(Request $request, MultimediaObject $multimediaObject): Response
     {
         $playerController = $this->playerService->getPublicControllerPlayer($multimediaObject);
 
@@ -168,6 +186,20 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
      * @Route("/iframe/magic/{secret}", name="pumukit_webtv_multimediaobject_magiciframe", defaults={"show_hide"=true})
      */
     public function magicIframeAction(Request $request, MultimediaObject $multimediaObject): Response
+    {
+        $thumbnailUrl = $this->picService->getFirstUrlPic($multimediaObject, true, true);
+
+        return $this->render('@PumukitWebTV/MultimediaObject/iframe_thumbnail.html.twig', [
+            'multimediaObject' => $multimediaObject,
+            'thumbnail_url' => $thumbnailUrl,
+            'is_magic' => true,
+        ]);
+    }
+
+    /**
+     * @Route("/player_iframe/magic/{secret}", name="pumukit_webtv_multimediaobject_player_magiciframe", defaults={"show_hide"=true})
+     */
+    public function magicPlayerIframeAction(Request $request, MultimediaObject $multimediaObject): Response
     {
         $playerController = $this->playerService->getMagicControllerPlayer($multimediaObject);
 
