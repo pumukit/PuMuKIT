@@ -34,6 +34,7 @@
         "symfony/http-kernel": "^5.0",
         "symfony/intl": "^5.0",
         "symfony/monolog-bundle": "^3.0",
+        "symfony/rate-limiter": "^5.0",
         "symfony/security-bundle": "^5.0",
         "symfony/serializer": "^5.0",
         "symfony/swiftmailer-bundle": "^3.0",

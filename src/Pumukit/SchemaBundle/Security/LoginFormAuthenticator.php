@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -28,19 +29,25 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     use TargetPathTrait;
 
     public const LOGIN_ROUTE = 'pumukit_login';
-    private const EXCEPTION_MESSAGE = 'Invalid login';
 
     private $objectManager;
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
+    private $loginIpLimiter;
 
-    public function __construct(DocumentManager $objectManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
-    {
+    public function __construct(
+        DocumentManager $objectManager,
+        UrlGeneratorInterface $urlGenerator,
+        CsrfTokenManagerInterface $csrfTokenManager,
+        UserPasswordEncoderInterface $passwordEncoder,
+        RateLimiterFactory $loginIpLimiter
+    ) {
         $this->objectManager = $objectManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->loginIpLimiter = $loginIpLimiter;
     }
 
     public function supports(Request $request): bool
@@ -50,14 +57,24 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function getCredentials(Request $request): array
     {
+        $limiter = $this->loginIpLimiter->create($request->getClientIp());
+        if (false === $limiter->consume(1)->isAccepted()) {
+            throw new CustomUserMessageAuthenticationException('Unusual activity detected. For your safety, please wait a few minutes before trying again.');
+        }
+
+        $username = (string) ($request->request->get('username') ?? '');
+        $password = (string) ($request->request->get('password') ?? '');
+        $csrfToken = (string) ($request->request->get('_csrf_token') ?? '');
+
         $credentials = [
-            'username' => strtolower($request->request->get('username')),
-            'password' => $request->request->get('password'),
-            'csrf_token' => $request->request->get('_csrf_token'),
+            'username' => $username,
+            'password' => $password,
+            'csrf_token' => $csrfToken,
         ];
+
         $request->getSession()->set(
             Security::LAST_USERNAME,
-            $credentials['username']
+            $username
         );
 
         return $credentials;
