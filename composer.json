@@ -76,7 +76,7 @@
             "bin/console lint:xliff src/Pumukit/EncoderBundle",
             "bin/console lint:xliff src/Pumukit/InspectionBundle",
             "bin/console lint:xliff src/Pumukit/NewAdminBundle",
-            "bin/console lint:xliff src/Pumukit/NotificationBundle",
+            "bin/console lint:xliff src/Pumukit/NotifisetionBundle",
             "bin/console lint:xliff src/Pumukit/SchemaBundle",
             "bin/console lint:xliff src/Pumukit/StatsBundle",
             "bin/console lint:xliff src/Pumukit/WebTVBundle",
