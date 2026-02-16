@@ -221,8 +221,6 @@ services:
 
   Pumukit\SchemaBundle\Security\LoginFormAuthenticator:
     class: Pumukit\SchemaBundle\Security\LoginFormAuthenticator
-    arguments:
-      $recaptchaEnabled: '%env(bool:APP_RECAPTCHA_ENABLED)%'
 
   Pumukit\SchemaBundle\Services\CreateUserService:
     class: Pumukit\SchemaBundle\Services\CreateUserService

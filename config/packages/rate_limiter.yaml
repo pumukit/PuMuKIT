@@ -1,0 +1,6 @@
+framework:
+  rate_limiter:
+    login_ip:
+      policy: 'token_bucket'
+      limit: 10
+      rate: { interval: '1 minute', amount: 5 }

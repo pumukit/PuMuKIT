@@ -19,7 +19,7 @@ const uppyTUS = Uppy.Core({
     autoProceed: true,
     locale: locales["{{ app.request.getLocale() }}"],
     meta: {
-        series: {{ "folder" }}
+        series: folder
     },
     restrictions: {
         minFileSize: convertSizeToBytes("{{ inbox_min_file_size() }}"),
