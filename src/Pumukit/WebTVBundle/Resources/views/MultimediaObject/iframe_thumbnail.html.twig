@@ -41,7 +41,7 @@
             $('#thumbnail-container').on('click', function() {
                 var playerUrl = '{{ player_url|raw }}';
                 
-                playerUrl += (playerUrl.indexOf('?') > -1 ? '&' : '?') + 'autostart=true';
+                playerUrl += (playerUrl.indexOf('?') > -1 ? '&' : '?') + 'autoplay_click=1';
                 
                 var params = window.location.search;
                 if (params) {
