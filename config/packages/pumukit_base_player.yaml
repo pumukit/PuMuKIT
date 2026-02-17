@@ -18,11 +18,8 @@ services:
       $secret:         '%pumukitplayer.secure_secret%'
       $tokenDuration:  '%pumukitplayer.secure_duration%'
 
-
   Pumukit\BasePlayerBundle\Services\TrackUrlService:
     arguments:
-      $secret:         '%pumukitplayer.secure_secret%'
-      $secureDuration: '%pumukitplayer.secure_duration%'
       $secureTokenService: '@Pumukit\BasePlayerBundle\Services\SecureTokenService'
 
   Pumukit\BasePlayerBundle\Services\SeriesPlaylistService:

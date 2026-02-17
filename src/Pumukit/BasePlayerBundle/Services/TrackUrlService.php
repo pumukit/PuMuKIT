@@ -12,19 +12,13 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class TrackUrlService
 {
     private UrlGeneratorInterface $router;
-    private ?string $secret;
-    private int $secureDuration;
     private SecureTokenService $secureTokenService;
 
     public function __construct(
         UrlGeneratorInterface $router,
-        ?string $secret,
-        int $secureDuration,
         SecureTokenService $secureTokenService
     ) {
         $this->router = $router;
-        $this->secret = $secret;
-        $this->secureDuration = $secureDuration;
         $this->secureTokenService = $secureTokenService;
     }
 
@@ -57,17 +51,17 @@ class TrackUrlService
 
     public function generateDirectTrackFileUrl(Track $track, Request $request): string
     {
-        $timestamp = time() + $this->secureDuration;
-        $hash = $this->getHash($track, $timestamp, $this->secret, $request->getClientIp());
+        $tokenData = $this->secureTokenService->generateToken($track->id());
 
-        return $track->storage()->url()."?md5={$hash}&expires={$timestamp}&".http_build_query($request->query->all(), '', '&');
-    }
+        $separator = str_contains($track->storage()->url()->url(), '?') ? '&' : '?';
 
-    protected function getHash(Track $track, int $timestamp, ?string $secret, string $ip): string
-    {
-        $url = $track->storage()->url()->url();
-        $path = parse_url($url, PHP_URL_PATH);
-
-        return str_replace('=', '', strtr(base64_encode(md5("{$timestamp}{$path}{$ip} {$secret}", true)), '+/', '-_'));
+        return sprintf(
+            '%s%stoken=%s&expires=%d&resource=%s',
+            $track->storage()->url()->url(),
+            $separator,
+            $tokenData['token'],
+            $tokenData['expires'],
+            urlencode($track->id())
+        );
     }
 }
