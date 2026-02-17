@@ -14,12 +14,18 @@ class TrackUrlService
     private UrlGeneratorInterface $router;
     private ?string $secret;
     private int $secureDuration;
+    private SecureTokenService $secureTokenService;
 
-    public function __construct(UrlGeneratorInterface $router, ?string $secret, int $secureDuration)
-    {
+    public function __construct(
+        UrlGeneratorInterface $router,
+        ?string $secret,
+        int $secureDuration,
+        SecureTokenService $secureTokenService = null
+    ) {
         $this->router = $router;
         $this->secret = $secret;
         $this->secureDuration = $secureDuration;
+        $this->secureTokenService = $secureTokenService;
     }
 
     public function generateTrackFileUrl(MediaInterface $track, int $reference_type = UrlGeneratorInterface::ABSOLUTE_PATH): string
@@ -34,7 +40,19 @@ class TrackUrlService
             'ext' => $ext,
         ];
 
-        return $this->router->generate('pumukit_trackfile_index', $params, $reference_type);
+        $baseUrl = $this->router->generate('pumukit_trackfile_index', $params, $reference_type);
+
+        $tokenData = $this->secureTokenService->generateToken($track->id());
+        $separator = str_contains($baseUrl, '?') ? '&' : '?';
+        $baseUrl .= sprintf(
+            '%stoken=%s&expires=%d&resource=%s',
+            $separator,
+            $tokenData['token'],
+            $tokenData['expires'],
+            urlencode($track->id())
+        );
+
+        return $baseUrl;
     }
 
     public function generateDirectTrackFileUrl(Track $track, Request $request): string

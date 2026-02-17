@@ -9,6 +9,8 @@ use MongoDB\BSON\ObjectId;
 use Psr\Log\LoggerInterface;
 use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
+use Pumukit\BasePlayerBundle\Services\SecureTokenService;
+use Pumukit\BasePlayerBundle\Services\TrackAccessRateLimiter;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,18 +25,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class TrackFileController extends AbstractController
 {
     private DocumentManager $documentManager;
-
     private EventDispatcherInterface $eventDispatcher;
     private LoggerInterface $logger;
+    private ?SecureTokenService $secureTokenService;
+    private ?TrackAccessRateLimiter $rateLimiter;
 
     public function __construct(
         DocumentManager $documentManager,
         EventDispatcherInterface $eventDispatcher,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        ?SecureTokenService $secureTokenService = null,
+        ?TrackAccessRateLimiter $rateLimiter = null
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->documentManager = $documentManager;
         $this->logger = $logger;
+        $this->secureTokenService = $secureTokenService;
+        $this->rateLimiter = $rateLimiter;
     }
 
     /**
@@ -46,11 +53,53 @@ class TrackFileController extends AbstractController
      */
     public function indexAction(string $id, Request $request, DocumentManager $documentManager, string $pumukitPlayerWhenDispatchViewEvent, $secret, $secureDuration)
     {
-        if (!preg_match('/^[a-f\d]{24}$/i', $id)) {
-            return new Response('', Response::HTTP_NOT_FOUND);
+        $clientIp = $request->getClientIp();
+
+        // Rate limiting - prevent enumeration attacks
+        if ($this->rateLimiter !== null) {
+            if (!$this->rateLimiter->isAllowed($clientIp)) {
+                // Return 429 Too Many Requests
+                return new Response('Too many requests. Please try again later.', Response::HTTP_TOO_MANY_REQUESTS);
+            }
+            $this->rateLimiter->registerAttempt($clientIp);
         }
 
-        [$mmobj, $track] = $this->getMmobjAndTrack($documentManager, $id);
+        if (!preg_match('/^[a-f\d]{24}$/i', $id)) {
+            if ($this->rateLimiter !== null) {
+                $this->rateLimiter->registerFailedAttempt($clientIp);
+            }
+            // Return generic 404 to prevent information disclosure
+            return new Response('Not Found', Response::HTTP_NOT_FOUND);
+        }
+
+        // Validate secure token BEFORE accessing the database
+        // This prevents enumeration attacks even if the ObjectId doesn't exist
+        if ($this->secureTokenService !== null) {
+            if (!$this->secureTokenService->validateTokenFromRequest($request, $id)) {
+                $this->logger->warning(sprintf(
+                    'Invalid or expired token for track %s from IP %s',
+                    $id,
+                    $clientIp
+                ));
+                if ($this->rateLimiter !== null) {
+                    $this->rateLimiter->registerFailedAttempt($clientIp);
+                }
+                // Return generic 404 instead of 403 to prevent enumeration
+                // Attackers cannot distinguish between "doesn't exist" and "no permission"
+                return new Response('Not Found', Response::HTTP_NOT_FOUND);
+            }
+        }
+
+        try {
+            [$mmobj, $track] = $this->getMmobjAndTrack($documentManager, $id);
+        } catch (\Exception $e) {
+            // Track not found or not accessible
+            if ($this->rateLimiter !== null) {
+                $this->rateLimiter->registerFailedAttempt($clientIp);
+            }
+            // Return generic 404 - don't reveal if track exists but is hidden
+            return new Response('Not Found', Response::HTTP_NOT_FOUND);
+        }
 
         if ($this->shouldIncreaseViews($request, $mmobj, $track, $pumukitPlayerWhenDispatchViewEvent)) {
             $this->dispatchViewEvent($mmobj, $track);

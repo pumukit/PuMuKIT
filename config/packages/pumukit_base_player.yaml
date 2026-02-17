@@ -12,10 +12,20 @@ services:
     resource: '../../src/Pumukit/BasePlayerBundle/Controller/'
     tags: ['controller.service_arguments']
 
+  Pumukit\BasePlayerBundle\Services\SecureTokenService:
+    arguments:
+      $secret:         '%pumukitplayer.secure_secret%'
+      $tokenDuration:  '%pumukitplayer.secure_duration%'
+
+  Pumukit\BasePlayerBundle\Services\TrackAccessRateLimiter:
+    arguments:
+      $logger: '@logger'
+
   Pumukit\BasePlayerBundle\Services\TrackUrlService:
     arguments:
       $secret:         '%pumukitplayer.secure_secret%'
       $secureDuration: '%pumukitplayer.secure_duration%'
+      $secureTokenService: '@Pumukit\BasePlayerBundle\Services\SecureTokenService'
 
   Pumukit\BasePlayerBundle\Services\SeriesPlaylistService:
     class: Pumukit\BasePlayerBundle\Services\SeriesPlaylistService
