@@ -20,7 +20,7 @@ class TrackUrlService
         UrlGeneratorInterface $router,
         ?string $secret,
         int $secureDuration,
-        SecureTokenService $secureTokenService = null
+        SecureTokenService $secureTokenService
     ) {
         $this->router = $router;
         $this->secret = $secret;

@@ -10,7 +10,6 @@ use Psr\Log\LoggerInterface;
 use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\BasePlayerBundle\Services\SecureTokenService;
-use Pumukit\BasePlayerBundle\Services\TrackAccessRateLimiter;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,6 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TrackFileController extends AbstractController
@@ -28,52 +28,46 @@ class TrackFileController extends AbstractController
     private EventDispatcherInterface $eventDispatcher;
     private LoggerInterface $logger;
     private ?SecureTokenService $secureTokenService;
-    private ?TrackAccessRateLimiter $rateLimiter;
+    private ?RateLimiterFactory $trackfileAccessLimiter;
 
     public function __construct(
         DocumentManager $documentManager,
         EventDispatcherInterface $eventDispatcher,
         LoggerInterface $logger,
         ?SecureTokenService $secureTokenService = null,
-        ?TrackAccessRateLimiter $rateLimiter = null
+        ?RateLimiterFactory $trackfileAccessLimiter = null
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->documentManager = $documentManager;
         $this->logger = $logger;
         $this->secureTokenService = $secureTokenService;
-        $this->rateLimiter = $rateLimiter;
+        $this->trackfileAccessLimiter = $trackfileAccessLimiter;
     }
 
     /**
      * @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index")
      * @Route("/trackfile/{id}", name="pumukit_trackfile_index_no_ext")
-     *
-     * @param mixed $secret
-     * @param mixed $secureDuration
      */
     public function indexAction(string $id, Request $request, DocumentManager $documentManager, string $pumukitPlayerWhenDispatchViewEvent, $secret, $secureDuration)
     {
         $clientIp = $request->getClientIp();
 
-        // Rate limiting - prevent enumeration attacks
-        if ($this->rateLimiter !== null) {
-            if (!$this->rateLimiter->isAllowed($clientIp)) {
-                // Return 429 Too Many Requests
+        if ($this->trackfileAccessLimiter !== null) {
+            $limiter = $this->trackfileAccessLimiter->create($clientIp);
+
+            if (false === $limiter->consume(1)->isAccepted()) {
+                $this->logger->warning(sprintf(
+                    'Rate limit exceeded for IP %s accessing trackfile',
+                    $clientIp
+                ));
                 return new Response('Too many requests. Please try again later.', Response::HTTP_TOO_MANY_REQUESTS);
             }
-            $this->rateLimiter->registerAttempt($clientIp);
         }
 
         if (!preg_match('/^[a-f\d]{24}$/i', $id)) {
-            if ($this->rateLimiter !== null) {
-                $this->rateLimiter->registerFailedAttempt($clientIp);
-            }
-            // Return generic 404 to prevent information disclosure
             return new Response('Not Found', Response::HTTP_NOT_FOUND);
         }
 
-        // Validate secure token BEFORE accessing the database
-        // This prevents enumeration attacks even if the ObjectId doesn't exist
         if ($this->secureTokenService !== null) {
             if (!$this->secureTokenService->validateTokenFromRequest($request, $id)) {
                 $this->logger->warning(sprintf(
@@ -81,23 +75,20 @@ class TrackFileController extends AbstractController
                     $id,
                     $clientIp
                 ));
-                if ($this->rateLimiter !== null) {
-                    $this->rateLimiter->registerFailedAttempt($clientIp);
-                }
-                // Return generic 404 instead of 403 to prevent enumeration
-                // Attackers cannot distinguish between "doesn't exist" and "no permission"
+
                 return new Response('Not Found', Response::HTTP_NOT_FOUND);
             }
+        } else {
+            $this->logger->warning(sprintf(
+                'SECURITY: SecureTokenService not configured - track %s accessed without validation from IP %s',
+                $id,
+                $clientIp
+            ));
         }
 
         try {
             [$mmobj, $track] = $this->getMmobjAndTrack($documentManager, $id);
         } catch (\Exception $e) {
-            // Track not found or not accessible
-            if ($this->rateLimiter !== null) {
-                $this->rateLimiter->registerFailedAttempt($clientIp);
-            }
-            // Return generic 404 - don't reveal if track exists but is hidden
             return new Response('Not Found', Response::HTTP_NOT_FOUND);
         }
 
@@ -146,7 +137,7 @@ class TrackFileController extends AbstractController
             return new JsonResponse(['status' => 'error']);
         }
 
-        if (0 !== strpos($request->headers->get('referer'), $request->getSchemeAndHttpHost())) {
+        if (!str_starts_with($request->headers->get('referer'), $request->getSchemeAndHttpHost())) {
             return new JsonResponse(['status' => 'error']);
         }
 
@@ -201,7 +192,7 @@ class TrackFileController extends AbstractController
         if (!$range && !$start) {
             return true;
         }
-        if ($range && 'bytes=0-' === substr($range, 0, 8)) {
+        if ($range && str_starts_with($range, 'bytes=0-')) {
             return true;
         }
         if (null !== $start && 0 == $start) {

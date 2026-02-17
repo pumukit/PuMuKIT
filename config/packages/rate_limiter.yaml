@@ -4,3 +4,8 @@ framework:
       policy: 'token_bucket'
       limit: 10
       rate: { interval: '1 minute', amount: 5 }
+
+    trackfile_access:
+      policy: 'sliding_window'
+      limit: 200
+      interval: '1 minute'

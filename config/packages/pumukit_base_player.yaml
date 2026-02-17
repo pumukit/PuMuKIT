@@ -7,6 +7,7 @@ services:
       $secret:         '%pumukitplayer.secure_secret%'
       $secureDuration: '%pumukitplayer.secure_duration%'
       $pumukitPlayerWhenDispatchViewEvent: '%pumukitplayer.when_dispatch_view_event%'
+      $trackfileAccessLimiter: '@limiter.trackfile_access'
 
   Pumukit\BasePlayerBundle\Controller\:
     resource: '../../src/Pumukit/BasePlayerBundle/Controller/'
@@ -17,9 +18,6 @@ services:
       $secret:         '%pumukitplayer.secure_secret%'
       $tokenDuration:  '%pumukitplayer.secure_duration%'
 
-  Pumukit\BasePlayerBundle\Services\TrackAccessRateLimiter:
-    arguments:
-      $logger: '@logger'
 
   Pumukit\BasePlayerBundle\Services\TrackUrlService:
     arguments:

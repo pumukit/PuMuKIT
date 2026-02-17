@@ -6,10 +6,6 @@ namespace Pumukit\BasePlayerBundle\Services;
 
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Service to generate and validate secure tokens for media file access.
- * Implements security measures against WSTG-ATHN-04 vulnerability.
- */
 class SecureTokenService
 {
     private string $secret;
@@ -17,126 +13,69 @@ class SecureTokenService
 
     public function __construct(string $secret, int $tokenDuration = 3600)
     {
-        if (empty($secret)) {
-            throw new \InvalidArgumentException('Secret cannot be empty for secure token generation');
-        }
-
         $this->secret = $secret;
         $this->tokenDuration = $tokenDuration;
     }
 
-    /**
-     * Generate a secure token for a resource.
-     *
-     * @param string $resourceId The resource identifier (track ID, path, etc.)
-     * @param string|null $clientIp Client IP address for additional security
-     * @param int|null $customExpiration Custom expiration timestamp
-     *
-     * @return array{token: string, expires: int}
-     */
-    public function generateToken(string $resourceId, ?string $clientIp = null, ?int $customExpiration = null): array
+    private function ensureSecretConfigured(): void
     {
+        if (empty($this->secret)) {
+            throw new \RuntimeException(
+                'PUMUKITPLAYER_SECURE_SECRET is not configured. ' .
+                'Please set it in your .env file. ' .
+                'Generate one with: php -r "echo bin2hex(random_bytes(32)) . PHP_EOL;"'
+            );
+        }
+    }
+
+    public function generateToken(string $resourceId, ?int $customExpiration = null): array
+    {
+        $this->ensureSecretConfigured();
         $expires = $customExpiration ?? (time() + $this->tokenDuration);
-        $clientIp = $clientIp ?? '';
+        $tokenData = sprintf('%s|%d', $resourceId, $expires);
 
-        // Generate a random salt for additional security
-        $salt = bin2hex(random_bytes(16));
-
-        // Create token data
-        $tokenData = sprintf(
-            '%s|%d|%s|%s',
-            $resourceId,
-            $expires,
-            $clientIp,
-            $salt
-        );
-
-        // Generate HMAC using SHA-256
         $hash = hash_hmac('sha256', $tokenData, $this->secret);
 
-        // Combine salt and hash for the token
-        $token = base64_encode($salt . '|' . $hash);
-
-        // URL-safe token
-        $token = strtr($token, '+/', '-_');
+        $token = strtr(base64_encode($hash), '+/', '-_');
         $token = rtrim($token, '=');
 
         return [
             'token' => $token,
             'expires' => $expires,
-            'salt' => $salt,
         ];
     }
 
-    /**
-     * Validate a secure token.
-     *
-     * @param string $token The token to validate
-     * @param string $resourceId The resource identifier
-     * @param int $expires The expiration timestamp
-     * @param string|null $clientIp Client IP address
-     *
-     * @return bool True if token is valid, false otherwise
-     */
-    public function validateToken(string $token, string $resourceId, int $expires, ?string $clientIp = null): bool
+    public function validateToken(string $token, string $resourceId, int $expires): bool
     {
-        // Check if token has expired
+        $this->ensureSecretConfigured();
+
         if (time() > $expires) {
             return false;
         }
 
         try {
-            // URL-safe decoding
             $token = strtr($token, '-_', '+/');
-            $decodedToken = base64_decode($token, true);
+            $providedHash = base64_decode($token, true);
 
-            if ($decodedToken === false) {
+            if ($providedHash === false) {
                 return false;
             }
 
-            // Extract salt and hash
-            $parts = explode('|', $decodedToken);
-            if (count($parts) !== 2) {
-                return false;
-            }
+            $tokenData = sprintf('%s|%d', $resourceId, $expires);
 
-            [$salt, $providedHash] = $parts;
-
-            $clientIp = $clientIp ?? '';
-
-            // Recreate token data
-            $tokenData = sprintf(
-                '%s|%d|%s|%s',
-                $resourceId,
-                $expires,
-                $clientIp,
-                $salt
-            );
-
-            // Generate expected hash
             $expectedHash = hash_hmac('sha256', $tokenData, $this->secret);
 
-            // Constant-time comparison to prevent timing attacks
             return hash_equals($expectedHash, $providedHash);
         } catch (\Exception $e) {
             return false;
         }
     }
 
-    /**
-     * Generate a secure URL for a resource.
-     *
-     * @param string $baseUrl The base URL
-     * @param string $resourceId The resource identifier
-     * @param string|null $clientIp Client IP address
-     *
-     * @return string The secure URL with token parameters
-     */
-    public function generateSecureUrl(string $baseUrl, string $resourceId, ?string $clientIp = null): string
+    public function generateSecureUrl(string $baseUrl, string $resourceId): string
     {
-        $tokenData = $this->generateToken($resourceId, $clientIp);
+        $tokenData = $this->generateToken($resourceId);
 
-        $separator = strpos($baseUrl, '?') !== false ? '&' : '?';
+        $separator = str_contains($baseUrl, '?') ? '&' : '?';
 
         return sprintf(
             '%s%stoken=%s&expires=%d&resource=%s',
@@ -148,14 +87,6 @@ class SecureTokenService
         );
     }
 
-    /**
-     * Validate token from request.
-     *
-     * @param Request $request The HTTP request
-     * @param string $resourceId The resource identifier
-     *
-     * @return bool True if token is valid, false otherwise
-     */
     public function validateTokenFromRequest(Request $request, string $resourceId): bool
     {
         $token = $request->query->get('token');
@@ -166,19 +97,13 @@ class SecureTokenService
             return false;
         }
 
-        // Verify that the requested resource matches
         if ($requestedResource !== null && $requestedResource !== $resourceId) {
             return false;
         }
 
-        $clientIp = $request->getClientIp();
-
-        return $this->validateToken($token, $resourceId, $expires, $clientIp);
+        return $this->validateToken($token, $resourceId, $expires);
     }
 
-    /**
-     * Get token duration in seconds.
-     */
     public function getTokenDuration(): int
     {
         return $this->tokenDuration;
