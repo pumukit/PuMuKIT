@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
+## [5.1.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...5.0.0) - (Coming soon)
+
+#### Fixed
+
+- Create token on trackfile to prevent WSTG-ATHN-04.
+
+
 ## [5.0.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...5.0.0) - (2025-02-24)
 
 #### Added
