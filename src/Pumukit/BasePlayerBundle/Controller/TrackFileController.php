@@ -47,12 +47,15 @@ class TrackFileController extends AbstractController
     /**
      * @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index")
      * @Route("/trackfile/{id}", name="pumukit_trackfile_index_no_ext")
+     *
+     * @param mixed $secret
+     * @param mixed $secureDuration
      */
     public function indexAction(string $id, Request $request, DocumentManager $documentManager, string $pumukitPlayerWhenDispatchViewEvent, $secret, $secureDuration)
     {
         $clientIp = $request->getClientIp();
 
-        if ($this->trackfileAccessLimiter !== null) {
+        if (null !== $this->trackfileAccessLimiter) {
             $limiter = $this->trackfileAccessLimiter->create($clientIp);
 
             if (false === $limiter->consume(1)->isAccepted()) {
@@ -60,6 +63,7 @@ class TrackFileController extends AbstractController
                     'Rate limit exceeded for IP %s accessing trackfile',
                     $clientIp
                 ));
+
                 return new Response('Too many requests. Please try again later.', Response::HTTP_TOO_MANY_REQUESTS);
             }
         }
@@ -68,7 +72,7 @@ class TrackFileController extends AbstractController
             return new Response('Not Found', Response::HTTP_NOT_FOUND);
         }
 
-        if ($this->secureTokenService !== null) {
+        if (null !== $this->secureTokenService) {
             if (!$this->secureTokenService->validateTokenFromRequest($request, $id)) {
                 $this->logger->warning(sprintf(
                     'Invalid or expired token for track %s from IP %s',
@@ -114,7 +118,6 @@ class TrackFileController extends AbstractController
         return $response;
     }
 
-
     /**
      * @Route("/trackplayed/{id}", name="pumukit_trackplayed_index")
      */
@@ -158,7 +161,6 @@ class TrackFileController extends AbstractController
 
         return new JsonResponse(['status' => 'ok']);
     }
-
 
     protected function shouldIncreaseViews(Request $request, MultimediaObject $multimediaObject, MediaInterface $media, string $pumukitPlayerWhenDispatchViewEvent)
     {

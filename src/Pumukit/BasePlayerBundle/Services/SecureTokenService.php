@@ -17,17 +17,6 @@ class SecureTokenService
         $this->tokenDuration = $tokenDuration;
     }
 
-    private function ensureSecretConfigured(): void
-    {
-        if (empty($this->secret)) {
-            throw new \RuntimeException(
-                'PUMUKITPLAYER_SECURE_SECRET is not configured. ' .
-                'Please set it in your .env file. ' .
-                'Generate one with: php -r "echo bin2hex(random_bytes(32)) . PHP_EOL;"'
-            );
-        }
-    }
-
     public function generateToken(string $resourceId, ?int $customExpiration = null): array
     {
         $this->ensureSecretConfigured();
@@ -57,7 +46,7 @@ class SecureTokenService
             $token = strtr($token, '-_', '+/');
             $providedHash = base64_decode($token, true);
 
-            if ($providedHash === false) {
+            if (false === $providedHash) {
                 return false;
             }
 
@@ -97,7 +86,7 @@ class SecureTokenService
             return false;
         }
 
-        if ($requestedResource !== null && $requestedResource !== $resourceId) {
+        if (null !== $requestedResource && $requestedResource !== $resourceId) {
             return false;
         }
 
@@ -108,5 +97,15 @@ class SecureTokenService
     {
         return $this->tokenDuration;
     }
-}
 
+    private function ensureSecretConfigured(): void
+    {
+        if (empty($this->secret)) {
+            throw new \RuntimeException(
+                'PUMUKITPLAYER_SECURE_SECRET is not configured. '.
+                'Please set it in your .env file. '.
+                'Generate one with: php -r "echo bin2hex(random_bytes(32)) . PHP_EOL;"'
+            );
+        }
+    }
+}
