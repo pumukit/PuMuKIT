@@ -96,7 +96,6 @@ class TrackFileController extends AbstractController
             $this->dispatchViewEvent($mmobj, $track);
         }
 
-        // Serve file directly from PHP (secure - no redirect to /storage)
         $filePath = $track->storage()->path()->path();
 
         if (!file_exists($filePath)) {
@@ -106,7 +105,6 @@ class TrackFileController extends AbstractController
         $response = new BinaryFileResponse($filePath);
         $response::trustXSendfileTypeHeader();
 
-        // Set content disposition based on request
         if ($request->query->getBoolean('forcedl')) {
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
         } else {
