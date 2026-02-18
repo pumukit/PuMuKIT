@@ -96,31 +96,26 @@ class TrackFileController extends AbstractController
             $this->dispatchViewEvent($mmobj, $track);
         }
 
-        if (!$track->storage()->url()->url()) {
-            if ($request->query->getBoolean('forcedl')) {
-                $response = new BinaryFileResponse($track->getPath());
-                $response::trustXSendfileTypeHeader();
-                $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
+        // Serve file directly from PHP (secure - no redirect to /storage)
+        $filePath = $track->storage()->path()->path();
 
-                return $response;
-            }
-
-            throw $this->createNotFoundException("Not mmobj found with the track id: {$id}");
+        if (!file_exists($filePath)) {
+            throw $this->createNotFoundException("Track file not found: {$id}");
         }
 
-        if ($secret) {
-            $timestamp = time() + $secureDuration;
-            $hash = $this->getHash($track, $timestamp, $secret, $request->getClientIp());
+        $response = new BinaryFileResponse($filePath);
+        $response::trustXSendfileTypeHeader();
 
-            return $this->redirect($track->storage()->url()->url()."?md5={$hash}&expires={$timestamp}&".http_build_query($request->query->all(), '', '&'));
+        // Set content disposition based on request
+        if ($request->query->getBoolean('forcedl')) {
+            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
+        } else {
+            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE);
         }
 
-        if ($request->query->all()) {
-            return $this->redirect($track->storage()->url()->url().'?'.http_build_query($request->query->all()));
-        }
-
-        return $this->redirect($track->storage()->url()->url());
+        return $response;
     }
+
 
     /**
      * @Route("/trackplayed/{id}", name="pumukit_trackplayed_index")
@@ -166,13 +161,6 @@ class TrackFileController extends AbstractController
         return new JsonResponse(['status' => 'ok']);
     }
 
-    protected function getHash(MediaInterface $track, $timestamp, string $secret, string $ip)
-    {
-        $url = $track->storage()->url()->url();
-        $path = parse_url($url, PHP_URL_PATH);
-
-        return str_replace('=', '', strtr(base64_encode(md5("{$timestamp}{$path}{$ip} {$secret}", true)), '+/', '-_'));
-    }
 
     protected function shouldIncreaseViews(Request $request, MultimediaObject $multimediaObject, MediaInterface $media, string $pumukitPlayerWhenDispatchViewEvent)
     {
