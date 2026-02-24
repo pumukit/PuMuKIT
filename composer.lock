@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c73736bb84a9cce4e9d476fc2f41bd73",
+    "content-hash": "f8e18cb925fa5ff3293e3a59d6d37b97",
     "packages": [
         {
             "name": "ankitpokhrel/tus-php",
@@ -9494,16 +9494,16 @@
         },
         {
             "name": "teltek/pumukit-paella-player-bundle",
-            "version": "4.0.1",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teltek/PumukitPaellaPlayerBundle.git",
-                "reference": "9fcf43d50e6af43502f478a4f7945b736b78a338"
+                "reference": "c9c8abbc26d5358e816e86c6d9f50816ac5268c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PumukitPaellaPlayerBundle/zipball/9fcf43d50e6af43502f478a4f7945b736b78a338",
-                "reference": "9fcf43d50e6af43502f478a4f7945b736b78a338",
+                "url": "https://api.github.com/repos/teltek/PumukitPaellaPlayerBundle/zipball/c9c8abbc26d5358e816e86c6d9f50816ac5268c1",
+                "reference": "c9c8abbc26d5358e816e86c6d9f50816ac5268c1",
                 "shasum": ""
             },
             "require": {
@@ -9539,9 +9539,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teltek/PumukitPaellaPlayerBundle/issues",
-                "source": "https://github.com/teltek/PumukitPaellaPlayerBundle/tree/4.0.1"
+                "source": "https://github.com/teltek/PumukitPaellaPlayerBundle/tree/4.1.0"
             },
-            "time": "2025-07-07T07:44:14+00:00"
+            "time": "2026-02-18T15:58:32+00:00"
         },
         {
             "name": "teltek/pumukit-stats-ui-bundle",
