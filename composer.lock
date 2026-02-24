@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "010d50a4aa9e7f28f6164cb9b015738d",
+    "content-hash": "4ffcc728de9956e7bda6c6500fd13980",
     "packages": [
         {
             "name": "ankitpokhrel/tus-php",
@@ -9494,16 +9494,16 @@
         },
         {
             "name": "teltek/pumukit-paella-player-bundle",
-            "version": "4.0.1",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teltek/PumukitPaellaPlayerBundle.git",
-                "reference": "9fcf43d50e6af43502f478a4f7945b736b78a338"
+                "reference": "c9c8abbc26d5358e816e86c6d9f50816ac5268c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PumukitPaellaPlayerBundle/zipball/9fcf43d50e6af43502f478a4f7945b736b78a338",
-                "reference": "9fcf43d50e6af43502f478a4f7945b736b78a338",
+                "url": "https://api.github.com/repos/teltek/PumukitPaellaPlayerBundle/zipball/c9c8abbc26d5358e816e86c6d9f50816ac5268c1",
+                "reference": "c9c8abbc26d5358e816e86c6d9f50816ac5268c1",
                 "shasum": ""
             },
             "require": {
@@ -9539,9 +9539,9 @@
             ],
             "support": {
                 "issues": "https://github.com/teltek/PumukitPaellaPlayerBundle/issues",
-                "source": "https://github.com/teltek/PumukitPaellaPlayerBundle/tree/4.0.1"
+                "source": "https://github.com/teltek/PumukitPaellaPlayerBundle/tree/4.1.0"
             },
-            "time": "2025-07-07T07:44:14+00:00"
+            "time": "2026-02-18T15:58:32+00:00"
         },
         {
             "name": "teltek/pumukit-stats-ui-bundle",
@@ -9812,16 +9812,16 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "2.1.2",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozarts/assert.git",
-                "reference": "ce6a2f100c404b2d32a1dd1270f9b59ad4f57649"
+                "reference": "79155f94852fa27e2f73b459f6503f5e87e2c188"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozarts/assert/zipball/ce6a2f100c404b2d32a1dd1270f9b59ad4f57649",
-                "reference": "ce6a2f100c404b2d32a1dd1270f9b59ad4f57649",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/79155f94852fa27e2f73b459f6503f5e87e2c188",
+                "reference": "79155f94852fa27e2f73b459f6503f5e87e2c188",
                 "shasum": ""
             },
             "require": {
@@ -9868,9 +9868,9 @@
             ],
             "support": {
                 "issues": "https://github.com/webmozarts/assert/issues",
-                "source": "https://github.com/webmozarts/assert/tree/2.1.2"
+                "source": "https://github.com/webmozarts/assert/tree/2.1.5"
             },
-            "time": "2026-01-13T14:02:24+00:00"
+            "time": "2026-02-18T14:09:36+00:00"
         },
         {
             "name": "willdurand/negotiation",
