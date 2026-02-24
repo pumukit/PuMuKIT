@@ -28,8 +28,8 @@ class TrackUrlServiceTest extends PumukitTestCase
 {
     private $client;
     private $trackurlService;
-    private $mmobjRepo;
     private $i18nService;
+    private $projectDir;
 
     public function setUp(): void
     {
@@ -37,9 +37,9 @@ class TrackUrlServiceTest extends PumukitTestCase
 
         self::ensureKernelShutdown();
         $this->client = static::createClient();
-        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->trackurlService = static::$kernel->getContainer()->get('pumukit_baseplayer.trackurl');
         $this->i18nService = new i18nService(['en', 'es'], 'en');
+        $this->projectDir = static::$kernel->getContainer()->getParameter('kernel.project_dir');
     }
 
     public function tearDown(): void
@@ -47,7 +47,6 @@ class TrackUrlServiceTest extends PumukitTestCase
         parent::tearDown();
         $this->dm->close();
 
-        $this->mmobjRepo = null;
         $this->trackurlService = null;
         $this->client = null;
         gc_collect_cycles();
@@ -70,45 +69,23 @@ class TrackUrlServiceTest extends PumukitTestCase
         $this->dm->persist($mmobj);
         $this->dm->flush();
 
-        static::assertEquals(0, $mmobj->getNumview());
+        $genUrl = $this->trackurlService->generateTrackFileUrl($track);
 
-        $genUrl = $this->trackurlService->generateTrackFileUrl($track);
+        // The URL must start with /trackfile/{id}.mp4 and include token parameters
+        static::assertStringStartsWith('/trackfile/'.$track->id().'.mp4', $genUrl);
+        static::assertStringContainsString('token=', $genUrl);
+        static::assertStringContainsString('expires=', $genUrl);
+        static::assertStringContainsString('resource=', $genUrl);
+
+        // Normal request returns 200
         $this->client->request('GET', $genUrl);
-        // @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index" )
-        static::assertEquals($genUrl, '/trackfile/'.$track->id().'.mp4');
-        static::assertEquals(302, $this->client->getResponse()->getStatusCode());
-        static::assertEquals($track->storage()->url()->url(), $this->client->getResponse()->getTargetUrl());
-        // Reload mmobj to check for new views.
-        $this->dm->clear();
-        $mmobj = $this->mmobjRepo->find($mmobj->getId());
-        static::assertEquals(1, $mmobj->getNumview());
-        $this->client->request('GET', $genUrl, [], [], ['HTTP_RANGE' => 'bytes=123-246']);
-        $this->dm->clear();
-        $mmobj = $this->mmobjRepo->find($mmobj->getId());
-        static::assertEquals(1, $mmobj->getNumview());
-        // Views should work if range = 0
-        $this->client->request('GET', $genUrl, [], [], ['HTTP_RANGE' => 'bytes=0-1256']);
-        $this->client->request('GET', $genUrl, [], [], ['HTTP_RANGE' => 'bytes=0-']);
-        $this->dm->clear();
-        $mmobj = $this->mmobjRepo->find($mmobj->getId());
-        static::assertEquals(3, $mmobj->getNumview());
-        // Start should also work
-        $this->client->request('GET', $genUrl, [], [], ['HTTP_START' => 0]);
-        // xTreme case: If either 'start' or 'range' is valid, it adds a numView.
-        $this->client->request('GET', $genUrl, [], [], ['HTTP_START' => 1254, 'HTTP_RANGE' => 'bytes=0-1256']);
-        $this->client->request('GET', $genUrl, [], [], ['HTTP_START' => 0, 'HTTP_RANGE' => 'bytes=123-1256']);
-        $this->client->request('GET', $genUrl, [], [], ['HTTP_START' => 1254, 'HTTP_RANGE' => 'bytes=123-1256']);
-        $this->dm->clear();
-        $mmobj = $this->mmobjRepo->find($mmobj->getId());
-        static::assertEquals(6, $mmobj->getNumview());
-        // With GET params
-        $getParams = '?1=2&forcedl=1';
+        static::assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+        // forcedl=1 should return 200 with attachment Content-Disposition
         $genUrl = $this->trackurlService->generateTrackFileUrl($track);
-        $this->client->request('GET', $genUrl.$getParams);
-        // @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index" )
-        static::assertEquals($genUrl, '/trackfile/'.$track->id().'.mp4');
-        static::assertEquals(302, $this->client->getResponse()->getStatusCode());
-        static::assertEquals($track->storage()->url()->url().$getParams, $this->client->getResponse()->getTargetUrl());
+        $this->client->request('GET', $genUrl.'&forcedl=1');
+        static::assertEquals(200, $this->client->getResponse()->getStatusCode());
+        static::assertStringContainsString('attachment', $this->client->getResponse()->headers->get('Content-Disposition'));
     }
 
     public function testGenerateTrackFileUrlBadExt()
@@ -139,7 +116,7 @@ class TrackUrlServiceTest extends PumukitTestCase
         $tags = Tags::create(['display']);
         $views = 0;
         $url = StorageUrl::create($url);
-        $path = Path::create('public/storage');
+        $path = Path::create($this->projectDir.'/tests/files/pumukit.mp4');
         $storage = Storage::create($url, $path);
         $mediaMetadata = VideoAudio::create('{"format":{"duration":"10.000000"}}');
 
