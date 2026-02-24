@@ -38,3 +38,11 @@ The third command will execute the "ffprobe" of all video/audio tracks to get al
     ```bash
     php bin/console pumukit:upgrade:metadata:track --force
     ```
+
+### Required Permission to Upload Multimedia Objects in Pumukit 5
+
+In Pumukit 5, users must have the ROLE_UPLOAD_INBOX permission in order to upload multimedia objects.
+
+Although implemented as a role within the system, ROLE_UPLOAD_INBOX functions as a specific permission that grants access to the Upload Inbox, which is required to upload multimedia content.
+
+The ROLE_UPLOAD_INBOX permission must be assigned to the user through the administration interface.
