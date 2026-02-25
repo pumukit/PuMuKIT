@@ -138,4 +138,50 @@ class PersonalSeriesService
             '_id' => new ObjectId($user->getPersonalSeries()),
         ]);
     }
+
+    public function createFromUser(User $user): Series
+    {
+        
+        if ($user->getPersonalSeries()) {
+            $series = $this->documentManager
+                ->getRepository(Series::class)
+                ->find($user->getPersonalSeries());
+
+            if ($series instanceof Series) {
+                return $series;
+            }
+        }
+
+        
+        $title = $this->generateDefaultPersonalSeriesTitleForUser($user);
+
+        $series = $this->factoryService->createSeries($user, $title);
+
+        $series->setProperty(self::DEFAULT_PERSONAL_SERIES_PROPERTY, true);
+
+        $user->setPersonalSeries($series->getId());
+
+        $this->documentManager->persist($series);
+        $this->documentManager->persist($user);
+        $this->documentManager->flush();
+
+        return $series;
+    }
+
+    private function generateDefaultPersonalSeriesTitleForUser(User $user): array
+    {
+        $i18nTitle = [];
+
+        foreach ($this->locales as $locale) {
+            $i18nTitle[$locale] =
+                $this->translator->trans(
+                    'Videos of ',
+                    [],
+                    null,
+                    $locale
+                ) . $user->getUsername();
+        }
+
+        return $i18nTitle;
+    }
 }
