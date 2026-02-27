@@ -1,10 +1,20 @@
 {% include "@PumukitCore/Upload/common.js.twig" %}
 
 {% if folder is defined %}
-    var endpoint = "{{ inboxUploadURL }}" + "?series={{ folder }}";
+    {% set isNaked = is_naked() %}
+    {% if isNaked %}
+        var endpoint = "{{ moodle_upload_url() }}" + "?series={{ folder }}&username=" + encodeURIComponent("{{ username }}") + "&email=" + encodeURIComponent("{{ email }}") + "&hash=" + encodeURIComponent("{{ hash }}");
+    {% else %}
+        var endpoint = "{{ inboxUploadURL }}" + "?series={{ folder }}";
+    {% endif %}
     var folder = "{{ folder }}";
 {% else %}
-    var endpoint = "{{ inboxUploadURL }}" + "?series={{ series.id }}";
+    {% set isNaked = is_naked() %}
+    {% if isNaked %}
+        var endpoint = "{{ moodle_upload_url() }}" + "?series={{ series.id }}&username=" + encodeURIComponent("{{ username }}") + "&email=" + encodeURIComponent("{{ email }}") + "&hash=" + encodeURIComponent("{{ hash }}");
+    {% else %}
+        var endpoint = "{{ inboxUploadURL }}" + "?series={{ series.id }}";
+    {% endif %}
     var folder = "{{ series.id }}";
 {% endif %}
 
@@ -42,8 +52,7 @@ const uppyTUS = Uppy.Core({
     .use(Uppy.Tus, {
         endpoint: endpoint,
         overridePatchMethod: {{ inbox_override_patch_method() }},
-        limit: {{ inbox_upload_limit() }},
-        withCredentials: true
+        limit: {{ inbox_upload_limit() }}
     })
     .run()
 

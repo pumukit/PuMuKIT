@@ -73,6 +73,7 @@ services:
     class: Pumukit\CoreBundle\Services\InboxService
     arguments:
       $inboxUploadURL: '%pumukit.inboxUploadURL%'
+      $moodleUploadURL: '%pumukit.moodleUploadURL%'
       $inboxUploadLIMIT: '%pumukit.inboxUploadLIMIT%'
       $minFileSize: '%pumukit.minFileSize%'
       $maxFileSize: '%pumukit.maxFileSize%'
