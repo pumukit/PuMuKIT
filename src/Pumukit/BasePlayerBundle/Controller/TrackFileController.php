@@ -54,40 +54,12 @@ class TrackFileController extends AbstractController
     public function indexAction(string $id, Request $request, DocumentManager $documentManager, string $pumukitPlayerWhenDispatchViewEvent, $secret, $secureDuration)
     {
         $clientIp = $request->getClientIp();
-
-        if (null !== $this->trackfileAccessLimiter) {
-            $limiter = $this->trackfileAccessLimiter->create($clientIp);
-
-            if (false === $limiter->consume(1)->isAccepted()) {
-                $this->logger->warning(sprintf(
-                    'Rate limit exceeded for IP %s accessing trackfile',
-                    $clientIp
-                ));
-
-                return new Response('Too many requests. Please try again later.', Response::HTTP_TOO_MANY_REQUESTS);
-            }
-        }
-
-        if (!preg_match('/^[a-f\d]{24}$/i', $id)) {
-            return new Response('Not Found', Response::HTTP_NOT_FOUND);
-        }
+        $fileName = $request->query->get('file');
 
         if (null !== $this->secureTokenService) {
             if (!$this->secureTokenService->validateTokenFromRequest($request, $id)) {
-                $this->logger->warning(sprintf(
-                    'Invalid or expired token for track %s from IP %s',
-                    $id,
-                    $clientIp
-                ));
-
-                return new Response('Not Found', Response::HTTP_NOT_FOUND);
+                return new Response('Invalid Token', Response::HTTP_NOT_FOUND);
             }
-        } else {
-            $this->logger->warning(sprintf(
-                'SECURITY: SecureTokenService not configured - track %s accessed without validation from IP %s',
-                $id,
-                $clientIp
-            ));
         }
 
         try {
@@ -95,25 +67,40 @@ class TrackFileController extends AbstractController
         } catch (\Exception $e) {
             return new Response('Not Found', Response::HTTP_NOT_FOUND);
         }
+        $masterPath = $track->storage()->path()->path();
+        $baseDir = dirname($masterPath);
 
-        if ($this->shouldIncreaseViews($request, $mmobj, $track, $pumukitPlayerWhenDispatchViewEvent)) {
-            $this->dispatchViewEvent($mmobj, $track);
+        if ($fileName) {
+            $fileName = basename($fileName);
+            $filePath = $baseDir.'/'.$fileName;
+        } else {
+            $filePath = $masterPath;
         }
-
-        $filePath = $track->storage()->path()->path();
 
         if (!file_exists($filePath)) {
-            throw $this->createNotFoundException("Track file not found: {$id}");
+            return new Response('File not found', Response::HTTP_NOT_FOUND);
         }
 
+        $extension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+
+        if ('m3u8' === $extension) {
+            $content = file_get_contents($filePath);
+            $queryString = $request->getQueryString();
+
+            $content = preg_replace_callback('/^(?!#)(.+?\.(m3u8|ts))/m', function ($matches) use ($queryString, $id) {
+                $relativeFile = trim($matches[1]);
+                $connector = (!str_contains($queryString, '?')) ? '?' : '&';
+
+                return '/trackfile/'.$id.'.m3u8'.$connector.$queryString.'&file='.$relativeFile;
+            }, $content);
+
+            return new Response($content, 200, ['Content-Type' => 'application/x-mpegURL']);
+        }
         $response = new BinaryFileResponse($filePath);
         $response::trustXSendfileTypeHeader();
-
-        if ($request->query->getBoolean('forcedl')) {
-            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
-        } else {
-            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE);
-        }
+        $response->setContentDisposition(
+            $request->query->getBoolean('forcedl') ? ResponseHeaderBag::DISPOSITION_ATTACHMENT : ResponseHeaderBag::DISPOSITION_INLINE
+        );
 
         return $response;
     }
