@@ -3,7 +3,12 @@
 {% if folder is defined %}
     {% set isNaked = is_naked() %}
     {% if isNaked %}
-        var endpoint = "{{ moodle_upload_url() }}" + "?series={{ folder }}&username=" + encodeURIComponent("{{ username }}") + "&email=" + encodeURIComponent("{{ email }}") + "&hash=" + encodeURIComponent("{{ hash }}");
+        {% set lmsUrl = inbox_lms_upload_url() %}
+        {% if lmsUrl %}
+            var endpoint = "{{ lmsUrl }}" + "?series={{ folder }}&username=" + encodeURIComponent("{{ username }}") + "&email=" + encodeURIComponent("{{ email }}") + "&hash=" + encodeURIComponent("{{ hash }}");
+        {% else %}
+            var endpoint = "{{ inboxUploadURL }}" + "?series={{ folder }}";
+        {% endif %}
     {% else %}
         var endpoint = "{{ inboxUploadURL }}" + "?series={{ folder }}";
     {% endif %}
@@ -11,7 +16,12 @@
 {% else %}
     {% set isNaked = is_naked() %}
     {% if isNaked %}
-        var endpoint = "{{ moodle_upload_url() }}" + "?series={{ series.id }}&username=" + encodeURIComponent("{{ username }}") + "&email=" + encodeURIComponent("{{ email }}") + "&hash=" + encodeURIComponent("{{ hash }}");
+        {% set lmsUrl = inbox_lms_upload_url() %}
+        {% if lmsUrl %}
+            var endpoint = "{{ lmsUrl }}" + "?series={{ series.id }}&username=" + encodeURIComponent("{{ username }}") + "&email=" + encodeURIComponent("{{ email }}") + "&hash=" + encodeURIComponent("{{ hash }}");
+        {% else %}
+            var endpoint = "{{ inboxUploadURL }}" + "?series={{ series.id }}";
+        {% endif %}
     {% else %}
         var endpoint = "{{ inboxUploadURL }}" + "?series={{ series.id }}";
     {% endif %}

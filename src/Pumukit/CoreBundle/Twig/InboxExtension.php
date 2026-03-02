@@ -21,7 +21,6 @@ class InboxExtension extends AbstractExtension
     {
         return [
             new TwigFunction('inbox_upload_url', [$this, 'getInboxUploadURL']),
-            new TwigFunction('moodle_upload_url', [$this, 'getMoodleUploadURL']),
             new TwigFunction('inbox_upload_limit', [$this, 'getInboxUploadLIMIT']),
             new TwigFunction('inbox_min_file_size', [$this, 'getInboxMinFileSize']),
             new TwigFunction('inbox_max_file_size', [$this, 'getInboxMaxFileSize']),
@@ -39,11 +38,6 @@ class InboxExtension extends AbstractExtension
     public function getInboxUploadURL(): string
     {
         return $this->inboxService->inboxUploadURL();
-    }
-
-    public function getMoodleUploadURL(): string
-    {
-        return $this->inboxService->moodleUploadURL();
     }
 
     public function getInboxUploadLIMIT(): int

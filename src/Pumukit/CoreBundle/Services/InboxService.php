@@ -7,7 +7,6 @@ namespace Pumukit\CoreBundle\Services;
 class InboxService
 {
     private $inboxUploadURL;
-    private $moodleUploadURL;
     private $inboxUploadLIMIT;
     private $minFileSize;
     private $maxFileSize;
@@ -20,7 +19,6 @@ class InboxService
 
     public function __construct(
         string $inboxUploadURL,
-        string $moodleUploadURL,
         int $inboxUploadLIMIT,
         string $minFileSize,
         string $maxFileSize,
@@ -32,7 +30,6 @@ class InboxService
         bool $showBackofficeButtonInInbox
     ) {
         $this->inboxUploadURL = $inboxUploadURL;
-        $this->moodleUploadURL = $moodleUploadURL;
         $this->inboxUploadLIMIT = $inboxUploadLIMIT;
         $this->minFileSize = $minFileSize;
         $this->maxFileSize = $maxFileSize;
@@ -47,11 +44,6 @@ class InboxService
     public function inboxUploadURL(): string
     {
         return $this->inboxUploadURL;
-    }
-
-    public function moodleUploadURL(): string
-    {
-        return $this->moodleUploadURL;
     }
 
     public function inboxUploadLIMIT(): int
