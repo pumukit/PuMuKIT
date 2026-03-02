@@ -298,4 +298,9 @@ abstract class Media implements MediaInterface
         Storage $storage,
         MediaMetadata $mediaMetadata
     ): MediaInterface;
+
+    public function __clone()
+    {
+        $this->id = null;
+    }
 }
