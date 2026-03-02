@@ -42,8 +42,7 @@ final class WizardController extends AbstractController
         $username = '';
         $email = '';
 
-        if ($session->has('tus_sso_hash') && $session->has('tus_sso_username') && $session->has('tus_sso_email')) {
-            $hash = $session->get('tus_sso_hash');
+        if ($session->has('tus_sso_username') && $session->has('tus_sso_email')) {
             $username = $session->get('tus_sso_username');
             $email = $session->get('tus_sso_email');
         }
