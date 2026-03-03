@@ -170,7 +170,6 @@ class CloneService
     {
         foreach ($tracks as $track) {
             $clonedTrack = clone $track;
-            $clonedTrack->setNumview(0);
             $this->documentManager->persist($clonedTrack);
             $multimediaObject->addTrack($clonedTrack);
         }
@@ -180,7 +179,6 @@ class CloneService
     {
         foreach ($medias as $media) {
             $clonedMedia = clone $media;
-            $clonedMedia->setNumview(0);
             $this->documentManager->persist($clonedMedia);
             $multimediaObject->addImage($clonedMedia);
         }
@@ -190,7 +188,6 @@ class CloneService
     {
         foreach ($medias as $media) {
             $clonedMedia = clone $media;
-            $clonedMedia->setNumview(0);
             $this->documentManager->persist($clonedMedia);
             $multimediaObject->addDocument($clonedMedia);
         }
@@ -200,7 +197,6 @@ class CloneService
     {
         foreach ($medias as $media) {
             $clonedMedia = clone $media;
-            $clonedMedia->setNumview(0);
             $this->documentManager->persist($clonedMedia);
             $multimediaObject->addExternal($clonedMedia);
         }
