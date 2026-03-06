@@ -1,32 +1,21 @@
 {% include "@PumukitCore/Upload/common.js.twig" %}
 
-{% if folder is defined %}
-    {% set isNaked = is_naked() %}
-    {% if isNaked %}
-        {% set lmsUrl = inbox_lms_upload_url() %}
-        {% if lmsUrl %}
-            var endpoint = "{{ lmsUrl }}" + "?series={{ folder }}&username=" + encodeURIComponent("{{ username }}") + "&email=" + encodeURIComponent("{{ email }}") + "&hash=" + encodeURIComponent("{{ hash }}");
-        {% else %}
-            var endpoint = "{{ inboxUploadURL }}" + "?series={{ folder }}";
-        {% endif %}
-    {% else %}
-        var endpoint = "{{ inboxUploadURL }}" + "?series={{ folder }}";
-    {% endif %}
-    var folder = "{{ folder }}";
+{% set isNaked = is_naked() %}
+{% set lmsUrl = inbox_lms_upload_url() %}
+{% set currentSeries = folder is defined ? folder : series.id %}
+
+{% if isNaked and lmsUrl %}
+    var endpoint = "{{ lmsUrl }}"
+        + "?series={{ currentSeries }}"
+        + "&username=" + encodeURIComponent("{{ username|default('') }}")
+        + "&email=" + encodeURIComponent("{{ email|default('') }}")
+        + "&hash=" + encodeURIComponent("{{ hash|default('') }}");
 {% else %}
-    {% set isNaked = is_naked() %}
-    {% if isNaked %}
-        {% set lmsUrl = inbox_lms_upload_url() %}
-        {% if lmsUrl %}
-            var endpoint = "{{ lmsUrl }}" + "?series={{ series.id }}&username=" + encodeURIComponent("{{ username }}") + "&email=" + encodeURIComponent("{{ email }}") + "&hash=" + encodeURIComponent("{{ hash }}");
-        {% else %}
-            var endpoint = "{{ inboxUploadURL }}" + "?series={{ series.id }}";
-        {% endif %}
-    {% else %}
-        var endpoint = "{{ inboxUploadURL }}" + "?series={{ series.id }}";
-    {% endif %}
-    var folder = "{{ series.id }}";
+    var endpoint = "{{ inboxUploadURL }}"
+        + "?series={{ currentSeries }}";
 {% endif %}
+
+var folder = "{{ currentSeries }}";
 
 var locales = {
     "es": Uppy.locales.es_ES,
