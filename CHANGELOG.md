@@ -5,11 +5,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
-## [5.1.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...5.0.0) - (Coming soon)
+## [5.1.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...5.0.0) - (2026-03-06)
+
+#### Added
+
+- Iframes works now loading first de thumbnail and when user click on it, the iframe is loaded and the video starts to play.
+- Add new env to configure the token expiration time on trackfile.
 
 #### Fixed
 
 - Create token on trackfile to prevent WSTG-ATHN-04.
+- Added properties to multimedia object when use archive feature.
 
 
 ## [5.0.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...5.0.0) - (2025-02-24)
