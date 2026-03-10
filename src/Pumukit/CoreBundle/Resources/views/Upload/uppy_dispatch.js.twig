@@ -1,4 +1,10 @@
 uppyTUS.on('upload-success', (file, response) => {
-    uppyTUS.setFileState(file.id, { uploadURL: `${response.url}/get` })
+    const uploadURL = response?.uploadURL || response?.url;
+    if (!uploadURL) return;
+
+    const uuid = uploadURL.split('/').pop();
+    uppyTUS.setFileState(file.id, { tusUuid: uuid });
+    file.tusUuid = uuid;
+
     sendInboxXHRImportRequest(file);
 });

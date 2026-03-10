@@ -1,12 +1,21 @@
 {% include "@PumukitCore/Upload/common.js.twig" %}
 
-{% if folder is defined %}
-    var endpoint = "{{ inboxUploadURL }}" + "?series={{ folder }}";
-    var folder = "{{ folder }}";
+{% set isNaked = is_naked() %}
+{% set lmsUrl = inbox_lms_upload_url() %}
+{% set currentSeries = folder is defined ? folder : series.id %}
+
+{% if isNaked and lmsUrl %}
+    var endpoint = "{{ lmsUrl }}"
+        + "?series={{ currentSeries }}"
+        + "&username=" + encodeURIComponent("{{ username|default('') }}")
+        + "&email=" + encodeURIComponent("{{ email|default('') }}")
+        + "&hash=" + encodeURIComponent("{{ hash|default('') }}");
 {% else %}
-    var endpoint = "{{ inboxUploadURL }}" + "?series={{ series.id }}";
-    var folder = "{{ series.id }}";
+    var endpoint = "{{ inboxUploadURL }}"
+        + "?series={{ currentSeries }}";
 {% endif %}
+
+var folder = "{{ currentSeries }}";
 
 var locales = {
     "es": Uppy.locales.es_ES,
@@ -42,8 +51,7 @@ const uppyTUS = Uppy.Core({
     .use(Uppy.Tus, {
         endpoint: endpoint,
         overridePatchMethod: {{ inbox_override_patch_method() }},
-        limit: {{ inbox_upload_limit() }},
-        withCredentials: true
+        limit: {{ inbox_upload_limit() }}
     })
     .run()
 

@@ -37,9 +37,22 @@ final class WizardController extends AbstractController
     {
         $series = $this->seriesRepository->search($series);
 
+        $session = $request->getSession();
+        $hash = '';
+        $username = '';
+        $email = '';
+
+        if ($session->has('tus_sso_username') && $session->has('tus_sso_email')) {
+            $username = $session->get('tus_sso_username');
+            $email = $session->get('tus_sso_email');
+        }
+
         return $this->render('@PumukitWizard/Upload/template.html.twig', [
             'series' => $series,
             'inboxUploadURL' => $this->inboxService->inboxUploadURL(),
+            'hash' => $hash,
+            'username' => $username,
+            'email' => $email,
             'inboxUploadLIMIT' => $this->inboxService->inboxUploadLIMIT(),
             'minFileSize' => $this->inboxService->minFileSize(),
             'maxFileSize' => $this->inboxService->maxFileSize(),
