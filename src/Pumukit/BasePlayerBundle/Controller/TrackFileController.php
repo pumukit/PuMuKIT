@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -67,6 +68,15 @@ class TrackFileController extends AbstractController
         } catch (\Exception $e) {
             return new Response('Not Found', Response::HTTP_NOT_FOUND);
         }
+
+        $storage = $track->storage();
+        if ($storage && $storage->url() && $storage->url()->url()) {
+            $externalUrl = $storage->url()->url();
+            $connector = (str_contains($externalUrl, '?')) ? '&' : '?';
+
+            return new RedirectResponse($externalUrl.$connector.$request->getQueryString());
+        }
+
         $masterPath = $track->storage()->path()->path();
         $baseDir = dirname($masterPath);
 
