@@ -68,7 +68,7 @@ class UserProfileController extends AbstractController
             $this->updateUserService->update($user);
         }
 
-        //$seriesOfUser = $this->seriesService->getSeriesOfUser($user, false, $personalScopeRoleCode, ['public_date' => 'desc']);
+        // $seriesOfUser = $this->seriesService->getSeriesOfUser($user, false, $personalScopeRoleCode, ['public_date' => 'desc']);
         $seriesOfUser = [];
 
         return [
