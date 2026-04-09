@@ -70,6 +70,9 @@ final class JobCreator
 
     public function fromPath(MultimediaObject $multimediaObject, Path $filePath, JobOptions $jobOptions): MultimediaObject
     {
+        $extension = strtolower(pathinfo($filePath->path(), PATHINFO_EXTENSION));
+        BlackListExtensions::assertNotBlackListed($extension);
+
         $this->jobValidator->validateFile($filePath->path());
         $this->create($filePath->path(), $multimediaObject, $jobOptions);
 
