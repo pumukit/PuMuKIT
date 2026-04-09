@@ -32,25 +32,39 @@ class InboxController extends AbstractController implements NewAdminControllerIn
      */
     public function dirAction(Request $request): JsonResponse
     {
-        $dir = $request->query->get('dir', '');
+        $relativeDir = $request->query->get('dir', '');
         $type = $request->query->get('type', 'file');
+
+        $inboxBasePath = realpath($this->pumukitInbox);
+        if (!$inboxBasePath) {
+            return new JsonResponse([]);
+        }
+
+        // Resolve the absolute path and validate it stays within the inbox
+        $absoluteDir = '' !== $relativeDir
+            ? realpath($inboxBasePath.DIRECTORY_SEPARATOR.$relativeDir)
+            : $inboxBasePath;
+
+        if (!$absoluteDir || !str_starts_with($absoluteDir.DIRECTORY_SEPARATOR, $inboxBasePath.DIRECTORY_SEPARATOR)) {
+            return new JsonResponse([], 403);
+        }
 
         $finder = new Finder();
 
         $res = [];
 
         if ('file' === $type) {
-            $finder->depth('< 1')->followLinks()->in($dir);
+            $finder->depth('< 1')->followLinks()->in($absoluteDir);
             $finder->sortByName();
             foreach ($finder as $f) {
-                $res[] = ['path' => $f->getRealpath(),
+                $res[] = ['path' => $this->toRelativePath($f->getRealpath(), $inboxBasePath),
                     'relativepath' => $f->getRelativePathname(),
                     'is_file' => $f->isFile(),
                     'hash' => hash('md5', $f->getRealpath()),
                     'content' => false, ];
             }
         } else {
-            $finder->depth('< 1')->directories()->followLinks()->in($dir);
+            $finder->depth('< 1')->directories()->followLinks()->in($absoluteDir);
             $finder->sortByName();
             foreach ($finder as $f) {
                 if (0 !== (is_countable(glob("{$f}/*")) ? count(glob("{$f}/*")) : 0)) {
@@ -59,7 +73,7 @@ class InboxController extends AbstractController implements NewAdminControllerIn
                         $contentFinder->depth('== 0');
                     }
                     $contentFinder->files()->in($f->getRealpath());
-                    $res[] = ['path' => $f->getRealpath(),
+                    $res[] = ['path' => $this->toRelativePath($f->getRealpath(), $inboxBasePath),
                         'relativepath' => $f->getRelativePathname(),
                         'is_file' => $f->isFile(),
                         'hash' => hash('md5', $f->getRealpath()),
@@ -79,14 +93,24 @@ class InboxController extends AbstractController implements NewAdminControllerIn
 
         $dir = realpath($this->pumukitInbox);
 
-        if (!file_exists($dir)) {
-            return $this->render('@PumukitNewAdmin/Inbox/form_nofile.html.twig', ['dir' => $dir, 'series' => $series]);
+        if (!file_exists($dir ?: $this->pumukitInbox)) {
+            return $this->render('@PumukitNewAdmin/Inbox/form_nofile.html.twig', ['dir' => basename($this->pumukitInbox), 'series' => $series]);
         }
 
         if (!is_readable($dir)) {
-            return $this->render('@PumukitNewAdmin/Inbox/form_noperm.html.twig', ['dir' => $dir, 'series' => $series]);
+            return $this->render('@PumukitNewAdmin/Inbox/form_noperm.html.twig', ['dir' => basename($this->pumukitInbox), 'series' => $series]);
         }
 
-        return $this->render('@PumukitNewAdmin/Inbox/form.html.twig', ['dir' => $dir, 'onlyDir' => $onlyDir, 'series' => $series]);
+        return $this->render('@PumukitNewAdmin/Inbox/form.html.twig', [
+            'dir' => '',
+            'displayDir' => basename($this->pumukitInbox),
+            'onlyDir' => $onlyDir,
+            'series' => $series,
+        ]);
+    }
+
+    private function toRelativePath(string $absolutePath, string $basePath): string
+    {
+        return ltrim(substr($absolutePath, strlen($basePath)), DIRECTORY_SEPARATOR);
     }
 }

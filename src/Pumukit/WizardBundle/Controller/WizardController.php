@@ -67,11 +67,24 @@ final class WizardController extends AbstractController
      */
     public function uploadFromServer(Request $request, string $series): JsonResponse
     {
-        $path = $request->get('filePath');
+        $relativeFilePath = $request->get('filePath');
         $profile = $request->get('profile');
 
         try {
-            $finder = FinderUtils::filesFromPath($path);
+            $inboxBasePath = realpath($this->inboxService->inboxPath());
+            if (!$inboxBasePath) {
+                return new JsonResponse('Inbox not configured', 400);
+            }
+
+            $absolutePath = '' !== (string) $relativeFilePath
+                ? realpath($inboxBasePath.DIRECTORY_SEPARATOR.$relativeFilePath)
+                : $inboxBasePath;
+
+            if (!$absolutePath || !str_starts_with($absolutePath.DIRECTORY_SEPARATOR, $inboxBasePath.DIRECTORY_SEPARATOR)) {
+                return new JsonResponse('Invalid path', 403);
+            }
+
+            $finder = FinderUtils::filesFromPath($absolutePath);
             foreach ($finder->files() as $file) {
                 $this->uploadDispatcherService->dispatchUploadFromServer(
                     $this->getUser(),

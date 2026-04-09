@@ -6,7 +6,7 @@
         <a data-hash="root" data-path="root" class="list-group-item collapsed noload" href="#"
            onclick="fileServerTree(this, '{{ onlyDir ? 'dir' : 'file' }}', '{{ dir }}', 1, 'explorer_videoserv'); return false;">
                <span style="padding-left: 0"><i class="mdi- tag_icon"></i></span>
-               <span>{{ dir }}</span>
+               <span>{{ displayDir }}</span>
         </a>
     {% else %}
         {% trans %}You don't have enough permissions to access this content.{% endtrans %}
