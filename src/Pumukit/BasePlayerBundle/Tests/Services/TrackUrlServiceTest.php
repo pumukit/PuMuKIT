@@ -54,7 +54,7 @@ class TrackUrlServiceTest extends PumukitTestCase
 
     public function testGenerateTrackFileUrl()
     {
-        $track = $this->generateTrackMedia('https://localhost/pumukit.mp4');
+        $track = $this->generateTrackMedia('');
         $series = new Series();
         $series->setNumericalID(1);
         $mmobj = new MultimediaObject();
