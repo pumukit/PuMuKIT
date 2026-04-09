@@ -222,7 +222,7 @@ class User implements UserInterface
         }
 
         $this->loginAttempt = self::MAX_LOGIN_ATTEMPTS;
-
+        $this->setLastLoginAttempt(new \DateTime());
         $this->setEnabled(false);
     }
 
