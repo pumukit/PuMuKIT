@@ -7,6 +7,7 @@ namespace Pumukit\SchemaBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use MongoDB\BSON\ObjectId;
+use Pumukit\CoreBundle\Utils\BlackListExtensions;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
@@ -121,11 +122,20 @@ class MultimediaObjectPicService
             throw new FileNotFoundException($picFile->getPathname());
         }
 
-        if (file_exists($this->getTargetPath($multimediaObject).'/'.$picFile->getClientOriginalName())) {
+        $extension = strtolower($picFile->getClientOriginalExtension());
+        BlackListExtensions::assertNotBlackListed($extension);
+
+        $mimeType = (string) $picFile->getMimeType();
+        if (!str_starts_with($mimeType, 'image/')) {
+            throw new \InvalidArgumentException('Only image files are allowed.');
+        }
+
+        $safeFileName = basename($picFile->getClientOriginalName());
+        if (file_exists($this->getTargetPath($multimediaObject).'/'.$safeFileName)) {
             $i = random_int(0, 15);
-            $name = $picFile->getClientOriginalName().$i;
+            $name = $safeFileName.$i;
         } else {
-            $name = $picFile->getClientOriginalName();
+            $name = $safeFileName;
         }
 
         $path = $picFile->move($this->getTargetPath($multimediaObject), $name);

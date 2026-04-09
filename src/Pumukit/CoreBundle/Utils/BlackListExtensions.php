@@ -21,4 +21,11 @@ final class BlackListExtensions
     {
         return in_array(strtolower($extension), self::all(), true);
     }
+
+    public static function assertNotBlackListed(string $extension): void
+    {
+        if (self::isBlackListed($extension)) {
+            throw new \InvalidArgumentException(sprintf('File extension "%s" is not allowed for security reasons.', $extension));
+        }
+    }
 }

@@ -6,6 +6,7 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Utils\BlackListExtensions;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Finder\Finder;
@@ -113,10 +114,14 @@ class MaterialService
             throw new FileNotFoundException($materialFile->getPathname());
         }
 
+        $extension = strtolower($materialFile->getClientOriginalExtension());
+        BlackListExtensions::assertNotBlackListed($extension);
+
         $material = new Material();
 
+        $safeFileName = basename($materialFile->getClientOriginalName());
         if (!isset($formData['i18n_name'])) {
-            $fileInfo = pathinfo($materialFile->getClientOriginalName());
+            $fileInfo = pathinfo($safeFileName);
             $i18nName['en'] = $fileInfo['filename'];
             foreach ($this->locales as $locale) {
                 $i18nName[$locale] = $fileInfo['filename'];
@@ -126,7 +131,7 @@ class MaterialService
 
         $material = $this->saveFormData($material, $formData);
 
-        $path = $materialFile->move($this->targetPath.'/'.$multimediaObject->getId(), $materialFile->getClientOriginalName());
+        $path = $materialFile->move($this->targetPath.'/'.$multimediaObject->getId(), $safeFileName);
 
         foreach ($this->locales as $locale) {
             $i18nFileName = $formData['i18n_name'][$locale] ?? $formData['i18n_name'];
@@ -156,12 +161,16 @@ class MaterialService
             throw new FileNotFoundException($materialFile->getPathname());
         }
 
+        $extension = strtolower($materialFile->getClientOriginalExtension());
+        BlackListExtensions::assertNotBlackListed($extension);
+
+        $safeFileName = basename($materialFile->getClientOriginalName());
         $materialOldPath = $material->getPath();
 
         $material = $this->saveFormData($material, $formData);
 
-        $path = $materialFile->move($this->targetPath.'/'.$multimediaObject->getId(), $materialFile->getClientOriginalName());
-        $material->setName($materialFile->getClientOriginalName());
+        $path = $materialFile->move($this->targetPath.'/'.$multimediaObject->getId(), $safeFileName);
+        $material->setName($safeFileName);
 
         $material->setPath($path->getPathname());
         $material->setUrl(str_replace($this->targetPath, $this->targetUrl, $path->getPathname()));

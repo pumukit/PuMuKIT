@@ -6,6 +6,7 @@ namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Utils\BlackListExtensions;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\CoreBundle\Utils\ImageRawUtils;
 use Pumukit\EncoderBundle\Document\Job;
@@ -51,12 +52,15 @@ final class JobCreator
 
     public function fromUploadedFile(MultimediaObject $multimediaObject, UploadedFile $file, JobOptions $jobOptions): MultimediaObject
     {
+        $extension = strtolower(pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION));
+        BlackListExtensions::assertNotBlackListed($extension);
+
         $this->jobValidator->validateFile($file->getPathname());
         $fileName = $this->cleanFileName($file);
 
         $newFile = $file->move(
             $this->tmpPath.'/'.$multimediaObject->getId(),
-            $fileName.'.'.pathinfo($file->getClientOriginalName())['extension']
+            $fileName.'.'.$extension
         );
 
         $this->create($newFile->getPathname(), $multimediaObject, $jobOptions);
