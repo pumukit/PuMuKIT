@@ -194,13 +194,13 @@ class APIController extends AbstractController implements NewAdminControllerInte
                 foreach ($criteria as $key => $val) {
                     if (is_array($val)) {
                         foreach ($val as $sub_key => $sub_val) {
-                            if (!is_int($sub_val)) {
+                            if (is_string($sub_val)) {
                                 $val[$sub_key] = preg_replace('/[^a-zA-Z áéíóúÁÉÍÓÚñÑ0-9]+/', '', $sub_val);
                                 $criteria[$key] = $val;
                             }
                         }
                     } else {
-                        if (!is_int($val)) {
+                        if (is_string($val)) {
                             $criteria[$key] = preg_replace('/[^a-zA-Z áéíóúÁÉÍÓÚñÑ0-9]+/', '', $val);
                         }
                     }
