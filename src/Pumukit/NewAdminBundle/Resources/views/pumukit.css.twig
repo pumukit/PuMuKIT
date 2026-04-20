@@ -16,6 +16,10 @@ width: 50px;
     overflow: hidden;
 }
 
+#list_series .shorten-title {
+    -webkit-line-clamp: 2;
+}
+
 {% if app.request.attributes.get('nakedbackoffice_color') %}
 /*Naked css rules*/
 .hidden-naked {
@@ -916,4 +920,10 @@ hr.pumukit-green {
 .bg-pumukit {
     background-color: #c05800;
     color: #ffffff;
+}
+
+@media (max-width: 767px) {
+    #list_series td[headers="th-title"] {
+        white-space: normal;
+    }
 }
