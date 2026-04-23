@@ -111,6 +111,10 @@ class SeriesController extends AdminController
      */
     public function indexAction(Request $request)
     {
+        if ('reset_criteria' === $request->get('action') && !$request->get('criteria')) {
+            $this->session->remove('admin/series/criteria');
+        }
+
         $criteria = $this->getCriteria($request->get('criteria', []));
         $resources = $this->getResources($request, $criteria);
 
