@@ -197,13 +197,11 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
         if ($request->isMethod('POST')) {
             try {
-                if ($request->get('hide')) {
-                    $this->mediaUpdater->updateHide($multimediaObject, $track, true);
-                }
+                $download = $request->request->has('download');
+                $hide = $request->request->has('hide');
 
-                if ($request->get('download')) {
-                    $this->mediaUpdater->updateDownload($multimediaObject, $track, true);
-                }
+                $this->mediaUpdater->updateDownload($multimediaObject, $track, $download);
+                $this->mediaUpdater->updateHide($multimediaObject, $track, $hide);
 
                 $this->mediaUpdater->updateLanguage($multimediaObject, $track, $request->get('language'));
                 $tags = Tags::create(explode(',', $request->get('tags')));
