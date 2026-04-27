@@ -22,7 +22,7 @@ class TrackUrlService
         $this->secureTokenService = $secureTokenService;
     }
 
-    public function generateTrackFileUrl(MediaInterface $track, int $reference_type = UrlGeneratorInterface::ABSOLUTE_PATH): string
+    public function generateTrackFileUrl(MediaInterface $track, int $reference_type = UrlGeneratorInterface::ABSOLUTE_PATH, bool $forceDownload = false): string
     {
         $ext = pathinfo(parse_url($track->storage()->url()->url(), PHP_URL_PATH), PATHINFO_EXTENSION);
         if (!$ext) {
@@ -35,6 +35,10 @@ class TrackUrlService
         ];
 
         $baseUrl = $this->router->generate('pumukit_trackfile_index', $params, $reference_type);
+
+        if ($forceDownload) {
+            $baseUrl .= (str_contains($baseUrl, '?') ? '&' : '?').'forcedl=1';
+        }
 
         $tokenData = $this->secureTokenService->generateToken($track->id());
         $separator = str_contains($baseUrl, '?') ? '&' : '?';

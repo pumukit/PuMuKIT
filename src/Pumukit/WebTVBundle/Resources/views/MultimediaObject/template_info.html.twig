@@ -75,7 +75,7 @@
                         {% set none_attach = false %}
                         <li class="qa-player-tracks tracks">
                             <span class="glyphicon glyphicon-facetime-video"></span>
-                            <a class="video-tracks" download href="{{ track_url(track) }}?forcedl=1">
+                            <a class="video-tracks" download href="{{ download_track_url(track) }}">
                                 {% if track.metadata().isOnlyAudio() %}
                                     {% trans %}Download this audio{% endtrans %}
                                 {% else %}
