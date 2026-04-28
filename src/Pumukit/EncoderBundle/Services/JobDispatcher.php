@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pumukit\EncoderBundle\Services;
 
 use Pumukit\EncoderBundle\Document\Job;
-use Pumukit\EncoderBundle\Event\EncoderEvents;
 use Pumukit\EncoderBundle\Event\JobEvent;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
