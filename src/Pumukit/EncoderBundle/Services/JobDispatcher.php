@@ -21,11 +21,11 @@ class JobDispatcher
         $this->jobValidator = $jobValidator;
     }
 
-    public function dispatch(string $success, Job $job, MediaInterface $media = null): void
+    public function dispatch(string $eventName, Job $job, MediaInterface $media = null): void
     {
         $multimediaObject = $this->jobValidator->ensureMultimediaObjectExists($job);
 
         $event = new JobEvent($job, $media, $multimediaObject);
-        $this->eventDispatcher->dispatch($event, $success ? EncoderEvents::JOB_SUCCESS : EncoderEvents::JOB_ERROR);
+        $this->eventDispatcher->dispatch($event, $eventName);
     }
 }
