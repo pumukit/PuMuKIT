@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f8e18cb925fa5ff3293e3a59d6d37b97",
+    "content-hash": "dca83246f5b465b1386918853e058abd",
     "packages": [
         {
             "name": "ankitpokhrel/tus-php",
@@ -1428,16 +1428,16 @@
         },
         {
             "name": "doctrine/persistence",
-            "version": "3.4.3",
+            "version": "3.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/persistence.git",
-                "reference": "d59e6ef7caffe6a30f4b6f9e9079a75f52c64ae0"
+                "reference": "5785dc79a0553ba41b0dda8a7ee792053e6186c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/persistence/zipball/d59e6ef7caffe6a30f4b6f9e9079a75f52c64ae0",
-                "reference": "d59e6ef7caffe6a30f4b6f9e9079a75f52c64ae0",
+                "url": "https://api.github.com/repos/doctrine/persistence/zipball/5785dc79a0553ba41b0dda8a7ee792053e6186c8",
+                "reference": "5785dc79a0553ba41b0dda8a7ee792053e6186c8",
                 "shasum": ""
             },
             "require": {
@@ -1460,7 +1460,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Doctrine\\Persistence\\": "src/Persistence"
+                    "Doctrine\\Persistence\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1504,7 +1504,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/persistence/issues",
-                "source": "https://github.com/doctrine/persistence/tree/3.4.3"
+                "source": "https://github.com/doctrine/persistence/tree/3.4.4"
             },
             "funding": [
                 {
@@ -1520,7 +1520,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-10-21T15:21:39+00:00"
+            "time": "2026-04-04T19:40:43+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -2126,16 +2126,16 @@
         },
         {
             "name": "jaybizzle/crawler-detect",
-            "version": "v1.3.8",
+            "version": "v1.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JayBizzle/Crawler-Detect.git",
-                "reference": "1882af9b76cb1dbfba3256de2562c3cd383f9b8f"
+                "reference": "5edf2e43d9f42e5baa6f844826213257c247b309"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/1882af9b76cb1dbfba3256de2562c3cd383f9b8f",
-                "reference": "1882af9b76cb1dbfba3256de2562c3cd383f9b8f",
+                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/5edf2e43d9f42e5baa6f844826213257c247b309",
+                "reference": "5edf2e43d9f42e5baa6f844826213257c247b309",
                 "shasum": ""
             },
             "require": {
@@ -2172,9 +2172,9 @@
             ],
             "support": {
                 "issues": "https://github.com/JayBizzle/Crawler-Detect/issues",
-                "source": "https://github.com/JayBizzle/Crawler-Detect/tree/v1.3.8"
+                "source": "https://github.com/JayBizzle/Crawler-Detect/tree/v1.3.9"
             },
-            "time": "2026-03-26T23:01:33+00:00"
+            "time": "2026-04-14T19:32:41+00:00"
         },
         {
             "name": "jean85/pretty-package-versions",
@@ -2696,16 +2696,16 @@
         },
         {
             "name": "mobiledetect/mobiledetectlib",
-            "version": "2.8.46",
+            "version": "2.8.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/serbanghita/Mobile-Detect.git",
-                "reference": "7a0734a321e4af9d4752f8a5cce1b75af1fbc29a"
+                "reference": "28e9045958dcaf771f9b56564549d5b174e38b0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/7a0734a321e4af9d4752f8a5cce1b75af1fbc29a",
-                "reference": "7a0734a321e4af9d4752f8a5cce1b75af1fbc29a",
+                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/28e9045958dcaf771f9b56564549d5b174e38b0e",
+                "reference": "28e9045958dcaf771f9b56564549d5b174e38b0e",
                 "shasum": ""
             },
             "require": {
@@ -2746,7 +2746,7 @@
             ],
             "support": {
                 "issues": "https://github.com/serbanghita/Mobile-Detect/issues",
-                "source": "https://github.com/serbanghita/Mobile-Detect/tree/2.8.46"
+                "source": "https://github.com/serbanghita/Mobile-Detect/tree/2.8.47"
             },
             "funding": [
                 {
@@ -2754,7 +2754,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-14T09:03:36+00:00"
+            "time": "2026-04-14T12:32:34+00:00"
         },
         {
             "name": "mongodb/mongodb",
@@ -6568,7 +6568,7 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.35.0",
+            "version": "v1.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -6627,7 +6627,7 @@
                 "portable"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.37.0"
             },
             "funding": [
                 {
@@ -6651,7 +6651,7 @@
         },
         {
             "name": "symfony/polyfill-iconv",
-            "version": "v1.35.0",
+            "version": "v1.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-iconv.git",
@@ -6711,7 +6711,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-iconv/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-iconv/tree/v1.37.0"
             },
             "funding": [
                 {
@@ -6735,16 +6735,16 @@
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
-            "version": "v1.35.0",
+            "version": "v1.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-grapheme.git",
-                "reference": "ad1b7b9092976d6c948b8a187cec9faaea9ec1df"
+                "reference": "4864388bfbd3001ce88e234fab652acd91fdc57e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/ad1b7b9092976d6c948b8a187cec9faaea9ec1df",
-                "reference": "ad1b7b9092976d6c948b8a187cec9faaea9ec1df",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/4864388bfbd3001ce88e234fab652acd91fdc57e",
+                "reference": "4864388bfbd3001ce88e234fab652acd91fdc57e",
                 "shasum": ""
             },
             "require": {
@@ -6793,7 +6793,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.37.0"
             },
             "funding": [
                 {
@@ -6813,11 +6813,11 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-04-10T16:19:22+00:00"
+            "time": "2026-04-26T13:13:48+00:00"
         },
         {
             "name": "symfony/polyfill-intl-icu",
-            "version": "v1.35.0",
+            "version": "v1.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-icu.git",
@@ -6881,7 +6881,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-icu/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-intl-icu/tree/v1.37.0"
             },
             "funding": [
                 {
@@ -6905,7 +6905,7 @@
         },
         {
             "name": "symfony/polyfill-intl-idn",
-            "version": "v1.35.0",
+            "version": "v1.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-idn.git",
@@ -6968,7 +6968,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.37.0"
             },
             "funding": [
                 {
@@ -6992,7 +6992,7 @@
         },
         {
             "name": "symfony/polyfill-intl-normalizer",
-            "version": "v1.35.0",
+            "version": "v1.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
@@ -7053,7 +7053,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.37.0"
             },
             "funding": [
                 {
@@ -7077,7 +7077,7 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.35.0",
+            "version": "v1.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -7138,7 +7138,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.37.0"
             },
             "funding": [
                 {
@@ -7162,7 +7162,7 @@
         },
         {
             "name": "symfony/polyfill-php73",
-            "version": "v1.35.0",
+            "version": "v1.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php73.git",
@@ -7218,7 +7218,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php73/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-php73/tree/v1.37.0"
             },
             "funding": [
                 {
@@ -7242,7 +7242,7 @@
         },
         {
             "name": "symfony/polyfill-php80",
-            "version": "v1.35.0",
+            "version": "v1.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php80.git",
@@ -7302,7 +7302,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php80/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-php80/tree/v1.37.0"
             },
             "funding": [
                 {
@@ -7326,7 +7326,7 @@
         },
         {
             "name": "symfony/polyfill-php81",
-            "version": "v1.35.0",
+            "version": "v1.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php81.git",
@@ -7382,7 +7382,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php81/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-php81/tree/v1.37.0"
             },
             "funding": [
                 {
@@ -7406,7 +7406,7 @@
         },
         {
             "name": "symfony/polyfill-php84",
-            "version": "v1.35.0",
+            "version": "v1.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php84.git",
@@ -7462,7 +7462,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php84/tree/v1.35.0"
+                "source": "https://github.com/symfony/polyfill-php84/tree/v1.37.0"
             },
             "funding": [
                 {
@@ -9252,16 +9252,16 @@
         },
         {
             "name": "symfony/var-exporter",
-            "version": "v6.4.36",
+            "version": "v6.4.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-exporter.git",
-                "reference": "f9c4a9695a9e2bbc65c920e147d8d7ae28f8d79a"
+                "reference": "34f6957deffacabd1b1c579a312daa481e3e99ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/f9c4a9695a9e2bbc65c920e147d8d7ae28f8d79a",
-                "reference": "f9c4a9695a9e2bbc65c920e147d8d7ae28f8d79a",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/34f6957deffacabd1b1c579a312daa481e3e99ca",
+                "reference": "34f6957deffacabd1b1c579a312daa481e3e99ca",
                 "shasum": ""
             },
             "require": {
@@ -9309,7 +9309,7 @@
                 "serialize"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-exporter/tree/v6.4.36"
+                "source": "https://github.com/symfony/var-exporter/tree/v6.4.37"
             },
             "funding": [
                 {
@@ -9329,7 +9329,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-10T15:06:19+00:00"
+            "time": "2026-04-14T12:12:40+00:00"
         },
         {
             "name": "symfony/web-link",
