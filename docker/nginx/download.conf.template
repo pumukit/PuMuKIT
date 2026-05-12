@@ -2,12 +2,12 @@
 # PuMuKIT - Download Server vhost (descarga.localhost)
 # =============================================================================
 #
-# DEPLOYMENT NOTE: The 'pumukit_app' upstream below must point to the Pumukit
-# application server. For co-located deployments (DLS on the same host as
-# Pumukit) the default 127.0.0.1:443 is correct. For separate DLS servers,
-# change it to the Pumukit server hostname or IP.
+# DEPLOYMENT NOTE: Set PUMUKIT_DLS_BACKEND in docker/.env (or as an environment
+# variable) to point to the Pumukit application server.
+# - Co-located deployment (default): 127.0.0.1:443
+# - Separate DLS server: pumukit.your-domain.com:443
 upstream pumukit_app {
-    server 127.0.0.1:443;
+    server ${PUMUKIT_DLS_BACKEND};
 }
 #
 # =============================================================================

@@ -163,10 +163,17 @@ RUN openssl x509 -req -sha256 -days 365 -in cert.csr -signkey cert.key -out cert
 
 FROM nginx:$NGINX_VERSION-alpine AS proxy
 
-RUN mkdir -p /etc/nginx/ssl/
+# Default Pumukit backend for DLS token validation.
+# Override via PUMUKIT_DLS_BACKEND env var:
+#   - Co-located DLS (default): 127.0.0.1:443
+#   - Separate DLS server:      pumukit.your-domain.com:443
+ENV PUMUKIT_DLS_BACKEND=127.0.0.1:443
+
+RUN mkdir -p /etc/nginx/ssl/ /etc/nginx/templates/
 COPY --from=ssl /srv/pumukit/cert.key /etc/nginx/ssl/
 COPY --from=ssl /srv/pumukit/cert.crt /etc/nginx/ssl/
 COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY docker/nginx/download.conf.template /etc/nginx/templates/download.conf.template
 
 COPY --from=production /srv/pumukit/public public/
 
