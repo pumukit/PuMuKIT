@@ -70,14 +70,8 @@ class TrackFileController extends AbstractController
         }
 
         $storage = $track->storage();
-        if ($storage && $storage->url() && $storage->url()->url()) {
-            $externalUrl = $storage->url()->url();
-            $connector = (str_contains($externalUrl, '?')) ? '&' : '?';
 
-            return new RedirectResponse($externalUrl.$connector.$request->getQueryString());
-        }
-
-        $masterPath = $track->storage()->path()->path();
+        $masterPath = $storage->path()->path();
         $baseDir = dirname($masterPath);
 
         if ($fileName) {
@@ -85,6 +79,24 @@ class TrackFileController extends AbstractController
             $filePath = $baseDir.'/'.$fileName;
         } else {
             $filePath = $masterPath;
+        }
+
+        if ($request->query->getBoolean('forcedl')) {
+            if (!file_exists($filePath)) {
+                return new Response('File not found', Response::HTTP_NOT_FOUND);
+            }
+            $response = new BinaryFileResponse($filePath);
+            $response::trustXSendfileTypeHeader();
+            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
+
+            return $response;
+        }
+
+        if ($storage && $storage->url() && $storage->url()->url()) {
+            $externalUrl = $storage->url()->url();
+            $connector = (str_contains($externalUrl, '?')) ? '&' : '?';
+
+            return new RedirectResponse($externalUrl.$connector.$request->getQueryString());
         }
 
         if (!file_exists($filePath)) {
@@ -106,11 +118,10 @@ class TrackFileController extends AbstractController
 
             return new Response($content, 200, ['Content-Type' => 'application/x-mpegURL']);
         }
+
         $response = new BinaryFileResponse($filePath);
         $response::trustXSendfileTypeHeader();
-        $response->setContentDisposition(
-            $request->query->getBoolean('forcedl') ? ResponseHeaderBag::DISPOSITION_ATTACHMENT : ResponseHeaderBag::DISPOSITION_INLINE
-        );
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_INLINE);
 
         return $response;
     }
