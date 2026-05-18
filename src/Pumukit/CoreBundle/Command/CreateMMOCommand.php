@@ -162,7 +162,6 @@ EOT
 
         $user = $this->findUser($input->getOption('user'));
         $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $user);
-        $this->sortedMultimediaObjectsService->reorder($series);
 
         if (!$user) {
             $this->tagService->addTagByCodToMultimediaObject($multimediaObject, PumukitWebTVBundle::WEB_TV_TAG);
@@ -179,6 +178,8 @@ EOT
         $jobOptions = new JobOptions($profile, 2, $locale, [], []);
         $path = Path::create($path);
         $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
+
+        $this->sortedMultimediaObjectsService->reorder($series);
 
         SemaphoreUtils::release($semaphore);
 
