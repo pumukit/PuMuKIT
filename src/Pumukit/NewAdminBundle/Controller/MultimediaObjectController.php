@@ -1134,6 +1134,8 @@ class MultimediaObjectController extends SortableAdminController
             $this->mediaCreator->createMediaFromExternalURL($multimediaObject, $data['url']);
             $this->documentManager->flush();
 
+            $this->sortedMultimediaObjectService->reorder($series);
+
             return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
         }
 
