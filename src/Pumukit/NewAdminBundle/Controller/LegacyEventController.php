@@ -211,7 +211,7 @@ class LegacyEventController extends AdminController
             ->setNormalizeOutOfRangePages(true)
         ;
 
-        $resources->setCurrentPage($page);
+        $resources->setCurrentPage((int) $page);
 
         [$m, $y, $calendar] = $this->getCalendar($request);
 

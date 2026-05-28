@@ -640,9 +640,9 @@ class PersonController extends AdminController
         }
 
         $resources
-            ->setMaxPerPage($maxPerPage)
+            ->setMaxPerPage((int) $maxPerPage)
             ->setNormalizeOutOfRangePages(true)
-            ->setCurrentPage($page)
+            ->setCurrentPage((int) $page)
         ;
 
         return $resources;

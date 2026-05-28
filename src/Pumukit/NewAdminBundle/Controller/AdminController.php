@@ -295,9 +295,9 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         }
 
         $resources
-            ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
+            ->setMaxPerPage((int) $session->get($session_namespace.'/paginate', 10))
             ->setNormalizeOutOfRangePages(true)
-            ->setCurrentPage($session->get($session_namespace.'/page', 1))
+            ->setCurrentPage((int) $session->get($session_namespace.'/page', 1))
         ;
 
         return $resources;

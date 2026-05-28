@@ -210,9 +210,9 @@ class GroupController extends AdminController
         }
 
         $resources
-            ->setMaxPerPage($session->get($sessionNamespace.'/paginate', 10))
+            ->setMaxPerPage((int) $session->get($sessionNamespace.'/paginate', 10))
             ->setNormalizeOutOfRangePages(true)
-            ->setCurrentPage($session->get($sessionNamespace.'/page', 1))
+            ->setCurrentPage((int) $session->get($sessionNamespace.'/page', 1))
         ;
 
         return $resources;

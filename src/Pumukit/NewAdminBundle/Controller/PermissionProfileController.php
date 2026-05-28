@@ -91,7 +91,7 @@ class PermissionProfileController extends AdminController
             $page = $permissionProfiles->getNbPages();
             $session->set('admin/permissionprofile/page', $page);
         }
-        $permissionProfiles->setCurrentPage($page);
+        $permissionProfiles->setCurrentPage((int) $page);
 
         [$permissions, $dependencies] = $this->getPermissions();
         $scopes = PermissionProfile::$scopeDescription;
@@ -242,9 +242,9 @@ class PermissionProfileController extends AdminController
         }
 
         $resources
-            ->setMaxPerPage($session->get($session_namespace.'/paginate', 9))
+            ->setMaxPerPage((int) $session->get($session_namespace.'/paginate', 9))
             ->setNormalizeOutOfRangePages(true)
-            ->setCurrentPage($session->get($session_namespace.'/page', 1))
+            ->setCurrentPage((int) $session->get($session_namespace.'/page', 1))
         ;
 
         return $resources;

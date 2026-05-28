@@ -518,9 +518,9 @@ class SeriesController extends AdminController
         }
 
         $resources
-            ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
+            ->setMaxPerPage((int) $session->get($session_namespace.'/paginate', 10))
             ->setNormalizeOutOfRangePages(true)
-            ->setCurrentPage($page)
+            ->setCurrentPage((int) $page)
         ;
 
         return $resources;

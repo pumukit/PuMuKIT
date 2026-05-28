@@ -122,7 +122,7 @@ class LiveController extends AdminController
         }
 
         $resources
-            ->setMaxPerPage($session->get($session_namespace.'/paginate', 10))
+            ->setMaxPerPage((int) $session->get($session_namespace.'/paginate', 10))
             ->setNormalizeOutOfRangePages(true)
         ;
 
@@ -130,7 +130,7 @@ class LiveController extends AdminController
             $page = $resources->getNbPages();
             $session->set($session_namespace.'/page', $page);
         }
-        $resources->setCurrentPage($page);
+        $resources->setCurrentPage((int) $page);
 
         return $resources;
     }
