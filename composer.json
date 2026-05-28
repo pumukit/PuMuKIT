@@ -13,7 +13,6 @@
         "ext-mongodb": "*",
         "ext-sysvsem": "*",
         "ankitpokhrel/tus-php": "^2.4",
-        "api-platform/core": "^2.7.18",
         "babdev/pagerfanta-bundle": "^4",
         "doctrine/mongodb-odm": "2.6.0",
         "doctrine/mongodb-odm-bundle": "4.6.2",
@@ -131,12 +130,6 @@
         "sort-packages": true,
         "allow-plugins": {
             "symfony/flex": true
-        },
-        "audit": {
-            "ignore": {
-                "PKSA-gs8r-6kz6-pp56": "GraphQL deshabilitado (config/packages/api_platform.yaml); fix al subir api-platform en migración SF6.4",
-                "PKSA-gnn4-pxdg-q76m": "GraphQL deshabilitado (config/packages/api_platform.yaml); fix al subir api-platform en migración SF6.4"
-            }
         }
     },
     "autoload": {
