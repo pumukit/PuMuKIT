@@ -76,7 +76,7 @@ class CreateMMOCommand extends Command
             ->addOption('status', null, InputOption::VALUE_OPTIONAL, 'Multimedia object initial status (\'published\', \'blocked\' or \'hidden\')')
             ->addOption('user', null, InputOption::VALUE_OPTIONAL, 'User was upload video')
             ->addOption('series', null, InputOption::VALUE_REQUIRED, 'Series to create multimedia object')
-            ->addOption('profile', null, InputOption::VALUE_REQUIRED, 'Profile for file encoding')
+            ->addOption('encoding-profile', null, InputOption::VALUE_REQUIRED, 'Profile for file encoding')
             ->setHelp(
                 <<<'EOT'
 This command create a multimedia object from a multimedia file path
@@ -127,8 +127,8 @@ EOT
             sleep(2);
         }
 
-        if ($input->getOption('profile')) {
-            $profile = $this->profileValidator->searchBestProfileForFile($input->getOption('profile'), $path);
+        if ($input->getOption('encoding-profile')) {
+            $profile = $this->profileValidator->searchBestProfileForFile($input->getOption('encoding-profile'), $path);
         } elseif (str_contains($path, 'INBOX_MASTER_BROADCASTABLE')) {
             $profile = 'broadcastable_master';
         } elseif (str_contains($path, 'INBOX_MASTER_COPY')) {

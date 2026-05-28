@@ -40,7 +40,7 @@ class InboxUploadListener
             $filePath,
             '--user='.$event->getUser()->getUsername(),
             '--series='.$series,
-            '--profile='.$event->getProfile(),
+            '--encoding-profile='.$event->getProfile(),
         ];
 
         $process = new Process($command);

@@ -48,7 +48,7 @@ class ImportFileToMMOCommand extends Command
             ->setDescription('This command import file like a track on a multimedia object')
             ->addArgument('object', InputArgument::REQUIRED, 'object')
             ->addArgument('file', InputArgument::REQUIRED, 'file')
-            ->addOption('profile', null, InputOption::VALUE_OPTIONAL, 'profile')
+            ->addOption('encoding-profile', null, InputOption::VALUE_OPTIONAL, 'profile')
             ->addOption('language', null, InputOption::VALUE_OPTIONAL, 'language', null)
             ->addArgument('description', InputArgument::OPTIONAL, 'description')
             ->setHelp(
@@ -56,7 +56,7 @@ class ImportFileToMMOCommand extends Command
 This command import file like a track on a multimedia object
 
 Example complete:
-<info>php bin/console pumukit:import:multimedia:file %idmultimediaobject% %pathfile% --profile=%profile% --language=%language% %description%</info>
+<info>php bin/console pumukit:import:multimedia:file %idmultimediaobject% %pathfile% --encoding-profile=%profile% --language=%language% %description%</info>
 
 Basic example:
 <info>php bin/console pumukit:import:multimedia:file 58a31ce08381165d008b456a {pathToPuMuKITStorageTempDir}/test.mp4</info>
@@ -97,7 +97,7 @@ EOT
             ['id' => new ObjectId($multimediaObjectId)]
         );
 
-        $profile = ($input->hasOption('profile')) ? $input->getOption('profile') : $this->profileService->getDefaultMasterProfile();
+        $profile = ($input->hasOption('encoding-profile')) ? $input->getOption('encoding-profile') : $this->profileService->getDefaultMasterProfile();
         $language = ($input->hasOption('language')) ? $input->getOption('language') : null;
         $description = ($input->hasArgument('description')) ? [$this->defaultLanguage => $input->getArgument('description')] : '';
 

@@ -28,7 +28,7 @@ class ServerUploadListener
             $event->getFileName(),
             '--user='.$event->getUser()->getUsername(),
             '--series='.$event->getSeries(),
-            '--profile='.$event->getProfile(),
+            '--encoding-profile='.$event->getProfile(),
         ];
 
         $process = new Process($command);
