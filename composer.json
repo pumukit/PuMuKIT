@@ -130,10 +130,10 @@
             "symfony/flex": true
         },
         "audit": {
-            "ignore": [
-                "PKSA-gs8r-6kz6-pp56",
-                "PKSA-gnn4-pxdg-q76m"
-            ]
+            "ignore": {
+                "PKSA-gs8r-6kz6-pp56": "GraphQL deshabilitado (config/packages/api_platform.yaml); fix al subir api-platform en migración SF6.4",
+                "PKSA-gnn4-pxdg-q76m": "GraphQL deshabilitado (config/packages/api_platform.yaml); fix al subir api-platform en migración SF6.4"
+            }
         }
     },
     "autoload": {
