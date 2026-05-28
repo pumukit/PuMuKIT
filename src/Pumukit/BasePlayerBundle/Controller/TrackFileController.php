@@ -92,7 +92,7 @@ class TrackFileController extends AbstractController
             return $response;
         }
 
-        if ($storage && $storage->url() && $storage->url()->url()) {
+        if ($storage && !$storage->isLocalStorageSystem() && $storage->url() && $storage->url()->url()) {
             $externalUrl = $storage->url()->url();
             $connector = (str_contains($externalUrl, '?')) ? '&' : '?';
 
