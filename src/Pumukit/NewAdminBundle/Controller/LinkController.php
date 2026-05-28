@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -27,14 +27,13 @@ class LinkController extends AbstractController implements NewAdminControllerInt
     /** @var LinkService */
     private $linkService;
 
-    /** @var SessionInterface */
-    private $session;
+    private $requestStack;
 
-    public function __construct(TranslatorInterface $translator, LinkService $linkService, SessionInterface $session)
+    public function __construct(TranslatorInterface $translator, LinkService $linkService, RequestStack $requestStack)
     {
         $this->translator = $translator;
         $this->linkService = $linkService;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
     }
 
     /**

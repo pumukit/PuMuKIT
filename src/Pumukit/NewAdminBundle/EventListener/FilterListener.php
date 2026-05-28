@@ -51,7 +51,7 @@ class FilterListener
         $deprecatedCheck = (false !== strpos($req->attributes->get('_controller'), 'pumukitnewadmin'));
 
         if (($controller[0] instanceof NewAdminControllerInterface /* deprecated */ || $deprecatedCheck)
-            && $event->isMasterRequest()
+            && $event->isMainRequest()
             && $isFilterActivated) {
             if ($this->addUserAsPerson) {
                 $loggedInUser = $this->getLoggedInUser();

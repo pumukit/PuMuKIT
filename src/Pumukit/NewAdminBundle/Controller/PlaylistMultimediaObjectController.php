@@ -22,13 +22,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class PlaylistMultimediaObjectController extends AbstractController
 {
-    private $session;
+    private $requestStack;
     private $factoryService;
     private $personService;
     private $multimediaObjectService;
@@ -41,7 +41,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     private $locales;
 
     public function __construct(
-        SessionInterface $session,
+        RequestStack $requestStack,
         FactoryService $factoryService,
         PersonService $personService,
         MultimediaObjectService $multimediaObjectService,
@@ -53,7 +53,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         $warningOnUnpublished,
         $locales
     ) {
-        $this->session = $session;
+        $this->requestStack = $requestStack;
         $this->factoryService = $factoryService;
         $this->personService = $personService;
         $this->multimediaObjectService = $multimediaObjectService;
@@ -71,7 +71,7 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $sessionId = $session->get('admin/playlist/id', null);
         $series = $this->factoryService->findSeriesById($request->query->get('id'), $sessionId);
         if (!$series) {
@@ -88,7 +88,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         // Removes the session mmobj (shown on info and preview) if it does not belong to THIS playlist.
         $update_session = true;
         foreach ($mms as $mm) {
-            if ($mm->getId() == $this->session->get('admin/playlistmms/id')) {
+            if ($mm->getId() == $this->requestStack->getSession()->get('admin/playlistmms/id')) {
                 $update_session = false;
 
                 break;
@@ -111,9 +111,9 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function showAction(MultimediaObject $mmobj, Request $request)
     {
-        $this->session->set('admin/playlistmms/id', $mmobj->getId());
+        $this->requestStack->getSession()->set('admin/playlistmms/id', $mmobj->getId());
         if ($request->query->has('pos')) {
-            $this->session->set('admin/playlistmms/pos', $request->query->get('pos'));
+            $this->requestStack->getSession()->set('admin/playlistmms/pos', $request->query->get('pos'));
         }
         $roles = $this->personService->getRoles();
         $activeEditor = $this->checkHasEditor();
@@ -144,16 +144,16 @@ class PlaylistMultimediaObjectController extends AbstractController
      */
     public function listAction(Request $request)
     {
-        $sessionId = $this->session->get('admin/playlist/id', null);
+        $sessionId = $this->requestStack->getSession()->get('admin/playlist/id', null);
         $series = $this->factoryService->findSeriesById($request->query->get('id'), $sessionId);
         if (!$series) {
             throw $this->createNotFoundException();
         }
 
-        $this->session->set('admin/playlist/id', $series->getId());
+        $this->requestStack->getSession()->set('admin/playlist/id', $series->getId());
 
         if ($request->query->has('mmid')) {
-            $this->session->set('admin/playlistmms/id', $request->query->get('mmid'));
+            $this->requestStack->getSession()->set('admin/playlistmms/id', $request->query->get('mmid'));
         }
 
         $mms = $this->getPlaylistMmobjs($series, $request);
@@ -443,7 +443,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     {
         $mmsList = $series->getPlaylist()->getMultimediaObjects();
 
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         if ($request->get('page', null)) {
             $session->set('admin/playlistmms/page', $request->get('page', 1));
         }

@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_EDIT_PLAYLIST')")
@@ -28,19 +28,18 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     /** @var PaginationService */
     private $paginationService;
 
-    /** @var SessionInterface */
-    private $session;
+    private $requestStack;
 
     public function __construct(
         SeriesPicService $seriesPicService,
         DocumentManager $documentManager,
         PaginationService $paginationService,
-        SessionInterface $session
+        RequestStack $requestStack
     ) {
         $this->seriesPicService = $seriesPicService;
         $this->documentManager = $documentManager;
         $this->paginationService = $paginationService;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -180,9 +179,9 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     public function picstoaddlistAction(Request $request, Series $playlist)
     {
         if ($request->get('page', null)) {
-            $this->session->set('admin/playlistpic/page', $request->get('page', 1));
+            $this->requestStack->getSession()->set('admin/playlistpic/page', $request->get('page', 1));
         }
-        $page = (int) $this->session->get('admin/playlistpic/page', 1);
+        $page = (int) $this->requestStack->getSession()->get('admin/playlistpic/page', 1);
         $limit = 12;
 
         $urlPics = $this->seriesPicService->getRecommendedPics($playlist);

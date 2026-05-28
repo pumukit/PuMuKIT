@@ -32,7 +32,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -111,9 +110,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     /** @var GroupService */
     private $groupService;
 
-    /** @var SessionInterface */
-    private $session;
-
     /** @var RequestStack */
     private $requestStack;
 
@@ -139,7 +135,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         TranslatorInterface $translator,
         UserService $userService,
         GroupService $groupService,
-        SessionInterface $session,
         RequestStack $requestStack,
         RouterInterface $router,
         MultimediaObjectSearchService $multimediaObjectSearchService,
@@ -157,7 +152,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $this->translator = $translator;
         $this->userService = $userService;
         $this->groupService = $groupService;
-        $this->session = $session;
         $this->requestStack = $requestStack;
         $this->router = $router;
         $this->showLatestWithPudeNew = $showLatestWithPudeNew;
@@ -176,7 +170,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     {
         $configuredTag = $this->getConfiguredTag();
 
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $page = (int) $request->query->get('page', 1);
         if ($page < 1) {
             $page = 1;
@@ -257,7 +251,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function listAction($tag = null)
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $page = $session->get('admin/unesco/page', 1);
         $maxPerPage = $session->get('admin/unesco/paginate', 10);
 
@@ -339,7 +333,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function resetSessionAction($all = true)
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
 
         $this->tagCatalogueService->resetSessionCriteria($session, $all);
 
@@ -353,7 +347,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function addCriteriaSessionAction(Request $request)
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
 
         $this->tagCatalogueService->addSessionCriteria($request, $session);
 
@@ -393,7 +387,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         ];
         $formPub = $this->createForm(MultimediaObjectPubType::class, $multimediaObject, $options);
 
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $session->set('admin/unesco/id', $multimediaObject->getId());
 
         // If the 'pudenew' tag is not being used, set the display to 'false'.
@@ -571,7 +565,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function optionsMultimediaObjectsAction(Request $request, $option)
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $session->remove('admin/unesco/tag');
         $session->remove('admin/unesco/page');
         $session->remove('admin/unesco/paginate');
@@ -613,7 +607,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function deleteAction(string $multimediaObjectId)
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $session->remove('admin/unesco/tag');
         $session->remove('admin/unesco/page');
         $session->remove('admin/unesco/paginate');
@@ -651,7 +645,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
      */
     public function customFieldsAction(Request $request)
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
 
         if (!$session->has('admin/unesco/selected_fields')) {
             $defaultSelectedFields = $this->tagCatalogueService->getDefaultListFields();
@@ -689,7 +683,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     {
         $configuredTag = $this->getConfiguredTag();
 
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $session->set('admin/unesco/tag', $tag);
 
         $tagCondition = $tag;
@@ -735,7 +729,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     private function addCriteria($query, $criteria)
     {
-        $request = $this->requestStack->getMasterRequest();
+        $request = $this->requestStack->getMainRequest();
 
         foreach ($criteria as $key => $field) {
             if ('roles' === $key && (is_countable($field) ? count($field) : 0) >= 1) {

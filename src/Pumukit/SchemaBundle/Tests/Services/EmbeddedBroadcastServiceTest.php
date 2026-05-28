@@ -42,7 +42,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->embeddedBroadcastService = static::$kernel->getContainer()->get('pumukitschema.embeddedbroadcast');
         $this->mmsService = static::$kernel->getContainer()->get('pumukitschema.multimedia_object');
         $this->dispatcher = static::$kernel->getContainer()->get('pumukitschema.multimediaobject_dispatcher');
-        $this->authorizationChecker = static::$kernel->getContainer()->get('security.authorization_checker');
+        $this->authorizationChecker = static::getContainer()->get('security.authorization_checker');
         $this->templating = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
 
         $this->router = static::$kernel->getContainer()->get('router');

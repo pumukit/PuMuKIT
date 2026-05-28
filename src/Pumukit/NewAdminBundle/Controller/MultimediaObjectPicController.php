@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -27,8 +27,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     /** @var PaginationService */
     private $paginationService;
 
-    /** @var SessionInterface */
-    private $session;
+    private $requestStack;
 
     /** @var MultimediaObjectPicService */
     private $multimediaObjectPicService;
@@ -36,12 +35,12 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     public function __construct(
         DocumentManager $documentManager,
         PaginationService $paginationService,
-        SessionInterface $session,
+        RequestStack $requestStack,
         MultimediaObjectPicService $multimediaObjectPicService
     ) {
         $this->documentManager = $documentManager;
         $this->paginationService = $paginationService;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
         $this->multimediaObjectPicService = $multimediaObjectPicService;
     }
 
@@ -200,9 +199,9 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
         $isEventPoster = $request->get('is_event_poster', false);
 
         if ($request->get('page', null)) {
-            $this->session->set('admin/mmspic/page', $request->get('page', 1));
+            $this->requestStack->getSession()->set('admin/mmspic/page', $request->get('page', 1));
         }
-        $page = (int) $this->session->get('admin/mmspic/page', 1);
+        $page = (int) $this->requestStack->getSession()->get('admin/mmspic/page', 1);
         $limit = 12;
 
         $series = $multimediaObject->getSeries();

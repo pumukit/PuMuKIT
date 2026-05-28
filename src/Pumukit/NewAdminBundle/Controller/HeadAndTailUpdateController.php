@@ -15,7 +15,7 @@ use Pumukit\SchemaBundle\Services\HeadAndTailService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -30,10 +30,10 @@ class HeadAndTailUpdateController extends AdminController
         GroupService $groupService,
         UserService $userService,
         HeadAndTailService $headAndTailService,
-        SessionInterface $session,
+        RequestStack $requestStack,
         TranslatorInterface $translator
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $requestStack, $translator);
         $this->headAndTailService = $headAndTailService;
     }
 

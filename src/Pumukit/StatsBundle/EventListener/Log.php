@@ -32,7 +32,7 @@ class Log
 
     public function onMultimediaObjectViewed(ViewedEvent $event): void
     {
-        $request = $this->requestStack->getMasterRequest();
+        $request = $this->requestStack->getMainRequest();
         if (!$request) {
             return;
         }

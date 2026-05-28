@@ -18,8 +18,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -27,8 +27,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class PlaylistController extends CollectionController
 {
-    /** @var SessionInterface */
-    private $session;
+    private $requestStack;
 
     /** @var TranslatorInterface */
     private $translator;
@@ -40,7 +39,7 @@ class PlaylistController extends CollectionController
     private $seriesSearchService;
 
     public function __construct(
-        SessionInterface $session,
+        RequestStack $requestStack,
         TranslatorInterface $translator,
         SeriesEventDispatcherService $pumukitSchemaSeriesEventDispatcher,
         SeriesSearchService $seriesSearchService,
@@ -49,8 +48,8 @@ class PlaylistController extends CollectionController
         PaginationService $paginationService,
         PersonService $personService
     ) {
-        parent::__construct($documentManager, $factoryService, $paginationService, $personService, $session);
-        $this->session = $session;
+        parent::__construct($documentManager, $factoryService, $paginationService, $personService, $requestStack);
+        $this->requestStack = $requestStack;
         $this->translator = $translator;
         $this->pumukitSchemaSeriesEventDispatcher = $pumukitSchemaSeriesEventDispatcher;
         $this->seriesSearchService = $seriesSearchService;
@@ -61,7 +60,7 @@ class PlaylistController extends CollectionController
      */
     public function showAction(Series $collection): array
     {
-        $this->session->set('admin/playlist/id', $collection->getId());
+        $this->requestStack->getSession()->set('admin/playlist/id', $collection->getId());
 
         return ['collection' => $collection];
     }
@@ -75,13 +74,13 @@ class PlaylistController extends CollectionController
         $resources = $this->getResources($request);
 
         foreach ($resources as $playlist) {
-            if ($playlist->getId() == $this->session->get('admin/playlist/id')) {
+            if ($playlist->getId() == $this->requestStack->getSession()->get('admin/playlist/id')) {
                 $update_session = false;
             }
         }
 
         if ($update_session) {
-            $this->session->remove('admin/playlist/id');
+            $this->requestStack->getSession()->remove('admin/playlist/id');
         }
 
         return ['series' => $resources];
@@ -100,14 +99,14 @@ class PlaylistController extends CollectionController
     public function createAction(Request $request): JsonResponse
     {
         $collection = $this->factoryService->createPlaylist($this->getUser(), $request->request->get('playlist_title'));
-        $this->session->set('admin/playlist/id', $collection->getId());
+        $this->requestStack->getSession()->set('admin/playlist/id', $collection->getId());
 
         return new JsonResponse(['playlistId' => $collection->getId(), 'title' => $collection->getTitle($request->getLocale())]);
     }
 
     public function updateAction(Request $request, Series $series): Response
     {
-        $this->session->set('admin/playlist/id', $series->getId());
+        $this->requestStack->getSession()->set('admin/playlist/id', $series->getId());
 
         $locale = $request->getLocale();
         $form = $this->createForm(PlaylistType::class, $series, ['translator' => $this->translator, 'locale' => $locale]);
@@ -149,15 +148,15 @@ class PlaylistController extends CollectionController
         }
 
         $playlistId = $playlist->getId();
-        $playlistSessionId = $this->session->get('admin/mms/id');
+        $playlistSessionId = $this->requestStack->getSession()->get('admin/mms/id');
         if ($playlistId === $playlistSessionId) {
-            $this->session->remove('admin/playlist/id');
+            $this->requestStack->getSession()->remove('admin/playlist/id');
         }
-        $mmSessionId = $this->session->get('admin/mms/id');
+        $mmSessionId = $this->requestStack->getSession()->get('admin/mms/id');
         if ($mmSessionId) {
             $mm = $this->factoryService->findMultimediaObjectById($mmSessionId);
             if ($playlistId === $mm->getSeries()->getId()) {
-                $this->session->remove('admin/mms/id');
+                $this->requestStack->getSession()->remove('admin/mms/id');
             }
         }
 
@@ -177,13 +176,13 @@ class PlaylistController extends CollectionController
         $seriesRepo = $this->documentManager->getRepository(Series::class);
         $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
 
-        $playlist = $seriesRepo->find($this->session->get('admin/playlist/id'));
+        $playlist = $seriesRepo->find($this->requestStack->getSession()->get('admin/playlist/id'));
         if (!$playlist) {
-            $this->session->remove('admin/playlist/id');
+            $this->requestStack->getSession()->remove('admin/playlist/id');
         }
-        $mm = $mmobjRepo->find($this->session->get('admin/mms/id'));
+        $mm = $mmobjRepo->find($this->requestStack->getSession()->get('admin/mms/id'));
         if (!$mm) {
-            $this->session->remove('admin/mms/id');
+            $this->requestStack->getSession()->remove('admin/mms/id');
         }
 
         return $this->redirectToRoute('pumukitnewadmin_playlist_list', []);
@@ -192,7 +191,7 @@ class PlaylistController extends CollectionController
     public function searchAction(Request $req): RedirectResponse
     {
         $q = $req->get('q');
-        $this->session->set('admin/playlist/criteria', ['search' => $q]);
+        $this->requestStack->getSession()->set('admin/playlist/criteria', ['search' => $q]);
 
         return $this->redirectToRoute('pumukitnewadmin_playlist_index');
     }
@@ -202,11 +201,11 @@ class PlaylistController extends CollectionController
         $criteria = $request->get('criteria', []);
 
         if (array_key_exists('reset', $criteria)) {
-            $this->session->remove('admin/playlist/criteria');
+            $this->requestStack->getSession()->remove('admin/playlist/criteria');
         } elseif ($criteria) {
-            $this->session->set('admin/playlist/criteria', $criteria);
+            $this->requestStack->getSession()->set('admin/playlist/criteria', $criteria);
         }
-        $criteria = $this->session->get('admin/playlist/criteria', []);
+        $criteria = $this->requestStack->getSession()->get('admin/playlist/criteria', []);
 
         return $this->seriesSearchService->processCriteria($criteria, true, $request->getLocale());
     }
@@ -226,12 +225,12 @@ class PlaylistController extends CollectionController
     private function getSorting(?Request $request = null): array
     {
         if ($sorting = $request->get('sorting')) {
-            $this->session->set('admin/playlist/type', current($sorting));
-            $this->session->set('admin/playlist/sort', key($sorting));
+            $this->requestStack->getSession()->set('admin/playlist/type', current($sorting));
+            $this->requestStack->getSession()->set('admin/playlist/sort', key($sorting));
         }
 
-        $value = $this->session->get('admin/playlist/type', 'desc');
-        $key = $this->session->get('admin/playlist/sort', 'public_date');
+        $value = $this->requestStack->getSession()->get('admin/playlist/type', 'desc');
+        $key = $this->requestStack->getSession()->get('admin/playlist/sort', 'public_date');
 
         if ('title' == $key) {
             $key .= '.'.$request->getLocale();

@@ -19,8 +19,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -50,11 +50,11 @@ class PermissionProfileController extends AdminController
         PermissionProfileService $permissionProfileService,
         TranslatorInterface $translator,
         PermissionService $permissionService,
-        SessionInterface $session,
+        RequestStack $requestStack,
         PermissionProfileEventDispatcherService $pumukitSchemaPermissionProfileDispatcher,
         $pumukitUseSeriesChannels
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $requestStack, $translator);
         $this->permissionProfileService = $permissionProfileService;
         $this->permissionService = $permissionService;
         $this->pumukitUseSeriesChannels = $pumukitUseSeriesChannels;
@@ -85,7 +85,7 @@ class PermissionProfileController extends AdminController
      */
     public function listAction(Request $request)
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
 
         $criteria = $this->getCriteria($request->get('criteria', []));
         $permissionProfiles = $this->getResources($request, $criteria);
@@ -175,8 +175,8 @@ class PermissionProfileController extends AdminController
         try {
             $this->factoryService->deleteResource($permissionProfile);
             $this->pumukitSchemaPermissionProfileDispatcher->dispatchDelete($permissionProfile);
-            if ($permissionProfileId === $this->session->get('admin/permissionprofile/id')) {
-                $this->session->remove('admin/permissionprofile/id');
+            if ($permissionProfileId === $this->requestStack->getSession()->get('admin/permissionprofile/id')) {
+                $this->requestStack->getSession()->remove('admin/permissionprofile/id');
             }
         } catch (\Exception $e) {
             throw $e;
@@ -234,7 +234,7 @@ class PermissionProfileController extends AdminController
         if (!isset($sorting['rank'])) {
             $sorting['rank'] = 1;
         }
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $session_namespace = 'admin/permissionprofile';
 
         $resources = $this->createPager($criteria, $sorting);

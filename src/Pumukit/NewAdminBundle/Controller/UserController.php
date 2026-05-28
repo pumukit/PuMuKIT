@@ -22,8 +22,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -47,11 +47,11 @@ class UserController extends AdminController
         UserService $userService,
         PersonService $personService,
         TranslatorInterface $translator,
-        SessionInterface $session,
+        RequestStack $requestStack,
         CreateUserService $createUserService,
         UpdateUserService $updateUserService
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $requestStack, $translator);
         $this->personService = $personService;
         $this->createUserService = $createUserService;
         $this->updateUserService = $updateUserService;
@@ -246,11 +246,11 @@ class UserController extends AdminController
     public function getCriteria($criteria)
     {
         if (array_key_exists('reset', $criteria)) {
-            $this->session->remove('admin/user/criteria');
+            $this->requestStack->getSession()->remove('admin/user/criteria');
         } elseif ($criteria) {
-            $this->session->set('admin/user/criteria', $criteria);
+            $this->requestStack->getSession()->set('admin/user/criteria', $criteria);
         }
-        $criteria = $this->session->get('admin/user/criteria', []);
+        $criteria = $this->requestStack->getSession()->get('admin/user/criteria', []);
 
         $new_criteria = [];
         foreach ($criteria as $property => $value) {

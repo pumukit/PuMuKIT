@@ -15,9 +15,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AdminController extends ResourceController implements NewAdminControllerInterface
@@ -31,8 +31,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     /** @var UserService */
     protected $userService;
 
-    /** @var SessionInterface */
-    protected $session;
+    protected $requestStack;
 
     /** @var TranslatorInterface */
     protected $translator;
@@ -43,14 +42,14 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         FactoryService $factoryService,
         GroupService $groupService,
         UserService $userService,
-        SessionInterface $session,
+        RequestStack $requestStack,
         TranslatorInterface $translator
     ) {
         parent::__construct($documentManager, $paginationService);
         $this->factoryService = $factoryService;
         $this->groupService = $groupService;
         $this->userService = $userService;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
         $this->translator = $translator;
     }
 
@@ -186,8 +185,8 @@ class AdminController extends ResourceController implements NewAdminControllerIn
         $resourceName = $this->getResourceName();
 
         $this->factoryService->deleteResource($resource);
-        if ($resourceId === $this->session->get('admin/'.$resourceName.'/id')) {
-            $this->session->remove('admin/'.$resourceName.'/id');
+        if ($resourceId === $this->requestStack->getSession()->get('admin/'.$resourceName.'/id')) {
+            $this->requestStack->getSession()->remove('admin/'.$resourceName.'/id');
         }
 
         return $this->redirectToRoute('pumukitnewadmin_'.$resourceName.'_list');
@@ -217,7 +216,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
      */
     public function delete($resource)
     {
-        $this->session->remove('admin/'.$this->getResourceName().'/id');
+        $this->requestStack->getSession()->remove('admin/'.$this->getResourceName().'/id');
 
         $this->factoryService->deleteResource($resource);
         $this->documentManager->flush();
@@ -241,8 +240,8 @@ class AdminController extends ResourceController implements NewAdminControllerIn
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
-            if ($id === $this->session->get('admin/'.$resourceName.'/id')) {
-                $this->session->remove('admin/'.$resourceName.'/id');
+            if ($id === $this->requestStack->getSession()->get('admin/'.$resourceName.'/id')) {
+                $this->requestStack->getSession()->remove('admin/'.$resourceName.'/id');
             }
         }
 
@@ -261,11 +260,11 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     public function getCriteria($criteria)
     {
         if (array_key_exists('reset', $criteria)) {
-            $this->session->remove('admin/'.$this->getResourceName().'/criteria');
+            $this->requestStack->getSession()->remove('admin/'.$this->getResourceName().'/criteria');
         } elseif ($criteria) {
-            $this->session->set('admin/'.$this->getResourceName().'/criteria', $criteria);
+            $this->requestStack->getSession()->set('admin/'.$this->getResourceName().'/criteria', $criteria);
         }
-        $criteria = $this->session->get('admin/'.$this->getResourceName().'/criteria', []);
+        $criteria = $this->requestStack->getSession()->get('admin/'.$this->getResourceName().'/criteria', []);
 
         $new_criteria = [];
         foreach ($criteria as $property => $value) {
@@ -282,7 +281,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     {
         $sorting = $this->getSorting($request);
 
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $session_namespace = 'admin/'.$this->getResourceName();
 
         $resources = $this->createPager($criteria, $sorting);

@@ -31,13 +31,13 @@ class LegacyEventController extends AdminController
 
         $update_session = true;
         foreach ($events as $event) {
-            if ($event->getId() == $this->session->get('admin/event/id')) {
+            if ($event->getId() == $this->requestStack->getSession()->get('admin/event/id')) {
                 $update_session = false;
             }
         }
 
         if ($update_session) {
-            $this->session->remove('admin/event/id');
+            $this->requestStack->getSession()->remove('admin/event/id');
         }
 
         $repo = $this->documentManager->getRepository(Event::class);
@@ -64,7 +64,7 @@ class LegacyEventController extends AdminController
             if (null === $resource) {
                 return new JsonResponse(['eventId' => null]);
             }
-            $this->session->set('admin/event/id', $resource->getId());
+            $this->requestStack->getSession()->set('admin/event/id', $resource->getId());
 
             return new JsonResponse(['eventId' => $resource->getId()]);
         }
@@ -104,10 +104,10 @@ class LegacyEventController extends AdminController
         $activeTab = $request->get('activeTab', null);
 
         if ($activeTab) {
-            $this->session->set('admin/event/tab', $activeTab);
+            $this->requestStack->getSession()->set('admin/event/tab', $activeTab);
             $tabValue = 'Active tab: '.$activeTab;
         } else {
-            $this->session->remove('admin/event/tab');
+            $this->requestStack->getSession()->remove('admin/event/tab');
             $tabValue = 'Active tab: listTab';
         }
 
@@ -157,11 +157,11 @@ class LegacyEventController extends AdminController
     public function getCriteria($criteria)
     {
         if (array_key_exists('reset', $criteria)) {
-            $this->session->remove('admin/event/criteria');
+            $this->requestStack->getSession()->remove('admin/event/criteria');
         } elseif ($criteria) {
-            $this->session->set('admin/event/criteria', $criteria);
+            $this->requestStack->getSession()->set('admin/event/criteria', $criteria);
         }
-        $criteria = $this->session->get('admin/event/criteria', []);
+        $criteria = $this->requestStack->getSession()->get('admin/event/criteria', []);
 
         $new_criteria = [];
 
@@ -195,7 +195,7 @@ class LegacyEventController extends AdminController
     public function getResources(Request $request, $criteria)
     {
         $sorting = ['date' => -1];
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $session_namespace = 'admin/event';
 
         $page = $session->get($session_namespace.'/page', 1);
@@ -231,31 +231,31 @@ class LegacyEventController extends AdminController
 
     private function getCalendar($request)
     {
-        if (!$this->session->get('admin/event/month')) {
-            $this->session->set('admin/event/month', date('m'));
+        if (!$this->requestStack->getSession()->get('admin/event/month')) {
+            $this->requestStack->getSession()->set('admin/event/month', date('m'));
         }
-        if (!$this->session->get('admin/event/year')) {
-            $this->session->set('admin/event/year', date('Y'));
+        if (!$this->requestStack->getSession()->get('admin/event/year')) {
+            $this->requestStack->getSession()->set('admin/event/year', date('Y'));
         }
 
-        $m = $this->session->get('admin/event/month');
-        $y = $this->session->get('admin/event/year');
+        $m = $this->requestStack->getSession()->get('admin/event/month');
+        $y = $this->requestStack->getSession()->get('admin/event/year');
 
         if ('next' == $request->query->get('month')) {
             $changed_date = mktime(0, 0, 0, $m + 1, 1, $y);
-            $this->session->set('admin/event/year', date('Y', $changed_date));
-            $this->session->set('admin/event/month', date('m', $changed_date));
+            $this->requestStack->getSession()->set('admin/event/year', date('Y', $changed_date));
+            $this->requestStack->getSession()->set('admin/event/month', date('m', $changed_date));
         } elseif ('previous' == $request->query->get('month')) {
             $changed_date = mktime(0, 0, 0, $m - 1, 1, $y);
-            $this->session->set('admin/event/year', date('Y', $changed_date));
-            $this->session->set('admin/event/month', date('m', $changed_date));
+            $this->requestStack->getSession()->set('admin/event/year', date('Y', $changed_date));
+            $this->requestStack->getSession()->set('admin/event/month', date('m', $changed_date));
         } elseif ('today' == $request->query->get('month')) {
-            $this->session->set('admin/event/year', date('Y'));
-            $this->session->set('admin/event/month', date('m'));
+            $this->requestStack->getSession()->set('admin/event/year', date('Y'));
+            $this->requestStack->getSession()->set('admin/event/month', date('m'));
         }
 
-        $m = $this->session->get('admin/event/month', date('m'));
-        $y = $this->session->get('admin/event/year', date('Y'));
+        $m = $this->requestStack->getSession()->get('admin/event/month', date('m'));
+        $y = $this->requestStack->getSession()->get('admin/event/year', date('Y'));
 
         $calendar = self::generateArray($m, $y);
 

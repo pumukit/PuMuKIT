@@ -6,7 +6,7 @@ namespace Pumukit\WebTVBundle\Services;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -15,7 +15,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class BreadcrumbsService
 {
-    private $session;
+    private $requestStack;
     private $router;
     private $allTitle;
     private $allRoute;
@@ -34,14 +34,14 @@ class BreadcrumbsService
      */
     public function __construct(
         RouterInterface $router,
-        SessionInterface $session,
+        RequestStack $requestStack,
         TranslatorInterface $translator,
         $allTitle = 'All',
         $allRoute = 'pumukit_webtv_medialibrary_index',
         $homeTitle = 'home',
         $parentWeb = null
     ) {
-        $this->session = $session;
+        $this->requestStack = $requestStack;
         $this->router = $router;
         $this->allTitle = $allTitle;
         $this->allRoute = $allRoute;
@@ -53,14 +53,14 @@ class BreadcrumbsService
 
     public function init()
     {
-        if (!$this->session->has('breadcrumbs/title')) {
-            $this->session->set('breadcrumbs/title', $this->translator->trans($this->allTitle));
+        if (!$this->requestStack->getSession()->has('breadcrumbs/title')) {
+            $this->requestStack->getSession()->set('breadcrumbs/title', $this->translator->trans($this->allTitle));
         }
-        if (!$this->session->has('breadcrumbs/routeParameters')) {
-            $this->session->set('breadcrumbs/routeName', $this->allRoute);
+        if (!$this->requestStack->getSession()->has('breadcrumbs/routeParameters')) {
+            $this->requestStack->getSession()->set('breadcrumbs/routeName', $this->allRoute);
         }
-        if (!$this->session->has('breadcrumbs/routeParameters')) {
-            $this->session->set('breadcrumbs/routeParameters', []);
+        if (!$this->requestStack->getSession()->has('breadcrumbs/routeParameters')) {
+            $this->requestStack->getSession()->set('breadcrumbs/routeParameters', []);
         }
         $this->breadcrumbs = [];
         if (null !== $this->parentWeb) {
@@ -71,9 +71,9 @@ class BreadcrumbsService
 
     public function reset()
     {
-        $this->session->set('breadcrumbs/title', $this->translator->trans($this->allTitle));
-        $this->session->set('breadcrumbs/routeName', $this->allRoute);
-        $this->session->set('breadcrumbs/routeParameters', []);
+        $this->requestStack->getSession()->set('breadcrumbs/title', $this->translator->trans($this->allTitle));
+        $this->requestStack->getSession()->set('breadcrumbs/routeName', $this->allRoute);
+        $this->requestStack->getSession()->set('breadcrumbs/routeParameters', []);
         $this->breadcrumbs = [];
         if (null !== $this->parentWeb) {
             $this->breadcrumbs = [['title' => $this->parentWeb['title'], 'link' => $this->parentWeb['url']]];
@@ -92,9 +92,9 @@ class BreadcrumbsService
             $title = $this->translator->trans($title);
         }
         $this->reset();
-        $this->session->set('breadcrumbs/title', $title);
-        $this->session->set('breadcrumbs/routeName', $routeName);
-        $this->session->set('breadcrumbs/routeParameters', $routeParameters);
+        $this->requestStack->getSession()->set('breadcrumbs/title', $title);
+        $this->requestStack->getSession()->set('breadcrumbs/routeName', $routeName);
+        $this->requestStack->getSession()->set('breadcrumbs/routeParameters', $routeParameters);
         $this->add($title, $routeName, $routeParameters);
     }
 
@@ -102,9 +102,9 @@ class BreadcrumbsService
     {
         if (1 == (is_countable($this->breadcrumbs) ? count($this->breadcrumbs) : 0)) {
             $this->add(
-                $this->session->get('breadcrumbs/title', $this->allTitle),
-                $this->session->get('breadcrumbs/routeName', $this->allRoute),
-                $this->session->get('breadcrumbs/routeParameters', [])
+                $this->requestStack->getSession()->get('breadcrumbs/title', $this->allTitle),
+                $this->requestStack->getSession()->get('breadcrumbs/routeName', $this->allRoute),
+                $this->requestStack->getSession()->get('breadcrumbs/routeParameters', [])
             );
         }
 

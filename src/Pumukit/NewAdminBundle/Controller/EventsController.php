@@ -30,7 +30,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -64,8 +64,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /** @var EmbeddedEventSessionService */
     protected $eventsService;
 
-    /** @var SessionInterface */
-    private $session;
+    private $requestStack;
 
     private $pumukitNewAdminAdvanceLiveEventCreateSeriesPic;
     private $pumukitUseSeriesChannels;
@@ -87,7 +86,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         SeriesEventDispatcherService $seriesDispatcher,
         PaginationService $paginationService,
         EmbeddedEventSessionService $eventsService,
-        SessionInterface $session,
+        RequestStack $requestStack,
         $pumukitNewAdminAdvanceLiveEventCreateSeriesPic,
         $pumukitUseSeriesChannels,
         $locales,
@@ -107,7 +106,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $this->seriesDispatcher = $seriesDispatcher;
         $this->paginationService = $paginationService;
         $this->eventsService = $eventsService;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
         $this->pumukitNewAdminAdvanceLiveEventCreateSeriesPic = $pumukitNewAdminAdvanceLiveEventCreateSeriesPic;
         $this->pumukitUseSeriesChannels = $pumukitUseSeriesChannels;
         $this->locales = $locales;
@@ -129,7 +128,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     public function indexEventAction(Request $request): array
     {
         if ($request->query->get('page')) {
-            $this->session->set('admin/live/event/page', $request->query->get('page'));
+            $this->requestStack->getSession()->set('admin/live/event/page', $request->query->get('page'));
         }
 
         $aRoles = $this->documentManager->getRepository(Role::class)->findAll();
@@ -203,9 +202,9 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $this->documentManager->persist($multimediaObject);
         $this->documentManager->flush();
 
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $session->set('admin/live/event/id', $multimediaObject->getId());
-        $this->session->set('admin/live/event/page', 1);
+        $this->requestStack->getSession()->set('admin/live/event/page', 1);
 
         return $this->redirectToRoute('pumukit_new_admin_live_event_list');
     }
@@ -220,9 +219,9 @@ class EventsController extends AbstractController implements NewAdminControllerI
     public function listEventAction(Request $request, $type = null)
     {
         $criteria = [];
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $eventPicDefault = $this->pumukitNewAdminAdvanceLiveEventCreateDefaultPic;
-        $page = ($this->session->get('admin/live/event/page')) ?: ($request->query->get('page') ?: 1);
+        $page = ($this->requestStack->getSession()->get('admin/live/event/page')) ?: ($request->query->get('page') ?: 1);
 
         $criteria['type'] = MultimediaObject::TYPE_LIVE;
         if ($type) {
@@ -320,7 +319,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
      */
     public function addSessionSortingAction(Request $request): JsonResponse
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
 
         if ($request->request->get('field')) {
             $field = $request->request->get('field');
@@ -346,7 +345,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
      */
     public function removeCriteriaSessionAction(): JsonResponse
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $session->remove('admin/live/event/sort/field');
         $session->remove('admin/live/event/sort/type');
         $session->remove('admin/live/event/criteria');
@@ -379,13 +378,13 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
                 case 'delete':
                     $message = $this->deleteEvent($multimediaObject);
-                    $this->session->set('admin/live/event/id', null);
+                    $this->requestStack->getSession()->set('admin/live/event/id', null);
 
                     break;
 
                 case 'deleteAll':
                     $message = $this->deleteEventAndSeries($multimediaObject);
-                    $this->session->set('admin/live/event/id', null);
+                    $this->requestStack->getSession()->set('admin/live/event/id', null);
 
                     break;
 
@@ -426,7 +425,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
      */
     public function editEventAction(MultimediaObject $multimediaObject)
     {
-        $this->session->set('admin/live/event/id', $multimediaObject->getId());
+        $this->requestStack->getSession()->set('admin/live/event/id', $multimediaObject->getId());
 
         return ['multimediaObject' => $multimediaObject];
     }

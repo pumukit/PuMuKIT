@@ -12,8 +12,8 @@ use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CollectionController extends AbstractController implements NewAdminControllerInterface
 {
@@ -29,21 +29,20 @@ class CollectionController extends AbstractController implements NewAdminControl
     /** @var PersonService */
     protected $personService;
 
-    /** @var SessionInterface */
-    private $session;
+    private $requestStack;
 
     public function __construct(
         DocumentManager $documentManager,
         FactoryService $factoryService,
         PaginationService $paginationService,
         PersonService $personService,
-        SessionInterface $session
+        RequestStack $requestStack
     ) {
         $this->documentManager = $documentManager;
         $this->factoryService = $factoryService;
         $this->paginationService = $paginationService;
         $this->personService = $personService;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -104,7 +103,7 @@ class CollectionController extends AbstractController implements NewAdminControl
 
     protected function createPager($queryBuilder, $request, $session_namespace = 'admin/collection')
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         if ($request->get('page', null)) {
             $session->set($session_namespace.'/page', $request->get('page', 1));
         }

@@ -7,7 +7,6 @@ namespace Pumukit\CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouterInterface;
@@ -17,9 +16,9 @@ class LocaleController extends AbstractController implements WebTVControllerInte
     /**
      * @Route("/locale/{locale}", name="pumukit_locale")
      */
-    public function changeAction(Request $request, SessionInterface $session, RequestContext $requestContext, RouterInterface $router, string $locale): RedirectResponse
+    public function changeAction(Request $request, RequestContext $requestContext, RouterInterface $router, string $locale): RedirectResponse
     {
-        $session->set('_locale', $locale);
+        $request->getSession()->set('_locale', $locale);
         $requestContext->setParameter('_locale', $locale);
 
         $request->setLocale($locale);

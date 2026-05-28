@@ -15,8 +15,8 @@ use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -37,11 +37,11 @@ class LiveController extends AdminController
         GroupService $groupService,
         UserService $userService,
         TranslatorInterface $translator,
-        SessionInterface $session,
+        RequestStack $requestStack,
         $pumukitLiveChatEnable,
         $advanceLiveEvent
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $requestStack, $translator);
         $this->pumukitLiveChatEnable = $pumukitLiveChatEnable;
         $this->advanceLiveEvent = $advanceLiveEvent;
     }
@@ -58,7 +58,7 @@ class LiveController extends AdminController
             if (null === $resource) {
                 return new JsonResponse(['liveId' => null]);
             }
-            $this->session->set('admin/live/id', $resource->getId());
+            $this->requestStack->getSession()->set('admin/live/id', $resource->getId());
 
             return new JsonResponse(['liveId' => $resource->getId()]);
         }
@@ -107,7 +107,7 @@ class LiveController extends AdminController
     public function getResources(Request $request, $criteria)
     {
         $sorting = $this->getSorting();
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $session_namespace = 'admin/live';
 
         $newLiveId = $request->get('newLiveId');
@@ -148,8 +148,8 @@ class LiveController extends AdminController
             return new JsonResponse(['error']);
         }
 
-        if ($resourceId === $this->session->get('admin/'.$resourceName.'/id')) {
-            $this->session->remove('admin/'.$resourceName.'/id');
+        if ($resourceId === $this->requestStack->getSession()->get('admin/'.$resourceName.'/id')) {
+            $this->requestStack->getSession()->remove('admin/'.$resourceName.'/id');
         }
 
         $this->documentManager->remove($resource);
@@ -181,8 +181,8 @@ class LiveController extends AdminController
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
-            if ($id === $this->session->get('admin/'.$resourceName.'/id')) {
-                $this->session->remove('admin/'.$resourceName.'/id');
+            if ($id === $this->requestStack->getSession()->get('admin/'.$resourceName.'/id')) {
+                $this->requestStack->getSession()->remove('admin/'.$resourceName.'/id');
             }
         }
 

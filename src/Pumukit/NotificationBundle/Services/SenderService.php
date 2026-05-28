@@ -8,7 +8,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Repository\PersonRepository;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
@@ -41,7 +41,7 @@ class SenderService
     /** @var PersonRepository */
     private $personRepo;
     private $enable;
-    private $session;
+    private $requestStack;
 
     public function __construct(
         MailerInterface $mailer,
@@ -49,7 +49,7 @@ class SenderService
         TranslatorInterface $translator,
         DocumentManager $documentManager,
         LoggerInterface $logger,
-        SessionInterface $session,
+        RequestStack $requestStack,
         $enable,
         $senderEmail,
         $senderName,
@@ -76,7 +76,7 @@ class SenderService
         $this->notificateErrorsToAdmin = $notificateErrorsToAdmin;
         $this->platformName = $platformName;
         $this->personRepo = $documentManager->getRepository(Person::class);
-        $this->session = $session;
+        $this->requestStack = $requestStack;
     }
 
     public function isEnabled()
@@ -225,16 +225,16 @@ class SenderService
             return $this->templating->render($template, $parameters);
         }
 
-        $sessionLocale = $this->session->get('_locale');
+        $sessionLocale = $this->requestStack->getSession()->get('_locale');
         $body = '';
         foreach ($this->locales as $locale) {
-            $this->session->set('_locale', $locale);
+            $this->requestStack->getSession()->set('_locale', $locale);
             $parameters = $this->transConfigurationSubject($parameters, $locale, $error, $transConfigSubject);
             $parameters['locale'] = $locale;
             $bodyLocale = $this->templating->render($template, $parameters);
             $body .= $bodyLocale;
         }
-        $this->session->set('_locale', $sessionLocale);
+        $this->requestStack->getSession()->set('_locale', $sessionLocale);
 
         return $body;
     }

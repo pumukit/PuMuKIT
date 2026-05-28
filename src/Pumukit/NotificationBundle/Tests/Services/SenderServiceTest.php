@@ -45,7 +45,7 @@ class SenderServiceTest extends PumukitTestCase
         $this->templating = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
         $this->mailer = $this->getMockBuilder(MailerInterface::class)->disableOriginalConstructor()->getMock();
         $this->translator = $container->get('translator');
-        $this->session = $container->get('session');
+        $this->session = $container->get('request_stack');
         $this->enable = true;
         $this->senderEmail = 'sender@pumukit.org';
         $this->senderName = 'Sender Pumukit';

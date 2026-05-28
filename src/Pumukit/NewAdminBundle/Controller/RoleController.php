@@ -16,8 +16,8 @@ use Pumukit\SchemaBundle\Services\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -47,17 +47,17 @@ class RoleController extends SortableAdminController
         FactoryService $factoryService,
         GroupService $groupService,
         UserService $userService,
-        SessionInterface $session,
+        RequestStack $requestStack,
         PersonService $personService,
         TranslatorInterface $translator,
         RoleService $roleService,
         ValidatorInterface $validator
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $requestStack, $translator);
         $this->personService = $personService;
         $this->translator = $translator;
         $this->roleService = $roleService;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
         $this->validator = $validator;
     }
 
@@ -98,7 +98,7 @@ class RoleController extends SortableAdminController
     {
         $sorting = $this->getSorting($request);
         $sorting['rank'] = 'asc';
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $session_namespace = 'admin/'.$this->getResourceName();
 
         $resources = $this->createPager($criteria, $sorting);
@@ -131,8 +131,8 @@ class RoleController extends SortableAdminController
         }
 
         $this->factoryService->deleteResource($resource);
-        if ($resourceId === $this->session->get('admin/'.$resourceName.'/id')) {
-            $this->session->remove('admin/'.$resourceName.'/id');
+        if ($resourceId === $this->requestStack->getSession()->get('admin/'.$resourceName.'/id')) {
+            $this->requestStack->getSession()->remove('admin/'.$resourceName.'/id');
         }
 
         return $this->redirectToRoute('pumukitnewadmin_'.$resourceName.'_list');
@@ -159,8 +159,8 @@ class RoleController extends SortableAdminController
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
-            if ($id === $this->session->get('admin/'.$resourceName.'/id')) {
-                $this->session->remove('admin/'.$resourceName.'/id');
+            if ($id === $this->requestStack->getSession()->get('admin/'.$resourceName.'/id')) {
+                $this->requestStack->getSession()->remove('admin/'.$resourceName.'/id');
             }
         }
 

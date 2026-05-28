@@ -21,8 +21,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -45,13 +45,13 @@ class PersonController extends AdminController
         FactoryService $factoryService,
         GroupService $groupService,
         UserService $userService,
-        SessionInterface $session,
+        RequestStack $requestStack,
         PersonService $personService,
         TranslatorInterface $translator,
         $pumukitLdapEnable,
         $pumukitSchemaPersonalScopeRoleCode
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $requestStack, $translator);
         $this->personService = $personService;
         $this->pumukitLdapEnable = $pumukitLdapEnable;
         $this->pumukitSchemaPersonalScopeRoleCode = $pumukitSchemaPersonalScopeRoleCode;
@@ -601,8 +601,8 @@ class PersonController extends AdminController
             } catch (\Exception $e) {
                 return new Response($this->translator->trans("Can not delete Person '").$person->getName()."'. ", Response::HTTP_BAD_REQUEST);
             }
-            if ($id === $this->session->get('admin/person/id')) {
-                $this->session->remove('admin/person/id');
+            if ($id === $this->requestStack->getSession()->get('admin/person/id')) {
+                $this->requestStack->getSession()->remove('admin/person/id');
             }
         }
 
@@ -612,11 +612,11 @@ class PersonController extends AdminController
     public function getCriteria($criteria, $locale = 'en')
     {
         if (array_key_exists('reset', $criteria)) {
-            $this->session->remove('admin/person/criteria');
+            $this->requestStack->getSession()->remove('admin/person/criteria');
         } elseif ($criteria) {
-            $this->session->set('admin/person/criteria', $criteria);
+            $this->requestStack->getSession()->set('admin/person/criteria', $criteria);
         }
-        $criteria = $this->session->get('admin/person/criteria', []);
+        $criteria = $this->requestStack->getSession()->get('admin/person/criteria', []);
 
         $new_criteria = [];
 
@@ -650,7 +650,7 @@ class PersonController extends AdminController
 
     public function getSorting(?Request $request = null, $session_namespace = null): array
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
 
         if ($sorting = $request->get('sorting')) {
             $session->set('admin/person/type', $sorting[key($sorting)]);
@@ -666,7 +666,7 @@ class PersonController extends AdminController
     public function getResources(Request $request, $criteria, $selectedPersonId = null)
     {
         $sorting = $this->getSorting($request);
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
 
         $resources = $this->createPager($criteria, $sorting);
 

@@ -56,7 +56,7 @@ class FilterService
 
         $isFilterActivated = (!isset($routeParams['filter']) || $routeParams['filter']);
 
-        return !(!$isFilterActivated || !$event->isMasterRequest());
+        return !(!$isFilterActivated || !$event->isMainRequest());
     }
 
     public function getEventData(ControllerEvent $event): array

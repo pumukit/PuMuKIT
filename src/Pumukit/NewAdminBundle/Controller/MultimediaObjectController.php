@@ -56,7 +56,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -67,9 +66,6 @@ class MultimediaObjectController extends SortableAdminController
 {
     public static $resourceName = 'mms';
     public static $repoName = MultimediaObject::class;
-
-    /** @var RequestStack */
-    private $requestStack;
 
     /** @var MultimediaObjectSyncService */
     private $multimediaObjectSyncService;
@@ -132,7 +128,6 @@ class MultimediaObjectController extends SortableAdminController
         SortedMultimediaObjectsService $sortedMultimediaObjectService,
         JobRepository $jobRepository,
         ProfileService $profileService,
-        SessionInterface $session,
         MultimediaObjectService $multimediaObjectService,
         TagService $tagService,
         EmbeddedBroadcastService $embeddedBroadcastService,
@@ -150,7 +145,7 @@ class MultimediaObjectController extends SortableAdminController
         $pumukitNewAdminMultimediaObjectLabel,
         MediaUpdater $mediaUpdater
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $requestStack, $translator);
         $this->requestStack = $requestStack;
         $this->multimediaObjectSyncService = $multimediaObjectSyncService;
         $this->multimediaObjectSearchService = $multimediaObjectSearchService;
@@ -181,7 +176,7 @@ class MultimediaObjectController extends SortableAdminController
      */
     public function indexAction(Request $request)
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
 
         $sessionId = $session->get('admin/series/id', null);
         $series = $this->factoryService->findSeriesById($request->query->get('id'), $sessionId);
@@ -239,7 +234,7 @@ class MultimediaObjectController extends SortableAdminController
 
     public function createAction(Request $request)
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
 
         $sessionId = $session->get('admin/series/id', null);
         $series = $this->factoryService->findSeriesById($request->get('id'), $sessionId);
@@ -423,7 +418,7 @@ class MultimediaObjectController extends SortableAdminController
         }
 
         $resource = $this->findOr404($request);
-        $this->session->set('admin/mms/id', $resource->getId());
+        $this->requestStack->getSession()->set('admin/mms/id', $resource->getId());
 
         $locale = $request->getLocale();
         if ($resource->isPrototype()) {
@@ -456,16 +451,16 @@ class MultimediaObjectController extends SortableAdminController
     {
         $resource = $this->findOr404($request);
 
-        $sessionId = $this->session->get('admin/series/id', null);
+        $sessionId = $this->requestStack->getSession()->get('admin/series/id', null);
         $series = $this->factoryService->findSeriesById(null, $resource->getSeries()->getId());
         if (null === $series) {
             throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
         }
-        $this->session->set('admin/series/id', $series->getId());
+        $this->requestStack->getSession()->set('admin/series/id', $series->getId());
 
         $parentTags = $this->factoryService->getParentTags();
 
-        $this->session->set('admin/mms/id', $resource->getId());
+        $this->requestStack->getSession()->set('admin/mms/id', $resource->getId());
 
         $locale = $request->getLocale();
         $previousStatus = $resource->getStatus();
@@ -707,8 +702,8 @@ class MultimediaObjectController extends SortableAdminController
             return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
-        if ($resourceId === $this->session->get('admin/mms/id')) {
-            $this->session->remove('admin/mms/id');
+        if ($resourceId === $this->requestStack->getSession()->get('admin/mms/id')) {
+            $this->requestStack->getSession()->remove('admin/mms/id');
         }
 
         return $this->redirectToRoute('pumukitnewadmin_mms_list', ['seriesId' => $seriesId]);
@@ -733,8 +728,8 @@ class MultimediaObjectController extends SortableAdminController
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
-            if ($id === $this->session->get('admin/mms/id')) {
-                $this->session->remove('admin/mms/id');
+            if ($id === $this->requestStack->getSession()->get('admin/mms/id')) {
+                $this->requestStack->getSession()->remove('admin/mms/id');
             }
         }
 
@@ -789,7 +784,7 @@ class MultimediaObjectController extends SortableAdminController
     public function listAction(Request $request)
     {
         $seriesId = $request->get('seriesId', null);
-        $sessionId = $this->session->get('admin/series/id', null);
+        $sessionId = $this->requestStack->getSession()->get('admin/series/id', null);
         $series = $this->factoryService->findSeriesById($seriesId, $sessionId);
 
         if (!$series) {
@@ -800,13 +795,13 @@ class MultimediaObjectController extends SortableAdminController
 
         $update_session = true;
         foreach ($mms as $mm) {
-            if ($mm->getId() == $this->session->get('admin/mms/id')) {
+            if ($mm->getId() == $this->requestStack->getSession()->get('admin/mms/id')) {
                 $update_session = false;
             }
         }
 
         if ($update_session) {
-            $this->session->remove('admin/mms/id');
+            $this->requestStack->getSession()->remove('admin/mms/id');
         }
 
         return $this->render(
@@ -824,21 +819,21 @@ class MultimediaObjectController extends SortableAdminController
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
-        $this->session->set('admin/mms/cut', $ids);
+        $this->requestStack->getSession()->set('admin/mms/cut', $ids);
 
         return new JsonResponse($ids);
     }
 
     public function pasteAction(Request $request)
     {
-        if (!$this->session->has('admin/mms/cut')) {
+        if (!$this->requestStack->getSession()->has('admin/mms/cut')) {
             throw new \Exception('Not found any multimedia object to paste.');
         }
 
-        $ids = $this->session->get('admin/mms/cut');
+        $ids = $this->requestStack->getSession()->get('admin/mms/cut');
 
         $seriesId = $request->get('seriesId', null);
-        $sessionId = $this->session->get('admin/series/id', null);
+        $sessionId = $this->requestStack->getSession()->get('admin/series/id', null);
         $series = $this->factoryService->findSeriesById($seriesId, $sessionId);
 
         foreach ($ids as $id) {
@@ -848,8 +843,8 @@ class MultimediaObjectController extends SortableAdminController
                 continue;
             }
 
-            if ($id === $this->session->get('admin/mms/id')) {
-                $this->session->remove('admin/mms/id');
+            if ($id === $this->requestStack->getSession()->get('admin/mms/id')) {
+                $this->requestStack->getSession()->remove('admin/mms/id');
             }
             $multimediaObject->setSeries($series);
             if (Series::SORT_MANUAL === $series->getSorting()) {
@@ -864,7 +859,7 @@ class MultimediaObjectController extends SortableAdminController
         $this->documentManager->persist($series);
         $this->documentManager->flush();
 
-        $this->session->remove('admin/mms/cut');
+        $this->requestStack->getSession()->remove('admin/mms/cut');
 
         $this->sortedMultimediaObjectService->reorder($series);
 
@@ -873,7 +868,7 @@ class MultimediaObjectController extends SortableAdminController
 
     public function reorderAction(Request $request)
     {
-        $sessionId = $this->session->get('admin/series/id', null);
+        $sessionId = $this->requestStack->getSession()->get('admin/series/id', null);
         $series = $this->factoryService->findSeriesById($request->get('id'), $sessionId);
 
         $series->setSorting($request->get('sorting', Series::SORT_MANUAL));
@@ -1194,11 +1189,11 @@ class MultimediaObjectController extends SortableAdminController
         $requestCriteria = $request->get('criteria', []);
 
         if (array_key_exists('reset', $requestCriteria)) {
-            $this->session->remove('admin/'.$this->getResourceName().'/criteria');
+            $this->requestStack->getSession()->remove('admin/'.$this->getResourceName().'/criteria');
         } elseif ($requestCriteria) {
-            $this->session->set('admin/'.$this->getResourceName().'/criteria', $requestCriteria);
+            $this->requestStack->getSession()->set('admin/'.$this->getResourceName().'/criteria', $requestCriteria);
         }
-        $requestCriteria = $this->session->get('admin/'.$this->getResourceName().'/criteria', []);
+        $requestCriteria = $this->requestStack->getSession()->get('admin/'.$this->getResourceName().'/criteria', []);
 
         return $this->multimediaObjectSearchService->processMMOCriteria($requestCriteria, $request->getLocale());
     }
@@ -1206,7 +1201,7 @@ class MultimediaObjectController extends SortableAdminController
     public function getResources(Request $request, $criteria)
     {
         $sorting = $this->getSorting($request, $this->getResourceName());
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $session_namespace = 'admin/'.$this->getResourceName();
 
         $resources = $this->createPager($criteria, $sorting);
@@ -1235,7 +1230,7 @@ class MultimediaObjectController extends SortableAdminController
 
     public function getSorting(?Request $request = null, $session_namespace = null): array
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
 
         if ($sorting = $request->get('sorting')) {
             $session->set('admin/'.$session_namespace.'/type', current($sorting));
@@ -1254,7 +1249,7 @@ class MultimediaObjectController extends SortableAdminController
 
     public function getResourceName(): string
     {
-        $request = $this->requestStack->getMasterRequest();
+        $request = $this->requestStack->getMainRequest();
         $sRoute = $request->get('_route');
 
         return (false === strpos($sRoute, 'all')) ? 'mms' : 'mmslist';
@@ -1356,7 +1351,7 @@ class MultimediaObjectController extends SortableAdminController
 
     protected function getListMultimediaObjects(Series $series, $newMultimediaObjectId = null)
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $page = $session->get('admin/mms/page', 1);
 
         $maxPerPage = $session->get('admin/mms/paginate', 10);
@@ -1573,7 +1568,7 @@ class MultimediaObjectController extends SortableAdminController
 
     private function updateSession(MultimediaObject $mm)
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $paginate = $session->get('admin/mms/paginate', 10);
 
         $page = (int) ceil($mm->getRank() / $paginate);

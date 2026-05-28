@@ -46,7 +46,7 @@ final class JobCreatorTest extends PumukitTestCase
         $this->jobValidator = self::$kernel->getContainer()->get(JobValidator::class);
         $this->profileValidator = self::$kernel->getContainer()->get(ProfileValidator::class);
         $this->propService = self::$kernel->getContainer()->get(MultimediaObjectPropertyJobService::class);
-        $this->tokenStorage = self::$kernel->getContainer()->get('security.token_storage');
+        $this->tokenStorage = self::getContainer()->get('security.token_storage');
         $this->logger = new Logger('test');
         $this->tmpPath = self::$kernel->getContainer()->getParameter('pumukit.tmp');
 

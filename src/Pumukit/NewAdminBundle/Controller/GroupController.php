@@ -19,8 +19,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -42,16 +42,16 @@ class GroupController extends AdminController
         PaginationService $paginationService,
         FactoryService $factoryService,
         GroupService $groupService,
-        SessionInterface $session,
+        RequestStack $requestStack,
         MultimediaObjectService $multimediaObjectService,
         EmbeddedBroadcastService $embeddedBroadcastService,
         UserService $userService,
         TranslatorInterface $translator
     ) {
-        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $session, $translator);
+        parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $requestStack, $translator);
         $this->documentManager = $documentManager;
         $this->groupService = $groupService;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
         $this->multimediaObjectService = $multimediaObjectService;
         $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->userService = $userService;
@@ -176,8 +176,8 @@ class GroupController extends AdminController
                     return new JsonResponse($e->getMessage(), Response::HTTP_BAD_REQUEST);
                 }
             }
-            if ($id === $this->session->get('admin/group/id')) {
-                $this->session->remove('admin/group/id');
+            if ($id === $this->requestStack->getSession()->get('admin/group/id')) {
+                $this->requestStack->getSession()->remove('admin/group/id');
             }
         }
         if ($notDeleted) {
@@ -204,7 +204,7 @@ class GroupController extends AdminController
     public function getResources(Request $request, $criteria)
     {
         $sorting = $this->getSorting($request);
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         $sessionNamespace = 'admin/group';
 
         $resources = $this->createPager($criteria, $sorting);
@@ -228,7 +228,7 @@ class GroupController extends AdminController
 
     public function getSorting(?Request $request = null, $session_namespace = null): array
     {
-        $session = $this->session;
+        $session = $this->requestStack->getSession();
         if ($sorting = $request->get('sorting')) {
             $session->set('admin/group/type', $sorting[key($sorting)]);
             $session->set('admin/group/sort', key($sorting));

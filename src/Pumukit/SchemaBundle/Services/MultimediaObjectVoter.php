@@ -28,7 +28,7 @@ class MultimediaObjectVoter extends Voter
         $this->requestStack = $requestStack;
     }
 
-    protected function supports($attribute, $subject)
+    protected function supports(string $attribute, $subject): bool
     {
         // if the attribute isn't one we support, return false
         if (!in_array($attribute, [self::EDIT, self::PLAY, self::VIEW_METADATA])) {
@@ -43,7 +43,7 @@ class MultimediaObjectVoter extends Voter
         return true;
     }
 
-    protected function voteOnAttribute($attribute, $multimediaObject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, $multimediaObject, TokenInterface $token): bool
     {
         $user = $token->getUser();
 

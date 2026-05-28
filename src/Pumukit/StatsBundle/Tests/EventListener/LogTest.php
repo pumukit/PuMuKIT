@@ -39,7 +39,7 @@ class LogTest extends PumukitTestCase
         parent::setUp();
         $this->repo = $this->dm->getRepository(ViewsLog::class);
         $this->factoryService = static::$kernel->getContainer()->get('pumukitschema.factory');
-        $this->tokenStorage = static::$kernel->getContainer()->get('security.token_storage');
+        $this->tokenStorage = static::getContainer()->get('security.token_storage');
         $this->i18nService = new i18nService(['en', 'es'], 'en');
     }
 
@@ -77,7 +77,7 @@ class LogTest extends PumukitTestCase
     {
         $request = Request::create('/');
         $requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
-        $requestStack->expects(static::once())->method('getMasterRequest')->willReturn($request);
+        $requestStack->expects(static::once())->method('getMainRequest')->willReturn($request);
 
         return $requestStack;
     }

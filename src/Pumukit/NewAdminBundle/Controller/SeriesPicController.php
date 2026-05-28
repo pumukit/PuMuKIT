@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
@@ -28,19 +28,18 @@ class SeriesPicController extends AbstractController implements NewAdminControll
     /** @var PaginationService */
     private $paginationService;
 
-    /** @var SessionInterface */
-    private $session;
+    private $requestStack;
 
     public function __construct(
         DocumentManager $documentManager,
         SeriesPicService $seriesPicService,
         PaginationService $paginationService,
-        SessionInterface $session
+        RequestStack $requestStack
     ) {
         $this->documentManager = $documentManager;
         $this->seriesPicService = $seriesPicService;
         $this->paginationService = $paginationService;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -182,9 +181,9 @@ class SeriesPicController extends AbstractController implements NewAdminControll
     public function picstoaddlistAction(Request $request, Series $series)
     {
         if ($request->get('page', null)) {
-            $this->session->set('admin/seriespic/page', $request->get('page', 1));
+            $this->requestStack->getSession()->set('admin/seriespic/page', $request->get('page', 1));
         }
-        $page = (int) $this->session->get('admin/seriespic/page', 1);
+        $page = (int) $this->requestStack->getSession()->get('admin/seriespic/page', 1);
         $limit = 12;
 
         $urlPics = $this->seriesPicService->getRecommendedPics($series);
