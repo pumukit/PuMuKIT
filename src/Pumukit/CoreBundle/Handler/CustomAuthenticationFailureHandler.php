@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler;
 use Symfony\Component\Security\Http\HttpUtils;
 
@@ -29,12 +29,12 @@ class CustomAuthenticationFailureHandler extends DefaultAuthenticationFailureHan
     {
         $username = $request->request->get('_username');
         if (!$username) {
-            throw new UsernameNotFoundException(self::EXCEPTION_MESSAGE);
+            throw new UserNotFoundException(self::EXCEPTION_MESSAGE);
         }
 
         $user = $this->documentManager->getRepository(User::class)->findOneBy(['username' => $username]);
         if (!$user) {
-            throw new UsernameNotFoundException(self::EXCEPTION_MESSAGE);
+            throw new UserNotFoundException(self::EXCEPTION_MESSAGE);
         }
 
         $this->updateUser($user);

@@ -10,7 +10,7 @@ class FrameListManifest
 {
     private $opencastClient;
 
-    public function __construct(?Pumukit\OpencastBundle\Services\Client $opencastClient)
+    public function __construct(?\Pumukit\OpencastBundle\Services\Client $opencastClient)
     {
         $this->opencastClient = $opencastClient;
     }
