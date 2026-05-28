@@ -1,33 +1,39 @@
-.PHONY: help debug stop start clean pull build test-all shell php-shell composer ps logs cc composer-validate fixtures composer-install
+.PHONY: help up start stop clean down debug pull build \
+        cc cc-envs ai \
+        composer composer-install composer-update composer-validate fixtures \
+        test-all test test-lint-yaml test-lint-twig test-lint-xliff test-lint-generic \
+        test-php-cs-fixer test-php-stan test-rector \
+        shell php-shell ps logs
+
+.DEFAULT_GOAL := help
 
 DOCKER_COMP = docker compose
+
+DC_BASE = $(DOCKER_COMP) -f docker-compose.yml
+DC_TEST = $(DOCKER_COMP) -f docker-compose.test.yml
+
+# Run a command in the php service: reuse the running container if the stack is up,
+# otherwise spin up an ephemeral one that is removed afterwards (--rm).
+define run_php
+	@if [ -n "$$($(DOCKER_COMP) ps -q php 2>/dev/null)" ]; then \
+		$(DOCKER_COMP) exec php $(1); \
+	else \
+		$(DC_BASE) run --rm php $(1); \
+	fi
+endef
+
+# Run a command in the php service of the test stack (always an ephemeral container).
+define run_php_test
+	@$(DC_TEST) run --rm php $(1)
+endef
 
 help:
 	@echo ''
 	@echo 'PuMuKIT makefile'
 	@echo ''
 	@echo 'Usage:'
-	@echo '    make up                    Deploy all the containers'
-	@echo '    make debug                 Deploy all the containers with debug log'
-	@echo '    make stop                  Stop all the containers'
-	@echo '    make start                 Start stopped containers'
-	@echo '    make clean                 Remove all the containers'
-	@echo '    make pull                  Download container images from registry'
-	@echo '    make build                 build project docker images'
-	@echo '    make test-all              Run the PuMuKIT code tests'
-	@echo '    make shell                 Attach to tte PuMuKIT tty (new container)'
-	@echo '    make php-shell             Open a shell in the running PHP container'
-	@echo '    make composer CMD="..."    Run a composer command in the running PHP container'
-	@echo '    make ps                    List service state'
-	@echo '    make logs                  Show the log of all services'
-	@echo '    make cc                    Clear cache and install assets'
-	@echo '    make composer-validate     Validate composer'
-	@echo '    make fixtures              Import basic fixtures'
-	@echo '    make composer-install      Install composer dependencies'
-
-current-dir := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-
-dynamic_docker_php_name := $(shell echo $(notdir $(shell pwd) | tr A-Z a-z))_php_1
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
+		awk 'BEGIN {FS = ":.*?## "}; {printf "    \033[36m%-22s\033[0m %s\n", $$1, $$2}'
 
 up:
 	@$(DOCKER_COMP) up -d
@@ -41,6 +47,9 @@ stop:
 clean: stop
 	@$(DOCKER_COMP) rm -f
 
+down:
+	@$(DOCKER_COMP) down
+
 debug:
 	@$(DOCKER_COMP) up
 
@@ -51,60 +60,59 @@ build:
 	@$(DOCKER_COMP) build
 
 cc-envs:
-	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php bin/console c:c
-	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php bin/console c:c --env=prod
+	$(call run_php,bin/console c:c)
+	$(call run_php,bin/console c:c --env=prod)
 
 ai:
-	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php bin/console a:i --symlink --relative
+	$(call run_php,bin/console a:i --symlink --relative)
 
 cc: cc-envs ai
 
-# Composer
 composer-install: CMD=install
-composer-update: CMD=update
+composer-update:  CMD=update
 composer-install composer-update:
-	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer $(CMD)
+	$(call run_php,composer $(CMD))
+
+composer:
+	$(call run_php,composer $(CMD))
 
 composer-validate:
-	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer validate
+	$(call run_php,composer validate)
 
 fixtures:
-	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php bin/console pumukit:init:repo all --force
+	$(call run_php,bin/console pumukit:init:repo all --force)
 
-test-all: test test-lint-yaml test-lint-twig test-lint-generic test-php-cs-fixer test-php-stan test-rector
+test-all: test test-lint-yaml test-lint-twig test-lint-xliff test-lint-generic test-php-cs-fixer test-php-stan test-rector ## Run all the PuMuKIT code tests
 
 test:
-	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer tests
+	$(call run_php_test,composer tests)
 
 test-lint-yaml:
-	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer lint-yaml
+	$(call run_php_test,composer lint-yaml)
 
 test-lint-twig:
-	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer lint-twig
+	$(call run_php_test,composer lint-twig)
 
 test-lint-xliff:
-	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer lint-xliff
+	$(call run_php_test,composer lint-xliff)
 
 test-lint-generic:
-	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer lint-generic
+	$(call run_php_test,composer lint-generic)
 
 test-php-cs-fixer:
-	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer php-cs-fixer
+	$(call run_php_test,composer php-cs-fixer)
 
 test-php-stan:
-	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer php-stan
+	$(call run_php_test,composer php-stan)
 
 test-rector:
-	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php composer php-rector
+	$(call run_php_test,composer php-rector)
 
 shell:
-	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php sh
+	@$(DC_BASE) run --rm php sh
 
 php-shell:
 	@$(DOCKER_COMP) exec php bash
-
-composer:
-	@$(DOCKER_COMP) exec php composer $(CMD)
 
 ps:
 	@$(DOCKER_COMP) ps
