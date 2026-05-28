@@ -12,6 +12,7 @@ return [
     Pumukit\InspectionBundle\PumukitInspectionBundle::class => ['all' => true],
     Pumukit\NewAdminBundle\PumukitNewAdminBundle::class => ['all' => true],
     Pumukit\NotificationBundle\PumukitNotificationBundle::class => ['all' => true],
+    Pumukit\PaellaPlayerBundle\PumukitPaellaPlayerBundle::class => ['all' => true],
     Pumukit\SchemaBundle\PumukitSchemaBundle::class => ['all' => true],
     Pumukit\StatsBundle\PumukitStatsBundle::class => ['all' => true],
     Pumukit\StatsUIBundle\PumukitStatsUIBundle::class => ['all' => true],
@@ -26,7 +27,6 @@ return [
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
-    Pumukit\PaellaPlayerBundle\PumukitPaellaPlayerBundle::class => ['all' => true],
     Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
     ApiPlatform\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
 ];

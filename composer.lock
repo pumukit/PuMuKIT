@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a7974235e5085ed1828e058f6dc5ac89",
+    "content-hash": "25135de3900af1409fb9274708c743df",
     "packages": [
         {
             "name": "ankitpokhrel/tus-php",
@@ -9482,57 +9482,6 @@
                 }
             ],
             "time": "2026-05-25T06:03:23+00:00"
-        },
-        {
-            "name": "teltek/pumukit-paella-player-bundle",
-            "version": "4.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/teltek/PumukitPaellaPlayerBundle.git",
-                "reference": "ad1db240602006e7503caca8512cee6864087035"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PumukitPaellaPlayerBundle/zipball/ad1db240602006e7503caca8512cee6864087035",
-                "reference": "ad1db240602006e7503caca8512cee6864087035",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.2",
-                "pumukit/pumukit": "^5.0"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "Pumukit\\PaellaPlayerBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Teltek Team",
-                    "homepage": "https://teltek.es"
-                }
-            ],
-            "description": "Paella Player Bundle",
-            "homepage": "https://github.com/teltek/PumukitPaellaPlayerBundle",
-            "keywords": [
-                "bundle",
-                "paella",
-                "player",
-                "pumukit",
-                "symfony",
-                "teltek",
-                "theming"
-            ],
-            "support": {
-                "issues": "https://github.com/teltek/PumukitPaellaPlayerBundle/issues",
-                "source": "https://github.com/teltek/PumukitPaellaPlayerBundle/tree/4.1.2"
-            },
-            "time": "2026-03-04T12:10:31+00:00"
         },
         {
             "name": "twig/extra-bundle",

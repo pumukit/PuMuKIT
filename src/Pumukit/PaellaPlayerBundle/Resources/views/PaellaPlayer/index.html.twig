@@ -1,0 +1,22 @@
+{% extends '@PumukitWebTV/layout.html.twig' %}
+{% set hide_slidebar = true %}
+
+{% block meta %}
+  <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
+  {# THIS IS WHAT MAKES PAELLA WORK #}
+  <base href="/bundles/pumukitpaellaplayer/paella/">
+  {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+  {% if live is not defined and event is not defined %}
+    {{ parent() }}
+  {% endif %}
+  <script type="text/javascript" src="{{ asset('bundles/pumukitpaellaplayer/paella/dist/teltek-paella-player-2026-03-04.js') }}"></script>
+{% endblock %}
+
+{% block title %}{{ parent() }} {% endblock %}
+{% block keywords %}{{ parent() }} }}{% endblock %}
+
+{% block body_base %}
+{% endblock %}

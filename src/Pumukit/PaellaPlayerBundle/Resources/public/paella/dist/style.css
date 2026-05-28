@@ -1,0 +1,40 @@
+#player-container {
+    height: 85vh;
+    position: relative;
+    font-family: helvetica, arial, sans-serif;
+}
+
+.video-player, video {
+    pointer-events: none !important;
+}
+
+:root {
+    --volume-slider-fill-color: #FFF;
+    --progress-bar-height: 7px;
+}
+
+.progress-indicator {
+    width: 100%;
+    margin-left: 0;
+    height: var(--progress-bar-height);
+}
+
+.playback-bar .button-plugins .button-plugin-container button {
+    cursor: pointer;
+}
+
+.progress-indicator-container .progress-indicator-content, .progress-indicator-remaining {
+    height: var(--progress-bar-height);
+}
+
+.playback-bar .button-plugins button:hover {
+    background-color: transparent;
+}
+
+.center-container div.captions-search-container input {
+    color: #000;
+}
+
+.image-container, .image-container img {
+    width: 100%;
+}

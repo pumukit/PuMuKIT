@@ -1,0 +1,60 @@
+services:
+  _defaults:
+    autowire:      true
+    autoconfigure: true
+    public:        true
+    bind:
+      $pumukitOpencastHost: "@=container.hasParameter('pumukit_opencast.host') ? parameter('pumukit_opencast.host') : null"
+      $paellaCustomCssUrl: '%pumukitpaella.custom_css_url%'
+      $paellaLogo: '%pumukitpaella.logo%'
+      $pumukitIntro: '%pumukit.intro%'
+      $paellaXAPIEndpoint: '%pumukitpaella.xapi_endpoint%'
+      $paellaXAPIAuth: '%pumukitpaella.xapi_auth%'
+      $paellaAccessControlClass: '%pumukitpaella.access_control_class%'
+      $paellaFootPrints: '%pumukitpaella.footprints%'
+      $paellaAutoPlay: '%pumukitpaella.autoplay%'
+      $pumukitPlayerWhenDispatchViewEvent: '%pumukitplayer.when_dispatch_view_event%'
+      $requestContextScheme: '%router.request_context.scheme%'
+      $requestContextHost: '%router.request_context.host%'
+
+
+  Pumukit\PaellaPlayerBundle\Controller\:
+    resource: '../../Controller/'
+    tags: ['controller.service_arguments']
+
+  Pumukit\PaellaPlayerBundle\Twig\PumukitExtension:
+    class: Pumukit\PaellaPlayerBundle\Twig\PumukitExtension
+    tags:
+      - { name: "twig.extension" }
+
+  Pumukit\PaellaPlayerBundle\Services\CaptionsManifest:
+    class: Pumukit\PaellaPlayerBundle\Services\CaptionsManifest
+
+  Pumukit\PaellaPlayerBundle\Services\FrameListManifest:
+    class: Pumukit\PaellaPlayerBundle\Services\FrameListManifest
+
+  Pumukit\PaellaPlayerBundle\Services\LiveManifest:
+    class: Pumukit\PaellaPlayerBundle\Services\LiveManifest
+
+  Pumukit\PaellaPlayerBundle\Services\MetadataManifest:
+    class: Pumukit\PaellaPlayerBundle\Services\MetadataManifest
+
+  Pumukit\PaellaPlayerBundle\Services\StreamsManifest:
+    class: Pumukit\PaellaPlayerBundle\Services\StreamsManifest
+
+  Pumukit\PaellaPlayerBundle\Services\CustomManifest:
+    class: Pumukit\PaellaPlayerBundle\Services\CustomManifest
+
+  Pumukit\PaellaPlayerBundle\Services\VoDManifest:
+    class: Pumukit\PaellaPlayerBundle\Services\VoDManifest
+
+  Pumukit\PaellaPlayerBundle\Services\ChannelManifest:
+    class: Pumukit\PaellaPlayerBundle\Services\ChannelManifest
+    arguments:
+      $eventDefaultPic: "%pumukit_new_admin.advance_live_event_create_default_pic%"
+
+  Pumukit\PaellaPlayerBundle\Services\PlaylistManifest:
+    class: Pumukit\PaellaPlayerBundle\Services\PlaylistManifest
+
+  Pumukit\PaellaPlayerBundle\Services\TrimmingManifest:
+    class: Pumukit\PaellaPlayerBundle\Services\TrimmingManifest

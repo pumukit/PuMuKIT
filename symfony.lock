@@ -316,9 +316,6 @@
             "config/routes/dev/web_profiler.yaml"
         ]
     },
-    "teltek/pumukit-paella-player-bundle": {
-        "version": "3.0.12"
-    },
     "twig/extra-bundle": {
         "version": "v3.5.0"
     }

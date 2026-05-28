@@ -1,0 +1,12 @@
+{% if opencast_host is defined and opencast_host is not null %}
+    localStorage.setItem('opencast_host', "{{ opencast_host }}");
+    var isOpencast = "{{ multimediaObject.getProperty('opencast') }}";
+    if(isOpencast) {
+        localStorage.setItem('opencastId',"{{ multimediaObject.getProperty('opencast') }}");
+    } else {
+        localStorage.removeItem('opencastId');
+    }
+
+    var username = "{{ app.user.username|default('anonymous') }}";
+    var useremail = "{{ app.user.email|default('anonymous@pumukit.org') }}";
+{% endif %}

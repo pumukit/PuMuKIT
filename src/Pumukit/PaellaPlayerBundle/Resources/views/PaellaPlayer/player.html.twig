@@ -1,0 +1,79 @@
+{% extends '@PumukitPaellaPlayer/PaellaPlayer/index.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% if custom_css_url is defined and custom_css_url %}
+        <link rel="stylesheet" href="{{ custom_css_url }}" type="text/css" media="screen">
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+    <script>
+        function resizeFrame(elem) {
+            var width = $(elem).width();
+            var height = width / 16 * 9;
+            $(elem).height(height);
+        }
+
+        $(window).resize(function () {
+            resizeFrame($('#player-container'));
+        });
+
+        $(window).on("load", function() {
+            resizeFrame($('#player-container'));
+        });
+    </script>
+{% endblock %}
+
+{% block body_base %}
+
+    <div id="player-container"></div>
+
+    <script>
+        {% include('@PumukitPaellaPlayer/PaellaPlayer/multistream.js.twig') %}
+    </script>
+
+    <script>
+        (function () {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('autoclick') !== '1') return;
+
+            const selectors = [
+                '#playerContainerClickArea',
+                '.preview-container[role="button"]',
+                '.preview-container button[aria-label="Play video"]',
+                '.preview-container button[aria-label="Reproducir"]',
+                '#playerContainerClickArea button[aria-label="Play video"]',
+                '#playerContainerClickArea button[aria-label="Reproducir"]'
+            ];
+
+            function tryClick() {
+                for (const selector of selectors) {
+                    const el = document.querySelector(selector);
+                    if (el && typeof el.click === 'function') {
+                        el.click();
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            window.addEventListener('load', () => {
+                if (tryClick()) return;
+
+                const observer = new MutationObserver(() => {
+                    if (tryClick()) observer.disconnect();
+                });
+
+                const playerContainer = document.getElementById('player-container') || document.body;
+                observer.observe(playerContainer, {
+                    childList: true,
+                    subtree: true
+                });
+
+                setTimeout(() => observer.disconnect(), 10000);
+            });
+        })();
+    </script>
+{% endblock %}
