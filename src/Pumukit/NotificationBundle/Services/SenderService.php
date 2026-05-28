@@ -9,6 +9,9 @@ use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Repository\PersonRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
@@ -41,7 +44,7 @@ class SenderService
     private $session;
 
     public function __construct(
-        \Swift_Mailer $mailer,
+        MailerInterface $mailer,
         Environment $templating,
         TranslatorInterface $translator,
         DocumentManager $documentManager,
@@ -150,15 +153,15 @@ class SenderService
             $body = $template->render($parameters);
             $subjectTemplate = $twig->createTemplate($subjectString);
             $subject = $subjectTemplate->render($parameters);
-            $message = new \Swift_Message();
-            $message
-                ->setSubject($subject)
-                ->setSender($this->senderEmail, $this->senderName)
-                ->setFrom($this->senderEmail, $this->senderName)
-                ->addReplyTo($this->senderEmail, $this->senderName)
-                ->setTo($email)
-                ->setBody($body, 'text/html')
-                ->addPart($body, 'text/plain')
+            $senderAddress = new Address($this->senderEmail, $this->senderName);
+            $message = (new Email())
+                ->subject($subject)
+                ->sender($senderAddress)
+                ->from($senderAddress)
+                ->replyTo($senderAddress)
+                ->to($email)
+                ->html($body)
+                ->text($body)
             ;
 
             $this->mailer->send($message);
@@ -198,18 +201,19 @@ class SenderService
         return (bool) $sent;
     }
 
-    public function getMessageToSend(\Swift_Message $message, string $email, string $subject, string $template, array $parameters, bool $error, bool $transConfigSubject)
+    public function getMessageToSend(Email $message, string $email, string $subject, string $template, array $parameters, bool $error, bool $transConfigSubject)
     {
         $body = $this->getBodyInMultipleLanguages($template, $parameters, $error, $transConfigSubject);
 
+        $senderAddress = new Address($this->senderEmail, $this->senderName);
         $message
-            ->setSubject($subject)
-            ->setSender($this->senderEmail, $this->senderName)
-            ->setFrom($this->senderEmail, $this->senderName)
-            ->addReplyTo($this->senderEmail, $this->senderName)
-            ->setTo($email)
-            ->setBody($body, 'text/html')
-            ->addPart($body, 'text/plain')
+            ->subject($subject)
+            ->sender($senderAddress)
+            ->from($senderAddress)
+            ->replyTo($senderAddress)
+            ->to($email)
+            ->html($body)
+            ->text($body)
         ;
 
         return $message;
@@ -282,7 +286,7 @@ class SenderService
 
     private function sendEmailTemplate($emailTo, string $subject, string $template, array $parameters, bool $error, bool $transConfigSubject)
     {
-        $message = new \Swift_Message();
+        $message = new Email();
         if ($error && $this->notificateErrorsToAdmin) {
             if (is_array($this->adminEmail)) {
                 foreach ($this->adminEmail as $admin) {
@@ -298,15 +302,17 @@ class SenderService
             foreach ($emailTo as $email) {
                 $parameters['person_name'] = $this->getPersonNameFromEmail($email);
                 $message = $this->getMessageToSend($message, $email, $subject, $template, $parameters, $error, $transConfigSubject);
-                $aux += $this->mailer->send($message);
+                $this->mailer->send($message);
+                ++$aux;
             }
 
             return $aux;
         }
         $parameters['person_name'] = $this->getPersonNameFromEmail($emailTo);
         $message = $this->getMessageToSend($message, $emailTo, $subject, $template, $parameters, $error, $transConfigSubject);
+        $this->mailer->send($message);
 
-        return $this->mailer->send($message);
+        return 1;
     }
 
     private function transConfigurationSubject(array $parameters, string $locale, bool $error, bool $transConfigSubject): array

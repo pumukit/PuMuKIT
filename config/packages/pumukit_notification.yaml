@@ -7,7 +7,6 @@ services:
   Pumukit\NotificationBundle\Services\SenderService:
     class: Pumukit\NotificationBundle\Services\SenderService
     arguments:
-      $mailer:                  '@mailer'
       $enable:                  '%pumukit_notification.enable%'
       $senderEmail:             '%pumukit_notification.sender_email%'
       $senderName:              '%pumukit_notification.sender_name%'

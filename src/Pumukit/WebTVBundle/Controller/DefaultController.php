@@ -21,6 +21,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -46,7 +49,7 @@ class DefaultController extends AbstractController
         EmbeddedEventSessionService $embeddedEventSessionService,
         TranslatorInterface $translator,
         LoggerInterface $logger,
-        \Swift_Mailer $mailer,
+        MailerInterface $mailer,
         $captchaPublicKey,
         $captchaPrivateKey,
         $pumukitLiveEventContactAndShare,
@@ -299,11 +302,11 @@ class DefaultController extends AbstractController
                 $multimediaObject->getEmbeddedEvent()->getName()
             );
 
-            $message = new \Swift_Message();
-            $message->setSubject($subject)->setSender($mail)->setFrom($mail)->setTo($to)->setBody($bodyMail, 'text/plain');
-            $sent = $this->mailer->send($message);
+            $message = (new Email())->subject($subject)->sender($mail)->from($mail)->to($to)->text($bodyMail);
 
-            if (0 === $sent) {
+            try {
+                $this->mailer->send($message);
+            } catch (TransportExceptionInterface $exception) {
                 $this->logger->error('Event contact: Error sending message from - '.$request->request->get('email'));
             }
 

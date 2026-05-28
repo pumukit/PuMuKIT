@@ -7,6 +7,7 @@ namespace Pumukit\NotificationBundle\Tests\Services;
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\NotificationBundle\Services\SenderService;
+use Symfony\Component\Mailer\MailerInterface;
 use Twig\Environment;
 
 /**
@@ -42,7 +43,7 @@ class SenderServiceTest extends PumukitTestCase
         $container = static::$kernel->getContainer();
         $this->logger = $this->getMockBuilder(LoggerInterface::class)->disableOriginalConstructor()->getMock();
         $this->templating = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
-        $this->mailer = $container->get('mailer');
+        $this->mailer = $this->getMockBuilder(MailerInterface::class)->disableOriginalConstructor()->getMock();
         $this->translator = $container->get('translator');
         $this->session = $container->get('session');
         $this->enable = true;
