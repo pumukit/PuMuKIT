@@ -13,6 +13,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Mailpit as a mail catcher for local development (web inbox at http://localhost:8025).
 - Functional tests for user creation, login and logout.
 - `make php-shell` and `make composer` targets to work inside the PHP container.
+- `pumukit:textindex:rebuild` command to regenerate the search text index for all Multimedia Objects and Series.
 
 #### Changed
 
