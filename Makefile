@@ -101,7 +101,7 @@ shell:
 	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php sh
 
 php-shell:
-	@$(DOCKER_COMP) exec php sh
+	@$(DOCKER_COMP) exec php bash
 
 composer:
 	@$(DOCKER_COMP) exec php composer $(CMD)
