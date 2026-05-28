@@ -28,7 +28,7 @@ Instead, please use the **GitHub Private Vulnerability Reporting** feature:
 
 * **Assessment:** Our team will review the report and either accept it or request more information within 2-3 business days.
 * **Fixing:** If confirmed, we will work on a patch in a private branch associated with the Advisory.
-* **Release:** Once version **5.1.0** (or the corresponding patch) is ready, we will publish the Security Advisory to inform the community.
+* **Release:** Once a fixed version (or the corresponding patch) is ready, we will publish the Security Advisory to inform the community.
 
 ## Responsible Disclosure
 
