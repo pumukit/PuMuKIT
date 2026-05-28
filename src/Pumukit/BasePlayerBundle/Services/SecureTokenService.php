@@ -102,9 +102,9 @@ class SecureTokenService
     {
         if (empty($this->secret)) {
             throw new \RuntimeException(
-                'PUMUKITPLAYER_SECURE_SECRET is not configured. '.
-                'Please set it in your .env file. '.
-                'Generate one with: php -r "echo bin2hex(random_bytes(32)) . PHP_EOL;"'
+                'PUMUKITPLAYER_SECURE_SECRET is not configured. '
+                .'Please set it in your .env file. '
+                .'Generate one with: php -r "echo bin2hex(random_bytes(32)) . PHP_EOL;"'
             );
         }
     }

@@ -213,7 +213,7 @@ class CategoriesService
     /**
      * @return mixed
      */
-    private function countGeneralMmobjsInTag(TagInterface $tag, string $provider = null)
+    private function countGeneralMmobjsInTag(TagInterface $tag, ?string $provider = null)
     {
         $repo = $this->documentManager->getRepository(MultimediaObject::class);
         $qb = $repo->createBuilderWithGeneralTag($tag);

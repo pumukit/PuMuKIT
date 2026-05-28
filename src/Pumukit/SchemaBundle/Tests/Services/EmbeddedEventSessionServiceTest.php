@@ -135,8 +135,8 @@ class EmbeddedEventSessionServiceTest extends PumukitTestCase
         static::assertCount(2, $now);
 
         static::assertTrue(
-            $now[0]['data']['session']['start'] <
-            $now[1]['data']['session']['start']
+            $now[0]['data']['session']['start']
+            < $now[1]['data']['session']['start']
         );
         $today = $this->service->findEventsToday();
         static::assertCount(2, $today);
@@ -171,8 +171,8 @@ class EmbeddedEventSessionServiceTest extends PumukitTestCase
         static::assertCount(2, $next);
 
         static::assertTrue(
-            $next[0]['data']['session']['start'] <
-            $next[1]['data']['session']['start']
+            $next[0]['data']['session']['start']
+            < $next[1]['data']['session']['start']
         );
 
         // Other future object
@@ -203,13 +203,13 @@ class EmbeddedEventSessionServiceTest extends PumukitTestCase
         static::assertCount(3, $next);
 
         static::assertTrue(
-            $next[0]['data']['session']['start'] <
-            $next[1]['data']['session']['start']
+            $next[0]['data']['session']['start']
+            < $next[1]['data']['session']['start']
         );
 
         static::assertTrue(
-            $next[1]['data']['session']['start'] <
-            $next[2]['data']['session']['start']
+            $next[1]['data']['session']['start']
+            < $next[2]['data']['session']['start']
         );
     }
 }

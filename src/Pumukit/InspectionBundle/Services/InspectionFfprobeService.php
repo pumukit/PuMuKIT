@@ -13,7 +13,7 @@ class InspectionFfprobeService implements InspectionServiceInterface
     private $logger;
     private $command;
 
-    public function __construct(string $command = null, LoggerInterface $logger = null)
+    public function __construct(?string $command = null, ?LoggerInterface $logger = null)
     {
         $this->command = $command ?: 'ffprobe -v quiet -print_format json -show_format -show_streams "{{file}}"';
         $this->logger = $logger;
@@ -88,8 +88,8 @@ class InspectionFfprobeService implements InspectionServiceInterface
         $process->run();
 
         if (!$process->isSuccessful()) {
-            $message = 'Exception executing "'.$command.'": '.$process->getExitCode().' '.
-              $process->getExitCodeText().'. '.$process->getErrorOutput();
+            $message = 'Exception executing "'.$command.'": '.$process->getExitCode().' '
+              .$process->getExitCodeText().'. '.$process->getErrorOutput();
             if ($this->logger) {
                 $this->logger->error($message);
             }

@@ -9,7 +9,7 @@ use Symfony\Component\Process\Process;
 
 class LocalExecutor implements ExecutorInterface
 {
-    public function execute($command, array $cpu = null): string
+    public function execute($command, ?array $cpu = null): string
     {
         $tempFile = tempnam(sys_get_temp_dir(), '');
         if (FileSystemUtils::exists($tempFile)) {

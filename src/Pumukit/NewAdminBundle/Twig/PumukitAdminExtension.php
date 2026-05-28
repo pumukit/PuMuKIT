@@ -161,9 +161,9 @@ class PumukitAdminExtension extends AbstractExtension
         }
 
         if (isset($this->languages[$code])) {
-            $name = $translate ?
-                  $this->languages[$code] :
-                  Languages::getName($code);
+            $name = $translate
+                  ? $this->languages[$code]
+                  : Languages::getName($code);
 
             return ucfirst($name);
         }

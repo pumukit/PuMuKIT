@@ -242,7 +242,7 @@ class EmbeddedBroadcastService
      *
      * @return bool|Response
      */
-    public function canUserPlayMultimediaObject(MultimediaObject $multimediaObject, User $user = null, $password = null)
+    public function canUserPlayMultimediaObject(MultimediaObject $multimediaObject, ?User $user = null, $password = null)
     {
         $embeddedBroadcast = $multimediaObject->getEmbeddedBroadcast();
         if (!$embeddedBroadcast) {
@@ -269,7 +269,7 @@ class EmbeddedBroadcastService
      *
      * @return bool
      */
-    public function isUserRelatedToMultimediaObject(MultimediaObject $multimediaObject, User $user = null)
+    public function isUserRelatedToMultimediaObject(MultimediaObject $multimediaObject, ?User $user = null)
     {
         if (!$user) {
             return false;
@@ -298,7 +298,7 @@ class EmbeddedBroadcastService
         $this->dm->flush();
     }
 
-    private function isAuthenticatedFully(User $user = null)
+    private function isAuthenticatedFully(?User $user = null)
     {
         if (!$user) {
             return false;
@@ -307,7 +307,7 @@ class EmbeddedBroadcastService
         return $this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY');
     }
 
-    private function isUserLoggedIn(User $user = null)
+    private function isUserLoggedIn(?User $user = null)
     {
         if ($this->isAuthenticatedFully($user)) {
             return true;
@@ -316,7 +316,7 @@ class EmbeddedBroadcastService
         return $this->renderErrorNotAuthenticated();
     }
 
-    private function isUserLoggedInAndInGroups(MultimediaObject $multimediaObject, User $user = null)
+    private function isUserLoggedInAndInGroups(MultimediaObject $multimediaObject, ?User $user = null)
     {
         if ($this->isAuthenticatedFully($user)) {
             if ($permissionProfile = $user->getPermissionProfile()) {

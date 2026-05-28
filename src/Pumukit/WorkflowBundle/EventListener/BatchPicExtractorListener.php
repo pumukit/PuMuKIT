@@ -46,8 +46,8 @@ class BatchPicExtractorListener
 
         $this->logger->info(
             self::class.'['.__FUNCTION__.'] '
-            .'Extracted pic from track '.
-            $track->id().' into MultimediaObject "'
+            .'Extracted pic from track '
+            .$track->id().' into MultimediaObject "'
             .$multimediaObject->getId().'"'
         );
 

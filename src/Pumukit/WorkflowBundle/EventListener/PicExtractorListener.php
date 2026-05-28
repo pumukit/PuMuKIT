@@ -99,8 +99,8 @@ class PicExtractorListener
         }
         $this->logger->info(
             self::class.'['.__FUNCTION__.'] '
-            .'Extracted pic from track '.
-            $media->id().' into MultimediaObject "'
+            .'Extracted pic from track '
+            .$media->id().' into MultimediaObject "'
             .$multimediaObject->getId().'"'
         );
     }

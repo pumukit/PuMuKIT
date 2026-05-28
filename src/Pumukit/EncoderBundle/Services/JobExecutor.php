@@ -213,8 +213,8 @@ final class JobExecutor
             $maxExecutionJobTime->add(new \DateInterval('PT'.$this->maxExecutionJobSeconds.'S'));
             if ($nowDateTime > $maxExecutionJobTime) {
                 $job->setStatus(Job::STATUS_ERROR);
-                $message = '[checkService] Job executing for a long time, set status to ERROR. Máx execution time was '.
-                    $maxExecutionJobTime->format('Y-m-d H:i:s');
+                $message = '[checkService] Job executing for a long time, set status to ERROR. Máx execution time was '
+                    .$maxExecutionJobTime->format('Y-m-d H:i:s');
                 $job->appendOutput($message);
                 $this->logger->error($message.' for JOB ID '.$job->getId());
 

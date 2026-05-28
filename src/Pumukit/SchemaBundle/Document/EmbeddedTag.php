@@ -103,7 +103,7 @@ class EmbeddedTag implements TagInterface
         return $this->id;
     }
 
-    public function setTitle(string $title, string $locale = null): void
+    public function setTitle(string $title, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -111,7 +111,7 @@ class EmbeddedTag implements TagInterface
         $this->title[$locale] = $title;
     }
 
-    public function getTitle(string $locale = null): string
+    public function getTitle(?string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -130,7 +130,7 @@ class EmbeddedTag implements TagInterface
         $this->title = $title;
     }
 
-    public function setDescription(string $description, string $locale = null): void
+    public function setDescription(string $description, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -138,7 +138,7 @@ class EmbeddedTag implements TagInterface
         $this->description[$locale] = $description;
     }
 
-    public function getDescription(string $locale = null): ?string
+    public function getDescription(?string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;

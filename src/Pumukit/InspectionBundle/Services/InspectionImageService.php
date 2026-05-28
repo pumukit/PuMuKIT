@@ -13,7 +13,7 @@ final class InspectionImageService implements InspectionServiceInterface
     private string $command;
     private LoggerInterface $logger;
 
-    public function __construct(string $command = null, LoggerInterface $logger = null)
+    public function __construct(?string $command = null, ?LoggerInterface $logger = null)
     {
         $this->command = $command ?: 'exiftool -json "{{file}}"';
         $this->logger = $logger;

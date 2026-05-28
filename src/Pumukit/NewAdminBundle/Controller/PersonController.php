@@ -648,7 +648,7 @@ class PersonController extends AdminController
         return $new_criteria;
     }
 
-    public function getSorting(Request $request = null, $session_namespace = null): array
+    public function getSorting(?Request $request = null, $session_namespace = null): array
     {
         $session = $this->session;
 

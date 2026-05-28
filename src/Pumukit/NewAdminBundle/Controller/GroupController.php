@@ -226,7 +226,7 @@ class GroupController extends AdminController
         return $resources;
     }
 
-    public function getSorting(Request $request = null, $session_namespace = null): array
+    public function getSorting(?Request $request = null, $session_namespace = null): array
     {
         $session = $this->session;
         if ($sorting = $request->get('sorting')) {

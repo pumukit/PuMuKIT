@@ -45,7 +45,7 @@ class RoleType extends AbstractType
                 TextType::class,
                 [
                     'attr' => [
-                        'pattern' => '^\\w*$',
+                        'pattern' => '^\w*$',
                         'oninvalid' => "setCustomValidity('The code can not have blank spaces neither special characters')",
                         'oninput' => "setCustomValidity('')",
                     ],

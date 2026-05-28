@@ -83,9 +83,9 @@ EOT
         foreach ($cpus as $name => $cpu) {
             $table->addRow([
                 $name,
-                in_array($name, $deactivatedCpus) ?
-                    '<error>In Maintenance</error>' :
-                    '<info>Working</info>',
+                in_array($name, $deactivatedCpus)
+                    ? '<error>In Maintenance</error>'
+                    : '<info>Working</info>',
                 $cpu['type'],
                 $cpu['host'],
                 $cpu['number'].'/'.$cpu['max'],

@@ -54,7 +54,7 @@ class TagType extends AbstractType
                 [
                     'attr' => [
                         'aria-label' => $this->translator->trans('Cod', [], null, $this->locale),
-                        'pattern' => '^\\w*$',
+                        'pattern' => '^\w*$',
                         'oninvalid' => "setCustomValidity('The code can not have blank spaces neither special characters')",
                         'oninput' => "setCustomValidity('')",
                     ],

@@ -16,7 +16,7 @@ final class Storage
     private ?Path $path;
     private int $storageSystem;
 
-    private function __construct(UrlInterface $url = null, Path $path = null)
+    private function __construct(?UrlInterface $url = null, ?Path $path = null)
     {
         $this->url = $url;
         $this->path = $path;

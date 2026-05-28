@@ -636,7 +636,7 @@ class MultimediaObjectController extends SortableAdminController
         $mmId = $request->get('mmId');
 
         $parent = $repo->findOneBy(['_id' => $request->get('parent')]);
-        $parent_path = str_replace('|', '\\|', $parent->getPath());
+        $parent_path = str_replace('|', '\|', $parent->getPath());
 
         $qb = $this->documentManager->createQueryBuilder(Tag::class);
         $children = $qb
@@ -1233,7 +1233,7 @@ class MultimediaObjectController extends SortableAdminController
         return $resources;
     }
 
-    public function getSorting(Request $request = null, $session_namespace = null): array
+    public function getSorting(?Request $request = null, $session_namespace = null): array
     {
         $session = $this->session;
 

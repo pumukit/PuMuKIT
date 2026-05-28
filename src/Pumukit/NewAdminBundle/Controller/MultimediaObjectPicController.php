@@ -248,9 +248,9 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
 
             return new JsonResponse('done');
         }
-        $track = $request->query->has('track_id') ?
-                   $multimediaObject->getTrackById($request->query->get('track_id')) :
-                   $multimediaObject->getDisplayTrack();
+        $track = $request->query->has('track_id')
+                   ? $multimediaObject->getTrackById($request->query->get('track_id'))
+                   : $multimediaObject->getDisplayTrack();
 
         if (!$track || $track->metadata()->isOnlyAudio()) {
             throw new NotFoundHttpException("Requested multimedia object doesn't have a public track");

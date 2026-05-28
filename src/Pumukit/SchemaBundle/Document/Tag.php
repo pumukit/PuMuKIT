@@ -142,7 +142,7 @@ class Tag implements TagInterface
         return $this->id;
     }
 
-    public function setTitle(string $title, string $locale = null): void
+    public function setTitle(string $title, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -150,7 +150,7 @@ class Tag implements TagInterface
         $this->title[$locale] = $title;
     }
 
-    public function getTitle(string $locale = null): string
+    public function getTitle(?string $locale = null): string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -159,7 +159,7 @@ class Tag implements TagInterface
         return $this->title[$locale] ?? '';
     }
 
-    public function setLabel(string $label, string $locale = null): void
+    public function setLabel(string $label, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -167,7 +167,7 @@ class Tag implements TagInterface
         $this->label[$locale] = $label;
     }
 
-    public function getLabel(string $locale = null): ?string
+    public function getLabel(?string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -189,7 +189,7 @@ class Tag implements TagInterface
         $this->title = $title;
     }
 
-    public function setDescription(string $description, string $locale = null): void
+    public function setDescription(string $description, ?string $locale = null): void
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -197,7 +197,7 @@ class Tag implements TagInterface
         $this->description[$locale] = $description;
     }
 
-    public function getDescription(string $locale = null): ?string
+    public function getDescription(?string $locale = null): ?string
     {
         if (null === $locale) {
             $locale = $this->locale;
@@ -311,7 +311,7 @@ class Tag implements TagInterface
         $this->number_multimedia_objects = $count;
     }
 
-    public function setParent(TagInterface $parent = null): void
+    public function setParent(?TagInterface $parent = null): void
     {
         $this->parent = $parent;
 

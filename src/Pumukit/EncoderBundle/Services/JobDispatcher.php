@@ -20,7 +20,7 @@ class JobDispatcher
         $this->jobValidator = $jobValidator;
     }
 
-    public function dispatch(string $eventName, Job $job, MediaInterface $media = null): void
+    public function dispatch(string $eventName, Job $job, ?MediaInterface $media = null): void
     {
         $multimediaObject = $this->jobValidator->ensureMultimediaObjectExists($job);
 

@@ -103,7 +103,7 @@ class SearchController extends AbstractController implements WebTVControllerInte
      *
      * @ParamConverter("blockedTag", options={"mapping": {"tagCod": "cod"}})
      */
-    public function multimediaObjectsAction(Request $request, Tag $blockedTag = null, bool $useTagAsGeneral = false): Response
+    public function multimediaObjectsAction(Request $request, ?Tag $blockedTag = null, bool $useTagAsGeneral = false): Response
     {
         $templateTitle = $this->menuSearchTitle ?? 'Multimedia objects search';
         $this->breadcrumbsService->addList($blockedTag ? $blockedTag->getTitle() : $this->translator->trans($templateTitle), 'pumukit_webtv_search_multimediaobjects');

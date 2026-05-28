@@ -44,7 +44,7 @@ interface ElementInterface
 
     public function isHide(): bool;
 
-    public function setDescription(?string $description, string $locale = null): void;
+    public function setDescription(?string $description, ?string $locale = null): void;
 
     public function getDescription($locale = null): ?string;
 

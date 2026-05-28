@@ -92,7 +92,7 @@ class DashboardController extends AbstractController implements NewAdminControll
 
         foreach ($series as $s) {
             $XMLSeries = $XML->addChild('event', htmlspecialchars($s->getTitle()));
-            $XMLSeries->addAttribute('start', $s->getPublicDate()->format('M j Y H:i:s \\G\\M\\TP'));
+            $XMLSeries->addAttribute('start', $s->getPublicDate()->format('M j Y H:i:s \G\M\TP'));
             $XMLSeries->addAttribute('title', $s->getTitle());
             $XMLSeries->addAttribute('link', $this->router->generate('pumukit_webtv_series_index', ['id' => $s->getId()], UrlGeneratorInterface::ABSOLUTE_URL));
         }

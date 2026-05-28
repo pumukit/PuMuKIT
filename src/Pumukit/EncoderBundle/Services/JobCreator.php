@@ -38,7 +38,7 @@ final class JobCreator
         MultimediaObjectPropertyJobService $propService,
         TokenStorageInterface $tokenStorage,
         LoggerInterface $logger,
-        string $tmpPath = null
+        ?string $tmpPath = null
     ) {
         $this->documentManager = $documentManager;
         $this->jobExecutor = $jobExecutor;
@@ -167,7 +167,7 @@ final class JobCreator
         return $job;
     }
 
-    private function getUserEmail(Job $job = null): ?string
+    private function getUserEmail(?Job $job = null): ?string
     {
         if (null !== $token = $this->tokenStorage->getToken()) {
             if (($user = $token->getUser()) instanceof User) {

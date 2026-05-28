@@ -6,7 +6,6 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Services\PaginationService;
-use Pumukit\SchemaBundle\Document\Playlist;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\SeriesPicService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;

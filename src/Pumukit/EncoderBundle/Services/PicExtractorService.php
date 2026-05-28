@@ -27,7 +27,7 @@ class PicExtractorService
         MultimediaObjectPicService $mmsPicService,
         int $width,
         int $height,
-        string $command = null
+        ?string $command = null
     ) {
         $this->dm = $documentManager;
         $this->mmsPicService = $mmsPicService;
@@ -36,7 +36,7 @@ class PicExtractorService
         $this->command = $command ?: 'ffmpeg -ss {{ss}} -y -i "{{input}}" -r 1 -vframes 1 -s {{size}} -f image2 "{{output}}"';
     }
 
-    public function extractPicOnBatch(MultimediaObject $multimediaObject, Track $track, array $marks = null): bool
+    public function extractPicOnBatch(MultimediaObject $multimediaObject, Track $track, ?array $marks = null): bool
     {
         if ($multimediaObject->getProperty('imagesonbatch')) {
             return false;
@@ -54,7 +54,7 @@ class PicExtractorService
         return true;
     }
 
-    public function extractPic(MultimediaObject $multimediaObject, MediaInterface $media, string $numFrame = null): bool
+    public function extractPic(MultimediaObject $multimediaObject, MediaInterface $media, ?string $numFrame = null): bool
     {
         if (!FinderUtils::isValidFile($media->storage()->path()->path())) {
             return false;

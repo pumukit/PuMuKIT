@@ -223,7 +223,7 @@ class PlaylistController extends CollectionController
         return $this->createPager($queryBuilder, $request, 'admin/playlist');
     }
 
-    private function getSorting(Request $request = null): array
+    private function getSorting(?Request $request = null): array
     {
         if ($sorting = $request->get('sorting')) {
             $this->session->set('admin/playlist/type', current($sorting));

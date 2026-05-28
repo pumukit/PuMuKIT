@@ -466,19 +466,19 @@ EOT
 
             if ('tag' === $this->repoName) {
                 if (false === ($csvTagHeaders = fgetcsv($file, 0, ';'))) {
-                    $message = '<error>Error reading first row (csv header) of '.
-                               $fileRoute.
-                               ": fgetcsv returned 'false' </error>";
+                    $message = '<error>Error reading first row (csv header) of '
+                               .$fileRoute
+                               .": fgetcsv returned 'false' </error>";
                     $validate = false;
                 }
 
                 $result_diff = array_diff(self::TAG_REQUIRED_FIELDS, $csvTagHeaders);
                 if (count($result_diff) > 0) {
-                    $message = '<error>Error reading first row (csv header) of '.
-                               $fileRoute.
-                               ": HEADER doesn't have the required fields: ".
-                               print_r($result_diff, true).
-                               ' </error>';
+                    $message = '<error>Error reading first row (csv header) of '
+                               .$fileRoute
+                               .": HEADER doesn't have the required fields: "
+                               .print_r($result_diff, true)
+                               .' </error>';
                     $validate = false;
                 }
             }

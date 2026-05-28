@@ -315,7 +315,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     public function getForm($resource = null, $locale = 'en')
     {
         $resourceName = $this->getResourceName();
-        $formType = 'Pumukit\\NewAdminBundle\\Form\\Type\\'.ucfirst($resourceName).'Type';
+        $formType = 'Pumukit\NewAdminBundle\Form\Type\\'.ucfirst($resourceName).'Type';
 
         return $this->createForm($formType, $resource, ['translator' => $this->translator, 'locale' => $locale]);
     }
