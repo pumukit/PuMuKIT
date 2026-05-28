@@ -38,7 +38,6 @@
         "symfony/rate-limiter": "^5.0",
         "symfony/security-bundle": "^5.0",
         "symfony/serializer": "^5.0",
-        "symfony/templating": "^5.0",
         "symfony/translation": "^5.0",
         "symfony/twig-bundle": "^5.0",
         "symfony/validator": "^5.0",
