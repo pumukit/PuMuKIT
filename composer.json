@@ -15,7 +15,7 @@
         "ankitpokhrel/tus-php": "^2.4",
         "api-platform/core": "^4.3",
         "babdev/pagerfanta-bundle": "^4",
-        "doctrine/mongodb-odm": "2.6.0",
+        "doctrine/mongodb-odm": "2.15.*",
         "doctrine/mongodb-odm-bundle": "4.6.2",
         "gedmo/doctrine-extensions": "^3.22",
         "jaybizzle/crawler-detect": "^1.2",

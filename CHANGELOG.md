@@ -25,7 +25,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Move PaellaPlayerBundle and StatsUIBundle into the core; they are no longer external packages.
 - Upgrade Pagerfanta to v4 and MobileDetect to v4.
 - Upgrade PHPUnit to 10 and migrate its configuration to the new schema.
-- Upgrade the MongoDB stack: server 5.0 → 8.0, `ext-mongodb` 1.14 → 1.21 and `mongodb/mongodb` 1.13 → 1.21.
+- Upgrade the MongoDB stack: server 5.0 → 8.0, `ext-mongodb` 1.14 → 1.21, `mongodb/mongodb` 1.13 → 1.21 and Doctrine ODM 2.6 → 2.15.
 - Update composer dependencies (gedmo/doctrine-extensions, php-cs-fixer, pagerfanta adapters, etc.).
 
 #### Fixed
