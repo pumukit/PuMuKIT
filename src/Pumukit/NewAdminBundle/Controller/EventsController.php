@@ -2,6 +2,7 @@
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
@@ -23,22 +24,20 @@ use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 use Pumukit\SchemaBundle\Services\SeriesEventDispatcherService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
- *
  * @Route("liveevent/")
  */
+#[IsGranted('ROLE_ACCESS_LIVE_EVENTS')]
 class EventsController extends AbstractController implements NewAdminControllerInterface
 {
     protected static $regex = '/^[0-9a-z]{24}$/';
@@ -122,9 +121,8 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("index/", name="pumukit_new_admin_live_event_index")
-     *
-     * @Template("@PumukitNewAdmin/LiveEvent/index.html.twig")
      */
+    #[Template('@PumukitNewAdmin/LiveEvent/index.html.twig')]
     public function indexEventAction(Request $request): array
     {
         if ($request->query->get('page')) {
@@ -212,10 +210,9 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("list/event/{type}", name="pumukit_new_admin_live_event_list")
      *
-     * @Template("@PumukitNewAdmin/LiveEvent/list.html.twig")
-     *
      * @param mixed|null $type
      */
+    #[Template('@PumukitNewAdmin/LiveEvent/list.html.twig')]
     public function listEventAction(Request $request, $type = null)
     {
         $criteria = [];
@@ -359,13 +356,10 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("list/options/{type}/{id}", name="pumukit_new_admin_live_event_options")
      *
-     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
-     *
-     * @Template("@PumukitNewAdmin/LiveEvent/updatemenu.html.twig")
-     *
      * @param mixed $type
      */
-    public function menuOptionsAction($type, MultimediaObject $multimediaObject)
+    #[Template('@PumukitNewAdmin/LiveEvent/updatemenu.html.twig')]
+    public function menuOptionsAction($type, #[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject)
     {
         $message = '';
 
@@ -418,12 +412,9 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("edit/{id}", name="pumukit_new_admin_live_event_edit")
-     *
-     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
-     *
-     * @Template("@PumukitNewAdmin/LiveEvent/edit.html.twig")
      */
-    public function editEventAction(MultimediaObject $multimediaObject)
+    #[Template('@PumukitNewAdmin/LiveEvent/edit.html.twig')]
+    public function editEventAction(#[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject)
     {
         $this->requestStack->getSession()->set('admin/live/event/id', $multimediaObject->getId());
 
@@ -432,12 +423,9 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("event/{id}", name="pumukit_new_admin_live_event_eventtab")
-     *
-     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
-     *
-     * @Template("@PumukitNewAdmin/LiveEvent/updateevent.html.twig")
      */
-    public function eventAction(Request $request, MultimediaObject $multimediaObject)
+    #[Template('@PumukitNewAdmin/LiveEvent/updateevent.html.twig')]
+    public function eventAction(Request $request, #[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject)
     {
         $locale = $request->getLocale();
 
@@ -600,12 +588,9 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("series/tab/{id}", name="pumukit_new_admin_live_event_seriestab")
-     *
-     * @ParamConverter("series", options={"mapping": {"id": "id"}})
-     *
-     * @Template("@PumukitNewAdmin/Series/updatemeta.html.twig")
      */
-    public function seriesAction(Request $request, Series $series)
+    #[Template('@PumukitNewAdmin/Series/updatemeta.html.twig')]
+    public function seriesAction(Request $request, #[MapDocument(mapping: ['id' => 'id'])] Series $series)
     {
         $locale = $request->getLocale();
         $disablePudenew = !$this->showLatestWithPudeNew;
@@ -633,12 +618,9 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("session/{id}", name="pumukit_new_admin_live_event_sessiontab")
-     *
-     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
-     *
-     * @Template("@PumukitNewAdmin/LiveEvent/updatesession.html.twig")
      */
-    public function sessionAction(Request $request, MultimediaObject $multimediaObject)
+    #[Template('@PumukitNewAdmin/LiveEvent/updatesession.html.twig')]
+    public function sessionAction(Request $request, #[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject)
     {
         $locale = $request->getLocale();
 
@@ -692,10 +674,9 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("list/session/{id}", name="pumukit_new_admin_live_event_session_list")
      *
-     * @Template("@PumukitNewAdmin/LiveEvent/sessionlist.html.twig")
-     *
      * @param mixed $id
      */
+    #[Template('@PumukitNewAdmin/LiveEvent/sessionlist.html.twig')]
     public function sessionListAction($id)
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($id)]);
@@ -706,11 +687,10 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("delete/session/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_session_delete")
      *
-     * @Template("@PumukitNewAdmin/LiveEvent/sessionlist.html.twig")
-     *
      * @param mixed $multimediaObject
      * @param mixed $session_id
      */
+    #[Template('@PumukitNewAdmin/LiveEvent/sessionlist.html.twig')]
     public function sessionDeleteAction($multimediaObject, $session_id)
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
@@ -728,11 +708,10 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("clone/session/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_clone_session")
      *
-     * @Template("@PumukitNewAdmin/LiveEvent/sessionlist.html.twig")
-     *
      * @param mixed $multimediaObject
      * @param mixed $session_id
      */
+    #[Template('@PumukitNewAdmin/LiveEvent/sessionlist.html.twig')]
     public function sessionCloneAction($multimediaObject, $session_id)
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
@@ -760,11 +739,10 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("modal/{multimediaObject}/{session_id}", name="pumukit_new_admin_live_event_session_modal")
      *
-     * @Template("@PumukitNewAdmin/LiveEvent/updatesessionmodal.html.twig")
-     *
      * @param mixed $multimediaObject
      * @param mixed $session_id
      */
+    #[Template('@PumukitNewAdmin/LiveEvent/updatesessionmodal.html.twig')]
     public function modalSessionAction(Request $request, $multimediaObject, $session_id = false)
     {
         $locale = $request->getLocale();
@@ -803,10 +781,9 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("change/series/{multimediaObject}", name="pumukitnewadmin_live_event_change_series")
      *
-     * @Template("@PumukitNewAdmin/LiveEvent/changeSeries.html.twig")
-     *
      * @param mixed|null $multimediaObject
      */
+    #[Template('@PumukitNewAdmin/LiveEvent/changeSeries.html.twig')]
     public function seriesChangeModalAction($multimediaObject = null)
     {
         if (isset($multimediaObject)) {
@@ -841,22 +818,17 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("show/{id}", name="pumukit_new_admin_live_event_show")
-     *
-     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
-     *
-     * @Template("@PumukitNewAdmin/LiveEvent/show.html.twig")
      */
-    public function showAction(MultimediaObject $multimediaObject)
+    #[Template('@PumukitNewAdmin/LiveEvent/show.html.twig')]
+    public function showAction(#[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject)
     {
         return ['multimediaObject' => $multimediaObject];
     }
 
     /**
      * @Route("autocomplete/series/with/event/data/{id}", name="pumukit_new_admin_autocomplete_series_with_event_data")
-     *
-     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
      */
-    public function autocompleteSeriesWithEventDataAction(Request $request, MultimediaObject $multimediaObject)
+    public function autocompleteSeriesWithEventDataAction(Request $request, #[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject)
     {
         $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => $multimediaObject->getSeries()->getId()]);
         if (!$series) {

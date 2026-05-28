@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
@@ -24,9 +25,7 @@ use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\TagService;
 use Pumukit\SchemaBundle\Services\UserService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,13 +33,13 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/unesco")
- *
- * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
+#[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class UNESCOController extends AbstractController implements NewAdminControllerInterface
 {
     public static $baseTags = [
@@ -163,9 +162,8 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("/", name="pumukitnewadmin_unesco_index")
-     *
-     * @Template("@PumukitNewAdmin/UNESCO/index.html.twig")
      */
+    #[Template('@PumukitNewAdmin/UNESCO/index.html.twig')]
     public function indexAction(Request $request)
     {
         $configuredTag = $this->getConfiguredTag();
@@ -186,9 +184,8 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("/tags", name="pumukitnewadmin_unesco_menu_tags")
-     *
-     * @Template("@PumukitNewAdmin/UNESCO/menuTags.html.twig")
      */
+    #[Template('@PumukitNewAdmin/UNESCO/menuTags.html.twig')]
     public function menuTagsAction()
     {
         $configuredTag = $this->getConfiguredTag();
@@ -245,10 +242,9 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("/list/{tag}", name="pumukitnewadmin_unesco_list")
      *
-     * @Template("@PumukitNewAdmin/UNESCO/list.html.twig")
-     *
      * @param mixed|null $tag
      */
+    #[Template('@PumukitNewAdmin/UNESCO/list.html.twig')]
     public function listAction($tag = null)
     {
         $session = $this->requestStack->getSession();
@@ -356,12 +352,9 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("edit/{id}", name="pumukit_new_admin_unesco_edit")
-     *
-     * @ParamConverter("multimediaObject", options={"mapping": {"id":"id"}})
-     *
-     * @Template("@PumukitNewAdmin/UNESCO/edit.html.twig")
      */
-    public function editUNESCOAction(Request $request, MultimediaObject $multimediaObject)
+    #[Template('@PumukitNewAdmin/UNESCO/edit.html.twig')]
+    public function editUNESCOAction(Request $request, #[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject)
     {
         $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
 
@@ -432,10 +425,9 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     /**
      * @Route("/advance/search/show/{id}", name="pumukitnewadmin_unesco_show")
      *
-     * @Template("@PumukitNewAdmin/UNESCO/show.html.twig")
-     *
      * @param mixed|null $id
      */
+    #[Template('@PumukitNewAdmin/UNESCO/show.html.twig')]
     public function showAction($id = null)
     {
         $activeEditor = $this->checkHasEditor();
@@ -459,9 +451,8 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     /**
      * @Route("/advance/search/form", name="pumukitnewadmin_unesco_advance_search_form")
-     *
-     * @Template("@PumukitNewAdmin/UNESCO/search_view.html.twig")
      */
+    #[Template('@PumukitNewAdmin/UNESCO/search_view.html.twig')]
     public function advancedSearchFormAction(Request $request)
     {
         $locale = $request->getLocale();
@@ -640,9 +631,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         return new JsonResponse(['success']);
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/UNESCO/custom_fields.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/UNESCO/custom_fields.html.twig')]
     public function customFieldsAction(Request $request)
     {
         $session = $this->requestStack->getSession();

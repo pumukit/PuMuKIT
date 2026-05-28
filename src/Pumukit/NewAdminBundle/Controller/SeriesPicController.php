@@ -8,15 +8,13 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\SeriesPicService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
- */
+#[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class SeriesPicController extends AbstractController implements NewAdminControllerInterface
 {
     /** @var DocumentManager */
@@ -42,9 +40,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
         $this->requestStack = $requestStack;
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/create.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/create.html.twig')]
     public function createAction(Series $series)
     {
         return [
@@ -53,9 +49,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/list.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/list.html.twig')]
     public function listAction(Series $series)
     {
         return [
@@ -64,9 +58,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/list.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/list.html.twig')]
     public function updateAction(Series $series, Request $request)
     {
         $isBanner = false;
@@ -86,9 +78,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/upload.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/upload.html.twig')]
     public function uploadAction(Series $series, Request $request)
     {
         $isBanner = false;
@@ -175,9 +165,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
         return $this->redirectToRoute('pumukitnewadmin_seriespic_list', ['id' => $series->getId()]);
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/picstoaddlist.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/picstoaddlist.html.twig')]
     public function picstoaddlistAction(Request $request, Series $series)
     {
         if ($request->get('page', null)) {
@@ -201,9 +189,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/banner.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/banner.html.twig')]
     public function bannerAction(Series $series)
     {
         return [

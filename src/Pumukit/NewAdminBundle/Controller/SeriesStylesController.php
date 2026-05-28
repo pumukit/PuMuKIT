@@ -8,20 +8,19 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesStyle;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route ("/series/styles")
- *
- * @Security("is_granted('ROLE_ACCESS_SERIES_STYLE')")
  */
+#[IsGranted('ROLE_ACCESS_SERIES_STYLE')]
 class SeriesStylesController extends AbstractController
 {
     /** @var DocumentManager */
@@ -41,9 +40,8 @@ class SeriesStylesController extends AbstractController
 
     /**
      * @Route("/", name="pumukit_newadmin_series_styles")
-     *
-     * @Template("@PumukitNewAdmin/SeriesStyle/crud.html.twig")
      */
+    #[Template('@PumukitNewAdmin/SeriesStyle/crud.html.twig')]
     public function menuAction()
     {
         return [];
@@ -51,9 +49,8 @@ class SeriesStylesController extends AbstractController
 
     /**
      * @Route("/list", name="pumukit_newadmin_series_styles_list")
-     *
-     * @Template("@PumukitNewAdmin/SeriesStyle/list.html.twig")
      */
+    #[Template('@PumukitNewAdmin/SeriesStyle/list.html.twig')]
     public function listAction(): array
     {
         $styles = $this->documentManager->getRepository(SeriesStyle::class)->findAll();
@@ -136,9 +133,8 @@ class SeriesStylesController extends AbstractController
 
     /**
      * @Route("/show/{id}", name="pumukit_newadmin_series_styles_show")
-     *
-     * @Template("@PumukitNewAdmin/SeriesStyle/show.html.twig")
      */
+    #[Template('@PumukitNewAdmin/SeriesStyle/show.html.twig')]
     public function showAction(?string $id = null): array
     {
         if (isset($id)) {

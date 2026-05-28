@@ -11,19 +11,18 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\SeriesService;
 use Pumukit\SchemaBundle\Services\UpdateUserService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/user_profile")
- *
- * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
  */
+#[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class UserProfileController extends AbstractController
 {
     protected $documentManager;
@@ -51,9 +50,8 @@ class UserProfileController extends AbstractController
 
     /**
      * @Route("/", name="pumukitnewadmin_profile_user_index")
-     *
-     * @Template("@PumukitNewAdmin/UserProfile/template.html.twig")
      */
+    #[Template('@PumukitNewAdmin/UserProfile/template.html.twig')]
     public function profileAction(Request $request): array
     {
         $user = $this->getUser();
@@ -78,9 +76,7 @@ class UserProfileController extends AbstractController
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/UserProfile/template_user_stats.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/UserProfile/template_user_stats.html.twig')]
     public function userStatsAction(): array
     {
         $objectsByStatus = $this->userStatsService->getUserMultimediaObjectsGroupByStats($this->getUser());

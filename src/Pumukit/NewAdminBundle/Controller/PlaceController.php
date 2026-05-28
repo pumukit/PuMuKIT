@@ -4,26 +4,25 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\NewAdminBundle\Form\Type\TagType;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Services\TagService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @Security("is_granted('ROLE_ACCESS_TAGS')")
- *
  * @Route("/places")
  */
+#[IsGranted('ROLE_ACCESS_TAGS')]
 class PlaceController extends AbstractController implements NewAdminControllerInterface
 {
     /** @var TranslatorInterface */
@@ -47,9 +46,8 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Route("/", name="pumukitnewadmin_places_index")
-     *
-     * @Template("@PumukitNewAdmin/Place/index.html.twig")
      */
+    #[Template('@PumukitNewAdmin/Place/index.html.twig')]
     public function indexAction(Request $request)
     {
         $placeTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
@@ -60,9 +58,8 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Route("/parent/", name="pumukitnewadmin_places_parent")
-     *
-     * @Template("@PumukitNewAdmin/Place/parent_list.html.twig")
      */
+    #[Template('@PumukitNewAdmin/Place/parent_list.html.twig')]
     public function parentAction(Request $request)
     {
         $placeTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
@@ -73,12 +70,9 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Route("/children/{id}", name="pumukitnewadmin_places_children")
-     *
-     * @ParamConverter("tag", options={"mapping": {"id": "id"}})
-     *
-     * @Template("@PumukitNewAdmin/Place/children_list.html.twig")
      */
-    public function childrenAction(Tag $tag)
+    #[Template('@PumukitNewAdmin/Place/children_list.html.twig')]
+    public function childrenAction(#[MapDocument(mapping: ['id' => 'id'])] Tag $tag)
     {
         $children = $tag->getChildren();
 
@@ -87,12 +81,9 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Route("/preview/{id}", name="pumukitnewadmin_places_children_preview")
-     *
-     * @ParamConverter("tag", options={"mapping": {"id": "id"}})
-     *
-     * @Template("@PumukitNewAdmin/Place/preview_data.html.twig")
      */
-    public function previewAction(Tag $tag)
+    #[Template('@PumukitNewAdmin/Place/preview_data.html.twig')]
+    public function previewAction(#[MapDocument(mapping: ['id' => 'id'])] Tag $tag)
     {
         $multimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)->findBy(['tags._id' => new ObjectId($tag->getId())]);
 
@@ -107,10 +98,9 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     /**
      * @Route("/create/{id}", name="pumukitnewadmin_places_create")
      *
-     * @Template("@PumukitNewAdmin/Place/create.html.twig")
-     *
      * @param mixed|null $id
      */
+    #[Template('@PumukitNewAdmin/Place/create.html.twig')]
     public function createAction(Request $request, $id = null)
     {
         if ($id) {
@@ -146,10 +136,8 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Route("/delete/{id}", name="pumukitnewadmin_places_delete")
-     *
-     * @ParamConverter("tag", options={"mapping": {"id": "id"}})
      */
-    public function deletePlaceAction(Request $request, Tag $tag)
+    public function deletePlaceAction(Request $request, #[MapDocument(mapping: ['id' => 'id'])] Tag $tag)
     {
         try {
             $this->tagService->deleteTag($tag);
@@ -163,12 +151,9 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
 
     /**
      * @Route("/update/{id}", name="pumukitnewadmin_places_update")
-     *
-     * @ParamConverter("tag", options={"mapping": {"id": "id"}})
-     *
-     * @Template("@PumukitNewAdmin/Place/update.html.twig")
      */
-    public function updateAction(Request $request, Tag $tag)
+    #[Template('@PumukitNewAdmin/Place/update.html.twig')]
+    public function updateAction(Request $request, #[MapDocument(mapping: ['id' => 'id'])] Tag $tag)
     {
         $locale = $request->getLocale();
         $form = $this->createForm(TagType::class, $tag, ['translator' => $this->translator, 'locale' => $locale]);

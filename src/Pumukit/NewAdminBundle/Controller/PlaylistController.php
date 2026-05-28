@@ -13,18 +13,16 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\SeriesEventDispatcherService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_EDIT_PLAYLIST')")
- */
+#[IsGranted('ROLE_ACCESS_EDIT_PLAYLIST')]
 class PlaylistController extends CollectionController
 {
     private $requestStack;
@@ -55,9 +53,7 @@ class PlaylistController extends CollectionController
         $this->seriesSearchService = $seriesSearchService;
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Collection/show.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Collection/show.html.twig')]
     public function showAction(Series $collection): array
     {
         $this->requestStack->getSession()->set('admin/playlist/id', $collection->getId());
@@ -65,9 +61,7 @@ class PlaylistController extends CollectionController
         return ['collection' => $collection];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Playlist/index.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Playlist/index.html.twig')]
     public function indexAction(Request $request): array
     {
         $update_session = true;
@@ -86,9 +80,7 @@ class PlaylistController extends CollectionController
         return ['series' => $resources];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Playlist/list.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Playlist/list.html.twig')]
     public function listAction(Request $request): array
     {
         $resources = $this->getResources($request);

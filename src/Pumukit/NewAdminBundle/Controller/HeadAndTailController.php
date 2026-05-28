@@ -10,17 +10,15 @@ use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\HeadAndTailService;
 use Pumukit\SchemaBundle\Services\UserService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_HEAD_AND_TAIL_MANAGER')")
- */
+#[IsGranted('ROLE_ACCESS_HEAD_AND_TAIL_MANAGER')]
 class HeadAndTailController extends AdminController
 {
     private $headAndTailService;

@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Pumukit\NewAdminBundle\Form\Type\MaterialType;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\MaterialService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
- */
+#[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class MaterialController extends AbstractController implements NewAdminControllerInterface
 {
     /** @var TranslatorInterface */
@@ -36,9 +34,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
         $this->requestStack = $requestStack;
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Material/create.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Material/create.html.twig')]
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
         $locale = $request->getLocale();
@@ -52,10 +48,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
         ];
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function updateAction(MultimediaObject $multimediaObject, Request $request)
+    public function updateAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
         $locale = $request->getLocale();
         $material = $multimediaObject->getMaterialById($request->get('id'));
@@ -82,9 +75,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
         );
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Material/upload.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Material/upload.html.twig')]
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {
         $formData = $request->get('pumukitnewadmin_material', []);
@@ -115,20 +106,14 @@ class MaterialController extends AbstractController implements NewAdminControlle
         ];
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function deleteAction(MultimediaObject $multimediaObject, Request $request)
+    public function deleteAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
         $multimediaObject = $this->materialService->removeMaterialFromMultimediaObject($multimediaObject, $request->get('id'));
 
         return $this->redirectToRoute('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]);
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function upAction(MultimediaObject $multimediaObject, Request $request)
+    public function upAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
         $multimediaObject = $this->materialService->upMaterialInMultimediaObject($multimediaObject, $request->get('id'));
 
@@ -137,10 +122,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
         return $this->redirectToRoute('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]);
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function downAction(MultimediaObject $multimediaObject, Request $request)
+    public function downAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
         $multimediaObject = $this->materialService->downMaterialInMultimediaObject($multimediaObject, $request->get('id'));
 
@@ -149,9 +131,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
         return $this->redirectToRoute('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]);
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Material/list.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Material/list.html.twig')]
     public function listAction(MultimediaObject $multimediaObject)
     {
         return [

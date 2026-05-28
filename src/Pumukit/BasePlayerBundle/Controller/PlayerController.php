@@ -8,7 +8,7 @@ use Pumukit\BasePlayerBundle\Services\IntroService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,9 +31,8 @@ final class PlayerController extends BasePlayerController
     /**
      * @Route("/player/{id}", name="pumukit_player_index")
      * @Route("/iframe/player/{id}", name="pumukit_player_index_iframe")
-     *
-     * @Template("@PumukitBasePlayer/player.html.twig")
      */
+    #[Template('@PumukitBasePlayer/player.html.twig')]
     public function indexAction(Request $request, MultimediaObject $multimediaObject)
     {
         return $this->doRender($request, $multimediaObject);
@@ -42,9 +41,8 @@ final class PlayerController extends BasePlayerController
     /**
      * @Route("/player/magic/{secret}", name="pumukit_player_magic_index")
      * @Route("/iframe/player/magic/{secret}", name="pumukit_player_magic_index_iframe")
-     *
-     * @Template("@PumukitBasePlayer/player.html.twig")
      */
+    #[Template('@PumukitBasePlayer/player.html.twig')]
     public function magicAction(Request $request, MultimediaObject $multimediaObject)
     {
         return $this->doRender($request, $multimediaObject);

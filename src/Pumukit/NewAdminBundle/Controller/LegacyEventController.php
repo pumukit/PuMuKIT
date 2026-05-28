@@ -6,14 +6,12 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use MongoDB\BSON\Regex;
 use Pumukit\SchemaBundle\Document\Event;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
- */
+#[IsGranted('ROLE_ACCESS_LIVE_EVENTS')]
 class LegacyEventController extends AdminController
 {
     public static $resourceName = 'event';
@@ -21,9 +19,7 @@ class LegacyEventController extends AdminController
 
     public static $daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-    /**
-     * @Template("@PumukitNewAdmin/LegacyEvent/index.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/LegacyEvent/index.html.twig')]
     public function indexAction(Request $request)
     {
         $criteria = $this->getCriteria($request->get('criteria', []));
@@ -78,9 +74,7 @@ class LegacyEventController extends AdminController
         );
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/LegacyEvent/list.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/LegacyEvent/list.html.twig')]
     public function listAction(Request $request)
     {
         $criteria = $this->getCriteria($request->get('criteria', []));

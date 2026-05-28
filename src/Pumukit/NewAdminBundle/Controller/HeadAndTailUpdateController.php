@@ -13,10 +13,10 @@ use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\HeadAndTailService;
 use Pumukit\SchemaBundle\Services\UserService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class HeadAndTailUpdateController extends AdminController
@@ -38,10 +38,9 @@ class HeadAndTailUpdateController extends AdminController
     }
 
     /**
-     * @Security("is_granted('ROLE_ADD_HEAD_AND_TAIL')")
-     *
      * @Route("/head/update/{multimediaObject}/{isHead}", name="pumukit_newadmin_head_and_tail_set_head", methods={"POST"})
      */
+    #[IsGranted('ROLE_ADD_HEAD_AND_TAIL')]
     public function updateVideoHeadStatus(string $multimediaObject, string $isHead): JsonResponse
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
@@ -64,10 +63,9 @@ class HeadAndTailUpdateController extends AdminController
     }
 
     /**
-     * @Security("is_granted('ROLE_ADD_HEAD_AND_TAIL')")
-     *
      * @Route("/tail/update/{multimediaObject}/{isTail}", name="pumukit_newadmin_head_and_tail_set_tail", methods={"POST"})
      */
+    #[IsGranted('ROLE_ADD_HEAD_AND_TAIL')]
     public function updateVideoTailStatus(string $multimediaObject, string $isTail): JsonResponse
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
@@ -90,10 +88,9 @@ class HeadAndTailUpdateController extends AdminController
     }
 
     /**
-     * @Security("is_granted('ROLE_ADD_HEAD_AND_TAIL')")
-     *
      * @Route("/headandtail/update/{multimediaObject}/{type}/{element}", name="pumukit_newadmin_head_and_tail_update", methods={"POST"})
      */
+    #[IsGranted('ROLE_ADD_HEAD_AND_TAIL')]
     public function updateHeadAndTail(string $type, string $multimediaObject, string $element): JsonResponse
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObject)]);
@@ -153,10 +150,9 @@ class HeadAndTailUpdateController extends AdminController
     }
 
     /**
-     * @Security("is_granted('ROLE_ADD_HEAD_AND_TAIL')")
-     *
      * @Route("/headandtail/series/update/{series}/{type}/{element}", name="pumukit_newadmin_head_and_tail_series_update", methods={"POST"})
      */
+    #[IsGranted('ROLE_ADD_HEAD_AND_TAIL')]
     public function updateSeriesHeadAndTail(string $type, string $series, string $element): JsonResponse
     {
         $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($series)]);

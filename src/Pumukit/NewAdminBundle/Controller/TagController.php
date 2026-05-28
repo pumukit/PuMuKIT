@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\NewAdminBundle\Form\Type\TagType;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Services\TagService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_TAGS')")
- */
+#[IsGranted('ROLE_ACCESS_TAGS')]
 class TagController extends AbstractController implements NewAdminControllerInterface
 {
     /** @var DocumentManager */
@@ -40,9 +38,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
         $this->translator = $translator;
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Tag/index.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Tag/index.html.twig')]
     public function indexAction()
     {
         $repo = $this->documentManager->getRepository(Tag::class);
@@ -60,9 +56,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
             'children' => $children, ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Tag/children.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Tag/children.html.twig')]
     public function childrenAction(Tag $tag)
     {
         return [
@@ -88,9 +82,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
         return new JsonResponse(['status' => 'Deleted'], 200);
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Tag/update.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Tag/update.html.twig')]
     public function updateAction(Request $request, Tag $tag)
     {
         $locale = $request->getLocale();
@@ -110,12 +102,8 @@ class TagController extends AbstractController implements NewAdminControllerInte
         return ['tag' => $tag, 'form' => $form->createView()];
     }
 
-    /**
-     * @ParamConverter("tag", options={"id" = "parent"})
-     *
-     * @Template("@PumukitNewAdmin/Tag/create.html.twig")
-     */
-    public function createAction(Request $request, Tag $parent)
+    #[Template('@PumukitNewAdmin/Tag/create.html.twig')]
+    public function createAction(Request $request, #[MapDocument(id: 'parent')] Tag $parent)
     {
         $tag = new Tag();
         $tag->setParent($parent);
@@ -139,9 +127,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
         return ['tag' => $tag, 'form' => $form->createView()];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Tag/list.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Tag/list.html.twig')]
     public function listAction()
     {
         $repo = $this->documentManager->getRepository(Tag::class);

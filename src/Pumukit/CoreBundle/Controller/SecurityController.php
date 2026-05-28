@@ -7,7 +7,7 @@ namespace Pumukit\CoreBundle\Controller;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,9 +17,8 @@ class SecurityController extends AbstractController
 {
     /**
      * @Route("/security/edit/{id}", name="pumukit_webtv_can_edit_multimediaobject")
-     *
-     * @Template("@PumukitCore/Security/editButton.html.twig")
      */
+    #[Template('@PumukitCore/Security/editButton.html.twig')]
     public function canEditAction(Request $request, DocumentManager $documentManager, string $id)
     {
         // Performance: No queries for anonymous users

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\CoreBundle\Services\PaginationService;
@@ -25,19 +26,16 @@ use Pumukit\SchemaBundle\Services\SeriesService;
 use Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService;
 use Pumukit\SchemaBundle\Services\TagService;
 use Pumukit\SchemaBundle\Services\UserService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
- */
+#[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class SeriesController extends AdminController
 {
     public static $resourceName = 'series';
@@ -101,9 +99,7 @@ class SeriesController extends AdminController
         $this->pumukitSchemaSeriesDispatcher = $pumukitSchemaSeriesDispatcher;
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Series/index.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Series/index.html.twig')]
     public function indexAction(Request $request)
     {
         if ('reset_criteria' === $request->get('action') && !$request->get('criteria')) {
@@ -130,9 +126,7 @@ class SeriesController extends AdminController
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Series/list.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Series/list.html.twig')]
     public function listAction(Request $request)
     {
         $criteria = $this->getCriteria($request->get('criteria', []));
@@ -166,9 +160,7 @@ class SeriesController extends AdminController
         }
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Series/links.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Series/links.html.twig')]
     public function linksAction(Series $resource)
     {
         return [
@@ -366,9 +358,7 @@ class SeriesController extends AdminController
         return $this->redirectToRoute('pumukitnewadmin_series_list');
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Series/changepub.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Series/changepub.html.twig')]
     public function changePubAction(Request $request)
     {
         $series = $this->findOr404($request);
@@ -544,12 +534,8 @@ class SeriesController extends AdminController
         return $this->redirectToRoute('pumukitnewadmin_series_index');
     }
 
-    /**
-     * @ParamConverter("series", options={"id" = "id"})
-     *
-     * @Template("@PumukitNewAdmin/Series/updatebroadcast.html.twig")
-     */
-    public function updateBroadcastAction(Series $series, Request $request)
+    #[Template('@PumukitNewAdmin/Series/updatebroadcast.html.twig')]
+    public function updateBroadcastAction(#[MapDocument(id: 'id')] Series $series, Request $request)
     {
         $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
         $broadcasts = $this->embeddedBroadcastService->getAllTypes();
@@ -619,9 +605,7 @@ class SeriesController extends AdminController
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Series/listProperties.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Series/listProperties.html.twig')]
     public function listPropertiesAction(Series $series)
     {
         return ['series' => $series];

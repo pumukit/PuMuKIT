@@ -18,17 +18,15 @@ use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\UpdateUserService;
 use Pumukit\SchemaBundle\Services\UserService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_ADMIN_USERS')")
- */
+#[IsGranted('ROLE_ACCESS_ADMIN_USERS')]
 class UserController extends AdminController
 {
     public static $resourceName = 'user';
@@ -57,9 +55,7 @@ class UserController extends AdminController
         $this->updateUserService = $updateUserService;
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/User/index.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/User/index.html.twig')]
     public function indexAction(Request $request)
     {
         $criteria = $this->getCriteria($request->get('criteria', []));
@@ -174,9 +170,7 @@ class UserController extends AdminController
         return parent::batchDeleteAction($request);
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/User/editgroups.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/User/editgroups.html.twig')]
     public function editGroupsAction(Request $request)
     {
         $user = $this->findOr404($request);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
@@ -46,9 +47,7 @@ use Pumukit\SchemaBundle\Services\SpecialTranslationService;
 use Pumukit\SchemaBundle\Services\TagService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
@@ -57,11 +56,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
- */
+#[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class MultimediaObjectController extends SortableAdminController
 {
     public static $resourceName = 'mms';
@@ -171,9 +169,7 @@ class MultimediaObjectController extends SortableAdminController
         $this->mediaUpdater = $mediaUpdater;
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/MultimediaObject/index.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/MultimediaObject/index.html.twig')]
     public function indexAction(Request $request)
     {
         $session = $this->requestStack->getSession();
@@ -266,9 +262,7 @@ class MultimediaObjectController extends SortableAdminController
         );
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/MultimediaObject/show.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/MultimediaObject/show.html.twig')]
     public function showAction(Request $request)
     {
         $data = $this->findOr404($request);
@@ -281,9 +275,7 @@ class MultimediaObjectController extends SortableAdminController
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/MultimediaObject/edit.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/MultimediaObject/edit.html.twig')]
     public function editAction(Request $request)
     {
         $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
@@ -366,9 +358,7 @@ class MultimediaObjectController extends SortableAdminController
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/MultimediaObject/links.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/MultimediaObject/links.html.twig')]
     public function linksAction(MultimediaObject $resource)
     {
         return [
@@ -380,9 +370,7 @@ class MultimediaObjectController extends SortableAdminController
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/MultimediaObject/updatesocial.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/MultimediaObject/updatesocial.html.twig')]
     public function updatesocialAction(Request $request)
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($request->request->get('id'))]);
@@ -557,9 +545,7 @@ class MultimediaObjectController extends SortableAdminController
         );
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig')]
     public function getChildrenTagAction(Tag $tag, Request $request)
     {
         return [
@@ -942,9 +928,7 @@ class MultimediaObjectController extends SortableAdminController
         );
     }
 
-    /**
-     * @Security("is_granted('ROLE_MODIFY_OWNER')")
-     */
+    #[IsGranted('ROLE_MODIFY_OWNER')]
     public function updateGroupsAction(Request $request)
     {
         $multimediaObject = $this->findOr404($request);
@@ -1019,12 +1003,8 @@ class MultimediaObjectController extends SortableAdminController
         return new JsonResponse($info);
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "id"})
-     *
-     * @Template("@PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig")
-     */
-    public function updateBroadcastAction(MultimediaObject $multimediaObject, Request $request)
+    #[Template('@PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig')]
+    public function updateBroadcastAction(#[MapDocument(id: 'id')] MultimediaObject $multimediaObject, Request $request)
     {
         if ($multimediaObject->isLive()) {
             $broadcasts = $this->embeddedBroadcastService->getAllTypes(true);
@@ -1093,19 +1073,14 @@ class MultimediaObjectController extends SortableAdminController
         return new JsonResponse($response, Response::HTTP_OK);
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/MultimediaObject/listProperties.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/MultimediaObject/listProperties.html.twig')]
     public function listPropertiesAction(MultimediaObject $multimediaObject)
     {
         return ['multimediaObject' => $multimediaObject];
     }
 
-    /**
-     * @Security("is_granted('ROLE_ADD_EXTERNAL_PLAYER')")
-     *
-     * @Template("@PumukitNewAdmin/MultimediaObject/listExternalPlayer.html.twig")
-     */
+    #[IsGranted('ROLE_ADD_EXTERNAL_PLAYER')]
+    #[Template('@PumukitNewAdmin/MultimediaObject/listExternalPlayer.html.twig')]
     public function listExternalPlayerAction(Request $request)
     {
         $seriesId = $request->get('series');
@@ -1137,11 +1112,8 @@ class MultimediaObjectController extends SortableAdminController
         return ['series' => $seriesId, 'form' => $form->createView()];
     }
 
-    /**
-     * @Security("is_granted('ROLE_ADD_EXTERNAL_PLAYER')")
-     *
-     * @Template("@PumukitNewAdmin/MultimediaObject/updateExternalPlayer.html.twig")
-     */
+    #[IsGranted('ROLE_ADD_EXTERNAL_PLAYER')]
+    #[Template('@PumukitNewAdmin/MultimediaObject/updateExternalPlayer.html.twig')]
     public function updateExternalAction(Request $request, MultimediaObject $multimediaObject)
     {
         $form = $this->createFormBuilder()
@@ -1164,9 +1136,7 @@ class MultimediaObjectController extends SortableAdminController
         return ['mm' => $multimediaObject, 'form' => $form->createView()];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/MultimediaObject/modalPreview.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/MultimediaObject/modalPreview.html.twig')]
     public function modalPreviewAction(MultimediaObject $multimediaObject)
     {
         return [
@@ -1175,9 +1145,7 @@ class MultimediaObjectController extends SortableAdminController
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/MultimediaObject/status.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/MultimediaObject/status.html.twig')]
     public function statusAction(MultimediaObject $mm, Request $request)
     {
         return ['mm' => $mm];
@@ -1267,12 +1235,8 @@ class MultimediaObjectController extends SortableAdminController
         return new JsonResponse(['paellalayout' => $multimediaObject->getProperty('paellalayout')]);
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "id"})
-     *
-     * @Template("@PumukitNewAdmin/MultimediaObject/modalsyncmetadata.html.twig")
-     */
-    public function modalSyncMedatadaAction(Request $request, MultimediaObject $multimediaObject)
+    #[Template('@PumukitNewAdmin/MultimediaObject/modalsyncmetadata.html.twig')]
+    public function modalSyncMedatadaAction(Request $request, #[MapDocument(id: 'id')] MultimediaObject $multimediaObject)
     {
         $locale = $request->getLocale();
         $syncService = $this->multimediaObjectSyncService;

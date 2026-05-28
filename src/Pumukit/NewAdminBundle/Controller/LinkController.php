@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Pumukit\NewAdminBundle\Form\Type\LinkType;
 use Pumukit\SchemaBundle\Document\Link;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\LinkService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
- */
+#[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class LinkController extends AbstractController implements NewAdminControllerInterface
 {
     /** @var TranslatorInterface */
@@ -36,9 +34,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
         $this->requestStack = $requestStack;
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Link/create.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Link/create.html.twig')]
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
         $locale = $request->getLocale();
@@ -69,12 +65,8 @@ class LinkController extends AbstractController implements NewAdminControllerInt
         ];
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     *
-     * @Template("@PumukitNewAdmin/Link/update.html.twig")
-     */
-    public function updateAction(MultimediaObject $multimediaObject, Request $request)
+    #[Template('@PumukitNewAdmin/Link/update.html.twig')]
+    public function updateAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
         $locale = $request->getLocale();
         $link = $multimediaObject->getLinkById($request->get('id'));
@@ -104,12 +96,8 @@ class LinkController extends AbstractController implements NewAdminControllerInt
         ];
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     *
-     * @Template("@PumukitNewAdmin/Link/list.html.twig")
-     */
-    public function deleteAction(MultimediaObject $multimediaObject, Request $request)
+    #[Template('@PumukitNewAdmin/Link/list.html.twig')]
+    public function deleteAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
         $multimediaObject = $this->linkService->removeLinkFromMultimediaObject($multimediaObject, $request->get('id'));
 
@@ -121,12 +109,8 @@ class LinkController extends AbstractController implements NewAdminControllerInt
         ];
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     *
-     * @Template("@PumukitNewAdmin/Link/list.html.twig")
-     */
-    public function upAction(MultimediaObject $multimediaObject, Request $request)
+    #[Template('@PumukitNewAdmin/Link/list.html.twig')]
+    public function upAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
         $multimediaObject = $this->linkService->upLinkInMultimediaObject($multimediaObject, $request->get('id'));
 
@@ -138,12 +122,8 @@ class LinkController extends AbstractController implements NewAdminControllerInt
         ];
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     *
-     * @Template("@PumukitNewAdmin/Link/list.html.twig")
-     */
-    public function downAction(MultimediaObject $multimediaObject, Request $request)
+    #[Template('@PumukitNewAdmin/Link/list.html.twig')]
+    public function downAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
         $multimediaObject = $this->linkService->downLinkInMultimediaObject($multimediaObject, $request->get('id'));
 

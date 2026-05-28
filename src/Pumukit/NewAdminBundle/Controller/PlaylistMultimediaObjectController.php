@@ -18,7 +18,7 @@ use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Utils\Mongo\TextIndexUtils;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,9 +66,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         $this->locales = $locales;
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/PlaylistMultimediaObject/index.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/PlaylistMultimediaObject/index.html.twig')]
     public function indexAction(Request $request)
     {
         $session = $this->requestStack->getSession();
@@ -106,9 +104,8 @@ class PlaylistMultimediaObjectController extends AbstractController
 
     /**
      * Displays the preview.
-     *
-     * @Template("@PumukitNewAdmin/MultimediaObject/show.html.twig")
      */
+    #[Template('@PumukitNewAdmin/MultimediaObject/show.html.twig')]
     public function showAction(MultimediaObject $mmobj, Request $request)
     {
         $this->requestStack->getSession()->set('admin/playlistmms/id', $mmobj->getId());
@@ -125,9 +122,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/PlaylistMultimediaObject/info.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/PlaylistMultimediaObject/info.html.twig')]
     public function infoAction(MultimediaObject $mmobj, Request $request): array
     {
         return [
@@ -139,9 +134,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/PlaylistMultimediaObject/list.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/PlaylistMultimediaObject/list.html.twig')]
     public function listAction(Request $request)
     {
         $sessionId = $this->requestStack->getSession()->get('admin/playlist/id', null);
@@ -168,9 +161,8 @@ class PlaylistMultimediaObjectController extends AbstractController
      * Returns a modal window where to add mmobjs to a playlist.
      *
      * It is meant to be used through ajax.
-     *
-     * @Template("@PumukitNewAdmin/PlaylistMultimediaObject/modal.html.twig")
      */
+    #[Template('@PumukitNewAdmin/PlaylistMultimediaObject/modal.html.twig')]
     public function modalAction(Series $playlist, Request $request)
     {
         $limit = $request->get('modal_limit', 20);
@@ -197,9 +189,8 @@ class PlaylistMultimediaObjectController extends AbstractController
      * Returns the user mmobjs.
      *
      * It is meant to be used through ajax.
-     *
-     * @Template("@PumukitNewAdmin/PlaylistMultimediaObject/modal_myvideos_list.html.twig")
      */
+    #[Template('@PumukitNewAdmin/PlaylistMultimediaObject/modal_myvideos_list.html.twig')]
     public function modalMyMmobjsAction(Series $playlist, Request $request)
     {
         $page = $request->get('modal_page', 1);
@@ -220,9 +211,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/PlaylistMultimediaObject/modal_search_list.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/PlaylistMultimediaObject/modal_search_list.html.twig')]
     public function searchModalAction(Request $request)
     {
         $this->enableFilter();
@@ -240,9 +229,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         return ['mmobjs' => $pager];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/PlaylistMultimediaObject/modal_url_list.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/PlaylistMultimediaObject/modal_url_list.html.twig')]
     public function urlModalAction(Request $request)
     {
         $broadcastService = $this->embeddedBroadcastService;
@@ -376,9 +363,8 @@ class PlaylistMultimediaObjectController extends AbstractController
 
     /**
      * Show modal to add one or more mmobjs to a playlist.
-     *
-     * @Template("@PumukitNewAdmin/PlaylistMultimediaObject/addModal.html.twig")
      */
+    #[Template('@PumukitNewAdmin/PlaylistMultimediaObject/addModal.html.twig')]
     public function addModalAction(Request $request)
     {
         $repoSeries = $this->documentManager->getRepository(Series::class);

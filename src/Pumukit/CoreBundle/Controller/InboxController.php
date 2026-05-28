@@ -8,12 +8,12 @@ use Pumukit\CoreBundle\Services\InboxService;
 use Pumukit\CoreBundle\Services\UploadDispatcherService;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\CoreBundle\Utils\FinderUtils;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class InboxController extends AbstractController
 {
@@ -28,11 +28,9 @@ class InboxController extends AbstractController
 
     /**
      * @Route("/inbox", name="inbox")
-     *
-     * @Security("is_granted('ROLE_UPLOAD_INBOX')")
-     *
-     * @Template("@PumukitCore/Upload/uppy_folder.html.twig")
      */
+    #[IsGranted('ROLE_UPLOAD_INBOX')]
+    #[Template('@PumukitCore/Upload/uppy_folder.html.twig')]
     public function inbox(): array
     {
         $inboxPath = $this->inboxService->inboxPath();
@@ -44,12 +42,10 @@ class InboxController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('ROLE_UPLOAD_INBOX')")
-     *
      * @Route("/upload", name="file_upload")
-     *
-     * @Template("@PumukitCore/Upload/upload_drag_and_drop.html.twig")
      */
+    #[IsGranted('ROLE_UPLOAD_INBOX')]
+    #[Template('@PumukitCore/Upload/upload_drag_and_drop.html.twig')]
     public function folder(Request $request): array
     {
         $formData = $request->get('inbox_form_data', []);
@@ -96,10 +92,9 @@ class InboxController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('ROLE_UPLOAD_INBOX')")
-     *
      * @Route("/check_folder", name="check_folder_before_creating")
      */
+    #[IsGranted('ROLE_UPLOAD_INBOX')]
     public function checkFolderBeforeCreating(Request $request): JsonResponse
     {
         $folderName = $request->get('folder');
@@ -112,10 +107,9 @@ class InboxController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('ROLE_UPLOAD_INBOX')")
-     *
      * @Route("/dispatchImport", name="inbox_auto_import")
      */
+    #[IsGranted('ROLE_UPLOAD_INBOX')]
     public function dispatchImport(Request $request): JsonResponse
     {
         try {

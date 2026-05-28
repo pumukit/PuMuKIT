@@ -8,17 +8,15 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
- */
+#[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class MultimediaObjectPicController extends AbstractController implements NewAdminControllerInterface
 {
     /** @var DocumentManager */
@@ -44,9 +42,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
         $this->multimediaObjectPicService = $multimediaObjectPicService;
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/create.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/create.html.twig')]
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
         $isEventPoster = $request->get('is_event_poster', false);
@@ -58,9 +54,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/list.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/list.html.twig')]
     public function listAction(MultimediaObject $multimediaObject, Request $request)
     {
         $isEventPoster = $request->get('is_event_poster', false);
@@ -74,9 +68,8 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
 
     /**
      * Assign a picture from an url or from an existing one to the multimedia object.
-     *
-     * @Template("@PumukitNewAdmin/Pic/list.html.twig")
      */
+    #[Template('@PumukitNewAdmin/Pic/list.html.twig')]
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
         $isEventPoster = $request->get('is_event_poster', false);
@@ -91,9 +84,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/upload.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/upload.html.twig')]
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {
         $isEventPoster = $request->get('is_event_poster', false);
@@ -191,9 +182,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
         return $this->redirectToRoute('pumukitnewadmin_mmspic_list', ['id' => $multimediaObject->getId()]);
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/picstoaddlist.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/picstoaddlist.html.twig')]
     public function picstoaddlistAction(MultimediaObject $multimediaObject, Request $request)
     {
         $isEventPoster = $request->get('is_event_poster', false);
@@ -222,9 +211,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/generate.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/generate.html.twig')]
     public function generateAction(MultimediaObject $multimediaObject, Request $request)
     {
         if ($request->isMethod('POST')) {

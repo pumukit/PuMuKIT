@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\WebTVBundle\Controller;
 
 use Detection\MobileDetect;
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Psr\Log\LoggerInterface;
@@ -15,8 +16,7 @@ use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\WebTVBundle\Form\Type\ContactType;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,9 +75,8 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/live/{id}", name="pumukit_live_id")
-     *
-     * @Template("@PumukitWebTV/Live/Basic/template.html.twig")
      */
+    #[Template('@PumukitWebTV/Live/Basic/template.html.twig')]
     public function indexAction(Live $live, Request $request)
     {
         $this->updateBreadcrumbs($live->getName(), 'pumukit_live_id', ['id' => $live->getId()]);
@@ -87,9 +86,8 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/live/iframe/{id}", name="pumukit_live_iframe_id")
-     *
-     * @Template("@PumukitWebTV/Live/Basic/template_iframe.html.twig")
      */
+    #[Template('@PumukitWebTV/Live/Basic/template_iframe.html.twig')]
     public function iframeAction(Live $live, Request $request)
     {
         return $this->doLive($live, $request);
@@ -97,12 +95,9 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/live/event/{id}", name="pumukit_live_event_id")
-     *
-     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
-     *
-     * @Template("@PumukitWebTV/Live/Advance/template.html.twig")
      */
-    public function indexEventAction(MultimediaObject $multimediaObject, Request $request)
+    #[Template('@PumukitWebTV/Live/Advance/template.html.twig')]
+    public function indexEventAction(#[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject, Request $request)
     {
         $criteria = [
             '_id' => new ObjectId($multimediaObject->getId()),
@@ -134,12 +129,9 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/live/event/iframe/{id}", name="pumukit_live_event_iframe_id")
-     *
-     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
-     *
-     * @Template("@PumukitWebTV/Live/Advance/iframe.html.twig")
      */
-    public function iframeEventAction(MultimediaObject $multimediaObject, Request $request, bool $iframe = true)
+    #[Template('@PumukitWebTV/Live/Advance/iframe.html.twig')]
+    public function iframeEventAction(#[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject, Request $request, bool $iframe = true)
     {
         if (EmbeddedBroadcast::TYPE_PASSWORD === $multimediaObject->getEmbeddedBroadcast()->getType() && $multimediaObject->getEmbeddedBroadcast()->getPassword() !== $request->get('broadcast_password')) {
             return $this->render($iframe ? '@PumukitWebTV/Live/Basic/template_iframe_password.html.twig' : '@PumukitWebTV/Live/Basic/template_password.html.twig', [
@@ -243,9 +235,8 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/live", name="pumukit_live")
-     *
-     * @Template("@PumukitWebTV/Live/Basic/template.html.twig")
      */
+    #[Template('@PumukitWebTV/Live/Basic/template.html.twig')]
     public function defaultAction(Request $request)
     {
         $live = $this->documentManager->getRepository(Live::class)->findOneBy([]);
@@ -283,10 +274,8 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/event/contact/{id}", name="pumukit_webtv_contact_event")
-     *
-     * @ParamConverter("multimediaObject", options={"mapping": {"id": "id"}})
      */
-    public function contactAction(MultimediaObject $multimediaObject, Request $request): JsonResponse
+    public function contactAction(#[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject, Request $request): JsonResponse
     {
         if ('POST' === $request->getMethod() && $this->checkCaptcha($request->request->get('g-recaptcha-response'), $request->getClientIp())) {
             $mail = $this->pumukitNotificationSenderEmail ?? 'noreplay@yourplatform.es';

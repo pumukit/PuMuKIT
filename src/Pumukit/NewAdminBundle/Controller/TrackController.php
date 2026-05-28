@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Services\i18nService;
@@ -27,8 +28,6 @@ use Pumukit\SchemaBundle\Services\MediaRemover;
 use Pumukit\SchemaBundle\Services\MediaUpdater;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -36,10 +35,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
- */
+#[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class TrackController extends AbstractController implements NewAdminControllerInterface
 {
     private LoggerInterface $logger;
@@ -98,9 +96,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $this->inboxService = $inboxService;
     }
 
-    /**
-     * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
-     */
+    #[IsGranted('ROLE_ACCESS_ADVANCED_UPLOAD')]
     public function createAction(Request $request, MultimediaObject $multimediaObject): Response
     {
         $masterProfiles = $this->profileService->getMasterProfiles(true);
@@ -114,9 +110,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_ACCESS_ADVANCED_UPLOAD')")
-     */
+    #[IsGranted('ROLE_ACCESS_ADVANCED_UPLOAD')]
     public function uploadAction(Request $request, MultimediaObject $multimediaObject): JsonResponse
     {
         $profile = $request->get('profile_option');
@@ -164,10 +158,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         ]);
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function toggleHideAction(Request $request, MultimediaObject $multimediaObject): Response
+    public function toggleHideAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
         try {
             $track = $multimediaObject->getTrackById($request->get('id'));
@@ -180,10 +171,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         return $this->redirectToRoute('pumukitnewadmin_track_list', ['reload_links' => true, 'id' => $multimediaObject->getId()]);
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function updateAction(Request $request, MultimediaObject $multimediaObject): Response
+    public function updateAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         $isPlayable = $track->tags()->containsTag('display');
@@ -229,20 +217,14 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         );
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function playAction(Request $request, MultimediaObject $multimediaObject): Response
+    public function playAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
 
         return $this->render('@PumukitNewAdmin/Media/play.html.twig', ['track' => $track]);
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function deleteAction(Request $request, MultimediaObject $multimediaObject): Response
+    public function deleteAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
         $media = $multimediaObject->getMediaById($request->get('id'));
         if ($media) {
@@ -259,10 +241,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function upAction(Request $request, MultimediaObject $multimediaObject): Response
+    public function upAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
         $multimediaObject = $this->trackService->upTrackInMultimediaObject($multimediaObject, $request->get('id'));
 
@@ -271,10 +250,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function downAction(Request $request, MultimediaObject $multimediaObject): Response
+    public function downAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
         $multimediaObject = $this->trackService->downTrackInMultimediaObject($multimediaObject, $request->get('id'));
 
@@ -301,11 +277,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         ]);
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     * @ParamConverter("job", options={"id" = "jobId"})
-     */
-    public function retryJobAction(MultimediaObject $multimediaObject, Job $job): Response
+    public function retryJobAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, #[MapDocument(id: 'jobId')] Job $job): Response
     {
         $flashMessage = $this->jobUpdater->retryJob($job);
         $this->addFlash('success', $flashMessage);
@@ -313,11 +285,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         return $this->redirectToRoute('pumukitnewadmin_track_list', ['id' => $multimediaObject->getId()]);
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     * @ParamConverter("job", options={"id" = "jobId"})
-     */
-    public function infoJobAction(MultimediaObject $multimediaObject, Job $job): Response
+    public function infoJobAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, #[MapDocument(id: 'jobId')] Job $job): Response
     {
         $command = $this->jobRender->renderBat($job);
 
@@ -328,10 +296,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         ]);
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function deleteJobAction(Request $request, MultimediaObject $multimediaObject): Response
+    public function deleteJobAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
         $job = $this->jobRepository->searchJob($request->get('jobId'));
         $this->jobRemover->delete($job);
@@ -350,10 +315,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         return new JsonResponse(['jobId' => $job->getId(), 'priority' => $priority]);
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function picAction(Request $request, MultimediaObject $multimediaObject): Response
+    public function picAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         $numFrame = $request->get('numframe');
@@ -369,10 +331,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         ]);
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function downloadAction(Request $request, MultimediaObject $multimediaObject): BinaryFileResponse
+    public function downloadAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): BinaryFileResponse
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         $path = $track->storage()->path()->path();
@@ -388,10 +347,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         return $response;
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function retranscodeAction(Request $request, MultimediaObject $multimediaObject): Response
+    public function retranscodeAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
         $track = $multimediaObject->getTrackById($request->get('id'));
         $profile = $request->get('profile');

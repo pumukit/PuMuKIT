@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,9 +17,7 @@ class WidgetController extends AbstractController
         $this->locales = $locales;
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Widget/languageselect.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Widget/languageselect.html.twig')]
     public function languageSelectAction()
     {
         if (count($this->locales) <= 1) {

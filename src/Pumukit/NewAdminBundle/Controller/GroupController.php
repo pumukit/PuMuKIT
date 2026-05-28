@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\Group;
@@ -14,18 +15,15 @@ use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\UserService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_GROUPS')")
- */
+#[IsGranted('ROLE_ACCESS_GROUPS')]
 class GroupController extends AdminController
 {
     public static $resourceName = 'group';
@@ -57,9 +55,7 @@ class GroupController extends AdminController
         $this->userService = $userService;
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Group/index.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Group/index.html.twig')]
     public function indexAction(Request $request)
     {
         $criteria = $this->getCriteria($request->get('criteria', []));
@@ -70,9 +66,7 @@ class GroupController extends AdminController
         return ['groups' => $groups, 'origins' => $origins];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Group/list.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Group/list.html.twig')]
     public function listAction(Request $request)
     {
         $criteria = $this->getCriteria($request->get('criteria', []));
@@ -139,9 +133,7 @@ class GroupController extends AdminController
         );
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Group/list.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Group/list.html.twig')]
     public function deleteAction(Request $request)
     {
         $group = $this->groupService->findById($request->get('id'));
@@ -239,9 +231,7 @@ class GroupController extends AdminController
         return [$key => $value];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Group/info.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Group/info.html.twig')]
     public function infoAction(Request $request)
     {
         $group = $this->findOr404($request);
@@ -274,9 +264,7 @@ class GroupController extends AdminController
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Group/dataresources.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Group/dataresources.html.twig')]
     public function dataResourcesAction(Group $group, Request $request): array
     {
         $action = $request->get('action', '0');
@@ -304,10 +292,7 @@ class GroupController extends AdminController
         ];
     }
 
-    /**
-     * @ParamConverter("user", options={"id" = "userId"})
-     */
-    public function deleteUserAction(User $user, Request $request)
+    public function deleteUserAction(#[MapDocument(id: 'userId')] User $user, Request $request)
     {
         $action = $request->get('action', '0');
         $group = $this->findOr404($request);
@@ -316,10 +301,7 @@ class GroupController extends AdminController
         return $this->redirectToRoute('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'user', 'action' => $action]);
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function deleteMultimediaObjectAction(MultimediaObject $multimediaObject, Request $request)
+    public function deleteMultimediaObjectAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
         $action = $request->get('action', '0');
         $group = $this->findOr404($request);
@@ -328,10 +310,7 @@ class GroupController extends AdminController
         return $this->redirectToRoute('pumukitnewadmin_group_data_resources', ['id' => $group->getId(), 'resourceName' => 'multimediaobject', 'action' => $action]);
     }
 
-    /**
-     * @ParamConverter("multimediaObject", options={"id" = "mmId"})
-     */
-    public function deleteEmbeddedBroadcastAction(MultimediaObject $multimediaObject, Request $request)
+    public function deleteEmbeddedBroadcastAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
         $action = $request->get('action', '0');
         $group = $this->findOr404($request);

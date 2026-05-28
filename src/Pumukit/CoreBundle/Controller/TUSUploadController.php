@@ -6,13 +6,13 @@ use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Services\InboxService;
 use Pumukit\CoreBundle\Utils\BlackListExtensions;
 use Pumukit\CoreBundle\Utils\MediaMimeTypeUtils;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use TusPhp\Middleware\Cors;
 use TusPhp\Tus\Server;
 
@@ -28,12 +28,11 @@ class TUSUploadController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('ROLE_UPLOAD_INBOX')")
-     *
      * @Route("/tus", name="tus_post")
      * @Route("/tus/{token}", name="tus_post_token", requirements={"token"=".+"})
      * @Route("/files/{token}", name="tus_files", requirements={"token"=".+"})
      */
+    #[IsGranted('ROLE_UPLOAD_INBOX')]
     public function server(Request $request, Server $server)
     {
         if ($request->isMethod('DELETE')) {

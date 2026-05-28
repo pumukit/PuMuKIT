@@ -15,17 +15,15 @@ use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
 use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Services\PermissionService;
 use Pumukit\SchemaBundle\Services\UserService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_PERMISSION_PROFILES')")
- */
+#[IsGranted('ROLE_ACCESS_PERMISSION_PROFILES')]
 class PermissionProfileController extends AdminController
 {
     public static $resourceName = 'permissionprofile';
@@ -61,9 +59,7 @@ class PermissionProfileController extends AdminController
         $this->pumukitSchemaPermissionProfileDispatcher = $pumukitSchemaPermissionProfileDispatcher;
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/PermissionProfile/index.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/PermissionProfile/index.html.twig')]
     public function indexAction(Request $request)
     {
         $criteria = $this->getCriteria($request->get('criteria', []));
@@ -80,9 +76,7 @@ class PermissionProfileController extends AdminController
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/PermissionProfile/list.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/PermissionProfile/list.html.twig')]
     public function listAction(Request $request)
     {
         $session = $this->requestStack->getSession();

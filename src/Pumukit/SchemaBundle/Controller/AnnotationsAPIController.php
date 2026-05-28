@@ -11,13 +11,13 @@ use Pumukit\SchemaBundle\Document\Annotation;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Event\AnnotationsEvents;
 use Pumukit\SchemaBundle\Event\AnnotationsUpdateEvent;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  *  @Route("/annotation")
@@ -117,9 +117,8 @@ class AnnotationsAPIController extends AbstractController
 
     /**
      * @Route("/", methods={"PUT"})
-     *
-     * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
+    #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
     public function createNewAction(Request $request)
     {
         $episode = $request->get('episode');
@@ -171,9 +170,8 @@ class AnnotationsAPIController extends AbstractController
 
     /**
      * @Route("/{id}", methods={"PUT"})
-     *
-     * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
+    #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
     public function editAction(Request $request, Annotation $annotation)
     {
         $value = $request->get('value');
@@ -204,9 +202,8 @@ class AnnotationsAPIController extends AbstractController
 
     /**
      * @Route("/{id}", methods={"DELETE"})
-     *
-     * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
+    #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
     public function deleteAction(Annotation $annotation)
     {
         $this->documentManager->remove($annotation);
@@ -219,9 +216,8 @@ class AnnotationsAPIController extends AbstractController
 
     /**
      * @Route("/reset/{id}", methods={"DELETE"})
-     *
-     * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
      */
+    #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
     public function deleteAllAction(MultimediaObject $multimediaobject)
     {
         $annonRepo = $this->documentManager->getRepository(Annotation::class);

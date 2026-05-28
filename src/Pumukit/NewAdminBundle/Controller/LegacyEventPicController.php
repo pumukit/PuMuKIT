@@ -6,14 +6,12 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Pumukit\SchemaBundle\Document\Event;
 use Pumukit\SchemaBundle\Services\LegacyEventPicService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_LIVE_EVENTS')")
- */
+#[IsGranted('ROLE_ACCESS_LIVE_EVENTS')]
 class LegacyEventPicController extends AbstractController implements NewAdminControllerInterface
 {
     /** @var LegacyEventPicService */
@@ -24,9 +22,7 @@ class LegacyEventPicController extends AbstractController implements NewAdminCon
         $this->legacyEventPicService = $legacyEventPicService;
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/create.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/create.html.twig')]
     public function createAction(Request $request, Event $event)
     {
         return [
@@ -47,9 +43,7 @@ class LegacyEventPicController extends AbstractController implements NewAdminCon
         return $this->redirectToRoute('pumukitnewadmin_event_list');
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/upload_event.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/upload_event.html.twig')]
     public function uploadAction(Event $event, Request $request)
     {
         try {

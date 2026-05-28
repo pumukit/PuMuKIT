@@ -5,17 +5,15 @@ declare(strict_types=1);
 namespace Pumukit\NewAdminBundle\Controller;
 
 use Pumukit\SchemaBundle\Document\Series;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_INBOX')")
- */
+#[IsGranted('ROLE_ACCESS_INBOX')]
 class InboxController extends AbstractController implements NewAdminControllerInterface
 {
     private $pumukitInbox;

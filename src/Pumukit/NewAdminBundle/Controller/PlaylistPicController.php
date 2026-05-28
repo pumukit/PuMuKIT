@@ -8,15 +8,13 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\SeriesPicService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_EDIT_PLAYLIST')")
- */
+#[IsGranted('ROLE_ACCESS_EDIT_PLAYLIST')]
 class PlaylistPicController extends AbstractController implements NewAdminControllerInterface
 {
     /** @var SeriesPicService */
@@ -42,9 +40,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
         $this->requestStack = $requestStack;
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/create.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/create.html.twig')]
     public function createAction(Series $playlist)
     {
         return [
@@ -53,9 +49,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/list.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/list.html.twig')]
     public function listAction(Series $playlist)
     {
         return [
@@ -64,9 +58,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/list.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/list.html.twig')]
     public function updateAction(Request $request, Series $playlist)
     {
         $isBanner = false;
@@ -86,9 +78,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/upload.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/upload.html.twig')]
     public function uploadAction(Request $request, Series $playlist)
     {
         $isBanner = false;
@@ -173,9 +163,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
         return $this->redirectToRoute('pumukitnewadmin_playlistpic_list', ['id' => $playlist->getId()]);
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/picstoaddlist.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/picstoaddlist.html.twig')]
     public function picstoaddlistAction(Request $request, Series $playlist)
     {
         if ($request->get('page', null)) {
@@ -199,9 +187,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
         ];
     }
 
-    /**
-     * @Template("@PumukitNewAdmin/Pic/banner.html.twig")
-     */
+    #[Template('@PumukitNewAdmin/Pic/banner.html.twig')]
     public function bannerAction(Request $request, Series $playlist)
     {
         return [

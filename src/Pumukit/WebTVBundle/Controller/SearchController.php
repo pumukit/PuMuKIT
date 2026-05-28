@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\CoreBundle\Services\PaginationService;
@@ -13,7 +14,6 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Pumukit\WebTVBundle\Services\SearchService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -100,10 +100,8 @@ class SearchController extends AbstractController implements WebTVControllerInte
 
     /**
      * @Route("/searchmultimediaobjects/{tagCod}/{useTagAsGeneral}", defaults={"tagCod"=null, "useTagAsGeneral"=false}, name="pumukit_webtv_search_multimediaobjects")
-     *
-     * @ParamConverter("blockedTag", options={"mapping": {"tagCod": "cod"}})
      */
-    public function multimediaObjectsAction(Request $request, ?Tag $blockedTag = null, bool $useTagAsGeneral = false): Response
+    public function multimediaObjectsAction(Request $request, #[MapDocument(mapping: ['tagCod' => 'cod'])] ?Tag $blockedTag = null, bool $useTagAsGeneral = false): Response
     {
         $templateTitle = $this->menuSearchTitle ?? 'Multimedia objects search';
         $this->breadcrumbsService->addList($blockedTag ? $blockedTag->getTitle() : $this->translator->trans($templateTitle), 'pumukit_webtv_search_multimediaobjects');

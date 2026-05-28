@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Pumukit\NewAdminBundle\Services\OwnerService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment as TemplatingEngine;
 
@@ -38,17 +38,11 @@ class OwnerController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @Security("is_granted('ROLE_ACCESS_MULTIMEDIA_SERIES')")
-     *
      * @Route("/reject/{id}/owner/{owner}/coowner/{coOwner}", name="pumukit_multimedia_object_reject_co_owner")
-     *
-     * @ParamConverter("multimediaObject", options={"id"="id"})
-     * @ParamConverter("owner", options={"id"="owner"})
-     * @ParamConverter("coOwner", options={"id"="coOwner"})
-     *
-     * @Template("@PumukitNewAdmin/MultimediaObject/Owner/reject.html.twig")
      */
-    public function rejectCoOwnerAction(MultimediaObject $multimediaObject, User $owner, User $coOwner)
+    #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
+    #[Template('@PumukitNewAdmin/MultimediaObject/Owner/reject.html.twig')]
+    public function rejectCoOwnerAction(#[MapDocument(id: 'id')] MultimediaObject $multimediaObject, #[MapDocument(id: 'owner')] User $owner, #[MapDocument(id: 'coOwner')] User $coOwner)
     {
         $user = $this->getUser();
         $errorMessage = '';

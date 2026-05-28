@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\Live;
 use Pumukit\SchemaBundle\Document\Message;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,11 +32,9 @@ class ChatController extends AbstractController
     }
 
     /**
-     * @ParamConverter("multimediaObject", options={"id" = "id"})
-     *
      * @Route("/show/{id}", name="pumukit_live_chat_show")
      */
-    public function showAction(Request $request, MultimediaObject $multimediaObject): Response
+    public function showAction(Request $request, #[MapDocument(id: 'id')] MultimediaObject $multimediaObject): Response
     {
         $username = $this->getUser();
         if (!$username) {
@@ -56,11 +54,9 @@ class ChatController extends AbstractController
     }
 
     /**
-     * @ParamConverter("live", options={"id" = "id"})
-     *
      * @Route("/basic/show/{id}", name="pumukit_live_chat_basic_show")
      */
-    public function showBasicAction(Request $request, Live $live): Response
+    public function showBasicAction(Request $request, #[MapDocument(id: 'id')] Live $live): Response
     {
         $username = $this->getUser();
         if (!$username) {
@@ -80,11 +76,9 @@ class ChatController extends AbstractController
     }
 
     /**
-     * @ParamConverter("multimediaObject", options={"id" = "id"})
-     *
      * @Route("/post/{id}", name="pumukit_live_chat_post")
      */
-    public function postAction(MultimediaObject $multimediaObject, Request $request): JsonResponse
+    public function postAction(#[MapDocument(id: 'id')] MultimediaObject $multimediaObject, Request $request): JsonResponse
     {
         $message = new Message();
         $message->setAuthor($request->get('name'));
@@ -105,11 +99,9 @@ class ChatController extends AbstractController
     }
 
     /**
-     * @ParamConverter("live", options={"id" = "id"})
-     *
      * @Route("/basic/post/{id}", name="pumukit_live_chat_basic_post")
      */
-    public function postBasicAction(Live $live, Request $request): JsonResponse
+    public function postBasicAction(#[MapDocument(id: 'id')] Live $live, Request $request): JsonResponse
     {
         $message = new Message();
         $message->setAuthor($request->get('name'));
@@ -130,11 +122,9 @@ class ChatController extends AbstractController
     }
 
     /**
-     * @ParamConverter("multimediaObject", options={"id" = "id"})
-     *
      * @Route("/list/{id}", name="pumukit_live_chat_list")
      */
-    public function listAction(MultimediaObject $multimediaObject): Response
+    public function listAction(#[MapDocument(id: 'id')] MultimediaObject $multimediaObject): Response
     {
         $messages = $this->documentManager->getRepository(Message::class)->findBy(
             ['multimediaObject' => $multimediaObject->getId()],
@@ -147,11 +137,9 @@ class ChatController extends AbstractController
     }
 
     /**
-     * @ParamConverter("live", options={"id" = "id"})
-     *
      * @Route("/basic/list/{id}", name="pumukit_live_chat_basic_list")
      */
-    public function listBasicAction(Live $live): Response
+    public function listBasicAction(#[MapDocument(id: 'id')] Live $live): Response
     {
         $messages = $this->documentManager->getRepository(Message::class)->findBy(
             ['channel' => $live->getId()],

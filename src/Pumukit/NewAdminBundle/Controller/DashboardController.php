@@ -8,18 +8,16 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\StatsService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @Security("is_granted('ROLE_ACCESS_DASHBOARD')")
- */
+#[IsGranted('ROLE_ACCESS_DASHBOARD')]
 class DashboardController extends AbstractController implements NewAdminControllerInterface
 {
     /** @var DocumentManager */
@@ -45,9 +43,8 @@ class DashboardController extends AbstractController implements NewAdminControll
     /**
      * @Route("/dashboard")
      * @Route("/dashboard/default", name="pumukit_newadmin_dashboard_index_default")
-     *
-     * @Template("@PumukitNewAdmin/Dashboard/index.html.twig")
      */
+    #[Template('@PumukitNewAdmin/Dashboard/index.html.twig')]
     public function indexAction(Request $request)
     {
         $data = ['stats' => false];

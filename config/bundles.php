@@ -18,7 +18,6 @@ return [
     Pumukit\WebTVBundle\PumukitWebTVBundle::class => ['all' => true],
     Pumukit\WizardBundle\PumukitWizardBundle::class => ['all' => true],
     Pumukit\WorkflowBundle\PumukitWorkflowBundle::class => ['all' => true],
-    Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
@@ -29,4 +28,5 @@ return [
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     Pumukit\PaellaPlayerBundle\PumukitPaellaPlayerBundle::class => ['all' => true],
     ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
+    Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
 ];

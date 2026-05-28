@@ -14,19 +14,18 @@ use Pumukit\EncoderBundle\Services\JobUpdater;
 use Pumukit\EncoderBundle\Services\Repository\JobRepository;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * @Route("/admin/encoder")
- *
- * @Security("is_granted('ROLE_ACCESS_JOBS')")
  */
+#[IsGranted('ROLE_ACCESS_JOBS')]
 class InfoController extends AbstractController
 {
     private JobRender $jobRender;
@@ -44,9 +43,8 @@ class InfoController extends AbstractController
 
     /**
      * @Route("/", name="pumukit_encoder_info")
-     *
-     * @Template("@PumukitEncoder/Info/index.html.twig")
      */
+    #[Template('@PumukitEncoder/Info/index.html.twig')]
     public function indexAction(Request $request, DocumentManager $documentManager, CpuService $cpuService, PaginationService $paginationService): array
     {
         $user = $this->getUser();
@@ -125,9 +123,8 @@ class InfoController extends AbstractController
 
     /**
      * @Route("/job/{id}", methods={"GET"}, name="pumukit_encoder_job")
-     *
-     * @Template("@PumukitEncoder/Info/infoJob.html.twig")
      */
+    #[Template('@PumukitEncoder/Info/infoJob.html.twig')]
     public function infoJobAction(Request $request, Job $job): array
     {
         $deletedMultimediaObject = false;
