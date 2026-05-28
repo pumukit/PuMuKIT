@@ -57,9 +57,7 @@
         "rector/rector": "^2",
         "symfony/browser-kit": "*",
         "symfony/debug-bundle": "*",
-        "symfony/maker-bundle": "^1.39",
         "symfony/phpunit-bridge": "*",
-        "symfony/stopwatch": "*",
         "symfony/var-dumper": "*",
         "symfony/web-profiler-bundle": "*"
     },
