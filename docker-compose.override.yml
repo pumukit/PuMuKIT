@@ -1,0 +1,13 @@
+# Local dev overrides (auto-loaded by `docker compose` / `make up`).
+# Adds Mailpit as a mail catcher: all emails are captured and viewable
+# at http://localhost:8025 instead of being delivered.
+services:
+  php:
+    environment:
+      MAILER_DSN: smtp://mailer:1025
+
+  mailer:
+    image: axllent/mailpit
+    restart: unless-stopped
+    ports:
+      - "8025:8025"
