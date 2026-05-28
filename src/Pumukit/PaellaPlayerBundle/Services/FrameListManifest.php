@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Pumukit\PaellaPlayerBundle\Services;
 
+use Pumukit\OpencastBundle\Services\Client;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 class FrameListManifest
 {
     private $opencastClient;
 
-    public function __construct(?\Pumukit\OpencastBundle\Services\Client $opencastClient)
+    public function __construct(?Client $opencastClient)
     {
         $this->opencastClient = $opencastClient;
     }
