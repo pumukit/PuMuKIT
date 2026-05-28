@@ -5,6 +5,38 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 To get the diff for a specific change, go to https://github.com/pumukit/PuMuKIT/commit/XXX where XXX is the change hash.
 To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/compare/3.0.0...3.1.x.
 
+## [Unreleased]
+
+#### Added
+
+- Versioned read-only REST API based on API Platform 4 under `/api/v1`, with Swagger UI and ReDoc, protected by the API access permission and exposing MultimediaObject, Series, Tag and Person collections.
+- Mailpit as a mail catcher for local development (web inbox at http://localhost:8025).
+- Functional tests for user creation, login and logout.
+- `make php-shell` and `make composer` targets to work inside the PHP container.
+
+#### Changed
+
+- Upgrade the core to Symfony 6.4 LTS.
+- Single source of truth for the Symfony version through `extra.symfony.require` (Symfony components pinned with `*`).
+- Migrate the security layer from the legacy Guard system to the new authenticator system (existing sha512 passwords remain valid).
+- Replace Swiftmailer with `symfony/mailer`.
+- Migrate controllers from sensio annotations to native PHP 8 attributes (`#[Template]`, `#[IsGranted]`, `#[MapDocument]`).
+- Move PaellaPlayerBundle and StatsUIBundle into the core; they are no longer external packages.
+- Upgrade Pagerfanta to v4 and MobileDetect to v4.
+- Update composer dependencies (gedmo/doctrine-extensions, php-cs-fixer, pagerfanta adapters, etc.).
+
+#### Fixed
+
+- Several Symfony 6 runtime issues in the backoffice menu, the web profiler and the pagination adapters.
+- Media API endpoint failing on multimedia objects whose metadata was stored as a JSON array.
+
+#### Removed
+
+- API Platform 2.7 (replaced by 4.x), removing the two GraphQL security advisories and their audit ignores.
+- `sensio/framework-extra-bundle` (abandoned).
+- `symfony/templating` (unused), Swiftmailer and `symfony/swiftmailer-bundle`.
+
+
 ## [5.1.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...5.0.0) - (2026-03-06)
 
 #### Added
