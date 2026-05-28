@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentNotFoundException;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
@@ -15,6 +18,7 @@ use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\ValueObject\Immutable;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\MultimediaObjectRepository")
@@ -23,6 +27,7 @@ use Pumukit\SchemaBundle\Document\ValueObject\Immutable;
  *
  * @MongoDB\HasLifecycleCallbacks
  */
+#[ApiResource(operations: [new GetCollection(), new Get()], normalizationContext: ['groups' => ['multimedia_object:read']])]
 class MultimediaObject
 {
     use Traits\Keywords;
@@ -306,6 +311,7 @@ class MultimediaObject
         return false;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getId()
     {
         return $this->id;
@@ -498,6 +504,7 @@ class MultimediaObject
         $this->public_date = $publicDate;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getPublicDate()
     {
         return $this->public_date;
@@ -511,6 +518,7 @@ class MultimediaObject
         $this->title[$locale] = $title;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getTitle($locale = null): string
     {
         if (null === $locale) {
@@ -565,6 +573,7 @@ class MultimediaObject
         $this->description[$locale] = $description;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getDescription($locale = null): string
     {
         if (null === $locale) {
@@ -646,6 +655,7 @@ class MultimediaObject
         $this->duration = $duration;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getDuration(): int
     {
         return $this->duration;

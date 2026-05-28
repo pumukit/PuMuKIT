@@ -1,0 +1,15 @@
+api_platform:
+    title: 'PuMuKIT API'
+    description: 'PuMuKIT REST API'
+    version: '1.0.0'
+    mapping:
+        paths:
+            - '%kernel.project_dir%/src/Pumukit/SchemaBundle/Document'
+    doctrine: false
+    doctrine_mongodb_odm:
+        enabled: true
+    defaults:
+        stateless: false
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']
+        security: "is_granted('ROLE_ACCESS_API')"

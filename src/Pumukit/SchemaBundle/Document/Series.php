@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\SeriesRepository")
  *
  * @MongoDB\Index(name="text_index", keys={"textindex.text"="text", "secondarytextindex.text"="text"}, options={"language_override"="indexlanguage", "default_language"="none", "weights"={"textindex.text"=10, "secondarytextindex.text"=1}})
  */
+#[ApiResource(operations: [new GetCollection(), new Get()], normalizationContext: ['groups' => ['series:read']])]
 class Series
 {
     use Traits\Keywords;
@@ -187,6 +192,7 @@ class Series
         return true;
     }
 
+    #[Groups(['series:read'])]
     public function getId()
     {
         return $this->id;
@@ -309,6 +315,7 @@ class Series
         $this->public_date = $public_date;
     }
 
+    #[Groups(['series:read'])]
     public function getPublicDate()
     {
         return $this->public_date;
@@ -322,6 +329,7 @@ class Series
         $this->title[$locale] = $title;
     }
 
+    #[Groups(['series:read'])]
     public function getTitle($locale = null): string
     {
         if (null === $locale) {
@@ -376,6 +384,7 @@ class Series
         $this->description[$locale] = $description;
     }
 
+    #[Groups(['series:read'])]
     public function getDescription($locale = null): string
     {
         if (null === $locale) {

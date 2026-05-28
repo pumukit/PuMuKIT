@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\PersonRepository")
  */
+#[ApiResource(operations: [new GetCollection(), new Get()], normalizationContext: ['groups' => ['person:read']])]
 class Person implements PersonInterface
 {
     use Traits\Properties;
@@ -81,6 +86,7 @@ class Person implements PersonInterface
         return '';
     }
 
+    #[Groups(['person:read'])]
     public function getId()
     {
         return $this->id;
@@ -101,6 +107,7 @@ class Person implements PersonInterface
         $this->name = $name;
     }
 
+    #[Groups(['person:read'])]
     public function getName(): ?string
     {
         return $this->name;
@@ -111,6 +118,7 @@ class Person implements PersonInterface
         $this->email = $email;
     }
 
+    #[Groups(['person:read'])]
     public function getEmail(): ?string
     {
         return $this->email;

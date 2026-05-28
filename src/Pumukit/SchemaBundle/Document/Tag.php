@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @Gedmo\Tree(type="materializedPath", activateLocking=false)
  */
+#[ApiResource(operations: [new GetCollection(), new Get()], normalizationContext: ['groups' => ['tag:read']])]
 class Tag implements TagInterface
 {
     use Traits\Properties;
@@ -131,6 +136,7 @@ class Tag implements TagInterface
         return $this->getTitle();
     }
 
+    #[Groups(['tag:read'])]
     public function getId()
     {
         return $this->id;
@@ -144,6 +150,7 @@ class Tag implements TagInterface
         $this->title[$locale] = $title;
     }
 
+    #[Groups(['tag:read'])]
     public function getTitle(?string $locale = null): string
     {
         if (null === $locale) {
@@ -225,6 +232,7 @@ class Tag implements TagInterface
         $this->cod = $code;
     }
 
+    #[Groups(['tag:read'])]
     public function getCod(): string
     {
         return $this->cod;
@@ -295,6 +303,7 @@ class Tag implements TagInterface
         --$this->number_multimedia_objects;
     }
 
+    #[Groups(['tag:read'])]
     public function getNumberMultimediaObjects(): int
     {
         return $this->number_multimedia_objects;
