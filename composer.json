@@ -34,7 +34,7 @@
         "symfony/form": "*",
         "symfony/http-kernel": "*",
         "symfony/intl": "*",
-        "symfony/lock": "6.4.*",
+        "symfony/lock": "*",
         "symfony/mailer": "*",
         "symfony/monolog-bundle": "^3.0",
         "symfony/rate-limiter": "*",
