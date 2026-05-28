@@ -1,4 +1,4 @@
-.PHONY: help debug stop start clean pull build test-all shell ps logs cc composer-validate fixtures composer-install
+.PHONY: help debug stop start clean pull build test-all shell php-shell composer ps logs cc composer-validate fixtures composer-install
 
 DOCKER_COMP = docker compose
 
@@ -15,7 +15,9 @@ help:
 	@echo '    make pull                  Download container images from registry'
 	@echo '    make build                 build project docker images'
 	@echo '    make test-all              Run the PuMuKIT code tests'
-	@echo '    make shell                 Attach to tte PuMuKIT tty'
+	@echo '    make shell                 Attach to tte PuMuKIT tty (new container)'
+	@echo '    make php-shell             Open a shell in the running PHP container'
+	@echo '    make composer CMD="..."    Run a composer command in the running PHP container'
 	@echo '    make ps                    List service state'
 	@echo '    make logs                  Show the log of all services'
 	@echo '    make cc                    Clear cache and install assets'
@@ -97,6 +99,12 @@ test-rector:
 
 shell:
 	@$(DOCKER_COMP) -f docker-compose.yml run --service-ports php sh
+
+php-shell:
+	@$(DOCKER_COMP) exec php sh
+
+composer:
+	@$(DOCKER_COMP) exec php composer $(CMD)
 
 ps:
 	@$(DOCKER_COMP) ps
