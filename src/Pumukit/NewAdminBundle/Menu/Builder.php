@@ -20,7 +20,7 @@ class Builder implements ContainerAwareInterface
     {
         $menu = $factory->createItem('root');
 
-        $this->authorizationChecker = $this->container->get('security.authorization_checker');
+        $this->authorizationChecker = $this->container->get('pumukitnewadmin.authorization_checker');
 
         $this->addDashboardMenu($menu);
         $this->addMediaManagerMenu($menu);
