@@ -269,7 +269,7 @@ class UserController extends AdminController
         $profileRepo = $this->documentManager->getRepository(PermissionProfile::class);
         $usersRepo = $this->documentManager->getRepository(User::class);
 
-        $ids = $request->request->get('ids');
+        $ids = $request->request->all('ids');
         $profile = $profileRepo->find($request->request->get('profile'));
 
         if (!$profile) {

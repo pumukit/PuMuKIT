@@ -234,7 +234,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 $criteria['embeddedEvent.embeddedEventSession.start'] = ['$gt' => $date];
             }
         } elseif ($request->query->has('criteria')) {
-            $data = $request->query->get('criteria');
+            $data = $request->query->all('criteria');
             $session->set('admin/live/event/dataForm', $data);
             if (!empty($data['name'])) {
                 if (preg_match(self::$regex, $data['name'])) {

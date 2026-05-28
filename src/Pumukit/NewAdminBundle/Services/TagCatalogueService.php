@@ -108,7 +108,7 @@ class TagCatalogueService
         $newCriteria = [];
         $tag = [];
 
-        $criteria = $request->request->get('criteria');
+        $criteria = $request->request->all('criteria');
 
         if ($criteria) {
             foreach ($criteria as $key => $value) {
