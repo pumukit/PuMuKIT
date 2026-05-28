@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Doctrine\ODM\MongoDB\PersistentCollection;
 use MongoDB\BSON\ObjectId;
+use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
@@ -20,7 +21,7 @@ use Symfony\Component\Serializer\Annotation\Ignore;
  *     itemOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}}
  * )
  */
-class User implements UserInterface
+class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
 {
     use Traits\Properties;
 
@@ -167,6 +168,11 @@ class User implements UserInterface
     }
 
     public function getUsername(): string
+    {
+        return (string) $this->username;
+    }
+
+    public function getUserIdentifier(): string
     {
         return (string) $this->username;
     }

@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Services\PermissionService;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 
 /**
  * @internal
@@ -42,7 +42,7 @@ class CreateUserServiceTest extends PumukitTestCase
             $permissionService
         );
 
-        $userPasswordEncoder = $this->getMockBuilder(UserPasswordEncoder::class)
+        $userPasswordEncoder = $this->getMockBuilder(UserPasswordHasher::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;

@@ -5,24 +5,24 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class PasswordService
 {
     protected $documentManager;
-    protected $userPasswordEncoder;
+    protected $userPasswordHasher;
 
-    public function __construct(DocumentManager $documentManager, UserPasswordEncoderInterface $userPasswordEncoder)
+    public function __construct(DocumentManager $documentManager, UserPasswordHasherInterface $userPasswordHasher)
     {
         $this->documentManager = $documentManager;
-        $this->userPasswordEncoder = $userPasswordEncoder;
+        $this->userPasswordHasher = $userPasswordHasher;
     }
 
     public function changePassword(UserInterface $user, string $password): void
     {
         try {
-            $user->setPassword($this->userPasswordEncoder->encodePassword($user, $password));
+            $user->setPassword($this->userPasswordHasher->hashPassword($user, $password));
             $this->documentManager->flush();
         } catch (\Exception $exception) {
             throw new \Exception($exception);

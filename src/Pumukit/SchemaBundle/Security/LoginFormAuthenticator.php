@@ -8,23 +8,22 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
-use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Csrf\CsrfToken;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
-use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
+use Symfony\Component\Security\Http\Authenticator\AbstractLoginFormAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
+class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
@@ -32,21 +31,15 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     private $objectManager;
     private $urlGenerator;
-    private $csrfTokenManager;
-    private $passwordEncoder;
     private $loginIpLimiter;
 
     public function __construct(
         DocumentManager $objectManager,
         UrlGeneratorInterface $urlGenerator,
-        CsrfTokenManagerInterface $csrfTokenManager,
-        UserPasswordEncoderInterface $passwordEncoder,
         RateLimiterFactory $loginIpLimiter
     ) {
         $this->objectManager = $objectManager;
         $this->urlGenerator = $urlGenerator;
-        $this->csrfTokenManager = $csrfTokenManager;
-        $this->passwordEncoder = $passwordEncoder;
         $this->loginIpLimiter = $loginIpLimiter;
     }
 
@@ -55,7 +48,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         return self::LOGIN_ROUTE === $request->attributes->get('_route') && $request->isMethod('POST');
     }
 
-    public function getCredentials(Request $request): array
+    public function authenticate(Request $request): Passport
     {
         $limiter = $this->loginIpLimiter->create($request->getClientIp());
         if (false === $limiter->consume(1)->isAccepted()) {
@@ -66,28 +59,60 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         $password = (string) ($request->request->get('password') ?? '');
         $csrfToken = (string) ($request->request->get('_csrf_token') ?? '');
 
-        $credentials = [
-            'username' => $username,
-            'password' => $password,
-            'csrf_token' => $csrfToken,
-        ];
+        $request->getSession()->set(Security::LAST_USERNAME, $username);
 
-        $request->getSession()->set(
-            Security::LAST_USERNAME,
-            $username
+        return new Passport(
+            new UserBadge($username, fn (string $userIdentifier) => $this->loadUser($userIdentifier)),
+            new PasswordCredentials($password),
+            [
+                new CsrfTokenBadge('authenticate', $csrfToken),
+                new RememberMeBadge(),
+            ]
         );
-
-        return $credentials;
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        $token = new CsrfToken('authenticate', $credentials['csrf_token']);
-        if (!$this->csrfTokenManager->isTokenValid($token)) {
-            throw new InvalidCsrfTokenException();
+        $user = $token->getUser();
+        if ($user instanceof User) {
+            $user->resetLoginAttempts();
+            $this->objectManager->flush();
         }
 
-        $user = $this->objectManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
+        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+            return new RedirectResponse($targetPath);
+        }
+
+        return new RedirectResponse($this->urlGenerator->generate('homepage'));
+    }
+
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
+    {
+        if ($exception instanceof CustomUserMessageAuthenticationException) {
+            $request->getSession()->getFlashBag()->add('error', $exception->getMessage());
+
+            return new RedirectResponse($this->urlGenerator->generate(self::LOGIN_ROUTE));
+        }
+
+        $username = $request->request->get('username');
+        $user = $this->objectManager->getRepository(User::class)->findOneBy(['username' => $username]);
+        if ($user) {
+            $this->updateUser($user);
+        }
+
+        $request->getSession()->getFlashBag()->add('error', 'Invalid credentials or account temporarily blocked.');
+
+        return new RedirectResponse($this->urlGenerator->generate(self::LOGIN_ROUTE));
+    }
+
+    protected function getLoginUrl(Request $request): string
+    {
+        return $this->urlGenerator->generate(self::LOGIN_ROUTE);
+    }
+
+    protected function loadUser(string $username): User
+    {
+        $user = $this->objectManager->getRepository(User::class)->findOneBy(['username' => $username]);
         if (!$user) {
             throw new CustomUserMessageAuthenticationException('Invalid credentials or account temporarily blocked.');
         }
@@ -98,66 +123,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
         }
 
         if (!$user->canLogin() || !$user->isEnabled()) {
-            throw new CustomUserMessageAuthenticationException(
-                'Invalid credentials or account temporarily blocked.'
-            );
+            throw new CustomUserMessageAuthenticationException('Invalid credentials or account temporarily blocked.');
         }
 
         return $user;
-    }
-
-    public function checkCredentials($credentials, UserInterface $user): bool
-    {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
-    }
-
-    public function getPassword($credentials): ?string
-    {
-        return $credentials['password'];
-    }
-
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): RedirectResponse
-    {
-        $user = $token->getUser();
-        if ($user instanceof User) {
-            $user->resetLoginAttempts();
-            $this->objectManager->flush();
-        }
-
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
-        }
-
-        return new RedirectResponse($this->urlGenerator->generate('homepage'));
-    }
-
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): RedirectResponse
-    {
-        if ($exception instanceof CustomUserMessageAuthenticationException) {
-            $request->getSession()->getFlashBag()->add('error', $exception->getMessage());
-        } else {
-            $username = $request->request->get('username');
-            $user = $this->objectManager->getRepository(User::class)->findOneBy(['username' => $username]);
-
-            if ($user) {
-                $this->updateUser($user);
-
-                if (!$user->canLogin()) {
-                    $request->getSession()->getFlashBag()->add('error', 'Invalid credentials or account temporarily blocked.');
-                } else {
-                    $request->getSession()->getFlashBag()->add('error', 'Invalid credentials or account temporarily blocked.');
-                }
-            } else {
-                $request->getSession()->getFlashBag()->add('error', 'Invalid credentials or account temporarily blocked.');
-            }
-        }
-
-        return new RedirectResponse($this->urlGenerator->generate(self::LOGIN_ROUTE));
-    }
-
-    protected function getLoginUrl(): string
-    {
-        return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 
     private function updateUser(User $user): void

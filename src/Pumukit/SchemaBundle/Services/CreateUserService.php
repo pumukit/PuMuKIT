@@ -7,25 +7,25 @@ namespace Pumukit\SchemaBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class CreateUserService extends CommonUserService
 {
     protected $userRepository;
-    private $userPasswordEncoder;
+    private $userPasswordHasher;
     private $personService;
     private $dispatcher;
 
     public function __construct(
         DocumentManager $objectManager,
-        UserPasswordEncoderInterface $userPasswordEncoder,
+        UserPasswordHasherInterface $userPasswordHasher,
         PermissionProfileService $permissionProfileService,
         PersonService $personService,
         UserEventDispatcherService $dispatcher
     ) {
         parent::__construct($objectManager, $permissionProfileService);
-        $this->userPasswordEncoder = $userPasswordEncoder;
+        $this->userPasswordHasher = $userPasswordHasher;
         $this->personService = $personService;
         $this->dispatcher = $dispatcher;
 
@@ -56,7 +56,7 @@ class CreateUserService extends CommonUserService
         $user->setUsername($username);
         $user->setFullName($fullName ?? $username);
         $user->setEmail($email);
-        $user->setPassword($this->userPasswordEncoder->encodePassword($user, $password));
+        $user->setPassword($this->userPasswordHasher->hashPassword($user, $password));
         $user->setEnabled(true);
         if ($permissionProfile instanceof PermissionProfile) {
             $user->setPermissionProfile($permissionProfile);

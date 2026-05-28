@@ -19,8 +19,8 @@ use Pumukit\SchemaBundle\Services\UpdateUserService;
 use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 /**
  * @internal
@@ -69,7 +69,7 @@ class PermissionProfileListenerTest extends PumukitTestCase
             $sendEmailWhenAddUserOwner
         );
 
-        $this->userPasswordEncoder = $this->getMockBuilder(UserPasswordEncoder::class)
+        $this->userPasswordEncoder = $this->getMockBuilder(UserPasswordHasher::class)
             ->disableOriginalConstructor()
             ->getMock()
         ;

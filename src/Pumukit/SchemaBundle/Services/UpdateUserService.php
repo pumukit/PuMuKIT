@@ -6,24 +6,24 @@ namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UpdateUserService extends CommonUserService
 {
     protected $userRepository;
     private $dispatcher;
-    private $userPasswordEncoder;
+    private $userPasswordHasher;
 
     public function __construct(
         DocumentManager $objectManager,
         PermissionProfileService $permissionProfileService,
-        UserPasswordEncoderInterface $userPasswordEncoder,
+        UserPasswordHasherInterface $userPasswordHasher,
         UserEventDispatcherService $dispatcher
     ) {
         parent::__construct($objectManager, $permissionProfileService);
         $this->dispatcher = $dispatcher;
-        $this->userPasswordEncoder = $userPasswordEncoder;
+        $this->userPasswordHasher = $userPasswordHasher;
         $this->userRepository = $objectManager->getRepository(User::class);
     }
 
@@ -55,7 +55,7 @@ class UpdateUserService extends CommonUserService
     private function updateUserPassword(UserInterface $user): void
     {
         if (null !== $user->getPlainPassword()) {
-            $user->setPassword($this->userPasswordEncoder->encodePassword(
+            $user->setPassword($this->userPasswordHasher->hashPassword(
                 $user,
                 $user->getPlainPassword()
             ));
