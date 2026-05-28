@@ -1,0 +1,31 @@
+<div class="col-md-7 block-results-views">
+    <div class="row">
+        <div class="col-md-4">
+            <h2 class="total-views-objects"></h2>
+        </div>
+        <div class="col-md-6">
+            <h4>{% trans %}Total views in the date{% endtrans %}</h4>
+        </div>
+        <div class="col-md-2 pull-right">
+            <i class="ion ion-eye glyphicon glyphicon-eye-open"></i>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+{% if app.request.get('_route') != 'pumukit_stats_mmobj_index_id' %}
+    <div class="col-md-7 block-results-objects">
+        <div class="row">
+            <div class="col-md-4">
+                <h2 class="total-objects"></h2>
+            </div>
+            <div class="col-md-6">
+                <h4>{% trans %}Total Objects{% endtrans %} </h4>
+            </div>
+            <div class="col-md-2 pull-right">
+                <i class="ion ion-stats-bars mdi-av-equalizer"></i>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+{% endif %}

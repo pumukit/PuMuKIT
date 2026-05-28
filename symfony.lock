@@ -319,9 +319,6 @@
     "teltek/pumukit-paella-player-bundle": {
         "version": "3.0.12"
     },
-    "teltek/pumukit-stats-ui-bundle": {
-        "version": "3.0.2"
-    },
     "twig/extra-bundle": {
         "version": "v3.5.0"
     }

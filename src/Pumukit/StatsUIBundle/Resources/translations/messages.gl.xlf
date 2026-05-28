@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" target-language="gl" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="afbae52a868d11e8adc0fa7ae01bbebc" resname="General Statistics for Series">
+                <source>General Statistics for Series</source>
+                <target>Estadísticas xenerais por series</target>
+            </trans-unit>
+            <trans-unit id="afbae7a0868d11e8adc0fa7ae01bbebc" resname="Search by title">
+                <source>Search by title</source>
+                <target>Buscar polo título</target>
+            </trans-unit>
+            <trans-unit id="afbae8e0868d11e8adc0fa7ae01bbebc" resname="Set URL parameters">
+                <source>Set URL parameters</source>
+                <target>Definir parámetros URL</target>
+            </trans-unit>
+            <trans-unit id="afbaecc8868d11e8adc0fa7ae01bbebc" resname="Clear filter">
+                <source>Clear filter</source>
+                <target>Borrar filtros</target>
+            </trans-unit>
+            <trans-unit id="afbaee08868d11e8adc0fa7ae01bbebc" resname="Date range">
+                <source>Date range</source>
+                <target>Rango de datas</target>
+            </trans-unit>
+            <trans-unit id="afbaef2a868d11e8adc0fa7ae01bbebc" resname="Toggle date range">
+                <source>Toggle date range</source>
+                <target>Alternar rango de datas</target>
+            </trans-unit>
+            <trans-unit id="afbaf042868d11e8adc0fa7ae01bbebc" resname="Most viewed series">
+                <source>Most viewed series</source>
+                <target>Series máis vistas</target>
+            </trans-unit>
+            <trans-unit id="afbaf15a868d11e8adc0fa7ae01bbebc" resname="Ranking">
+                <source>Ranking</source>
+                <target>Clasificación</target>
+            </trans-unit>
+            <trans-unit id="afbaf2a4868d11e8adc0fa7ae01bbebc" resname="Views">
+                <source>Views</source>
+                <target>Vistas</target>
+            </trans-unit>
+            <trans-unit id="afbaf3d0868d11e8adc0fa7ae01bbebc" resname="Views by time period">
+                <source>Views by time period</source>
+                <target>Vistas por periodo de tempo</target>
+            </trans-unit>
+            <trans-unit id="afbaf808868d11e8adc0fa7ae01bbebc" resname="Total">
+                <source>Total</source>
+                <target>Total</target>
+            </trans-unit>
+            <trans-unit id="afbaf93e868d11e8adc0fa7ae01bbebc" resname="Day">
+                <source>Day</source>
+                <target>Día</target>
+            </trans-unit>
+            <trans-unit id="afbafa60868d11e8adc0fa7ae01bbebc" resname="Month">
+                <source>Month</source>
+                <target>Mes</target>
+            </trans-unit>
+            <trans-unit id="af337620868e11e8adc0fa7ae01bbebc" resname="Statistics of the series">
+                <source>Statistics of the series</source>
+                <target>Estadísticas da serie</target>
+            </trans-unit>
+            <trans-unit id="af3378b4868e11e8adc0fa7ae01bbebc" resname="Views of this series objects">
+                <source>Views of this series objects</source>
+                <target>Vistas dos obxectos da serie</target>
+            </trans-unit>
+            <trans-unit id="af3379f4868e11e8adc0fa7ae01bbebc" resname="Record date">
+                <source>Record date</source>
+                <target>Data de grabación</target>
+            </trans-unit>
+            <trans-unit id="175f25a0868f11e8adc0fa7ae01bbebc" resname="General Statistics for Objects (videos/audios)">
+                <source>General Statistics for Objects (videos/audios)</source>
+                <target>Estadísticas xenerais por obxectos (videos/audios)</target>
+            </trans-unit>
+            <trans-unit id="175f28ca868f11e8adc0fa7ae01bbebc" resname="Most viewed objects (videos/audios)">
+                <source>Most viewed objects (videos/audios)</source>
+                <target>Obxectos máis vistos (videos/audios)</target>
+            </trans-unit>
+            <trans-unit id="94a7c3dc868f11e8adc0fa7ae01bbebc" resname="Statistics of the object">
+                <source>Statistics of the object</source>
+                <target>Estadísticas do obxecto</target>
+            </trans-unit>
+            <trans-unit id="30a4587ca5fd11e898d0529269fb1459" resname="Total views in the date">
+                <source>Total views in the date</source>
+                <target>Total de vistas na data</target>
+            </trans-unit>
+            <trans-unit id="30a45b1aa5fd11e898d0529269fb1459" resname="Total Objects">
+                <source>Total Objects</source>
+                <target>Total de obxectos</target>
+            </trans-unit>
+            <trans-unit id="4f9c60f0a61911e898d0529269fb1459" resname="Previous">
+                <source>Previous</source>
+                <target>Anterior</target>
+            </trans-unit>
+            <trans-unit id="4f9c63c0a61911e898d0529269fb1459" resname="Next">
+                <source>Next</source>
+                <target>Seguinte</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

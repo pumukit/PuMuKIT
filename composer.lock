@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1eb798798fdbb130b2e5a77909912e4d",
+    "content-hash": "a7974235e5085ed1828e058f6dc5ac89",
     "packages": [
         {
             "name": "ankitpokhrel/tus-php",
@@ -9533,56 +9533,6 @@
                 "source": "https://github.com/teltek/PumukitPaellaPlayerBundle/tree/4.1.2"
             },
             "time": "2026-03-04T12:10:31+00:00"
-        },
-        {
-            "name": "teltek/pumukit-stats-ui-bundle",
-            "version": "4.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/teltek/PumukitStatsUIBundle.git",
-                "reference": "e4a83a7358fca11aa35af1f4d945c699e8185f8b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/teltek/PumukitStatsUIBundle/zipball/e4a83a7358fca11aa35af1f4d945c699e8185f8b",
-                "reference": "e4a83a7358fca11aa35af1f4d945c699e8185f8b",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.2",
-                "pumukit/pumukit": "^5.0"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "Pumukit\\StatsUIBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Teltek Team",
-                    "homepage": "https://teltek.es"
-                }
-            ],
-            "description": "Stats UI for PuMuKIT",
-            "homepage": "https://github.com/teltek/PumukitStatsUIBundle",
-            "keywords": [
-                "bundle",
-                "pumukit",
-                "stats",
-                "symfony",
-                "teltek",
-                "ui"
-            ],
-            "support": {
-                "issues": "https://github.com/teltek/PumukitStatsUIBundle/issues",
-                "source": "https://github.com/teltek/PumukitStatsUIBundle/tree/4.0.0"
-            },
-            "time": "2024-12-17T18:14:06+00:00"
         },
         {
             "name": "twig/extra-bundle",

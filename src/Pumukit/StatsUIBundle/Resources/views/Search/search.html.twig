@@ -1,0 +1,38 @@
+<div class="col-md-6 col-md-offset-3 text-left">
+    <h4>&nbsp;</h4>
+    <div class="form-group">
+        {% if app.request.get('_route') != 'pumukit_stats_mmobj_index_id' %}
+            <label for="title">
+                {% trans %}Search by title{% endtrans %}:
+            </label>
+            <div class="input-group">
+                <input id="title" type="text" class="form-control form_daterangepicker" />
+                <div class="input-group-addon no-padding">
+                    <button class="btn btn-default btn-raised btn-stats-search btn-stats-search-text" title="{% trans %}Set URL parameters{% endtrans %}">
+                        <i class="fa fa-search glyphicon glyphicon-search"></i>
+                    </button>
+                    <button class="btn btn-default btn-raised btn-stats-search btn-stats-search-remove" title="{% trans %}Clear filter{% endtrans %}">
+                        <i class="fa fa-remove glyphicon glyphicon-remove"></i>
+                    </button>
+                </div>
+            </div>
+        {% endif %}
+
+        <label for="form_daterangepicker">
+            {% trans %}Date range{% endtrans %}:
+        </label>
+        <div class="input-group">
+            <span class="no-margin no-padding form_daterangepicker">
+                <input type="daterange" id="form_daterangepicker" class="form-control form_daterangepicker" name="datefilter" />
+            </span>
+            <div class="input-group-addon no-padding">
+                <button class="btn btn-default btn-raised btn-stats-search btn-stats-calendar" title="{% trans %}Toggle date range{% endtrans %}">
+                    <i class="fa fa-calendar glyphicon glyphicon-calendar"></i>
+                </button>
+                <button class="btn btn-default btn-raised btn-stats-search btn-stats-calendar-remove" title="{% trans %}Clear filter{% endtrans %}">
+                    <i class="fa fa-remove glyphicon glyphicon-remove"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

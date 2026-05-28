@@ -6,6 +6,6 @@ services:
 
 
   Pumukit\StatsUIBundle\Controller\:
-    resource: '../../src/Pumukit/StatsUIBundle/Controller/'
+    resource: '../../Controller'
     tags: [ 'controller.service_arguments' ]
 

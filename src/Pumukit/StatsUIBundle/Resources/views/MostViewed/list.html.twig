@@ -1,0 +1,28 @@
+<table class="table table-bordered table-condensed">
+    <thead>
+        {% if app.request.get('_route') == 'pumukit_stats_series_index' %}
+            <th id="ranking" style="width:60px;">{% trans %}Ranking{% endtrans %}</th>
+            <th id="title">{% trans %}Title{% endtrans %}</th>
+            <th id="videos">{% trans %}Videos{% endtrans %}</th>
+            <th id="views">{% trans %}Views{% endtrans %}</th>
+        {% endif %}
+
+        {% if app.request.get('_route') == 'pumukit_stats_mmobj_index' %}
+            <th id="ranking" style="width:60px;">{% trans %}Ranking{% endtrans %}</th>
+            <th id="title">{% trans %}Title{% endtrans %}</th>
+            <th id="recording" style="width:20%;">{% trans %}Record date{% endtrans %}</th>
+            <th id="series" style="min-width:110px;">{% trans %}Series{% endtrans %}</th>
+            <th id="views">{% trans %}Views{% endtrans %}</th>
+        {% endif %}
+
+        {% if app.request.get('_route') == 'pumukit_stats_series_index_id' or app.request.get('_route') == 'pumukit_stats_mmobj_index_id' %}
+            <th id="ranking" style="width:60px;">{% trans %}Ranking{% endtrans %}</th>
+            <th id="title">{% trans %}Title{% endtrans %}</th>
+            <th id="recording">{% trans %}Record date{% endtrans %}</th>
+            <th id="series" style="min-width:110px;">{% trans %}Series{% endtrans %}</th>
+            <th id="views">{% trans %}Views{% endtrans %}</th>
+        {% endif %}
+    </thead>
+    <tbody class="most-viewed-table-body">
+    </tbody>
+</table>

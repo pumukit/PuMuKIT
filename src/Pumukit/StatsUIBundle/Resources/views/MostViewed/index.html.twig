@@ -1,0 +1,29 @@
+{% if app.request.get('_route') == 'pumukit_stats_series_index' %}
+    {% set title = "Most viewed series"|trans %}
+{% elseif app.request.get('_route') == 'pumukit_stats_mmobj_index' %}
+    {% set title = "Most viewed objects (videos/audios)"|trans %}
+{% elseif app.request.get('_route') == 'pumukit_stats_series_index_id' %}
+    {% set title = "Views of this series objects"|trans %}
+{% elseif app.request.get('_route') == 'pumukit_stats_mmobj_index_id' %}
+    {% set title = "Video"|trans %}
+{% endif %}
+
+<div class="col-md-12 block-preview">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="title_of_most_viewed">
+                {{ title }}
+            </h2>
+        </div>
+        <div class="col-sm-6 col-md-6">
+            {% include "@PumukitStatsUI/MostViewed/list.html.twig" %}
+        </div>
+        <div class="col-sm-6 col-md-6">
+            <div id="chart-most-viewed">
+                <svg style="height: 400px;"></svg>
+            </div>
+        </div>
+        <div class="col-md-12 text-center most-viewed-paginator">
+        </div>
+    </div>
+</div>

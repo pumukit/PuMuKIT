@@ -1,0 +1,912 @@
+<script type="text/javascript">
+    "use strict";
+    var inputDatePicker = $('input[name="datefilter"]');
+    var locale = "{{ app.request.getLocale() }}";
+    var page = "{{ app.request.get('page')|default(0) }}";
+    $('.day').removeClass('active-button');
+    $('.month').addClass('active-button');
+    $('.year').removeClass('active-button');
+
+    window.initDateRangePicker = function() {
+        inputDatePicker.daterangepicker({
+            "minYear": 1970,
+            "maxDate": moment().format('YYYY-MM-DD'),
+            ranges: {
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                'This Year': [moment().startOf('year'), moment()],
+                {% if app.request.get('_route') == 'pumukit_stats_mmobj_index_id' or app.request.get('_route') == 'pumukit_stats_series_index_id' %}
+                    'All History': [moment({year:1970}), moment()]
+                {% endif %}
+            },
+            "locale": {
+                "format": "YYYY-MM-DD"
+            },
+            "linkedCalendars": false,
+            "alwaysShowCalendars": true,
+            "showDropdowns": true,
+            "startDate": moment().startOf('year').format('YYYY-MM-DD'),
+            "endDate": moment().format('YYYY-MM-DD')
+        });
+    };
+
+    $(function() {
+        window.initDateRangePicker();
+        var data = window.prepareSearch();
+        window.getAjaxRequest(data);
+    });
+
+    inputDatePicker.on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+    });
+
+    inputDatePicker.on('cancel.daterangepicker', function() {
+        $(this).val('');
+    });
+
+    $('.btn-stats-calendar').on('click', function(event) {
+        event.preventDefault();
+        inputDatePicker.click();
+    });
+
+    $('.btn-stats-calendar-remove').on('click', function(event){
+        event.preventDefault();
+        window.location = window.location.href.split("?")[0];
+    });
+
+    $('.btn-stats-search-remove').on('click', function(event){
+        event.preventDefault();
+        window.location = window.location.href.split("?")[0];
+    });
+
+    $('.btn-reset-filter').on('click',function(event) {
+        event.preventDefault();
+        window.location = window.location.href.split("?")[0];
+    });
+
+    $('.ripple-wrapper').on('click', function(event) {
+        event.preventDefault();
+        $('#form_daterangepicker').val('');
+        $('#title').val('');
+        var data = window.prepareSearch();
+        window.getAjaxRequest(data);
+    });
+
+    $('.btn-stats-search-text').on('click', function(event) {
+        event.preventDefault();
+        page = 0;
+        var url = new URL(window.location.href);
+        url.searchParams.set('page', page);
+        window.history.pushState({}, '', url);
+        var data = window.prepareSearch();
+        window.getAjaxRequest(data);
+    });
+
+    $('.btn-all-views-group').on('click', function(event) {
+        event.preventDefault();
+
+        $('.day').removeClass('active-button');
+        $('.month').removeClass('active-button');
+        $('.year').removeClass('active-button');
+
+        $('.'+$(this).data('group')).addClass('active-button');
+
+        var group_by = $(this).data('group');
+        var data = window.prepareSearch();
+        window.getAjaxRequest(data, group_by);
+    });
+
+    $('.most-viewed-paginator').on('click', '.change_page', function(event) {
+        event.preventDefault();
+
+        var data = window.prepareSearch();
+        var page_selected = $(this).data('value');
+
+        var url = new URL(window.location.href);
+        url.searchParams.set('page', page_selected);
+        window.history.pushState({}, '', url);
+
+        {% if app.request.get('_route') == 'pumukit_stats_series_index' %}
+            window.most_viewed_series(data['criteria'], data['from_date'], data['to_date'], page_selected);
+        {% endif %}
+
+        {% if app.request.get('_route') == 'pumukit_stats_mmobj_index' %}
+            window.most_viewed_mmobj(data['criteria'], data['from_date'], data['to_date'],page_selected);
+        {% endif %}
+
+        {% if app.request.get('_route') == 'pumukit_stats_series_index_id' %}
+        var series = "{{ app.request.attributes.get('_route_params')['id'] }}";
+            window.most_viewed_series_by_id(series, data['criteria'], data['from_date'], data['to_date'], page_selected);
+        {% endif %}
+
+        {% if app.request.get('_route') == 'pumukit_stats_mmobj_index_id' %}
+        var mmobj = "{{ app.request.attributes.get('_route_params')['id'] }}";
+            window.most_viewed_mmobj_by_id(mmobj, data['criteria'], data['from_date'], data['to_date'], page_selected);
+        {% endif %}
+    });
+
+    inputDatePicker.on('change', function(event) {
+        event.preventDefault();
+        var data = window.prepareSearch();
+        window.getAjaxRequest(data, 'month');
+    });
+
+    window.defaultAjaxValues = function() {
+        return {
+            'from_date': moment().startOf('year').format('YYYY-MM-DD'),
+            'to_date': moment().format('YYYY-MM-DD'),
+            'page': page,
+            'group_by': 'month'
+        }
+    };
+
+    window.getAjaxRequest = function(data, group_by) {
+
+        if(group_by === '' || group_by === 'undefined') {
+            group_by = 'month';
+        }
+
+        {% if app.request.get('_route') == 'pumukit_stats_series_index' %}
+            window.most_viewed_series(data['criteria'], data['from_date'], data['to_date'], page);
+            window.views(data['criteria'], data['from_date'], data['to_date'], 0, group_by);
+        {% endif %}
+
+        {% if app.request.get('_route') == 'pumukit_stats_mmobj_index' %}
+            window.most_viewed_mmobj(data['criteria'], data['from_date'], data['to_date'],page);
+            window.views(data['criteria'], data['from_date'], data['to_date'], 0, group_by);
+        {% endif %}
+
+        {% if app.request.get('_route') == 'pumukit_stats_series_index_id' %}
+            var series = "{{ app.request.attributes.get('_route_params')['id'] }}";
+            window.most_viewed_series_by_id(series, data['criteria'], data['from_date'], data['to_date'], page);
+            window.views_series(series, data['criteria'], data['from_date'], data['to_date'], 0, group_by);
+        {% endif %}
+
+        {% if app.request.get('_route') == 'pumukit_stats_mmobj_index_id' %}
+            var mmobj = "{{ app.request.attributes.get('_route_params')['id'] }}";
+            window.most_viewed_mmobj_by_id(mmobj, data['criteria'], data['from_date'], data['to_date'], page);
+            window.views_mmobj(mmobj, data['criteria'], data['from_date'], data['to_date'], 0, group_by);
+        {% endif %}
+    };
+
+    window.initializeAjaxRequest = function() {
+        {% if app.request.get('_route') == 'pumukit_stats_series_index' %}
+            window.most_viewed_series(null,null,null,0);
+            window.views(null, null,null,0, 'month');
+        {% endif %}
+
+        {% if app.request.get('_route') == 'pumukit_stats_mmobj_index' %}
+            window.most_viewed_mmobj(null,null,null, 0);
+            window.views(null,null,null,0,'month');
+        {% endif %}
+
+        {% if app.request.get('_route') == 'pumukit_stats_series_index_id' %}
+            var series = "{{ app.request.attributes.get('_route_params')['id'] }}";
+            window.most_viewed_series_by_id(series,null, null, null, 0);
+            window.views_series(series,null, null,null, 0, 'month');
+        {% endif %}
+
+        {% if app.request.get('_route') == 'pumukit_stats_mmobj_index_id' %}
+            var mmobj = "{{ app.request.attributes.get('_route_params')['id'] }}";
+            window.most_viewed_mmobj_by_id(mmobj, null, null, null, 0);
+            window.views_mmobj(mmobj,null, null, null, 0, 'month');
+        {% endif %}
+    };
+
+    window.prepareSearch = function() {
+        var criteria = $('#title').val();
+        var dates = $('#form_daterangepicker').val().split(" - ");
+        var from_date = dates[0].trim().replace(/\//g, "-");
+        var to_date = dates[1].trim().replace(/\//g, "-");
+
+        return {
+            'criteria': criteria,
+            'from_date': from_date,
+            'to_date': to_date
+        };
+    };
+
+    window.most_viewed_series = function(criteria, from_date, to_date, page) {
+        if(from_date == null || to_date == null) {
+            var data = window.defaultAjaxValues();
+            from_date = data['from_date'];
+            to_date = data['to_date'];
+            page = data['page'];
+        }
+
+        var url = "{{ path('pumukit_stats_api_seriesmostviewed') }}";
+        if(criteria != null && criteria !==  '') {
+            url = url + "?criteria[$text][$search]=" + criteria;
+        }
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {
+                from_date: from_date,
+                to_date: to_date,
+                page: page,
+                limit: 10,
+                sort: -1
+            },
+            success: function(response) {
+                var series = response.series;
+                var i = page * 10 + 1;
+                var path = "{{ path('pumukit_stats_series_index_id',{'id': '__ID__'}) }}";
+                $('.total-objects').html(response.total);
+                $('.most-viewed-table-body').html('');
+                series.forEach(function(data) {
+                    $('.most-viewed-table-body').append(
+                        "<tr>" +
+                        "<td headers='ranking'>" + i + "</td>" +
+                        "<td headers='title'>" +
+                        "<a href='" + path.replace('__ID__', data.series.id) + "'>" +
+                        data.series.i18nTitle[locale] +
+                        "</a>" +
+                        "</td>" +
+                        "<td headers='videos' id='" +  data.series.id +"'>" + 0 + "</td>" +
+                        "<td headers='views'>" + data.num_viewed + "</td>" +
+                        "</tr>"
+                    );
+                    window.getInfoSeries(data.series.id);
+                    i = i + 1;
+                });
+                if(series.length < 10) {
+                    for(var i = series.length + 1; i < 11; i++){
+                        $('.most-viewed-table-body').append(
+                            "<tr>" +
+                            "<td headers='ranking'>" + (page * 10 + i) + "</td>" +
+                            "<td headers='title'></td>" +
+                            "<td headers='videos'></td>" +
+                            "<td headers='views'></td>" +
+                            "</tr>"
+                        );
+                    }
+                }
+
+                window.createPager(response);
+                data = window.prepareDataMostViewedSeries(response.series);
+                window.initializeChartMostViewed(data);
+            }
+        });
+    };
+
+    window.prepareDataMostViewedSeries = function(data) {
+        var values = [];
+        data.forEach(function(element) {
+            values.push({'label': element.series.i18nTitle[locale], 'value': element.num_viewed });
+        });
+        return [{'key' : '', 'color': '#ED6D00', 'values': values}];
+    };
+
+    window.prepareDataMostViewedMmobj = function(data) {
+        var values = [];
+        data.forEach(function(element) {
+            values.push({'label': element.mmobj.i18nTitle[locale], 'value': element.num_viewed });
+        });
+        return [{'key' : '', 'color': '#ED6D00','values': values}];
+    };
+
+    window.getInfoSeries = function(series, from_date, to_date) {
+        $.ajax({
+            url: "{{ path('pumukit_schema_api_multimediaobjects') }}",
+            type: 'GET',
+            data: {
+                criteria: {
+                    'series': series
+                },
+                from_date: from_date,
+                to_date: to_date,
+                sort: -1
+            },
+            success: function(response) {
+                $('#'+series).html(response.total);
+            }
+        });
+    };
+
+    window.getInfoMmobj = function(mmobj, from_date, to_date) {
+        $.ajax({
+            url: "{{ path('pumukit_stats_api_viewsmmobj') }}",
+            type: 'GET',
+            data: {
+                mmobj: mmobj,
+                from_date: from_date,
+                to_date: to_date,
+                sort: -1
+            },
+            success: function(response) {
+                var views = response.views;
+                var total = 0;
+                views.forEach(function(element){
+                    total = total + element.numView;
+                });
+                $('#'+mmobj).html(total);
+                $('.total-views-objects').html(total);
+            }
+        });
+    };
+
+    window.most_viewed_series_by_id = function(series, criteria, from_date, to_date, page) {
+        if(from_date == null || to_date == null) {
+            var data = window.defaultAjaxValues();
+            from_date = data['from_date'];
+            to_date = data['to_date'];
+            page = (page == 0) ? page : data['page'];
+        }
+
+        var url = "{{ path('pumukit_stats_api_mmobjmostviewed') }}";
+        if(criteria != null && criteria !==  '') {
+            url = url + "?criteria[$text][$search]=" + criteria;
+        }
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {
+                criteria: {
+                    'series': series
+                },
+                from_date: from_date,
+                to_date: to_date,
+                page: page,
+                limit:10,
+                sort: -1
+            },
+            success: function(response) {
+                var mmobjs = response.mmobjs;
+                var i = page * 10 + 1;
+                var path = "{{ path('pumukit_stats_mmobj_index_id',{'id': '__ID__'}) }}";
+
+                $('.total-objects').html(response.total);
+                $('.most-viewed-table-body').html('');
+                mmobjs.forEach(function(data) {
+                    $('.most-viewed-table-body').append(
+                        "<tr>" +
+                        "<td headers='ranking'>" + i + "</td>" +
+                        "<td headers='title'>" +
+                        "<a href='" + path.replace('__ID__', data.mmobj.id) + "'>" +
+                        data.mmobj.i18nTitle[locale] +
+                        "</a>" +
+                        "</td>" +
+                        "<td headers='recording'>" + moment(data.mmobj.recordDate).format('YYYY-MM-DD HH:mm:ss') + "</td>" +
+                        "<td headers='series'>" + data.mmobj.seriesTitle + "</td>" +
+                        "<td headers='views'>" + data.num_viewed + "</td>" +
+                        "</tr>"
+                    );
+                    i = i + 1;
+                });
+
+                if(mmobjs.length < 10) {
+                    for(var i = mmobjs.length + 1; i < 11; i++){
+                        $('.most-viewed-table-body').append(
+                            "<tr>" +
+                            "<td headers='ranking'>" + (page * 10 + i) + "</td>" +
+                            "<td headers='title'></td>" +
+                            "<td headers='recording'></td>" +
+                            "<td headers='series'></td>" +
+                            "<td headers='views'></td>" +
+                            "</tr>"
+                        );
+                    }
+                }
+
+                window.createPager(response);
+                data = window.prepareDataMostViewedMmobj(response.mmobjs);
+                window.initializeChartMostViewed(data);
+            }
+        });
+    };
+
+    window.most_viewed_mmobj_by_id = function(mmobj, criteria, from_date, to_date, page) {
+        if (from_date == null && to_date == null) {
+            var data = window.defaultAjaxValues();
+            from_date = data['from_date'];
+            to_date = data['to_date'];
+            page = (page == 0) ? page : data['page'];
+        }
+
+        var url = "{{ path('pumukit_schema_api_multimediaobjects') }}";
+        if(criteria != null && criteria !==  '') {
+            url = url + "?criteria[$text][$search]=" + criteria;
+        }
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {
+                criteria: {
+                    'id': mmobj
+                },
+                from_date: from_date,
+                to_date: to_date,
+                page: page,
+                limit: 10,
+                sort: -1
+            },
+            success: function (response) {
+                var mmobj = response.mmobjs[0];
+                var i = page * 10 + 1;
+                var id = "{{ app.request.attributes.get('id') }}";
+                var url = "{{ path('pumukit_stats_series_index_id',{'id': '__ID__'}) }}";
+                $('.most-viewed-table-body').html(
+                    "<tr>" +
+                    "<td headers='ranking'>" + i + "</td>" +
+                    "<td headers='title'>" +
+                    mmobj.i18nTitle[locale] +
+                    "</td>" +
+                    "<td headers='recording'>" + moment(mmobj.recordDate).format('YYYY-MM-DD HH:mm:ss') + "</td>" +
+                    "<td headers='series'>" +
+                    "<a href='" + url.replace('__ID__', mmobj.series.split('/').pop()) + "'>" +
+                    mmobj.seriesTitle +
+                    "</a>" +
+                    "</td>" +
+                    "<td headers='views' id='"+ id +"'>" + 0 + "</td>" +
+                    "</tr>"
+                );
+                window.getInfoMmobj(id, from_date, to_date);
+                window.showMmobj(mmobj);
+                $('.title_of_most_viewed').html(mmobj.seriesTitle);
+            }
+        });
+    };
+
+    window.views_series = function(series, criteria, from_date, to_date, page, group_by) {
+        if(from_date == null || to_date == null) {
+            var data = window.defaultAjaxValues();
+            from_date = data['from_date'];
+            to_date = data['to_date'];
+            page = (page == 0) ? page : data['page'];
+            group_by = data['group_by'];
+        }
+
+        var url = "{{ path('pumukit_stats_api_viewsseries') }}";
+        if(criteria != null && criteria !==  '') {
+            url = url + "?criteria[$text][$search]=" + criteria;
+        }
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {
+                from_date: from_date,
+                to_date: to_date,
+                page: page,
+                series: series,
+                group_by: group_by,
+                sort: 1
+            },
+            success: function(response) {
+                var objects = response.views;
+                var total = 0;
+                $('.views-table-body').html('');
+                objects.forEach(function(data) {
+                    total = total + data.numView;
+                    var format = window.getFormat(data);
+                    $('.views-table-body').append(
+                        "<tr>" +
+                        "<td headers='date' style='width:50%'>" + moment(data._id).format(format) + "</td>" +
+                        "<td headers='views' class='text-right' style='width:50%;'>" + data.numView + "</td>" +
+                        "</tr>"
+                    );
+                });
+                $('.total-views-objects').html(total);
+                $('#foot-views').html(total);
+
+                data = window.prepareDataForAllViews(response.views);
+                window.initializeChartAllViews(data);
+            }
+        });
+    };
+
+    window.views_mmobj = function(mmobj, criteria, from_date, to_date, page, group_by) {
+        if(from_date == null || to_date == null) {
+            var data = window.defaultAjaxValues();
+            from_date = data['from_date'];
+            to_date = data['to_date'];
+            page = data['page'];
+            group_by = data['group_by'];
+        }
+
+        var url = "{{ path('pumukit_stats_api_viewsmmobj') }}";
+        if(criteria != null && criteria !==  '') {
+            url = url + "?criteria[$text][$search]=" + criteria;
+        }
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {
+                from_date: from_date,
+                to_date: to_date,
+                page: page,
+                mmobj: mmobj,
+                group_by: group_by,
+                sort: 1
+            },
+            success: function(response) {
+                var objects = response.views;
+                var total = 0;
+                $('.views-table-body').html('');
+                objects.forEach(function(data) {
+                    total = total + data.numView;
+                    var format = window.getFormat(data);
+                    $('.views-table-body').append(
+                        "<tr>" +
+                        "<td headers='date' style='width:50%'>" + moment(data._id).format(format) + "</td>" +
+                        "<td headers='views' class='text-right' style='width:50%;'>" + data.numView + "</td>" +
+                        "</tr>"
+                    );
+                });
+
+                $('.total-views-objects').html(total);
+                $('#foot-views').html(total);
+
+                data = window.prepareDataForAllViews(response.views);
+                window.initializeChartAllViews(data);
+            }
+        });
+    };
+
+    window.most_viewed_mmobj = function(criteria, from_date, to_date, page) {
+        if(from_date == null || to_date == null) {
+            var data = window.defaultAjaxValues();
+            from_date = data['from_date'];
+            to_date = data['to_date'];
+            page = (page == 0) ? page : data['page'];
+        }
+
+        var url = "{{ path('pumukit_stats_api_mmobjmostviewed') }}";
+        if(criteria != null && criteria !==  '') {
+            url = url + "?criteria[$text][$search]=" + criteria;
+        }
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {
+                from_date: from_date,
+                to_date: to_date,
+                page: page,
+                limit:10
+            },
+            success: function(response) {
+                var mmobjs = response.mmobjs;
+                var i = page * 10 + 1;
+                var path = "{{ path('pumukit_stats_mmobj_index_id',{'id': '__ID__'}) }}";
+                var url = "{{ path('pumukit_stats_series_index_id',{'id': '__ID__'}) }}";
+                $('.total-objects').html(response.total);
+                $('.most-viewed-table-body').html('');
+                mmobjs.forEach(function(data) {
+                    $('.most-viewed-table-body').append(
+                        "<tr>" +
+                        "<td headers='ranking'>" + i + "</td>" +
+                        "<td headers='title'>" +
+                        "<a href='" + path.replace('__ID__', data.mmobj.id) + "'>" +
+                        data.mmobj.i18nTitle[locale] +
+                        "</a>" +
+                        "</td>" +
+                        "<td headers='recording'>" + moment(data.mmobj.recordDate).format('YYYY-MM-DD HH:mm:ss') + "</td>" +
+                        "<td headers='series'>" +
+                        "<a href='" + url.replace('__ID__', data.mmobj.series.split('/').pop()) + "'>" +
+                        data.mmobj.seriesTitle +
+                        "</a>" +
+                        "</td>" +
+                        "<td headers='views'>" + data.num_viewed + "</td>" +
+                        "</tr>"
+                    );
+                    i = i + 1;
+                });
+
+                if(mmobjs.length < 10) {
+                    for(var i = mmobjs.length + 1; i < 11; i++){
+                        $('.most-viewed-table-body').append(
+                            "<tr>" +
+                            "<td headers='ranking'>" + (page * 10 + i) + "</td>" +
+                            "<td headers='title'></td>" +
+                            "<td headers='recording'></td>" +
+                            "<td headers='series'></td>" +
+                            "<td headers='views'></td>" +
+                            "</tr>"
+                        );
+                    }
+                }
+
+                window.createPager(response);
+                data = window.prepareDataMostViewedMmobj(response.mmobjs);
+                window.initializeChartMostViewed(data);
+            }
+        });
+    };
+
+    window.views = function(criteria, from_date, to_date, page, group_by) {
+        if(from_date == null || to_date == null) {
+            var data = window.defaultAjaxValues();
+            from_date = data['from_date'];
+            to_date = data['to_date'];
+            page = (page == 0) ? page : data['page'];
+            group_by = data['group_by'];
+        }
+
+        var url = "{{ path('pumukit_stats_api_views') }}";
+        if(criteria != null && criteria !== '') {
+            url = url + "?criteria[$text][$search]=" + criteria;
+        }
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {
+                from_date: from_date,
+                to_date: to_date,
+                page: page,
+                group_by: group_by,
+                sort: 1
+            },
+            success: function(response){
+                var objects = response.views;
+                var total = 0;
+                $('.views-table-body').html('');
+                objects.forEach(function(data) {
+                    total = total + data.numView;
+                    var format = window.getFormat(data);
+                    $('.views-table-body').append(
+                        "<tr>" +
+                        "<td headers='date' style='width:50%'>" + moment(data._id).format(format) + "</td>" +
+                        "<td headers='views' class='text-right' style='width:50%; '>" + data.numView + "</td>" +
+                        "</tr>"
+                    );
+                });
+                $('.total-views-objects').html(total);
+                $('#foot-views').html(total);
+
+                data = window.prepareDataForAllViews(response.views);
+                window.initializeChartAllViews(data);
+            }
+        });
+    };
+
+    window.getFormat = function(element) {
+        var format = '';
+        var number_format = (element['_id'].match(/-/g) || []).length;
+        if(number_format === 1 ){
+            format = 'MMMM YYYY';
+        } else if (number_format === 2) {
+            format = 'DD MMMM YYYY';
+        } else {
+            format = 'YYYY';
+        }
+
+        return format;
+    };
+
+    window.prepareDataForAllViews = function(data) {
+        var values = [];
+
+        data.forEach(function(element) {
+            var timestamp = moment(element['_id']).valueOf();
+            values.push([
+                timestamp,
+                element.numView
+            ]);
+        });
+
+        return [{
+            "key" : "",
+            "bar": true,
+            "values" : values
+        }];
+    };
+
+    window.showMmobj = function(mmobj) {
+        var url = "{{ path('pumukit_webtv_multimediaobject_index', {'id' : '__ID__' }) }}";
+        var subtitle = mmobj.i18nSubtitle[locale] ? mmobj.i18nSubtitle[locale] : '';
+        $('#chart-most-viewed').html(
+                    "<a href='" +
+                    url.replace('__ID__', mmobj.id) +
+                    "' target='_blank'>" +
+                    "<div class='pumukit_mmobj'>"  +
+                    "<div class='thumbnail'>" +
+                    "<span class='play_icon'></span>" +
+                    "<img title='serial_pic' class='serial thumbnailimg' " +
+                    "src=" + mmobj.pics[0].url  + " /> " +
+                    "<div class='thumbnailholder'></div></div>" +
+                    "<div class='info-wrapper'>" +
+                    "<div class='info'>" +
+                    "<div class='title' title='"+ mmobj.i18nTitle[locale] + "'>" +
+                    "<span class='mmobj_thumbnail_title'>" + mmobj.i18nTitle[locale] + "</span>" +
+                    "</div>" +
+                    "<div class='subtitle'>" +
+                    "<abbr title='" + subtitle + "'>"+ subtitle +"</abbr>" +
+                    "</div>" +
+                    "<div class='date mmobj'>" +
+                        moment(mmobj.recordDate).format('YYYY-MM-DD HH:mm:ss') +
+                    "</div>" +
+                    "</div></div></div>"
+        );
+
+    };
+
+    function range(num, page){
+        var range;
+        if (num > 6){
+            if (page > 3 && page < num-3){
+                range = [0,'...',page-1,page,page+1,'...',num-1];
+            }else if (page <= 3){
+                range = [0,1,2,3,4,'...',num-1];
+            }else if (page >= num-3){
+                range = [0,'...',num-3,num-2,num-1];
+            } else {
+                range = [0,'...',page,'...',num-1];
+            }
+        }else{
+            range = Array.apply(null,Array(num)).map(function (x, i) { return i; });
+        }
+        return range;
+    }
+
+
+    /* Pager for most viewed series/mmobjs */
+    window.createPager = function(data) {
+        var pages = Math.ceil(data.total / 10);
+
+        var active_page = data.page;
+        var aPages = range(pages,active_page);
+        var disabled_previous = '';
+        var disabled_next = '';
+        if(active_page === 0) { disabled_previous = 'disabled'; }
+        if(active_page === (pages-1)) { disabled_next = 'disabled'; }
+
+        var html = "<ul class='pagination'>";
+        if(active_page === 0) {
+            html = html + "<li class='" + disabled_previous + "'><a>{% trans %}Previous{% endtrans %}</a></li>";
+        } else {
+            html = html + "<li class='change_page' data-value='"+ (active_page -1) +"'>" +
+                "<a>{% trans %}Previous{% endtrans %}</a>" +
+                "</li>";
+        }
+
+        aPages.forEach(function(element) {
+            var htmlPage = '';
+            if(element !== '...') {
+                if(element === active_page) {
+                    htmlPage = "<li><a class='change_page' style='background-color:#EAEAEA;' data-value='" + element + "'>" + (element +1 ) + "</a></li>";
+
+                } else {
+                    htmlPage = "<li><a class='change_page' data-value='" + element + "'>" + (element +1 )+ "</a></li>";
+                }
+            } else {
+                htmlPage = "<li><a>" + element + "</a></li>";
+            }
+            html = html + htmlPage;
+        });
+
+        if(active_page !== (pages-1)) {
+            html = html + "<li><a class='change_page' data-value='"+ (active_page +1) +"'>{% trans %}Next{% endtrans %}</a></li></ul></div>";
+        } else {
+            html = html + "<li class='" + disabled_next + "'><a>{% trans %}Next{% endtrans %}</a></li></ul>";
+        }
+
+        $('.most-viewed-paginator').html(html);
+    };
+
+    /* Charts of views functions */
+    window.initializeChartMostViewed = function(data) {
+
+        $('#chart-most-viewed svg').html('');
+        nv.addGraph(function() {
+            var chart = nv.models.multiBarHorizontalChart()
+                .x(function(d) { return d.label })
+                .y(function(d) { return d.value })
+                .margin({top: 30, right: 20, bottom: 50, left: 175})
+                .showValues(false)
+                .showControls(false)
+                .showLegend(false);
+
+            chart.xAxis
+                .tickFormat(function(d) {
+                    d3.select(this)
+                        .attr('style', 'fill:transparent');
+                    if (this) {
+                        d3.select(this.parentNode)
+                            .append("foreignObject")
+                            .attr('x', -175)
+                            .attr('y', -8)
+                            .attr("width", 170)
+                            .attr("height", 50)
+                            .append("xhtml:p")
+                            .attr('style', 'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;font-size:12px')
+                            .html(d);
+                    }
+                    return d;
+                });
+
+            chart.yAxis
+                .tickFormat(d3.format('~s'));
+
+            d3.select('#chart-most-viewed svg')
+                .datum(data)
+                .transition().duration(500)
+                .call(chart);
+
+            nv.utils.windowResize(chart.update);
+
+            return chart;
+        });
+    };
+
+    window.initializeChartAllViews = function(data) {
+
+        $('#chart-all-views svg').html('');
+        nv.addGraph(function() {
+            var chart = nv.models.linePlusBarChart()
+                .margin({top: 30, right: 60, bottom: 50, left: 70})
+                .x(function(d,i) { return i })
+                .y(function(d) { return d[1] })
+                .color(d3.scale.category10().range())
+                .showLegend(false);
+
+            chart.xAxis
+                .showMaxMin(false)
+                .tickFormat(function(d) {
+                    var dx = data[0].values[d] && data[0].values[d][0] || 0;
+                    var date = '';
+                    if($('.day').hasClass('active-button')){
+                        date = d3.time.format('%x')(new Date(dx));
+                    } else if($('.month').hasClass('active-button')) {
+                        date = d3.time.format('%-m/%Y')(new Date(dx));
+                    } else {
+                        date = d3.time.format('%Y')(new Date(dx));
+                    }
+                    return date
+                });
+
+            chart.y1Axis
+                .tickFormat(d3.format('~s'));
+            
+            chart.tooltip
+                .contentGenerator(function (e) {
+                    var series = e.series[0];
+                    if (series.value === null) return;
+                    var dx = e.data[0] || 0;
+                    var date = '';
+                    if($('.day').hasClass('active-button')){
+                        date = d3.time.format('%x')(new Date(dx));
+                    } else if($('.month').hasClass('active-button')) {
+                        date = d3.time.format('%-m/%Y')(new Date(dx));
+                    } else {
+                        date = d3.time.format('%Y')(new Date(dx));
+                    }
+                    
+                    var rows = 
+                    "<tr>" +
+                      "<td class='x-value'>" + date + "</td>" + 
+                    "</tr>" +
+                    "<tr>" +
+                      "<td class='legend-color-guide'><div style='background-color: " + series.color + ";'></div></td>" +
+                      "<td class='x-value'><strong>" + (series.value?series.value:0) + "</strong></td>" +
+                    "</tr>";
+                    
+                  return "<table>" +
+                      "<tbody>" + 
+                        rows + 
+                      "</tbody>" +
+                    "</table>";
+                });
+
+            chart.bars.forceY([0]);
+
+            d3.select('#chart-all-views svg')
+                .datum(data)
+                .transition().duration(500)
+                .call(chart);
+
+            nv.utils.windowResize(chart.update);
+
+            return chart;
+        });
+    };
+</script>

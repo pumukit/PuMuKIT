@@ -1,0 +1,46 @@
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/pumukitstatsui/vendor/nvd3/nv.d3.min.css') }}" />
+    <link href="{{ asset('bundles/pumukitstatsui/css/statsui.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/pumukitstatsui/vendor/daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/pumukitstatsui/vendor/d3/d3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/pumukitstatsui/vendor/nvd3/nv.d3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/pumukitstatsui/vendor/moment/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/pumukitstatsui/vendor/daterangepicker/daterangepicker.min.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+
+        <h3 class="cab_body_div">
+            <ul class="breadcrumb">
+                <li class="active">{{ template_title }}</li>
+            </ul>
+        </h3>
+
+        <div class="row block-search-and-views">
+            {% include "@PumukitStatsUI/Search/index.html.twig" %}
+        </div>
+
+        <div class="row block-stats-most-viewed">
+            {% include "@PumukitStatsUI/MostViewed/index.html.twig" %}
+        </div>
+
+        <div class="row block-preview">
+            {% include "@PumukitStatsUI/Views/index.html.twig" %}
+        </div>
+
+    </div>
+
+    {% include "@PumukitStatsUI/Stats/js.html.twig" %}
+
+{% endblock %}
+
+
