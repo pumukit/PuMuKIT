@@ -146,7 +146,8 @@ class DefaultController extends AbstractController
 
         $userAgent = $request->headers->get('user-agent');
 
-        $mobileDevice = ($this->mobileDetector->isMobile($userAgent) || $this->mobileDetector->isTablet($userAgent));
+        $this->mobileDetector->setUserAgent($userAgent ?? '');
+        $mobileDevice = ($this->mobileDetector->isMobile() || $this->mobileDetector->isTablet());
         $isIE = $this->mobileDetector->version('IE');
         $versionIE = $isIE ? (float) $isIE : 11.0;
 
@@ -330,7 +331,8 @@ class DefaultController extends AbstractController
             ]);
         }
         $userAgent = $request->headers->get('user-agent');
-        $mobileDevice = ($this->mobileDetector->isMobile($userAgent) || $this->mobileDetector->isTablet($userAgent));
+        $this->mobileDetector->setUserAgent($userAgent ?? '');
+        $mobileDevice = ($this->mobileDetector->isMobile() || $this->mobileDetector->isTablet());
         $isIE = $this->mobileDetector->version('IE');
         $versionIE = $isIE ? (float) $isIE : 11.0;
 

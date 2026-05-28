@@ -21,7 +21,7 @@
         "jaybizzle/crawler-detect": "^1.2",
         "jms/serializer-bundle": "^5.2",
         "knplabs/knp-menu-bundle": "^3.7",
-        "mobiledetect/mobiledetectlib": "^2.8",
+        "mobiledetect/mobiledetectlib": "^4",
         "pagerfanta/doctrine-collections-adapter": "^4",
         "pagerfanta/doctrine-mongodb-odm-adapter": "^4",
         "pagerfanta/twig": "^4",
