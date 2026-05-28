@@ -23,6 +23,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Migrate controllers from sensio annotations to native PHP 8 attributes (`#[Template]`, `#[IsGranted]`, `#[MapDocument]`).
 - Move PaellaPlayerBundle and StatsUIBundle into the core; they are no longer external packages.
 - Upgrade Pagerfanta to v4 and MobileDetect to v4.
+- Upgrade PHPUnit to 10 and migrate its configuration to the new schema.
 - Update composer dependencies (gedmo/doctrine-extensions, php-cs-fixer, pagerfanta adapters, etc.).
 
 #### Fixed
