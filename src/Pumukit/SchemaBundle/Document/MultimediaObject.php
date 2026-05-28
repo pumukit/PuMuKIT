@@ -317,6 +317,7 @@ class MultimediaObject
         return $this->id;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getNumericalID(): int
     {
         return $this->numerical_id;
@@ -459,6 +460,7 @@ class MultimediaObject
         $this->status = $status;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getStatus(): int
     {
         return $this->status;
@@ -494,6 +496,7 @@ class MultimediaObject
         $this->record_date = $recordDate;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getRecordDate()
     {
         return $this->record_date;
@@ -546,6 +549,7 @@ class MultimediaObject
         $this->subtitle[$locale] = $subtitle;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getSubtitle($locale = null): string
     {
         if (null === $locale) {
@@ -598,6 +602,7 @@ class MultimediaObject
         $this->comments = $comments;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getComments()
     {
         return $this->comments;
@@ -635,6 +640,7 @@ class MultimediaObject
         $this->copyright = $copyright;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getCopyright()
     {
         return $this->copyright;
@@ -645,6 +651,7 @@ class MultimediaObject
         $this->license = $license;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getLicense()
     {
         return $this->license;
@@ -693,6 +700,7 @@ class MultimediaObject
         ++$this->numview;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getNumview(): int
     {
         return $this->numview;
@@ -710,6 +718,7 @@ class MultimediaObject
         }
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getSeries()
     {
         // WORKAROUND: get the object series is it's hidden and the MongoDB filter is enabled.
@@ -783,6 +792,7 @@ class MultimediaObject
         return new EmbeddedBroadcast();
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getEmbeddedBroadcast()
     {
         return $this->embeddedBroadcast;
@@ -803,6 +813,7 @@ class MultimediaObject
         return $this->embeddedSocial;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getTags()
     {
         return $this->tags;

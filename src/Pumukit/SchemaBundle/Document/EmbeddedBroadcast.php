@@ -6,6 +6,7 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -70,6 +71,7 @@ class EmbeddedBroadcast
         return $this->getName().$groupsDescription;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getId()
     {
         return $this->id;
@@ -80,6 +82,7 @@ class EmbeddedBroadcast
         $this->name = $name;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getName(): string
     {
         return $this->name;
@@ -120,6 +123,7 @@ class EmbeddedBroadcast
         $this->groups->removeElement($group);
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getGroups()
     {
         return $this->groups;

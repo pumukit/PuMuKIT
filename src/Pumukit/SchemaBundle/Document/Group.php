@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -67,6 +68,7 @@ class Group implements GroupInterface
         return $this->key ?? '';
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getId()
     {
         return $this->id;
@@ -79,6 +81,7 @@ class Group implements GroupInterface
         return $this;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getName(): string
     {
         return $this->name ?? '';
@@ -89,6 +92,7 @@ class Group implements GroupInterface
         $this->key = $key;
     }
 
+    #[Groups(['multimedia_object:read'])]
     public function getKey(): ?string
     {
         return $this->key;
