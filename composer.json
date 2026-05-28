@@ -26,7 +26,6 @@
         "pagerfanta/doctrine-mongodb-odm-adapter": "^4",
         "pagerfanta/twig": "^4",
         "phpdocumentor/reflection-docblock": "^5.3",
-        "sensio/framework-extra-bundle": "^6.2",
         "symfony/asset": "*",
         "symfony/css-selector": "*",
         "symfony/dotenv": "*",
