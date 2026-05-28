@@ -5,3 +5,7 @@ includes:
 parameters:
     doctrine:
         objectManagerLoader: doc/object-manager.php
+    ignoreErrors:
+        # OpencastBundle is an optional dependency (not installed by default).
+        - message: '#has invalid type Pumukit\\OpencastBundle\\Services\\Client#'
+          path: src/Pumukit/PaellaPlayerBundle/Services/FrameListManifest.php

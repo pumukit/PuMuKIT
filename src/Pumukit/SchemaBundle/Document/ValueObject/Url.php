@@ -18,7 +18,7 @@ final class Url implements UrlInterface
 
     public function __toString(): string
     {
-        return $this->url ?? '';
+        return $this->url;
     }
 
     public static function create(string $url): Url
