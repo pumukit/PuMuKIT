@@ -22,6 +22,7 @@
         "jms/serializer-bundle": "^5.2",
         "knplabs/knp-menu-bundle": "^3.7",
         "mobiledetect/mobiledetectlib": "^4",
+        "mongodb/mongodb": "^1.21",
         "pagerfanta/doctrine-collections-adapter": "^4",
         "pagerfanta/doctrine-mongodb-odm-adapter": "^4",
         "pagerfanta/twig": "^4",

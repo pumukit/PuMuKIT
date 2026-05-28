@@ -8,6 +8,7 @@ Security support is currently focused on the latest stable branch and upcoming m
 
 | Version | Supported                       |
 |---------|---------------------------------|
+| 6.0.x   | :white_check_mark:              |
 | 5.1.x   | :white_check_mark:              |
 | 5.0.x   | :warning: Critical patches only |
 | < 5.0   | :x:                             |

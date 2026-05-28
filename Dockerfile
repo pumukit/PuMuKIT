@@ -6,7 +6,7 @@ FROM php:${PHP_VERSION}-fpm-${SO_VERSION} AS base
 LABEL org.opencontainers.image.authors="Pablo Nieto, pnieto@teltek.es"
 
 ARG APCU_VERSION=5.1.22
-ARG PHP_MONGODB_VERSION=1.14.2
+ARG PHP_MONGODB_VERSION=1.21.0
 ARG XDEBUG_VERSION=3.2.0
 ARG PHP_REDIS_VERSION=5.3.4
 ARG DEBIAN_FRONTEND=noninteractive
