@@ -39,6 +39,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - API Platform 2.7 (replaced by 4.x), removing the two GraphQL security advisories and their audit ignores.
 - `sensio/framework-extra-bundle` (abandoned).
 - `symfony/templating` (unused), Swiftmailer and `symfony/swiftmailer-bundle`.
+- The v4→v5 data migration commands (`pumukit:upgrade:*`); 6.0 is reached from 5.1.x, which already runs the v5 schema.
 
 
 ## [5.1.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...5.0.0) - (2026-03-06)
