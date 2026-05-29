@@ -40,7 +40,7 @@ class MoveFilesCommand extends Command
             ->setDescription('This command move files from origin NAS to new NAS')
             ->addOption('origin', null, InputOption::VALUE_REQUIRED, 'Origin path NAS', '/mnt/nas/almacen/masters/')
             ->addOption('destiny', null, InputOption::VALUE_REQUIRED, 'Destiny path NAS', '/mnt/pumukit/storage/masters/')
-            ->addOption('limit', null, InputOption::VALUE_OPTIONAL, 'Limit of files to move')
+            ->addOption('limit', null, InputOption::VALUE_REQUIRED, 'Maximum number of files to move (0 = no limit)', '0')
             ->setHelp(
                 <<<'EOT'
 
@@ -58,23 +58,14 @@ EOT
     {
         $this->origin = $input->getOption('origin');
         $this->destiny = $input->getOption('destiny');
-        $this->limit = $input->getOption('limit');
+        $this->limit = (int) $input->getOption('limit');
         $this->output = $output;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        try {
-            $this->checkInputs();
-        } catch (\Exception $exception) {
-            throw new \Exception($exception->getMessage());
-        }
-
-        try {
-            $this->moveFiles();
-        } catch (\Exception $exception) {
-            throw new \Exception($exception->getMessage());
-        }
+        $this->checkInputs();
+        $this->moveFiles();
 
         $this->output->writeln('Move files done');
 
@@ -91,8 +82,8 @@ EOT
             throw new \Exception($this->destiny." directory doesn't exists");
         }
 
-        if (!is_int($this->limit)) {
-            throw new \Exception($this->limit." isn't integer");
+        if ($this->limit < 0) {
+            throw new \Exception('--limit must be zero or a positive integer');
         }
     }
 
@@ -106,11 +97,13 @@ EOT
 
         $i = 0;
         foreach ($multimediaObjects as $multimediaObject) {
-            if ($i > $this->limit) {
-                break;
+            $track = $multimediaObject->getMaster();
+            if (null === $track) {
+                $this->logger->error('No master track on multimedia object '.$multimediaObject->getId());
+
+                continue;
             }
 
-            $track = $multimediaObject->getMaster();
             $path = $track->storage()->path()->path();
             if (!str_contains($path, (string) $this->origin)) {
                 $this->logger->error('the root directory does not match on multimedia object '.$multimediaObject->getId());
@@ -159,7 +152,7 @@ EOT
                 'tracks.properties.moved' => ['$exists' => false],
             ],
             ['_id' => 1],
-            $this->limit
+            $this->limit > 0 ? $this->limit : null
         );
     }
 }
