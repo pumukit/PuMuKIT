@@ -522,7 +522,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param array $sort
      *
-     * @return \Doctrine\MongoDB\Query\Builder|mixed
+     * @return \Doctrine\ODM\MongoDB\Query\Builder|mixed
      */
     public function createBuilderWithTag(TagInterface $tag, $sort = [])
     {
@@ -551,7 +551,7 @@ class MultimediaObjectRepository extends DocumentRepository
      * @param array $status
      * @param array $sort
      *
-     * @return \Doctrine\MongoDB\Query\Builder|mixed
+     * @return \Doctrine\ODM\MongoDB\Query\Builder|mixed
      */
     public function createBuilderWithSeriesAndStatus(Series $series, $status = [], $sort = [])
     {
@@ -565,7 +565,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param array $sort
      *
-     * @return \Doctrine\MongoDB\Query\Builder|mixed
+     * @return \Doctrine\ODM\MongoDB\Query\Builder|mixed
      */
     public function createBuilderWithGeneralTag(TagInterface $tag, $sort = [])
     {
@@ -1104,7 +1104,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param array $sort
      *
-     * @return \Doctrine\MongoDB\Query\Builder|mixed
+     * @return \Doctrine\ODM\MongoDB\Query\Builder|mixed
      */
     public function createBuilderWithGroup(Group $group, $sort = [])
     {
@@ -1154,7 +1154,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param array $sort
      *
-     * @return \Doctrine\MongoDB\Query\Builder|mixed
+     * @return \Doctrine\ODM\MongoDB\Query\Builder|mixed
      */
     public function createBuilderWithGroupInEmbeddedBroadcast(Group $group, $sort = [])
     {

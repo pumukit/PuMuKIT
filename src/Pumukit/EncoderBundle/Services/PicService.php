@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Pumukit\EncoderBundle\Services;
 
-use Doctrine\MongoDB\Iterator;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use MongoDB\BSON\ObjectId;
@@ -44,7 +43,7 @@ class PicService
      * @param string|null $exists
      * @param string|null $type
      *
-     * @return Iterator|mixed|null
+     * @return mixed|null
      *
      * @throws MongoDBException
      */
