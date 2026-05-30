@@ -17,7 +17,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Changed
 
-- Replace SIMILE Timeline 2.3.1 (EOL since ~2012) with Chart.js 4 on the admin dashboard; the series feed moves from `/dashboard/series/timeline.xml` to `.json`. Chart.js (+ `chartjs-adapter-date-fns` + `chartjs-plugin-zoom`) is introduced as the planned successor for the D3 v3 + NVD3 stack still used in `StatsUIBundle`.
+- Redesign the admin dashboard: drop the SIMILE Timeline 2.3.1 widget (and its `/dashboard/series/timeline.xml` feed) in favour of a Chart.js layout. The default view renders KPI cards (series, multimedia objects, total time, storage usage), a publication-activity bubble chart (date × 4-hour buckets, fed by a new `StatsService::getMmobjActivityByDayHour` aggregation over `properties.created`) with a day/month/year toggle that windows to the last 30 days / 12 months / 10 years, storage occupancy as HTML progress bars per `dir_out`, and a Last-5-series panel with owner username. The `?show_stats=1` gate is removed: everything renders on the default route. Scope-aware: users without `ROLE_SCOPE_GLOBAL` get storage hidden and their stats / recent series filtered by `properties.owners`. Chart.js (+ `chartjs-adapter-date-fns` + `chartjs-plugin-zoom`) is introduced as the planned successor for the D3 v3 + NVD3 stack still used in `StatsUIBundle`.
 - Upgrade the core to Symfony 6.4 LTS.
 - Single source of truth for the Symfony version through `extra.symfony.require` (Symfony components pinned with `*`).
 - Migrate the security layer from the legacy Guard system to the new authenticator system (existing sha512 passwords remain valid).

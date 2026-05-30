@@ -21,7 +21,7 @@ class StatsService
         $this->repoMmobj = $this->dm->getRepository(MultimediaObject::class);
     }
 
-    public function getGlobalStats($groupBy = 'month', $sort = -1)
+    public function getGlobalStats($groupBy = 'month', $sort = -1, ?string $ownerId = null)
     {
         $dmColl = $this->dm->getDocumentCollection(MultimediaObject::class);
         $dmRepo = $this->dm->getRepository(MultimediaObject::class);
@@ -33,6 +33,9 @@ class StatsService
             'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
             'status' => ['$ne' => MultimediaObject::STATUS_PROTOTYPE],
         ];
+        if ($ownerId) {
+            $criteria['properties.owners'] = ['$in' => [$ownerId]];
+        }
         $pipeline[] = ['$match' => $criteria];
 
         $this->dm->getFilterCollection()->enable('backoffice');
@@ -90,6 +93,78 @@ class StatsService
         $aggregation = $this->getAggrRecordedGroupedBy($dmColl, $mongoGroup, 'record_date', $fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
 
         return $aggregation->toArray();
+    }
+
+    /**
+     * Aggregate multimedia objects by their creation timestamp into (date, hour-of-day, count) buckets.
+     *
+     * Reads `properties.created`, which the MultimediaObject constructor stores via
+     * Properties::setPropertyAsDateTime as an ISO 8601 string ("YYYY-MM-DDTHH:MM:SS±TZ"), NOT a BSON
+     * Date. We slice the string directly so the result preserves the wall-clock hour as it was
+     * recorded, instead of getting shifted by $hour's UTC normalisation.
+     */
+    public function getMmobjActivityByDayHour(string $groupBy = 'day', ?string $ownerId = null): array
+    {
+        $dateExpr = match ($groupBy) {
+            'year' => ['$concat' => [['$substrCP' => ['$properties.created', 0, 4]], '-01-01']],
+            'month' => ['$concat' => [['$substrCP' => ['$properties.created', 0, 7]], '-01']],
+            default => ['$substrCP' => ['$properties.created', 0, 10]],
+        };
+        // 4-hour buckets: floor(hour / 4) * 4 → 0, 4, 8, 12, 16, 20.
+        $hourExpr = ['$multiply' => [
+            ['$toInt' => ['$divide' => [
+                ['$toInt' => ['$substrCP' => ['$properties.created', 11, 2]]],
+                4,
+            ]]],
+            4,
+        ]];
+
+        $fromIso = $this->getActivityWindowStart($groupBy)->format('c');
+
+        $dmColl = $this->dm->getDocumentCollection(MultimediaObject::class);
+        $dmRepo = $this->dm->getRepository(MultimediaObject::class);
+
+        $match = [
+            'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
+            'status' => ['$ne' => MultimediaObject::STATUS_PROTOTYPE],
+            'properties.created' => ['$type' => 'string', '$gte' => $fromIso],
+        ];
+        if ($ownerId) {
+            $match['properties.owners'] = ['$in' => [$ownerId]];
+        }
+        $pipeline = [['$match' => $match]];
+
+        $this->dm->getFilterCollection()->enable('backoffice');
+        $filterCriteria = $this->dm->getFilterCollection()->getFilterCriteria($dmRepo->getClassMetadata());
+        if ($filterCriteria) {
+            $pipeline[] = ['$match' => $filterCriteria];
+        }
+
+        $pipeline[] = ['$project' => ['date' => $dateExpr, 'hour' => $hourExpr]];
+        $pipeline[] = ['$group' => [
+            '_id' => ['date' => '$date', 'hour' => '$hour'],
+            'count' => ['$sum' => 1],
+        ]];
+        $pipeline[] = ['$sort' => ['_id.date' => 1, '_id.hour' => 1]];
+
+        $rows = $dmColl->aggregate($pipeline, ['cursor' => []])->toArray();
+
+        return array_map(static fn ($r) => [
+            'date' => $r['_id']['date'],
+            'hour' => $r['_id']['hour'],
+            'count' => $r['count'],
+        ], $rows);
+    }
+
+    public function getActivityWindowStart(string $groupBy): \DateTimeImmutable
+    {
+        $now = new \DateTimeImmutable('now');
+
+        return match ($groupBy) {
+            'year' => $now->modify('-9 years')->modify('first day of January')->setTime(0, 0),
+            'month' => $now->modify('-11 months')->modify('first day of this month')->setTime(0, 0),
+            default => $now->modify('-29 days')->setTime(0, 0),
+        };
     }
 
     /**

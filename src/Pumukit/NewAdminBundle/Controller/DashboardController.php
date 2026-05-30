@@ -6,38 +6,27 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\EncoderBundle\Services\ProfileService;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\StatsService;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ACCESS_DASHBOARD')]
 class DashboardController extends AbstractController implements NewAdminControllerInterface
 {
-    /** @var DocumentManager */
-    protected $documentManager;
+    private const RECENT_SERIES_LIMIT = 5;
+    private const ALLOWED_GROUP_BY = ['day', 'month', 'year'];
 
-    /** @var StatsService */
-    protected $statsService;
-
-    /** @var ProfileService */
-    protected $profileService;
-
-    /** @var RouterInterface */
-    private $router;
-
-    public function __construct(DocumentManager $documentManager, StatsService $statsService, ProfileService $profileService, RouterInterface $router)
-    {
-        $this->documentManager = $documentManager;
-        $this->statsService = $statsService;
-        $this->profileService = $profileService;
-        $this->router = $router;
+    public function __construct(
+        private readonly DocumentManager $documentManager,
+        private readonly StatsService $statsService,
+        private readonly ProfileService $profileService,
+    ) {
     }
 
     /**
@@ -45,51 +34,79 @@ class DashboardController extends AbstractController implements NewAdminControll
      * @Route("/dashboard/default", name="pumukit_newadmin_dashboard_index_default")
      */
     #[Template('@PumukitNewAdmin/Dashboard/index.html.twig')]
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): array
     {
-        $data = ['stats' => false];
-        if ($request->get('show_stats')) {
-            $groupBy = $request->get('group_by', 'year');
-
-            $stats = $this->statsService->getGlobalStats($groupBy);
-
-            $data['stats'] = $stats;
-
-            $storage = $this->profileService->getDirOutInfo();
-            $data['storage'] = $storage;
-
-            $seriesRepo = $this->documentManager->getRepository(Series::class);
-
-            $data['num_series'] = $seriesRepo->count();
-            $data['num_mm'] = array_sum(array_map(function ($e) {
-                return $e['num'];
-            }, $stats));
-            $data['duration'] = array_sum(array_map(function ($e) {
-                return $e['duration'];
-            }, $stats));
-            $data['size'] = array_sum(array_map(function ($e) {
-                return $e['size'];
-            }, $stats));
+        $groupBy = $request->get('group_by', 'month');
+        if (!in_array($groupBy, self::ALLOWED_GROUP_BY, true)) {
+            $groupBy = 'month';
         }
 
-        return $data;
+        $isGlobal = $this->isGranted(PermissionProfile::SCOPE_GLOBAL) || $this->isGranted('ROLE_SUPER_ADMIN');
+        $user = $this->getUser();
+        $ownerId = (!$isGlobal && $user instanceof User) ? $user->getId() : null;
+
+        $stats = $this->statsService->getGlobalStats($groupBy, 1, $ownerId);
+        $activityFrom = $this->statsService->getActivityWindowStart($groupBy);
+        $activityTo = (new \DateTimeImmutable('today'))->modify('+1 day');
+
+        return [
+            'is_global' => $isGlobal,
+            'group_by' => $groupBy,
+            'stats' => $stats,
+            'activity' => $this->statsService->getMmobjActivityByDayHour($groupBy, $ownerId),
+            'activity_window' => [
+                'from' => $activityFrom->format('c'),
+                'to' => $activityTo->format('c'),
+            ],
+            'storage' => $isGlobal ? $this->profileService->getDirOutInfo() : [],
+            'num_series' => $this->countSeries($ownerId),
+            'num_mm' => array_sum(array_map(static fn ($e) => $e['num'], $stats)),
+            'duration' => array_sum(array_map(static fn ($e) => $e['duration'], $stats)),
+            'size' => array_sum(array_map(static fn ($e) => $e['size'], $stats)),
+            'recent_series' => $this->buildRecentSeries($ownerId),
+        ];
     }
 
-    /**
-     * @Route("/dashboard/series/timeline.json", name="pumukit_newadmin_dashboard_seriestimeline")
-     */
-    public function seriesTimelineAction(): JsonResponse
+    private function countSeries(?string $ownerId): int
     {
-        $series = $this->documentManager->getRepository(Series::class)->findAll();
+        $repo = $this->documentManager->getRepository(Series::class);
+        if (!$ownerId) {
+            return $repo->count();
+        }
 
-        $items = array_map(function (Series $s) {
-            return [
-                'x' => $s->getPublicDate()->format(\DateTimeInterface::ATOM),
+        return (int) $repo->createQueryBuilder()
+            ->field('properties.owners')->equals($ownerId)
+            ->count()
+            ->getQuery()
+            ->execute();
+    }
+
+    private function buildRecentSeries(?string $ownerId): array
+    {
+        $repo = $this->documentManager->getRepository(Series::class);
+        $criteria = $ownerId ? ['properties.owners' => $ownerId] : [];
+        $series = $repo->findBy($criteria, ['id' => 'desc'], self::RECENT_SERIES_LIMIT);
+        if (!$series) {
+            return [];
+        }
+
+        $userRepo = $this->documentManager->getRepository(User::class);
+        $out = [];
+        foreach ($series as $s) {
+            $owners = $s->getProperty('owners') ?? [];
+            $ownerName = null;
+            if ($owners) {
+                $owner = $userRepo->find($owners[0]);
+                $ownerName = $owner?->getUsername();
+            }
+            $out[] = [
+                'id' => $s->getId(),
                 'title' => $s->getTitle(),
-                'link' => $this->router->generate('pumukit_webtv_series_index', ['id' => $s->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
+                'publicDate' => $s->getPublicDate(),
+                'owner' => $ownerName,
             ];
-        }, $series);
+        }
 
-        return new JsonResponse($items);
+        return $out;
     }
 }

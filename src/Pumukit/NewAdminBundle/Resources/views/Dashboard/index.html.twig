@@ -9,8 +9,11 @@
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('/bundles/pumukitnewadmin/vendor/chartjs/chart.umd.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/bundles/pumukitnewadmin/vendor/chartjs/chartjs-adapter-date-fns.bundle.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/bundles/pumukitnewadmin/vendor/chartjs/chartjs-plugin-zoom.min.js') }}"></script>
 {% endblock %}
+
+{% set storage_total_bytes = storage|reduce((carry, s) => carry + s.total, 0) %}
+{% set storage_free_bytes = storage|reduce((carry, s) => carry + s.free, 0) %}
+{% set storage_used_pct = storage_total_bytes > 0 ? ((storage_total_bytes - storage_free_bytes) / storage_total_bytes * 100) : 0 %}
 
 {% block body %}
     <h3 class="cab_body_div">
@@ -19,97 +22,208 @@
         </ul>
     </h3>
 
-    <div class="text-center well">
-        <div style="height: 300px; border: 1px solid #aaa">
-            <canvas id="my-timeline"></canvas>
+    {% set kpi_col_class = is_global ? 'col-md-3 col-sm-6' : 'col-md-4 col-sm-6' %}
+    <div class="row dashboard-kpis">
+        <div class="{{ kpi_col_class }}">
+            <div class="dashboard-kpi">
+                <div class="dashboard-kpi-label">{% trans %}Series{% endtrans %}</div>
+                <div class="dashboard-kpi-value">{{ num_series|number_format(0, '.', ' ') }}</div>
+            </div>
         </div>
-        <br/>
-        <br/>
-        <noscript>
-            {% trans %}This page uses Javascript to show you a Timeline.{% endtrans %}
-            {% trans %}Please enable Javascript in your browser to see the full page.{% endtrans %}
-            {% trans %}Thank you.{% endtrans %}
-        </noscript>
+        <div class="{{ kpi_col_class }}">
+            <div class="dashboard-kpi">
+                <div class="dashboard-kpi-label">{% trans %}Multimedia objects{% endtrans %}</div>
+                <div class="dashboard-kpi-value">{{ num_mm|number_format(0, '.', ' ') }}</div>
+            </div>
+        </div>
+        {% set duration_hours = (duration // 3600) %}
+        {% set duration_minutes = ((duration % 3600) // 60) %}
+        <div class="{{ kpi_col_class }}">
+            <div class="dashboard-kpi">
+                <div class="dashboard-kpi-label">{% trans %}Total time{% endtrans %}</div>
+                <div class="dashboard-kpi-value">
+                    {% if duration_hours > 0 %}
+                        {{ duration_hours|number_format(0, '.', ' ') }} <span class="dashboard-kpi-unit">h</span>
+                        {{ duration_minutes }} <span class="dashboard-kpi-unit">min</span>
+                    {% else %}
+                        {{ duration_minutes }} <span class="dashboard-kpi-unit">min</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% if is_global %}
+        <div class="{{ kpi_col_class }}">
+            <div class="dashboard-kpi">
+                <div class="dashboard-kpi-label">{% trans %}Storage used{% endtrans %}</div>
+                <div class="dashboard-kpi-value">
+                    {{ storage_used_pct|number_format(0) }}<span class="dashboard-kpi-unit">%</span>
+                    <span class="dashboard-kpi-aux">{{ ((storage_total_bytes - storage_free_bytes) / (1024**4))|number_format(1) }}/{{ (storage_total_bytes / (1024**4))|number_format(1) }} TB</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dashboard-card">
+                <div class="dashboard-card-header">
+                    <span class="dashboard-card-title">{% trans %}Publication activity{% endtrans %}</span>
+                    <div class="btn-group pull-right" role="group">
+                        <a href="?group_by=day"   class="btn btn-sm btn-default {% if group_by == 'day' %}active{% endif %}">{% trans %}Day{% endtrans %}</a>
+                        <a href="?group_by=month" class="btn btn-sm btn-default {% if group_by == 'month' %}active{% endif %}">{% trans %}Month{% endtrans %}</a>
+                        <a href="?group_by=year"  class="btn btn-sm btn-default {% if group_by == 'year' %}active{% endif %}">{% trans %}Year{% endtrans %}</a>
+                    </div>
+                </div>
+                <div class="dashboard-card-body">
+                    {% if activity|length == 0 %}
+                        <p class="text-muted text-center">{% trans %}No data to display yet.{% endtrans %}</p>
+                    {% else %}
+                        <div class="dashboard-chart-wrap dashboard-chart-wrap-tall"><canvas id="activity-chart"></canvas></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if is_global %}
+        <div class="col-md-6">
+            <div class="dashboard-card">
+                <div class="dashboard-card-header">
+                    <span class="dashboard-card-title">{% trans %}Storage{% endtrans %}</span>
+                </div>
+                <div class="dashboard-card-body">
+                    {% if storage|length == 0 %}
+                        <p class="text-muted text-center">{% trans %}No storage configured.{% endtrans %}</p>
+                    {% else %}
+                        {% for s in storage %}
+                            {% set used = s.total - s.free %}
+                            {% set pct = s.total > 0 ? (used / s.total * 100) : 0 %}
+                            {% set fill_class = pct >= 90 ? 'is-critical' : (pct >= 75 ? 'is-warning' : '') %}
+                            <div class="storage-bar">
+                                <div class="storage-bar-header">
+                                    <span class="storage-bar-label" title="{{ s.dir }}">{{ s.dir|split('/')|last ?: s.dir }}</span>
+                                    <span class="storage-bar-value">{{ (used / (1024**4))|number_format(2) }} / {{ (s.total / (1024**4))|number_format(2) }} TB · {{ pct|number_format(0) }}%</span>
+                                </div>
+                                <div class="storage-bar-track">
+                                    <div class="storage-bar-fill {{ fill_class }}" style="width: {{ pct }}%;"></div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="{{ is_global ? 'col-md-6' : 'col-md-12' }}">
+            <div class="dashboard-card">
+                <div class="dashboard-card-header">
+                    <span class="dashboard-card-title">{% trans %}Last 5 series{% endtrans %}</span>
+                </div>
+                <div class="dashboard-card-body">
+                    {% if recent_series|length == 0 %}
+                        <p class="text-muted text-center">{% trans %}No series yet.{% endtrans %}</p>
+                    {% else %}
+                        <ul class="dashboard-recent-list">
+                            {% for s in recent_series %}
+                                <li>
+                                    <div class="dashboard-recent-main">
+                                        <a href="{{ path('pumukit_webtv_series_index', {'id': s.id}) }}">{{ s.title }}</a>
+                                        {% if s.owner %}<span class="dashboard-recent-owner">{{ s.owner }}</span>{% endif %}
+                                    </div>
+                                    <span class="dashboard-recent-date">{{ s.publicDate|date('Y-m-d H:i') }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
 
     <script type="text/javascript">
         (function () {
-            const seriesPageLabel = "{{ 'Go to series WebTV page'|trans|e('js') }}";
-            const dateLocale = navigator.language || 'en-US';
+            const activityRaw = {{ activity|json_encode|raw }};
+            const activityWindow = {{ activity_window|json_encode|raw }};
+            const groupBy = "{{ group_by|e('js') }}";
 
-            fetch("{{ url('pumukit_newadmin_dashboard_seriestimeline') }}", { credentials: 'same-origin' })
-                .then(function (r) { return r.json(); })
-                .then(function (items) {
-                    const data = items.map(function (it) {
-                        return { x: it.x, y: 0, title: it.title, link: it.link };
-                    });
+            const numberFmt = new Intl.NumberFormat(navigator.language || 'en-US');
 
-                    Chart.register(ChartZoom);
+            const HOUR_BUCKETS = [
+                { start: 0,  label: '00–04' },
+                { start: 4,  label: '04–08' },
+                { start: 8,  label: '08–12' },
+                { start: 12, label: '12–16' },
+                { start: 16, label: '16–20' },
+                { start: 20, label: '20–24' },
+            ];
 
-                    const ctx = document.getElementById('my-timeline').getContext('2d');
-                    const chart = new Chart(ctx, {
-                        type: 'scatter',
-                        data: {
-                            datasets: [{
-                                label: "{{ 'Series'|trans|e('js') }}",
-                                data: data,
-                                backgroundColor: '#3b8bba',
-                                borderColor: '#3b8bba',
-                                pointRadius: 6,
-                                pointHoverRadius: 8,
-                            }],
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                x: {
-                                    type: 'time',
-                                    time: { tooltipFormat: 'PPpp' },
-                                    adapters: { date: { locale: dateLocale } },
-                                },
-                                y: { display: false, min: -1, max: 1 },
-                            },
-                            plugins: {
-                                legend: { display: false },
-                                tooltip: {
-                                    callbacks: {
-                                        title: function (items) {
-                                            return items[0].raw.title;
-                                        },
-                                        label: function (item) {
-                                            return new Date(item.raw.x).toLocaleString(dateLocale);
-                                        },
-                                        afterBody: function () {
-                                            return seriesPageLabel;
-                                        },
-                                    },
-                                },
-                                zoom: {
-                                    pan: { enabled: true, mode: 'x' },
-                                    zoom: {
-                                        wheel: { enabled: true },
-                                        pinch: { enabled: true },
-                                        mode: 'x',
-                                    },
-                                },
-                            },
-                            onClick: function (_, elements) {
-                                if (elements.length === 0) return;
-                                const link = data[elements[0].index].link;
-                                if (link) {
-                                    window.open(link, '_blank');
-                                }
-                            },
-                        },
-                    });
+            const activityCanvas = document.getElementById('activity-chart');
+            if (activityCanvas) {
+                // Each bubble sits at the bucket centre (start + 2) so it visually fills its row.
+                const points = activityRaw.map(function (r) {
+                    return {
+                        x: r.date,
+                        y: r.hour + 2,
+                        r: Math.max(4, Math.min(22, Math.sqrt(r.count) * 5)),
+                        bucketStart: r.hour,
+                        count: r.count,
+                    };
                 });
+                new Chart(activityCanvas.getContext('2d'), {
+                    type: 'bubble',
+                    data: {
+                        datasets: [{
+                            label: "{{ 'Multimedia objects created'|trans|e('js') }}",
+                            data: points,
+                            backgroundColor: 'rgba(59, 139, 186, 0.55)',
+                            borderColor: 'rgba(59, 139, 186, 1)',
+                            borderWidth: 1,
+                        }],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                type: 'time',
+                                min: activityWindow.from,
+                                max: activityWindow.to,
+                                time: { unit: groupBy === 'year' ? 'year' : (groupBy === 'month' ? 'month' : 'day') },
+                                grid: { display: false },
+                            },
+                            y: {
+                                min: 0,
+                                max: 24,
+                                ticks: {
+                                    stepSize: 4,
+                                    callback: function (v) {
+                                        const bucket = HOUR_BUCKETS.find(function (b) { return b.start === v; });
+                                        return bucket ? bucket.label : '';
+                                    },
+                                },
+                                title: { display: true, text: "{{ 'Hour of day'|trans|e('js') }}" },
+                            },
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    title: function (items) {
+                                        const it = items[0];
+                                        const bucket = HOUR_BUCKETS.find(function (b) { return b.start === it.raw.bucketStart; });
+                                        return it.raw.x + ' · ' + (bucket ? bucket.label + ' h' : '');
+                                    },
+                                    label: function (ctx) {
+                                        return numberFmt.format(ctx.raw.count) + ' {{ 'multimedia objects'|trans|e('js') }}';
+                                    },
+                                },
+                            },
+                        },
+                    },
+                });
+            }
         })();
     </script>
-    <br/>
-
-
-    {% if stats %}
-        {% include "@PumukitNewAdmin/Dashboard/stats.html.twig" %}
-    {% endif %}
 {% endblock %}
