@@ -9,6 +9,7 @@ use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Services\JobRender;
 use Pumukit\EncoderBundle\Services\Repository\JobRepository;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -45,10 +46,6 @@ class PumukitEncoderInfoCommand extends BasePumukitEncoderCommand
                 new InputArgument('id', InputArgument::OPTIONAL, 'Job identifier to execute'),
                 new InputOption('all', null, InputOption::VALUE_NONE, 'Set this parameter to list jobs in all states'),
             ])
-            ->setHelp(
-                <<<'EOT'
-EOT
-            )
         ;
     }
 
@@ -57,12 +54,12 @@ EOT
         if ($input->getArgument('id')) {
             $this->showInfo($input->getArgument('id'), $output);
 
-            return 0;
+            return Command::SUCCESS;
         }
 
         $this->showList((bool) $input->getOption('all'), $output);
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     protected function showList(bool $all, OutputInterface $output): void
@@ -97,8 +94,6 @@ EOT
 
     private function listJobs(OutputInterface $output, $all = false): void
     {
-        $jobRepo = $this->dm->getRepository(Job::class);
-
         $stats = $this->jobRepository->getAllJobsStatus();
 
         $output->writeln('<info>JOBS NUMBERS:</info>');
@@ -113,7 +108,7 @@ EOT
             $status = [Job::STATUS_PAUSED, Job::STATUS_WAITING, Job::STATUS_EXECUTING, Job::STATUS_ERROR];
         }
         $sort = ['timeini' => 'asc'];
-        $jobs = $jobRepo->findWithStatus($status, $sort);
+        $jobs = $this->dm->getRepository(Job::class)->findWithStatus($status, $sort);
 
         $output->writeln('<info>JOBS:</info>');
         $table = new Table($output);
@@ -138,10 +133,6 @@ EOT
 
     private function showInfo(string $id, OutputInterface $output): void
     {
-        if (null === ($job = $this->dm->find(Job::class, $id))) {
-            throw new \RuntimeException("Not job found with id {$id}.");
-        }
-
         if (null === ($job = $this->dm->find(Job::class, $id))) {
             throw new \RuntimeException("Not job found with id {$id}.");
         }
