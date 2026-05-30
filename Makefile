@@ -16,15 +16,15 @@ DC_TEST = $(DOCKER_COMP) -f docker-compose.test.yml
 # otherwise spin up an ephemeral one that is removed afterwards (--rm).
 define run_php
 	@if [ -n "$$($(DOCKER_COMP) ps -q php 2>/dev/null)" ]; then \
-		$(DOCKER_COMP) exec php $(1); \
+		$(DOCKER_COMP) exec -u www-data php $(1); \
 	else \
-		$(DC_BASE) run --rm php $(1); \
+		$(DC_BASE) run --rm --user www-data php $(1); \
 	fi
 endef
 
 # Run a command in the php service of the test stack (always an ephemeral container).
 define run_php_test
-	@$(DC_TEST) run --rm php $(1)
+	@$(DC_TEST) run --rm --user www-data php $(1)
 endef
 
 help:
@@ -109,10 +109,10 @@ test-rector:
 	$(call run_php_test,composer php-rector)
 
 shell:
-	@$(DC_BASE) run --rm php sh
+	@$(DC_BASE) run --rm --user www-data php sh
 
 php-shell:
-	@$(DOCKER_COMP) exec php bash
+	@$(DOCKER_COMP) exec -u www-data php bash
 
 ps:
 	@$(DOCKER_COMP) ps
