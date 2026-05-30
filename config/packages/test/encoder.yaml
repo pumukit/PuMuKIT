@@ -1,3 +1,6 @@
+parameters:
+  pumukit.tmp: '%kernel.project_dir%/var/tests/tmp'
+
 pumukit_encoder:
   cpus:
     local:
@@ -13,7 +16,7 @@ pumukit_encoder:
       audio: false
       bat: cp "{{input}}" "{{output}}"
       streamserver:
-        dir_out: '%kernel.project_dir%/src/Pumukit/EncoderBundle/Tests/Resources/dir_out'
+        dir_out: '%kernel.project_dir%/var/tests/encoder/dir_out'
     video_broadcastable:
       generate_pic: false
       display: true
@@ -27,5 +30,5 @@ pumukit_encoder:
       audio: false
       bat: ffmpeg -y -i "{{input}}" -acodec libfdk_aac -b:a 128k -ac 2 -ar 44100 -vcodec libx264 -preset slow -crf 22 -movflags faststart -threads 0 "{{output}}"
       streamserver:
-        dir_out: '%kernel.project_dir%/src/Pumukit/EncoderBundle/Tests/Resources/dir_out'
+        dir_out: '%kernel.project_dir%/var/tests/encoder/dir_out'
         url_out: 'http://localhost:8000/downloads/'

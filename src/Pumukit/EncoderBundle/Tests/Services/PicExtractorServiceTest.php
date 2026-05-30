@@ -44,7 +44,12 @@ class PicExtractorServiceTest extends PumukitTestCase
         $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
         $this->factory = static::$kernel->getContainer()->get('pumukitschema.factory');
         $this->picEventDispatcher = static::$kernel->getContainer()->get('pumukitschema.pic_dispatcher');
-        $this->resourcesDir = realpath(__DIR__.'/../Resources');
+        $projectDir = static::$kernel->getContainer()->getParameter('kernel.project_dir');
+        $this->resourcesDir = $projectDir.'/var/tests/pic-extractor';
+        if (!is_dir($this->resourcesDir)) {
+            mkdir($this->resourcesDir, 0775, true);
+        }
+        $this->resourcesDir = realpath($this->resourcesDir);
         $this->targetPath = $this->resourcesDir;
         $this->targetUrl = '/uploads';
         $mmsPicService = new MultimediaObjectPicService($this->dm, $this->picEventDispatcher, $this->targetPath, $this->targetUrl, false);

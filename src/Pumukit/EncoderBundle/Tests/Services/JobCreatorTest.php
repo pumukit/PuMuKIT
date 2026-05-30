@@ -195,9 +195,12 @@ final class JobCreatorTest extends PumukitTestCase
 
     private function copyFileToUse(string $origin, string $fileName): string
     {
-        $tmpPath = $this->projectDir.'/tests/tmp/';
-        copy($origin, $this->projectDir.'/tests/tmp/'.$fileName);
+        if (!is_dir($this->tmpPath)) {
+            mkdir($this->tmpPath, 0775, true);
+        }
+        $destination = $this->tmpPath.'/'.$fileName;
+        copy($origin, $destination);
 
-        return $tmpPath.$fileName;
+        return $destination;
     }
 }
