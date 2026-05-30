@@ -87,10 +87,7 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $validInput = $this->checkInputOptions();
-        if (!$validInput['success']) {
-            throw new \Exception($validInput['message']);
-        }
+        $this->validateInputOptions();
 
         $inputs = $this->picService->formatInputs($this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type);
         [$this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type] = $inputs;
@@ -103,43 +100,18 @@ EOT
             $this->output->writeln('No pics found');
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
-    private function checkInputOptions(): array
+    private function validateInputOptions(): void
     {
-        $isValidInput = ['success' => true];
-        if ($this->size && !is_string($this->size)) {
-            $isValidInput['success'] = false;
-            $isValidInput['message'] = 'Size must be string, then will be converted';
-        }
-
-        if ($this->extension && !is_string($this->extension)) {
-            $isValidInput['success'] = false;
-            $isValidInput['message'] = 'Extension must be string';
-        }
-
-        if ($this->path && !is_string($this->path)) {
-            $isValidInput['success'] = false;
-            $isValidInput['message'] = 'Path must be string';
-        }
-
-        if ($this->tags && !is_string($this->tags)) {
-            $isValidInput['success'] = false;
-            $isValidInput['message'] = 'Tags must be string';
-        }
-
         if ($this->exists && !in_array(strtolower($this->exists), ['false', 'true', '1', '0'])) {
-            $isValidInput['success'] = false;
-            $isValidInput['message'] = 'Exists must be boolean';
+            throw new \Exception('Exists must be boolean');
         }
 
         if (!in_array($this->type, ['mm', 'series'])) {
-            $isValidInput['success'] = false;
-            $isValidInput['message'] = 'Type must be have the value series or mm';
+            throw new \Exception('Type must be have the value series or mm');
         }
-
-        return $isValidInput;
     }
 
     private function showData(array $data): bool
