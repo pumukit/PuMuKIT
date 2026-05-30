@@ -59,9 +59,9 @@ EOT
 
         $this->updateTag($tag, $display);
 
-        $output->writeln(sprintf('<info>Tag with code "%s" has been set with display to %b.</info>', $tagCode, $display));
+        $output->writeln(sprintf('<info>Tag with code "%s" has been set with display to %s.</info>', $tagCode, $display ? 'true' : 'false'));
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function updateTag(TagInterface $tag, bool $display): TagInterface
