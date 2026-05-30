@@ -120,10 +120,21 @@ class ProfileService
         return match ($multimediaObject->getType()) {
             MultimediaObject::TYPE_VIDEO => $this->default_profiles[$tag->getCod()]['video'],
             MultimediaObject::TYPE_AUDIO => $this->default_profiles[$tag->getCod()]['audio'],
-            MultimediaObject::TYPE_IMAGE => $this->default_profiles[$tag->getCod()]['image'],
+            MultimediaObject::TYPE_IMAGE => $this->resolveImageDefaultProfile($multimediaObject, $tag),
             MultimediaObject::TYPE_DOCUMENT => $this->default_profiles[$tag->getCod()]['document'],
             default => throw new \InvalidArgumentException('No target default profiles.'),
         };
+    }
+
+    private function resolveImageDefaultProfile(MultimediaObject $multimediaObject, Tag $tag): string
+    {
+        $tagDefaults = $this->default_profiles[$tag->getCod()];
+        $master = $multimediaObject->getMaster();
+        if ($master && ImageRawUtils::isRawImage($master->storage()->path()) && !empty($tagDefaults['image_raw'])) {
+            return $tagDefaults['image_raw'];
+        }
+
+        return $tagDefaults['image'];
     }
 
     public function generateProfileTag(string $profileName): string

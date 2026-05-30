@@ -34,6 +34,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Media API endpoint failing on multimedia objects whose metadata was stored as a JSON array.
 - Video playback returning a 404 for local tracks: they are now served through `/trackfile` instead of redirecting to the blocked `/storage` path.
 - Image-type multimedia objects returning a 404 on the player: the image now goes through `track_url()` (i.e. `/trackfile`) like documents and video tracks, instead of the raw `/storage/downloads/...` URL.
+- Already-developed images (JPG/PNG/…) being run through the `image_raw_broadcastable` profile and rendered with darktable's default development modules (washed-out / blown-out output). The default image profile for a target now picks `image_raw` only when the master is actually a camera RAW file (extensions in `ImageRawUtils`); otherwise it uses the generic `image` profile. Set `target_default_profiles.<TARGET>.image_raw` next to `image` in `encoder.yaml` to opt in.
 
 #### Removed
 

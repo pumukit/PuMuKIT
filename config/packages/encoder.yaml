@@ -130,7 +130,8 @@ pumukit_encoder:
     PUCHWEBTV:
       audio: "audio_broadcastable"
       video: "video_broadcastable"
-      image: "image_raw_broadcastable"
+      image: "image_broadcastable"
+      image_raw: "image_raw_broadcastable"
       document: "document_broadcastable"
     PUCHPODCAST:
       audio: "audio_broadcastable"
