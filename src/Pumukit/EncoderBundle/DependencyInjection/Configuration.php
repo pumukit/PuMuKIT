@@ -83,8 +83,6 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('streamserver')
             ->isRequired()
             ->children()
-            ->scalarNode('name')->isRequired()->cannotBeEmpty()
-            ->info('Name of the streamserver')->end()
             ->scalarNode('dir_out')->isRequired()->cannotBeEmpty()
             ->info('Directory path of resulting track')->end()
             ->scalarNode('url_out')->info('URL of resulting track')->end()

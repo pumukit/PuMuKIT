@@ -16,7 +16,6 @@ pumukit_encoder:
       audio: false
       bat: cp "{{input}}" "{{output}}"
       streamserver:
-        name: Localmaster
         dir_out: "%pumukit.masters_dir%"
     video_master_encoded:
       display: false
@@ -28,7 +27,6 @@ pumukit_encoder:
       audio: false
       bat: ffmpeg -y -i "{{input}}" -acodec libfdk_aac -b:a 128k -ac 2 -ar 44100 -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"
       streamserver:
-        name: Localmaster
         dir_out: "%pumukit.masters_dir%"
         url_out: "%pumukit.downloads_url%"
     video_master_broadcastable:
@@ -42,7 +40,6 @@ pumukit_encoder:
       audio: false
       bat: ffmpeg -y -i "{{input}}" -acodec libfdk_aac -b:a 128k -ac 2 -ar 44100 -vcodec libx264 -preset slow -crf 22 -movflags faststart -threads 0 "{{output}}"
       streamserver:
-        name: Localhost
         dir_out: "%pumukit.downloads_dir%"
         url_out: "%pumukit.downloads_url%"
     video_broadcastable_dynamic_quality:
@@ -59,7 +56,6 @@ pumukit_encoder:
       audio: false
       bat: ffmpeg -y -i "{{input}}" -c:v libx264 -x264-params "nal-hrd=cbr:force-cfr=1" -b:v 4M -maxrate:v 4M -bufsize:v 4M -pix_fmt yuv420p -tune film -preset slow -g 50 -sc_threshold 0 -crf 20 -keyint_min 50 -c:a libfdk_aac -b:a 128k -ac 2 -f hls -hls_time 10 -hls_init_time 1 -hls_playlist_type vod -hls_flags independent_segments -hls_segment_type mpegts -hls_segment_filename "{{output_dirname}}/data_%%03d.ts" -master_pl_name "{{output_filename}}.m3u8" "{{output_dirname}}/index.m3u8" -threads 0 -shortest
       streamserver:
-        name: Localhost
         dir_out: "%pumukit.downloads_dir%"
         url_out: "%pumukit.downloads_url%"
     video_broadcastable:
@@ -75,7 +71,6 @@ pumukit_encoder:
       audio: false
       bat: ffmpeg -y -i "{{input}}" -acodec libfdk_aac -b:a 128k -ac 2 -ar 44100 -vcodec libx264 -preset slow -crf 22 -movflags faststart -threads 0 "{{output}}"
       streamserver:
-        name: Localhost
         dir_out: "%pumukit.downloads_dir%"
         url_out: "%pumukit.downloads_url%"
     audio_broadcastable:
@@ -90,7 +85,6 @@ pumukit_encoder:
       audio: true
       bat: ffmpeg -y -i "{{input}}" -acodec libfdk_aac -b:a 128k -ac 2 -ar 44100 -vn -threads 0 "{{output}}"
       streamserver:
-        name: Localhost
         dir_out: "%pumukit.downloads_dir%"
         url_out: "%pumukit.downloads_url%"
     image_broadcastable:
@@ -104,7 +98,6 @@ pumukit_encoder:
       bat: convert "{{input}}" -compress JPEG -quality 90 "{{output}}"
       extension: jpg
       streamserver:
-        name: Localhost
         dir_out: "%pumukit.downloads_dir%"
         url_out: "%pumukit.downloads_url%"
     image_raw_broadcastable:
@@ -118,7 +111,6 @@ pumukit_encoder:
       bat: darktable-cli "{{input}}" "{{output}}" --core --conf plugins/imageio/format/jpeg/quality=90
       extension: jpg
       streamserver:
-        name: Localhost
         dir_out: "%pumukit.downloads_dir%"
         url_out: "%pumukit.downloads_url%"
     document_broadcastable:
@@ -131,7 +123,6 @@ pumukit_encoder:
       audio: false
       bat: cp "{{input}}" "{{output}}"
       streamserver:
-        name: Localhost
         dir_out: "%pumukit.downloads_dir%"
         url_out: "%pumukit.downloads_url%"
 

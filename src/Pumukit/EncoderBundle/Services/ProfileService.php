@@ -94,10 +94,10 @@ class ProfileService
 
     public static function validateProfilesDir(array $profiles): void
     {
-        foreach ($profiles as $profile) {
+        foreach ($profiles as $name => $profile) {
             $dirOut = realpath($profile['streamserver']['dir_out']);
             if (!$dirOut) {
-                throw new \InvalidArgumentException("The path '".$profile['streamserver']['dir_out']."' for dir_out of the streamserver '".$profile['streamserver']['name']."' doesn't exist.");
+                throw new \InvalidArgumentException("The path '".$profile['streamserver']['dir_out']."' for dir_out of profile '".$name."' doesn't exist.");
             }
         }
     }

@@ -451,17 +451,20 @@ Campos **a borrar** de cada profile y del tree de configuración del bundle, si 
 
 - A nivel de profile: `format`, `codec`, `mime_type`, `bitrate`, `framerate`, `channels`,
   `app`, `rel_duration_size`, `rel_duration_trans`, `file_cfg`, `prescript`.
-- Dentro de `streamserver`: `type`, `host`, `description`.
+- Dentro de `streamserver`: `name`, `type`, `host`, `description`. El antiguo `name`
+  era solo metadata para mensajes de error; ahora el error de `validateProfilesDir()`
+  identifica el profile por su clave del array (mucho más útil cuando varios profiles
+  comparten el mismo streamserver lógico).
 
 Campos **load-bearing** (no tocar): `bat`, `target`, `tags`, `extension`,
-`streamserver.{name,dir_out,url_out}`, `display`, `wizard`, `master`, `audio`, `image`,
+`streamserver.{dir_out,url_out}`, `display`, `wizard`, `master`, `audio`, `image`,
 `document`, `generate_pic`, `nocheckduration`, `resolution_hor`, `resolution_ver`,
 `downloadable`.
 
 Buscar:
 ```bash
 grep -nE "format:|codec:|mime_type:|bitrate:|framerate:|channels:|app:|rel_duration_(size|trans):|file_cfg:|prescript:" config/packages/*encoder*.yaml
-grep -nE "scalarNode\('(format|codec|mime_type|bitrate|framerate|channels|app|file_cfg|prescript)'\)|integerNode\('(channels|rel_duration_size|rel_duration_trans)'\)|enumNode\('type'\)|scalarNode\('(host|description)'\)" src/
+grep -nE "scalarNode\('(format|codec|mime_type|bitrate|framerate|channels|app|file_cfg|prescript|name|host|description)'\)|integerNode\('(channels|rel_duration_size|rel_duration_trans)'\)|enumNode\('type'\)" src/
 ```
 
 Cleanup completo:

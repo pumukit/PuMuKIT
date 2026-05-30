@@ -303,7 +303,6 @@ class RemoveListenerTest extends PumukitTestCase
                 'audio' => false,
                 'bat' => 'cp "{{input}}" "{{output}}"',
                 'streamserver' => [
-                    'name' => 'Localmaster',
                     'dir_out' => __DIR__.'/../Resources/dir_out',
                 ],
             ],
@@ -317,7 +316,6 @@ class RemoveListenerTest extends PumukitTestCase
                 'audio' => false,
                 'bat' => 'ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"',
                 'streamserver' => [
-                    'name' => 'Download',
                     'dir_out' => __DIR__.'/../Resources/dir_out',
                     'url_out' => 'http://localhost:8000/downloads/',
                 ],

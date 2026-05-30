@@ -24,7 +24,6 @@ pumukit_encoder:
       audio: false
       bat: 'cp "{{input}}" "{{output}}"'
       streamserver:
-        name: Localmaster
         dir_out: "%pumukit.masters%"
     master_video_h264:
       display: false
@@ -37,7 +36,6 @@ pumukit_encoder:
       bat: |
         ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 15 -threads 0 "{{output}}"
       streamserver:
-        name: Localmaster
         dir_out: "%pumukit.masters%"
     broadcastable_master:
       display: true
@@ -51,7 +49,6 @@ pumukit_encoder:
       bat: |
         ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 22 -movflags faststart -threads 0 "{{output}}"
       streamserver:
-        name: Localhost
         dir_out: "%pumukit.downloads%"
         url_out: "/storage/downloads"
     video_h264:
@@ -67,7 +64,6 @@ pumukit_encoder:
       bat: |
         ffmpeg -y -i "{{input}}" -acodec aac -vcodec libx264 -preset slow -crf 22 -movflags faststart -threads 0 "{{output}}"
       streamserver:
-        name: Localhost
         dir_out: "%pumukit.downloads%"
         url_out: "/storage/downloads"
     audio_aac:
@@ -83,7 +79,6 @@ pumukit_encoder:
       bat: |
         ffmpeg -y -i "{{input}}" -acodec aac -vn -threads 0 "{{output}}"
       streamserver:
-        name: Localhost
         dir_out: "%pumukit.downloads%"
         url_out: "/storage/downloads"
     sbs:
@@ -98,7 +93,6 @@ pumukit_encoder:
       bat: |
         ffmpeg -i {{ properties.opencastinvert ? tracks_video['presenter/delivery'] : tracks_video['presentation/delivery']  }}  -i {{ properties.opencastinvert ? tracks_video['presentation/delivery'] : tracks_video['presenter/delivery']  }} -filter_complex "[0:v]scale=640:-1[a],[a]pad=1280:720:0:120+((480-in_h)/2) [bg],[1:v]scale=640:-1[b],[bg][b]overlay=w:120+((480-h)/2)" -r 25 -vcodec libx264 -preset medium -crf 22 -maxrate 1100k -bufsize 1835k -acodec aac -ac 2 -ar 44100 -b:a 128k -f mp4 -y "{{output}}"
       streamserver:
-        name: Localhost
         dir_out: "%pumukit.downloads%"
         url_out: "/storage/downloads"
   target_default_profiles:
@@ -152,6 +146,5 @@ pumukit_encoder:
 * `profiles` `{profileName}` `bat` Command line to execute transcodification of track. Available variables: {{input}}, {{output}}, {{tmpfile1}}, {{tmpfile2}}, ... {{tmpfile9}}.
 * `profiles` `{profileName}` `streamserver` Streamserver output paths for transcodification results
 * `profiles` `{profileName}` `streamserver` `{streamserverName}`
-* `profiles` `{profileName}` `streamserver` `{streamserverName}` `name` Name of the streamserver
 * `profiles` `{profileName}` `streamserver` `{streamserverName}` `dir_out` Directory path of resulting track
 * `profiles` `{profileName}` `streamserver` `{streamserverName}` `url_out` URL of resulting track

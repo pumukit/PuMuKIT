@@ -13,7 +13,6 @@ pumukit_encoder:
       audio: false
       bat: cp "{{input}}" "{{output}}"
       streamserver:
-        name: Localmaster
         dir_out: '%kernel.project_dir%/src/Pumukit/EncoderBundle/Tests/Resources/dir_out'
     video_broadcastable:
       generate_pic: false
@@ -28,6 +27,5 @@ pumukit_encoder:
       audio: false
       bat: ffmpeg -y -i "{{input}}" -acodec libfdk_aac -b:a 128k -ac 2 -ar 44100 -vcodec libx264 -preset slow -crf 22 -movflags faststart -threads 0 "{{output}}"
       streamserver:
-        name: Localhost
         dir_out: '%kernel.project_dir%/src/Pumukit/EncoderBundle/Tests/Resources/dir_out'
         url_out: 'http://localhost:8000/downloads/'
