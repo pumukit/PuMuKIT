@@ -33,6 +33,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Several Symfony 6 runtime issues in the backoffice menu, the web profiler and the pagination adapters.
 - Media API endpoint failing on multimedia objects whose metadata was stored as a JSON array.
 - Video playback returning a 404 for local tracks: they are now served through `/trackfile` instead of redirecting to the blocked `/storage` path.
+- Image-type multimedia objects returning a 404 on the player: the image now goes through `track_url()` (i.e. `/trackfile`) like documents and video tracks, instead of the raw `/storage/downloads/...` URL.
 
 #### Removed
 
