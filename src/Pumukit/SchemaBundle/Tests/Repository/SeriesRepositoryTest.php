@@ -671,40 +671,6 @@ class SeriesRepositoryTest extends PumukitTestCase
         static::assertCount(3, $this->repo->getMultimediaObjects($series1));
     }
 
-    public function testMultimediaObjectsInSeries()
-    {
-        static::markTestSkipped('S');
-
-        $series1 = $this->createSeries('Series 1');
-        $series2 = $this->createSeries('Series 2');
-
-        // NOTE: After creation we must take the initialized document
-        $series1 = $this->repo->find($this->repo->getId());
-        $series2 = $this->repo->find($series2->getId());
-
-        static::assertCount(0, $this->repo->getMultimediaObjects($series1));
-        static::assertCount(0, $this->repo->getMultimediaObjects($series2));
-
-        $mm11 = $this->factoryService->createMultimediaObject($series1);
-        $mm12 = $this->factoryService->createMultimediaObject($series1);
-        $mm13 = $this->factoryService->createMultimediaObject($series1);
-
-        $mm21 = $this->factoryService->createMultimediaObject($series2);
-        $mm22 = $this->factoryService->createMultimediaObject($series2);
-
-        static::assertCount(3, $this->repo->getMultimediaObjects($series1));
-        static::assertCount(2, $this->repo->getMultimediaObjects($series2));
-
-        $this->dm->remove($mm11);
-        $this->dm->flush();
-
-        static::assertCount(2, $this->repo->getMultimediaObjects($series1));
-        static::assertCount(2, $this->repo->getMultimediaObjects($series2));
-
-        static::assertTrue($series1->containsMultimediaObject($mm12));
-        static::assertFalse($series1->containsMultimediaObject($mm11));
-    }
-
     public function testRankInAddMultimediaObject()
     {
         $series1 = $this->createSeries('Series 1');

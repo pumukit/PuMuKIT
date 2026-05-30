@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
+use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
 
 /**
@@ -62,18 +63,21 @@ class SeriesTypeRepositoryTest extends PumukitTestCase
 
     public function testContainsSeries()
     {
-        static::markTestSkipped('S');
-
         $seriesType = new SeriesType();
         $this->dm->persist($seriesType);
         $this->dm->flush();
 
         $series = $this->factoryService->createSeries();
         $series->setSeriesType($seriesType);
-        $this->dm->persist($series);
-        $this->dm->persist($seriesType);
         $this->dm->flush();
 
-        static::assertTrue($seriesType->containsSeries($series));
+        $seriesTypeId = $seriesType->getId();
+        $seriesId = $series->getId();
+        $this->dm->clear();
+
+        $reloadedType = $this->repo->find($seriesTypeId);
+        $reloadedSeries = $this->dm->getRepository(Series::class)->find($seriesId);
+
+        static::assertTrue($reloadedType->containsSeries($reloadedSeries));
     }
 }

@@ -109,16 +109,4 @@ class SenderServiceTest extends PumukitTestCase
         static::assertEquals($this->platformName, $this->senderService->getPlatformName());
     }
 
-    public function testSendNotification(): void
-    {
-        static::markTestSkipped('S');
-
-        /*$mailTo = 'receiver@pumukit.org';
-        $subject = 'Test sender service';
-        $body = 'test send notification';
-        $template = '@PumukitNotification/Email/notification.html.twig';
-        $parameters = ['subject' => $subject, 'body' => $body, 'sender_name' => 'Sender Pumukit'];
-        $output = $this->senderService->sendNotification($mailTo, $subject, $template, $parameters, false);
-        static::assertEquals(1, $output);*/
-    }
 }
