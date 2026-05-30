@@ -48,7 +48,7 @@ EOT
         $this->syncNumberPeopleInMultimediaObjectsOnRoles($input, $output);
         $this->syncJobsInMultimediaObjectsProperties($input, $output);
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function syncJobsInMultimediaObjectsProperties(InputInterface $input, OutputInterface $output)
@@ -66,7 +66,7 @@ EOT
             if (in_array($jg['_id'], [Job::STATUS_PAUSED, Job::STATUS_WAITING])) {
                 $jobsPending += $jg['count'];
             } elseif (Job::STATUS_EXECUTING == $jg['_id']) {
-                $jobsPending = $jg['count'];
+                $jobsExecuting += $jg['count'];
             }
         }
 
