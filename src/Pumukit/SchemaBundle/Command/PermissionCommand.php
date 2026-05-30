@@ -60,13 +60,13 @@ EOT
 
         if ($delete) {
             $this->permissionProfileService->removePermission($profile, $permissionName);
-            $output->writeln(sprintf('Profile "%s" has been deleted into profile %s.', $permissionName, $profileName));
+            $output->writeln(sprintf('Permission "%s" has been removed from profile %s.', $permissionName, $profileName));
         } else {
             $this->permissionProfileService->addPermission($profile, $permissionName);
-            $output->writeln(sprintf('Profile "%s" has been added into profile %s.', $permissionName, $profileName));
+            $output->writeln(sprintf('Permission "%s" has been added to profile %s.', $permissionName, $profileName));
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function getProfile(string $profileName)
