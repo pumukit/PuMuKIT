@@ -8,7 +8,6 @@ use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
-use Pumukit\InspectionBundle\Utils\TestCommand;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Storage;
@@ -39,10 +38,6 @@ class PicExtractorServiceTest extends PumukitTestCase
 
     public function setUp(): void
     {
-        if (false === TestCommand::commandExists('/usr/local/bin/ffmpeg')) {
-            static::markTestSkipped('PicExtractor test marks as skipped (No ffmpeg).');
-        }
-
         $options = ['environment' => 'test'];
         static::bootKernel($options);
         parent::setUp();
