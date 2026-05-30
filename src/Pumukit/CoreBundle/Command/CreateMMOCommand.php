@@ -112,7 +112,7 @@ EOT
         }
 
         if ('IN_CLOSE_WRITE' !== $input->getArgument('inotify_event')) {
-            return -1;
+            return Command::SUCCESS;
         }
         $locale = $this->locale;
 
@@ -139,7 +139,7 @@ EOT
             $profile = $this->profileService->getDefaultMasterProfile();
         }
 
-        $title = substr(basename($path), 0, -4);
+        $title = pathinfo($path, PATHINFO_FILENAME);
 
         $semaphore = SemaphoreUtils::acquire(1000001);
 
@@ -148,7 +148,7 @@ EOT
         try {
             $objectId = new ObjectId($seriesId);
             $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => $objectId]);
-        } catch (\Exception $e) {
+        } catch (\InvalidArgumentException) {
             $series = $this->documentManager->getRepository(Series::class)->findByTitleWithLocaleQuery($seriesId, $locale)->getSingleResult();
             if (!$series) {
                 $seriesTitle = $this->i18nService->generateI18nText($seriesId);
@@ -183,7 +183,7 @@ EOT
 
         SemaphoreUtils::release($semaphore);
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function findUser($username)
