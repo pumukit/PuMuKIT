@@ -17,7 +17,6 @@ class NumericalIDCommand extends Command
 {
     private $dm;
     private $step;
-    private $force;
     private $output;
 
     public function __construct(DocumentManager $documentManager)
@@ -31,8 +30,7 @@ class NumericalIDCommand extends Command
         $this
             ->setName('pumukit:update:numerical:id')
             ->setDescription('Generate and update numerical ID on series and Multimedia Object.')
-            ->addOption('step', 'S', InputOption::VALUE_REQUIRED, 'Step of command. See help for more info', -99)
-            ->addOption('force', null, InputOption::VALUE_NONE, 'Set this parameter force the execution of this action')
+            ->addOption('step', 'S', InputOption::VALUE_REQUIRED, 'Step of command. See help for more info')
             ->setHelp(
                 <<<'EOT'
 
@@ -47,7 +45,6 @@ EOT
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->step = $input->getOption('step');
-        $this->force = (true === $input->getOption('force'));
 
         $this->output = $output;
     }
@@ -64,15 +61,15 @@ EOT
                 $output->writeln(' ***** Please select an valid step');
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function generateNewNumericalID()
     {
-        $this->output->writeln(
-            ['<info> ***** Executing pumukit:update:numerical:id *****</info>'],
-            ['Checking status...']
-        );
+        $this->output->writeln([
+            '<info> ***** Executing pumukit:update:numerical:id *****</info>',
+            'Checking status...',
+        ]);
 
         $status = $this->checkStatus();
         if (!$status) {
@@ -156,33 +153,24 @@ EOT
     private function getLastNumericalID($series = false)
     {
         if ($series) {
-            $series = $this->dm->getRepository(Series::class)->createQueryBuilder()
+            $last = $this->dm->getRepository(Series::class)->createQueryBuilder()
                 ->field('numerical_id')->exists(true)
                 ->sort(['numerical_id' => -1])
                 ->getQuery()
                 ->getSingleResult()
             ;
 
-            if (!$series instanceof Series) {
-                throw new \Exception('Series with numerical_id not found');
-            }
-
-            $lastNumericalID = $series->getNumericalID();
-        } else {
-            $multimediaObject = $this->dm->getRepository(MultimediaObject::class)->createQueryBuilder()
-                ->field('numerical_id')->exists(true)
-                ->sort(['numerical_id' => -1])
-                ->getQuery()
-                ->getSingleResult()
-            ;
-
-            if (!$multimediaObject instanceof MultimediaObject) {
-                throw new \Exception('MultimediaObject with numerical_id not found');
-            }
-            $lastNumericalID = $multimediaObject->getNumericalID();
+            return $last instanceof Series ? $last->getNumericalID() : 0;
         }
 
-        return $lastNumericalID;
+        $last = $this->dm->getRepository(MultimediaObject::class)->createQueryBuilder()
+            ->field('numerical_id')->exists(true)
+            ->sort(['numerical_id' => -1])
+            ->getQuery()
+            ->getSingleResult()
+        ;
+
+        return $last instanceof MultimediaObject ? $last->getNumericalID() : 0;
     }
 
     private function generateNumericalID($elements, $lastNumericalID)
