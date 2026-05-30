@@ -40,6 +40,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - `sensio/framework-extra-bundle` (abandoned).
 - `symfony/templating` (unused), Swiftmailer and `symfony/swiftmailer-bundle`.
 - The v4→v5 data migration commands (`pumukit:upgrade:*`); 6.0 is reached from 5.1.x, which already runs the v5 schema.
+- Unused fields from the encoder profile configuration schema (`format`, `codec`, `mime_type`, `bitrate`, `framerate`, `channels`, `app`, `rel_duration_size`, `rel_duration_trans`, `file_cfg`, `prescript`, and `streamserver.{type,host,description}`); these were declared but never read by the application.
 
 
 ## [5.1.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...5.0.0) - (2026-03-06)

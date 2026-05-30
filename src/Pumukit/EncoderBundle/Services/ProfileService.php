@@ -10,11 +10,6 @@ use Pumukit\SchemaBundle\Document\Tag;
 
 class ProfileService
 {
-    public const STREAMSERVER_STORE = 'store';
-    public const STREAMSERVER_DOWNLOAD = 'download';
-    public const STREAMSERVER_WMV = 'wmv';
-    public const STREAMSERVER_FMS = 'fms';
-    public const STREAMSERVER_RED5 = 'red5';
     private $profiles;
     private $default_profiles;
 
