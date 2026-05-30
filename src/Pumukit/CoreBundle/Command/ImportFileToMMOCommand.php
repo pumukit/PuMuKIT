@@ -71,17 +71,17 @@ EOT
         $output->writeln('<info> ***** Add track to multimedia object ***** </info>');
 
         $filePath = $input->getArgument('file');
-        if (is_string($filePath) && !is_file($filePath)) {
-            throw new \Exception('Path is not a file: '.$filePath);
-        }
         if (!is_string($filePath)) {
-            throw new \Exception('Argument file must be an string');
+            throw new \Exception('Argument file must be a string');
+        }
+        if (!is_file($filePath)) {
+            throw new \Exception('Path is not a file: '.$filePath);
         }
 
         try {
             $duration = $this->inspectionService->getDuration($filePath);
         } catch (\Exception $e) {
-            throw new \Exception('The file is not a valid video or audio file');
+            throw new \Exception('The file is not a valid video or audio file: '.$e->getMessage(), 0, $e);
         }
 
         if (0 == $duration) {
@@ -94,12 +94,17 @@ EOT
         }
 
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(
-            ['id' => new ObjectId($multimediaObjectId)]
+            ['_id' => new ObjectId($multimediaObjectId)]
         );
 
-        $profile = ($input->hasOption('encoding-profile')) ? $input->getOption('encoding-profile') : $this->profileService->getDefaultMasterProfile();
-        $language = ($input->hasOption('language')) ? $input->getOption('language') : null;
-        $description = ($input->hasArgument('description')) ? [$this->defaultLanguage => $input->getArgument('description')] : '';
+        if (!$multimediaObject instanceof MultimediaObject) {
+            throw new \Exception('Multimedia object not found: '.$multimediaObjectId);
+        }
+
+        $profile = $input->getOption('encoding-profile') ?? $this->profileService->getDefaultMasterProfile();
+        $language = $input->getOption('language');
+        $descriptionArg = $input->getArgument('description');
+        $description = null !== $descriptionArg ? [$this->defaultLanguage => $descriptionArg] : [];
 
         $jobOptions = new JobOptions($profile, 2, $language, $description, []);
         $path = Path::create($filePath);
@@ -107,6 +112,6 @@ EOT
 
         $output->writeln('<info> Added media '.$filePath.' to Multimedia Object '.$multimediaObject->getId().'</info>');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }
