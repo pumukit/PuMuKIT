@@ -23,8 +23,6 @@ class PumukitPicsConvertCommand extends Command
     private $picService;
     private $id;
     private $convert;
-    private $convert_size;
-    private $convert_ext;
     private $convert_quality;
     private $no_replace;
     private $convert_max_width;
@@ -48,8 +46,6 @@ class PumukitPicsConvertCommand extends Command
             ->addOption('type', null, InputOption::VALUE_OPTIONAL, 'Type can be series or mmobj', 'mm')
             ->addOption('size', null, InputOption::VALUE_OPTIONAL, 'List pics greater than selected size in KB.')
             ->addOption('convert', null, InputOption::VALUE_NONE, 'Convert result pics')
-            ->addOption('convert_ext', null, InputOption::VALUE_OPTIONAL, 'Convert result extension', 'jpg')
-            ->addOption('convert_size', null, InputOption::VALUE_REQUIRED, 'Max size for the new images ( Default 100K )', 100)
             ->addOption('convert_quality', null, InputOption::VALUE_OPTIONAL, 'Convert quality of image ( 0 to 100 )', 100)
             ->addOption('convert_max_width', null, InputOption::VALUE_OPTIONAL, 'Set max width of the new image')
             ->addOption('convert_max_height', null, InputOption::VALUE_OPTIONAL, 'Set max height of the new image')
@@ -80,8 +76,6 @@ php app/console pumukit:pics:convert --path="/mnt/storage/" --size=10000
 Create image options:
 
 --convert
---convert_ext="jpg"  ( Doesnt work, ever convert to JPG )
---convert_size="10000" ( Doesnt work )
 --convert_quality=100
 --convert_max_width=1920
 --convert_max_height=1080
@@ -112,8 +106,6 @@ EOT
         $this->type = $this->input->getOption('type');
 
         $this->convert = $this->input->getOption('convert');
-        $this->convert_size = $this->input->getOption('convert_size');
-        $this->convert_ext = $this->input->getOption('convert_ext');
         $this->convert_quality = $this->input->getOption('convert_quality');
         $this->convert_max_width = $this->input->getOption('convert_max_width');
         $this->convert_max_height = $this->input->getOption('convert_max_height');
@@ -125,24 +117,15 @@ EOT
         if (!extension_loaded('gd')) {
             throw new \Exception('GD extension not installed. See http://php.net/manual/en/image.installation.php for installation options.');
         }
-        $validInput = $this->checkInputOptions();
-        if (!$validInput['success']) {
-            throw new \Exception($validInput['message']);
-        }
+        $this->validateInputOptions();
 
-        try {
-            $inputs = $this->picService->formatInputs($this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type);
-            [$this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type] = $inputs;
-        } catch (\Exception $exception) {
-            throw new \Exception($exception->getMessage());
-        }
+        $inputs = $this->picService->formatInputs($this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type);
+        [$this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type] = $inputs;
 
         $pics = $this->picService->findPicsByOptions($this->id, $this->size, $this->path, $this->extension, $this->tags, $this->exists, $this->type);
 
         if ($this->convert) {
             $params = [
-                'size' => $this->convert_size,
-                'ext' => $this->convert_ext,
                 'quality' => $this->convert_quality,
                 'max_width' => $this->convert_max_width,
                 'max_height' => $this->convert_max_height,
@@ -154,43 +137,14 @@ EOT
             $this->output->writeln('<info>Please set option --convert to start convert</info>');
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
-    private function checkInputOptions(): array
+    private function validateInputOptions(): void
     {
-        $isValidInput = ['success' => true];
-        if ($this->size && !is_string($this->size)) {
-            $isValidInput['success'] = false;
-            $isValidInput['message'] = 'Size must be string, then will be converted';
-        }
-
-        if ($this->extension && !is_string($this->extension)) {
-            $isValidInput['success'] = false;
-            $isValidInput['message'] = 'Extension must be string';
-        }
-
-        if ($this->path && !is_string($this->path)) {
-            $isValidInput['success'] = false;
-            $isValidInput['message'] = 'Path must be string';
-        }
-
-        if ($this->tags && !is_string($this->tags)) {
-            $isValidInput['success'] = false;
-            $isValidInput['message'] = 'Tags must be string';
-        }
-
-        if ($this->exists && !in_array(strtolower($this->exists), ['false', 'true', '1', '0'])) {
-            $isValidInput['success'] = false;
-            $isValidInput['message'] = 'Exists must be boolean';
-        }
-
         if (!in_array($this->type, ['mm', 'series'])) {
-            $isValidInput['success'] = false;
-            $isValidInput['message'] = 'Type must be have the value series or mm';
+            throw new \Exception('Type must be have the value series or mm');
         }
-
-        return $isValidInput;
     }
 
     private function showData(array $data): bool
