@@ -2,7 +2,7 @@
         cc cc-envs ai \
         composer composer-install composer-update composer-validate fixtures \
         test-all test test-lint-yaml test-lint-twig test-lint-xliff test-lint-generic \
-        test-php-cs-fixer test-php-stan test-rector \
+        test-php-cs-fixer test-php-stan test-rector fix-test-perms \
         shell php-shell ps logs
 
 .DEFAULT_GOAL := help
@@ -107,6 +107,9 @@ test-php-stan:
 
 test-rector:
 	$(call run_php_test,composer php-rector)
+
+fix-test-perms: ## Reset ownership of test fixture dirs (run after a stale root-owned state breaks make test)
+	@$(DC_TEST) run --rm --user root php sh -c 'chown -R www-data:www-data tests/tmp src/Pumukit/EncoderBundle/Tests/Resources .phpunit.cache'
 
 shell:
 	@$(DC_BASE) run --rm --user www-data php sh
