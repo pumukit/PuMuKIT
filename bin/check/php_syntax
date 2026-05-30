@@ -1,0 +1,7 @@
+# Lints every PHP file under src/ in parallel using `php -l`.
+# Only the syntax errors are printed; the "No syntax errors detected in ..." lines
+# are suppressed by capturing the output of each subprocess and printing it only
+# on non-zero exit. xargs aggregates the exit codes, so a single bad file makes
+# the whole check fail (exit 123, the standard xargs failure code).
+find src -type f -name '*.php' -print0 \
+    | xargs -0 -n1 -P8 sh -c 'output=$(php -l "$0" 2>&1) || { echo "$output"; exit 1; }'

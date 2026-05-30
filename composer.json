@@ -93,7 +93,7 @@
             "bin/console lint:twig templates"
         ],
         "lint-generic": [
-            "find src -type f -name '*.php' -print0 | xargs -0 -n1 -P8 php -l",
+            "bin/check/php_syntax",
             "bin/check/console_log"
         ],
         "php-cs-fixer": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix src --dry-run -v",
