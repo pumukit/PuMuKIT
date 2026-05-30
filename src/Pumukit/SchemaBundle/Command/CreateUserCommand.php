@@ -36,7 +36,9 @@ class CreateUserCommand extends Command
         try {
             $userWasCreated = $this->createUserService->createSuperAdmin($username, $password, $email);
         } catch (\Exception $exception) {
-            $userWasCreated = false;
+            $output->writeln('<error> Failed to create user '.$username.': '.$exception->getMessage().' </error>');
+
+            return Command::FAILURE;
         }
 
         if ($userWasCreated) {
@@ -49,7 +51,7 @@ class CreateUserCommand extends Command
             [$message]
         );
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     protected function configure(): void
