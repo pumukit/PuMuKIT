@@ -136,7 +136,7 @@ EOT
             }
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     protected function executeTags(): array
@@ -379,7 +379,7 @@ EOT
             if (isset($csvTagsArray[$key_name])) {
                 $role->setText($csvTagsArray[$key_name], $locale);
             } else {
-                $role->setText($csvTagsArray['name_en'], $locale);
+                $role->setText($csvTagsArray['text_en'] ?? $csvTagsArray['name_en'], $locale);
             }
         }
 
@@ -450,55 +450,55 @@ EOT
 
     private function validateFile(string $fileRoute): array
     {
-        $validate = true;
-        $message = '';
-
-        try {
-            if (!file_exists($fileRoute)) {
-                $message = '<error>'.$this->repoName.': Error stating '.$fileRoute.": File doesn't exist</error>";
-                $validate = false;
-            }
-
-            if (false === ($file = fopen($fileRoute, 'rb'))) {
-                $message = '<error>Error opening '.$fileRoute.": fopen() returned 'false' </error>";
-                $validate = false;
-            }
-
-            if ('tag' === $this->repoName) {
-                if (false === ($csvTagHeaders = fgetcsv($file, 0, ';'))) {
-                    $message = '<error>Error reading first row (csv header) of '
-                               .$fileRoute
-                               .": fgetcsv returned 'false' </error>";
-                    $validate = false;
-                }
-
-                $result_diff = array_diff(self::TAG_REQUIRED_FIELDS, $csvTagHeaders);
-                if (count($result_diff) > 0) {
-                    $message = '<error>Error reading first row (csv header) of '
-                               .$fileRoute
-                               .": HEADER doesn't have the required fields: "
-                               .print_r($result_diff, true)
-                               .' </error>';
-                    $validate = false;
-                }
-            }
-
-            $fileExtension = pathinfo($fileRoute, PATHINFO_EXTENSION);
-            $ending = substr($fileExtension, -1);
-            if ('~' === $ending || ('#' === $ending)) {
-                $message = '<comment>'.$this->repoName.': Ignoring file '.$file.'</comment>';
-                $validate = false;
-            }
-        } catch (\Exception $e) {
+        $fileExtension = pathinfo($fileRoute, PATHINFO_EXTENSION);
+        $ending = substr($fileExtension, -1);
+        if ('~' === $ending || '#' === $ending) {
             return [
-                'status' => $validate,
-                'message' => $message,
+                'status' => false,
+                'message' => '<comment>'.$this->repoName.': Ignoring file '.$fileRoute.'</comment>',
             ];
         }
 
+        if (!file_exists($fileRoute)) {
+            return [
+                'status' => false,
+                'message' => '<error>'.$this->repoName.': Error stating '.$fileRoute.": File doesn't exist</error>",
+            ];
+        }
+
+        $file = fopen($fileRoute, 'rb');
+        if (false === $file) {
+            return [
+                'status' => false,
+                'message' => '<error>Error opening '.$fileRoute.": fopen() returned 'false' </error>",
+            ];
+        }
+
+        if ('tag' === $this->repoName) {
+            $csvTagHeaders = fgetcsv($file, 0, ';');
+            fclose($file);
+
+            if (false === $csvTagHeaders) {
+                return [
+                    'status' => false,
+                    'message' => '<error>Error reading first row (csv header) of '.$fileRoute.": fgetcsv returned 'false' </error>",
+                ];
+            }
+
+            $result_diff = array_diff(self::TAG_REQUIRED_FIELDS, $csvTagHeaders);
+            if (count($result_diff) > 0) {
+                return [
+                    'status' => false,
+                    'message' => '<error>Error reading first row (csv header) of '.$fileRoute.": HEADER doesn't have the required fields: ".print_r($result_diff, true).' </error>',
+                ];
+            }
+        } else {
+            fclose($file);
+        }
+
         return [
-            'status' => $validate,
-            'message' => $message,
+            'status' => true,
+            'message' => '',
         ];
     }
 }
