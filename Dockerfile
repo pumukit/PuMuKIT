@@ -1,6 +1,9 @@
 ARG PHP_VERSION=8.2
 ARG SO_VERSION=bookworm
 ARG NGINX_VERSION=1.25
+ARG FFMPEG_VERSION=6.0
+
+FROM linuxserver/ffmpeg:version-${FFMPEG_VERSION}-cli AS ffmpeg
 
 FROM php:${PHP_VERSION}-fpm-${SO_VERSION} AS base
 LABEL org.opencontainers.image.authors="Pablo Nieto, pnieto@teltek.es"
@@ -79,7 +82,7 @@ RUN apt-get update \
 		&& pecl clear-cache
 
 
-COPY --from=linuxserver/ffmpeg:version-6.0-cli /usr/local /usr/local
+COPY --from=ffmpeg /usr/local /usr/local
 
 RUN \
   echo "**** install runtime ****" && \
