@@ -5,6 +5,7 @@ $finder = PhpCsFixer\Finder::create()
 ;
 
 $config =  new PhpCsFixer\Config();
+$config->setUnsupportedPhpVersionAllowed(true);
 return $config->setRules([
     '@Symfony' => true,
     '@PhpCsFixer' => true,

@@ -126,17 +126,6 @@ class ProfileService
         };
     }
 
-    private function resolveImageDefaultProfile(MultimediaObject $multimediaObject, Tag $tag): string
-    {
-        $tagDefaults = $this->default_profiles[$tag->getCod()];
-        $master = $multimediaObject->getMaster();
-        if ($master && ImageRawUtils::isRawImage($master->storage()->path()) && !empty($tagDefaults['image_raw'])) {
-            return $tagDefaults['image_raw'];
-        }
-
-        return $tagDefaults['image'];
-    }
-
     public function generateProfileTag(string $profileName): string
     {
         return 'profile:'.$profileName;
@@ -215,5 +204,16 @@ class ProfileService
     private function imageGenericProfiles(): array
     {
         return array_filter($this->profiles, function ($profile) { return isset($profile['image']) && true === $profile['image'] && false === $profile['master']; });
+    }
+
+    private function resolveImageDefaultProfile(MultimediaObject $multimediaObject, Tag $tag): string
+    {
+        $tagDefaults = $this->default_profiles[$tag->getCod()];
+        $master = $multimediaObject->getMaster();
+        if ($master && ImageRawUtils::isRawImage($master->storage()->path()) && !empty($tagDefaults['image_raw'])) {
+            return $tagDefaults['image_raw'];
+        }
+
+        return $tagDefaults['image'];
     }
 }

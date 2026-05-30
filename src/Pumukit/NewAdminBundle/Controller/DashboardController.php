@@ -26,8 +26,7 @@ class DashboardController extends AbstractController implements NewAdminControll
         private readonly DocumentManager $documentManager,
         private readonly StatsService $statsService,
         private readonly ProfileService $profileService,
-    ) {
-    }
+    ) {}
 
     /**
      * @Route("/dashboard")
@@ -78,7 +77,8 @@ class DashboardController extends AbstractController implements NewAdminControll
             ->field('properties.owners')->equals($ownerId)
             ->count()
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
 
     private function buildRecentSeries(?string $ownerId): array
