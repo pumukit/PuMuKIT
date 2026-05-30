@@ -108,5 +108,4 @@ class SenderServiceTest extends PumukitTestCase
     {
         static::assertEquals($this->platformName, $this->senderService->getPlatformName());
     }
-
 }
