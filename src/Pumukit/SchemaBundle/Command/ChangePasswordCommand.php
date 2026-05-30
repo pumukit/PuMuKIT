@@ -45,14 +45,13 @@ class ChangePasswordCommand extends Command
             $output->writeln(['<info> User '.$username.' not found </info>']);
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     protected function configure(): void
     {
         $this
             ->setDescription('This command allows you to change password for one user')
-            ->setHelp('This command allows you to change password for one user')
             ->addArgument(
                 'username',
                 InputArgument::REQUIRED,
