@@ -17,6 +17,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Changed
 
+- Replace SIMILE Timeline 2.3.1 (EOL since ~2012) with Chart.js 4 on the admin dashboard; the series feed moves from `/dashboard/series/timeline.xml` to `.json`. Chart.js (+ `chartjs-adapter-date-fns` + `chartjs-plugin-zoom`) is introduced as the planned successor for the D3 v3 + NVD3 stack still used in `StatsUIBundle`.
 - Upgrade the core to Symfony 6.4 LTS.
 - Single source of truth for the Symfony version through `extra.symfony.require` (Symfony components pinned with `*`).
 - Migrate the security layer from the legacy Guard system to the new authenticator system (existing sha512 passwords remain valid).
@@ -42,6 +43,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - `sensio/framework-extra-bundle` (abandoned).
 - `symfony/templating` (unused), Swiftmailer and `symfony/swiftmailer-bundle`.
 - The v4→v5 data migration commands (`pumukit:upgrade:*`); 6.0 is reached from 5.1.x, which already runs the v5 schema.
+- Vendored SIMILE Timeline 2.3.1 assets (~1 MB) under `NewAdminBundle/Resources/public/js/timeline_2.3.1/`.
 - Unused fields from the encoder profile configuration schema (`format`, `codec`, `mime_type`, `bitrate`, `framerate`, `channels`, `app`, `rel_duration_size`, `rel_duration_trans`, `file_cfg`, `prescript`, and `streamserver.{name,type,host,description}`); these were declared but never read by the application. `validateProfilesDir()` now identifies the failing profile by its array key in its error message instead of the redundant `streamserver.name`.
 
 

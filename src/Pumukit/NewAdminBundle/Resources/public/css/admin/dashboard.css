@@ -11,12 +11,7 @@
        _height: 200px; /* IE6 */
 }
 
-.dashboard_element legend{ 
+.dashboard_element legend{
        font-size: 140%;
        color: #AAA;
-}
-
-
-.dashboard_timeline{ 
-       
 }

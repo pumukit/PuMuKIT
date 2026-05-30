@@ -10,8 +10,8 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\StatsService;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -76,24 +76,20 @@ class DashboardController extends AbstractController implements NewAdminControll
     }
 
     /**
-     * @Route("/dashboard/series/timeline.xml")
+     * @Route("/dashboard/series/timeline.json", name="pumukit_newadmin_dashboard_seriestimeline")
      */
-    public function seriesTimelineAction(Request $request)
+    public function seriesTimelineAction(): JsonResponse
     {
-        $repo = $this->documentManager->getRepository(Series::class);
-        $series = $repo->findAll();
+        $series = $this->documentManager->getRepository(Series::class)->findAll();
 
-        $XML = new \SimpleXMLElement('<data></data>');
-        $XML->addAttribute('wiki-url', $request->getUri());
-        $XML->addAttribute('wiki-section', 'Pumukit time-line Feed');
+        $items = array_map(function (Series $s) {
+            return [
+                'x' => $s->getPublicDate()->format(\DateTimeInterface::ATOM),
+                'title' => $s->getTitle(),
+                'link' => $this->router->generate('pumukit_webtv_series_index', ['id' => $s->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
+            ];
+        }, $series);
 
-        foreach ($series as $s) {
-            $XMLSeries = $XML->addChild('event', htmlspecialchars($s->getTitle()));
-            $XMLSeries->addAttribute('start', $s->getPublicDate()->format('M j Y H:i:s \G\M\TP'));
-            $XMLSeries->addAttribute('title', $s->getTitle());
-            $XMLSeries->addAttribute('link', $this->router->generate('pumukit_webtv_series_index', ['id' => $s->getId()], UrlGeneratorInterface::ABSOLUTE_URL));
-        }
-
-        return new Response($XML->asXML(), 200, ['Content-Type' => 'text/xml']);
+        return new JsonResponse($items);
     }
 }
