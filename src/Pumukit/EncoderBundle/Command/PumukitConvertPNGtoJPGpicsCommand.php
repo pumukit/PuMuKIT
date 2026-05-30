@@ -10,8 +10,8 @@ use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class PumukitConvertPNGtoJPGpicsCommand extends Command
@@ -37,20 +37,17 @@ class PumukitConvertPNGtoJPGpicsCommand extends Command
     {
         $this
             ->setName('pumukit:regenerate:pics')
-            ->setDescription('Pumukit regenerate pics png to jpg')
-            ->addArgument('delete', InputArgument::OPTIONAL, 'Delete png files ( true or false')
+            ->setDescription('Regenerate auto pics from PNG to JPG re-extracting from master')
+            ->addOption('delete', null, InputOption::VALUE_NONE, 'Delete the original PNG pic after regenerating')
             ->setHelp(
                 <<<'EOT'
-                ***** Command options *****
+                Regenerate auto PNG pics by re-extracting from the master track.
 
-                php app/console pumukit:regenerate:pics false
+                Without --delete, the regenerated JPG is added and the original PNG is kept.
+                With --delete, the original PNG pic is removed from the multimedia object.
 
-                ** Use before command to not delete png pics
-
-                php app/console pumukit:regenerate:pics true
-
-                ** Use before command to delete pics
-
+                    php bin/console pumukit:regenerate:pics
+                    php bin/console pumukit:regenerate:pics --delete
 EOT
             )
         ;
@@ -61,7 +58,7 @@ EOT
         $this->output = $output;
         $this->input = $input;
 
-        $this->deletePngFiles = $this->input->getArgument('delete');
+        $this->deletePngFiles = (bool) $this->input->getOption('delete');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -77,16 +74,12 @@ EOT
         if (!$multimediaObjects) {
             $output->writeln('No multimedia objects found to regenerate pics');
 
-            return 0;
+            return Command::SUCCESS;
         }
 
-        try {
-            $this->regeneratePicsOfMultimediaObjects($multimediaObjects);
-        } catch (\Exception $exception) {
-            throw new \Exception($exception->getMessage());
-        }
+        $this->regeneratePicsOfMultimediaObjects($multimediaObjects);
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function regeneratePicsOfMultimediaObjects($multimediaObjects): void
@@ -99,29 +92,32 @@ EOT
     private function regeneratePicOnMultimediaObject(MultimediaObject $multimediaObject): void
     {
         foreach ($multimediaObject->getPics() as $pic) {
-            if (false !== stripos($pic->getPath(), '.png')) {
-                $picTags = $pic->getTags();
+            $path = $pic->getPath();
+            if (null === $path || false === stripos($path, '.png')) {
+                continue;
+            }
 
-                if (in_array('auto', $picTags)) {
-                    foreach ($picTags as $tag) {
-                        if (false !== strpos($tag, 'frame_')) {
-                            $frame = explode('frame_', $tag);
-                            if ($multimediaObject->getMaster()) {
-                                $this->picExtractorService->extractPic(
-                                    $multimediaObject,
-                                    $multimediaObject->getMaster(),
-                                    $frame[1]
-                                );
-                            }
-                            $this->output->writeln('Created new pic for the mmobj - '.$multimediaObject->getId());
+            $picTags = $pic->getTags();
+
+            if (in_array('auto', $picTags)) {
+                foreach ($picTags as $tag) {
+                    if (false !== strpos($tag, 'frame_')) {
+                        $frame = explode('frame_', $tag);
+                        if ($multimediaObject->getMaster()) {
+                            $this->picExtractorService->extractPic(
+                                $multimediaObject,
+                                $multimediaObject->getMaster(),
+                                $frame[1]
+                            );
                         }
+                        $this->output->writeln('Created new pic for the mmobj - '.$multimediaObject->getId());
                     }
                 }
+            }
 
-                if ('true' === $this->deletePngFiles) {
-                    $this->multimediaObjectPicService->removePicFromMultimediaObject($multimediaObject, $pic->getId());
-                    $this->output->writeln('Deleted pic for the mmobj - '.$multimediaObject->getId().' with path '.$pic->getPath());
-                }
+            if ($this->deletePngFiles) {
+                $this->multimediaObjectPicService->removePicFromMultimediaObject($multimediaObject, $pic->getId());
+                $this->output->writeln('Deleted pic for the mmobj - '.$multimediaObject->getId().' with path '.$path);
             }
         }
     }
