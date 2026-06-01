@@ -399,7 +399,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
      */
     public function deleteSelectedEventsAction(Request $request): JsonResponse
     {
-        $data = $request->request->get('events_checkbox');
+        $data = $request->request->all('events_checkbox');
         foreach ($data as $multimediaObjectId) {
             $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(
                 ['_id' => new ObjectId($multimediaObjectId)]
@@ -445,7 +445,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $form->handleRequest($request);
         if ('POST' === $request->getMethod()) {
             try {
-                $data = $request->request->get('pumukitnewadmin_live_event');
+                $data = $request->request->all('pumukitnewadmin_live_event');
 
                 $event = $multimediaObject->getEmbeddedEvent();
 
@@ -635,7 +635,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 $duration = $end->getTimestamp() - $start->getTimestamp();
                 $notes = $data->getNotes();
 
-                $data = $request->request->get('pumukitnewadmin_event_session');
+                $data = $request->request->all('pumukitnewadmin_event_session');
                 if (isset($data['id'])) {
                     foreach ($multimediaObject->getEmbeddedEvent()->getEmbeddedEventSession(
                     ) as $embeddedEventSession) {

@@ -90,7 +90,7 @@ class PlaylistController extends CollectionController
 
     public function createAction(Request $request): JsonResponse
     {
-        $collection = $this->factoryService->createPlaylist($this->getUser(), $request->request->get('playlist_title'));
+        $collection = $this->factoryService->createPlaylist($this->getUser(), $request->request->all('playlist_title') ?: null);
         $this->requestStack->getSession()->set('admin/playlist/id', $collection->getId());
 
         return new JsonResponse(['playlistId' => $collection->getId(), 'title' => $collection->getTitle($request->getLocale())]);

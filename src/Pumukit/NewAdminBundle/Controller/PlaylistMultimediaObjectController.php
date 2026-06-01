@@ -494,16 +494,21 @@ class PlaylistMultimediaObjectController extends AbstractController
 
     private function getIds(Request $request, $idsKey = 'ids')
     {
-        if ($request->request->has($idsKey)) {
-            $ids = $request->request->get($idsKey);
-            if ('string' === gettype($ids)) {
-                return json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
-            }
+        if (!$request->request->has($idsKey)) {
+            throw $this->createNotFoundException();
+        }
 
+        $ids = $request->request->all($idsKey);
+        if ($ids) {
             return $ids;
         }
 
-        throw $this->createNotFoundException();
+        $raw = (string) $request->request->getString($idsKey);
+        if ('' === $raw) {
+            return [];
+        }
+
+        return json_decode($raw, true, 512, JSON_THROW_ON_ERROR);
     }
 
     private function getPersonalVideos()

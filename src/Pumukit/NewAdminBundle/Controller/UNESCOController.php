@@ -562,7 +562,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $session->remove('admin/unesco/paginate');
         $session->remove('admin/unesco/id');
 
-        $data = $request->request->get('data');
+        $data = $request->request->all('data');
 
         switch ($option) {
             case 'delete_selected':

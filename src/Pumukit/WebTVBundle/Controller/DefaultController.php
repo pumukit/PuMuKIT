@@ -282,7 +282,7 @@ class DefaultController extends AbstractController
             $mail = $this->pumukitNotificationSenderEmail ?? 'noreplay@yourplatform.es';
             $to = $multimediaObject->getEmbeddedSocial()->getEmail();
 
-            $data = $request->request->get('pumukit_multimedia_object_contact');
+            $data = $request->request->all('pumukit_multimedia_object_contact');
             $bodyMail = sprintf(" * URL: %s\n * ".$this->translator->trans('Email').": %s\n * ".$this->translator->trans('Name').": %s\n * ".$this->translator->trans('Content').": %s\n ", $request->headers->get('referer', 'No referer'), $data['email'], $data['name'], $data['content']);
 
             $subject = sprintf(
