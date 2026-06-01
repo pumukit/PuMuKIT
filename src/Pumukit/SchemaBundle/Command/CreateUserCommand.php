@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Command;
 
 use Pumukit\SchemaBundle\Services\CreateUserService;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'pumukit:create:user')]
 class CreateUserCommand extends Command
 {
-    protected static $defaultName = 'pumukit:create:user';
-
     private $createUserService;
 
     public function __construct(CreateUserService $createUserService)

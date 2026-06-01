@@ -7,16 +7,16 @@ namespace Pumukit\SchemaBundle\Command;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\PasswordService;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+#[AsCommand(name: 'pumukit:change:password')]
 class ChangePasswordCommand extends Command
 {
-    protected static $defaultName = 'pumukit:change:password';
-
     private $documentManager;
     private $passwordService;
 
