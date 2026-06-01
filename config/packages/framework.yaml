@@ -4,13 +4,17 @@ framework:
   secret:          "%env(string:PUMUKIT_SECRET)%"
   form:            ~
   csrf_protection: ~
-  validation:      { enable_annotations: true }
+  validation:      { enable_attributes: true }
+  handle_all_throwables: true
+  php_errors:      { log: true }
   #assets_version: SomeVersionScheme
   default_locale:  "%env(string:PUMUKIT_LOCALE)%"
   trusted_hosts:   ~
   session:
     # handler_id set to null will use default session handler from php.ini
     name: pumukit
-    handler_id:  ~
+    handler_id: ~
+    cookie_secure: 'auto'
+    cookie_samesite: 'lax'
   fragments:       ~
   http_method_override: true

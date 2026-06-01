@@ -1,6 +1,6 @@
 controllers:
     resource: ../../src/Pumukit/*/Controller/*
-    type: annotation
+    type: attribute
 
 pumukit_stats_ui:
   resource: "@PumukitStatsUIBundle/Resources/config/routing.yml"
