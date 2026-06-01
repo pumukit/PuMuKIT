@@ -42,7 +42,7 @@ EOT
         ;
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         $this->step = $input->getOption('step');
 
