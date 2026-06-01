@@ -15,7 +15,7 @@ use Pumukit\SchemaBundle\Services\HeadAndTailService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -37,9 +37,7 @@ class HeadAndTailUpdateController extends AdminController
         $this->headAndTailService = $headAndTailService;
     }
 
-    /**
-     * @Route("/head/update/{multimediaObject}/{isHead}", name="pumukit_newadmin_head_and_tail_set_head", methods={"POST"})
-     */
+    #[Route('/head/update/{multimediaObject}/{isHead}', name: 'pumukit_newadmin_head_and_tail_set_head', methods: ['POST'])]
     #[IsGranted('ROLE_ADD_HEAD_AND_TAIL')]
     public function updateVideoHeadStatus(string $multimediaObject, string $isHead): JsonResponse
     {
@@ -62,9 +60,7 @@ class HeadAndTailUpdateController extends AdminController
         return new JsonResponse(['success' => $this->translator->trans('Multimedia Object not found')]);
     }
 
-    /**
-     * @Route("/tail/update/{multimediaObject}/{isTail}", name="pumukit_newadmin_head_and_tail_set_tail", methods={"POST"})
-     */
+    #[Route('/tail/update/{multimediaObject}/{isTail}', name: 'pumukit_newadmin_head_and_tail_set_tail', methods: ['POST'])]
     #[IsGranted('ROLE_ADD_HEAD_AND_TAIL')]
     public function updateVideoTailStatus(string $multimediaObject, string $isTail): JsonResponse
     {
@@ -87,9 +83,7 @@ class HeadAndTailUpdateController extends AdminController
         return new JsonResponse(['success' => $this->translator->trans('Multimedia Object not found')]);
     }
 
-    /**
-     * @Route("/headandtail/update/{multimediaObject}/{type}/{element}", name="pumukit_newadmin_head_and_tail_update", methods={"POST"})
-     */
+    #[Route('/headandtail/update/{multimediaObject}/{type}/{element}', name: 'pumukit_newadmin_head_and_tail_update', methods: ['POST'])]
     #[IsGranted('ROLE_ADD_HEAD_AND_TAIL')]
     public function updateHeadAndTail(string $type, string $multimediaObject, string $element): JsonResponse
     {
@@ -149,9 +143,7 @@ class HeadAndTailUpdateController extends AdminController
         return new JsonResponse(['error' => 'Unknown error. Please contact with administrator.']);
     }
 
-    /**
-     * @Route("/headandtail/series/update/{series}/{type}/{element}", name="pumukit_newadmin_head_and_tail_series_update", methods={"POST"})
-     */
+    #[Route('/headandtail/series/update/{series}/{type}/{element}', name: 'pumukit_newadmin_head_and_tail_series_update', methods: ['POST'])]
     #[IsGranted('ROLE_ADD_HEAD_AND_TAIL')]
     public function updateSeriesHeadAndTail(string $type, string $series, string $element): JsonResponse
     {

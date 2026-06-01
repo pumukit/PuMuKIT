@@ -9,13 +9,11 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class BaseLivePlayerController extends AbstractController
 {
-    /**
-     * @Route("/livevideoplayer/{id}", name="pumukit_livevideoplayer_index")
-     */
+    #[Route('/livevideoplayer/{id}', name: 'pumukit_livevideoplayer_index')]
     #[Template('@PumukitPaellaPlayer/PaellaPlayer/player.html.twig')]
     public function indexAction(Request $request, MultimediaObject $multimediaObject)
     {
@@ -26,9 +24,7 @@ class BaseLivePlayerController extends AbstractController
         ];
     }
 
-    /**
-     * @Route("/live/channel/videoplayer/{id}", name="pumukit_live_channel_videoplayer")
-     */
+    #[Route('/live/channel/videoplayer/{id}', name: 'pumukit_live_channel_videoplayer')]
     #[Template('@PumukitPaellaPlayer/PaellaPlayer/player.html.twig')]
     public function fromLiveAction(Request $request, Live $live)
     {

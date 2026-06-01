@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Services\StatsService;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ACCESS_DASHBOARD')]
@@ -28,10 +28,8 @@ class DashboardController extends AbstractController implements NewAdminControll
         private readonly ProfileService $profileService,
     ) {}
 
-    /**
-     * @Route("/dashboard")
-     * @Route("/dashboard/default", name="pumukit_newadmin_dashboard_index_default")
-     */
+    #[Route('/dashboard')]
+    #[Route('/dashboard/default', name: 'pumukit_newadmin_dashboard_index_default')]
     #[Template('@PumukitNewAdmin/Dashboard/index.html.twig')]
     public function indexAction(Request $request): array
     {

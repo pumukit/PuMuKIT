@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 abstract class BasePlayerController extends AbstractController
 {
@@ -40,14 +40,10 @@ abstract class BasePlayerController extends AbstractController
         $this->basePlayerIntroService = $basePlayerIntroService;
     }
 
-    /**
-     * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index" )
-     */
+    #[Route('/videoplayer/{id}', name: 'pumukit_videoplayer_index')]
     abstract public function indexAction(Request $request, MultimediaObject $multimediaObject);
 
-    /**
-     * @Route("/videoplayer/magic/{secret}", name="pumukit_videoplayer_magicindex")
-     */
+    #[Route('/videoplayer/magic/{secret}', name: 'pumukit_videoplayer_magicindex')]
     abstract public function magicAction(Request $request, MultimediaObject $multimediaObject);
 
     public function validateAccess(Request $request, MultimediaObject $multimediaObject)

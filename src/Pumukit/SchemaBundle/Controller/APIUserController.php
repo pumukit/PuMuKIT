@@ -10,11 +10,9 @@ use Pumukit\SchemaBundle\Document\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/api/user")
- */
+#[Route('/api/user')]
 class APIUserController extends AbstractController
 {
     protected $documentManager;
@@ -26,9 +24,7 @@ class APIUserController extends AbstractController
         $this->serializer = $serializer;
     }
 
-    /**
-     * @Route("/users.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/users.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function allAction(Request $request): Response
     {
         $users = $this->documentManager->getRepository(User::class)->findAll();

@@ -31,14 +31,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route("/unesco")
- */
+#[Route('/unesco')]
 #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class UNESCOController extends AbstractController implements NewAdminControllerInterface
 {
@@ -160,9 +158,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $this->jobRepository = $jobRepository;
     }
 
-    /**
-     * @Route("/", name="pumukitnewadmin_unesco_index")
-     */
+    #[Route('/', name: 'pumukitnewadmin_unesco_index')]
     #[Template('@PumukitNewAdmin/UNESCO/index.html.twig')]
     public function indexAction(Request $request)
     {
@@ -182,9 +178,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         return ['configuredTag' => $configuredTag];
     }
 
-    /**
-     * @Route("/tags", name="pumukitnewadmin_unesco_menu_tags")
-     */
+    #[Route('/tags', name: 'pumukitnewadmin_unesco_menu_tags')]
     #[Template('@PumukitNewAdmin/UNESCO/menuTags.html.twig')]
     public function menuTagsAction()
     {
@@ -240,10 +234,9 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @Route("/list/{tag}", name="pumukitnewadmin_unesco_list")
-     *
      * @param mixed|null $tag
      */
+    #[Route('/list/{tag}', name: 'pumukitnewadmin_unesco_list')]
     #[Template('@PumukitNewAdmin/UNESCO/list.html.twig')]
     public function listAction($tag = null)
     {
@@ -323,10 +316,9 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @Route("/remove/session/{all}", name="pumukitnewadmin_unesco_removesession")
-     *
      * @param mixed $all
      */
+    #[Route('/remove/session/{all}', name: 'pumukitnewadmin_unesco_removesession')]
     public function resetSessionAction($all = true)
     {
         $session = $this->requestStack->getSession();
@@ -338,9 +330,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         );
     }
 
-    /**
-     * @Route("/add/criteria", name="pumukitnewadmin_unesco_addcriteria")
-     */
+    #[Route('/add/criteria', name: 'pumukitnewadmin_unesco_addcriteria')]
     public function addCriteriaSessionAction(Request $request)
     {
         $session = $this->requestStack->getSession();
@@ -350,9 +340,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         return new JsonResponse(['success']);
     }
 
-    /**
-     * @Route("edit/{id}", name="pumukit_new_admin_unesco_edit")
-     */
+    #[Route('edit/{id}', name: 'pumukit_new_admin_unesco_edit')]
     #[Template('@PumukitNewAdmin/UNESCO/edit.html.twig')]
     public function editUNESCOAction(Request $request, #[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject)
     {
@@ -423,10 +411,9 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @Route("/advance/search/show/{id}", name="pumukitnewadmin_unesco_show")
-     *
      * @param mixed|null $id
      */
+    #[Route('/advance/search/show/{id}', name: 'pumukitnewadmin_unesco_show')]
     #[Template('@PumukitNewAdmin/UNESCO/show.html.twig')]
     public function showAction($id = null)
     {
@@ -449,9 +436,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         ];
     }
 
-    /**
-     * @Route("/advance/search/form", name="pumukitnewadmin_unesco_advance_search_form")
-     */
+    #[Route('/advance/search/form', name: 'pumukitnewadmin_unesco_advance_search_form')]
     #[Template('@PumukitNewAdmin/UNESCO/search_view.html.twig')]
     public function advancedSearchFormAction(Request $request)
     {
@@ -510,9 +495,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         ];
     }
 
-    /**
-     * @Route("/delete/tag/{multimediaObjectId}/{tagCod}", name="pumukitnewadmin_unesco_delete_tag")
-     */
+    #[Route('/delete/tag/{multimediaObjectId}/{tagCod}', name: 'pumukitnewadmin_unesco_delete_tag')]
     public function deleteTagDnDAction(string $tagCod, string $multimediaObjectId)
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
@@ -532,9 +515,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         return new JsonResponse(['success']);
     }
 
-    /**
-     * @Route("/add/tag/{multimediaObjectId}/{tagCod}", name="pumukitnewadmin_unesco_add_tag")
-     */
+    #[Route('/add/tag/{multimediaObjectId}/{tagCod}', name: 'pumukitnewadmin_unesco_add_tag')]
     public function addTagDnDAction(string $tagCod, string $multimediaObjectId)
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
@@ -550,10 +531,9 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     }
 
     /**
-     * @Route("/option/selected/{option}", name="pumukitnewadmin_unesco_options_list")
-     *
      * @param mixed $option
      */
+    #[Route('/option/selected/{option}', name: 'pumukitnewadmin_unesco_options_list')]
     public function optionsMultimediaObjectsAction(Request $request, $option)
     {
         $session = $this->requestStack->getSession();
@@ -593,9 +573,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         return new JsonResponse(['success']);
     }
 
-    /**
-     * @Route("/delete/mms/{multimediaObjectId}", name="pumukitnewadmin_unesco_delete")
-     */
+    #[Route('/delete/mms/{multimediaObjectId}', name: 'pumukitnewadmin_unesco_delete')]
     public function deleteAction(string $multimediaObjectId)
     {
         $session = $this->requestStack->getSession();
@@ -615,9 +593,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         return new JsonResponse(['success']);
     }
 
-    /**
-     * @Route("/clone/mms/{multimediaObjectId}", name="pumukitnewadmin_unesco_clone")
-     */
+    #[Route('/clone/mms/{multimediaObjectId}', name: 'pumukitnewadmin_unesco_clone')]
     public function cloneAction(string $multimediaObjectId)
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
@@ -646,9 +622,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         ];
     }
 
-    /**
-     * @Route("/custom/fields/add", name="pumukitnewadmin_catalogue_custom_fields")
-     */
+    #[Route('/custom/fields/add', name: 'pumukitnewadmin_catalogue_custom_fields')]
     public function setCustomFields(Request $request)
     {
         $customFields = array_filter($request->request->all(), function ($value) {

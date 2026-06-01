@@ -12,7 +12,7 @@ use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class InboxController extends AbstractController
@@ -26,9 +26,7 @@ class InboxController extends AbstractController
         $this->uploadDispatcherService = $uploadDispatcherService;
     }
 
-    /**
-     * @Route("/inbox", name="inbox")
-     */
+    #[Route('/inbox', name: 'inbox')]
     #[IsGranted('ROLE_UPLOAD_INBOX')]
     #[Template('@PumukitCore/Upload/uppy_folder.html.twig')]
     public function inbox(): array
@@ -41,9 +39,7 @@ class InboxController extends AbstractController
         ];
     }
 
-    /**
-     * @Route("/upload", name="file_upload")
-     */
+    #[Route('/upload', name: 'file_upload')]
     #[IsGranted('ROLE_UPLOAD_INBOX')]
     #[Template('@PumukitCore/Upload/upload_drag_and_drop.html.twig')]
     public function folder(Request $request): array
@@ -91,9 +87,7 @@ class InboxController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/check_folder", name="check_folder_before_creating")
-     */
+    #[Route('/check_folder', name: 'check_folder_before_creating')]
     #[IsGranted('ROLE_UPLOAD_INBOX')]
     public function checkFolderBeforeCreating(Request $request): JsonResponse
     {
@@ -106,9 +100,7 @@ class InboxController extends AbstractController
         return new JsonResponse($folderName);
     }
 
-    /**
-     * @Route("/dispatchImport", name="inbox_auto_import")
-     */
+    #[Route('/dispatchImport', name: 'inbox_auto_import')]
     #[IsGranted('ROLE_UPLOAD_INBOX')]
     public function dispatchImport(Request $request): JsonResponse
     {

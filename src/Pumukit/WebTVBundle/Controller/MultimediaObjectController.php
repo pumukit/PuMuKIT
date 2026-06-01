@@ -22,7 +22,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class MultimediaObjectController extends AbstractController implements WebTVControllerInterface
@@ -71,9 +71,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         $this->picService = $picService;
     }
 
-    /**
-     * @Route("/video/{id}", name="pumukit_webtv_multimediaobject_index")
-     */
+    #[Route('/video/{id}', name: 'pumukit_webtv_multimediaobject_index')]
     public function indexAction(Request $request, MultimediaObject $multimediaObject)
     {
         $track = null;
@@ -111,9 +109,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         ]);
     }
 
-    /**
-     * @Route("/iframe/{id}", name="pumukit_webtv_multimediaobject_iframe" )
-     */
+    #[Route('/iframe/{id}', name: 'pumukit_webtv_multimediaobject_iframe')]
     public function iframeAction(Request $request, MultimediaObject $multimediaObject): Response
     {
         $thumbnailUrl = $this->picService->getFirstUrlPic($multimediaObject, true, true);
@@ -125,9 +121,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         ]);
     }
 
-    /**
-     * @Route("/player_iframe/{id}", name="pumukit_webtv_multimediaobject_player_iframe" )
-     */
+    #[Route('/player_iframe/{id}', name: 'pumukit_webtv_multimediaobject_player_iframe')]
     public function playerIframeAction(Request $request, MultimediaObject $multimediaObject): Response
     {
         $playerController = $this->playerService->getPublicControllerPlayer($multimediaObject);
@@ -135,9 +129,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         return $this->forward($playerController, ['request' => $request, 'multimediaObject' => $multimediaObject]);
     }
 
-    /**
-     * @Route("/video/magic/{secret}", name="pumukit_webtv_multimediaobject_magicindex", defaults={"show_hide"=true})
-     */
+    #[Route('/video/magic/{secret}', name: 'pumukit_webtv_multimediaobject_magicindex', defaults: ['show_hide' => true])]
     public function magicIndexAction(Request $request, MultimediaObject $multimediaObject)
     {
         if ($this->multimediaObjectService->isPublished($multimediaObject, PumukitWebTVBundle::WEB_TV_TAG)) {
@@ -182,9 +174,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         ]);
     }
 
-    /**
-     * @Route("/iframe/magic/{secret}", name="pumukit_webtv_multimediaobject_magiciframe", defaults={"show_hide"=true})
-     */
+    #[Route('/iframe/magic/{secret}', name: 'pumukit_webtv_multimediaobject_magiciframe', defaults: ['show_hide' => true])]
     public function magicIframeAction(Request $request, MultimediaObject $multimediaObject): Response
     {
         $thumbnailUrl = $this->picService->getFirstUrlPic($multimediaObject, true, true);
@@ -196,9 +186,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         ]);
     }
 
-    /**
-     * @Route("/player_iframe/magic/{secret}", name="pumukit_webtv_multimediaobject_player_magiciframe", defaults={"show_hide"=true})
-     */
+    #[Route('/player_iframe/magic/{secret}', name: 'pumukit_webtv_multimediaobject_player_magiciframe', defaults: ['show_hide' => true])]
     public function magicPlayerIframeAction(Request $request, MultimediaObject $multimediaObject): Response
     {
         $playerController = $this->playerService->getMagicControllerPlayer($multimediaObject);
@@ -257,9 +245,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         return $this->render('@PumukitWebTV/MultimediaObject/template_related.html.twig', ['multimediaObjects' => $relatedMms]);
     }
 
-    /**
-     * @Route("/video/{id}/info", name="pumukit_webtv_multimediaobject_info" )
-     */
+    #[Route('/video/{id}/info', name: 'pumukit_webtv_multimediaobject_info')]
     public function multimediaInfoAction(Request $request, MultimediaObject $multimediaObject): Response
     {
         $requestRoute = $this->requestStack->getMainRequest()->get('_route');

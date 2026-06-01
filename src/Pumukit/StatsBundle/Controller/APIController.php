@@ -11,11 +11,9 @@ use Pumukit\StatsBundle\Services\StatsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/api/media")
- */
+#[Route('/api/media')]
 class APIController extends AbstractController implements NewAdminControllerInterface
 {
     /** @var SerializerService */
@@ -30,9 +28,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         $this->statsService = $statsService;
     }
 
-    /**
-     * @Route("/mmobj/most_viewed.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/mmobj/most_viewed.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function mmobjMostViewedAction(Request $request)
     {
         $options = [];
@@ -62,9 +58,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         return new Response($data);
     }
 
-    /**
-     * @Route("/series/most_viewed.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/series/most_viewed.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function seriesMostViewedAction(Request $request)
     {
         $options = [];
@@ -94,9 +88,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         return new Response($data);
     }
 
-    /**
-     * @Route("/views.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/views.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function viewsAction(Request $request)
     {
         $options = [];
@@ -138,9 +130,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         return new Response($data);
     }
 
-    /**
-     * @Route("/views/mmobj.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/views/mmobj.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function viewsMmobjAction(Request $request)
     {
         $options = [];
@@ -176,9 +166,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         return new Response($data);
     }
 
-    /**
-     * @Route("/views/series.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/views/series.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function viewsSeriesAction(Request $request)
     {
         $options = [];

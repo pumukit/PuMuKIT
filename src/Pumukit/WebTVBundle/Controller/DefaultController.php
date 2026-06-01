@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DefaultController extends AbstractController
@@ -73,9 +73,7 @@ class DefaultController extends AbstractController
         $this->mobileDetector = new MobileDetect();
     }
 
-    /**
-     * @Route("/live/{id}", name="pumukit_live_id")
-     */
+    #[Route('/live/{id}', name: 'pumukit_live_id')]
     #[Template('@PumukitWebTV/Live/Basic/template.html.twig')]
     public function indexAction(Live $live, Request $request)
     {
@@ -84,18 +82,14 @@ class DefaultController extends AbstractController
         return $this->doLive($live, $request);
     }
 
-    /**
-     * @Route("/live/iframe/{id}", name="pumukit_live_iframe_id")
-     */
+    #[Route('/live/iframe/{id}', name: 'pumukit_live_iframe_id')]
     #[Template('@PumukitWebTV/Live/Basic/template_iframe.html.twig')]
     public function iframeAction(Live $live, Request $request)
     {
         return $this->doLive($live, $request);
     }
 
-    /**
-     * @Route("/live/event/{id}", name="pumukit_live_event_id")
-     */
+    #[Route('/live/event/{id}', name: 'pumukit_live_event_id')]
     #[Template('@PumukitWebTV/Live/Advance/template.html.twig')]
     public function indexEventAction(#[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject, Request $request)
     {
@@ -127,9 +121,7 @@ class DefaultController extends AbstractController
         return $this->iframeEventAction($multimediaObject, $request, false);
     }
 
-    /**
-     * @Route("/live/event/iframe/{id}", name="pumukit_live_event_iframe_id")
-     */
+    #[Route('/live/event/iframe/{id}', name: 'pumukit_live_event_iframe_id')]
     #[Template('@PumukitWebTV/Live/Advance/iframe.html.twig')]
     public function iframeEventAction(#[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject, Request $request, bool $iframe = true)
     {
@@ -234,9 +226,7 @@ class DefaultController extends AbstractController
         ];
     }
 
-    /**
-     * @Route("/live", name="pumukit_live")
-     */
+    #[Route('/live', name: 'pumukit_live')]
     #[Template('@PumukitWebTV/Live/Basic/template.html.twig')]
     public function defaultAction(Request $request)
     {
@@ -251,9 +241,7 @@ class DefaultController extends AbstractController
         return $this->doLive($live, $request);
     }
 
-    /**
-     * @Route("/live/playlist/{id}", name="pumukit_live_playlist_id", defaults={"_format": "xml"})
-     */
+    #[Route('/live/playlist/{id}', name: 'pumukit_live_playlist_id', defaults: ['_format' => 'xml'])]
     public function playlistAction(Live $live): Response
     {
         $intro = $this->pumukitIntro ?? null;
@@ -273,9 +261,7 @@ class DefaultController extends AbstractController
         return $this->render('@PumukitWebTV/Live/Basic/playlist.xml.twig', $response);
     }
 
-    /**
-     * @Route("/event/contact/{id}", name="pumukit_webtv_contact_event")
-     */
+    #[Route('/event/contact/{id}', name: 'pumukit_webtv_contact_event')]
     public function contactAction(#[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject, Request $request): JsonResponse
     {
         if ('POST' === $request->getMethod() && $this->checkCaptcha($request->request->get('g-recaptcha-response'), $request->getClientIp())) {
@@ -312,9 +298,7 @@ class DefaultController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/sitemap", name="pumukit_sitemap")
-     */
+    #[Route('/sitemap', name: 'pumukit_sitemap')]
     public function siteMapAction(): Response
     {
         $this->updateBreadcrumbs($this->translator->trans('Sitemap'), 'pumukit_sitemap');

@@ -9,11 +9,9 @@ use Pumukit\SchemaBundle\Services\StatsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/api/media")
- */
+#[Route('/api/media')]
 class APIRecordedController extends AbstractController
 {
     protected $statsService;
@@ -25,10 +23,8 @@ class APIRecordedController extends AbstractController
         $this->serializer = $serializer;
     }
 
-    /**
-     * @Route("/mmobj/num_recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     * @Route("/mmobj/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/mmobj/num_recorded.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
+    #[Route('/mmobj/recorded.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function mmobjRecordedAction(Request $request)
     {
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
@@ -53,11 +49,9 @@ class APIRecordedController extends AbstractController
         return new Response($data);
     }
 
-    /**
-     * @Route("/series/num_recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     * @Route("/series/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     * @Route("/series/published.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/series/num_recorded.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
+    #[Route('/series/recorded.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
+    #[Route('/series/published.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function seriesRecordedAction(Request $request)
     {
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
@@ -82,10 +76,8 @@ class APIRecordedController extends AbstractController
         return new Response($data);
     }
 
-    /**
-     * @Route("/hours/num_recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     * @Route("/hours/recorded.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/hours/num_recorded.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
+    #[Route('/hours/recorded.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function hoursRecordedAction(Request $request)
     {
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
@@ -110,9 +102,7 @@ class APIRecordedController extends AbstractController
         return new Response($data);
     }
 
-    /**
-     * @Route("/mmobj/stats.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/mmobj/stats.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function globalStatsAction(Request $request)
     {
         $groupBy = $request->get('group_by') ?: 'month';

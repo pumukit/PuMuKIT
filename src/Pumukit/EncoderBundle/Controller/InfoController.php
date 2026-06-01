@@ -19,12 +19,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @Route("/admin/encoder")
- */
+#[Route('/admin/encoder')]
 #[IsGranted('ROLE_ACCESS_JOBS')]
 class InfoController extends AbstractController
 {
@@ -41,9 +39,7 @@ class InfoController extends AbstractController
         $this->jobRemover = $jobRemover;
     }
 
-    /**
-     * @Route("/", name="pumukit_encoder_info")
-     */
+    #[Route('/', name: 'pumukit_encoder_info')]
     #[Template('@PumukitEncoder/Info/index.html.twig')]
     public function indexAction(Request $request, DocumentManager $documentManager, CpuService $cpuService, PaginationService $paginationService): array
     {
@@ -121,9 +117,7 @@ class InfoController extends AbstractController
         ];
     }
 
-    /**
-     * @Route("/job/{id}", methods={"GET"}, name="pumukit_encoder_job")
-     */
+    #[Route('/job/{id}', methods: ['GET'], name: 'pumukit_encoder_job')]
     #[Template('@PumukitEncoder/Info/infoJob.html.twig')]
     public function infoJobAction(Request $request, Job $job): array
     {
@@ -143,9 +137,7 @@ class InfoController extends AbstractController
         ];
     }
 
-    /**
-     * @Route("/job", methods={"POST"}, name="pumukit_encoder_update_job")
-     */
+    #[Route('/job', methods: ['POST'], name: 'pumukit_encoder_update_job')]
     public function updateJobPriorityAction(Request $request): JsonResponse
     {
         $priority = (int) $request->get('priority');
@@ -159,9 +151,7 @@ class InfoController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/error/job", methods={"POST"}, name="pumukit_encoder_error_job")
-     */
+    #[Route('/error/job', methods: ['POST'], name: 'pumukit_encoder_error_job')]
     public function setAsFailedAction(Request $request): JsonResponse
     {
         $job = $this->jobRepository->searchJob($request->get('jobId'));
@@ -170,9 +160,7 @@ class InfoController extends AbstractController
         return new JsonResponse(['jobId' => $job->getId()]);
     }
 
-    /**
-     * @Route("/job", methods={"DELETE"}, name="pumukit_encoder_delete_job")
-     */
+    #[Route('/job', methods: ['DELETE'], name: 'pumukit_encoder_delete_job')]
     public function deleteJobAction(Request $request): JsonResponse
     {
         $job = $this->jobRepository->searchJob($request->get('jobId'));
@@ -181,9 +169,7 @@ class InfoController extends AbstractController
         return new JsonResponse(['jobId' => $job->getId()]);
     }
 
-    /**
-     * @Route("/job/retry/{id}", methods={"POST"}, name="pumukit_encoder_retry_job")
-     */
+    #[Route('/job/retry/{id}', methods: ['POST'], name: 'pumukit_encoder_retry_job')]
     public function retryJobAction(Job $job): JsonResponse
     {
         $flashMessage = $this->jobUpdater->retryJob($job);
@@ -194,9 +180,7 @@ class InfoController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/mm/{id}", methods={"GET"}, name="pumukit_encoder_mm")
-     */
+    #[Route('/mm/{id}', methods: ['GET'], name: 'pumukit_encoder_mm')]
     public function multimediaObjectAction(MultimediaObject $multimediaObject): RedirectResponse
     {
         return $this->redirectToRoute('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()]);

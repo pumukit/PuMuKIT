@@ -8,7 +8,7 @@ use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Pumukit\WebTVBundle\Services\ChannelService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ChannelController extends AbstractController implements WebTVControllerInterface
 {
@@ -26,9 +26,7 @@ class ChannelController extends AbstractController implements WebTVControllerInt
         $this->columnsObjsByTag = $columnsObjsByTag;
     }
 
-    /**
-     * @Route("/series/channel/{channelNumber}.html", name="pumukit_webtv_channel_series")
-     */
+    #[Route('/series/channel/{channelNumber}.html', name: 'pumukit_webtv_channel_series')]
     public function seriesAction(string $channelNumber)
     {
         $channelTitle = $this->channelService->getChannelTitle($channelNumber);

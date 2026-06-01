@@ -9,11 +9,9 @@ use Pumukit\CoreBundle\Services\SerializerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/api/live")
- */
+#[Route('/api/live')]
 class APIController extends AbstractController
 {
     private $APIService;
@@ -25,9 +23,7 @@ class APIController extends AbstractController
         $this->serializer = $serializer;
     }
 
-    /**
-     * @Route("/events.{_format}", defaults={"_format"="json"}, requirements={"_format"="json"})
-     */
+    #[Route('/events.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json'])]
     public function eventsAction(Request $request): Response
     {
         [$criteria, $sort, $limit] = $this->getParameters($request);
@@ -39,9 +35,7 @@ class APIController extends AbstractController
         return new Response($data);
     }
 
-    /**
-     * @Route("/lives.{_format}", defaults={"_format"="json"}, requirements={"_format"="json"})
-     */
+    #[Route('/lives.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json'])]
     public function livesAction(Request $request): Response
     {
         [$criteria, $sort, $limit] = $this->getParameters($request);
@@ -53,9 +47,7 @@ class APIController extends AbstractController
         return new Response($data);
     }
 
-    /**
-     * @Route("/live_events.{_format}", defaults={"_format"="json"}, requirements={"_format": "json"})
-     */
+    #[Route('/live_events.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json'])]
     public function liveEventsAction(Request $request): Response
     {
         [$criteria, $sort, $limit] = $this->getParameters($request);

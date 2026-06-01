@@ -10,7 +10,7 @@ use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AnnouncesController extends AbstractController implements WebTVControllerInterface
@@ -41,9 +41,7 @@ class AnnouncesController extends AbstractController implements WebTVControllerI
         $this->useRecordDateAnnounce = $useRecordDateAnnounce;
     }
 
-    /**
-     * @Route("/latestuploads", name="pumukit_webtv_announces_latestuploads")
-     */
+    #[Route('/latestuploads', name: 'pumukit_webtv_announces_latestuploads')]
     public function latestUploadsAction(): Response
     {
         $templateTitle = $this->translator->trans($this->menuAnnouncesTitle);
@@ -57,9 +55,7 @@ class AnnouncesController extends AbstractController implements WebTVControllerI
         ]);
     }
 
-    /**
-     * @Route("/latestuploads/pager", name="pumukit_webtv_announces_latestuploads_pager")
-     */
+    #[Route('/latestuploads/pager', name: 'pumukit_webtv_announces_latestuploads_pager')]
     public function latestUploadsPagerAction(Request $request): Response
     {
         $dateRequest = $request->query->get('date', 0);

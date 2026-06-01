@@ -12,7 +12,7 @@ use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment as TemplatingEngine;
@@ -37,9 +37,7 @@ class OwnerController extends AbstractController implements NewAdminControllerIn
         $this->templating = $templating;
     }
 
-    /**
-     * @Route("/reject/{id}/owner/{owner}/coowner/{coOwner}", name="pumukit_multimedia_object_reject_co_owner")
-     */
+    #[Route('/reject/{id}/owner/{owner}/coowner/{coOwner}', name: 'pumukit_multimedia_object_reject_co_owner')]
     #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
     #[Template('@PumukitNewAdmin/MultimediaObject/Owner/reject.html.twig')]
     public function rejectCoOwnerAction(#[MapDocument(id: 'id')] MultimediaObject $multimediaObject, #[MapDocument(id: 'owner')] User $owner, #[MapDocument(id: 'coOwner')] User $coOwner)

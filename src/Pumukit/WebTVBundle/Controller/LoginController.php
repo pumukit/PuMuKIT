@@ -6,14 +6,12 @@ namespace Pumukit\WebTVBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
-    /**
-     * @Route("/login", name="pumukit_login")
-     */
+    #[Route('/login', name: 'pumukit_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {

@@ -11,7 +11,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class MultimediaObjectArchiveController extends AbstractController implements NewAdminControllerInterface
 {
@@ -24,9 +24,7 @@ class MultimediaObjectArchiveController extends AbstractController implements Ne
         $this->multimediaObjectArchiveService = $multimediaObjectArchiveService;
     }
 
-    /**
-     * @Route("/archive/mms/{id}", name="pumukit_multimedia_object_archive")
-     */
+    #[Route('/archive/mms/{id}', name: 'pumukit_multimedia_object_archive')]
     public function archiveModal(string $id): Response
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy([
@@ -38,9 +36,7 @@ class MultimediaObjectArchiveController extends AbstractController implements Ne
         ]);
     }
 
-    /**
-     * @Route("/archive/save/mms/{id}", methods="POST", name="pumukit_multimedia_object_save_and_archive")
-     */
+    #[Route('/archive/save/mms/{id}', methods: 'POST', name: 'pumukit_multimedia_object_save_and_archive')]
     public function saveAndArchive(string $id): JsonResponse
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy([

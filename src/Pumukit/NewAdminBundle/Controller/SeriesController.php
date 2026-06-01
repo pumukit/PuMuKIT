@@ -31,7 +31,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -611,9 +611,7 @@ class SeriesController extends AdminController
         return ['series' => $series];
     }
 
-    /**
-     * @Route("/info_series", name="pumukitnewadmin_info_series")
-     */
+    #[Route('/info_series', name: 'pumukitnewadmin_info_series')]
     public function getMmsAndEventsBySeries(Request $request)
     {
         $ids = $request->get('ids');

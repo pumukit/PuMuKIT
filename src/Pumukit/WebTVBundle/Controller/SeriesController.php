@@ -13,7 +13,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class SeriesController extends AbstractController implements WebTVControllerInterface
 {
@@ -34,9 +34,7 @@ class SeriesController extends AbstractController implements WebTVControllerInte
         $this->limitObjsSeries = $limitObjsSeries;
     }
 
-    /**
-     * @Route("/series/{id}", name="pumukit_webtv_series_index")
-     */
+    #[Route('/series/{id}', name: 'pumukit_webtv_series_index')]
     public function indexAction(Request $request, Series $series)
     {
         $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
@@ -53,9 +51,7 @@ class SeriesController extends AbstractController implements WebTVControllerInte
         ]);
     }
 
-    /**
-     * @Route("/series/magic/{secret}", name="pumukit_webtv_series_magicindex", defaults={"show_hide"=true, "broadcast"=false})
-     */
+    #[Route('/series/magic/{secret}', name: 'pumukit_webtv_series_magicindex', defaults: ['show_hide' => true, 'broadcast' => false])]
     public function magicIndexAction(Request $request, Series $series)
     {
         $request->attributes->set('noindex', true);

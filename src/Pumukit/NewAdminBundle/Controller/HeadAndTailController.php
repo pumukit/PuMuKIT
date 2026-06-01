@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -46,17 +46,13 @@ class HeadAndTailController extends AdminController
         $this->headAndTailService = $headAndTailService;
     }
 
-    /**
-     * @Route("/headandtail/manager", name="pumukit_newadmin_head_and_tail")
-     */
+    #[Route('/headandtail/manager', name: 'pumukit_newadmin_head_and_tail')]
     public function indexAction(Request $request): Response
     {
         return $this->render('@PumukitNewAdmin/HeadAndTail/template.html.twig');
     }
 
-    /**
-     * @Route("/headandtail/manager/xhr/remove/{type}/{element}", name="pumukit_newadmin_head_and_tail_manager_remove_item")
-     */
+    #[Route('/headandtail/manager/xhr/remove/{type}/{element}', name: 'pumukit_newadmin_head_and_tail_manager_remove_item')]
     public function removeAction(Request $request, string $type, string $element): JsonResponse
     {
         if ($this->headAndTailService->removeElement($type, $element)) {

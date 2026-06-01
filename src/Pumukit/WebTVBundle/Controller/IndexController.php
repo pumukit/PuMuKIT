@@ -8,7 +8,7 @@ use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class IndexController extends AbstractController implements WebTVControllerInterface
 {
@@ -21,9 +21,7 @@ class IndexController extends AbstractController implements WebTVControllerInter
         $this->menuShowStats = $menuShowStats;
     }
 
-    /**
-     * @Route("/", name="pumukit_webtv_index_index")
-     */
+    #[Route('/', name: 'pumukit_webtv_index_index')]
     public function indexAction(): Response
     {
         $this->breadcrumbsService->reset();

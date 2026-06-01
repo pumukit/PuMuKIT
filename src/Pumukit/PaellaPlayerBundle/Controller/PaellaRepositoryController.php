@@ -6,7 +6,6 @@ namespace Pumukit\PaellaPlayerBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
-use PHPUnit\Util\Json;
 use Pumukit\CoreBundle\Controller\PersonalControllerInterface;
 use Pumukit\CoreBundle\Services\SerializerService;
 use Pumukit\PaellaPlayerBundle\Services\ChannelManifest;
@@ -19,7 +18,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class PaellaRepositoryController extends AbstractController implements PersonalControllerInterface
 {
@@ -46,10 +45,8 @@ class PaellaRepositoryController extends AbstractController implements PersonalC
         $this->channelManifest = $channelManifest;
     }
 
-    /**
-     * @Route("/paellarepository/{id}.{_format}", methods={"GET"}, defaults={"_format"="json", "no_channels":true}, requirements={"_format": "json|xml"})
-     * @Route("/secret/paellarepository/{id}.{_format}", methods={"GET"}, defaults={"_format":"json", "show_hide":true, "no_channels":true}, requirements={"_format": "json|xml"})
-     */
+    #[Route('/paellarepository/{id}.{_format}', methods: ['GET'], defaults: ['_format' => 'json', 'no_channels' => true], requirements: ['_format' => 'json|xml'])]
+    #[Route('/secret/paellarepository/{id}.{_format}', methods: ['GET'], defaults: ['_format' => 'json', 'show_hide' => true, 'no_channels' => true], requirements: ['_format' => 'json|xml'])]
     public function indexAction(Request $request, string $id): Response
     {
         $disable = false;
@@ -90,10 +87,8 @@ class PaellaRepositoryController extends AbstractController implements PersonalC
         throw new \Exception('Element not found');
     }
 
-    /**
-     * @Route("/paellaplaylist/{id}.{_format}", methods={"GET"}, defaults={"_format"="json", "no_channels":true}, requirements={"_format": "json|xml"})
-     * @Route("/secret/paellaplaylist/{secret}.{_format}", methods={"GET"}, defaults={"_format":"json", "show_hide":true, "no_channels":true}, requirements={"_format": "json|xml"})
-     */
+    #[Route('/paellaplaylist/{id}.{_format}', methods: ['GET'], defaults: ['_format' => 'json', 'no_channels' => true], requirements: ['_format' => 'json|xml'])]
+    #[Route('/secret/paellaplaylist/{secret}.{_format}', methods: ['GET'], defaults: ['_format' => 'json', 'show_hide' => true, 'no_channels' => true], requirements: ['_format' => 'json|xml'])]
     public function playlistAction(Request $request, Series $series): Response
     {
         $data = $this->playlistManifest->create($request->getHost(), $series, $request->query->getInt('videoPos') ?? 0, $request->getPathInfo());

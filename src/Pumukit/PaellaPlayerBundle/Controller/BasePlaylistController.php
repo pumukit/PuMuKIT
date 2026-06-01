@@ -14,7 +14,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class BasePlaylistController extends BasePlaylistAbstractController
 {
@@ -41,18 +41,14 @@ class BasePlaylistController extends BasePlaylistAbstractController
         $this->paellaAutoPlay = $paellaAutoPlay;
     }
 
-    /**
-     * @Route("/playlist/{id}", name="pumukit_playlistplayer_index", defaults={"no_channels": true} )
-     * @Route("/playlist/magic/{secret}", name="pumukit_playlistplayer_magicindex", defaults={"show_hide": true, "no_channels": true} )
-     */
+    #[Route('/playlist/{id}', name: 'pumukit_playlistplayer_index', defaults: ['no_channels' => true])]
+    #[Route('/playlist/magic/{secret}', name: 'pumukit_playlistplayer_magicindex', defaults: ['show_hide' => true, 'no_channels' => true])]
     public function indexAction(Request $request, Series $series)
     {
         return $this->redirectWithMmobj($series, $request, $request->get('videoId'), $request->get('videoPos'));
     }
 
-    /**
-     * @Route("/playlist", name="pumukit_playlistplayer_paellaindex", defaults={"no_channels": true} )
-     */
+    #[Route('/playlist', name: 'pumukit_playlistplayer_paellaindex', defaults: ['no_channels' => true])]
     #[Template('@PumukitPaellaPlayer/PaellaPlayer/player.html.twig')]
     public function paellaIndexAction(Request $request)
     {

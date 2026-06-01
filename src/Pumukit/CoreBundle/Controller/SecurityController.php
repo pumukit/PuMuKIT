@@ -10,14 +10,12 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class SecurityController extends AbstractController
 {
-    /**
-     * @Route("/security/edit/{id}", name="pumukit_webtv_can_edit_multimediaobject")
-     */
+    #[Route('/security/edit/{id}', name: 'pumukit_webtv_can_edit_multimediaobject')]
     #[Template('@PumukitCore/Security/editButton.html.twig')]
     public function canEditAction(Request $request, DocumentManager $documentManager, string $id)
     {

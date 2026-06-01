@@ -17,11 +17,9 @@ use Pumukit\SchemaBundle\Services\SeriesService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/api/media")
- */
+#[Route('/api/media')]
 class APIController extends AbstractController implements NewAdminControllerInterface
 {
     public const API_SKIP = 0;
@@ -52,9 +50,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         $this->personService = $personService;
     }
 
-    /**
-     * @Route("/stats.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/stats.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function statsAction(Request $request)
     {
         $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
@@ -82,9 +78,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         return new Response($data);
     }
 
-    /**
-     * @Route("/mmobj.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/mmobj.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function multimediaObjectsAction(Request $request)
     {
         $tempCriteria = [];
@@ -235,9 +229,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         return new Response($data);
     }
 
-    /**
-     * @Route("/series.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/series.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function seriesAction(Request $request)
     {
         $seriesRepo = $this->documentManager->getRepository(Series::class);
@@ -295,9 +287,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         return new Response($data);
     }
 
-    /**
-     * @Route("/series/user.{_format}", defaults={"_format"="json"}, requirements={"_format": "json|xml"})
-     */
+    #[Route('/series/user.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function userSeriesAction(Request $request)
     {
         $userRepo = $this->documentManager->getRepository(User::class);
@@ -340,9 +330,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         return new Response($data);
     }
 
-    /**
-     * @Route("/live.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/live.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function liveAction(Request $request)
     {
         $liveRepo = $this->documentManager->getRepository(Live::class);
@@ -392,9 +380,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
         return new Response($data);
     }
 
-    /**
-     * @Route("/locales.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/locales.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function localesAction(Request $request, array $locales)
     {
         $data = $this->serializer->dataSerialize($locales, $request->getRequestFormat());

@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class TrackFileController extends AbstractController
 {
@@ -46,12 +46,11 @@ class TrackFileController extends AbstractController
     }
 
     /**
-     * @Route("/trackfile/{id}.{ext}", name="pumukit_trackfile_index")
-     * @Route("/trackfile/{id}", name="pumukit_trackfile_index_no_ext")
-     *
      * @param mixed $secret
      * @param mixed $secureDuration
      */
+    #[Route('/trackfile/{id}.{ext}', name: 'pumukit_trackfile_index')]
+    #[Route('/trackfile/{id}', name: 'pumukit_trackfile_index_no_ext')]
     public function indexAction(string $id, Request $request, DocumentManager $documentManager, string $pumukitPlayerWhenDispatchViewEvent, $secret, $secureDuration)
     {
         $clientIp = $request->getClientIp();
@@ -126,9 +125,7 @@ class TrackFileController extends AbstractController
         return $response;
     }
 
-    /**
-     * @Route("/trackplayed/{id}", name="pumukit_trackplayed_index")
-     */
+    #[Route('/trackplayed/{id}', name: 'pumukit_trackplayed_index')]
     public function trackPlayedAction(Request $request, DocumentManager $documentManager, string $pumukitPlayerWhenDispatchViewEvent, string $id): JsonResponse
     {
         if (!preg_match('/^[a-f\d]{24}$/i', $id)) {
@@ -150,9 +147,7 @@ class TrackFileController extends AbstractController
         return new JsonResponse(['status' => 'success']);
     }
 
-    /**
-     * @Route("/mediaplayed/{id}", name="pumukit_mediaplayed_index")
-     */
+    #[Route('/mediaplayed/{id}', name: 'pumukit_mediaplayed_index')]
     public function mediaPlayedAction(string $id): JsonResponse
     {
         if (!preg_match('/^[a-f\d]{24}$/i', $id)) {

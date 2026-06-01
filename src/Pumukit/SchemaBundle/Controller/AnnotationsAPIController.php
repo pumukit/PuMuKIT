@@ -16,12 +16,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- *  @Route("/annotation")
- */
+#[Route('/annotation')]
 class AnnotationsAPIController extends AbstractController
 {
     private $documentManager;
@@ -35,9 +33,7 @@ class AnnotationsAPIController extends AbstractController
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     * @Route("/annotations.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"}, methods={"GET"})
-     */
+    #[Route('/annotations.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'], methods: ['GET'])]
     public function getAction(Request $request)
     {
         $episode = $request->get('episode');
@@ -90,9 +86,7 @@ class AnnotationsAPIController extends AbstractController
         return new Response($response);
     }
 
-    /**
-     * @Route("/{id}.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"}, methods={"GET"})
-     */
+    #[Route('/{id}.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'], methods: ['GET'])]
     public function getByIdAction(Request $request, Annotation $annotation)
     {
         $data = [
@@ -115,9 +109,7 @@ class AnnotationsAPIController extends AbstractController
         return new Response($response);
     }
 
-    /**
-     * @Route("/", methods={"PUT"})
-     */
+    #[Route('/', methods: ['PUT'])]
     #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
     public function createNewAction(Request $request)
     {
@@ -168,9 +160,7 @@ class AnnotationsAPIController extends AbstractController
         return new Response($response);
     }
 
-    /**
-     * @Route("/{id}", methods={"PUT"})
-     */
+    #[Route('/{id}', methods: ['PUT'])]
     #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
     public function editAction(Request $request, Annotation $annotation)
     {
@@ -200,9 +190,7 @@ class AnnotationsAPIController extends AbstractController
         return new Response($response);
     }
 
-    /**
-     * @Route("/{id}", methods={"DELETE"})
-     */
+    #[Route('/{id}', methods: ['DELETE'])]
     #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
     public function deleteAction(Annotation $annotation)
     {
@@ -214,9 +202,7 @@ class AnnotationsAPIController extends AbstractController
         return new Response($response);
     }
 
-    /**
-     * @Route("/reset/{id}", methods={"DELETE"})
-     */
+    #[Route('/reset/{id}', methods: ['DELETE'])]
     #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
     public function deleteAllAction(MultimediaObject $multimediaobject)
     {

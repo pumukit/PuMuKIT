@@ -11,16 +11,12 @@ use Pumukit\SchemaBundle\Document\Series;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/api/keywords")
- */
+#[Route('/api/keywords')]
 class APIKeywordsController extends AbstractController
 {
-    /**
-     * @Route("/series.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/series.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function seriesAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
         return $this->base(
@@ -33,9 +29,7 @@ class APIKeywordsController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/mmobj.{_format}", defaults={"_format"="json"}, requirements={"_format"="json|xml"})
-     */
+    #[Route('/mmobj.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function mmobjAction(Request $request, DocumentManager $documentManager, SerializerService $serializer)
     {
         return $this->base(

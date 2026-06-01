@@ -12,11 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/admin/wizard")
- */
+#[Route('/admin/wizard')]
 final class WizardController extends AbstractController
 {
     private InboxService $inboxService;
@@ -30,9 +28,7 @@ final class WizardController extends AbstractController
         $this->seriesRepository = $seriesRepository;
     }
 
-    /**
-     * @Route("/{series}/upload", name="wizard_upload")
-     */
+    #[Route('/{series}/upload', name: 'wizard_upload')]
     public function upload(Request $request, string $series): Response
     {
         $series = $this->seriesRepository->search($series);
@@ -62,9 +58,7 @@ final class WizardController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{series}/server/upload", name="wizard_upload_from_server")
-     */
+    #[Route('/{series}/server/upload', name: 'wizard_upload_from_server')]
     public function uploadFromServer(Request $request, string $series): JsonResponse
     {
         $relativeFilePath = $request->get('filePath');

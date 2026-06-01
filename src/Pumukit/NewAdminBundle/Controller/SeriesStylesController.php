@@ -13,13 +13,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route ("/series/styles")
- */
+#[Route('/series/styles')]
 #[IsGranted('ROLE_ACCESS_SERIES_STYLE')]
 class SeriesStylesController extends AbstractController
 {
@@ -38,18 +36,14 @@ class SeriesStylesController extends AbstractController
         $this->requestStack = $requestStack;
     }
 
-    /**
-     * @Route("/", name="pumukit_newadmin_series_styles")
-     */
+    #[Route('/', name: 'pumukit_newadmin_series_styles')]
     #[Template('@PumukitNewAdmin/SeriesStyle/crud.html.twig')]
     public function menuAction()
     {
         return [];
     }
 
-    /**
-     * @Route("/list", name="pumukit_newadmin_series_styles_list")
-     */
+    #[Route('/list', name: 'pumukit_newadmin_series_styles_list')]
     #[Template('@PumukitNewAdmin/SeriesStyle/list.html.twig')]
     public function listAction(): array
     {
@@ -62,9 +56,7 @@ class SeriesStylesController extends AbstractController
         return ['styles' => $styles];
     }
 
-    /**
-     * @Route("/create", name="pumukit_newadmin_series_styles_create")
-     */
+    #[Route('/create', name: 'pumukit_newadmin_series_styles_create')]
     public function createAction(Request $request): JsonResponse
     {
         $style = new SeriesStyle();
@@ -79,9 +71,7 @@ class SeriesStylesController extends AbstractController
         return new JsonResponse(['success', 'id' => $style->getId()]);
     }
 
-    /**
-     * @Route("/edit", name="pumukit_newadmin_series_styles_edit")
-     */
+    #[Route('/edit', name: 'pumukit_newadmin_series_styles_edit')]
     public function editAction(Request $request): JsonResponse
     {
         $id = $request->request->get('id');
@@ -102,9 +92,7 @@ class SeriesStylesController extends AbstractController
         return new JsonResponse(['success']);
     }
 
-    /**
-     * @Route("/delete/{id}", name="pumukit_newadmin_series_styles_delete")
-     */
+    #[Route('/delete/{id}', name: 'pumukit_newadmin_series_styles_delete')]
     public function deleteAction(string $id): JsonResponse
     {
         $session = $this->requestStack->getSession();
@@ -131,9 +119,7 @@ class SeriesStylesController extends AbstractController
         return new JsonResponse(['error', 'msg' => $this->translator->trans("Series style {$id}() doesn't exists")]);
     }
 
-    /**
-     * @Route("/show/{id}", name="pumukit_newadmin_series_styles_show")
-     */
+    #[Route('/show/{id}', name: 'pumukit_newadmin_series_styles_show')]
     #[Template('@PumukitNewAdmin/SeriesStyle/show.html.twig')]
     public function showAction(?string $id = null): array
     {

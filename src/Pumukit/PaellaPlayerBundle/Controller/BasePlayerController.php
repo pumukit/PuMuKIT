@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class BasePlayerController extends BasePlayerAbstractController
 {
@@ -47,19 +47,15 @@ class BasePlayerController extends BasePlayerAbstractController
         $this->pumukitPlayerWhenDispatchViewEvent = $pumukitPlayerWhenDispatchViewEvent;
     }
 
-    /**
-     * @Route("/videoplayer/{id}", name="pumukit_videoplayer_index")
-     * @Route("/videoplayer/opencast/{id}", name="pumukit_videoplayer_opencast")
-     */
+    #[Route('/videoplayer/{id}', name: 'pumukit_videoplayer_index')]
+    #[Route('/videoplayer/opencast/{id}', name: 'pumukit_videoplayer_opencast')]
     #[Template('@PumukitPaellaPlayer/PaellaPlayer/player.html.twig')]
     public function indexAction(Request $request, MultimediaObject $multimediaObject)
     {
         return $this->doRender($request, $multimediaObject);
     }
 
-    /**
-     * @Route("/videoplayer/magic/{secret}", name="pumukit_videoplayer_magicindex")
-     */
+    #[Route('/videoplayer/magic/{secret}', name: 'pumukit_videoplayer_magicindex')]
     #[Template('@PumukitPaellaPlayer/PaellaPlayer/player.html.twig')]
     public function magicAction(Request $request, MultimediaObject $multimediaObject)
     {

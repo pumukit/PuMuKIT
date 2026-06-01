@@ -7,13 +7,11 @@ namespace Pumukit\StatsUIBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route("/admin/stats")
- */
+#[Route('/admin/stats')]
 #[IsGranted('ROLE_ACCESS_STATS')]
 class StatsController extends AbstractController
 {
@@ -24,12 +22,10 @@ class StatsController extends AbstractController
         $this->translator = $translator;
     }
 
-    /**
-     * @Route("/series", name="pumukit_stats_series_index")
-     * @Route("/objects", name="pumukit_stats_mmobj_index")
-     * @Route("/series/{id}", name="pumukit_stats_series_index_id")
-     * @Route("/objects/{id}", name="pumukit_stats_mmobj_index_id")
-     */
+    #[Route('/series', name: 'pumukit_stats_series_index')]
+    #[Route('/objects', name: 'pumukit_stats_mmobj_index')]
+    #[Route('/series/{id}', name: 'pumukit_stats_series_index_id')]
+    #[Route('/objects/{id}', name: 'pumukit_stats_mmobj_index_id')]
     public function indexAction(Request $request): Response
     {
         $routeName = $request->get('_route');

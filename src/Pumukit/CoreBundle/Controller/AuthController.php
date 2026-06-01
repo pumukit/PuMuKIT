@@ -7,13 +7,11 @@ namespace Pumukit\CoreBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class AuthController extends AbstractController implements WebTVControllerInterface
 {
-    /**
-     * @Route("/auth", name="pumukit_auth")
-     */
+    #[Route('/auth', name: 'pumukit_auth')]
     public function changeAction(Request $request): RedirectResponse
     {
         if (!$request->getSession()->has('target_path')) {

@@ -11,7 +11,7 @@ use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 final class PlayerController extends BasePlayerController
 {
@@ -28,20 +28,16 @@ final class PlayerController extends BasePlayerController
         $this->basePlayerIntroService = $basePlayerIntroService;
     }
 
-    /**
-     * @Route("/player/{id}", name="pumukit_player_index")
-     * @Route("/iframe/player/{id}", name="pumukit_player_index_iframe")
-     */
+    #[Route('/player/{id}', name: 'pumukit_player_index')]
+    #[Route('/iframe/player/{id}', name: 'pumukit_player_index_iframe')]
     #[Template('@PumukitBasePlayer/player.html.twig')]
     public function indexAction(Request $request, MultimediaObject $multimediaObject)
     {
         return $this->doRender($request, $multimediaObject);
     }
 
-    /**
-     * @Route("/player/magic/{secret}", name="pumukit_player_magic_index")
-     * @Route("/iframe/player/magic/{secret}", name="pumukit_player_magic_index_iframe")
-     */
+    #[Route('/player/magic/{secret}', name: 'pumukit_player_magic_index')]
+    #[Route('/iframe/player/magic/{secret}', name: 'pumukit_player_magic_index_iframe')]
     #[Template('@PumukitBasePlayer/player.html.twig')]
     public function magicAction(Request $request, MultimediaObject $multimediaObject)
     {

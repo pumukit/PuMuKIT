@@ -15,13 +15,11 @@ use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route("/user_profile")
- */
+#[Route('/user_profile')]
 #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class UserProfileController extends AbstractController
 {
@@ -48,9 +46,7 @@ class UserProfileController extends AbstractController
         $this->personService = $personService;
     }
 
-    /**
-     * @Route("/", name="pumukitnewadmin_profile_user_index")
-     */
+    #[Route('/', name: 'pumukitnewadmin_profile_user_index')]
     #[Template('@PumukitNewAdmin/UserProfile/template.html.twig')]
     public function profileAction(Request $request): array
     {
@@ -92,9 +88,7 @@ class UserProfileController extends AbstractController
         ];
     }
 
-    /**
-     * @Route("/check/email/{updateEmail}", name="pumukitnewadmin_profile_user_check_user")
-     */
+    #[Route('/check/email/{updateEmail}', name: 'pumukitnewadmin_profile_user_check_user')]
     public function checkEmailToUseOnUser(string $updateEmail): JsonResponse
     {
         $user = $this->documentManager->getRepository(User::class)->findOneBy([

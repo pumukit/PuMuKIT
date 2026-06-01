@@ -20,7 +20,7 @@ use Pumukit\WebTVBundle\Services\ListService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListController extends AbstractController implements WebTVControllerInterface
@@ -68,9 +68,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
         $this->limitObjsByTag = $limitObjsByTag;
     }
 
-    /**
-     * @Route("/multimediaobjects/tag/{tagCod}", name="pumukit_webtv_bytag_multimediaobjects", defaults={"tagCod"=null})
-     */
+    #[Route('/multimediaobjects/tag/{tagCod}', name: 'pumukit_webtv_bytag_multimediaobjects', defaults: ['tagCod' => null])]
     public function multimediaObjectsByTagAction(Request $request, #[MapDocument(mapping: ['tagCod' => 'cod'])] Tag $tag): Response
     {
         [$scrollList, $numberCols, $limit] = $this->getParametersByTag();
@@ -109,9 +107,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
         ]);
     }
 
-    /**
-     * @Route("/series/tag/{tagCod}", name="pumukit_webtv_bytag_series", defaults={"tagCod"=null})
-     */
+    #[Route('/series/tag/{tagCod}', name: 'pumukit_webtv_bytag_series', defaults: ['tagCod' => null])]
     public function seriesByTagAction(Request $request, #[MapDocument(mapping: ['tagCod' => 'cod'])] Tag $tag): Response
     {
         [$scrollList, $numberCols, $limit] = $this->getParametersByTag();
@@ -141,9 +137,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
         ]);
     }
 
-    /**
-     * @Route("/users/{username}", name="pumukit_webtv_byuser_multimediaobjects", defaults={"username"=null})
-     */
+    #[Route('/users/{username}', name: 'pumukit_webtv_byuser_multimediaobjects', defaults: ['username' => null])]
     public function multimediaObjectsByUserAction(Request $request, #[MapDocument(mapping: ['username' => 'username'])] User $user): Response
     {
         [$scrollList, $numberCols, $limit, $roleCode] = $this->getParametersByUser();
@@ -173,9 +167,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
         ]);
     }
 
-    /**
-     * @Route("/users/{username}/series", name="pumukit_webtv_byuser_series", defaults={"username"=null})
-     */
+    #[Route('/users/{username}/series', name: 'pumukit_webtv_byuser_series', defaults: ['username' => null])]
     public function seriesByUserAction(Request $request, #[MapDocument(mapping: ['username' => 'username'])] User $user): Response
     {
         [$scrollList, $numberCols, $limit, $roleCode] = $this->getParametersByUser();
@@ -204,9 +196,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
         ]);
     }
 
-    /**
-     * @Route("/users/{username}/pager/{type}", name="pumukit_webtv_byuser_objects_pager", defaults={"username": null, "type": "multimediaobject"})
-     */
+    #[Route('/users/{username}/pager/{type}', name: 'pumukit_webtv_byuser_objects_pager', defaults: ['username' => null, 'type' => 'multimediaobject'])]
     public function userObjectsPagerAction(Request $request, #[MapDocument(mapping: ['username' => 'username'])] User $user): Response
     {
         [$scroll_list, $numberCols, $limit, $roleCode] = $this->getParametersByUser();
@@ -237,9 +227,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
         return $this->generateResponse($qb, $date, $numberCols);
     }
 
-    /**
-     * @Route("/bytag/{tagCod}/pager/{type}", name="pumukit_webtv_bytag_objects_pager", defaults={"tagCod": null, "type": "multimediaobject"})
-     */
+    #[Route('/bytag/{tagCod}/pager/{type}', name: 'pumukit_webtv_bytag_objects_pager', defaults: ['tagCod' => null, 'type' => 'multimediaobject'])]
     public function byTagObjectsPagerAction(Request $request, #[MapDocument(mapping: ['tagCod' => 'cod'])] Tag $tag): Response
     {
         [$scroll_list, $numberCols, $limit] = $this->getParametersByTag();

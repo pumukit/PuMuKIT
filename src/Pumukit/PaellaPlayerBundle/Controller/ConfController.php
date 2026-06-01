@@ -12,7 +12,7 @@ use Pumukit\SchemaBundle\Services\CaptionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ConfController extends AbstractController
 {
@@ -43,9 +43,7 @@ class ConfController extends AbstractController
         $this->paellaFootPrints = $paellaFootPrints;
     }
 
-    /**
-     * @Route("/paella/config.json", name="paella_player_config")
-     */
+    #[Route('/paella/config.json', name: 'paella_player_config')]
     public function confAction(Request $request): Response
     {
         $multimediaObject = $this->getMultimediaObject($request->query->get('configID'));

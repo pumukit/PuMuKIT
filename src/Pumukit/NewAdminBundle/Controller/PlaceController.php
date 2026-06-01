@@ -15,13 +15,11 @@ use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route("/places")
- */
+#[Route('/places')]
 #[IsGranted('ROLE_ACCESS_TAGS')]
 class PlaceController extends AbstractController implements NewAdminControllerInterface
 {
@@ -44,9 +42,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         $this->tagService = $tagService;
     }
 
-    /**
-     * @Route("/", name="pumukitnewadmin_places_index")
-     */
+    #[Route('/', name: 'pumukitnewadmin_places_index')]
     #[Template('@PumukitNewAdmin/Place/index.html.twig')]
     public function indexAction(Request $request)
     {
@@ -56,9 +52,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         return ['places' => $places];
     }
 
-    /**
-     * @Route("/parent/", name="pumukitnewadmin_places_parent")
-     */
+    #[Route('/parent/', name: 'pumukitnewadmin_places_parent')]
     #[Template('@PumukitNewAdmin/Place/parent_list.html.twig')]
     public function parentAction(Request $request)
     {
@@ -68,9 +62,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         return ['places' => $places];
     }
 
-    /**
-     * @Route("/children/{id}", name="pumukitnewadmin_places_children")
-     */
+    #[Route('/children/{id}', name: 'pumukitnewadmin_places_children')]
     #[Template('@PumukitNewAdmin/Place/children_list.html.twig')]
     public function childrenAction(#[MapDocument(mapping: ['id' => 'id'])] Tag $tag)
     {
@@ -79,9 +71,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         return ['children' => $children, 'parent' => $tag];
     }
 
-    /**
-     * @Route("/preview/{id}", name="pumukitnewadmin_places_children_preview")
-     */
+    #[Route('/preview/{id}', name: 'pumukitnewadmin_places_children_preview')]
     #[Template('@PumukitNewAdmin/Place/preview_data.html.twig')]
     public function previewAction(#[MapDocument(mapping: ['id' => 'id'])] Tag $tag)
     {
@@ -96,10 +86,9 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     }
 
     /**
-     * @Route("/create/{id}", name="pumukitnewadmin_places_create")
-     *
      * @param mixed|null $id
      */
+    #[Route('/create/{id}', name: 'pumukitnewadmin_places_create')]
     #[Template('@PumukitNewAdmin/Place/create.html.twig')]
     public function createAction(Request $request, $id = null)
     {
@@ -134,9 +123,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         return ['tag' => $tag, 'form' => $form->createView(), 'suggested_code' => $suggested_code, 'parent' => $parent];
     }
 
-    /**
-     * @Route("/delete/{id}", name="pumukitnewadmin_places_delete")
-     */
+    #[Route('/delete/{id}', name: 'pumukitnewadmin_places_delete')]
     public function deletePlaceAction(Request $request, #[MapDocument(mapping: ['id' => 'id'])] Tag $tag)
     {
         try {
@@ -149,9 +136,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         }
     }
 
-    /**
-     * @Route("/update/{id}", name="pumukitnewadmin_places_update")
-     */
+    #[Route('/update/{id}', name: 'pumukitnewadmin_places_update')]
     #[Template('@PumukitNewAdmin/Place/update.html.twig')]
     public function updateAction(Request $request, #[MapDocument(mapping: ['id' => 'id'])] Tag $tag)
     {

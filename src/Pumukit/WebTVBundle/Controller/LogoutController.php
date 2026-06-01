@@ -6,13 +6,11 @@ namespace Pumukit\WebTVBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class LogoutController extends AbstractController
 {
-    /**
-     * @Route("/logout", name="pumukit_logout")
-     */
+    #[Route('/logout', name: 'pumukit_logout')]
     public function logout(): Response
     {
         return $this->redirectToRoute('homepage');

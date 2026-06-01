@@ -9,11 +9,9 @@ use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\Repository\JobRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route("/api/encoder")
- */
+#[Route('/api/encoder')]
 class APIController extends AbstractController
 {
     private ProfileService $profileService;
@@ -27,9 +25,7 @@ class APIController extends AbstractController
         $this->jobRepository = $jobRepository;
     }
 
-    /**
-     * @Route("/profiles.{_format}", defaults={"_format"="json"}, requirements={"_format"="json"})
-     */
+    #[Route('/profiles.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json'])]
     public function profilesAction(): JsonResponse
     {
         $profiles = $this->profileService->getProfiles();
@@ -37,9 +33,7 @@ class APIController extends AbstractController
         return new JsonResponse($profiles);
     }
 
-    /**
-     * @Route("/cpus.{_format}", defaults={"_format"="json"}, requirements={"_format"="json"})
-     */
+    #[Route('/cpus.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json'])]
     public function cpusAction(): JsonResponse
     {
         $cpus = $this->cpuService->getCpus();
@@ -47,9 +41,7 @@ class APIController extends AbstractController
         return new JsonResponse($cpus);
     }
 
-    /**
-     * @Route("/jobs.{_format}", defaults={"_format"="json"}, requirements={"_format"="json"})
-     */
+    #[Route('/jobs.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json'])]
     public function jobsAction(): JsonResponse
     {
         $stats = $this->jobRepository->getAllJobsStatus();

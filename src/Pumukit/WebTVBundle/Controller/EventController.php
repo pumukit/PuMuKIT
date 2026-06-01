@@ -14,7 +14,7 @@ use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EventController extends AbstractController implements WebTVControllerInterface
@@ -60,9 +60,7 @@ class EventController extends AbstractController implements WebTVControllerInter
         return new Response();
     }
 
-    /**
-     * @Route ("/events/", defaults={"filter"=false}, name="pumukit_webtv_events")
-     */
+    #[Route('/events/', defaults: ['filter' => false], name: 'pumukit_webtv_events')]
     public function indexAction(Request $request): Response
     {
         $advanceEvents = $this->checkAdvanceEvents();
@@ -105,10 +103,9 @@ class EventController extends AbstractController implements WebTVControllerInter
     }
 
     /**
-     * @Route("/event/next/session/{id}", name="pumukit_webtv_next_session_event")
-     *
      * @param mixed $id
      */
+    #[Route('/event/next/session/{id}', name: 'pumukit_webtv_next_session_event')]
     public function nextSessionListAction($id): Response
     {
         $embeddedEventSessionService = $this->eventSessionService;
@@ -125,9 +122,7 @@ class EventController extends AbstractController implements WebTVControllerInter
         ]);
     }
 
-    /**
-     * @Route("/event/twitter/{id}", name="pumukit_webtv_event_twitter")
-     */
+    #[Route('/event/twitter/{id}', name: 'pumukit_webtv_event_twitter')]
     public function twitterAction(string $id)
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->find($id);

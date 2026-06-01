@@ -10,7 +10,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ACCESS_INBOX')]
@@ -25,9 +25,7 @@ class InboxController extends AbstractController implements NewAdminControllerIn
         $this->pumukitInboxDepth = $pumukitInboxDepth;
     }
 
-    /**
-     * @Route("/inbox", defaults={"_format"="json"})
-     */
+    #[Route('/inbox', defaults: ['_format' => 'json'])]
     public function dirAction(Request $request): JsonResponse
     {
         $relativeDir = $request->query->get('dir', '');

@@ -9,12 +9,10 @@ use Pumukit\EncoderBundle\Services\JobExecutor;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @Route("/admin/encoder")
- */
+#[Route('/admin/encoder')]
 #[IsGranted('ROLE_ACCESS_JOBS')]
 class CPUsController extends AbstractController
 {
@@ -27,9 +25,7 @@ class CPUsController extends AbstractController
         $this->jobExecutor = $jobExecutor;
     }
 
-    /**
-     * @Route("/cpu/maintenance", name="pumukit_encoder_cpu_maintenance", requirements={"activateMaintenance": "activate|deactivate"})
-     */
+    #[Route('/cpu/maintenance', name: 'pumukit_encoder_cpu_maintenance', requirements: ['activateMaintenance' => 'activate|deactivate'])]
     public function maintenanceAction(Request $request): Response
     {
         $cpuName = $request->get('cpu_name');
@@ -56,9 +52,7 @@ class CPUsController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cpu/maintenance/{activateMaintenance}/{cpuName}", name="pumukit_encoder_cpu_maintenance_switch", requirements={"activateMaintenance": "activate|deactivate"})
-     */
+    #[Route('/cpu/maintenance/{activateMaintenance}/{cpuName}', name: 'pumukit_encoder_cpu_maintenance_switch', requirements: ['activateMaintenance' => 'activate|deactivate'])]
     public function switchMaintenanceAction(string $activateMaintenance, string $cpuName): Response
     {
         $cpu = $this->cpuService->getCpuByName($cpuName);

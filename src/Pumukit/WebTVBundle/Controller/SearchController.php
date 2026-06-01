@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SearchController extends AbstractController implements WebTVControllerInterface
@@ -59,9 +59,7 @@ class SearchController extends AbstractController implements WebTVControllerInte
         $this->limitObjsSearch = $limitObjsSearch;
     }
 
-    /**
-     * @Route("/searchseries", name="pumukit_webtv_search_series")
-     */
+    #[Route('/searchseries', name: 'pumukit_webtv_search_series')]
     public function seriesAction(Request $request): Response
     {
         $this->breadcrumbsService->addList($this->translator->trans('Series search'), 'pumukit_webtv_search_series');
@@ -98,9 +96,7 @@ class SearchController extends AbstractController implements WebTVControllerInte
         ]);
     }
 
-    /**
-     * @Route("/searchmultimediaobjects/{tagCod}/{useTagAsGeneral}", defaults={"tagCod"=null, "useTagAsGeneral"=false}, name="pumukit_webtv_search_multimediaobjects")
-     */
+    #[Route('/searchmultimediaobjects/{tagCod}/{useTagAsGeneral}', defaults: ['tagCod' => null, 'useTagAsGeneral' => false], name: 'pumukit_webtv_search_multimediaobjects')]
     public function multimediaObjectsAction(Request $request, #[MapDocument(mapping: ['tagCod' => 'cod'])] ?Tag $blockedTag = null, bool $useTagAsGeneral = false): Response
     {
         $templateTitle = $this->menuSearchTitle ?? 'Multimedia objects search';

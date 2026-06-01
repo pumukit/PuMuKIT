@@ -9,7 +9,7 @@ use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Pumukit\WebTVBundle\Services\CategoriesService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CategoriesController extends AbstractController implements WebTVControllerInterface
@@ -34,9 +34,7 @@ class CategoriesController extends AbstractController implements WebTVController
         $this->menuCategoriesTitle = $menuCategoriesTitle;
     }
 
-    /**
-     * @Route("/categories", name="pumukit_webtv_categories_index")
-     */
+    #[Route('/categories', name: 'pumukit_webtv_categories_index')]
     public function indexAction(Request $request)
     {
         $templateTitle = $this->translator->trans($this->menuCategoriesTitle);
