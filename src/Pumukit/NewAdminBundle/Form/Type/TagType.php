@@ -20,7 +20,7 @@ class TagType extends AbstractType
     private $translator;
     private $locale;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->translator = $options['translator'];
         $this->locale = $options['locale'];
@@ -131,7 +131,7 @@ class TagType extends AbstractType
         );
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [

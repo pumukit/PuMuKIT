@@ -36,7 +36,7 @@ class MultimediaObjectMetaType extends AbstractType
         $this->licenseInfoUrl = $licenseInfoUrl;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->translator = $options['translator'];
         $this->locale = $options['locale'];

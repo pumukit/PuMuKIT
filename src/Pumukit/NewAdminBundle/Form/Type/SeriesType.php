@@ -32,7 +32,7 @@ class SeriesType extends AbstractType
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->translator = $options['translator'];
         $this->locale = $options['locale'];
