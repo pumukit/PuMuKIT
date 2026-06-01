@@ -24,7 +24,7 @@ class PumukitSyncRepositoryCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('pumukit:sync:repository')

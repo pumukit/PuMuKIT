@@ -25,7 +25,7 @@ class NumericalIDCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('pumukit:update:numerical:id')
