@@ -60,6 +60,7 @@ class TrackFileController extends AbstractController
         if (null !== $this->secureTokenService) {
             if (!$this->secureTokenService->validateTokenFromRequest($request, $id)) {
                 $this->logger->error('Invalid token');
+
                 return new Response('Invalid Token', Response::HTTP_NOT_FOUND);
             }
         }
@@ -68,6 +69,7 @@ class TrackFileController extends AbstractController
             [$mmobj, $track] = $this->getMmobjAndTrack($documentManager, $id);
         } catch (\Exception $e) {
             $this->logger->error('Multimedia Object not found');
+
             return new Response('Not Found', Response::HTTP_NOT_FOUND);
         }
 
@@ -103,6 +105,7 @@ class TrackFileController extends AbstractController
 
         if (!file_exists($filePath)) {
             $this->logger->error('file not found.');
+
             return new Response('File not found', Response::HTTP_NOT_FOUND);
         }
 
