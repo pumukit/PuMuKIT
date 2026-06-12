@@ -39,7 +39,9 @@ final class VideoAudio implements MediaMetadata
     {
         $metadata = $this->decodeMetadataInfo();
 
-        return (int) ceil((float) $metadata->format->duration) ?? 0;
+        return isset($metadata->format->duration)
+            ? (int) ceil((float) $metadata->format->duration)
+            : 0;
     }
 
     public function isOnlyAudio(): bool
