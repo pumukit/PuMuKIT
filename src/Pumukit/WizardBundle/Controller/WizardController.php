@@ -84,14 +84,24 @@ final class WizardController extends AbstractController
                 return new JsonResponse('Invalid path', 403);
             }
 
-            $finder = FinderUtils::filesFromPath($absolutePath);
-            foreach ($finder->files() as $file) {
+            if (is_file($absolutePath)) {
                 $this->uploadDispatcherService->dispatchUploadFromServer(
                     $this->getUser(),
-                    $file->getPathname(),
+                    $absolutePath,
                     $series,
                     $profile
                 );
+            } else {
+                $finder = FinderUtils::filesFromPath($absolutePath);
+
+                foreach ($finder->files() as $file) {
+                    $this->uploadDispatcherService->dispatchUploadFromServer(
+                        $this->getUser(),
+                        $file->getPathname(),
+                        $series,
+                        $profile
+                    );
+                }
             }
         } catch (\Exception $exception) {
             return new JsonResponse($exception->getMessage(), 500);

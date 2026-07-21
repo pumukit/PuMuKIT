@@ -53,15 +53,29 @@ class InboxController extends AbstractController implements NewAdminControllerIn
 
         $res = [];
 
-        if ('file' === $type) {
+        if ('file' === $type || 'both' === $type) {
             $finder->depth('< 1')->followLinks()->in($absoluteDir);
             $finder->sortByName();
+
             foreach ($finder as $f) {
-                $res[] = ['path' => $this->toRelativePath($f->getRealpath(), $inboxBasePath),
+                $content = false;
+
+                if ($f->isDir()) {
+                    $contentFinder = new Finder();
+                    if (!$this->pumukitInboxDepth) {
+                        $contentFinder->depth('== 0');
+                    }
+                    $contentFinder->files()->in($f->getRealpath());
+                    $content = $contentFinder->count();
+                }
+
+                $res[] = [
+                    'path' => $this->toRelativePath($f->getRealpath(), $inboxBasePath),
                     'relativepath' => $f->getRelativePathname(),
                     'is_file' => $f->isFile(),
                     'hash' => hash('md5', $f->getRealpath()),
-                    'content' => false, ];
+                    'content' => $content,
+                ];
             }
         } else {
             $finder->depth('< 1')->directories()->followLinks()->in($absoluteDir);
@@ -85,7 +99,7 @@ class InboxController extends AbstractController implements NewAdminControllerIn
         return new JsonResponse($res);
     }
 
-    public function formAction(Series $series, bool $onlyDir = false): Response
+    public function formAction(Series $series, string $selection = 'file'): Response
     {
         if (!$this->pumukitInbox) {
             return $this->render('@PumukitNewAdmin/Inbox/form_noconf.html.twig');
@@ -104,7 +118,7 @@ class InboxController extends AbstractController implements NewAdminControllerIn
         return $this->render('@PumukitNewAdmin/Inbox/form.html.twig', [
             'dir' => '',
             'displayDir' => basename($this->pumukitInbox),
-            'onlyDir' => $onlyDir,
+            'selection' => $selection,
             'series' => $series,
         ]);
     }
