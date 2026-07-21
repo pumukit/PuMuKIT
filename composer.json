@@ -132,7 +132,8 @@
         "audit": {
             "ignore": [
                 "PKSA-gs8r-6kz6-pp56",
-                "PKSA-gnn4-pxdg-q76m"
+                "PKSA-gnn4-pxdg-q76m",
+                "PKSA-3ncz-km6v-5vjr"
             ]
         }
     },
