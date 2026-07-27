@@ -61,6 +61,10 @@ class InboxController extends AbstractController implements NewAdminControllerIn
                 $content = false;
 
                 if ($f->isDir()) {
+                    if (0 === (is_countable(glob("{$f}/*")) ? count(glob("{$f}/*")) : 0)) {
+                        continue;
+                    }
+
                     $contentFinder = new Finder();
                     if (!$this->pumukitInboxDepth) {
                         $contentFinder->depth('== 0');

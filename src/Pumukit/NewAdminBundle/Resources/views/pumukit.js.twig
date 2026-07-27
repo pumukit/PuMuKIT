@@ -1829,8 +1829,11 @@ window.fileServerTree = function(element, type, dir, num, input)
             baseelement.addClass("expanded").removeClass("collapsed");
         }
     } else {
-        //hide
-        $("." + baseelement.data('hash')).hide().addClass("collapsed").removeClass("expanded");
+        // Hide all elements (files and dirs)
+        $("."+baseelement.data('hash')).hide();
+
+        // Change the status only of the directories
+        $("."+baseelement.data('hash')).not(".elem").addClass("collapsed").removeClass("expanded");
         baseelement.addClass("collapsed").removeClass("expanded");
     }
 
