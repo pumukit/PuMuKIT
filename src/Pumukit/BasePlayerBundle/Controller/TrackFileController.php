@@ -10,6 +10,7 @@ use Psr\Log\LoggerInterface;
 use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\BasePlayerBundle\Services\SecureTokenService;
+use Pumukit\BasePlayerBundle\Services\ViewCounterService;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -147,7 +148,7 @@ class TrackFileController extends AbstractController
     /**
      * @Route("/trackplayed/{id}", name="pumukit_trackplayed_index")
      */
-    public function trackPlayedAction(Request $request, DocumentManager $documentManager, string $pumukitPlayerWhenDispatchViewEvent, string $id): JsonResponse
+    public function trackPlayedAction(Request $request, DocumentManager $documentManager, ViewCounterService $viewCounter, string $id): JsonResponse
     {
         if (!preg_match('/^[a-f\d]{24}$/i', $id)) {
             return new JsonResponse(['status' => 'error']);
@@ -155,15 +156,13 @@ class TrackFileController extends AbstractController
 
         [$mmobj, $track] = $this->getMmobjAndTrack($documentManager, $id);
 
-        if ('on_play' !== $pumukitPlayerWhenDispatchViewEvent) {
+        if (!str_starts_with($request->headers->get('referer', ''), $request->getSchemeAndHttpHost())) {
             return new JsonResponse(['status' => 'error']);
         }
 
-        if (!str_starts_with($request->headers->get('referer'), $request->getSchemeAndHttpHost())) {
+        if (!$viewCounter->registerOnPlay($mmobj, $track)) {
             return new JsonResponse(['status' => 'error']);
         }
-
-        $this->dispatchViewEvent($mmobj, $track);
 
         return new JsonResponse(['status' => 'success']);
     }
@@ -171,7 +170,7 @@ class TrackFileController extends AbstractController
     /**
      * @Route("/mediaplayed/{id}", name="pumukit_mediaplayed_index")
      */
-    public function mediaPlayedAction(string $id): JsonResponse
+    public function mediaPlayedAction(string $id, ViewCounterService $viewCounter): JsonResponse
     {
         if (!preg_match('/^[a-f\d]{24}$/i', $id)) {
             return new JsonResponse(['status' => 'error']);
@@ -182,12 +181,19 @@ class TrackFileController extends AbstractController
             return new JsonResponse(['status' => 'error']);
         }
 
-        $event = new ViewedEvent($multimediaObject);
-        $this->eventDispatcher->dispatch($event, BasePlayerEvents::MULTIMEDIAOBJECT_VIEW);
+        if (!$viewCounter->registerOnPlay($multimediaObject)) {
+            return new JsonResponse(['status' => 'error']);
+        }
 
         return new JsonResponse(['status' => 'ok']);
     }
 
+    /**
+     * @deprecated no lo llama nadie desde que la decision vive en ViewCounterService.
+     *             Se mantiene por compatibilidad con controladores que lo extiendan.
+     *             Su logica de multistream/Range es el unico matiz que el servicio
+     *             todavia no cubre; si hace falta, moverlo alli antes de borrarlo.
+     */
     protected function shouldIncreaseViews(Request $request, MultimediaObject $multimediaObject, MediaInterface $media, string $pumukitPlayerWhenDispatchViewEvent)
     {
         if ('on_load' !== $pumukitPlayerWhenDispatchViewEvent) {
@@ -216,6 +222,12 @@ class TrackFileController extends AbstractController
         return false;
     }
 
+    /**
+     * @deprecated usar ViewCounterService::registerOnLoad()/registerOnPlay().
+     *             Este metodo despacha sin comprobar la configuracion, que es
+     *             justo lo que se queria centralizar. Se mantiene por
+     *             compatibilidad con controladores que lo extiendan.
+     */
     protected function dispatchViewEvent(MultimediaObject $multimediaObject, ?MediaInterface $track = null): void
     {
         $event = new ViewedEvent($multimediaObject, $track);

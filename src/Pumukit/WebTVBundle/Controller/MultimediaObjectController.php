@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Pumukit\WebTVBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
-use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\BasePlayerBundle\Services\IntroService;
 use Pumukit\BasePlayerBundle\Services\PlayerService;
+use Pumukit\BasePlayerBundle\Services\ViewCounterService;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
@@ -74,7 +73,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
     /**
      * @Route("/video/{id}", name="pumukit_webtv_multimediaobject_index")
      */
-    public function indexAction(Request $request, MultimediaObject $multimediaObject)
+    public function indexAction(Request $request, MultimediaObject $multimediaObject, ViewCounterService $viewCounter)
     {
         $track = null;
 
@@ -94,8 +93,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         }
 
         if (!$track && !$multimediaObject->isExternalType()) {
-            $event = new ViewedEvent($multimediaObject);
-            $this->eventDispatcher->dispatch($event, BasePlayerEvents::MULTIMEDIAOBJECT_VIEW);
+            $viewCounter->registerOnLoad($multimediaObject);
         }
 
         $this->updateBreadcrumbs($multimediaObject);

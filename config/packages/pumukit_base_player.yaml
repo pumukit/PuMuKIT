@@ -25,6 +25,13 @@ services:
   Pumukit\BasePlayerBundle\Services\SeriesPlaylistService:
     class: Pumukit\BasePlayerBundle\Services\SeriesPlaylistService
 
+  # Punto unico de decision sobre cuando se contabiliza una visualizacion.
+  # Se inyecta como argumento de accion (autowiring por tipo), no por
+  # constructor, para no romper los controladores que los clientes extienden.
+  Pumukit\BasePlayerBundle\Services\ViewCounterService:
+    arguments:
+      $pumukitPlayerWhenDispatchViewEvent: '%pumukitplayer.when_dispatch_view_event%'
+
   Pumukit\BasePlayerBundle\Twig\BasePlayerExtension:
     class: Pumukit\BasePlayerBundle\Twig\BasePlayerExtension
     tags:
