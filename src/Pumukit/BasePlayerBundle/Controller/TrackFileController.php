@@ -83,6 +83,17 @@ class TrackFileController extends AbstractController
 
         $storage = $track->storage();
 
+        if ($storage && !$storage->isLocalStorageSystem() && $storage->url() && $storage->url()->url()) {
+            $externalUrl = $storage->url()->url();
+            $queryString = $request->getQueryString();
+            if ($queryString) {
+                $connector = (str_contains($externalUrl, '?')) ? '&' : '?';
+                $externalUrl .= $connector.$queryString;
+            }
+
+            return new RedirectResponse($externalUrl);
+        }
+
         $masterPath = $storage->path()->path();
         $baseDir = dirname($masterPath);
 
@@ -102,13 +113,6 @@ class TrackFileController extends AbstractController
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
             return $response;
-        }
-
-        if ($storage && !$storage->isLocalStorageSystem() && $storage->url() && $storage->url()->url()) {
-            $externalUrl = $storage->url()->url();
-            $connector = (str_contains($externalUrl, '?')) ? '&' : '?';
-
-            return new RedirectResponse($externalUrl.$connector.$request->getQueryString());
         }
 
         if (!file_exists($filePath)) {
