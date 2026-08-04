@@ -59,7 +59,15 @@ class TrackFileController extends AbstractController
 
         if (null !== $this->secureTokenService) {
             if (!$this->secureTokenService->validateTokenFromRequest($request, $id)) {
-                $this->logger->error('Invalid token');
+                $this->logger->error('Invalid token', [
+                    'trackId' => $id,
+                    'referer' => $request->headers->get('referer', 'none'),
+                    'origin' => $request->headers->get('origin', 'none'),
+                    'clientIp' => $clientIp,
+                    'userAgent' => $request->headers->get('user-agent', 'none'),
+                    'path' => $request->getPathInfo(),
+                    'reason' => $this->invalidTokenReason($request, $id),
+                ]);
 
                 return new Response('Invalid Token', Response::HTTP_NOT_FOUND);
             }
@@ -209,6 +217,28 @@ class TrackFileController extends AbstractController
         $event = new ViewedEvent($multimediaObject, $track);
 
         $this->eventDispatcher->dispatch($event, BasePlayerEvents::MULTIMEDIAOBJECT_VIEW);
+    }
+
+    private function invalidTokenReason(Request $request, string $id): string
+    {
+        if (!$request->query->get('token')) {
+            return 'missing token';
+        }
+
+        $expires = $request->query->getInt('expires', 0);
+        if (!$expires) {
+            return 'missing expires';
+        }
+        if (time() > $expires) {
+            return sprintf('expired %d seconds ago', time() - $expires);
+        }
+
+        $requestedResource = $request->query->get('resource');
+        if (null !== $requestedResource && $requestedResource !== $id) {
+            return sprintf('resource mismatch (requested %s)', $requestedResource);
+        }
+
+        return 'signature mismatch';
     }
 
     private function getMmobjAndTrack(DocumentManager $documentManager, string $id): array
