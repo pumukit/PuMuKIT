@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Services\AnnounceService;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\StatsBundle\Services\StatsService;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Pumukit\WebTVBundle\Services\ListService;
 use Pumukit\WebTVBundle\Services\MenuService;
@@ -415,10 +416,17 @@ class ModulesController extends AbstractController implements WebTVControllerInt
 
     public function sliderAction()
     {
-        $multimediaObjects = $this->documentManager->getRepository(MultimediaObject::class)
+        $multimediaObjects = $this->documentManager
+            ->getRepository(MultimediaObject::class)
             ->createStandardQueryBuilder()
             ->field('tags.cod')
-            ->equals('PUDEWALL')
+            ->all([
+                'PUDEWALL',
+                PumukitWebTVBundle::WEB_TV_TAG,
+            ])
+            ->field('status')
+            ->equals(MultimediaObject::STATUS_PUBLISHED)
+            ->sort('properties.slider_order', 'asc')
             ->getQuery()
             ->execute()
         ;

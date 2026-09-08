@@ -15,7 +15,7 @@ class RoleHierarchy extends SymfonyRoleHierarchy
         if (isset($hierarchy['ROLE_SUPER_ADMIN'])) {
             $hierarchy['ROLE_SUPER_ADMIN'][] = PermissionProfile::SCOPE_GLOBAL;
             foreach ($permissionService->getPermissionsForSuperAdmin() as $permission) {
-                if (false === stripos($permission, 'DISABLED')) {
+                if (false === stripos($permission, 'DISABLE')) {
                     $hierarchy['ROLE_SUPER_ADMIN'][] = $permission;
                 }
             }

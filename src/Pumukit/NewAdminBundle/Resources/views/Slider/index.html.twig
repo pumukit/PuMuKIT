@@ -1,0 +1,213 @@
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
+
+{% block body %}
+
+    <h3 class="cab_body_div">
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active">
+                {% trans %}Slider manager{% endtrans %}
+            </li>
+        </ul>
+    </h3>
+
+    <div class="well slider-manager">
+
+        <p class="text-muted slider-description">
+            {% trans %}Drag and drop the contents to change their order in the slider.{% endtrans %}
+        </p>
+
+        <div id="slider-sortable">
+            {% for mm in multimediaObjects %}
+                <div class="slider-item" data-id="{{ mm.id }}" draggable="true">
+                    <div class="slider-handle" title="{% trans %}Drag to reorder{% endtrans %}">
+                        <i class="fa fa-bars"></i>
+                    </div>
+
+                    <div class="slider-position">
+                        {{ loop.index }}
+                    </div>
+
+                    {% set src = mm|first_url_pic(false, false) %}
+
+                    <div class="slider-thumbnail">
+                        <a href="{{ path('pumukitnewadmin_mms_shortener', {id: mm.id}) }}" title="{% trans %}Edit multimedia object{% endtrans %}">
+                            <img src="{{ src }}" class="img-responsive" alt="{{ mm.getTitle() }}">
+                        </a>
+                    </div>
+
+                    <div class="slider-content">
+                        <div class="slider-main-info">
+                            <div class="slider-title">
+                                <a href="{{ path('pumukitnewadmin_mms_shortener', {id: mm.id}) }}" title="{% trans %}Edit multimedia object{% endtrans %}">
+                                    {{ mm.getTitle() }}
+                                </a>
+                            </div>
+
+                            <div class="slider-metadata">
+                                {% if mm.getSeries() %}
+                                    <span class="slider-metadata-item" title="{% trans %}Series{% endtrans %}">
+                                        <i class="fa fa-folder-open"></i>
+                                        {{ mm.getSeries().getTitle() }}
+                                    </span>
+                                {% endif %}
+
+                                <span class="slider-metadata-item" title="{% trans %}Type{% endtrans %}">
+                                    {% if mm.isVideoType() %}
+                                        <i class="fa fa-file-video"></i>
+                                    {% elseif mm.isAudioType() %}
+                                        <i class="fa fa-file-audio"></i>
+                                    {% elseif mm.isImageType() %}
+                                        <i class="fa fa-file-image"></i>
+                                    {% elseif mm.isDocumentType() %}
+                                        <i class="fa fa-file-alt"></i>
+                                    {% elseif mm.isExternalType() %}
+                                        <i class="fa fa-link"></i>
+                                    {% endif %}
+
+                                    {{ mm.getStringType(mm.getType()) }}
+                                </span>
+
+                                {% if mm.getPublicDate() %}
+                                    <span class="slider-metadata-item" title="{% trans %}Publication date{% endtrans %}">
+                                        <i class="fa fa-calendar"></i>
+                                        {{ mm.getPublicDate()|format_datetime('medium', 'none', locale=app.request.getLocale()) }}
+                                    </span>
+                                {% endif %}
+
+                            </div>
+                        </div>
+
+                        <div class="slider-status">
+                            {% if mm.containsTagWithCod('PUCHWEBTV') %}
+                                <span class="label label-info">
+                                    <i class="fa fa-globe"></i>
+                                    WebTV
+                                </span>
+                            {% else %}
+                                <span class="label label-default">
+                                    <i class="fa fa-times"></i>
+                                    WebTV
+                                </span>
+                            {% endif %}
+
+                            {% if mm.status == constant('Pumukit\\SchemaBundle\\Document\\MultimediaObject::STATUS_PUBLISHED') %}
+                                <span class="label label-success">
+                                    <i class="fa fa-check"></i>
+                                    {% trans %}Published{% endtrans %}
+                                </span>
+                            {% else %}
+                                <span class="label label-default">
+                                    <i class="fa fa-times"></i>
+                                    {% trans %}Not published{% endtrans %}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    {% trans %}There are no contents in the slider{% endtrans %}
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if multimediaObjects|length %}
+            <div class="slider-actions">
+                <button id="save-slider-order" type="button" class="btn btn-primary">
+                    {% trans %}Save{% endtrans %}
+                </button>
+            </div>
+        {% endif %}
+
+    </div>
+
+    <script>
+        $(function () {
+            var draggedItem = null;
+
+            function updatePositions() {
+                $('#slider-sortable .slider-item').each(function (index) {
+                    $(this)
+                        .find('.slider-position')
+                        .text(index + 1);
+                });
+            }
+
+            $('.slider-item').on('dragstart', function (event) {
+                draggedItem = this;
+
+                $(this).addClass('dragging');
+
+                if (event.originalEvent.dataTransfer) {
+                    event.originalEvent.dataTransfer.effectAllowed = 'move';
+                }
+            });
+
+            $('.slider-item').on('dragend', function () {
+                $(this).removeClass('dragging');
+
+                draggedItem = null;
+
+                updatePositions();
+            });
+
+            $('.slider-item').on('dragover', function (event) {
+                event.preventDefault();
+
+                if (!draggedItem || draggedItem === this) {
+                    return;
+                }
+
+                var rect = this.getBoundingClientRect();
+                var middle = rect.top + (rect.height / 2);
+
+                if (event.originalEvent.clientY < middle) {
+                    this.parentNode.insertBefore(
+                        draggedItem,
+                        this
+                    );
+                } else {
+                    this.parentNode.insertBefore(
+                        draggedItem,
+                        this.nextSibling
+                    );
+                }
+            });
+
+            $('#save-slider-order').on('click', function () {
+                var order = [];
+                var button = $(this);
+
+                $('#slider-sortable .slider-item').each(function () {
+                    order.push($(this).data('id'));
+                });
+
+                button.prop('disabled', true);
+
+                $.ajax({
+                    url: '{{ path('pumukit_newadmin_slider_order') }}',
+                    type: 'POST',
+                    data: {
+                        order: order,
+                        _token: '{{ csrf_token('slider_order') }}'
+                    },
+                    success: function (response) {
+                        button.prop('disabled', false);
+
+                        if (response.success) {
+                            success('{{ 'Order saved successfully'|trans }}');
+                        } else {
+                            no_success('{{ 'Error saving order'|trans }}');
+                        }
+                    },
+                    error: function () {
+                        button.prop('disabled', false);
+
+                        no_success('{{ 'Error saving order'|trans }}');
+                    }
+                });
+            });
+        });
+    </script>
+
+{% endblock %}
