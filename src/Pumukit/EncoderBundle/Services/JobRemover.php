@@ -11,6 +11,8 @@ use Pumukit\CoreBundle\Event\FileRemovedEvent;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\TrackService;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class JobRemover
@@ -90,19 +92,23 @@ final class JobRemover
     private function removeDirectoryIfEmpty(string $filePath): void
     {
         $directory = dirname($filePath);
-        $marker = $directory.DIRECTORY_SEPARATOR.'.pumukit-temporary';
+        $marker = $directory.\DIRECTORY_SEPARATOR.'.pumukit-temporary';
+        $filesystem = new Filesystem();
 
-        if (!is_dir($directory) || !file_exists($marker)) {
+        if (!$filesystem->exists([$directory, $marker])) {
             return;
         }
 
-        $files = array_diff(
-            scandir($directory),
-            ['.', '..', '.pumukit-temporary']
-        );
+        $finder = new Finder();
+        $finder
+            ->in($directory)
+            ->ignoreDotFiles(false)
+            ->notName('.pumukit-temporary')
+            ->depth('== 0')
+        ;
 
-        if (0 === count($files)) {
-            unlink($marker);
+        if (!$finder->hasResults()) {
+            $filesystem->remove($marker);
             rmdir($directory);
         }
     }
