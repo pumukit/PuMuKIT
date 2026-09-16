@@ -58,6 +58,8 @@ final class JobRemover
         } elseif ($this->deleteInboxFiles && str_starts_with($job->getPathIni(), $this->inboxPath)) {
             unlink($job->getPathIni());
 
+            $this->removeDirectoryIfEmpty($job->getPathIni());
+
             $event = new FileRemovedEvent($job->getPathIni());
             $this->eventDispatcher->dispatch($event, FileEvents::FILE_REMOVED);
         }
@@ -83,5 +85,25 @@ final class JobRemover
     public function removeMedia(MultimediaObject $multimediaObject, string $trackId): MultimediaObject
     {
         return $this->trackService->removeTrackFromMultimediaObject($multimediaObject, $trackId);
+    }
+
+    private function removeDirectoryIfEmpty(string $filePath): void
+    {
+        $directory = dirname($filePath);
+        $marker = $directory.DIRECTORY_SEPARATOR.'.pumukit-temporary';
+
+        if (!is_dir($directory) || !file_exists($marker)) {
+            return;
+        }
+
+        $files = array_diff(
+            scandir($directory),
+            ['.', '..', '.pumukit-temporary']
+        );
+
+        if (0 === count($files)) {
+            unlink($marker);
+            rmdir($directory);
+        }
     }
 }
