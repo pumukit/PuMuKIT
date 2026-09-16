@@ -3,6 +3,7 @@
 {% set isNaked = is_naked() %}
 {% set lmsUrl = inbox_lms_upload_url() %}
 {% set currentSeries = folder is defined ? folder : series.id %}
+{% set temporaryFolder = folder is not defined %}
 
 {% if isNaked and lmsUrl %}
     var endpoint = "{{ lmsUrl }}"
@@ -12,7 +13,8 @@
         + "&hash=" + encodeURIComponent("{{ hash|default('') }}");
 {% else %}
     var endpoint = "{{ inboxUploadURL }}"
-        + "?series={{ currentSeries }}";
+        + "?series={{ currentSeries }}"
+        + "&temporaryFolder={{ temporaryFolder ? '1' : '0' }}";;
 {% endif %}
 
 var folder = "{{ currentSeries }}";
