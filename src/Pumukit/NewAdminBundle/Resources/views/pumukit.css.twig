@@ -1069,6 +1069,36 @@ hr.pumukit-green {
     min-width: 140px;
 }
 
+.multimedia-object-column {
+    width: 30%;
+    max-width: 450px;
+}
+
+.multimedia-object-title {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.multimedia-object-title.single-line {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.multimedia-object-title.multiline {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+}
+
+.encoder-jobs-footer {
+    margin-right: 0;
+    margin-left: 0;
+}
+
 @media (max-width: 767px) {
     #list_series td[headers="th-title"] {
         white-space: normal;
