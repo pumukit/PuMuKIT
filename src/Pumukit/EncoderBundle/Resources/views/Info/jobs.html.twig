@@ -45,9 +45,12 @@
                     <td class="multimedia-object-column">
                         {% set multimediaObject = multimedia_object_from_id(job.getMmId()) %}
                         {% if multimediaObject is not null %}
-                        <a class="multimedia-object-title" href="{{ path('pumukit_encoder_mm', {'id':job.getMmId()}) }}" title="{{ multimediaObject.title() }}">
-                            {{ multimediaObject.title() }}
-                        </a>
+                            {% set multimediaTitle = multimediaObject.title() %}
+                            {% set hasSpaces = ' ' in multimediaTitle %}
+
+                            <a class="multimedia-object-title {{ hasSpaces ? 'multiline' : 'single-line' }}" href="{{ path('pumukit_encoder_mm', {'id':job.getMmId()}) }}" title="{{ multimediaObject.title() }}">
+                                {{ multimediaObject.title() }}
+                            </a>
                         {% else %}
                             <span class="text-danger">{{ "Multimedia object removed"|trans }}</span>
                         {% endif %}
