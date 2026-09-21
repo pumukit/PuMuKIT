@@ -247,6 +247,7 @@ class Builder implements ContainerAwareInterface
         $hasAccessToImporter = $showImporterTab && $this->authorizationChecker->isGranted('ROLE_ACCESS_IMPORTER');
         $hasAccessToSeriesStyle = $this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_STYLE);
         $hasAccessToHeadAndTailManager = $this->authorizationChecker->isGranted(Permission::ACCESS_HEAD_AND_TAIL_MANAGER);
+        $hasAccessToSliderManager = !$this->authorizationChecker->isGranted('ROLE_TAG_DISABLE_PUDEWALL');
 
         $externalTools = [];
 
@@ -263,7 +264,7 @@ class Builder implements ContainerAwareInterface
         }
 
         $hasAccessToAnyExternalTool = count($externalTools) > 0;
-        $hasAccessToAnyTool = $hasAccessToImporter || $hasAccessToSeriesStyle || $hasAccessToAnyExternalTool || $hasAccessToHeadAndTailManager;
+        $hasAccessToAnyTool = $hasAccessToImporter || $hasAccessToSeriesStyle || $hasAccessToAnyExternalTool || $hasAccessToHeadAndTailManager || $hasAccessToSliderManager;
 
         if (!$hasAccessToAnyTool) {
             return;
@@ -285,6 +286,11 @@ class Builder implements ContainerAwareInterface
         if ($hasAccessToHeadAndTailManager) {
             $options = ['route' => 'pumukit_newadmin_head_and_tail', 'attributes' => ['class' => 'menu_head_and_tail']];
             $root->addChild('Head & tail manager', $options);
+        }
+
+        if ($hasAccessToSliderManager) {
+            $options = ['route' => 'pumukit_newadmin_slider', 'attributes' => ['class' => 'menu_slider']];
+            $root->addChild('Slider manager', $options);
         }
 
         foreach ($externalTools as $item) {
