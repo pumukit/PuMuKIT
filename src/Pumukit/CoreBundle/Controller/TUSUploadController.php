@@ -72,6 +72,10 @@ class TUSUploadController extends AbstractController
                             throw new ConflictHttpException("A file with the name '{$filename}' already exists in this folder.");
                         }
                     }
+
+                    if ($request->query->getBoolean('temporaryFolder')) {
+                        touch($path.DIRECTORY_SEPARATOR.'.pumukit-temporary');
+                    }
                 }
 
                 $server->setUploadDir($path);
