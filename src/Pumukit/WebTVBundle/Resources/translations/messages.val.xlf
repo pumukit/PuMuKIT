@@ -801,6 +801,42 @@
         <source>News</source>
         <target state="translated">Destacats</target>
       </trans-unit>
+      <trans-unit id="slider_manager">
+        <source>Slider manager</source>
+        <target>Gestor del carrusel</target>
+      </trans-unit>
+      <trans-unit id="slider_drag_drop">
+        <source>Drag and drop the contents to change their order in the slider.</source>
+        <target>Arrossega i solta els continguts per a canviar-ne l'orde en el carrusel.</target>
+      </trans-unit>
+      <trans-unit id="slider_drag_reorder">
+        <source>Drag to reorder</source>
+        <target>Arrossega per a reordenar</target>
+      </trans-unit>
+      <trans-unit id="slider_no_contents">
+        <source>There are no contents in the slider</source>
+        <target>No hi ha continguts en el carrusel</target>
+      </trans-unit>
+      <trans-unit id="slider_save_order">
+        <source>Save order</source>
+        <target>Guardar l'orde</target>
+      </trans-unit>
+      <trans-unit id="slider_order_saved">
+        <source>Order saved successfully</source>
+        <target>L'orde s'ha guardat correctament</target>
+      </trans-unit>
+      <trans-unit id="slider_order_error">
+        <source>Error saving order</source>
+        <target>S'ha produït un error en guardar l'orde</target>
+      </trans-unit>
+      <trans-unit id="slider_not_published">
+        <source>Not published</source>
+        <target>No publicat</target>
+      </trans-unit>
+      <trans-unit id="slider_edit_multimedia_object">
+        <source>Edit multimedia object</source>
+        <target>Editar l'objecte multimèdia</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
