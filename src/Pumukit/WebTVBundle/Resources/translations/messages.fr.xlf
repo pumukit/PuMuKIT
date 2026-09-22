@@ -801,6 +801,42 @@
         <source>News</source>
         <target state="needs-translation">News</target>
       </trans-unit>
+      <trans-unit id="slider_manager">
+        <source>Slider manager</source>
+        <target>Gestionnaire du carrousel</target>
+      </trans-unit>
+      <trans-unit id="slider_drag_drop">
+        <source>Drag and drop the contents to change their order in the slider.</source>
+        <target>Glissez-déposez les contenus pour modifier leur ordre dans le carrousel.</target>
+      </trans-unit>
+      <trans-unit id="slider_drag_reorder">
+        <source>Drag to reorder</source>
+        <target>Faites glisser pour réorganiser</target>
+      </trans-unit>
+      <trans-unit id="slider_no_contents">
+        <source>There are no contents in the slider</source>
+        <target>Il n'y a aucun contenu dans le carrousel</target>
+      </trans-unit>
+      <trans-unit id="slider_save_order">
+        <source>Save order</source>
+        <target>Enregistrer l'ordre</target>
+      </trans-unit>
+      <trans-unit id="slider_order_saved">
+        <source>Order saved successfully</source>
+        <target>Ordre enregistré avec succès</target>
+      </trans-unit>
+      <trans-unit id="slider_order_error">
+        <source>Error saving order</source>
+        <target>Erreur lors de l'enregistrement de l'ordre</target>
+      </trans-unit>
+      <trans-unit id="slider_not_published">
+        <source>Not published</source>
+        <target>Non publié</target>
+      </trans-unit>
+      <trans-unit id="slider_edit_multimedia_object">
+        <source>Edit multimedia object</source>
+        <target>Modifier l'objet multimédia</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
