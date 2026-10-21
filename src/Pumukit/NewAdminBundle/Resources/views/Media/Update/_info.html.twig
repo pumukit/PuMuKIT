@@ -4,9 +4,7 @@
     {% set series_url = url('pumukit_webtv_series_index', {id: mm.series.id}) %}
     {% if is_playable %}
         {% if not is_published %}
-            {% trans %}
-                <span class="alert alert-dismissable alert-warning"><i>Warning: This multimedia object is not correctly published on WebTV</i></span>
-            {% endtrans %}
+            <span class="alert alert-dismissable alert-warning"><i>{% trans %}Warning: This multimedia object is not correctly published on WebTV{% endtrans %}</i></span>
             <br />
         {% endif %}
         <div class="form-group">

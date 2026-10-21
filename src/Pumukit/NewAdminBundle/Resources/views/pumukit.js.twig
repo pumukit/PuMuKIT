@@ -1808,7 +1808,7 @@ window.fileServerTree = function(element, type, dir, num, input)
                            ((file.relativepath.length > 50) ? (file.relativepath.slice(0, 35) + '...' + file.relativepath.slice(-15)) : (file.relativepath)) +
                            ((file.content) ? ' [' + (file.content) + ' video(s)]' : '') +
                            '</span></a>';
-                    if(type == 'dir') {
+                    if(type == 'dir' || type == 'both') {
                         links += '<a style="color:blue; text-decoration: underline" class="list-group-item element ' + baseelement.data('path') + ' p_' + baseelement.data('hash') + '" href="#" onclick="fileServerSelect(this, \'' + file.path + '\');">' +
                                  '<span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span>' +
                                  '{% trans %}This directory{% endtrans %}' +
@@ -1829,8 +1829,11 @@ window.fileServerTree = function(element, type, dir, num, input)
             baseelement.addClass("expanded").removeClass("collapsed");
         }
     } else {
-        //hide
-        $("." + baseelement.data('hash')).hide().addClass("collapsed").removeClass("expanded");
+        // Hide all elements (files and dirs)
+        $("."+baseelement.data('hash')).hide();
+
+        // Change the status only of the directories
+        $("."+baseelement.data('hash')).not(".elem").addClass("collapsed").removeClass("expanded");
         baseelement.addClass("collapsed").removeClass("expanded");
     }
 

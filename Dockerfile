@@ -164,6 +164,7 @@ RUN openssl x509 -req -sha256 -days 365 -in cert.csr -signkey cert.key -out cert
 FROM nginx:$NGINX_VERSION-alpine AS proxy
 
 RUN mkdir -p /etc/nginx/ssl/
+
 COPY --from=ssl /srv/pumukit/cert.key /etc/nginx/ssl/
 COPY --from=ssl /srv/pumukit/cert.crt /etc/nginx/ssl/
 COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf

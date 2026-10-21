@@ -14,14 +14,34 @@ function convertSizeToBytes(size)
 function sendInboxXHRImportRequest(file)
 {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "{{ path('inbox_auto_import') }}", true);
+
+    {% if is_naked() %}
+        xhr.open("POST", "{{ path('moodle_dispatch_import') }}", true);
+    {% else %}
+        xhr.open("POST", "{{ path('inbox_auto_import') }}", true);
+    {% endif %}
+
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     var profile = document.querySelector('input[name="profile_option"]:checked').value;
     {% if folder is defined %}
-        var xhrSend = "fileName=" + file.name + "&series={{ folder }}&profile="+profile;
+        var series = "{{ folder }}";
     {% else %}
-        var xhrSend = "fileName=" + file.name + "&series={{ series.id }}&profile="+profile;
+        var series = "{{ series.id }}";
     {% endif %}
+
+    var xhrSend =
+        "fileName=" + encodeURIComponent(file.name) +
+        "&series=" + encodeURIComponent(series) +
+        "&profile=" + encodeURIComponent(profile);
+
+    {% if is_naked() %}
+        xhrSend +=
+            "&username=" + encodeURIComponent("{{ username }}") +
+            "&email=" + encodeURIComponent("{{ email }}") +
+            "&hash=" + encodeURIComponent("{{ hash }}") +
+            "&uuid=" + encodeURIComponent(file.tusUuid || "");
+    {% endif %}
+
     xhr.send(xhrSend);
 }
 

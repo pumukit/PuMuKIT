@@ -31,6 +31,7 @@ class BasePlayerExtension extends AbstractExtension
         return [
             new TwigFunction('track_url', [$this, 'generateTrackFileUrl']),
             new TwigFunction('direct_track_url', [$this, 'generateDirectTrackFileUrl']),
+            new TwigFunction('download_track_url', [$this, 'generateDownloadTrackFileUrl']),
         ];
     }
 
@@ -54,5 +55,10 @@ class BasePlayerExtension extends AbstractExtension
     public function getFirstPublicTrackFilter(MultimediaObject $multimediaObject): ?Track
     {
         return $multimediaObject->getDisplayTrack();
+    }
+
+    public function generateDownloadTrackFileUrl(MediaInterface $track, int $reference_type = UrlGeneratorInterface::ABSOLUTE_URL): ?string
+    {
+        return $this->trackService->generateTrackFileUrl($track, $reference_type, true);
     }
 }

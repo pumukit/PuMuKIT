@@ -1,4 +1,6 @@
 api_platform:
+    graphql:
+      enabled: false
     title: 'PuMuKIT API'
     description: 'Powerful API'
     version: '0.0.0'

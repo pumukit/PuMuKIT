@@ -546,6 +546,21 @@ class FactoryService
             $this->dm->persist($clonedTrack);
             $new->addTrack($clonedTrack);
         }
+        foreach ($src->images() as $image) {
+            $clonedImage = clone $image;
+            $this->dm->persist($clonedImage);
+            $new->addImage($clonedImage);
+        }
+        foreach ($src->documents() as $document) {
+            $clonedDocument = clone $document;
+            $this->dm->persist($clonedDocument);
+            $new->addDocument($clonedDocument);
+        }
+        foreach ($src->external() as $external) {
+            $clonedExternal = clone $external;
+            $this->dm->persist($clonedExternal);
+            $new->addExternal($clonedExternal);
+        }
         foreach ($src->getMaterials() as $material) {
             $clonedMaterial = clone $material;
             $this->dm->persist($clonedMaterial);

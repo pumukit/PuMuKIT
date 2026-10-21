@@ -37,9 +37,22 @@ final class WizardController extends AbstractController
     {
         $series = $this->seriesRepository->search($series);
 
+        $session = $request->getSession();
+        $hash = '';
+        $username = '';
+        $email = '';
+
+        if ($session->has('tus_sso_username') && $session->has('tus_sso_email')) {
+            $username = $session->get('tus_sso_username');
+            $email = $session->get('tus_sso_email');
+        }
+
         return $this->render('@PumukitWizard/Upload/template.html.twig', [
             'series' => $series,
             'inboxUploadURL' => $this->inboxService->inboxUploadURL(),
+            'hash' => $hash,
+            'username' => $username,
+            'email' => $email,
             'inboxUploadLIMIT' => $this->inboxService->inboxUploadLIMIT(),
             'minFileSize' => $this->inboxService->minFileSize(),
             'maxFileSize' => $this->inboxService->maxFileSize(),
@@ -54,18 +67,41 @@ final class WizardController extends AbstractController
      */
     public function uploadFromServer(Request $request, string $series): JsonResponse
     {
-        $path = $request->get('filePath');
+        $relativeFilePath = $request->get('filePath');
         $profile = $request->get('profile');
 
         try {
-            $finder = FinderUtils::filesFromPath($path);
-            foreach ($finder->files() as $file) {
+            $inboxBasePath = realpath($this->inboxService->inboxPath());
+            if (!$inboxBasePath) {
+                return new JsonResponse('Inbox not configured', 400);
+            }
+
+            $absolutePath = '' !== (string) $relativeFilePath
+                ? realpath($inboxBasePath.DIRECTORY_SEPARATOR.$relativeFilePath)
+                : $inboxBasePath;
+
+            if (!$absolutePath || !str_starts_with($absolutePath.DIRECTORY_SEPARATOR, $inboxBasePath.DIRECTORY_SEPARATOR)) {
+                return new JsonResponse('Invalid path', 403);
+            }
+
+            if (is_file($absolutePath)) {
                 $this->uploadDispatcherService->dispatchUploadFromServer(
                     $this->getUser(),
-                    $file->getPathname(),
+                    $absolutePath,
                     $series,
                     $profile
                 );
+            } else {
+                $finder = FinderUtils::filesFromPath($absolutePath);
+
+                foreach ($finder->files() as $file) {
+                    $this->uploadDispatcherService->dispatchUploadFromServer(
+                        $this->getUser(),
+                        $file->getPathname(),
+                        $series,
+                        $profile
+                    );
+                }
             }
         } catch (\Exception $exception) {
             return new JsonResponse($exception->getMessage(), 500);

@@ -69,6 +69,7 @@ class MultimediaObjectArchiveService
         $formerOwnersIds = $this->personService->removeOwnersFromMultimediaObject($multimediaObject);
         $this->addFormerOwner($multimediaObject, $formerOwnersIds);
         $this->assignUserOnArchivedMultimediaObject($multimediaObject);
+        $clonedMultimediaObject->setProperty('archived_generated_from', date('Y'));
 
         $this->documentManager->persist($multimediaObject);
         if ($flush) {

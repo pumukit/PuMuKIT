@@ -17,6 +17,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService;
 use Pumukit\SchemaBundle\Services\TagService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Symfony\Component\Console\Command\Command;
@@ -40,6 +41,7 @@ class CreateMMOCommand extends Command
     ];
     private i18nService $i18nService;
     private ProfileValidator $profileValidator;
+    private SortedMultimediaObjectsService $sortedMultimediaObjectsService;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -49,6 +51,7 @@ class CreateMMOCommand extends Command
         ProfileService $profileService,
         i18nService $i18nService,
         ProfileValidator $profileValidator,
+        SortedMultimediaObjectsService $sortedMultimediaObjectsService,
         string $locale = 'en'
     ) {
         $this->documentManager = $documentManager;
@@ -60,6 +63,7 @@ class CreateMMOCommand extends Command
         parent::__construct();
         $this->i18nService = $i18nService;
         $this->profileValidator = $profileValidator;
+        $this->sortedMultimediaObjectsService = $sortedMultimediaObjectsService;
     }
 
     protected function configure(): void
@@ -158,6 +162,7 @@ EOT
 
         $user = $this->findUser($input->getOption('user'));
         $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $user);
+
         if (!$user) {
             $this->tagService->addTagByCodToMultimediaObject($multimediaObject, PumukitWebTVBundle::WEB_TV_TAG);
             if (null !== $status) {
@@ -173,6 +178,8 @@ EOT
         $jobOptions = new JobOptions($profile, 2, $locale, [], []);
         $path = Path::create($path);
         $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
+
+        $this->sortedMultimediaObjectsService->reorder($series);
 
         SemaphoreUtils::release($semaphore);
 

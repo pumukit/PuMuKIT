@@ -98,7 +98,7 @@
                         no_success(response.error);
                     }else{
                         $('#list_events').html(response);
-                        var message = '{{ "Event"|trans|e("js") }} ' + '{{ "successfully deleted."|trans|e("js") }}';
+                        var message = '{{ "Event successfully updated."|trans|e("js") }}';
                         success(message);
                     }
                 },

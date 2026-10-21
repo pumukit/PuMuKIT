@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.iframe-thumbnail-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background-color: #000;
+}
+
+.iframe-thumbnail-container img {
+    width: 100%;
+}
+
+.play-button-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    width: 20%;
+    max-width: 400px;
+    min-width: 100px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.iframe-thumbnail-container:hover .play-button-overlay {
+    opacity: 1;
+}
+
+.preview-play-icon {
+    pointer-events: none;
+    width: 100%;
+    opacity: 0.6;
+}
+
+.play-button-overlay svg {
+    width: 100%;
+    height: 100%;
+}

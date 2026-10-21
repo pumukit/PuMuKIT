@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\BasePlayerBundle\Controller;
 
 use Pumukit\BasePlayerBundle\Services\IntroService;
+use Pumukit\BasePlayerBundle\Services\ViewCounterService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
@@ -15,17 +16,21 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class PlayerController extends BasePlayerController
 {
+    private ViewCounterService $viewCounter;
+
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         EmbeddedBroadcastService $embeddedBroadcastService,
         MultimediaObjectService $multimediaObjectService,
-        IntroService $basePlayerIntroService
+        IntroService $basePlayerIntroService,
+        ViewCounterService $viewCounter
     ) {
         parent::__construct($eventDispatcher, $embeddedBroadcastService, $multimediaObjectService, $basePlayerIntroService);
         $this->eventDispatcher = $eventDispatcher;
         $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->multimediaObjectService = $multimediaObjectService;
         $this->basePlayerIntroService = $basePlayerIntroService;
+        $this->viewCounter = $viewCounter;
     }
 
     /**
@@ -58,7 +63,7 @@ final class PlayerController extends BasePlayerController
 
         $referer = $request->headers->get('referer') ?? '';
         if (false !== strpos($referer, 'admin')) {
-            $this->dispatchViewEvent($multimediaObject);
+            $this->viewCounter->registerAdminPreview($multimediaObject);
         }
 
         return [

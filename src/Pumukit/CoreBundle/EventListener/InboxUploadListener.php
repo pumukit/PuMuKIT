@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Pumukit\CoreBundle\EventListener;
 
-use MongoDB\BSON\ObjectId;
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Event\UploadFileEvent;
 use Symfony\Component\Process\Process;
@@ -24,12 +23,14 @@ class InboxUploadListener
 
     public function autoImport(UploadFileEvent $event): void
     {
-        $filePath = $this->inboxPath.'/'.$event->getFileName();
+        $fileName = $event->getFileName();
+        $series = $event->getSeries();
 
-        try {
-            $objectId = new ObjectId($event->getSeries());
-        } catch (\Exception $e) {
-            $filePath = $this->inboxPath.'/'.$event->getSeries().'/'.$event->getFileName();
+        $subdirectoryPath = $this->inboxPath.'/'.$series;
+        if (is_dir($subdirectoryPath)) {
+            $filePath = $subdirectoryPath.'/'.$fileName;
+        } else {
+            $filePath = $this->inboxPath.'/'.$fileName;
         }
 
         $command = [
@@ -38,7 +39,7 @@ class InboxUploadListener
             'pumukit:import:inbox',
             $filePath,
             '--user='.$event->getUser()->getUsername(),
-            '--series='.$event->getSeries(),
+            '--series='.$series,
             '--profile='.$event->getProfile(),
         ];
 

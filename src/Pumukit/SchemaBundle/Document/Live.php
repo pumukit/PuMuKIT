@@ -14,8 +14,6 @@ class Live
 {
     public const LIVE_TYPE_WOWZA = 'WOWZA';
 
-    protected static $instances = [];
-
     /**
      * @MongoDB\Id
      */

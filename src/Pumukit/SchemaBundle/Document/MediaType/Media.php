@@ -100,6 +100,11 @@ abstract class Media implements MediaInterface
         return (string) $this->id;
     }
 
+    public function __clone()
+    {
+        $this->id = null;
+    }
+
     public function id(): string
     {
         return (string) $this->id;

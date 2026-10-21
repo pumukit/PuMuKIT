@@ -87,6 +87,12 @@ abstract class BasePlayerController extends AbstractController
         return $tracks;
     }
 
+    /**
+     * @deprecated usar ViewCounterService, que es donde vive la decision de si
+     *             una visualizacion cuenta. Este metodo despacha sin comprobar
+     *             nada. Se mantiene por compatibilidad con los controladores
+     *             que extiendan esta clase.
+     */
     protected function dispatchViewEvent(MultimediaObject $multimediaObject, ?MediaInterface $track = null): void
     {
         $event = new ViewedEvent($multimediaObject, $track);

@@ -801,6 +801,42 @@
         <source>News</source>
         <target state="translated">Destacados</target>
       </trans-unit>
+      <trans-unit id="slider_manager">
+        <source>Slider manager</source>
+        <target>Xestor do carrusel</target>
+      </trans-unit>
+      <trans-unit id="slider_drag_drop">
+        <source>Drag and drop the contents to change their order in the slider.</source>
+        <target>Arrastra e solta os contidos para cambiar a súa orde no carrusel.</target>
+      </trans-unit>
+      <trans-unit id="slider_drag_reorder">
+        <source>Drag to reorder</source>
+        <target>Arrastra para reordenar</target>
+      </trans-unit>
+      <trans-unit id="slider_no_contents">
+        <source>There are no contents in the slider</source>
+        <target>Non hai contidos no carrusel</target>
+      </trans-unit>
+      <trans-unit id="slider_save_order">
+        <source>Save order</source>
+        <target>Gardar orde</target>
+      </trans-unit>
+      <trans-unit id="slider_order_saved">
+        <source>Order saved successfully</source>
+        <target>Orde gardada correctamente</target>
+      </trans-unit>
+      <trans-unit id="slider_order_error">
+        <source>Error saving order</source>
+        <target>Produciuse un erro ao gardar a orde</target>
+      </trans-unit>
+      <trans-unit id="slider_not_published">
+        <source>Not published</source>
+        <target>Non publicado</target>
+      </trans-unit>
+      <trans-unit id="slider_edit_multimedia_object">
+        <source>Edit multimedia object</source>
+        <target>Editar obxecto multimedia</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

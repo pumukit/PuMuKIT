@@ -7,6 +7,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Services\i18nService;
+use Pumukit\CoreBundle\Services\InboxService;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
 use Pumukit\EncoderBundle\Services\JobCreator;
@@ -57,6 +58,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     private MediaRemover $mediaRemover;
     private MediaUpdater $mediaUpdater;
     private i18nService $i18nService;
+    private InboxService $inboxService;
 
     public function __construct(
         LoggerInterface $logger,
@@ -73,6 +75,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         ProfileService $profileService,
         InspectionFfprobeService $inspectionService,
         PicExtractorService $picExtractorService,
+        InboxService $inboxService,
         $kernelEnvironment,
         $kernelBundles
     ) {
@@ -92,6 +95,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $this->mediaRemover = $mediaRemover;
         $this->mediaUpdater = $mediaUpdater;
         $this->i18nService = $i18nService;
+        $this->inboxService = $inboxService;
     }
 
     /**
@@ -135,6 +139,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
                 // Inbox server Upload
                 $jobOptions = new JobOptions($profile, $priority, $language, $description);
                 $path = Path::create($request->get('file'));
+                $this->assertPathIsWithinInbox($path->path());
                 $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
             } else {
                 throw new \Exception('Not received file or file type is not valid.');
@@ -192,13 +197,11 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
         if ($request->isMethod('POST')) {
             try {
-                if ($request->get('hide')) {
-                    $this->mediaUpdater->updateHide($multimediaObject, $track, true);
-                }
+                $download = $request->request->has('download');
+                $hide = $request->request->has('hide');
 
-                if ($request->get('download')) {
-                    $this->mediaUpdater->updateDownload($multimediaObject, $track, true);
-                }
+                $this->mediaUpdater->updateDownload($multimediaObject, $track, $download);
+                $this->mediaUpdater->updateHide($multimediaObject, $track, $hide);
 
                 $this->mediaUpdater->updateLanguage($multimediaObject, $track, $request->get('language'));
                 $tags = Tags::create(explode(',', $request->get('tags')));
@@ -414,5 +417,19 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         }
 
         return [$language, $description];
+    }
+
+    private function assertPathIsWithinInbox(string $filePath): void
+    {
+        $inboxBase = realpath($this->inboxService->inboxPath());
+        $resolvedPath = realpath($filePath);
+
+        if (!$inboxBase || !$resolvedPath) {
+            throw new \InvalidArgumentException('Invalid file path.');
+        }
+
+        if (!str_starts_with($resolvedPath, $inboxBase.DIRECTORY_SEPARATOR) && $resolvedPath !== $inboxBase) {
+            throw new \InvalidArgumentException('File path is not within the allowed inbox directory.');
+        }
     }
 }

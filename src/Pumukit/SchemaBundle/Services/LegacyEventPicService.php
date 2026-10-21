@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Utils\BlackListExtensions;
 use Pumukit\SchemaBundle\Document\Event;
 use Pumukit\SchemaBundle\Document\Pic;
 use Symfony\Component\Finder\Finder;
@@ -59,7 +60,16 @@ class LegacyEventPicService
             throw new FileNotFoundException($picFile->getPathname());
         }
 
-        $path = $picFile->move($this->targetPath.'/'.$event->getId(), $picFile->getClientOriginalName());
+        $extension = strtolower($picFile->getClientOriginalExtension());
+        BlackListExtensions::assertNotBlackListed($extension);
+
+        $mimeType = (string) $picFile->getMimeType();
+        if (!str_starts_with($mimeType, 'image/')) {
+            throw new \InvalidArgumentException('Only image files are allowed.');
+        }
+
+        $safeFileName = basename($picFile->getClientOriginalName());
+        $path = $picFile->move($this->targetPath.'/'.$event->getId(), $safeFileName);
 
         $pic = new Pic();
         $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path->getPathname()));

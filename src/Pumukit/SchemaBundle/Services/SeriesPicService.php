@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Utils\BlackListExtensions;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Series;
@@ -122,11 +123,20 @@ class SeriesPicService
             throw new FileNotFoundException($picFile->getPathname());
         }
 
-        if (file_exists($this->getTargetPath($series).'/'.$picFile->getClientOriginalName())) {
+        $extension = strtolower($picFile->getClientOriginalExtension());
+        BlackListExtensions::assertNotBlackListed($extension);
+
+        $mimeType = (string) $picFile->getMimeType();
+        if (!str_starts_with($mimeType, 'image/')) {
+            throw new \InvalidArgumentException('Only image files are allowed.');
+        }
+
+        $safeFileName = basename($picFile->getClientOriginalName());
+        if (file_exists($this->getTargetPath($series).'/'.$safeFileName)) {
             $i = random_int(0, 15);
-            $name = $picFile->getClientOriginalName().$i;
+            $name = $safeFileName.$i;
         } else {
-            $name = $picFile->getClientOriginalName();
+            $name = $safeFileName;
         }
 
         $path = $picFile->move($this->getTargetPath($series), $name);

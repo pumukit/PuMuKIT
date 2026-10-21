@@ -1,0 +1,56 @@
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ multimediaObject.title }}</title>
+    <link rel="stylesheet" href="{{ asset('bundles/pumukitwebtv/css/iframe_thumbnail.css') }}">
+</head>
+<body>
+    {% set player_url = is_magic 
+        ? path('pumukit_webtv_multimediaobject_player_magiciframe', {'secret': multimediaObject.secret})
+        : path('pumukit_webtv_multimediaobject_player_iframe', {'id': multimediaObject.id})
+    %}
+    
+    <div class="iframe-thumbnail-container" 
+         id="thumbnail-container"
+         data-mmobj-id="{{ multimediaObject.id }}"
+         data-is-magic="{{ is_magic ? 'true' : 'false' }}"
+         data-player-url="{{ player_url }}">
+        <img src="{{ thumbnail_url }}" alt="{{ multimediaObject.title }}" />
+        <button class="play-button-overlay" role="button" aria-label="Play video">
+            <i class="preview-play-icon">
+                <svg viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+                    <rect id="Play" x="0" y="0" width="300" height="300" style="fill:none;"></rect>
+                    <g id="Play1" serif:id="Play">
+                        <g transform="matrix(1.21457,0,0,1.21457,-55.8704,-35.2227)">
+                            <circle cx="169.5" cy="152.5" r="123.5" style="fill:rgb(128,128,128);"></circle>
+                            <path d="M169.5,29C237.662,29 293,84.338 293,152.5C293,220.662 237.662,276 169.5,276C101.338,276 46,220.662 46,152.5C46,84.338 101.338,29 169.5,29ZM169.5,37.233C233.117,37.233 284.767,88.883 284.767,152.5C284.767,216.117 233.117,267.767 169.5,267.767C105.883,267.767 54.233,216.117 54.233,152.5C54.233,88.883 105.883,37.233 169.5,37.233Z" style="fill:rgb(235,235,235);"></path>
+                        </g>
+                        <g transform="matrix(6.12323e-17,1,-1,6.12323e-17,347,-59)">
+                            <path d="M209,82L317,253L101,253L209,82Z" style="fill:rgb(235,235,235);"></path>
+                        </g>
+                    </g>
+                </svg>
+            </i>
+        </button>
+    </div>
+
+    <script src="{{ asset('bundles/pumukitwebtv/js/jquery.min.js') }}"></script>
+    <script>
+        $(function() {
+            $('#thumbnail-container').on('click', function() {
+                var playerUrl = '{{ player_url|raw }}';
+                
+                playerUrl += (playerUrl.indexOf('?') > -1 ? '&' : '?') + 'autoclick=1';
+                
+                var params = window.location.search;
+                if (params) {
+                    playerUrl += '&' + params.substring(1);
+                }
+                
+                window.location.href = playerUrl;
+            });
+        });
+    </script>
+</body>
+</html>

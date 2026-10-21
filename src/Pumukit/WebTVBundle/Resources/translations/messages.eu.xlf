@@ -801,6 +801,42 @@
         <source>News</source>
         <target state="needs-translation">News</target>
       </trans-unit>
+      <trans-unit id="slider_manager">
+        <source>Slider manager</source>
+        <target>Karruselaren kudeatzailea</target>
+      </trans-unit>
+      <trans-unit id="slider_drag_drop">
+        <source>Drag and drop the contents to change their order in the slider.</source>
+        <target>Arrastatu eta jaregin edukiak karruseleko ordena aldatzeko.</target>
+      </trans-unit>
+      <trans-unit id="slider_drag_reorder">
+        <source>Drag to reorder</source>
+        <target>Arrastatu berrantolatzeko</target>
+      </trans-unit>
+      <trans-unit id="slider_no_contents">
+        <source>There are no contents in the slider</source>
+        <target>Ez dago edukirik karruselean</target>
+      </trans-unit>
+      <trans-unit id="slider_save_order">
+        <source>Save order</source>
+        <target>Gorde ordena</target>
+      </trans-unit>
+      <trans-unit id="slider_order_saved">
+        <source>Order saved successfully</source>
+        <target>Ordena behar bezala gorde da</target>
+      </trans-unit>
+      <trans-unit id="slider_order_error">
+        <source>Error saving order</source>
+        <target>Errorea gertatu da ordena gordetzean</target>
+      </trans-unit>
+      <trans-unit id="slider_not_published">
+        <source>Not published</source>
+        <target>Argitaratu gabe</target>
+      </trans-unit>
+      <trans-unit id="slider_edit_multimedia_object">
+        <source>Edit multimedia object</source>
+        <target>Editatu multimedia-objektua</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

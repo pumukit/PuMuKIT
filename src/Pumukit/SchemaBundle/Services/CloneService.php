@@ -73,6 +73,9 @@ class CloneService
 
         $this->clonePics($multimediaObject, $baseMultimediaObject->getPics());
         $this->cloneTracks($multimediaObject, $baseMultimediaObject->getTracks());
+        $this->cloneImageMedias($multimediaObject, $baseMultimediaObject->images());
+        $this->cloneDocumentMedias($multimediaObject, $baseMultimediaObject->documents());
+        $this->cloneExternalMedias($multimediaObject, $baseMultimediaObject->external());
         $this->cloneMaterials($multimediaObject, $baseMultimediaObject->getMaterials());
         $this->cloneLinks($multimediaObject, $baseMultimediaObject->getLinks());
         $this->cloneAnnotations($multimediaObject, $baseMultimediaObject);
@@ -167,9 +170,35 @@ class CloneService
     {
         foreach ($tracks as $track) {
             $clonedTrack = clone $track;
-            $clonedTrack->setNumview(0);
             $this->documentManager->persist($clonedTrack);
             $multimediaObject->addTrack($clonedTrack);
+        }
+    }
+
+    private function cloneImageMedias(MultimediaObject $multimediaObject, Collection $medias): void
+    {
+        foreach ($medias as $media) {
+            $clonedMedia = clone $media;
+            $this->documentManager->persist($clonedMedia);
+            $multimediaObject->addImage($clonedMedia);
+        }
+    }
+
+    private function cloneDocumentMedias(MultimediaObject $multimediaObject, Collection $medias): void
+    {
+        foreach ($medias as $media) {
+            $clonedMedia = clone $media;
+            $this->documentManager->persist($clonedMedia);
+            $multimediaObject->addDocument($clonedMedia);
+        }
+    }
+
+    private function cloneExternalMedias(MultimediaObject $multimediaObject, Collection $medias): void
+    {
+        foreach ($medias as $media) {
+            $clonedMedia = clone $media;
+            $this->documentManager->persist($clonedMedia);
+            $multimediaObject->addExternal($clonedMedia);
         }
     }
 
