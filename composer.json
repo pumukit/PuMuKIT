@@ -1,7 +1,7 @@
 {
     "name": "pumukit/pumukit",
     "license": "AGPL-3.0-or-later",
-    "version": "5.1.x-dev",
+    "version": "5.1.15",
     "type": "project",
     "description": "Media Portal",
     "require": {
@@ -136,7 +136,8 @@
                 "PKSA-8kfs-m8zw-ggzs",
                 "PKSA-gs8r-6kz6-pp56",
                 "PKSA-gnn4-pxdg-q76m",
-                "PKSA-3ncz-km6v-5vjr"
+                "PKSA-3ncz-km6v-5vjr",
+                "PKSA-y93m-jgy6-r9ns"
             ]
         }
     },
