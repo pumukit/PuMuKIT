@@ -3,7 +3,13 @@
     </button>
     <h4 class="modal-title" id="myModalLabel">{% trans %}Job info{% endtrans %}</h4>
 </div>
-<div class="modal-body">
+<div class="modal-body"
+     data-controller="encoder--job"
+     data-encoder--job-id-value="{{ job.id }}"
+     data-encoder--job-update-url-value="{{ path('pumukit_encoder_update_job') }}"
+     data-encoder--job-retry-url-value="{{ path('pumukit_encoder_retry_job', {'id': job.id}) }}"
+     data-encoder--job-error-url-value="{{ path('pumukit_encoder_error_job') }}"
+     data-encoder--job-delete-url-value="{{ path('pumukit_encoder_delete_job') }}">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_JOBS')) %}
         <div class="box-body">
             <dl class="dl-horizontal">
@@ -30,17 +36,17 @@
                 <dt>{% trans %}Priority{% endtrans %}</dt>
                 <dd>
                     {% if job.isPending() %}
-                        <span id="job_info_priority_show" class="job_info_priority">
-          <span id="job_info_priority_show_val">{{ job.getPriority() }}</span>
-          <a href="#" onclick="$('.job_info_priority').toggle(); return false;"
+                        <span id="job_info_priority_show" class="job_info_priority" data-encoder--job-target="priority">
+          <span id="job_info_priority_show_val" data-encoder--job-target="priorityValue">{{ job.getPriority() }}</span>
+          <a href="#" data-action="encoder--job#togglePriority"
              title="{% trans %}Edit priority{% endtrans %}">
             <i class="mdi-editor-mode-edit"></i>
           </a>
         </span>
-                        <span id="job_info_priority_edit" class="job_info_priority" style="display:none">
-          <input type="number" max="3" min="1" value="{{ job.getPriority() }}" id="job_info_priority_edit_input"/>
+                        <span id="job_info_priority_edit" class="job_info_priority" style="display:none" data-encoder--job-target="priority">
+          <input type="number" max="3" min="1" value="{{ job.getPriority() }}" id="job_info_priority_edit_input" data-encoder--job-target="priorityInput"/>
           <a href="#"
-             onclick="$.post('{{ path('pumukit_encoder_update_job') }}', {'jobId': '{{ job.id }}', 'priority': $('#job_info_priority_edit_input').val()}).done(function(v){$('#job_info_priority_show_val').html(v.priority); $('.job_info_priority').toggle();}); return false;"
+             data-action="encoder--job#savePriority"
              title="{% trans %}Edit priority{% endtrans %}">
             <i class="mdi-content-save"></i>
           </a>
@@ -70,21 +76,21 @@
                         data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
                 {% if job.isFailed() and not deletedMultimediaObject %}
                     <button type="submit" class="btn btn-pumukit btn-raised"
-                            onclick="$.post('{{ path('pumukit_encoder_retry_job', {'id': job.id}) }}', {'jobId': '{{ job.id }}', 'success': function(){window.location.reload()}}); return false;"
+                            data-action="encoder--job#retry"
                             data-dismiss="modal">
                         {% trans %}RETRY{% endtrans %}
                     </button>
                 {% endif %}
                 {% if job.isWaiting() or job.isExecuting() %}
                     <button type="submit" class="btn btn-warning btn-raised"
-                            onclick="$.post('{{ path('pumukit_encoder_error_job') }}', {'jobId': '{{ job.id }}', '_method': 'POST', 'success': function(){window.location.reload()}}); return false;"
+                            data-action="encoder--job#stop"
                             data-dismiss="modal">
                         {% trans %}STOP{% endtrans %}
                     </button>
                 {% endif %}
                 {% if job.isFailed() or job.isWaiting() %}
                     <button type="submit" class="btn btn-danger btn-raised"
-                            onclick="$.post('{{ path('pumukit_encoder_delete_job') }}', {'jobId': '{{ job.id }}', '_method': 'DELETE', 'success': function(){window.location.reload()}}); return false;"
+                            data-action="encoder--job#remove"
                             data-dismiss="modal">
                         {% trans %}DELETE{% endtrans %}
                     </button>

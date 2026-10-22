@@ -8,8 +8,9 @@
         </ul>
     </h3>
 
-    <div class="row stats_jobs">
-        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_JOBS')) %}
+    {% set can_access_jobs = app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_JOBS')) %}
+    <div class="row stats_jobs"{% if can_access_jobs %} data-controller="encoder--stats"{% endif %}>
+        {% if can_access_jobs %}
             {% include '@PumukitEncoder/Info/stats.html.twig' %}
         {% endif %}
     </div>

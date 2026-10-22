@@ -35,27 +35,16 @@
                   </label>
               {% else %}
                     <label>
-                        <input id="maintenance-{{name}}-toggle" type="checkbox" {% if not deactivated %}checked="checked"{% endif %}>
+                        <input id="maintenance-{{name}}-toggle" type="checkbox" {% if not deactivated %}checked="checked"{% endif %}
+                               data-controller="encoder--cpu-maintenance"
+                               data-action="click->encoder--cpu-maintenance#toggle"
+                               data-encoder--cpu-maintenance-activate-url-value="{{ path('pumukit_encoder_cpu_maintenance_switch', {'activateMaintenance': 'activate', 'cpuName': name}) }}"
+                               data-encoder--cpu-maintenance-deactivate-url-value="{{ path('pumukit_encoder_cpu_maintenance_switch', {'activateMaintenance': 'deactivate', 'cpuName': name}) }}">
                     </label>
               {% endif %}
           </div>
         </div>
       </div>
     </div>
-    <script>
-     $(document.getElementById('maintenance-{{name}}-toggle')).click(function(){
-         var url = '';
-         var activateUrl = '{{ path('pumukit_encoder_cpu_maintenance_switch', { 'activateMaintenance': 'activate' , 'cpuName': name} ) }}';
-         var deactivateUrl = '{{ path('pumukit_encoder_cpu_maintenance_switch', { 'activateMaintenance': 'deactivate' , 'cpuName': name} ) }}';
-         if( this.checked ) {
-             url = deactivateUrl;
-         } else {
-             url = activateUrl;
-         }
-         $.get(url).done(function(){
-             window.location.reload(true);
-         });
-     });
-    </script>
   {% endfor %}
 </div>

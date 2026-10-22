@@ -50,13 +50,7 @@
                 {% endfor %}
             </tbody>
         </table>
-        <button id="expandOtherPackages" class="btn btn-primary" type="button">{{ 'Other packages' | trans }}</button>
+        <button id="expandOtherPackages" class="btn btn-primary" type="button" data-controller="core--toggle" data-core--toggle-selector-value=".otherPackages" data-action="core--toggle#toggle">{{ 'Other packages' | trans }}</button>
     </div>
-
-    <script type="text/javascript">
-        $('#expandOtherPackages').click(function() {
-            $('.otherPackages').toggle();
-        })
-    </script>
 
 {% endblock %}

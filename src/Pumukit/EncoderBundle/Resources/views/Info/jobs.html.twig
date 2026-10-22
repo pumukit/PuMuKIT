@@ -9,7 +9,7 @@
 {% elseif jobs.jobs|length == 0 %}
     <div>
         {% trans %}No showing {% endtrans %} {{ title|lower }}. {% trans %}Please change the filter or {% endtrans %}
-        <a href="#" onclick="window.location.href=window.location.pathname">{% trans %} reset it {% endtrans %}</a>.
+        <a href="{{ app.request.baseUrl ~ app.request.pathInfo }}">{% trans %} reset it {% endtrans %}</a>.
     </div>
 {% else %}
     <div class="table-responsive">

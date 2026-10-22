@@ -41,7 +41,7 @@
 
     {% if (app.request.attributes.get('_route') == "file_upload") %}
         <script src="{{ asset('bundles/pumukitcore/js/uppy.min.js') }}"></script>
-        <script>{% include "@PumukitCore/Upload/uppy_tus.js.twig" %}</script>
+        {% include "@PumukitCore/Upload/uppy_tus.html.twig" %}
     {% endif %}
 
 {% endblock %}
