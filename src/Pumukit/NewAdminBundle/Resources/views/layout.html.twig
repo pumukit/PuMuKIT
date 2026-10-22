@@ -17,9 +17,7 @@
     <!-- Dropdown.js -->
     <link href="{{ asset('bundles/pumukitnewadmin/css/jquery.dropdown.css') }}" rel="stylesheet">
     <!-- jQuery UI custom (autocomplete) -->
-    <link href="{{ asset('bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.structure.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.theme.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
     <link href="{{ path('pumukit_jquery_ui_autocomplete_css') }}" rel="stylesheet">
     <!-- SnackbarJS CSS core -->
     <link href="{{ asset('bundles/pumukitnewadmin/css/snackbar.min.css') }}" rel="stylesheet">
@@ -35,6 +33,7 @@
 
 {% block javascripts %}
     <script src="{{ asset('bundles/pumukitcore/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('bundles/pumukitcore/vendor/jquery-migrate/jquery-migrate.min.js') }}"></script>
     <script src="{{ asset('bundles/pumukitcore/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('bundles/pumukitnewadmin/js/ripples.min.js') }}"></script>
     <script src="{{ asset('bundles/pumukitnewadmin/js/material.min.js') }}"></script>
@@ -42,7 +41,7 @@
     <script src="{{ asset('bundles/pumukitnewadmin/js/jquery.nouislider.min.js') }}"></script>
     <script type="text/javascript" src="{{ path('pumukitnewadmin_locale_js') }}"></script>
     <script src="{{ asset('bundles/pumukitnewadmin/js/hinclude.js') }}"></script>
-    <script src="{{ asset('bundles/pumukitnewadmin/js/jquery-ui-1.11.3.custom.min.js') }}"></script>
+    <script src="{{ asset('bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('bundles/pumukitnewadmin/js/typeahead.bundle.min.js') }}"></script>
     <script src="{{ asset('bundles/pumukitnewadmin/js/materialize-tags.min.js') }}"></script>
 

@@ -23,6 +23,13 @@ class CheckAssetsCommand extends Command
         'bundles/pumukitwebtv/js/moment-with-locales.min.js' => 'bundles/pumukitcore/vendor/moment/moment-with-locales.min.js',
         'bundles/pumukitstatsui/vendor/moment/moment.min.js' => 'bundles/pumukitcore/vendor/moment/moment-with-locales.min.js',
         'bundles/pumukitlive/css/chat.css' => 'bundles/pumukitwebtv/css/live/chat.css',
+        'bundles/pumukitnewadmin/js/jquery-ui-1.11.3.custom.min.js' => 'bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.js',
+        'bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.min.css' => 'bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.css',
+        'bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.structure.min.css' => 'bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.css',
+        'bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.theme.min.css' => 'bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.css',
+        'bundles/pumukitwebtv/js/bootstrap-datetimepicker.min.js' => 'bundles/pumukitcore/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js',
+        'bundles/pumukitwebtv/css/bootstrap-datetimepicker.min.css' => 'bundles/pumukitcore/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css',
+        'bundles/pumukitwebtv/css/bootstrap-datetimepicker.css' => 'bundles/pumukitcore/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css',
     ];
 
     private const REFERENCE_PATTERN = '#(?<![\w./-])/?(bundles/([a-z0-9_]+)/[^\'"\s?\#{}()]*)#';
