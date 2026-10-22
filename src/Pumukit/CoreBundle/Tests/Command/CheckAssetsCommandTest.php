@@ -31,7 +31,10 @@ class CheckAssetsCommandTest extends PumukitTestCase
     public function tearDown(): void
     {
         if (isset($this->tmpDir) && is_dir($this->tmpDir)) {
-            array_map('unlink', glob($this->tmpDir.'/*') ?: []);
+            $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->tmpDir, \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST);
+            foreach ($files as $file) {
+                $file->isDir() ? rmdir($file->getPathname()) : unlink($file->getPathname());
+            }
             rmdir($this->tmpDir);
         }
         parent::tearDown();
@@ -69,14 +72,47 @@ class CheckAssetsCommandTest extends PumukitTestCase
     {
         file_put_contents(
             $this->tmpDir.'/template.html.twig',
-            "<script src=\"{{ asset('bundles/pumukitcore/vendor/jquery/jquery.min.js') }}\"></script>\n<img src=\"{{ asset('bundles/pumukitwebtv/images/categories/' ~ name) }}\">\n<base href=\"../bundles/pumukitmissing/\">\n"
+            "<script src=\"{{ asset('bundles/pumukitcore/vendor/jquery/jquery.min.js') }}\"></script>\n<img src=\"{{ asset('bundles/pumukitwebtv/images/categories/' ~ name) }}\">\n<base href=\"../bundles/pumukitmissing/\">\n{% extends ['@PumukitWebTV/Layout/template.html.twig', '@PumukitWebTV/Layout/missing.html.twig'] %}\n{% include '@PumukitWebTV/missing.html.twig' ignore missing %}\n"
         );
 
         $tester = $this->commandTester();
         $tester->execute(['--path' => $this->tmpDir]);
 
         $this->assertSame(Command::SUCCESS, $tester->getStatusCode());
-        $this->assertStringContainsString('Missing assets found: 0', $tester->getDisplay());
+        $this->assertStringContainsString('Problems found: 0', $tester->getDisplay());
+    }
+
+    public function testReportsRemovedTemplateWithItsReplacement(): void
+    {
+        file_put_contents(
+            $this->tmpDir.'/template.html.twig',
+            "{% include '@PumukitCore/Upload/uppy_drag_and_drop.html.twig' %}\n<script>{% include \"@PumukitCore/Upload/uppy_tus.js.twig\" %}</script>\n"
+        );
+
+        $tester = $this->commandTester();
+        $tester->execute(['--path' => $this->tmpDir]);
+
+        $display = $tester->getDisplay();
+        $this->assertSame(Command::FAILURE, $tester->getStatusCode());
+        $this->assertStringContainsString('Missing template: @PumukitCore/Upload/uppy_tus.js.twig in template.html.twig:2', $display);
+        $this->assertStringContainsString('use @PumukitCore/Upload/uppy_tus.html.twig', $display);
+        $this->assertStringNotContainsString('uppy_drag_and_drop', $display);
+    }
+
+    public function testReportsPortalLayoutWithoutImportmap(): void
+    {
+        mkdir($this->tmpDir.'/bundles/PumukitWebTVBundle/Layout', 0o777, true);
+        file_put_contents($this->tmpDir.'/bundles/PumukitWebTVBundle/Layout/template.html.twig', "<html><head>{% block javascripts %}{% endblock %}</head></html>\n");
+        file_put_contents($this->tmpDir.'/base.html.twig', "<html><head></head></html>\n");
+        file_put_contents($this->tmpDir.'/bundles/PumukitWebTVBundle/Layout/menu.html.twig', "{% include '@PumukitWebTV/Layout/template.html.twig' %}\n");
+
+        $tester = $this->commandTester();
+        $tester->execute(['--path' => $this->tmpDir]);
+
+        $display = $tester->getDisplay();
+        $this->assertSame(Command::FAILURE, $tester->getStatusCode());
+        $this->assertStringContainsString("Missing {{ importmap('pumukit') }} in the javascripts block of bundles/PumukitWebTVBundle/Layout/template.html.twig", $display);
+        $this->assertStringContainsString('Problems found: 1', $display);
     }
 
     public function testFailsWhenPathDoesNotExist(): void

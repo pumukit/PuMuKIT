@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Twig\Environment;
 
 class CheckAssetsCommand extends Command
 {
@@ -30,16 +31,23 @@ class CheckAssetsCommand extends Command
         'bundles/pumukitwebtv/js/bootstrap-datetimepicker.min.js' => 'bundles/pumukitcore/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js',
         'bundles/pumukitwebtv/css/bootstrap-datetimepicker.min.css' => 'bundles/pumukitcore/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css',
         'bundles/pumukitwebtv/css/bootstrap-datetimepicker.css' => 'bundles/pumukitcore/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css',
+        '@PumukitCore/Upload/uppy_tus.js.twig' => '@PumukitCore/Upload/uppy_tus.html.twig (include it outside the <script> tag)',
+        '@PumukitCore/Upload/uppy_dispatch.js.twig' => '@PumukitCore/Upload/uppy_tus.html.twig (include it outside the <script> tag)',
     ];
 
     private const REFERENCE_PATTERN = '#(?<![\w./-])/?(bundles/([a-z0-9_]+)/[^\'"\s?\#{}()]*)#';
+    private const TEMPLATE_PATTERN = '#[\'"](@Pumukit[A-Za-z]+/[^\'"]+\.twig)[\'"]#';
+    private const PORTAL_LAYOUT = 'PumukitWebTVBundle/Layout/template.html.twig';
+    private const OPTIONAL_TEMPLATE_PATTERN = '#\{%-?\s*(extends|include|embed)\s*\[|ignore missing#';
 
     private KernelInterface $kernel;
+    private Environment $twig;
     private string $projectDir;
 
-    public function __construct(KernelInterface $kernel, #[Autowire('%kernel.project_dir%')] string $projectDir)
+    public function __construct(KernelInterface $kernel, Environment $twig, #[Autowire('%kernel.project_dir%')] string $projectDir)
     {
         $this->kernel = $kernel;
+        $this->twig = $twig;
         $this->projectDir = $projectDir;
         parent::__construct();
     }
@@ -48,14 +56,16 @@ class CheckAssetsCommand extends Command
     {
         $this
             ->setName('pumukit:check:assets')
-            ->setDescription('List references in Twig templates to bundle assets that do not exist')
+            ->setDescription('List references in Twig templates to bundle assets and PuMuKIT templates that do not exist')
             ->addOption('path', null, InputOption::VALUE_REQUIRED, 'Directory with the templates to check (default: the project templates directory)', null)
             ->setHelp(
                 <<<'EOT'
 The <info>pumukit:check:assets</info> command looks for references to bundle public assets
-(<comment>bundles/<bundle>/...</comment>) in the Twig templates of a directory and reports the ones
-whose file is not provided by any installed bundle. When the asset was moved, it shows the
-path that replaces it.
+(<comment>bundles/<bundle>/...</comment>) and to PuMuKIT templates (<comment>@PumukitXxx/...twig</comment>)
+in the Twig templates of a directory and reports the ones that no installed bundle provides.
+When the asset or template was moved, it shows the one that replaces it. It also reports an
+overridden portal layout (<comment>PumukitWebTVBundle/Layout/template.html.twig</comment>) that does not
+load <comment>importmap('pumukit')</comment>.
 
 Run it on the overridden templates of a project before upgrading PuMuKIT. It exits with an
 error code when a missing asset is found.
@@ -82,29 +92,59 @@ EOT
 
         $finder = (new Finder())->files()->in($path)->name('*.twig')->sortByName();
         foreach ($finder as $file) {
-            foreach (file($file->getPathname()) as $index => $line) {
-                if (!preg_match_all(self::REFERENCE_PATTERN, $line, $matches, PREG_SET_ORDER)) {
+            $lines = file($file->getPathname());
+            foreach ($lines as $index => $line) {
+                $location = $file->getRelativePathname().':'.($index + 1);
+
+                preg_match_all(self::REFERENCE_PATTERN, $line, $matches, PREG_SET_ORDER);
+                foreach ($matches as [, $reference, $bundle]) {
+                    if (!$this->exists($publicDirs, $bundle, $reference)) {
+                        ++$missing;
+                        $this->report($output, 'Missing asset', $reference, $location);
+                    }
+                }
+
+                if (preg_match(self::OPTIONAL_TEMPLATE_PATTERN, $line)) {
                     continue;
                 }
 
-                foreach ($matches as [, $reference, $bundle]) {
-                    if ($this->exists($publicDirs, $bundle, $reference)) {
-                        continue;
-                    }
-
-                    ++$missing;
-                    $location = $file->getRelativePathname().':'.($index + 1);
-                    $output->writeln('Missing asset: <info>'.$reference.'</info> in '.$location);
-                    if (isset(self::REPLACEMENTS[$reference])) {
-                        $output->writeln('    use <comment>'.self::REPLACEMENTS[$reference].'</comment>');
+                preg_match_all(self::TEMPLATE_PATTERN, $line, $matches, PREG_SET_ORDER);
+                foreach ($matches as [, $template]) {
+                    if (!$this->templateExists($path, $template)) {
+                        ++$missing;
+                        $this->report($output, 'Missing template', $template, $location);
                     }
                 }
             }
+
+            if (str_ends_with($file->getRelativePathname(), self::PORTAL_LAYOUT) && !str_contains(implode('', $lines), 'importmap(')) {
+                ++$missing;
+                $output->writeln('Missing <info>{{ importmap(\'pumukit\') }}</info> in the javascripts block of '.$file->getRelativePathname());
+            }
         }
 
-        $output->writeln('<comment>***** Missing assets found: '.$missing.' *****</comment>');
+        $output->writeln('<comment>***** Problems found: '.$missing.' *****</comment>');
 
         return $missing > 0 ? Command::FAILURE : Command::SUCCESS;
+    }
+
+    private function templateExists(string $path, string $template): bool
+    {
+        if ($this->twig->getLoader()->exists($template)) {
+            return true;
+        }
+
+        [$namespace, $relativePath] = explode('/', substr($template, 1), 2);
+
+        return file_exists($path.'/bundles/'.$namespace.'Bundle/'.$relativePath);
+    }
+
+    private function report(OutputInterface $output, string $problem, string $reference, string $location): void
+    {
+        $output->writeln($problem.': <info>'.$reference.'</info> in '.$location);
+        if (isset(self::REPLACEMENTS[$reference])) {
+            $output->writeln('    use <comment>'.self::REPLACEMENTS[$reference].'</comment>');
+        }
     }
 
     private function bundlePublicDirs(): array
