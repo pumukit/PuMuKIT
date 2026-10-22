@@ -41,7 +41,7 @@ jQuery(document).ready(function() {
 
             month_loaded = false;
             cargando.show();
-            $.get( url_latestuploads_pager, {date: anDate.toStringParameter()}).success(function(data, textStatus, response){
+            $.get( url_latestuploads_pager, {date: anDate.toStringParameter()}).done(function(data, textStatus, response){
                 cargando.hide();
                 if( response.getResponseHeader( 'X-Date' ) != "---" )
                 {

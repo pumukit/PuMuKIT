@@ -32,7 +32,7 @@
  //Updates add video button.
  $('#add_videos_modal_button').prop('disabled', true);
  $('#url .mmobj_elem').removeClass('checked');
- $('iframe#paellaiframe').load(function(){
+ $('iframe#paellaiframe').on('load', function(){
      $('#add_videos_modal_button').prop('disabled', false);
      $('#url .mmobj_elem').addClass('checked');
  });

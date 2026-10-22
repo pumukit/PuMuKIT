@@ -431,7 +431,7 @@ window.upload_mmspic = function(resourceId) {
 
 
 window.check_for_new_pics = function(resourceId, numPics) {
-    var uiNumPics = $('.admin-pic-' + resourceId).size();
+    var uiNumPics = $('.admin-pic-' + resourceId).length;
     if (uiNumPics != numPics) {
         upload_mmspic(resourceId);
     }
