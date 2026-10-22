@@ -28,13 +28,13 @@ class CPUsController extends AbstractController
     #[Route('/cpu/maintenance', name: 'pumukit_encoder_cpu_maintenance', requirements: ['activateMaintenance' => 'activate|deactivate'])]
     public function maintenanceAction(Request $request): Response
     {
-        $cpuName = $request->get('cpu_name');
+        $cpuName = $request->query->get('cpu_name');
         if (!$cpuName) {
             throw $this->createNotFoundException("There is no required 'cpu_name' parameter");
         }
         $activateMaintenance = null;
-        $activate = $request->get('activate');
-        $deactivate = $request->get('deactivate');
+        $activate = $request->query->get('activate');
+        $deactivate = $request->query->get('deactivate');
         if ((true === $activate || 'activate' === $activate || 'true' === $activate || '' === $activate)
             || (null !== $deactivate && (false === $deactivate || 'false' === $deactivate))) {
             $activateMaintenance = 'activate';

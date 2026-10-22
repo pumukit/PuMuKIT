@@ -140,8 +140,8 @@ class InfoController extends AbstractController
     #[Route('/job', methods: ['POST'], name: 'pumukit_encoder_update_job')]
     public function updateJobPriorityAction(Request $request): JsonResponse
     {
-        $priority = (int) $request->get('priority');
-        $jobId = $request->get('jobId');
+        $priority = (int) $request->request->get('priority');
+        $jobId = $request->request->get('jobId');
         $job = $this->jobRepository->searchJob($jobId);
         $this->jobUpdater->updateJobPriority($job, $priority);
 
@@ -154,7 +154,7 @@ class InfoController extends AbstractController
     #[Route('/error/job', methods: ['POST'], name: 'pumukit_encoder_error_job')]
     public function setAsFailedAction(Request $request): JsonResponse
     {
-        $job = $this->jobRepository->searchJob($request->get('jobId'));
+        $job = $this->jobRepository->searchJob($request->request->get('jobId'));
         $this->jobUpdater->errorJob($job);
 
         return new JsonResponse(['jobId' => $job->getId()]);
@@ -163,7 +163,7 @@ class InfoController extends AbstractController
     #[Route('/job', methods: ['DELETE'], name: 'pumukit_encoder_delete_job')]
     public function deleteJobAction(Request $request): JsonResponse
     {
-        $job = $this->jobRepository->searchJob($request->get('jobId'));
+        $job = $this->jobRepository->searchJob($request->request->get('jobId'));
         $this->jobRemover->delete($job);
 
         return new JsonResponse(['jobId' => $job->getId()]);
