@@ -41,7 +41,7 @@ class TUSUploadController extends AbstractController
             $this->validateFileExtension($request);
         }
 
-        $series = $request->get('series');
+        $series = $request->query->get('series');
 
         if (!empty($series)) {
             try {

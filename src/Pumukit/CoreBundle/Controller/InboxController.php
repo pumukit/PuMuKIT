@@ -44,7 +44,7 @@ class InboxController extends AbstractController
     #[Template('@PumukitCore/Upload/upload_drag_and_drop.html.twig')]
     public function folder(Request $request): array
     {
-        $formData = $request->get('inbox_form_data', []);
+        $formData = $request->request->all('inbox_form_data');
         $inboxUploadURL = $this->inboxService->inboxUploadURL();
         $inboxUploadLIMIT = $this->inboxService->inboxUploadLIMIT();
         $minFileSize = $this->inboxService->minFileSize();
@@ -91,7 +91,7 @@ class InboxController extends AbstractController
     #[IsGranted('ROLE_UPLOAD_INBOX')]
     public function checkFolderBeforeCreating(Request $request): JsonResponse
     {
-        $folderName = $request->get('folder');
+        $folderName = $request->request->get('folder');
 
         if ((0 === preg_match('/^[[:alnum:]\s_]+$/', $folderName)) || empty(trim($folderName))) {
             return new JsonResponse(false);
@@ -107,9 +107,9 @@ class InboxController extends AbstractController
         try {
             $this->uploadDispatcherService->dispatchUploadFromInbox(
                 $this->getUser(),
-                $request->get('fileName'),
-                $request->get('series'),
-                $request->get('profile', 'master_copy')
+                $request->request->get('fileName'),
+                $request->request->get('series'),
+                $request->request->get('profile', 'master_copy')
             );
         } catch (\Exception $exception) {
             return new JsonResponse(['success' => false]);
