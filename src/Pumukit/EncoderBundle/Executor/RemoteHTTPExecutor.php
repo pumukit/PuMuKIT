@@ -32,13 +32,11 @@ class RemoteHTTPExecutor implements ExecutorInterface
 
         if (false === $response) {
             $error = curl_error($curl);
-            curl_close($curl);
 
             throw new ExecutorException(sprintf('An error occurred: %s.', $error));
         }
 
         $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);
         if (200 != $statusCode) {
             throw new ExecutorException(sprintf('The web service failed for an unknown reason (HTTP %s).', $statusCode));
         }

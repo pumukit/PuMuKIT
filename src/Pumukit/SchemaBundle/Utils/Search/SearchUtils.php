@@ -49,7 +49,7 @@ class SearchUtils
 
     public static function generateRegexExpression($string)
     {
-        $elements = str_getcsv(preg_quote($string), self::$delimiter);
+        $elements = str_getcsv(preg_quote($string), self::$delimiter, '"', '\\');
 
         if (self::$maxTokens > 0) {
             $elements = array_slice($elements, 0, self::$maxTokens);

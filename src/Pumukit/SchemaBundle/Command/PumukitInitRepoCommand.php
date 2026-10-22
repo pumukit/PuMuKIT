@@ -257,10 +257,10 @@ EOT
 
         $importedTags = [];
         $file = fopen($fileRoute, 'rb');
-        $csvTagHeaders = fgetcsv($file, 0, ';');
+        $csvTagHeaders = fgetcsv($file, 0, ';', '"', '\\');
 
         $numberPersisted = 0;
-        while (false !== ($currentRow = fgetcsv($file, 0, ';'))) {
+        while (false !== ($currentRow = fgetcsv($file, 0, ';', '"', '\\'))) {
             if ('id' === trim($currentRow[0])) {
                 continue;
             }
@@ -475,7 +475,7 @@ EOT
         }
 
         if ('tag' === $this->repoName) {
-            $csvTagHeaders = fgetcsv($file, 0, ';');
+            $csvTagHeaders = fgetcsv($file, 0, ';', '"', '\\');
             fclose($file);
 
             if (false === $csvTagHeaders) {
