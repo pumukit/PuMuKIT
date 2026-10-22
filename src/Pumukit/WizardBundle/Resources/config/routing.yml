@@ -1,4 +1,4 @@
 pumukit_wizard:
   resource: "@PumukitWizardBundle/Controller/"
-  type:     annotation
+  type:     attribute
   prefix:   /

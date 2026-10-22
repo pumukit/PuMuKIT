@@ -7,60 +7,37 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-/**
- * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\RoleRepository")
- */
+#[MongoDB\Document(repositoryClass: 'Pumukit\SchemaBundle\Repository\RoleRepository')]
 class Role implements RoleInterface
 {
-    /**
-     * @MongoDB\Id
-     */
+    #[MongoDB\Id]
     protected $id;
 
-    /**
-     * @MongoDB\Field(type="string")
-     *
-     * @MongoDB\UniqueIndex()
-     */
+    #[MongoDB\Field(type: 'string')]
+    #[MongoDB\UniqueIndex]
     private $cod = '0';
 
-    /**
-     * @MongoDB\Field(type="int")
-     *
-     * @MongoDB\Index
-     *
-     * @Gedmo\SortablePosition
-     */
+    #[MongoDB\Field(type: 'int')]
+    #[MongoDB\Index]
+    #[Gedmo\SortablePosition]
     private $rank;
 
-    /**
-     * @MongoDB\Field(type="int", strategy="increment" )
-     */
+    #[MongoDB\Field(type: 'int', strategy: 'increment')]
     private $number_people_in_multimedia_object = 0;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $xml;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $display = true;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $readOnly = false;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $name = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $text = ['en' => ''];
 
     /** @var string */

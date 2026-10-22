@@ -7,9 +7,7 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-/**
- * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\PermissionProfileRepository")
- */
+#[MongoDB\Document(repositoryClass: 'Pumukit\SchemaBundle\Repository\PermissionProfileRepository')]
 class PermissionProfile
 {
     public const SCOPE_GLOBAL = 'ROLE_SCOPE_GLOBAL';
@@ -22,43 +20,27 @@ class PermissionProfile
         self::SCOPE_NONE => 'No Scope',
     ];
 
-    /**
-     * @MongoDB\Id
-     */
+    #[MongoDB\Id]
     private $id;
 
-    /**
-     * @MongoDB\Field(type="string")
-     *
-     * @MongoDB\UniqueIndex(order="asc")
-     */
+    #[MongoDB\Field(type: 'string')]
+    #[MongoDB\UniqueIndex(order: 'asc')]
     private $name = '';
 
-    /**
-     * @MongoDB\Field(type="collection")
-     */
+    #[MongoDB\Field(type: 'collection')]
     private $permissions = [];
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $system = false;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $default = false;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $scope = self::SCOPE_PERSONAL;
 
-    /**
-     * @MongoDB\Field(type="int")
-     *
-     * @Gedmo\SortablePosition
-     */
+    #[MongoDB\Field(type: 'int')]
+    #[Gedmo\SortablePosition]
     private $rank;
 
     public function __toString(): string

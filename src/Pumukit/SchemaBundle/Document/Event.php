@@ -6,59 +6,37 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-/**
- * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\EventRepository")
- */
+#[MongoDB\Document(repositoryClass: 'Pumukit\SchemaBundle\Repository\EventRepository')]
 class Event
 {
-    /**
-     * @MongoDB\Id
-     */
+    #[MongoDB\Id]
     private $id;
 
-    /**
-     * @MongoDB\ReferenceOne(targetDocument=Live::class, cascade={"persist"})
-     */
+    #[MongoDB\ReferenceOne(targetDocument: Live::class, cascade: ['persist'])]
     private $live;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $name;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $description = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $place;
 
-    /**
-     * @MongoDB\Field(type="date")
-     */
+    #[MongoDB\Field(type: 'date')]
     private $date;
 
-    /**
-     * @MongoDB\Field(type="int")
-     */
+    #[MongoDB\Field(type: 'int')]
     private $duration = 60;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $display = true;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $create_serial = true;
 
-    /**
-     * @MongoDB\EmbedOne(targetDocument=Pic::class)
-     */
+    #[MongoDB\EmbedOne(targetDocument: Pic::class)]
     private $pic;
 
     private $locale = 'en';

@@ -6,49 +6,31 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-/**
- * @MongoDB\EmbeddedDocument
- */
+#[MongoDB\EmbeddedDocument]
 class EmbeddedSegment
 {
-    /**
-     * @MongoDB\Id
-     */
+    #[MongoDB\Id]
     private $id;
 
-    /**
-     * @MongoDB\Field(type="int")
-     */
+    #[MongoDB\Field(type: 'int')]
     private $index;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $time;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $duration;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $relevance;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $hit;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $text;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $preview;
 
     public function __toString(): string

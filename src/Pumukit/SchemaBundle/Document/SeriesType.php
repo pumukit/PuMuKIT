@@ -8,36 +8,23 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use JMS\Serializer\Annotation as Serializer;
 
-/**
- * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\SeriesTypeRepository")
- */
+#[MongoDB\Document(repositoryClass: 'Pumukit\SchemaBundle\Repository\SeriesTypeRepository')]
 class SeriesType
 {
-    /**
-     * @MongoDB\Id
-     */
+    #[MongoDB\Id]
     private $id;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $name = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $description = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $cod = '0';
 
-    /**
-     * @MongoDB\ReferenceMany(targetDocument=Series::class, mappedBy="series_type", storeAs="id", orphanRemoval=false)
-     *
-     * @Serializer\Exclude
-     */
+    #[MongoDB\ReferenceMany(targetDocument: Series::class, mappedBy: 'series_type', storeAs: 'id', orphanRemoval: false)]
+    #[Serializer\Exclude]
     private $series;
 
     /**

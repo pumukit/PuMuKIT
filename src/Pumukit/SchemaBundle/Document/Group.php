@@ -8,52 +8,33 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\GroupRepository")
- */
+#[MongoDB\Document(repositoryClass: 'Pumukit\SchemaBundle\Repository\GroupRepository')]
 class Group implements GroupInterface
 {
     public const ORIGIN_LOCAL = 'local';
 
-    /**
-     * @MongoDB\Id(strategy="auto")
-     */
+    #[MongoDB\Id(strategy: 'auto')]
     protected $id;
 
-    /**
-     * @MongoDB\Field(type="string")
-     *
-     * @MongoDB\UniqueIndex(order="asc")
-     *
-     * @Assert\Regex("/^\w*$/")
-     */
+    #[MongoDB\Field(type: 'string')]
+    #[MongoDB\UniqueIndex(order: 'asc')]
+    #[Assert\Regex('/^\w*$/')]
     protected $key;
 
-    /**
-     * @MongoDB\Field(type="string")
-     *
-     * @MongoDB\UniqueIndex(order="asc")
-     */
+    #[MongoDB\Field(type: 'string')]
+    #[MongoDB\UniqueIndex(order: 'asc')]
     protected $name;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     protected $comments;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     protected $origin = self::ORIGIN_LOCAL;
 
-    /**
-     * @MongoDB\Field(type="date")
-     */
+    #[MongoDB\Field(type: 'date')]
     private $createdAt;
 
-    /**
-     * @MongoDB\Field(type="date")
-     */
+    #[MongoDB\Field(type: 'date')]
     private $updatedAt;
 
     public function __construct($key = null)

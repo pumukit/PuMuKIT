@@ -1,4 +1,4 @@
 pumukit_core:
     resource: "@PumukitCoreBundle/Controller/"
-    type:     annotation
+    type:     attribute
     prefix:   /

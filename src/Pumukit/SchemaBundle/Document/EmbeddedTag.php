@@ -6,48 +6,31 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-/**
- * @MongoDB\EmbeddedDocument()
- */
+#[MongoDB\EmbeddedDocument]
 class EmbeddedTag implements TagInterface
 {
     use Traits\Tag;
 
-    /**
-     * @MongoDB\Id
-     */
+    #[MongoDB\Id]
     private $id;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $title = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $description = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $slug;
 
-    /**
-     * @MongoDB\Field(type="string")
-     *
-     * @MongoDB\Index
-     */
+    #[MongoDB\Field(type: 'string')]
+    #[MongoDB\Index]
     private $cod = '';
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $metatag = false;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $display = false;
 
     /**
@@ -55,24 +38,16 @@ class EmbeddedTag implements TagInterface
      */
     private $locale = 'en';
 
-    /**
-     * @MongoDB\Field(type="date")
-     */
+    #[MongoDB\Field(type: 'date')]
     private $created;
 
-    /**
-     * @MongoDB\Field(type="date")
-     */
+    #[MongoDB\Field(type: 'date')]
     private $updated;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $path;
 
-    /**
-     * @MongoDB\Field(type="int")
-     */
+    #[MongoDB\Field(type: 'int')]
     private $level;
 
     public function __construct(TagInterface $tag)

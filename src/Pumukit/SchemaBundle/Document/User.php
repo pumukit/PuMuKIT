@@ -12,9 +12,7 @@ use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterfac
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
-/**
- * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\UserRepository")
- */
+#[MongoDB\Document(repositoryClass: 'Pumukit\SchemaBundle\Repository\UserRepository')]
 class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
 {
     use Traits\Properties;
@@ -25,104 +23,66 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
     public const MAX_LOGIN_ATTEMPTS = 3;
     public const RESET_LOGIN_ATTEMPTS_INTERVAL = '5 minutes';
 
-    /**
-     * @MongoDB\Id(strategy="auto")
-     */
+    #[MongoDB\Id(strategy: 'auto')]
     protected $id;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     protected $username;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     protected $email;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     protected $enabled = false;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     protected $fullName;
 
-    /**
-     * @MongoDB\Field(type="int")
-     */
+    #[MongoDB\Field(type: 'int')]
     protected $loginAttempt = 0;
 
-    /**
-     * @MongoDB\Field(type="date")
-     */
+    #[MongoDB\Field(type: 'date')]
     protected $lastLoginAttempt;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     protected $origin = self::ORIGIN_LOCAL;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
     #[Ignore]
+    #[MongoDB\Field(type: 'string')]
     protected $salt;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
     #[Ignore]
+    #[MongoDB\Field(type: 'string')]
     protected $password;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     protected $personalSeries;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
     #[Ignore]
+    #[MongoDB\Field(type: 'string')]
     protected $plainPassword;
 
-    /**
-     * @MongoDB\Field(type="date")
-     */
+    #[MongoDB\Field(type: 'date')]
     protected $lastLogin;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
     #[Ignore]
+    #[MongoDB\Field(type: 'string')]
     protected $confirmationToken;
 
-    /**
-     * @MongoDB\Field(type="date")
-     */
     #[Ignore]
+    #[MongoDB\Field(type: 'date')]
     protected $passwordRequestedAt;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     protected $roles = [];
 
-    /**
-     * @MongoDB\ReferenceMany(targetDocument=Group::class, storeAs="id", sort={"key":1}, strategy="setArray")
-     */
+    #[MongoDB\ReferenceMany(targetDocument: Group::class, storeAs: 'id', sort: ['key' => 1], strategy: 'setArray')]
     protected $groups;
 
-    /**
-     * @MongoDB\ReferenceOne(targetDocument=PermissionProfile::class, storeAs="id", cascade={"persist"})
-     */
+    #[MongoDB\ReferenceOne(targetDocument: PermissionProfile::class, storeAs: 'id', cascade: ['persist'])]
     private $permissionProfile;
 
-    /**
-     * @MongoDB\ReferenceOne(targetDocument=Person::class, inversedBy="user", storeAs="id", cascade={"persist"})
-     */
+    #[MongoDB\ReferenceOne(targetDocument: Person::class, inversedBy: 'user', storeAs: 'id', cascade: ['persist'])]
     private $person;
 
     public function __construct()

@@ -8,87 +8,73 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
  * Pumukit\StatsBundle\Document\ViewsLog.
- *
- * @MongoDB\Document(repositoryClass="Pumukit\StatsBundle\Repository\ViewsLogRepository")
  */
+#[MongoDB\Document(repositoryClass: 'Pumukit\StatsBundle\Repository\ViewsLogRepository')]
 class ViewsLog
 {
     use Traits\Properties;
 
     /**
      * @var string
-     *
-     * @MongoDB\Id
      */
+    #[MongoDB\Id]
     private $id;
 
     /**
      * @var \DateTime
-     *
-     * @MongoDB\Field(type="date")
-     *
-     * @MongoDB\Index
      */
+    #[MongoDB\Field(type: 'date')]
+    #[MongoDB\Index]
     private $date;
 
     /**
      * @var string
-     *
-     * @MongoDB\Field(type="string")
      */
+    #[MongoDB\Field(type: 'string')]
     private $url;
 
     /**
      * @var string
-     *
-     * @MongoDB\Field(type="string")
      */
+    #[MongoDB\Field(type: 'string')]
     private $ip;
 
     /**
      * @var string
-     *
-     * @MongoDB\Field(type="string")
      */
+    #[MongoDB\Field(type: 'string')]
     private $userAgent;
 
     /**
      * @var string
-     *
-     * @MongoDB\Field(type="string")
      */
+    #[MongoDB\Field(type: 'string')]
     private $referer;
 
     /**
      * @var string
-     *
-     * @MongoDB\Field(type="object_id")
-     *
-     * @MongoDB\Index
      */
+    #[MongoDB\Field(type: 'object_id')]
+    #[MongoDB\Index]
     private $multimediaObject;
 
     /**
      * @var string
-     *
-     * @MongoDB\Field(type="object_id")
-     *
-     * @MongoDB\Index
      */
+    #[MongoDB\Field(type: 'object_id')]
+    #[MongoDB\Index]
     private $series;
 
     /**
      * @var string
-     *
-     * @MongoDB\Field(type="string")
      */
+    #[MongoDB\Field(type: 'string')]
     private $track;
 
     /**
      * @var string
-     *
-     * @MongoDB\Field(type="string")
      */
+    #[MongoDB\Field(type: 'string')]
     private $user;
 
     public function __construct($url, $ip, $userAgent, $referer, $multimediaObject, $series, $track, $user = null)

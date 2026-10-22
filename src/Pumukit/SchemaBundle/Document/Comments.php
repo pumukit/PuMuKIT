@@ -6,31 +6,20 @@ namespace Pumukit\SchemaBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-/**
- * @MongoDB\EmbeddedDocument
- */
+#[MongoDB\EmbeddedDocument]
 class Comments
 {
-    /**
-     * @MongoDB\Id
-     */
+    #[MongoDB\Id]
     private $id;
 
-    /**
-     * @MongoDB\Field(type="date")
-     */
+    #[MongoDB\Field(type: 'date')]
     private $date;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $text;
 
-    /**
-     * @MongoDB\Field(type="int")
-     *
-     * @MongoDB\EmbedOne(targetDocument=MultimediaObject::class)
-     */
+    #[MongoDB\Field(type: 'int')]
+    #[MongoDB\EmbedOne(targetDocument: MultimediaObject::class)]
     private $multimedia_object_id;
 
     public function getId()

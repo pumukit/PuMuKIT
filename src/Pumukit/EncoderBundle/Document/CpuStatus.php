@@ -8,9 +8,8 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
  * Pumukit\EncoderBundle\Document\CpuStatus.
- *
- * @MongoDB\Document(repositoryClass="Pumukit\EncoderBundle\Repository\CpuStatusRepository")
  */
+#[MongoDB\Document(repositoryClass: 'Pumukit\EncoderBundle\Repository\CpuStatusRepository')]
 class CpuStatus
 {
     public const STATUS_MAINTENANCE = -1;
@@ -28,23 +27,20 @@ class CpuStatus
 
     /**
      * @var int
-     *
-     * @MongoDB\Id
      */
+    #[MongoDB\Id]
     private $id;
 
     /**
      * @var string
-     *
-     * @MongoDB\Field(type="string")
      */
+    #[MongoDB\Field(type: 'string')]
     private $name;
 
     /**
      * @var int
-     *
-     * @MongoDB\Field(type="int")
      */
+    #[MongoDB\Field(type: 'int')]
     private $status = self::STATUS_WORKING;
 
     /**

@@ -25,10 +25,7 @@ trait Material
             ...
         }
     */
-
-    /**
-     * @MongoDB\EmbedMany(targetDocument=Material::class)
-     */
+    #[MongoDB\EmbedMany(targetDocument: DocumentMaterial::class)]
     private $materials;
 
     public function __construct()

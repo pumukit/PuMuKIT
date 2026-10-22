@@ -10,50 +10,41 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  * Pumukit\StatsBundle\Document\ViewsAggregation.
  *
  * See ´PumukitAggregateCommand´
- *
- * @MongoDB\Document(repositoryClass="Pumukit\StatsBundle\Repository\ViewsAggregationRepository")
  */
+#[MongoDB\Document(repositoryClass: 'Pumukit\StatsBundle\Repository\ViewsAggregationRepository')]
 class ViewsAggregation
 {
     /**
      * @var string
-     *
-     * @MongoDB\Id
      */
+    #[MongoDB\Id]
     private $id;
 
     /**
      * @var \DateTime
-     *
-     * @MongoDB\Field(type="date")
-     *
-     * @MongoDB\Index
      */
+    #[MongoDB\Field(type: 'date')]
+    #[MongoDB\Index]
     private $date;
 
     /**
      * @var string
-     *
-     * @MongoDB\Field(type="object_id")
-     *
-     * @MongoDB\Index
      */
+    #[MongoDB\Field(type: 'object_id')]
+    #[MongoDB\Index]
     private $multimediaObject;
 
     /**
      * @var string
-     *
-     * @MongoDB\Field(type="object_id")
-     *
-     * @MongoDB\Index
      */
+    #[MongoDB\Field(type: 'object_id')]
+    #[MongoDB\Index]
     private $series;
 
     /**
      * @var int
-     *
-     * @MongoDB\Field(type="int", strategy="increment" )
      */
+    #[MongoDB\Field(type: 'int', strategy: 'increment')]
     private $numView;
 
     public function __construct($multimediaObject, $series, $numView)

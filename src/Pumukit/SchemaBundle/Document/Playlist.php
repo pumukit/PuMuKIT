@@ -9,16 +9,11 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use JMS\Serializer\Annotation as Serializer;
 use MongoDB\BSON\ObjectId;
 
-/**
- * @MongoDB\EmbeddedDocument
- */
+#[MongoDB\EmbeddedDocument]
 class Playlist
 {
-    /**
-     * @MongoDB\ReferenceMany(targetDocument=MultimediaObject::class, storeAs="id", strategy="setArray")
-     *
-     * @Serializer\Exclude
-     */
+    #[MongoDB\ReferenceMany(targetDocument: MultimediaObject::class, storeAs: 'id', strategy: 'setArray')]
+    #[Serializer\Exclude]
     private $multimedia_objects;
 
     public function __construct()

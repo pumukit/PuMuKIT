@@ -7,58 +7,37 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @MongoDB\EmbeddedDocument()
- */
+#[MongoDB\EmbeddedDocument]
 class EmbeddedPerson implements PersonInterface
 {
     use Traits\Properties;
 
-    /**
-     * @MongoDB\Id
-     */
+    #[MongoDB\Id]
     protected $id;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     protected $name;
 
-    /**
-     * @MongoDB\Field(type="string")
-     *
-     * @Assert\Email
-     */
+    #[MongoDB\Field(type: 'string')]
+    #[Assert\Email]
     protected $email;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     protected $web;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     protected $phone;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     protected $honorific = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     protected $firm = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     protected $post = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     protected $bio = ['en' => ''];
 
     /**

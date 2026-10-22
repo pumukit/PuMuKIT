@@ -8,14 +8,10 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 trait HeadAndTail
 {
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $videoHead;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $videoTail;
 
     public function getVideoHead(): ?string

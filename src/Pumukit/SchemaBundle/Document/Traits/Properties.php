@@ -8,9 +8,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 trait Properties
 {
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $properties = [];
 
     public function getProperties(): array

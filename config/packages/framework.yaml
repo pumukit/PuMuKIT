@@ -5,6 +5,7 @@ framework:
   form:            ~
   csrf_protection: ~
   validation:      { enable_attributes: true }
+  annotations:     { enabled: false }
   handle_all_throwables: true
   php_errors:      { log: true }
   #assets_version: SomeVersionScheme

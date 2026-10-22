@@ -7,84 +7,52 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\LiveRepository")
- */
+#[MongoDB\Document(repositoryClass: 'Pumukit\SchemaBundle\Repository\LiveRepository')]
 class Live
 {
     public const LIVE_TYPE_WOWZA = 'WOWZA';
 
-    /**
-     * @MongoDB\Id
-     */
+    #[MongoDB\Id]
     private $id;
 
-    /**
-     * @MongoDB\Field(type="string")
-     *
-     * @Assert\NotBlank()
-     *
-     * @Assert\Url(protocols= {"rtmpt", "rtmp", "http", "mms", "rtp", "https"})
-     */
+    #[MongoDB\Field(type: 'string')]
+    #[Assert\NotBlank]
+    #[Assert\Url(protocols: ['rtmpt', 'rtmp', 'http', 'mms', 'rtp', 'https'])]
     private $url;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $passwd;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $live_type = self::LIVE_TYPE_WOWZA;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $qualities;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $ip_source;
 
-    /**
-     * @MongoDB\Field(type="string")
-     *
-     * @Assert\NotBlank()
-     */
+    #[MongoDB\Field(type: 'string')]
+    #[Assert\NotBlank]
     private $source_name;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $index_play = false;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $chat = false;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $broadcasting = false;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $debug = false;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     *
-     * @Assert\NotBlank()
-     */
+    #[MongoDB\Field(type: 'raw')]
+    #[Assert\NotBlank]
     private $name = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $description = ['en' => ''];
 
     private $locale = 'en';
@@ -129,9 +97,7 @@ class Live
         return $this->live_type;
     }
 
-    /**
-     * @Assert\IsTrue(message = "Live type not valid")
-     */
+    #[Assert\IsTrue(message: 'Live type not valid')]
     public function isValidLiveType(): bool
     {
         return in_array($this->live_type, [

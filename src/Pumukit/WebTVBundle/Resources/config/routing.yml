@@ -1,11 +1,11 @@
 pumukit_web_tv_parent:
     resource: "../../Controller/"
-    type:     annotation
+    type:     attribute
     prefix:   /
 
 pumukit_web_tv:
     resource: "@PumukitWebTVBundle/Controller/"
-    type:     annotation
+    type:     attribute
     prefix:   /
 
 pumukit_webtv_default_css:

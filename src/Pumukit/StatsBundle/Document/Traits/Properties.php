@@ -10,9 +10,8 @@ trait Properties
 {
     /**
      * @var string[]
-     *
-     * @MongoDB\Field(type="raw")
      */
+    #[MongoDB\Field(type: 'raw')]
     private $properties = [];
 
     /**

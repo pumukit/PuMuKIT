@@ -9,9 +9,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @MongoDB\EmbeddedDocument
- */
+#[MongoDB\EmbeddedDocument]
 class EmbeddedBroadcast
 {
     public const TYPE_PUBLIC = 'public';
@@ -24,29 +22,19 @@ class EmbeddedBroadcast
     public const NAME_LOGIN = 'Only logged in Users';
     public const NAME_GROUPS = 'Only Users in Groups';
 
-    /**
-     * @MongoDB\Id
-     */
+    #[MongoDB\Id]
     private $id;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $name = self::NAME_PUBLIC;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $type = self::TYPE_PUBLIC;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $password;
 
-    /**
-     * @MongoDB\ReferenceMany(targetDocument=Group::class, storeAs="id", sort={"key":1}, strategy="setArray")
-     */
+    #[MongoDB\ReferenceMany(targetDocument: Group::class, storeAs: 'id', sort: ['key' => 1], strategy: 'setArray')]
     private $groups;
 
     public function __construct()
@@ -129,9 +117,7 @@ class EmbeddedBroadcast
         return $this->groups;
     }
 
-    /**
-     * @Assert\IsTrue(message = "Password required if not public")
-     */
+    #[Assert\IsTrue(message: 'Password required if not public')]
     public function isPasswordValid(): bool
     {
         $isPublic = self::TYPE_PUBLIC === $this->getType();

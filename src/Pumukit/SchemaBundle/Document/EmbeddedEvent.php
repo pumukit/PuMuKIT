@@ -8,98 +8,60 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @MongoDB\EmbeddedDocument
- */
+#[MongoDB\EmbeddedDocument]
 class EmbeddedEvent
 {
-    /**
-     * @MongoDB\Id
-     */
+    #[MongoDB\Id]
     private $id;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $name = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $description = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $author;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $producer;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $place;
 
-    /**
-     * @MongoDB\Field(type="date")
-     */
+    #[MongoDB\Field(type: 'date')]
     private $date;
 
-    /**
-     * @MongoDB\Field(type="int")
-     */
+    #[MongoDB\Field(type: 'int')]
     private $duration = 0;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $display = true;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $create_serial = true;
 
-    /**
-     * @MongoDB\EmbedMany(targetDocument=EmbeddedEventSession::class)
-     */
+    #[MongoDB\EmbedMany(targetDocument: EmbeddedEventSession::class)]
     private $embeddedEventSession;
 
-    /**
-     * @MongoDB\ReferenceOne(targetDocument=Live::class, cascade={"persist"})
-     */
+    #[MongoDB\ReferenceOne(targetDocument: Live::class, cascade: ['persist'])]
     private $live;
 
-    /**
-     * @MongoDB\Field(type="string")
-     *
-     * @Assert\NotBlank()
-     *
-     * @Assert\Url(protocols= {"rtmpt", "rtmp", "http", "mms", "rtp", "https"})
-     */
+    #[MongoDB\Field(type: 'string')]
+    #[Assert\NotBlank]
+    #[Assert\Url(protocols: ['rtmpt', 'rtmp', 'http', 'mms', 'rtp', 'https'])]
     private $url;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $isIframeUrl = false;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $alreadyHeldMessage = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $notYetHeldMessage = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $enableChat = false;
 
     /**

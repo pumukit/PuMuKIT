@@ -11,60 +11,38 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\PersonRepository")
- */
 #[ApiResource(operations: [new GetCollection(), new Get()], normalizationContext: ['groups' => ['person:read']])]
+#[MongoDB\Document(repositoryClass: 'Pumukit\SchemaBundle\Repository\PersonRepository')]
 class Person implements PersonInterface
 {
     use Traits\Properties;
 
-    /**
-     * @MongoDB\Id
-     */
+    #[MongoDB\Id]
     protected $id;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     protected $name;
 
-    /**
-     * @MongoDB\Field(type="string")
-     *
-     * @Assert\Email
-     */
+    #[MongoDB\Field(type: 'string')]
+    #[Assert\Email]
     protected $email;
 
-    /**
-     * @MongoDB\Field(type="string")
-     * //@Assert\Url('http', 'https', 'ftp')
-     */
+    #[MongoDB\Field(type: 'string')]
     protected $web;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     protected $phone;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     protected $honorific = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     protected $firm = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     protected $post = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     protected $bio = ['en' => ''];
 
     /**
@@ -72,9 +50,7 @@ class Person implements PersonInterface
      */
     protected $locale = 'en';
 
-    /**
-     * @MongoDB\ReferenceOne(targetDocument=User::class, inversedBy="person", storeAs="id", cascade={"persist"})
-     */
+    #[MongoDB\ReferenceOne(targetDocument: User::class, inversedBy: 'person', storeAs: 'id', cascade: ['persist'])]
     private $user;
 
     public function __toString(): string

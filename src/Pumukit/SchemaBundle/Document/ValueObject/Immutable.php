@@ -8,24 +8,16 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use MongoDB\BSON\ObjectId;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @MongoDB\EmbeddedDocument()
- */
+#[MongoDB\EmbeddedDocument]
 class Immutable
 {
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     protected $value = false;
 
-    /**
-     * @MongoDB\Field(type="date")
-     */
+    #[MongoDB\Field(type: 'date')]
     protected $date;
 
-    /**
-     * @MongoDB\Field(type="object_id")
-     */
+    #[MongoDB\Field(type: 'object_id')]
     protected $user;
 
     private function __construct(bool $value, ?UserInterface $user)

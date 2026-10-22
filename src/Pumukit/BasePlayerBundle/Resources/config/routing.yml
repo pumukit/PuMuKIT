@@ -1,4 +1,4 @@
 pumukit_base_player:
     resource: "@PumukitBasePlayerBundle/Controller/"
-    type:     annotation
+    type:     attribute
     prefix:   /

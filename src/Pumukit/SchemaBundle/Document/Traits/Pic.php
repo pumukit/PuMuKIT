@@ -25,10 +25,7 @@ trait Pic
             ...
         }
     */
-
-    /**
-     * @MongoDB\EmbedMany(targetDocument=Pic::class)
-     */
+    #[MongoDB\EmbedMany(targetDocument: DocumentPic::class)]
     private $pics;
 
     public function __construct()

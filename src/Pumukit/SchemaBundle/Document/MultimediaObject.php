@@ -20,14 +20,10 @@ use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\ValueObject\Immutable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\MultimediaObjectRepository")
- *
- * @MongoDB\Index(name="text_index", keys={"textindex.text"="text", "secondarytextindex.text"="text"}, options={"language_override"="indexlanguage", "default_language"="none", "weights"={"textindex.text"=10, "secondarytextindex.text"=1}})
- *
- * @MongoDB\HasLifecycleCallbacks
- */
 #[ApiResource(operations: [new GetCollection(), new Get()], normalizationContext: ['groups' => ['multimedia_object:read']])]
+#[MongoDB\Document(repositoryClass: 'Pumukit\SchemaBundle\Repository\MultimediaObjectRepository')]
+#[MongoDB\Index(name: 'text_index', keys: ['textindex.text' => 'text', 'secondarytextindex.text' => 'text'], options: ['language_override' => 'indexlanguage', 'default_language' => 'none', 'weights' => ['textindex.text' => 10, 'secondarytextindex.text' => 1]])]
+#[MongoDB\HasLifecycleCallbacks]
 class MultimediaObject
 {
     use Traits\Keywords;
@@ -75,202 +71,123 @@ class MultimediaObject
         self::TYPE_DOCUMENT => 'Document',
     ];
 
-    /**
-     * @MongoDB\Id
-     */
+    #[MongoDB\Id]
     private $id;
 
-    /**
-     * @MongoDB\Field(type="int")
-     *
-     * @MongoDB\UniqueIndex()
-     */
+    #[MongoDB\Field(type: 'int')]
+    #[MongoDB\UniqueIndex]
     private $numerical_id;
 
-    /**
-     * @MongoDB\EmbedOne(name="immutable", targetDocument="Pumukit\SchemaBundle\Document\ValueObject\Immutable")
-     */
+    #[MongoDB\EmbedOne(name: 'immutable', targetDocument: 'Pumukit\SchemaBundle\Document\ValueObject\Immutable')]
     private $immutable;
 
-    /**
-     * @MongoDB\Field(type="int")
-     *
-     * @MongoDB\Index
-     */
+    #[MongoDB\Field(type: 'int')]
+    #[MongoDB\Index]
     private $type = self::TYPE_UNKNOWN;
 
-    /**
-     * @MongoDB\Field(type="string")
-     *
-     * @MongoDB\Index
-     */
+    #[MongoDB\Field(type: 'string')]
+    #[MongoDB\Index]
     private $secret;
 
-    /**
-     * @MongoDB\ReferenceOne(targetDocument=Series::class, storeAs="id", inversedBy="multimedia_object", cascade={"persist"})
-     *
-     * @Gedmo\SortableGroup
-     *
-     * @MongoDB\Index
-     */
+    #[MongoDB\ReferenceOne(targetDocument: Series::class, storeAs: 'id', inversedBy: 'multimedia_object', cascade: ['persist'])]
+    #[Gedmo\SortableGroup]
+    #[MongoDB\Index]
     private $series;
 
     /**
      * NOTE: This field is for MongoDB Search Index purposes. Do not use this field and do not create setter and/or getter.
-     *
-     * @MongoDB\Field(type="raw")
      */
+    #[MongoDB\Field(type: 'raw')]
     private $seriesTitle = ['en' => ''];
 
-    /**
-     * @MongoDB\EmbedOne(targetDocument=EmbeddedBroadcast::class)
-     */
+    #[MongoDB\EmbedOne(targetDocument: EmbeddedBroadcast::class)]
     private $embeddedBroadcast;
 
-    /**
-     * @MongoDB\EmbedOne(targetDocument=EmbeddedEvent::class)
-     */
+    #[MongoDB\EmbedOne(targetDocument: EmbeddedEvent::class)]
     private $embeddedEvent;
 
-    /**
-     * @MongoDB\EmbedMany(targetDocument=EmbeddedSegment::class)
-     */
+    #[MongoDB\EmbedMany(targetDocument: EmbeddedSegment::class)]
     private $embeddedSegments;
 
-    /**
-     * @MongoDB\EmbedOne(targetDocument=EmbeddedSocial::class)
-     */
+    #[MongoDB\EmbedOne(targetDocument: EmbeddedSocial::class)]
     private $embeddedSocial;
 
-    /**
-     * @MongoDB\EmbedMany(targetDocument=EmbeddedTag::class)
-     */
+    #[MongoDB\EmbedMany(targetDocument: EmbeddedTag::class)]
     private $tags;
 
-    /**
-     * @MongoDB\EmbedMany(targetDocument=Track::class)
-     */
+    #[MongoDB\EmbedMany(targetDocument: Track::class)]
     private $tracks;
 
-    /**
-     * @MongoDB\EmbedMany(targetDocument=Document::class)
-     */
+    #[MongoDB\EmbedMany(targetDocument: Document::class)]
     private $documents;
 
-    /**
-     * @MongoDB\EmbedMany(targetDocument=External::class)
-     */
+    #[MongoDB\EmbedMany(targetDocument: External::class)]
     private $external;
 
-    /**
-     * @MongoDB\EmbedMany(targetDocument=Image::class)
-     */
+    #[MongoDB\EmbedMany(targetDocument: Image::class)]
     private $images;
 
-    /**
-     * @MongoDB\ReferenceMany(targetDocument=Group::class, storeAs="id", sort={"key":1}, strategy="setArray", cascade={"persist"})
-     */
+    #[MongoDB\ReferenceMany(targetDocument: Group::class, storeAs: 'id', sort: ['key' => 1], strategy: 'setArray', cascade: ['persist'])]
     private $groups;
 
-    /**
-     * @MongoDB\Field(type="int")
-     *
-     * @Gedmo\SortablePosition
-     */
+    #[MongoDB\Field(type: 'int')]
+    #[Gedmo\SortablePosition]
     private $rank;
 
-    /**
-     * @MongoDB\Field(type="int")
-     */
+    #[MongoDB\Field(type: 'int')]
     private $status = self::STATUS_NEW;
 
-    /**
-     * @MongoDB\Field(type="date")
-     *
-     * @MongoDB\Index
-     */
+    #[MongoDB\Field(type: 'date')]
+    #[MongoDB\Index]
     private $record_date;
 
-    /**
-     * @MongoDB\Field(type="date")
-     *
-     * @MongoDB\Index
-     */
+    #[MongoDB\Field(type: 'date')]
+    #[MongoDB\Index]
     private $public_date;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $title = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $subtitle = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $description = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $comments;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $line2 = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $copyright;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $license;
 
-    /**
-     * @MongoDB\Field(type="int")
-     */
+    #[MongoDB\Field(type: 'int')]
     private $duration = 0;
 
-    /**
-     * @MongoDB\Field(type="int", strategy="increment")
-     */
+    #[MongoDB\Field(type: 'int', strategy: 'increment')]
     private $numview = 0;
 
-    /**
-     * @MongoDB\EmbedMany(targetDocument=EmbeddedRole::class)
-     */
+    #[MongoDB\EmbedMany(targetDocument: EmbeddedRole::class)]
     private $people;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $head = false;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $tail = false;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $textindex = [];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $secondarytextindex = [];
 
-    /**
-     * @MongoDB\Field(type="date")
-     */
+    #[MongoDB\Field(type: 'date')]
     private $updatedAt;
 
     /**
@@ -1541,11 +1458,8 @@ class MultimediaObject
         return $this->tail;
     }
 
-    /**
-     * @MongoDB\PreUpdate
-     *
-     * @MongoDB\PrePersist
-     */
+    #[MongoDB\PreUpdate]
+    #[MongoDB\PrePersist]
     public function setUpdateAt(): void
     {
         $this->updatedAt = new \DateTime();

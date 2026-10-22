@@ -1,4 +1,4 @@
 pumukit_paella_player:
     resource: "@PumukitPaellaPlayerBundle/Controller/"
-    type:     annotation
+    type:     attribute
     prefix:   /

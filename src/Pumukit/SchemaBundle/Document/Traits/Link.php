@@ -25,10 +25,7 @@ trait Link
             ...
         }
     */
-
-    /**
-     * @MongoDB\EmbedMany(targetDocument=Link::class)
-     */
+    #[MongoDB\EmbedMany(targetDocument: DocumentLink::class)]
     private $links;
 
     public function __construct()

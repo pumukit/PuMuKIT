@@ -8,9 +8,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 trait Keywords
 {
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $keywords = ['en' => []];
 
     public function setI18nKeyword(array $keyword): void

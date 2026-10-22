@@ -12,66 +12,42 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @MongoDB\Document(repositoryClass="Gedmo\Tree\Document\MongoDB\Repository\MaterializedPathRepository")
- *
- * @Gedmo\Tree(type="materializedPath", activateLocking=false)
- */
 #[ApiResource(operations: [new GetCollection(), new Get()], normalizationContext: ['groups' => ['tag:read']])]
+#[MongoDB\Document(repositoryClass: 'Gedmo\Tree\Document\MongoDB\Repository\MaterializedPathRepository')]
+#[Gedmo\Tree(type: 'materializedPath', activateLocking: false)]
 class Tag implements TagInterface
 {
     use Traits\Properties;
     use Traits\Tag;
 
-    /**
-     * @MongoDB\Id
-     */
+    #[MongoDB\Id]
     private $id;
 
-    /**
-     * @MongoDB\Field(type="int", strategy="increment" )
-     */
+    #[MongoDB\Field(type: 'int', strategy: 'increment')]
     private $number_multimedia_objects = 0;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $title = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $label = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $description = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $slug;
 
-    /**
-     * @MongoDB\Field(type="string")
-     *
-     * @MongoDB\UniqueIndex(order="asc")
-     *
-     * @Assert\Regex("/^\w*$/")
-     *
-     * @Gedmo\TreePathSource
-     */
+    #[MongoDB\Field(type: 'string')]
+    #[MongoDB\UniqueIndex(order: 'asc')]
+    #[Assert\Regex('/^\w*$/')]
+    #[Gedmo\TreePathSource]
     private $cod = '';
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $metatag = false;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $display = false;
 
     /**
@@ -79,54 +55,33 @@ class Tag implements TagInterface
      */
     private $locale = 'en';
 
-    /**
-     * @MongoDB\Field(type="date")
-     */
+    #[MongoDB\Field(type: 'date')]
     private $created;
 
-    /**
-     * @MongoDB\Field(type="date")
-     */
+    #[MongoDB\Field(type: 'date')]
     private $updated;
 
-    /**
-     * @Gedmo\TreeParent
-     *
-     * @MongoDB\ReferenceOne(targetDocument=Tag::class, inversedBy="children", cascade={"persist"})
-     *
-     * @MongoDB\Index
-     */
+    #[Gedmo\TreeParent]
+    #[MongoDB\ReferenceOne(targetDocument: Tag::class, inversedBy: 'children', cascade: ['persist'])]
+    #[MongoDB\Index]
     private $parent;
 
-    /**
-     * @MongoDB\ReferenceMany(targetDocument=Tag::class, mappedBy="parent", sort={"cod": 1})
-     */
+    #[MongoDB\ReferenceMany(targetDocument: Tag::class, mappedBy: 'parent', sort: ['cod' => 1])]
     private $children = [];
 
-    /**
-     * @MongoDB\Field(type="int", strategy="increment" )
-     */
+    #[MongoDB\Field(type: 'int', strategy: 'increment')]
     private $number_children = 0;
 
-    /**
-     * @MongoDB\Field(type="string")
-     *
-     * @Gedmo\TreePath(separator="|", appendId=false, startsWithSeparator=false, endsWithSeparator=true)
-     */
+    #[MongoDB\Field(type: 'string')]
+    #[Gedmo\TreePath(separator: '|', appendId: false, startsWithSeparator: false, endsWithSeparator: true)]
     private $path;
 
-    /**
-     * @Gedmo\TreeLevel
-     *
-     * @MongoDB\Field(type="int")
-     */
+    #[Gedmo\TreeLevel]
+    #[MongoDB\Field(type: 'int')]
     private $level;
 
-    /**
-     * @Gedmo\TreeLockTime
-     *
-     * @MongoDB\Field(type="date")
-     */
+    #[Gedmo\TreeLockTime]
+    #[MongoDB\Field(type: 'date')]
     private $lockTime;
 
     public function __construct() {}

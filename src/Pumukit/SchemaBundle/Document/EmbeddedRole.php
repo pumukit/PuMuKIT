@@ -7,44 +7,28 @@ namespace Pumukit\SchemaBundle\Document;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-/**
- * @MongoDB\EmbeddedDocument()
- */
+#[MongoDB\EmbeddedDocument]
 class EmbeddedRole implements RoleInterface
 {
-    /**
-     * @MongoDB\Id
-     */
+    #[MongoDB\Id]
     protected $id;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $cod = '0';
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $xml;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $display = true;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $name = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $text = ['en' => ''];
 
-    /**
-     * @MongoDB\EmbedMany(targetDocument=EmbeddedPerson::class)
-     */
+    #[MongoDB\EmbedMany(targetDocument: EmbeddedPerson::class)]
     private $people;
 
     private $locale = 'en';

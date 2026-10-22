@@ -60,20 +60,33 @@ services:
   doctrine:
     alias: doctrine_mongodb
 
+  Gedmo\Mapping\Driver\AttributeReader: ~
+
   Gedmo\Tree\TreeListener:
     tags:
-      - { name: doctrine.event_subscriber, connection: default }
-      - { name: doctrine_mongodb.odm.event_subscriber }
+      - { name: doctrine_mongodb.odm.event_listener, event: prePersist }
+      - { name: doctrine_mongodb.odm.event_listener, event: preRemove }
+      - { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
+      - { name: doctrine_mongodb.odm.event_listener, event: onFlush }
+      - { name: doctrine_mongodb.odm.event_listener, event: loadClassMetadata }
+      - { name: doctrine_mongodb.odm.event_listener, event: postPersist }
+      - { name: doctrine_mongodb.odm.event_listener, event: postUpdate }
+      - { name: doctrine_mongodb.odm.event_listener, event: postRemove }
     calls:
       - method: setAnnotationReader
         arguments:
-          - "@annotation_reader"
+          - '@Gedmo\Mapping\Driver\AttributeReader'
 
   Gedmo\Sortable\SortableListener:
     tags:
-      - { name: doctrine.event_subscriber, connection: default }
-      - { name: doctrine_mongodb.odm.event_subscriber }
+      - { name: doctrine_mongodb.odm.event_listener, event: onFlush }
+      - { name: doctrine_mongodb.odm.event_listener, event: loadClassMetadata }
+      - { name: doctrine_mongodb.odm.event_listener, event: prePersist }
+      - { name: doctrine_mongodb.odm.event_listener, event: postPersist }
+      - { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
+      - { name: doctrine_mongodb.odm.event_listener, event: postRemove }
+      - { name: doctrine_mongodb.odm.event_listener, event: postFlush }
     calls:
       - method: setAnnotationReader
         arguments:
-          - '@annotation_reader'
+          - '@Gedmo\Mapping\Driver\AttributeReader'

@@ -11,12 +11,9 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\SeriesRepository")
- *
- * @MongoDB\Index(name="text_index", keys={"textindex.text"="text", "secondarytextindex.text"="text"}, options={"language_override"="indexlanguage", "default_language"="none", "weights"={"textindex.text"=10, "secondarytextindex.text"=1}})
- */
 #[ApiResource(operations: [new GetCollection(), new Get()], normalizationContext: ['groups' => ['series:read']])]
+#[MongoDB\Document(repositoryClass: 'Pumukit\SchemaBundle\Repository\SeriesRepository')]
+#[MongoDB\Index(name: 'text_index', keys: ['textindex.text' => 'text', 'secondarytextindex.text' => 'text'], options: ['language_override' => 'indexlanguage', 'default_language' => 'none', 'weights' => ['textindex.text' => 10, 'secondarytextindex.text' => 1]])]
 class Series
 {
     use Traits\Keywords;
@@ -54,120 +51,75 @@ class Series
         self::SORT_ALPHAB => 'title',
     ];
 
-    /**
-     * @MongoDB\Id
-     */
+    #[MongoDB\Id]
     protected $id;
 
-    /**
-     * @MongoDB\Field(type="int")
-     *
-     * @MongoDB\UniqueIndex()
-     */
+    #[MongoDB\Field(type: 'int')]
+    #[MongoDB\UniqueIndex]
     private $numerical_id;
 
-    /**
-     * @MongoDB\Field(type="string")
-     *
-     * @MongoDB\Index
-     */
+    #[MongoDB\Field(type: 'string')]
+    #[MongoDB\Index]
     private $secret;
 
-    /**
-     * @MongoDB\Field(type="int")
-     *
-     * @MongoDB\Index
-     */
+    #[MongoDB\Field(type: 'int')]
+    #[MongoDB\Index]
     private $type;
 
-    /**
-     * @MongoDB\Field(type="int")
-     */
+    #[MongoDB\Field(type: 'int')]
     private $sorting = self::SORT_MANUAL;
 
-    /**
-     * @MongoDB\ReferenceOne(targetDocument=SeriesType::class, inversedBy="series", storeAs="id", cascade={"persist"})
-     */
+    #[MongoDB\ReferenceOne(targetDocument: SeriesType::class, inversedBy: 'series', storeAs: 'id', cascade: ['persist'])]
     private $series_type;
 
-    /**
-     * @MongoDB\ReferenceOne(targetDocument=SeriesStyle::class, inversedBy="series", storeAs="id", cascade={"persist"})
-     */
+    #[MongoDB\ReferenceOne(targetDocument: SeriesStyle::class, inversedBy: 'series', storeAs: 'id', cascade: ['persist'])]
     private $series_style;
 
-    /**
-     * @MongoDB\EmbedOne(targetDocument=Playlist::class)
-     *
-     * @Serializer\Exclude
-     */
+    #[MongoDB\EmbedOne(targetDocument: Playlist::class)]
+    #[Serializer\Exclude]
     private $playlist;
 
-    /**
-     * @MongoDB\Field(type="bool")
-     */
+    #[MongoDB\Field(type: 'bool')]
     private $announce = false;
 
     /**
      * When series is hide and we access to the series with the mmobj->getSeries(),
      * it creates a pseudo series with default values (the WebTV filter dont permit to access hide series),
      * and we want to force that the series will be hide.
-     *
-     * @MongoDB\Field(type="bool")
-     *
-     * @MongoDB\Index
      */
+    #[MongoDB\Field(type: 'bool')]
+    #[MongoDB\Index]
     private $hide = false;
 
-    /**
-     * @MongoDB\Field(type="date")
-     *
-     * @MongoDB\Index
-     */
+    #[MongoDB\Field(type: 'date')]
+    #[MongoDB\Index]
     private $public_date;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $title = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $subtitle = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $description = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
+    #[MongoDB\Field(type: 'string')]
     private $comments;
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $header = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $footer = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $line2 = ['en' => ''];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $textindex = [];
 
-    /**
-     * @MongoDB\Field(type="raw")
-     */
+    #[MongoDB\Field(type: 'raw')]
     private $secondarytextindex = [];
 
     /**
