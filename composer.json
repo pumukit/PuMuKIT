@@ -27,6 +27,7 @@
         "pagerfanta/twig": "^4",
         "phpdocumentor/reflection-docblock": "^6.0",
         "symfony/asset": "*",
+        "symfony/asset-mapper": "7.4.*",
         "symfony/dotenv": "*",
         "symfony/event-dispatcher": "*",
         "symfony/expression-language": "*",

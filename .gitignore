@@ -63,3 +63,7 @@ tests/tmp/
 # Internal working notes (migration / security audits) — devs only, not for git
 /doc/migration/
 /doc/security/
+
+###> symfony/asset-mapper ###
+/public/assets/
+###< symfony/asset-mapper ###
