@@ -41,9 +41,9 @@ class SenderServiceTest extends PumukitTestCase
         static::bootKernel($options);
         parent::setUp();
         $container = static::$kernel->getContainer();
-        $this->logger = $this->getMockBuilder(LoggerInterface::class)->disableOriginalConstructor()->getMock();
-        $this->templating = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
-        $this->mailer = $this->getMockBuilder(MailerInterface::class)->disableOriginalConstructor()->getMock();
+        $this->logger = $this->createStub(LoggerInterface::class);
+        $this->templating = $this->createStub(Environment::class);
+        $this->mailer = $this->createStub(MailerInterface::class);
         $this->translator = $container->get('translator');
         $this->session = $container->get('request_stack');
         $this->enable = true;

@@ -43,7 +43,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->mmsService = static::$kernel->getContainer()->get('pumukitschema.multimedia_object');
         $this->dispatcher = static::$kernel->getContainer()->get('pumukitschema.multimediaobject_dispatcher');
         $this->authorizationChecker = static::getContainer()->get('security.authorization_checker');
-        $this->templating = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
+        $this->templating = $this->createStub(Environment::class);
 
         $this->router = static::$kernel->getContainer()->get('router');
     }
@@ -489,24 +489,12 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->dm->persist($mm);
         $this->dm->flush();
 
-        $authorizationChecker = $this->getMockBuilder(AuthorizationCheckerInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-        $authorizationChecker->expects(static::any())
-            ->method('isGranted')
-            ->willReturn(false)
-        ;
+        $authorizationChecker = $this->createStub(AuthorizationCheckerInterface::class);
+        $authorizationChecker->method('isGranted')->willReturn(false);
 
         $content = 'test';
-        $templating = $this->getMockBuilder(Environment::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-        $templating->expects(static::any())
-            ->method('render')
-            ->willReturn($content)
-        ;
+        $templating = $this->createStub(Environment::class);
+        $templating->method('render')->willReturn($content);
 
         $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating, $this->router);
 
@@ -520,14 +508,8 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         static::assertEquals(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         static::assertEquals($content, $response->getContent());
 
-        $authorizationChecker = $this->getMockBuilder(AuthorizationCheckerInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-        $authorizationChecker->expects(static::any())
-            ->method('isGranted')
-            ->willReturn(true)
-        ;
+        $authorizationChecker = $this->createStub(AuthorizationCheckerInterface::class);
+        $authorizationChecker->method('isGranted')->willReturn(true);
 
         $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating, $this->router);
 

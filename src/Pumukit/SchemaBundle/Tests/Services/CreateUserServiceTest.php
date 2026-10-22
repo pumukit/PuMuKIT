@@ -42,15 +42,9 @@ class CreateUserServiceTest extends PumukitTestCase
             $permissionService
         );
 
-        $userPasswordEncoder = $this->getMockBuilder(UserPasswordHasher::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
+        $userPasswordEncoder = $this->createStub(UserPasswordHasher::class);
 
-        $personService = $this->getMockBuilder(PersonService::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
+        $personService = $this->createStub(PersonService::class);
 
         $this->createUserService = new CreateUserService(
             $this->dm,

@@ -29,7 +29,7 @@ final class JobRemoverTest extends PumukitTestCase
         parent::setUp();
 
         $this->logger = new Logger('test');
-        $this->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
+        $this->eventDispatcher = $this->createStub(EventDispatcherInterface::class);
         $this->trackService = self::$kernel->getContainer()->get(TrackService::class);
         $this->projectDir = self::$kernel->getContainer()->getParameter('kernel.project_dir');
 

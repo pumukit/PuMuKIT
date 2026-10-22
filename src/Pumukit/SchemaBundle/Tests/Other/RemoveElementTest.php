@@ -64,15 +64,9 @@ class RemoveElementTest extends PumukitTestCase
             $permissionService
         );
 
-        $this->userPasswordEncoder = $this->getMockBuilder(UserPasswordHasher::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
+        $this->userPasswordEncoder = $this->createStub(UserPasswordHasher::class);
 
-        $personService = $this->getMockBuilder(PersonService::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
+        $personService = $this->createStub(PersonService::class);
 
         $this->createUserService = new CreateUserService(
             $this->dm,
