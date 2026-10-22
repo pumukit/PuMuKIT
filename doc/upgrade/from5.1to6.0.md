@@ -38,6 +38,7 @@ deployment:
   `anonymous`/`IS_AUTHENTICATED_ANONYMOUSLY`).
 - **Other local customizations.** Any code or config you maintain on top of the core
   (overridden templates, services, controllers) should be reviewed against the SF6.4 APIs.
+  The code-level changes are listed in [UPGRADE-6.0.md](../../UPGRADE-6.0.md).
 
 Informational (no action required):
 
