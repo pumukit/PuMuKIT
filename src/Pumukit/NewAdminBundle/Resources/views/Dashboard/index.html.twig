@@ -2,13 +2,13 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('/bundles/pumukitnewadmin/css/admin/dashboard.css') }}"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('bundles/pumukitnewadmin/css/admin/dashboard.css') }}"/>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('/bundles/pumukitnewadmin/vendor/chartjs/chart.umd.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/bundles/pumukitnewadmin/vendor/chartjs/chartjs-adapter-date-fns.bundle.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/pumukitnewadmin/vendor/chartjs/chart.umd.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/pumukitnewadmin/vendor/chartjs/chartjs-adapter-date-fns.bundle.min.js') }}"></script>
 {% endblock %}
 
 {% set storage_total_bytes = storage|reduce((carry, s) => carry + s.total, 0) %}
