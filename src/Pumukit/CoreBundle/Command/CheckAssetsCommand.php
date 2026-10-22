@@ -33,6 +33,23 @@ class CheckAssetsCommand extends Command
         'bundles/pumukitwebtv/css/bootstrap-datetimepicker.css' => 'bundles/pumukitcore/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css',
         '@PumukitCore/Upload/uppy_tus.js.twig' => '@PumukitCore/Upload/uppy_tus.html.twig (include it outside the <script> tag)',
         '@PumukitCore/Upload/uppy_dispatch.js.twig' => '@PumukitCore/Upload/uppy_tus.html.twig (include it outside the <script> tag)',
+        'bundles/pumukitwebtv/js/announces_ajax.js' => 'the webtv--announces controller',
+        '@PumukitBaseLivePlayer/Advance/Sessions/common.js.twig' => '@PumukitBaseLivePlayer/Advance/sessions.html.twig (include it outside the <script> tag)',
+        '@PumukitBaseLivePlayer/Advance/Sessions/withoutSessions.js.twig' => '@PumukitBaseLivePlayer/Advance/sessions.html.twig (include it outside the <script> tag)',
+        '@PumukitBaseLivePlayer/Advance/Sessions/futureSessions.js.twig' => '@PumukitBaseLivePlayer/Advance/sessions.html.twig (include it outside the <script> tag)',
+        '@PumukitBaseLivePlayer/Advance/Sessions/nowSessions.js.twig' => '@PumukitBaseLivePlayer/Advance/sessions.html.twig (include it outside the <script> tag)',
+    ];
+
+    public const REMOVED_JAVASCRIPT_GLOBALS = [
+        'uppyTUS' => 'the core--uppy-tus controller',
+        'encoder_reload_timeout' => 'the encoder--stats controller',
+        'url_latestuploads_pager' => 'the webtv--announces controller',
+        'insertCookieUser' => 'the webtv--cookies controller',
+        'resizeFrame' => 'data-controller="webtv--player-frame" on the player iframe',
+        'submitForm' => 'the webtv--search controller',
+        'toggleDateSelect' => 'the webtv--search controller',
+        'postChatMessage' => 'the webtv--chat controller',
+        'updateChat' => 'the webtv--chat controller',
     ];
 
     private const REFERENCE_PATTERN = '#(?<![\w./-])/?(bundles/([a-z0-9_]+)/[^\'"\s?\#{}()]*)#';
@@ -90,11 +107,23 @@ EOT
         $publicDirs = $this->bundlePublicDirs();
         $missing = 0;
 
-        $finder = (new Finder())->files()->in($path)->name('*.twig')->sortByName();
-        foreach ($finder as $file) {
-            $lines = file($file->getPathname());
+        $files = [];
+        foreach ((new Finder())->files()->in($path)->name('*.twig')->sortByName() as $file) {
+            $files[$file->getRelativePathname()] = file($file->getPathname());
+        }
+        $removedGlobals = $this->removedGlobalsNotDefinedIn($files);
+
+        foreach ($files as $relativePathname => $lines) {
             foreach ($lines as $index => $line) {
-                $location = $file->getRelativePathname().':'.($index + 1);
+                $location = $relativePathname.':'.($index + 1);
+
+                foreach ($removedGlobals as $global) {
+                    if (preg_match('/(?<![\w$.])'.$global.'\b/', $line)) {
+                        ++$missing;
+                        $output->writeln('Removed JavaScript global: <info>'.$global.'</info> in '.$location);
+                        $output->writeln('    use <comment>'.self::REMOVED_JAVASCRIPT_GLOBALS[$global].'</comment>');
+                    }
+                }
 
                 preg_match_all(self::REFERENCE_PATTERN, $line, $matches, PREG_SET_ORDER);
                 foreach ($matches as [, $reference, $bundle]) {
@@ -117,15 +146,25 @@ EOT
                 }
             }
 
-            if (str_ends_with($file->getRelativePathname(), self::PORTAL_LAYOUT) && !str_contains(implode('', $lines), 'importmap(')) {
+            if (str_ends_with($relativePathname, self::PORTAL_LAYOUT) && !str_contains(implode('', $lines), 'importmap(')) {
                 ++$missing;
-                $output->writeln('Missing <info>{{ importmap(\'pumukit\') }}</info> in the javascripts block of '.$file->getRelativePathname());
+                $output->writeln('Missing <info>{{ importmap(\'pumukit\') }}</info> in the javascripts block of '.$relativePathname);
             }
         }
 
         $output->writeln('<comment>***** Problems found: '.$missing.' *****</comment>');
 
         return $missing > 0 ? Command::FAILURE : Command::SUCCESS;
+    }
+
+    private function removedGlobalsNotDefinedIn(array $files): array
+    {
+        $content = implode('', array_merge(...array_values($files)));
+
+        return array_values(array_filter(
+            array_keys(self::REMOVED_JAVASCRIPT_GLOBALS),
+            static fn (string $global): bool => !preg_match('/(function\s+'.$global.'\b|\b(var|let|const)\s+'.$global.'\b|(?<![\w$.])'.$global.'\s*=(?!=))/', $content)
+        ));
     }
 
     private function templateExists(string $path, string $template): bool

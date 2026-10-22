@@ -115,6 +115,25 @@ class CheckAssetsCommandTest extends PumukitTestCase
         $this->assertStringContainsString('Problems found: 1', $display);
     }
 
+    public function testReportsRemovedJavascriptGlobalsThatTheProjectDoesNotDefine(): void
+    {
+        file_put_contents(
+            $this->tmpDir.'/player.html.twig',
+            "<iframe onload=\"resizeFrame(this)\"></iframe>\n<select onchange=\"submitForm(this);\"></select>\n"
+        );
+        file_put_contents($this->tmpDir.'/template_player.html.twig', "<script>function resizeFrame(elem) {}</script>\n");
+
+        $tester = $this->commandTester();
+        $tester->execute(['--path' => $this->tmpDir]);
+
+        $display = $tester->getDisplay();
+        $this->assertSame(Command::FAILURE, $tester->getStatusCode());
+        $this->assertStringContainsString('Removed JavaScript global: submitForm in player.html.twig:2', $display);
+        $this->assertStringContainsString('use the webtv--search controller', $display);
+        $this->assertStringNotContainsString('resizeFrame', $display);
+        $this->assertStringContainsString('Problems found: 1', $display);
+    }
+
     public function testFailsWhenPathDoesNotExist(): void
     {
         $tester = $this->commandTester();
