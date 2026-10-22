@@ -10,4 +10,5 @@ return RectorConfig::configure()
         __DIR__.'/doc',
         __DIR__.'/public',
         __DIR__.'/src',
-    ]);
+    ])
+;

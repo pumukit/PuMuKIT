@@ -55,8 +55,8 @@ if (!isset($username)) {
 
             chdir($originalCwd);
 
-            file_put_contents('../log/log_trans.log', $_POST['command'].
-                              "\n".implode("\n", $salida)."\n\n\n", FILE_APPEND);
+            file_put_contents('../log/log_trans.log', $_POST['command']
+                              ."\n".implode("\n", $salida)."\n\n\n", FILE_APPEND);
 
             echo implode("\n", $salida);
         } else {
