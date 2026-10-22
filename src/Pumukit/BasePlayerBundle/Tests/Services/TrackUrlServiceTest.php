@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\BasePlayerBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
@@ -21,9 +22,8 @@ use Pumukit\WebTVBundle\PumukitWebTVBundle;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class TrackUrlServiceTest extends PumukitTestCase
 {
     private $client;

@@ -12,14 +12,14 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Other;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Series;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class MultimediaObjectInSeriesTest extends PumukitTestCase
 {
     private $seriesRepo;

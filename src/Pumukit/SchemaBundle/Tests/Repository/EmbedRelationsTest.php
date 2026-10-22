@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class EmbedRelationsTest extends PumukitTestCase
 {
     private $repoMmobjs;

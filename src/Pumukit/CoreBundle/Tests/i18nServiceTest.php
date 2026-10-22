@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Pumukit\CoreBundle\Tests;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use Pumukit\CoreBundle\Services\i18nService;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class i18nServiceTest extends TestCase
 {
     private array $locales;

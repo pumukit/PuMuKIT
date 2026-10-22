@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class AnnounceServiceTest extends PumukitTestCase
 {
     private $announceService;

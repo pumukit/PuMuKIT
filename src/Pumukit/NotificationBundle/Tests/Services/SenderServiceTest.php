@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\NotificationBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\NotificationBundle\Services\SenderService;
@@ -12,9 +13,8 @@ use Twig\Environment;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class SenderServiceTest extends PumukitTestCase
 {
     private $logger;

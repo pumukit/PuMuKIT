@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Pumukit\EncoderBundle\Tests\Executor;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\EncoderBundle\Executor\LocalExecutor;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class LocalExecutorTest extends WebTestCase
 {
     public function setUp(): void

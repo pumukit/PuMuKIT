@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Document\ValueObject;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class TagsTest extends TestCase
 {
     public function testCreate(): void

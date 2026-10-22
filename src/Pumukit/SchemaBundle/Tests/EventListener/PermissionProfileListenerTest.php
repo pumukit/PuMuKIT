@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\EventListener;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
@@ -24,9 +25,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class PermissionProfileListenerTest extends PumukitTestCase
 {
     private $userRepo;

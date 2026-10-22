@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Document\Series;
@@ -11,9 +12,8 @@ use Pumukit\SchemaBundle\Document\SeriesType;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class SeriesTest extends TestCase
 {
     public function testGetterAndSetter()

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
 use Pumukit\SchemaBundle\Event\PicEvent;
@@ -13,9 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class PicEventDispatcherServiceTest extends WebTestCase
 {
     public const EMPTY_TITLE = 'EMTPY TITLE';

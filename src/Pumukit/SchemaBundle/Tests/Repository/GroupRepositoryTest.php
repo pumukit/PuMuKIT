@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use MongoDB\BSON\ObjectId;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Group;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class GroupRepositoryTest extends PumukitTestCase
 {
     private $repo;

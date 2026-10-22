@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Tests\Security;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\CreateUserService;
@@ -14,9 +15,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class SecurityFunctionalTest extends WebTestCase
 {
     private const USERNAME = 'functionaltestuser';

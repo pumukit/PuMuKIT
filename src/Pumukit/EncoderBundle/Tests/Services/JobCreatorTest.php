@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\EncoderBundle\Tests\Services;
 
 use Monolog\Logger;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
@@ -21,9 +22,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class JobCreatorTest extends PumukitTestCase
 {
     private $jobExecutor;

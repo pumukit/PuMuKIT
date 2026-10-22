@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
@@ -11,9 +12,8 @@ use Pumukit\SchemaBundle\Services\PermissionProfileService;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class PermissionProfileServiceTest extends PumukitTestCase
 {
     private $repo;

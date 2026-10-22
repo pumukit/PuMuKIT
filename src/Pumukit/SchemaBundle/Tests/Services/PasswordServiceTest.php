@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\PasswordService;
@@ -11,9 +12,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class PasswordServiceTest extends PumukitTestCase
 {
     private PasswordService $passwordService;

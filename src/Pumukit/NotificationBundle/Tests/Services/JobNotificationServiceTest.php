@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\NotificationBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
@@ -20,9 +21,8 @@ use Pumukit\SchemaBundle\Services\FactoryService;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class JobNotificationServiceTest extends PumukitTestCase
 {
     private $repo;

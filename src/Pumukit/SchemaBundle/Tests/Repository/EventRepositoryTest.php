@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Event;
 use Pumukit\SchemaBundle\Document\Live;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class EventRepositoryTest extends PumukitTestCase
 {
     private $repo;

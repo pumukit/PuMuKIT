@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\StatsBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -13,9 +14,8 @@ use Pumukit\StatsBundle\Services\StatsService;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class StatsServiceTest extends PumukitTestCase
 {
     private $factoryService;

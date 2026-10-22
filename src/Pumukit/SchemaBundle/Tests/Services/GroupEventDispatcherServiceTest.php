@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Event\GroupEvent;
@@ -13,9 +14,8 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class GroupEventDispatcherServiceTest extends PumukitTestCase
 {
     public const EMPTY_NAME = 'EMTPY_NAME';

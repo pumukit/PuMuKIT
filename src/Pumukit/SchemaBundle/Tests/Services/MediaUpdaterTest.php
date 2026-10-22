@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
@@ -19,9 +20,8 @@ use Pumukit\SchemaBundle\Services\MediaUpdater;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class MediaUpdaterTest extends PumukitTestCase
 {
     private $i18nService;

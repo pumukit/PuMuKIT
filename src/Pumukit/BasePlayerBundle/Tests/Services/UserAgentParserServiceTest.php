@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Pumukit\BasePlayerBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class UserAgentParserServiceTest extends WebTestCase
 {
     private $agentStrings;

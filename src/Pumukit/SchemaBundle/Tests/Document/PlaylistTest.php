@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Playlist;
 use Pumukit\SchemaBundle\Document\Series;
@@ -11,9 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class PlaylistTest extends WebTestCase
 {
     public function testCreate()

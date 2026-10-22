@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\CoreBundle\Tests;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\EncoderBundle\Document\CpuStatus;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Document\Annotation;
@@ -27,9 +28,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class PumukitTestCase extends WebTestCase
 {
     protected DocumentManager $dm;

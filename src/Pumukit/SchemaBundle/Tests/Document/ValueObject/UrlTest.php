@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Document\ValueObject;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Exception\UrlException;
 use Pumukit\SchemaBundle\Document\ValueObject\Url;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class UrlTest extends TestCase
 {
     public function testCreate(): void

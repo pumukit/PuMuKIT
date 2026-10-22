@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Pumukit\EncoderBundle\Tests\Repository;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class JobRepositoryTest extends PumukitTestCase
 {
     private $repo;

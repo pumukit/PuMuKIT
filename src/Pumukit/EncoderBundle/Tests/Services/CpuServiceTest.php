@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Pumukit\EncoderBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\CpuService;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class CpuServiceTest extends PumukitTestCase
 {
     private $cpuService;

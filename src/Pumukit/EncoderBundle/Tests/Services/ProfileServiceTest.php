@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Pumukit\EncoderBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Services\ProfileService;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class ProfileServiceTest extends PumukitTestCase
 {
     private $profileService;

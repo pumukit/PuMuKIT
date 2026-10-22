@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Link;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -13,9 +14,8 @@ use Pumukit\SchemaBundle\Services\LinkEventDispatcherService;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class LinkEventDispatcherServiceTest extends PumukitTestCase
 {
     public const EMPTY_TITLE = 'EMTPY TITLE';

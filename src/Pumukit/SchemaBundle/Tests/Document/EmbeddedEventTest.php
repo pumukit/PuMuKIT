@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Tests\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\Live;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class EmbeddedEventTest extends TestCase
 {
     public function testSetterAndGetter()

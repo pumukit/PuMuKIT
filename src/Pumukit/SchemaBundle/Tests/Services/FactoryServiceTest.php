@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
@@ -15,9 +16,8 @@ use Pumukit\SchemaBundle\Services\FactoryService;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class FactoryServiceTest extends PumukitTestCase
 {
     private $multimediaObjectRepo;

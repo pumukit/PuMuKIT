@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
@@ -13,9 +14,8 @@ use Pumukit\SchemaBundle\Services\SeriesService;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class SeriesServiceTest extends PumukitTestCase
 {
     private $repo;

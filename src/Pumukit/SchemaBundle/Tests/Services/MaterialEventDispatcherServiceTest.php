@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -13,9 +14,8 @@ use Pumukit\SchemaBundle\Services\MaterialEventDispatcherService;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class MaterialEventDispatcherServiceTest extends PumukitTestCase
 {
     public const EMPTY_TITLE = 'EMTPY TITLE';

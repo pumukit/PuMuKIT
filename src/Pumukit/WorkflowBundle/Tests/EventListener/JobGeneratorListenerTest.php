@@ -6,6 +6,7 @@ namespace Pumukit\WorkflowBundle\Tests\EventListener;
 
 use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
 use Monolog\Logger;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
@@ -36,9 +37,8 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  * @IgnoreAnnotation("dataProvider")
  *
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class JobGeneratorListenerTest extends PumukitTestCase
 {
     private $logger;

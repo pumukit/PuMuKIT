@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Element;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class ElementTest extends TestCase
 {
     public function testGetterAndSetter()

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
@@ -11,9 +12,8 @@ use Pumukit\SchemaBundle\Document\User;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class PersonRepositoryTest extends PumukitTestCase
 {
     private $repo;

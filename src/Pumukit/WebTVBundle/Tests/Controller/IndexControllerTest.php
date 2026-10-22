@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Pumukit\WebTVBundle\Tests\Controller;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Class IndexControllerTest.
  *
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class IndexControllerTest extends WebTestCase
 {
     public function testIndex()

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\StatsBundle\Tests\EventListener;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
@@ -22,9 +23,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class LogTest extends PumukitTestCase
 {
     private $repo;

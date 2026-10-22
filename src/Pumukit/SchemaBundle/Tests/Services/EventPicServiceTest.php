@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Event;
 use Pumukit\SchemaBundle\Document\Live;
@@ -12,9 +13,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class EventPicServiceTest extends PumukitTestCase
 {
     private $repo;

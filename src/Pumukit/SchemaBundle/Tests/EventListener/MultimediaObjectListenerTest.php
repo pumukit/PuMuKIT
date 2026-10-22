@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Tests\EventListener;
 
 use Monolog\Logger;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
@@ -24,9 +25,8 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class MultimediaObjectListenerTest extends PumukitTestCase
 {
     private $listener;

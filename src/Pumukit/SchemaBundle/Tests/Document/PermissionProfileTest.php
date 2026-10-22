@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Security\Permission;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class PermissionProfileTest extends TestCase
 {
     public function testSetterAndGetter()

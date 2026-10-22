@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Document\ValueObject;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Exception\PathException;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class PathTest extends TestCase
 {
     public function testCreate(): void

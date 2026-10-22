@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\BasePlayerBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\BasePlayerBundle\Services\SeriesPlaylistService;
 use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
@@ -21,9 +22,8 @@ use Pumukit\SchemaBundle\Services\FactoryService;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class SeriesPlaylistServiceTest extends PumukitTestCase
 {
     private $mmobjRepo;

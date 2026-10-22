@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
@@ -20,9 +21,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class UpdateUserServiceTest extends PumukitTestCase
 {
     private $createUserService;

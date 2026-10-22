@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Document\MediaType;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Storage;
@@ -16,9 +17,8 @@ use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class MediaStorageTest extends PumukitTestCase
 {
     private string $tmpFile;

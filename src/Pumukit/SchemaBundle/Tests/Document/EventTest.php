@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Document;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use Pumukit\SchemaBundle\Document\Event;
 use Pumukit\SchemaBundle\Document\Live;
@@ -11,9 +12,8 @@ use Pumukit\SchemaBundle\Document\Pic;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class EventTest extends TestCase
 {
     public function testSetterAndGetter()

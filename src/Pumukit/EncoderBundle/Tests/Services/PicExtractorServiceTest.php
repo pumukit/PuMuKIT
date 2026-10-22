@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\EncoderBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
@@ -21,9 +22,8 @@ use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class PicExtractorServiceTest extends PumukitTestCase
 {
     private $mmobjRepo;

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Pumukit\EncoderBundle\Tests\Document;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use Pumukit\EncoderBundle\Document\Job;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class JobTest extends TestCase
 {
     public function testDefaults()

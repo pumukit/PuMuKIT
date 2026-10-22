@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\CoreBundle\Tests\Command;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Pic;
@@ -13,9 +14,8 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class CheckOrphansConsistencyCommandTest extends PumukitTestCase
 {
     private string $tmpDir;

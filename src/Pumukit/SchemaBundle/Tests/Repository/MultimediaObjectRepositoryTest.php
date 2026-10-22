@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
 use MongoDB\BSON\ObjectId;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
@@ -38,9 +39,8 @@ use Pumukit\SchemaBundle\Services\TagService;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class MultimediaObjectRepositoryTest extends PumukitTestCase
 {
     private $repo;

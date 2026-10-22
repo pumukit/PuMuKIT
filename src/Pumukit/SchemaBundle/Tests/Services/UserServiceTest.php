@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -27,9 +28,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class UserServiceTest extends PumukitTestCase
 {
     private $repo;

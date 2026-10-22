@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Repository;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class SeriesTypeRepositoryTest extends PumukitTestCase
 {
     private $repo;

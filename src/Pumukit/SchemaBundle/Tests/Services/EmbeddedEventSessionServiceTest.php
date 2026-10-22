@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\Services;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
@@ -11,9 +12,8 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class EmbeddedEventSessionServiceTest extends PumukitTestCase
 {
     private $service;

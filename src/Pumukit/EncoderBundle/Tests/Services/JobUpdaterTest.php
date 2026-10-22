@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\EncoderBundle\Tests\Services;
 
 use Monolog\Logger;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\JobExecutor;
@@ -15,9 +16,8 @@ use Pumukit\EncoderBundle\Services\ProfileValidator;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 final class JobUpdaterTest extends PumukitTestCase
 {
     private $logger;

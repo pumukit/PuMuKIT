@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Tests\EventListener;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
@@ -14,9 +15,8 @@ use Pumukit\SchemaBundle\Document\User;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversNothing]
 class RemoveListenerTest extends PumukitTestCase
 {
     private $repoJobs;
