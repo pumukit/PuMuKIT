@@ -24,7 +24,7 @@
         <div class="col-xs-12">
             <h1 class="qa-player-title video-title">
                 {{ multimediaObject.title|default("No title"|trans) }}
-                <span class="pull-right edit-button"></span>
+                <span class="pull-right edit-button" data-controller="webtv--edit-button" data-webtv--edit-button-url-value="{{ path('pumukit_webtv_can_edit_multimediaobject', {'id' : multimediaObject.getId()}) }}"></span>
             </h1>
         </div>
 
@@ -45,25 +45,4 @@
         </div>
     </div>
 
-    {% if cinema_mode is defined and cinema_mode %}
-        <script>
-            $("#paellaiframe").detach().prependTo(".main-content");
-        </script>
-    {% endif %}
-
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                url: "{{ path('pumukit_webtv_can_edit_multimediaobject', {'id' : multimediaObject.getId()}) }}",
-                method: 'GET',
-                success: function (response) {
-                    $('.edit-button').html(response);
-                }
-            });
-        });
-    </script>
 {% endblock %}

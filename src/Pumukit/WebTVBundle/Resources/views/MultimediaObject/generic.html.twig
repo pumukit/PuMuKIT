@@ -13,7 +13,9 @@
 <iframe src="{{ url_iframe }}"
         id="paellaiframe"
         width="100%"
-        onload="resizeFrame(this)"
+        data-controller="webtv--player-frame"
+        data-action="load->webtv--player-frame#resize"
+        data-webtv--player-frame-cinema-value="{{ cinema_mode|default(false) ? 'true' : 'false' }}"
         height="500px"
         title="player"
         allowfullscreen

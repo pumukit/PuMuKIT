@@ -3,15 +3,4 @@
 {% set advance_live_events = true %}
 
 {% include "@PumukitBaseLivePlayer/player.html.twig" %}
-
-<script type="text/javascript">
-    {% include "@PumukitBaseLivePlayer/Advance/Sessions/common.js.twig" %}
-
-    if(nextSessionsCount === 0 && nowSessionsCount === 0) {
-        {% include "@PumukitBaseLivePlayer/Advance/Sessions/withoutSessions.js.twig" %}
-    } else if (nextSessionsCount > 0 && nowSessionsCount === 0) {
-        {% include "@PumukitBaseLivePlayer/Advance/Sessions/futureSessions.js.twig" %}
-    } else if (nowSessionsCount > 0) {
-        {% include "@PumukitBaseLivePlayer/Advance/Sessions/nowSessions.js.twig" %}
-    }
-</script>
+{% include "@PumukitBaseLivePlayer/Advance/sessions.html.twig" %}

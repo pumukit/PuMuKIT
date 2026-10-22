@@ -50,7 +50,7 @@
         <li class="list-group-item list-group-item-pmk">
             <div class="qa-player-share-url share_url">
                 <span>{% trans %} URL: {% endtrans %}</span>
-                <input type="text" value="{{ url }}" aria-label="share-url" onclick="this.select()" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" readonly="readonly" />
+                <input type="text" value="{{ url }}" aria-label="share-url" data-controller="core--select" data-action="click->core--select#select" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" readonly="readonly" />
             </div>
         </li>
         <li class="list-group-item list-group-item-pmk">
@@ -68,18 +68,10 @@
                             {{- " loading='lazy'" -}}
                     ></iframe>
                 {% endapply %}{% endset %}
-                <input type="text" value="{{ iframe_value }}" aria-label="share-iframe" onclick="this.select()" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" readonly="readonly" />
+                <input type="text" value="{{ iframe_value }}" aria-label="share-iframe" data-controller="core--select" data-action="click->core--select#select" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" readonly="readonly" />
             </div>
         </li>
     </ul>
 </div>
 
-<script>
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
+<div hidden data-controller="core--external-script" data-core--external-script-src-value="https://connect.facebook.net/en_US/sdk.js#xfbml=1&amp;version=v3.0" data-core--external-script-script-id-value="facebook-jssdk"></div>

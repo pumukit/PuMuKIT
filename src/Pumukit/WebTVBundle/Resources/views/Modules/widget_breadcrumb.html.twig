@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <ol class="breadcrumb breadcrumb-pmk-list">
+                <ol class="breadcrumb breadcrumb-pmk-list" data-controller="webtv--breadcrumb">
                     <li>
                         <a href="{{ breadcrumbs[0]["link"] }}" {% if breadcrumbs|length == 1 %}class="active" aria-current="page"{% endif %} title="{{ breadcrumbs[0]["title"] }}">
                             {{ breadcrumbs[0]["title"] }}
@@ -19,7 +19,7 @@
 
                     {% if breadcrumbs|length > 2 %}
                         <li>
-                            <a id="breadcrumbs_series_a" href="{{ breadcrumbs[2]["link"] }}" {% if breadcrumbs|length == 3 %}class="active" aria-current="page"{% endif %} title="{{ breadcrumbs[2]["title"] }}">
+                            <a id="breadcrumbs_series_a" data-webtv--breadcrumb-target="series" href="{{ breadcrumbs[2]["link"] }}" {% if breadcrumbs|length == 3 %}class="active" aria-current="page"{% endif %} title="{{ breadcrumbs[2]["title"] }}">
                                 {{ breadcrumbs[2]["title"] }}
                             </a>
                         </li>
@@ -27,7 +27,7 @@
 
                     {% if breadcrumbs|length > 3 %}
                         <li>
-                            <a id="breadcrumbs_mmobj_a" href="{{ breadcrumbs[3]["link"] }}" {% if breadcrumbs|length == 4 %}class="active" aria-current="page"{% endif %} title="{{ breadcrumbs[3]["title"] }}">
+                            <a id="breadcrumbs_mmobj_a" data-webtv--breadcrumb-target="multimediaObject" href="{{ breadcrumbs[3]["link"] }}" {% if breadcrumbs|length == 4 %}class="active" aria-current="page"{% endif %} title="{{ breadcrumbs[3]["title"] }}">
                                 {{ breadcrumbs[3]["title"] }}
                             </a>
                         </li>
@@ -38,32 +38,3 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    $(function () {
-        var breadcrumbs_seriesa = $('#breadcrumbs_series_a');
-        var breadcrumbs_mmobja = $('#breadcrumbs_mmobj_a');
-        if (!breadcrumbs_mmobja.length && !breadcrumbs_seriesa.length) {
-            return false;
-        }
-        var breadcrumbLiHeight = ($('.breadcrumb li').first().height()) + 8;
-        var breadcrumbHeight = ($('.breadcrumb').height());
-        var breadcrumbSeriesTitle = breadcrumbs_seriesa.height();
-        var appendSeries, appendMultimediaObject = false;
-        while (((breadcrumbSeriesTitle + 3) > breadcrumbLiHeight) || (breadcrumbHeight > breadcrumbLiHeight)) {
-            if (breadcrumbs_seriesa.text().trim().length > 20) {
-                breadcrumbs_seriesa.text(breadcrumbs_seriesa.text().substring(0, breadcrumbs_seriesa.text().trim().length - 1));
-                appendSeries = true;
-            } else {
-                breadcrumbs_mmobja.text(breadcrumbs_mmobja.text().substring(0, breadcrumbs_mmobja.text().trim().length - 1));
-                if(breadcrumbs_mmobja.text().trim().length < 20) {
-                    break;
-                }
-                appendMultimediaObject = true;
-            }
-            breadcrumbSeriesTitle = $('.breadcrumb').height();
-            breadcrumbHeight = ($('.breadcrumb').height());
-        }
-        if (appendMultimediaObject) breadcrumbs_mmobja.append("...");
-        if (appendSeries) breadcrumbs_seriesa.append("...");
-    });
-</script>

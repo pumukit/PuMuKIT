@@ -16,23 +16,12 @@
             </h3>
             {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                 <div class="text-center">
-                    <button id="pumukit_forbidden_login" type="submit" class="btn btn-default btn-pmk btn-flat" name="submit" title="{% trans %}Log In{% endtrans %}">
+                    <button id="pumukit_forbidden_login" type="submit" class="btn btn-default btn-pmk btn-flat" name="submit" title="{% trans %}Log In{% endtrans %}"
+                            data-controller="webtv--login-redirect" data-action="webtv--login-redirect#redirect" data-webtv--login-redirect-url-value="{{ path('pumukit_auth') }}">
                         {% trans %}Log In{% endtrans %}
                     </button>
                 </div>
             {% endif %}
         {% endif %}
     </div>
-    <script type="text/javascript">
-        $('#pumukit_forbidden_login').on('click', function (event) {
-            try {
-                if (window.parent.location.origin == location.origin) {
-                    window.parent.location.href = '{{ path('pumukit_auth') }}?referer=' + escape(window.parent.location.href);
-                    return;
-                }
-            } catch (e) {
-            }
-            location.href = '{{ path('pumukit_auth') }}?referer=' + escape(location.href);
-        });
-    </script>
 {% endblock %}

@@ -4,11 +4,18 @@ declare(strict_types=1);
 
 namespace Pumukit\BaseLivePlayerBundle\DependencyInjection;
 
+use Pumukit\CoreBundle\DependencyInjection\FrontendAssets;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
-class PumukitBaseLivePlayerExtension extends Extension
+class PumukitBaseLivePlayerExtension extends Extension implements PrependExtensionInterface
 {
+    public function prepend(ContainerBuilder $container): void
+    {
+        FrontendAssets::register($container, dirname(__DIR__), '@pumukit/base-live-player');
+    }
+
     public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();

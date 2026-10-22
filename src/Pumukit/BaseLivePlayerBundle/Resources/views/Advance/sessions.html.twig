@@ -1,0 +1,26 @@
+{% if nextSessions|length == 0 and nowSessions|length == 0 %}
+    {% set state = 'finished' %}
+    {% set message = event.getAlreadyHeldMessage()|default('The event has already been held'|trans) %}
+{% elseif nowSessions|length == 0 %}
+    {% set state = 'future' %}
+    {% set message = event.getNotYetHeldMessage()|default('The event has not been held yet'|trans) %}
+{% else %}
+    {% set state = 'now' %}
+    {% set message = event.getNotYetHeldMessage()|default('The event has not been held yet'|trans) %}
+{% endif %}
+<div hidden
+     data-controller="live-player--sessions"
+     data-live-player--sessions-state-value="{{ state }}"
+     data-live-player--sessions-player-value="#live-{{ id }}"
+     data-live-player--sessions-next-session-starts-value="{{ nextSessions|length > 0 ? firstNextSession : '' }}"
+     data-live-player--sessions-seconds-to-event-value="{{ secondsToEvent|default(0) }}"
+     data-live-player--sessions-now-session-ends-value="{{ nowSessions|length > 0 ? firstNowSessionEnds : '' }}"
+     data-live-player--sessions-now-session-duration-value="{{ firstNowSessionDuration|default(0) }}">
+    <template data-live-player--sessions-target="poster">
+        <img src="{{ poster_pic(multimediaObject) }}" alt="{{ 'Event Poster'|trans }}" width="100%">
+        <h2 class="warning" style="position: absolute; top: 30%; color: {{ poster_pic_text_color(multimediaObject) }}; font-weight: bold; font-size: 20px; width:95%; line-height: 34px; text-align: center; word-break: break-word">
+            {{- message|raw -}}
+            <br/><span id="warning"></span>
+        </h2>
+    </template>
+</div>

@@ -1,52 +1,13 @@
 {% if enable_cookie_banner is defined and enable_cookie_banner %}
-    <div id="headercookie" class="cookielaw">
+    <div id="headercookie" class="cookielaw" data-controller="webtv--cookies" data-webtv--cookies-domain-value="{{ app.request.getHttpHost() }}">
         <div class="titlecookie">
             {{ "Cookies"|trans }}
         </div>
         <div class="textcookie">
             {% include '@PumukitWebTV/Cookies/cookies_text.html.twig' %}
             <div class="clearfix"></div>
-            <button id="btn-accept-cookies" class="btn btn-default btn-accept-cookies" style="margin-top: 9px">{{ "Accept"|trans }}</button>
+            <button id="btn-accept-cookies" class="btn btn-default btn-accept-cookies" style="margin-top: 9px" data-action="webtv--cookies#accept">{{ "Accept"|trans }}</button>
         </div>
     </div>
 {% endif %}
 
-<script type="text/javascript">
-    insertCookieUser("{{ app.request.getHttpHost() }}");
-
-    $('.btn-accept-cookies').on('click', function(event) {
-        event.preventDefault();
-        setCookie("{{ app.request.getHttpHost() }}", "full", 0);
-        $('#headercookie').hide();
-    });
-
-    function insertCookieUser(domain) {
-        let pumukitCookie = getCookie(domain);
-        if (pumukitCookie == null || typeof pumukitCookie == 'undefined' || (typeof pumukitCookie != 'undefined' && pumukitCookie.indexOf("full") === -1)) {
-            $('#headercookie').show();
-        } else {
-            $('#headercookie').hide();
-        }
-    }
-
-    function setCookie(name,value,days) {
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days*24*60*60*1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
-    }
-
-    function getCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for(let i=0;i < ca.length;i++) {
-            let c = ca[i];
-            while (c.charAt(0) == ' ') c = c.substring(1,c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-        }
-        return null;
-    }
-</script>

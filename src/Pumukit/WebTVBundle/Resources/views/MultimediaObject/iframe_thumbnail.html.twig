@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ multimediaObject.title }}</title>
     <link rel="stylesheet" href="{{ asset('bundles/pumukitwebtv/css/iframe_thumbnail.css') }}">
+    {{ importmap('pumukit') }}
 </head>
 <body>
     {% set player_url = is_magic 
@@ -15,7 +16,10 @@
          id="thumbnail-container"
          data-mmobj-id="{{ multimediaObject.id }}"
          data-is-magic="{{ is_magic ? 'true' : 'false' }}"
-         data-player-url="{{ player_url }}">
+         data-player-url="{{ player_url }}"
+         data-controller="webtv--thumbnail-play"
+         data-action="click->webtv--thumbnail-play#play"
+         data-webtv--thumbnail-play-player-url-value="{{ player_url }}">
         <img src="{{ thumbnail_url }}" alt="{{ multimediaObject.title }}" />
         <button class="play-button-overlay" role="button" aria-label="Play video">
             <i class="preview-play-icon">
@@ -35,23 +39,5 @@
         </button>
     </div>
 
-    <script src="{{ asset('bundles/pumukitcore/vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('bundles/pumukitcore/vendor/jquery-migrate/jquery-migrate.min.js') }}"></script>
-    <script>
-        $(function() {
-            $('#thumbnail-container').on('click', function() {
-                var playerUrl = '{{ player_url|raw }}';
-                
-                playerUrl += (playerUrl.indexOf('?') > -1 ? '&' : '?') + 'autoclick=1';
-                
-                var params = window.location.search;
-                if (params) {
-                    playerUrl += '&' + params.substring(1);
-                }
-                
-                window.location.href = playerUrl;
-            });
-        });
-    </script>
 </body>
 </html>
