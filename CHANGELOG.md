@@ -14,7 +14,8 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Functional tests for user creation, login and logout.
 - `make php-shell` and `make composer` targets to work inside the PHP container.
 - `pumukit:textindex:rebuild` command to regenerate the search text index for all Multimedia Objects and Series.
-- `pumukit:check:assets` command to list bundle assets referenced by templates that no installed bundle provides.
+- `pumukit:check:assets` command to list bundle assets and PuMuKIT templates referenced by templates that no installed bundle provides, and overridden portal layouts without the importmap.
+- Stimulus (`symfony/stimulus-bundle`) and `symfony/ux-translator`, with the importmap and the `pumukit` entrypoint declared by the CoreBundle; bundles register their controllers with `FrontendAssets::register()`.
 
 #### Changed
 
@@ -34,6 +35,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Upgrade MonologBundle to 4, API Platform to 5 and phpdocumentor/reflection-docblock to 6.
 - Serve bundle assets through Symfony AssetMapper; jQuery, Bootstrap 3.4.1, moment 2.30.1, jQuery UI and bootstrap-datetimepicker are shared from `bundles/pumukitcore/vendor/`.
 - Upgrade jQuery 1.10.2 → 3.7.1 (with jQuery Migrate 3.6.0 during the transition), jQuery UI 1.11.3 → 1.14.2 and bootstrap-datetimepicker 4.14.30 → 4.17.49.
+- Move the inline JavaScript of CoreBundle, EncoderBundle and WizardBundle templates to Stimulus controllers; `@PumukitCore/Upload/uppy_tus.js.twig` is replaced by `@PumukitCore/Upload/uppy_tus.html.twig`.
 - Update composer dependencies (gedmo/doctrine-extensions, php-cs-fixer, pagerfanta, knp-menu-bundle, twig extensions, etc.).
 
 #### Fixed

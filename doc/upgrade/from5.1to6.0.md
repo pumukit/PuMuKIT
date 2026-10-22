@@ -58,7 +58,10 @@ Informational (no action required):
 - **Frontend assets** are served through Symfony AssetMapper. The Docker image runs
   `assets:install` and `bin/console asset-map:compile`; deployments built outside the image
   must run both. Overridden templates that load core libraries are listed in
-  [UPGRADE-6.0.md](../../UPGRADE-6.0.md#frontend-assets).
+  [UPGRADE-6.0.md](../../UPGRADE-6.0.md#frontend-assets). An overridden portal layout
+  (`templates/bundles/PumukitWebTVBundle/Layout/template.html.twig`) must render
+  `{{ importmap('pumukit') }}` in its `javascripts` block; run `bin/console pumukit:check:assets`
+  to find what has to be adapted.
 
 ---
 

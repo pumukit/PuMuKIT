@@ -144,7 +144,6 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
   | `bundles/pumukitnewadmin/css/bootstrap.min.css` | `bundles/pumukitcore/vendor/bootstrap/css/bootstrap.min.css` |
   | `bundles/pumukitwebtv/js/moment-with-locales.min.js` | `bundles/pumukitcore/vendor/moment/moment-with-locales.min.js` |
   | `bundles/pumukitstatsui/vendor/moment/moment.min.js` | `bundles/pumukitcore/vendor/moment/moment-with-locales.min.js` |
-
   | `bundles/pumukitnewadmin/js/jquery-ui-1.11.3.custom.min.js` | `bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.js` |
   | `bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom*.min.css` (3 files) | `bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.css` |
   | `bundles/pumukitwebtv/js/bootstrap-datetimepicker.min.js` | `bundles/pumukitcore/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js` |
@@ -165,15 +164,53 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
   `ui-state-focus`; styles that targeted the focused item must include
   `.ui-menu .ui-menu-item-wrapper.ui-state-active`.
 - Run `bin/console pumukit:check:assets` in the project before upgrading: it lists every
-  `bundles/...` asset referenced by the templates in `templates/` (or `--path`) that no installed
-  bundle provides, with its replacement when it was moved. A missing JavaScript file does not
-  break the page, it only shows a 404 in the browser console.
+  `bundles/...` asset and every `@Pumukit.../....twig` template referenced by the templates in
+  `templates/` (or `--path`) that no installed bundle provides, with its replacement when it was
+  moved, and an overridden portal layout without `importmap('pumukit')`. A missing JavaScript file
+  does not break the page, it only shows a 404 in the browser console.
 - The portal keeps its own customized Bootstrap 3.4.1 stylesheet
   (`bundles/pumukitwebtv/css/bootstrap.min.css`).
 - Bundles that ship files whose JavaScript loads other files by relative URL (like the Paella
   build) must exclude them from AssetMapper with `framework.asset_mapper.excluded_patterns`.
 - Production builds must run `bin/console asset-map:compile` after `assets:install` (the
   Docker image does it).
+
+### JavaScript in templates (Stimulus)
+
+The inline JavaScript of the templates (`<script>` blocks, `on*=` attributes and the
+`*.js.twig` files) is being moved to [Stimulus](https://stimulus.hotwired.dev/) controllers
+(`symfony/stimulus-bundle`) loaded through the importmap, so that the pages can run under a
+Content Security Policy without `unsafe-inline`. The CoreBundle declares the importmap
+(`Resources/importmap/importmap.php`), the downloaded packages and the `pumukit` entrypoint.
+
+- The core layouts render `{{ importmap('pumukit') }}` at the end of the `javascripts` block
+  (`@PumukitWebTV/Layout/template.html.twig` and `@PumukitNewAdmin/layout.html.twig`).
+  **An overridden portal layout must add it**: without it the controllers do not start and the
+  migrated features silently do nothing, also in the back-office, whose layout extends the
+  portal one.
+- Data reaches the JavaScript through `data-*` attributes: values
+  (`data-<controller>-<name>-value`), targets and actions. Controllers are named
+  `<bundle>--<name>`, e.g. `data-controller="encoder--job"`. URLs are generated in the template
+  and passed as values.
+- Translations: `import { trans } from '@pumukit/translator';` (`symfony/ux-translator`, `messages`
+  domain, locale taken from `<html lang>`).
+- A bundle registers its controllers by calling
+  `FrontendAssets::register($container, dirname(__DIR__), '@pumukit/<alias>')` from the `prepend()`
+  of its extension, and puts them in `Resources/assets/controllers/<alias>/<name>_controller.js`
+  with the `/* stimulusFetch: 'lazy' */` directive, so they are only downloaded by the pages that use
+  them.
+- A project can add its own controllers with `stimulus.controller_paths` in
+  `config/packages/stimulus.yaml`. Their names must not collide with the core ones.
+- The Flex recipes of `symfony/stimulus-bundle` and `symfony/ux-translator` may add `assets/` and
+  `config/packages/ux_translator.yaml` to the project. PuMuKIT does not use them; they can be removed.
+
+Removed templates and globals:
+
+| Removed | Replacement |
+|---|---|
+| `@PumukitCore/Upload/uppy_tus.js.twig`, `@PumukitCore/Upload/uppy_dispatch.js.twig` | `{% include '@PumukitCore/Upload/uppy_tus.html.twig' %}` outside the `<script>` tag |
+| `uppyTUS` global variable | the `core--uppy-tus` controller |
+| `window.encoder_reload_timeout` | the `encoder--stats` controller |
 
 ## Doctrine annotations are no longer supported
 
