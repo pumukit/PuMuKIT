@@ -132,11 +132,24 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
 
 - Reference bundle assets **without** a leading slash: `asset('bundles/pumukitwebtv/...')`.
   A path starting with `/` is not mapped and is served as a plain static file.
-- jQuery, Bootstrap and moment are shared from `bundles/pumukitcore/vendor/`:
-  `vendor/jquery/jquery.min.js` (1.10.2), `vendor/bootstrap/js/bootstrap.min.js` and
-  `vendor/bootstrap/css/bootstrap.min.css` (3.4.1) and `vendor/moment/moment-with-locales.min.js`
-  (2.30.1). Overridden templates should load them from there. The copies in
-  `pumukitnewadmin`, `pumukitwebtv` and `pumukitstatsui` will be removed before 6.0.0.
+- jQuery, Bootstrap and moment are shared from `bundles/pumukitcore/vendor/` and the copies
+  that each bundle had are removed. Overridden templates must load the shared files:
+
+  | Removed | Replacement |
+  |---|---|
+  | `bundles/pumukitnewadmin/js/jquery-1.10.2.min.js` | `bundles/pumukitcore/vendor/jquery/jquery.min.js` |
+  | `bundles/pumukitwebtv/js/jquery.min.js` | `bundles/pumukitcore/vendor/jquery/jquery.min.js` |
+  | `bundles/pumukitnewadmin/js/bootstrap.min.js` | `bundles/pumukitcore/vendor/bootstrap/js/bootstrap.min.js` |
+  | `bundles/pumukitwebtv/js/bootstrap.min.js` | `bundles/pumukitcore/vendor/bootstrap/js/bootstrap.min.js` |
+  | `bundles/pumukitnewadmin/css/bootstrap.min.css` | `bundles/pumukitcore/vendor/bootstrap/css/bootstrap.min.css` |
+  | `bundles/pumukitwebtv/js/moment-with-locales.min.js` | `bundles/pumukitcore/vendor/moment/moment-with-locales.min.js` |
+  | `bundles/pumukitstatsui/vendor/moment/moment.min.js` | `bundles/pumukitcore/vendor/moment/moment-with-locales.min.js` |
+
+  The shared versions are jQuery 1.10.2, Bootstrap 3.4.1 and moment 2.30.1.
+- Run `bin/console pumukit:check:assets` in the project before upgrading: it lists every
+  `bundles/...` asset referenced by the templates in `templates/` (or `--path`) that no installed
+  bundle provides, with its replacement when it was moved. A missing JavaScript file does not
+  break the page, it only shows a 404 in the browser console.
 - The portal keeps its own customized Bootstrap 3.4.1 stylesheet
   (`bundles/pumukitwebtv/css/bootstrap.min.css`).
 - Bundles that ship files whose JavaScript loads other files by relative URL (like the Paella

@@ -14,6 +14,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Functional tests for user creation, login and logout.
 - `make php-shell` and `make composer` targets to work inside the PHP container.
 - `pumukit:textindex:rebuild` command to regenerate the search text index for all Multimedia Objects and Series.
+- `pumukit:check:assets` command to list bundle assets referenced by templates that no installed bundle provides.
 
 #### Changed
 
@@ -31,6 +32,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Map documents with PHP attributes instead of Doctrine annotations; `doctrine/annotations` and `doctrine/cache` are no longer installed.
 - Read request parameters from an explicit source (route attributes, query string or body) instead of `Request::get()`.
 - Upgrade MonologBundle to 4, API Platform to 5 and phpdocumentor/reflection-docblock to 6.
+- Serve bundle assets through Symfony AssetMapper; jQuery 1.10.2, Bootstrap 3.4.1 and moment 2.30.1 are shared from `bundles/pumukitcore/vendor/`.
 - Update composer dependencies (gedmo/doctrine-extensions, php-cs-fixer, pagerfanta, knp-menu-bundle, twig extensions, etc.).
 
 #### Fixed
@@ -49,6 +51,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - `symfony/templating` (unused), Swiftmailer and `symfony/swiftmailer-bundle`.
 - The v4→v5 data migration commands (`pumukit:upgrade:*`); 6.0 is reached from 5.1.x, which already runs the v5 schema.
 - Vendored SIMILE Timeline 2.3.1 assets (~1 MB) under `NewAdminBundle/Resources/public/js/timeline_2.3.1/`.
+- Per-bundle copies of jQuery, Bootstrap and moment in `pumukitnewadmin`, `pumukitwebtv` and `pumukitstatsui` (see UPGRADE-6.0.md for the replacements).
 - Unused fields from the encoder profile configuration schema (`format`, `codec`, `mime_type`, `bitrate`, `framerate`, `channels`, `app`, `rel_duration_size`, `rel_duration_trans`, `file_cfg`, `prescript`, and `streamserver.{name,type,host,description}`); these were declared but never read by the application. `validateProfilesDir()` now identifies the failing profile by its array key in its error message instead of the redundant `streamserver.name`.
 
 
