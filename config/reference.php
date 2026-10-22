@@ -847,7 +847,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         }>,
  *     },
  *     asset_mapper?: bool|array{ // Asset Mapper configuration
- *         enabled?: bool|Param, // Default: false
+ *         enabled?: bool|Param, // Default: true
  *         paths?: Param|string|array<string, scalar|Param|null>,
  *         excluded_patterns?: list<scalar|Param|null>,
  *         exclude_dotfiles?: bool|Param, // If true, any files starting with "." will be excluded from the asset mapper. // Default: true
@@ -1036,7 +1036,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     },
  *     disallow_search_engine_index?: bool|Param, // Enabled by default when debug is enabled. // Default: true
  *     http_client?: bool|array{ // HTTP Client configuration
- *         enabled?: bool|Param, // Default: false
+ *         enabled?: bool|Param, // Default: true
  *         max_host_connections?: int|Param, // The maximum number of connections to a single host.
  *         default_options?: array{
  *             headers?: array<string, mixed>,
@@ -2099,6 +2099,20 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     },
  *     ...<string, mixed>
  * }
+ * @psalm-type StimulusConfig = array{
+ *     controller_paths?: list<scalar|Param|null>,
+ *     controllers_json?: scalar|Param|null, // Default: "%kernel.project_dir%/assets/controllers.json"
+ * }
+ * @psalm-type UxTranslatorConfig = array{
+ *     dump_directory?: scalar|Param|null, // The directory where translations and TypeScript types are dumped. // Default: "%kernel.project_dir%/var/translations"
+ *     dump_typescript?: bool|Param, // Control whether TypeScript types are dumped alongside translations. Disable this if you do not use TypeScript (e.g. in production when using AssetMapper). // Default: true
+ *     domains?: Param|string|array{ // List of domains to include/exclude from the generated translations. Prefix with a `!` to exclude a domain.
+ *         type?: scalar|Param|null,
+ *         elements?: list<scalar|Param|null>,
+ *         ...<string, mixed>
+ *     },
+ *     keys_patterns?: Param|string|list<scalar|Param|null>,
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -2117,14 +2131,14 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     pumukit_schema?: PumukitSchemaConfig,
  *     pumukit_stats?: PumukitStatsConfig,
  *     pumukit_workflow?: PumukitWorkflowConfig,
- *     debug?: DebugConfig,
  *     framework?: FrameworkConfig,
  *     monolog?: MonologConfig,
  *     twig?: TwigConfig,
- *     web_profiler?: WebProfilerConfig,
  *     twig_extra?: TwigExtraConfig,
  *     security?: SecurityConfig,
  *     api_platform?: ApiPlatformConfig,
+ *     stimulus?: StimulusConfig,
+ *     ux_translator?: UxTranslatorConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -2151,6 +2165,35 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         api_platform?: ApiPlatformConfig,
+ *         stimulus?: StimulusConfig,
+ *         ux_translator?: UxTranslatorConfig,
+ *     },
+ *     "when@prod"?: array{
+ *         imports?: ImportsConfig,
+ *         parameters?: ParametersConfig,
+ *         services?: ServicesConfig,
+ *         babdev_pagerfanta?: BabdevPagerfantaConfig,
+ *         doctrine_mongodb?: DoctrineMongodbConfig,
+ *         jms_serializer?: JmsSerializerConfig,
+ *         knp_menu?: KnpMenuConfig,
+ *         pumukit_base_live_player?: PumukitBaseLivePlayerConfig,
+ *         pumukit_base_player?: PumukitBasePlayerConfig,
+ *         pumukit_core?: PumukitCoreConfig,
+ *         pumukit_encoder?: PumukitEncoderConfig,
+ *         pumukit_new_admin?: PumukitNewAdminConfig,
+ *         pumukit_notification?: PumukitNotificationConfig,
+ *         pumukit_paella_player?: PumukitPaellaPlayerConfig,
+ *         pumukit_schema?: PumukitSchemaConfig,
+ *         pumukit_stats?: PumukitStatsConfig,
+ *         pumukit_workflow?: PumukitWorkflowConfig,
+ *         framework?: FrameworkConfig,
+ *         monolog?: MonologConfig,
+ *         twig?: TwigConfig,
+ *         twig_extra?: TwigExtraConfig,
+ *         security?: SecurityConfig,
+ *         api_platform?: ApiPlatformConfig,
+ *         stimulus?: StimulusConfig,
+ *         ux_translator?: UxTranslatorConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -2178,6 +2221,8 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_extra?: TwigExtraConfig,
  *         security?: SecurityConfig,
  *         api_platform?: ApiPlatformConfig,
+ *         stimulus?: StimulusConfig,
+ *         ux_translator?: UxTranslatorConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
@@ -2262,6 +2307,7 @@ namespace Symfony\Component\Routing\Loader\Configurator;
  * }
  * @psalm-type RoutesConfig = array{
  *     "when@dev"?: array<string, RouteConfig|ImportConfig|AliasConfig>,
+ *     "when@prod"?: array<string, RouteConfig|ImportConfig|AliasConfig>,
  *     "when@test"?: array<string, RouteConfig|ImportConfig|AliasConfig>,
  *     ...<string, RouteConfig|ImportConfig|AliasConfig>
  * }

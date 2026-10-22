@@ -6,9 +6,39 @@ namespace Pumukit\CoreBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
-class PumukitCoreExtension extends Extension
+class PumukitCoreExtension extends Extension implements PrependExtensionInterface
 {
+    public function prepend(ContainerBuilder $container): void
+    {
+        $importmapDir = dirname(__DIR__).'/Resources/importmap';
+
+        $container->prependExtensionConfig('framework', [
+            'asset_mapper' => [
+                'paths' => [$importmapDir.'/vendor' => 'vendor'],
+                'importmap_path' => $importmapDir.'/importmap.php',
+                'vendor_dir' => $importmapDir.'/vendor',
+                'importmap_polyfill' => false,
+            ],
+        ]);
+
+        if ($container->hasExtension('stimulus')) {
+            $container->prependExtensionConfig('stimulus', [
+                'controllers_json' => $importmapDir.'/controllers.json',
+            ]);
+        }
+
+        if ($container->hasExtension('ux_translator')) {
+            $container->prependExtensionConfig('ux_translator', [
+                'domains' => ['messages'],
+                'dump_typescript' => false,
+            ]);
+        }
+
+        FrontendAssets::register($container, dirname(__DIR__), '@pumukit/core');
+    }
+
     public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
