@@ -994,7 +994,8 @@ class MultimediaObjectRepository extends DocumentRepository
             ->group()
             ->field('id')->expression('id')
             ->field('total_duration')->sum('$duration')
-            ->execute()
+            ->getAggregation()
+            ->getIterator()
         ;
 
         return $aggregation->current()['total_duration'] ?? 0;
