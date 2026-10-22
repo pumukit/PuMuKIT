@@ -2,8 +2,8 @@
 
 PuMuKIT 6.0 has **two independent parts**:
 
-1. **Symfony core**: `5.4` (end of life) → `6.4` LTS, plus the dependency bumps it
-   unblocked (api-platform 4, knp-menu 3, tus-php 2, pagerfanta 4, etc.).
+1. **Symfony core**: `5.4` (end of life) → `7.4` LTS on **PHP 8.5**, plus the dependency bumps it
+   unblocked (api-platform 4, knp-menu 3, tus-php 2, pagerfanta 4, DoctrineMongoDBBundle 5, etc.).
 2. **MongoDB stack**: server `5.0` → `8.0`, `ext-mongodb` `1.14.2` → `1.21.12` and
    `mongodb/mongodb` `1.13` → `1.21`.
 
@@ -16,9 +16,9 @@ setup of this repository, with services `php` (PHP-FPM) and `db` (MongoDB).
 
 ---
 
-## Application changes (Symfony 6.4)
+## Application changes (Symfony 7.4)
 
-Checking out 6.0.x gives you the updated `composer.json` and all the internal Symfony 6.4
+Checking out 6.0.x gives you the updated `composer.json` and all the internal Symfony 7.4
 changes for free. What you have to do is **adapt the customizations and configuration that
 are not part of the core**. The items below are the ones that affect a typical 5.1.x
 deployment:
@@ -31,13 +31,13 @@ deployment:
   `--profile` option and was renamed to **`--encoding-profile`** in
   `pumukit:import:inbox` and `pumukit:import:multimedia:file`. Update any cron jobs or
   upload scripts that pass `--profile`.
-- **Security configuration format.** The auth layer moved from Guard to the Symfony 6.4
+- **Security configuration format.** The auth layer moved from Guard to the Symfony
   authenticator system. The shipped config needs no action, but if you **customized
   `security.yaml`** you must port it to the new keys (`custom_authenticators`,
   `password_hashers`, `PUBLIC_ACCESS` instead of `guard`, `encoders`,
   `anonymous`/`IS_AUTHENTICATED_ANONYMOUSLY`).
 - **Other local customizations.** Any code or config you maintain on top of the core
-  (overridden templates, services, controllers) should be reviewed against the SF6.4 APIs.
+  (overridden templates, services, controllers) should be reviewed against the Symfony 7.4 APIs.
   The code-level changes are listed in [UPGRADE-6.0.md](../../UPGRADE-6.0.md).
 
 - **PHP 8.5.** The `php` image is built from `php:8.5-fpm` (it was `8.2`) and is rebuilt
@@ -59,7 +59,7 @@ Informational (no action required):
 
 - **MongoDB server**: `5.0` → `8.0` (must be upgraded one major at a time).
 - **PHP driver** (`ext-mongodb`): `1.14.2` → `1.21.12` (stays on the 1.x line).
-- **PHP MongoDB library** (`mongodb/mongodb`): `1.13` → `1.21` (Doctrine ODM stays on `2.6`).
+- **PHP MongoDB library** (`mongodb/mongodb`): `1.13` → `1.21` (Doctrine ODM `2.6` → `2.15`).
 - The denormalized **search text index must be rebuilt** after upgrading existing data.
 
 The 6.0 code already ships the final values (`docker-compose.yml` with `mongo:8.0`, the
@@ -138,7 +138,7 @@ git checkout 6.0.x
 > holds 5.0 data and an 8.0 server would refuse to start on it. Leave `db` running on its
 > current 5.0 container until step **B.3**.
 
-Now apply the **[application changes](#application-changes-symfony-64)**: confirm you are
+Now apply the **[application changes](#application-changes-symfony-74)**: confirm you are
 not blocked by SSO, set `MAILER_DSN`, update any ingest scripts using `--profile`, and
 review custom `security.yaml` overrides.
 

@@ -28,6 +28,31 @@ PuMuKIT code were:
 - The `session.sid_length` and `session.sid_bits_per_character` INI settings are deprecated
   and `disable_classes` was removed.
 
+## Symfony 7.4
+
+The core runs on Symfony 7.4 LTS with DoctrineMongoDBBundle 5.6 (`doctrine/persistence` 4).
+`doctrine/annotations` is no longer installed. Changes that affect bundles and custom code:
+
+- Symfony 7 adds native return types to the methods you override. A missing or wider type
+  is a fatal error, e.g. `Command::execute()` must return `int` (not `?int`), and
+  `configure()`, `initialize()`, `Bundle::build()` and `CompilerPassInterface::process()`
+  return `void`.
+- Bundle extensions extend `Symfony\Component\DependencyInjection\Extension\Extension`
+  instead of `Symfony\Component\HttpKernel\DependencyInjection\Extension`.
+- Voters: `voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token,
+  ?Vote $vote = null): bool`.
+- Inject rate limiters as `Symfony\Component\RateLimiter\RateLimiterFactoryInterface`.
+- `UserInterface::eraseCredentials()` is deprecated. If it is empty, mark it with
+  `#[\Deprecated]`; if it clears sensitive data, exclude that data in `__serialize()`.
+- `Assert\Url` constraints must set `requireTld` explicitly (its default changes in
+  Symfony 8). The core uses `requireTld: false` for the streaming URLs of live channels.
+- Configuration nodes cannot be both required and have a default value.
+- The dev routes of the profiler and the error preview import the `.php` files
+  (`errors.php`, `wdt.php`, `profiler.php`) instead of the `.xml` ones, and the
+  `twig.exception_controller` option is gone.
+- `Request::get()` is deprecated: read from `$request->attributes`, `$request->query` or
+  `$request->request` explicitly.
+
 ## Doctrine annotations are no longer supported
 
 The integration of Doctrine annotations is disabled (`framework.annotations.enabled: false`)
