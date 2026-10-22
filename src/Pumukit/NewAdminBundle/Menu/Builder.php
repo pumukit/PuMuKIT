@@ -4,23 +4,30 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Menu;
 
+use Knp\Menu\Attribute\AsMenuBuilder;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface as KnpItemInterface;
 use Pumukit\SchemaBundle\Security\Permission;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-class Builder implements ContainerAwareInterface
+class Builder
 {
-    use ContainerAwareTrait;
+    public function __construct(
+        protected readonly FactoryInterface $factory,
+        protected readonly AuthorizationCheckerInterface $authorizationChecker,
+        protected readonly RequestStack $requestStack,
+        protected readonly ParameterBagInterface $parameters,
+        protected readonly ItemsList $menuItems,
+        protected readonly BlocksList $blockItems,
+    ) {}
 
-    private $authorizationChecker;
-
-    public function mainMenu(FactoryInterface $factory, array $options): KnpItemInterface
+    #[AsMenuBuilder(name: 'pumukit_newadmin_main')]
+    #[AsMenuBuilder(name: 'PumukitNewAdminBundle:Builder:mainMenu')]
+    public function mainMenu(array $options = []): KnpItemInterface
     {
-        $menu = $factory->createItem('root');
-
-        $this->authorizationChecker = $this->container->get('pumukitnewadmin.authorization_checker');
+        $menu = $this->factory->createItem('root');
 
         $this->addDashboardMenu($menu);
         $this->addMediaManagerMenu($menu);
@@ -38,7 +45,7 @@ class Builder implements ContainerAwareInterface
 
     protected function addDashboardMenu(KnpItemInterface $menu): void
     {
-        $showDashboardTab = $this->container->getParameter('pumukit.show_dashboard_tab');
+        $showDashboardTab = $this->parameters->get('pumukit.show_dashboard_tab');
 
         if ($showDashboardTab && $this->authorizationChecker->isGranted(Permission::ACCESS_DASHBOARD)) {
             $options = ['route' => 'pumukit_newadmin_dashboard_index', 'attributes' => ['class' => 'menu_dashboard']];
@@ -68,7 +75,7 @@ class Builder implements ContainerAwareInterface
             $unesco->setDisplayChildren(false);
         }
 
-        if ($this->authorizationChecker->isGranted(Permission::ACCESS_EDIT_PLAYLIST) && $this->container->getParameter('pumukit_new_admin.enable_playlist')) {
+        if ($this->authorizationChecker->isGranted(Permission::ACCESS_EDIT_PLAYLIST) && $this->parameters->get('pumukit_new_admin.enable_playlist')) {
             $options = ['route' => 'pumukitnewadmin_playlist_index', 'attributes' => ['class' => 'menu_playlists_index']];
             $mediaManager->addChild('Playlists', $options);
         }
@@ -87,7 +94,7 @@ class Builder implements ContainerAwareInterface
             $stats->addChild('Multimedia Objects', $options);
 
             // Voters are a way to check if a menu item is the current one. Now we are just checking the routes and setting the Current element manually
-            $route = $this->container->get('request_stack')->getMainRequest()->attributes->get('_route');
+            $route = $this->requestStack->getMainRequest()->attributes->get('_route');
             $statsRoutes = ['pumukit_stats_series_index', 'pumukit_stats_mmobj_index', 'pumukit_stats_series_index_id', 'pumukit_stats_mmobj_index_id'];
             if (in_array($route, $statsRoutes)) {
                 $stats->setCurrent(true);
@@ -97,8 +104,8 @@ class Builder implements ContainerAwareInterface
 
     protected function addLiveMenu(KnpItemInterface $menu): void
     {
-        $advanceLiveEvent = $this->container->hasParameter('pumukit_new_admin.advance_live_event')
-                            && $this->container->getParameter('pumukit_new_admin.advance_live_event');
+        $advanceLiveEvent = $this->parameters->has('pumukit_new_admin.advance_live_event')
+                            && $this->parameters->get('pumukit_new_admin.advance_live_event');
         $options = ['attributes' => ['class' => 'menu_live']];
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_EVENTS) || $this->authorizationChecker->isGranted(Permission::ACCESS_LIVE_CHANNELS)) {
             $live = $menu->addChild('Live management', $options);
@@ -176,8 +183,8 @@ class Builder implements ContainerAwareInterface
 
     protected function addPlaceAndPrecinctMenu(KnpItemInterface $tables): void
     {
-        $menuPlaceAndPrecinct = $this->container->hasParameter('pumukit_new_admin.show_menu_place_and_precinct')
-                                && $this->container->getParameter('pumukit_new_admin.show_menu_place_and_precinct');
+        $menuPlaceAndPrecinct = $this->parameters->has('pumukit_new_admin.show_menu_place_and_precinct')
+                                && $this->parameters->get('pumukit_new_admin.show_menu_place_and_precinct');
         if ($menuPlaceAndPrecinct && $this->authorizationChecker->isGranted(Permission::ACCESS_TAGS)) {
             $options = ['route' => 'pumukitnewadmin_places_index', 'attributes' => ['class' => 'menu_places_and_precinct']];
             $tables->addChild('Places and precinct', $options);
@@ -186,7 +193,7 @@ class Builder implements ContainerAwareInterface
 
     protected function addSeriesTypeMenu(KnpItemInterface $tables): void
     {
-        $showSeriesTypeTab = $this->container->hasParameter('pumukit.use_series_channels') && $this->container->getParameter('pumukit.use_series_channels');
+        $showSeriesTypeTab = $this->parameters->has('pumukit.use_series_channels') && $this->parameters->get('pumukit.use_series_channels');
         if ($showSeriesTypeTab && $this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_TYPES)) {
             $options = ['route' => 'pumukitnewadmin_seriestype_index', 'attributes' => ['class' => 'menu_series_type']];
             $tables->addChild('Series types', $options);
@@ -243,7 +250,7 @@ class Builder implements ContainerAwareInterface
 
     protected function addToolsMenu(KnpItemInterface $menu): void
     {
-        $showImporterTab = $this->container->hasParameter('pumukit_opencast.show_importer_tab') && $this->container->getParameter('pumukit_opencast.show_importer_tab');
+        $showImporterTab = $this->parameters->has('pumukit_opencast.show_importer_tab') && $this->parameters->get('pumukit_opencast.show_importer_tab');
         $hasAccessToImporter = $showImporterTab && $this->authorizationChecker->isGranted('ROLE_ACCESS_IMPORTER');
         $hasAccessToSeriesStyle = $this->authorizationChecker->isGranted(Permission::ACCESS_SERIES_STYLE);
         $hasAccessToHeadAndTailManager = $this->authorizationChecker->isGranted(Permission::ACCESS_HEAD_AND_TAIL_MANAGER);
@@ -251,12 +258,7 @@ class Builder implements ContainerAwareInterface
 
         $externalTools = [];
 
-        $menuItems = $this->container->get('pumukitnewadmin.menu');
-        if (!$menuItems) {
-            return;
-        }
-
-        foreach ($menuItems->items() as $item) {
+        foreach ($this->menuItems->items() as $item) {
             if ('menu' !== $item->getServiceTag() || !$this->authorizationChecker->isGranted($item->getAccessRole())) {
                 continue;
             }
@@ -315,12 +317,7 @@ class Builder implements ContainerAwareInterface
 
     protected function addCustomMenu(KnpItemInterface $menu): void
     {
-        $blockItems = $this->container->get('pumukitnewadmin.block');
-        if (!$blockItems) {
-            return;
-        }
-
-        foreach ($blockItems->items() as $item) {
+        foreach ($this->blockItems->items() as $item) {
             $class = 'menu_tools_'.strtolower(str_replace(' ', '_', $item->getName()));
             $options = ['route' => $item->getUri(), 'attributes' => ['class' => $class]];
             $menu->addChild($item->getName(), $options);

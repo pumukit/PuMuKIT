@@ -117,6 +117,9 @@ services:
   Pumukit\NewAdminBundle\Menu\BlocksList:
     class: Pumukit\NewAdminBundle\Menu\BlocksList
 
+  Pumukit\NewAdminBundle\Menu\Builder:
+    class: Pumukit\NewAdminBundle\Menu\Builder
+
   Pumukit\NewAdminBundle\Twig\MultimediaObjectButtonsExtension:
     class: Pumukit\NewAdminBundle\Twig\MultimediaObjectButtonsExtension
     tags:
