@@ -1,4 +1,4 @@
-ARG PHP_VERSION=8.2
+ARG PHP_VERSION=8.5
 ARG SO_VERSION=bookworm
 ARG NGINX_VERSION=1.25
 ARG FFMPEG_VERSION=6.0
@@ -8,10 +8,10 @@ FROM linuxserver/ffmpeg:version-${FFMPEG_VERSION}-cli AS ffmpeg
 FROM php:${PHP_VERSION}-fpm-${SO_VERSION} AS base
 LABEL org.opencontainers.image.authors="Pablo Nieto, pnieto@teltek.es"
 
-ARG APCU_VERSION=5.1.22
-ARG PHP_MONGODB_VERSION=1.21.0
-ARG XDEBUG_VERSION=3.2.0
-ARG PHP_REDIS_VERSION=5.3.4
+ARG APCU_VERSION=5.1.28
+ARG PHP_MONGODB_VERSION=1.21.12
+ARG XDEBUG_VERSION=3.5.3
+ARG PHP_REDIS_VERSION=6.3.0
 ARG DEBIAN_FRONTEND=noninteractive
 
 ENV PHP_FPM_PM="dynamic" \
@@ -76,7 +76,6 @@ RUN apt-get update \
 		&& pecl install redis-${PHP_REDIS_VERSION} \
 		&& docker-php-ext-enable \
 		apcu \
-		opcache \
 		mongodb \
 		redis \
 		&& pecl clear-cache
