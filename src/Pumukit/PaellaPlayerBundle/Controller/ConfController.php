@@ -94,7 +94,7 @@ class ConfController extends AbstractController
 
     private function getPaellaProfileFolder(Request $request): string
     {
-        $multimediaObject = $this->getMultimediaObject($request->get('id'));
+        $multimediaObject = $this->getMultimediaObject($request->query->get('id'));
 
         if (strpos($request->headers->get('referer'), 'advanced')) {
             return self::PAELLA_ADVANCE_CONFIG_FOLDER;

@@ -45,15 +45,15 @@ class BasePlaylistController extends BasePlaylistAbstractController
     #[Route('/playlist/magic/{secret}', name: 'pumukit_playlistplayer_magicindex', defaults: ['show_hide' => true, 'no_channels' => true])]
     public function indexAction(Request $request, Series $series)
     {
-        return $this->redirectWithMmobj($series, $request, $request->get('videoId'), $request->get('videoPos'));
+        return $this->redirectWithMmobj($series, $request, $request->query->get('videoId'), $request->query->get('videoPos'));
     }
 
     #[Route('/playlist', name: 'pumukit_playlistplayer_paellaindex', defaults: ['no_channels' => true])]
     #[Template('@PumukitPaellaPlayer/PaellaPlayer/player.html.twig')]
     public function paellaIndexAction(Request $request)
     {
-        $mmobjId = $request->get('videoId');
-        $seriesId = $request->get('playlistId');
+        $mmobjId = $request->query->get('videoId');
+        $seriesId = $request->query->get('playlistId');
         $series = $this->documentManager->getRepository(Series::class)->find($seriesId);
         if (!$series) {
             return $this->return404Response("No playlist found with id: {$seriesId}");
