@@ -55,8 +55,10 @@ Informational (no action required):
 - **REST API.** The legacy controller API (`/api/media/*`, etc.) is kept as-is. 6.0 adds a
   new versioned, read-only api-platform 5 API under **`/api/v1`** (Swagger/ReDoc at
   `/api/v1/docs`).
-- **Frontend assets are unchanged** in 6.0 (still vendorized + `assets:install`, handled
-  by the Docker image). The AssetMapper/jQuery/Bootstrap modernization is deferred.
+- **Frontend assets** are served through Symfony AssetMapper. The Docker image runs
+  `assets:install` and `bin/console asset-map:compile`; deployments built outside the image
+  must run both. Overridden templates that load core libraries are listed in
+  [UPGRADE-6.0.md](../../UPGRADE-6.0.md#frontend-assets).
 
 ---
 

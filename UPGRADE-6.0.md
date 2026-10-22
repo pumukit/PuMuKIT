@@ -123,6 +123,27 @@ PHPUnit notice. Bundle test suites must follow the same rules:
 - `expects($this->any())` is deprecated: use a stub and `->method(...)->willReturn(...)`.
 - Migrate `phpunit.xml.dist` with `vendor/bin/phpunit --migrate-configuration`.
 
+## Frontend assets
+
+PuMuKIT 6.0 serves the public files of the bundles through Symfony AssetMapper. Every
+bundle `Resources/public` directory is mapped automatically under its usual prefix
+(`bundles/pumukitwebtv/...`), so `{{ asset('bundles/...') }}` now returns a versioned URL
+(`/assets/bundles/pumukitwebtv/js/template_video-<hash>.js`).
+
+- Reference bundle assets **without** a leading slash: `asset('bundles/pumukitwebtv/...')`.
+  A path starting with `/` is not mapped and is served as a plain static file.
+- jQuery, Bootstrap and moment are shared from `bundles/pumukitcore/vendor/`:
+  `vendor/jquery/jquery.min.js` (1.10.2), `vendor/bootstrap/js/bootstrap.min.js` and
+  `vendor/bootstrap/css/bootstrap.min.css` (3.4.1) and `vendor/moment/moment-with-locales.min.js`
+  (2.30.1). Overridden templates should load them from there. The copies in
+  `pumukitnewadmin`, `pumukitwebtv` and `pumukitstatsui` will be removed before 6.0.0.
+- The portal keeps its own customized Bootstrap 3.4.1 stylesheet
+  (`bundles/pumukitwebtv/css/bootstrap.min.css`).
+- Bundles that ship files whose JavaScript loads other files by relative URL (like the Paella
+  build) must exclude them from AssetMapper with `framework.asset_mapper.excluded_patterns`.
+- Production builds must run `bin/console asset-map:compile` after `assets:install` (the
+  Docker image does it).
+
 ## Doctrine annotations are no longer supported
 
 The integration of Doctrine annotations is disabled (`framework.annotations.enabled: false`)
