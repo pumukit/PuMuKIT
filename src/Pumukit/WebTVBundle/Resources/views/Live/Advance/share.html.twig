@@ -15,7 +15,7 @@
         <li class="list-group-item share_url">
             <span>{{ text_iframe|upper }}:</span>
             {% set trackId = (track.id is defined)?track.id:null %}
-            {% set iframe_value %}{% apply spaceless %}
+            {% set iframe_value %}{% apply pumukit_spaceless %}
                     <iframe src='{{ url('pumukit_live_event_iframe_id', {'id':multimediaObject.id, 'track_id': trackId}) }}'
                             {{- " id='pumukitiframe'" -}}
                             {{- " frameborder='0'" -}}

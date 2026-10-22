@@ -57,7 +57,7 @@
             <div class="qa-player-share-iframe share_url share_iframe">
                 <span>{% trans %} IFRAME: {% endtrans %}</span>
                 {% set trackid = (track.id is defined)?track.id:null %}
-                {% set iframe_value %}{% apply spaceless %}
+                {% set iframe_value %}{% apply pumukit_spaceless %}
                     <iframe src='{{ urlIframe }}'
                             {{- " id='pumukitiframe'" -}}
                             {{- " frameborder='0'" -}}

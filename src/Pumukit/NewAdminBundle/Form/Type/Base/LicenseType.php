@@ -39,7 +39,7 @@ class LicenseType extends AbstractType
         );
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         if (0 == count($this->licenses)) {
             return TextType::class;

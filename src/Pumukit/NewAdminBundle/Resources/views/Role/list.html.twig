@@ -45,7 +45,7 @@
           </td>
           <td headers="th-icons">
               {% if roles.getCurrentPage() != 1 or not loop.first %}
-              {% apply spaceless %}
+              {% apply pumukit_spaceless %}
               <a href="{{ path('pumukitnewadmin_role_down', {'id': role.id}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
               <a href="{{ path('pumukitnewadmin_role_bottom', {'id': role.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
               {% endapply %}
@@ -53,7 +53,7 @@
           </td>
           <td headers="th-icons">
               {% if (roles.getCurrentPage() != roles.getNbPages()) or (loop.index + ((roles.getCurrentPage() - 1 ) * roles.getMaxPerPage()) != roles.getNbResults())  %}
-              {% apply spaceless %}
+              {% apply pumukit_spaceless %}
               <a href="{{ path('pumukitnewadmin_role_up', {'id': role.id}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
               <a href="{{ path('pumukitnewadmin_role_top', {'id': role.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
               {% endapply %}

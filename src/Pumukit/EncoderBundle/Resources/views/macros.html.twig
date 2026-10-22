@@ -1,4 +1,4 @@
-{% macro job_status_color(status) %}{% apply spaceless %}
+{% macro job_status_color(status) %}{% apply pumukit_spaceless %}
 
 {% set colors = {
   (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')): 'rgb(221, 75, 57)',
@@ -13,7 +13,7 @@
 {% endapply %}{% endmacro %}
 
 
-{% macro job_status_icon(status) %}{% apply spaceless %}
+{% macro job_status_icon(status) %}{% apply pumukit_spaceless %}
 
 {% set icons = {
   (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')): 'mdi-av-new-releases',

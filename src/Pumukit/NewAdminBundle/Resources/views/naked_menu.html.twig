@@ -1,11 +1,11 @@
-{% set series_title %}{% apply spaceless %}
+{% set series_title %}{% apply pumukit_spaceless %}
     {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
         {% trans %}My Series{% endtrans %}
     {% else %}
         {% trans %}Multimedia Series{% endtrans %}
     {% endif %}
 {% endapply %}{% endset %}
-{% set playlist_title %}{% apply spaceless %}
+{% set playlist_title %}{% apply pumukit_spaceless %}
     {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
         {% trans %}My Playlists{% endtrans %}
     {% else %}

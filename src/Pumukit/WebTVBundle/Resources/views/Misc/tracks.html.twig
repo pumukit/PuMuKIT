@@ -2,7 +2,7 @@
     <li class="list-group-item">
         <a href="{{ videoUrl }}" title="{{ "Url track"|trans }}">
             <i class="fas fa-video"></i>
-            {% apply spaceless %}
+            {% apply pumukit_spaceless %}
                 {{ object.isPublicEmbeddedBroadcast() ? 'Video'|trans : 'Private video'|trans }}
             {% endapply %}
         </a>
@@ -32,7 +32,7 @@
                     <i class="fa fa-video-camera"></i>
                 {% endif %}
 
-                {% apply spaceless %}
+                {% apply pumukit_spaceless %}
                     {% if track.metadata().isOnlyAudio() %}
                         {{ object.isPublicEmbeddedBroadcast() ? 'Audio'|trans : 'Private audio'|trans }}
                     {% elseif track.tags().containsTag('download') %}

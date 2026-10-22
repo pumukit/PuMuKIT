@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class MenuPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         // The services tagged as pumukitnewadmin.menuitem (notice the extra 'item' in the name) will be added here
         $this->addItems($container, 'pumukitnewadmin.menu');

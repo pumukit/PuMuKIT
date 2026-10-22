@@ -56,7 +56,7 @@ class CustomLanguageType extends AbstractType
         return $choices;
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return ChoiceType::class;
     }

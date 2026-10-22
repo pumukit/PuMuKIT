@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class PumukitNewAdminBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new MenuPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 0);
     }
