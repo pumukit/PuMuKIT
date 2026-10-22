@@ -84,12 +84,12 @@ class APIController extends AbstractController implements NewAdminControllerInte
         $tempCriteria = [];
         $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
 
-        $limit = (int) $request->get('limit');
-        $page = (int) $request->get('page');
-        $skip = (int) ($request->get('skip') ?? self::API_SKIP);
+        $limit = (int) $request->query->get('limit', $request->request->get('limit'));
+        $page = (int) $request->query->get('page', $request->request->get('page'));
+        $skip = (int) ($request->query->get('skip', $request->request->get('skip')) ?? self::API_SKIP);
 
         try {
-            $criteria = $this->getMultimediaObjectCriteria($request->get('criteria'), $request->get('criteriajson'));
+            $criteria = $this->getMultimediaObjectCriteria($request->query->all()['criteria'] ?? $request->request->all()['criteria'] ?? null, $request->query->get('criteriajson', $request->request->get('criteriajson')));
         } catch (\Exception $e) {
             $error = ['error' => sprintf('Invalid criteria (%s)', $e->getMessage())];
             $data = $this->serializer->dataSerialize($error, $request->getRequestFormat());
@@ -97,11 +97,11 @@ class APIController extends AbstractController implements NewAdminControllerInte
             return new Response($data, 400);
         }
 
-        $sort = $request->get('sort') ?: [];
+        $sort = ($request->query->all()['sort'] ?? $request->request->all()['sort'] ?? null) ?: [];
         if (!is_array($sort)) {
             $sort = ['public_date' => $sort];
         }
-        $prototypes = $request->get('prototypes') ?: false;
+        $prototypes = $request->query->get('prototypes', $request->request->get('prototypes')) ?: false;
 
         if (!$limit || $limit > 100) {
             $limit = 100;
@@ -233,12 +233,12 @@ class APIController extends AbstractController implements NewAdminControllerInte
     public function seriesAction(Request $request)
     {
         $seriesRepo = $this->documentManager->getRepository(Series::class);
-        $limit = (int) $request->get('limit');
-        $page = (int) $request->get('page');
-        $skip = (int) ($request->get('skip') ?? self::API_SKIP);
+        $limit = (int) $request->query->get('limit', $request->request->get('limit'));
+        $page = (int) $request->query->get('page', $request->request->get('page'));
+        $skip = (int) ($request->query->get('skip', $request->request->get('skip')) ?? self::API_SKIP);
 
         try {
-            $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
+            $criteria = $this->getCriteria($request->query->all()['criteria'] ?? $request->request->all()['criteria'] ?? null, $request->query->get('criteriajson', $request->request->get('criteriajson')));
         } catch (\Exception $e) {
             $error = ['error' => sprintf('Invalid criteria (%s)', $e->getMessage())];
             $data = $this->serializer->dataSerialize($error, $request->getRequestFormat());
@@ -246,7 +246,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
             return new Response($data, 400);
         }
 
-        $sort = $request->get('sort') ?: [];
+        $sort = ($request->query->all()['sort'] ?? $request->request->all()['sort'] ?? null) ?: [];
 
         if (!$limit || $limit > 100) {
             $limit = 100;
@@ -291,14 +291,14 @@ class APIController extends AbstractController implements NewAdminControllerInte
     public function userSeriesAction(Request $request)
     {
         $userRepo = $this->documentManager->getRepository(User::class);
-        $sort = $request->get('sort') ?: [];
-        $onlyAdminSeries = $request->get('adminSeries') ?: false;
-        $limit = (int) $request->get('limit');
+        $sort = ($request->query->all()['sort'] ?? $request->request->all()['sort'] ?? null) ?: [];
+        $onlyAdminSeries = $request->query->get('adminSeries', $request->request->get('adminSeries')) ?: false;
+        $limit = (int) $request->query->get('limit', $request->request->get('limit'));
 
         $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
 
         try {
-            $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
+            $criteria = $this->getCriteria($request->query->all()['criteria'] ?? $request->request->all()['criteria'] ?? null, $request->query->get('criteriajson', $request->request->get('criteriajson')));
         } catch (\Exception $e) {
             $error = ['error' => sprintf('Invalid criteria (%s)', $e->getMessage())];
             $data = $this->serializer->dataSerialize($error, $request->getRequestFormat());
@@ -335,13 +335,13 @@ class APIController extends AbstractController implements NewAdminControllerInte
     {
         $liveRepo = $this->documentManager->getRepository(Live::class);
 
-        $limit = $request->get('limit');
+        $limit = $request->query->get('limit', $request->request->get('limit'));
         if (!$limit || $limit > 100) {
             $limit = 100;
         }
 
         try {
-            $criteria = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
+            $criteria = $this->getCriteria($request->query->all()['criteria'] ?? $request->request->all()['criteria'] ?? null, $request->query->get('criteriajson', $request->request->get('criteriajson')));
         } catch (\Exception $e) {
             $error = ['error' => sprintf('Invalid criteria (%s)', $e->getMessage())];
             $data = $this->serializer->dataSerialize($error, $request->getRequestFormat());
@@ -349,7 +349,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
             return new Response($data, 400);
         }
 
-        $sort = $request->get('sort') ?: [];
+        $sort = ($request->query->all()['sort'] ?? $request->request->all()['sort'] ?? null) ?: [];
 
         $qb = $liveRepo->createQueryBuilder();
 

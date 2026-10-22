@@ -36,12 +36,12 @@ class AnnotationsAPIController extends AbstractController
     #[Route('/annotations.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'], methods: ['GET'])]
     public function getAction(Request $request)
     {
-        $episode = $request->get('episode');
-        $type = $request->get('type');
-        $day = $request->get('day');
+        $episode = $request->query->get('episode');
+        $type = $request->query->get('type');
+        $day = $request->query->get('day');
 
-        $limit = (int) $request->get('limit') ?: 10;
-        $offset = (int) $request->get('offset') ?: 0;
+        $limit = (int) $request->query->get('limit') ?: 10;
+        $offset = (int) $request->query->get('offset') ?: 0;
 
         $annonRepo = $this->documentManager->getRepository(Annotation::class);
         $annonQB = $annonRepo->createQueryBuilder();
@@ -113,12 +113,12 @@ class AnnotationsAPIController extends AbstractController
     #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
     public function createNewAction(Request $request)
     {
-        $episode = $request->get('episode');
-        $type = $request->get('type');
-        $value = $request->get('value');
+        $episode = $request->query->get('episode', $request->request->get('episode'));
+        $type = $request->query->get('type', $request->request->get('type'));
+        $value = $request->query->get('value', $request->request->get('value'));
         $inPoint = $request->query->getInt('in');
-        $outPoint = $request->get('out') ?: 100;
-        $isPrivate = $request->get('isPrivate') ?: false;
+        $outPoint = $request->query->get('out', $request->request->get('out')) ?: 100;
+        $isPrivate = $request->query->get('isPrivate', $request->request->get('isPrivate')) ?: false;
 
         $annotation = new Annotation();
         $annotation->setMultimediaObject(new ObjectId($episode));
@@ -164,7 +164,7 @@ class AnnotationsAPIController extends AbstractController
     #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
     public function editAction(Request $request, Annotation $annotation)
     {
-        $value = $request->get('value');
+        $value = $request->query->get('value', $request->request->get('value'));
         $annotation->setValue($value);
         $this->documentManager->persist($annotation);
         $this->documentManager->flush();

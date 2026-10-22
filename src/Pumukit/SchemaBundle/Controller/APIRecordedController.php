@@ -29,7 +29,7 @@ class APIRecordedController extends AbstractController
     {
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
-        $groupBy = $request->get('group_by') ?: 'month';
+        $groupBy = $request->query->get('group_by', $request->request->get('group_by')) ?: 'month';
 
         $views = $this->statsService->getMmobjRecordedGroupedBy($fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
 
@@ -56,7 +56,7 @@ class APIRecordedController extends AbstractController
     {
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
-        $groupBy = $request->get('group_by') ?: 'month';
+        $groupBy = $request->query->get('group_by', $request->request->get('group_by')) ?: 'month';
 
         $views = $this->statsService->getSeriesRecordedGroupedBy($fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
 
@@ -82,7 +82,7 @@ class APIRecordedController extends AbstractController
     {
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
-        $groupBy = $request->get('group_by') ?: 'month';
+        $groupBy = $request->query->get('group_by', $request->request->get('group_by')) ?: 'month';
 
         $views = $this->statsService->getHoursRecordedGroupedBy($fromDate, $toDate, $limit, $page, $criteria, $sort, $groupBy);
 
@@ -105,7 +105,7 @@ class APIRecordedController extends AbstractController
     #[Route('/mmobj/stats.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'])]
     public function globalStatsAction(Request $request)
     {
-        $groupBy = $request->get('group_by') ?: 'month';
+        $groupBy = $request->query->get('group_by', $request->request->get('group_by')) ?: 'month';
 
         $stats = $this->statsService->getGlobalStats($groupBy);
 
@@ -123,12 +123,12 @@ class APIRecordedController extends AbstractController
     {
         $MAX_LIMIT = 1500;
         // Request variables.
-        $criteria = $request->get('criteria') ?: [];
-        $sort = (int) $request->get('sort');
-        $fromDate = $request->get('from_date') ?? date('Y-m-d');
-        $toDate = $request->get('to_date') ?? date('Y-m-d');
-        $limit = (int) $request->get('limit');
-        $page = $request->get('page') ?: 0;
+        $criteria = ($request->query->all()['criteria'] ?? $request->request->all()['criteria'] ?? null) ?: [];
+        $sort = (int) ($request->query->all()['sort'] ?? $request->request->all()['sort'] ?? null);
+        $fromDate = $request->query->get('from_date', $request->request->get('from_date')) ?? date('Y-m-d');
+        $toDate = $request->query->get('to_date', $request->request->get('to_date')) ?? date('Y-m-d');
+        $limit = (int) $request->query->get('limit', $request->request->get('limit'));
+        $page = $request->query->get('page', $request->request->get('page')) ?: 0;
 
         // Processing variables.
         if (!$limit || $limit > $MAX_LIMIT) {
