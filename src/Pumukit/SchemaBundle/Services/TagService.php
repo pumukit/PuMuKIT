@@ -258,7 +258,13 @@ class TagService
     public function deleteTag(TagInterface $tag)
     {
         if ($this->canDeleteTag($tag)) {
-            $this->dm->clear(MultimediaObject::class);
+            $multimediaObjectIds = $this->dm->createQueryBuilder(MultimediaObject::class)
+                ->distinct('_id')
+                ->field('tags._id')->equals(new ObjectId($tag->getId()))
+                ->getQuery()
+                ->execute()
+            ;
+
             $qb = $this->dm->createQueryBuilder(MultimediaObject::class);
 
             $query = $qb
@@ -267,6 +273,15 @@ class TagService
                 ->getQuery()
             ;
             $query->execute();
+
+            if ($multimediaObjectIds) {
+                $this->dm->createQueryBuilder(MultimediaObject::class)
+                    ->field('_id')->in($multimediaObjectIds)
+                    ->refresh()
+                    ->getQuery()
+                    ->toArray()
+                ;
+            }
 
             $this->dm->remove($tag);
             $this->dm->flush();
