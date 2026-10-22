@@ -145,7 +145,25 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
   | `bundles/pumukitwebtv/js/moment-with-locales.min.js` | `bundles/pumukitcore/vendor/moment/moment-with-locales.min.js` |
   | `bundles/pumukitstatsui/vendor/moment/moment.min.js` | `bundles/pumukitcore/vendor/moment/moment-with-locales.min.js` |
 
-  The shared versions are jQuery 1.10.2, Bootstrap 3.4.1 and moment 2.30.1.
+  | `bundles/pumukitnewadmin/js/jquery-ui-1.11.3.custom.min.js` | `bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.js` |
+  | `bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom*.min.css` (3 files) | `bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.css` |
+  | `bundles/pumukitwebtv/js/bootstrap-datetimepicker.min.js` | `bundles/pumukitcore/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js` |
+  | `bundles/pumukitwebtv/css/bootstrap-datetimepicker(.min).css` | `bundles/pumukitcore/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css` |
+
+  The shared versions are jQuery 3.7.1, jQuery Migrate 3.6.0, Bootstrap 3.4.1, moment 2.30.1,
+  jQuery UI 1.14.2 (autocomplete and menu only, so it does not replace the Bootstrap tooltip)
+  and bootstrap-datetimepicker 4.17.49.
+- **jQuery 3.** Load `bundles/pumukitcore/vendor/jquery-migrate/jquery-migrate.min.js` right after
+  jQuery while custom scripts are migrated: it restores the removed APIs and logs a
+  `JQMIGRATE` warning in the browser console for each one. It will be removed before 6.0.0.
+  The removed APIs found in PuMuKIT code were:
+  - `$.get(...).success()`/`.error()`/`.complete()`: use `.done()`/`.fail()`/`.always()`.
+  - `.size()`: use `.length`.
+  - `.load(function)`, `.unload()` and `.error(function)` as event shorthands: use
+    `.on('load', ...)`, `.on('unload', ...)`, `.on('error', ...)`.
+- **jQuery UI 1.14.** The highlighted autocomplete item uses `ui-state-active` instead of
+  `ui-state-focus`; styles that targeted the focused item must include
+  `.ui-menu .ui-menu-item-wrapper.ui-state-active`.
 - Run `bin/console pumukit:check:assets` in the project before upgrading: it lists every
   `bundles/...` asset referenced by the templates in `templates/` (or `--path`) that no installed
   bundle provides, with its replacement when it was moved. A missing JavaScript file does not
