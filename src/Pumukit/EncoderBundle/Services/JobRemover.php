@@ -11,6 +11,8 @@ use Pumukit\CoreBundle\Event\FileRemovedEvent;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\TrackService;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class JobRemover
@@ -58,6 +60,8 @@ final class JobRemover
         } elseif ($this->deleteInboxFiles && str_starts_with($job->getPathIni(), $this->inboxPath)) {
             unlink($job->getPathIni());
 
+            $this->removeDirectoryIfEmpty($job->getPathIni());
+
             $event = new FileRemovedEvent($job->getPathIni());
             $this->eventDispatcher->dispatch($event, FileEvents::FILE_REMOVED);
         }
@@ -83,5 +87,29 @@ final class JobRemover
     public function removeMedia(MultimediaObject $multimediaObject, string $trackId): MultimediaObject
     {
         return $this->trackService->removeTrackFromMultimediaObject($multimediaObject, $trackId);
+    }
+
+    private function removeDirectoryIfEmpty(string $filePath): void
+    {
+        $directory = dirname($filePath);
+        $marker = $directory.\DIRECTORY_SEPARATOR.'.pumukit-temporary';
+        $filesystem = new Filesystem();
+
+        if (!$filesystem->exists([$directory, $marker])) {
+            return;
+        }
+
+        $finder = new Finder();
+        $finder
+            ->in($directory)
+            ->ignoreDotFiles(false)
+            ->notName('.pumukit-temporary')
+            ->depth('== 0')
+        ;
+
+        if (!$finder->hasResults()) {
+            $filesystem->remove($marker);
+            rmdir($directory);
+        }
     }
 }

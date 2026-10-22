@@ -37,7 +37,7 @@ class Log
             return;
         }
 
-        $userAgent = mb_convert_encoding($request->headers->get('user-agent'), 'UTF-8', mb_list_encodings());
+        $userAgent = $this->normalizeUserAgent($request->headers->get('user-agent'));
 
         if (false !== strpos($userAgent, 'TTK Zabbix Agent')) {
             return;
@@ -60,6 +60,21 @@ class Log
 
         $this->dm->persist($log);
         $this->dm->flush();
+    }
+
+    private function normalizeUserAgent(?string $userAgent): string
+    {
+        if (null === $userAgent || '' === $userAgent) {
+            return '';
+        }
+
+        if (mb_check_encoding($userAgent, 'UTF-8')) {
+            return $userAgent;
+        }
+
+        $converted = mb_convert_encoding($userAgent, 'UTF-8', 'ISO-8859-1');
+
+        return \is_string($converted) ? $converted : '';
     }
 
     private function getUser(): ?string

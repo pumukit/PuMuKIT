@@ -801,6 +801,42 @@
         <source>News</source>
         <target state="translated">News</target>
       </trans-unit>
+      <trans-unit id="slider_manager">
+        <source>Slider manager</source>
+        <target>Slider manager</target>
+      </trans-unit>
+      <trans-unit id="slider_drag_drop">
+        <source>Drag and drop the contents to change their order in the slider.</source>
+        <target>Drag and drop the contents to change their order in the slider.</target>
+      </trans-unit>
+      <trans-unit id="slider_drag_reorder">
+        <source>Drag to reorder</source>
+        <target>Drag to reorder</target>
+      </trans-unit>
+      <trans-unit id="slider_no_contents">
+        <source>There are no contents in the slider</source>
+        <target>There are no contents in the slider</target>
+      </trans-unit>
+      <trans-unit id="slider_save_order">
+        <source>Save order</source>
+        <target>Save order</target>
+      </trans-unit>
+      <trans-unit id="slider_order_saved">
+        <source>Order saved successfully</source>
+        <target>Order saved successfully</target>
+      </trans-unit>
+      <trans-unit id="slider_order_error">
+        <source>Error saving order</source>
+        <target>Error saving order</target>
+      </trans-unit>
+      <trans-unit id="slider_not_published">
+        <source>Not published</source>
+        <target>Not published</target>
+      </trans-unit>
+      <trans-unit id="slider_edit_multimedia_object">
+        <source>Edit multimedia object</source>
+        <target>Edit multimedia object</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

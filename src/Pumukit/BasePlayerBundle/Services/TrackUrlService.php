@@ -53,7 +53,7 @@ class TrackUrlService
         return $baseUrl;
     }
 
-    public function generateDirectTrackFileUrl(Track $track, Request $request): string
+    public function generateDirectTrackFileUrl(Track $track, ?Request $request = null): string
     {
         $tokenData = $this->secureTokenService->generateToken($track->id());
 
