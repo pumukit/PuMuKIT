@@ -48,7 +48,7 @@ abstract class BasePlayerController extends AbstractController
 
     public function validateAccess(Request $request, MultimediaObject $multimediaObject)
     {
-        $password = $request->get('broadcast_password');
+        $password = $request->request->get('broadcast_password');
 
         $user = $this->getUser();
         $response = $this->embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $user, $password);
