@@ -9,7 +9,7 @@ use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -36,7 +36,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     public function __construct(
         DocumentManager $objectManager,
         UrlGeneratorInterface $urlGenerator,
-        RateLimiterFactory $loginIpLimiter
+        RateLimiterFactoryInterface $loginIpLimiter
     ) {
         $this->objectManager = $objectManager;
         $this->urlGenerator = $urlGenerator;

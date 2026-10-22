@@ -419,6 +419,7 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
         return $this->id;
     }
 
+    #[\Deprecated]
     public function eraseCredentials(): void {}
 
     public function setRoles(array $roles): self

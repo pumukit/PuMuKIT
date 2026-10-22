@@ -6,6 +6,7 @@ framework:
   csrf_protection: ~
   validation:      { enable_attributes: true }
   annotations:     { enabled: false }
+  property_info:   { with_constructor_extractor: false }
   handle_all_throwables: true
   php_errors:      { log: true }
   #assets_version: SomeVersionScheme

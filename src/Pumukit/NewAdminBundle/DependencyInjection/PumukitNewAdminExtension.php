@@ -7,7 +7,7 @@ namespace Pumukit\NewAdminBundle\DependencyInjection;
 use Pumukit\NewAdminBundle\EventListener\NakedBackofficeListener;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 
 class PumukitNewAdminExtension extends Extension
 {

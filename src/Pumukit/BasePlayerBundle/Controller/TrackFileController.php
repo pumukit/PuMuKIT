@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class TrackFileController extends AbstractController
@@ -30,14 +30,14 @@ class TrackFileController extends AbstractController
     private EventDispatcherInterface $eventDispatcher;
     private LoggerInterface $logger;
     private ?SecureTokenService $secureTokenService;
-    private ?RateLimiterFactory $trackfileAccessLimiter;
+    private ?RateLimiterFactoryInterface $trackfileAccessLimiter;
 
     public function __construct(
         DocumentManager $documentManager,
         EventDispatcherInterface $eventDispatcher,
         LoggerInterface $logger,
         ?SecureTokenService $secureTokenService = null,
-        ?RateLimiterFactory $trackfileAccessLimiter = null
+        ?RateLimiterFactoryInterface $trackfileAccessLimiter = null
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->documentManager = $documentManager;

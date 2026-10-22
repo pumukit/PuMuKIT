@@ -17,7 +17,7 @@ class Live
 
     #[MongoDB\Field(type: 'string')]
     #[Assert\NotBlank]
-    #[Assert\Url(protocols: ['rtmpt', 'rtmp', 'http', 'mms', 'rtp', 'https'])]
+    #[Assert\Url(protocols: ['rtmpt', 'rtmp', 'http', 'mms', 'rtp', 'https'], requireTld: false)]
     private $url;
 
     #[MongoDB\Field(type: 'string')]
