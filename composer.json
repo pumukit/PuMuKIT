@@ -37,7 +37,7 @@
         "symfony/intl": "*",
         "symfony/lock": "*",
         "symfony/mailer": "*",
-        "symfony/monolog-bundle": "^3.0",
+        "symfony/monolog-bundle": "^4.1",
         "symfony/rate-limiter": "*",
         "symfony/security-bundle": "*",
         "symfony/serializer": "*",
