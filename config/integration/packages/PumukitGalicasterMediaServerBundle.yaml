@@ -1,0 +1,5 @@
+pumukit_galicaster_media_server:
+    cas_file: '/tmp/integration-cas.json'
+    host: 'https://galicaster.integration.invalid'
+    digest_username: 'integration'
+    digest_password: 'integration'

@@ -1,0 +1,7 @@
+pumukit_blackboard:
+    learn_host: 'https://learn.integration.invalid'
+    learn_key: 'integration'
+    learn_secret: 'integration'
+    collaborate_host: 'https://collaborate.integration.invalid'
+    collaborate_key: 'integration'
+    collaborate_secret: 'integration-placeholder-secret-32b'

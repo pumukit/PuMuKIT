@@ -1,0 +1,594 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Composer\Semver\Semver;
+
+const PHPSTAN_LEVEL = 1;
+const CORE_COPY_EXCLUDES = [
+    './vendor', './var', './dev-bundles', './.git', './node_modules', './composer.lock',
+    './public/storage', './public/uploads', './public/bundles', './.phpunit.cache',
+];
+
+$root = dirname(__DIR__);
+$work = $root.'/var/integration';
+$app = $work.'/app';
+$logs = $work.'/logs';
+
+require $root.'/vendor/autoload.php';
+
+$opts = getopt('', ['tests', 'skip-phpstan', 'only:']);
+$only = isset($opts['only']) ? array_filter(explode(',', (string) $opts['only'])) : [];
+$runTests = isset($opts['tests']);
+$runPhpstan = !isset($opts['skip-phpstan']);
+
+$startedAt = microtime(true);
+@mkdir($logs, 0775, true);
+array_map('unlink', glob($logs.'/*') ?: []);
+
+$coreComposer = json_decode(file_get_contents($root.'/composer.json'), true, 512, JSON_THROW_ON_ERROR);
+$coreVersion = $coreComposer['version'] ?? throw new RuntimeException('composer.json of the core has no "version".');
+
+$report = [
+    'generated_at' => date(DATE_ATOM),
+    'options' => ['tests' => $runTests, 'phpstan' => $runPhpstan, 'only' => $only],
+    'core' => ['version' => $coreVersion] + gitInfo($root) + ['annotations' => countAnnotations($root.'/src')],
+    'global' => [],
+    'bundles' => discoverBundles($root, $only, $coreVersion),
+];
+$bundles = &$report['bundles'];
+$global = &$report['global'];
+$compatible = array_filter($bundles, fn (array $b) => $b['compatible']);
+
+step('Syncing core into var/integration/app');
+syncCore($root, $app);
+
+step('Installing '.count($compatible).' bundles with Composer');
+$global['composer'] = installBundles($root, $work, $app, $logs, $coreComposer, $compatible);
+foreach ($bundles as $dir => &$bundle) {
+    $bundle['installed'] = $bundle['compatible'] && 'pass' === $global['composer']['status'];
+}
+unset($bundle);
+$installed = array_filter($bundles, fn (array $b) => $b['installed']);
+
+wireBundles($root, $app, $installed);
+
+$report['core'] += runtimeVersions($app);
+
+if ($installed) {
+    run('rm -rf '.escapeshellarg($app.'/var/cache'), $app);
+    step('Building the container (cache:clear --env=test)');
+    $global['container'] = check(console('cache:clear', $app), $logs.'/container.log');
+}
+
+if ('pass' === ($global['container']['status'] ?? null)) {
+    step('Linting the container');
+    $global['lint_container'] = check(console('lint:container', $app), $logs.'/lint-container.log');
+
+    step('Loading routes');
+    $global['router'] = countRoutes($app, $logs, $bundles);
+
+    step('Collecting container deprecations');
+    $global['deprecations'] = countDeprecations($app, $bundles);
+
+    foreach ($installed as $dir => $bundle) {
+        step("Linting {$dir}");
+        $path = 'vendor/'.$bundle['package'];
+        $bundles[$dir]['checks']['twig'] = is_dir("{$app}/{$path}/Resources/views")
+            ? check(console("lint:twig {$path}/Resources/views", $app), "{$logs}/twig-{$dir}.log")
+            : skipped('no templates');
+        $bundles[$dir]['checks']['yaml'] = is_dir("{$app}/{$path}/Resources/config")
+            ? check(console("lint:yaml {$path}/Resources/config --parse-tags", $app), "{$logs}/yaml-{$dir}.log")
+            : skipped('no config');
+    }
+
+    if ($runPhpstan) {
+        step('Running PHPStan (level '.PHPSTAN_LEVEL.') on the bundles');
+        $global['phpstan'] = runPhpstan($app, $logs, $bundles);
+    }
+
+    if ($runTests) {
+        step('Running the core test suite with every bundle enabled');
+        $global['core_tests'] = runPhpunit($app, $logs, 'core', null);
+        foreach ($installed as $dir => $bundle) {
+            $testsDir = 'vendor/'.$bundle['package'].'/Tests';
+            if (glob("{$app}/{$testsDir}/{,*/,*/*/}*Test.php", GLOB_BRACE)) {
+                step("Running tests of {$dir}");
+                $bundles[$dir]['checks']['tests'] = runPhpunit($app, $logs, $dir, $testsDir);
+            }
+        }
+    }
+}
+
+$report['duration_secs'] = round(microtime(true) - $startedAt, 1);
+$report['bundles'] = array_values($bundles);
+file_put_contents($work.'/report.json', json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+$markdown = renderMarkdown($report);
+file_put_contents($work.'/report.md', $markdown);
+exportDashboard($root, $work, $report);
+
+echo "\n".$markdown."\n";
+echo "Report: var/integration/report.json · Logs: var/integration/logs/\n";
+
+exit(hasFailures($report) ? 1 : 0);
+
+function step(string $message): void
+{
+    echo "\033[36m▸\033[0m {$message}\n";
+}
+
+function run(string $cmd, string $cwd, array $env = []): array
+{
+    $started = microtime(true);
+    $errFile = tempnam(sys_get_temp_dir(), 'integration');
+    $process = proc_open($cmd, [1 => ['pipe', 'w'], 2 => ['file', $errFile, 'w']], $pipes, $cwd, $env + getenv());
+    $out = stream_get_contents($pipes[1]);
+    fclose($pipes[1]);
+    $code = proc_close($process);
+    $err = (string) file_get_contents($errFile);
+    unlink($errFile);
+
+    return ['code' => $code, 'out' => $out, 'err' => $err, 'secs' => round(microtime(true) - $started, 1)];
+}
+
+function console(string $command, string $app): array
+{
+    return run("php bin/console {$command} --env=test --no-interaction", $app, ['APP_ENV' => 'test']);
+}
+
+function check(array $result, string $log): array
+{
+    file_put_contents($log, $result['out'].$result['err']);
+
+    return [
+        'status' => 0 === $result['code'] ? 'pass' : 'fail',
+        'secs' => $result['secs'],
+        'log' => 'logs/'.basename($log),
+    ];
+}
+
+function skipped(string $reason): array
+{
+    return ['status' => 'skip', 'detail' => $reason];
+}
+
+function gitInfo(string $dir): array
+{
+    $git = 'git -c safe.directory=* -C '.escapeshellarg($dir);
+    $read = fn (string $args) => trim((string) shell_exec("{$git} {$args} 2>/dev/null"));
+    $status = $read('status --porcelain');
+
+    return [
+        'branch' => $read('rev-parse --abbrev-ref HEAD'),
+        'commit' => $read('rev-parse --short HEAD'),
+        'last_commit_date' => $read('log -1 --format=%cs'),
+        'uncommitted_files' => '' === $status ? 0 : count(explode("\n", $status)),
+        'remote' => $read('remote get-url origin'),
+    ];
+}
+
+function discoverBundles(string $root, array $only, string $coreVersion): array
+{
+    $bundles = [];
+    foreach (glob($root.'/dev-bundles/*/composer.json') as $file) {
+        $path = dirname($file);
+        $dir = basename($path);
+        if ($only && !in_array($dir, $only, true)) {
+            continue;
+        }
+
+        $composer = json_decode(file_get_contents($file), true, 512, JSON_THROW_ON_ERROR);
+        $namespace = (string) array_key_first($composer['autoload']['psr-4'] ?? []);
+        $bundleFile = glob($path.'/*Bundle.php')[0] ?? null;
+        $constraint = $composer['require']['pumukit/pumukit'] ?? null;
+
+        $bundles[$dir] = [
+            'dir' => $dir,
+            'package' => $composer['name'],
+            'namespace' => $namespace,
+            'class' => $bundleFile ? $namespace.basename($bundleFile, '.php') : null,
+            'routing' => is_file($path.'/Resources/config/routing.yml'),
+            'pumukit_constraint' => $constraint,
+            'compatible' => null !== $constraint && null !== $bundleFile && Semver::satisfies($coreVersion, $constraint),
+            'installed' => false,
+            'git' => gitInfo($path),
+            'annotations' => countAnnotations($path),
+            'checks' => [],
+        ];
+    }
+    ksort($bundles, SORT_FLAG_CASE | SORT_STRING);
+
+    return $bundles;
+}
+
+function syncCore(string $root, string $app): void
+{
+    @mkdir($app, 0775, true);
+    foreach (array_diff(scandir($app), ['.', '..', 'vendor', 'var', 'composer.lock']) as $entry) {
+        run('rm -rf '.escapeshellarg("{$app}/{$entry}"), $app);
+    }
+
+    $excludes = implode(' ', array_map(fn (string $e) => '--exclude='.escapeshellarg($e), CORE_COPY_EXCLUDES));
+    $result = run("tar -C {$root} {$excludes} -cf - . | tar -C {$app} -xf -", $root);
+    if (0 !== $result['code']) {
+        throw new RuntimeException("Could not copy the core:\n".$result['err']);
+    }
+}
+
+function installBundles(string $root, string $work, string $app, string $logs, array $composer, array $bundles): array
+{
+    $coreVersion = $composer['version'];
+    $composer['repositories'] = array_values($composer['repositories'] ?? []);
+    foreach ($bundles as $dir => $bundle) {
+        $composer['repositories'][] = [
+            'type' => 'path',
+            'url' => '../../../dev-bundles/'.$dir,
+            'options' => ['symlink' => true, 'versions' => [$bundle['package'] => $coreVersion]],
+        ];
+        $composer['require'][$bundle['package']] = $coreVersion;
+    }
+    $composer['minimum-stability'] = 'dev';
+    $composer['prefer-stable'] = true;
+
+    $json = json_encode($composer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)."\n";
+    file_put_contents($app.'/composer.json', $json);
+
+    $stateFile = $work.'/state.json';
+    $state = is_file($stateFile) ? json_decode(file_get_contents($stateFile), true) : [];
+    $coreHash = sha1_file($root.'/composer.json').sha1_file($root.'/composer.lock');
+    $bundlesHash = sha1($json.implode('', array_map(
+        fn (string $dir) => sha1_file("{$root}/dev-bundles/{$dir}/composer.json"),
+        array_keys($bundles),
+    )));
+
+    $mode = 'install';
+    if (!is_file($app.'/composer.lock') || ($state['core'] ?? null) !== $coreHash) {
+        copy($root.'/composer.lock', $app.'/composer.lock');
+        $mode = 'update';
+    } elseif (($state['bundles'] ?? null) !== $bundlesHash) {
+        $mode = 'update';
+    }
+
+    $flags = '--no-scripts --no-interaction --no-progress';
+    $packages = implode(' ', array_map(fn (array $b) => escapeshellarg($b['package']), $bundles));
+    $cmd = 'update' === $mode && $packages
+        ? "composer update {$packages} --with-dependencies {$flags}"
+        : "composer install {$flags}";
+
+    $result = check(run($cmd, $app, ['COMPOSER_CACHE_DIR' => $work.'/composer-cache']), $logs.'/composer.log');
+    $result['detail'] = $mode;
+    if ('pass' === $result['status']) {
+        file_put_contents($stateFile, json_encode(['core' => $coreHash, 'bundles' => $bundlesHash]));
+    }
+
+    return $result;
+}
+
+function wireBundles(string $root, string $app, array $bundles): void
+{
+    rename($app.'/config/bundles.php', $app.'/config/bundles.core.php');
+    $entries = implode('', array_map(fn (array $b) => "    {$b['class']}::class => ['all' => true],\n", $bundles));
+    file_put_contents($app.'/config/bundles.php', <<<PHP
+        <?php
+
+        return array_merge(require __DIR__.'/bundles.core.php', [
+        {$entries}]);
+
+        PHP);
+
+    $routes = '';
+    foreach ($bundles as $dir => $bundle) {
+        if ($bundle['routing']) {
+            $short = substr($bundle['class'], strrpos($bundle['class'], '\\') + 1);
+            $routes .= "integration_{$dir}:\n    resource: '@{$short}/Resources/config/routing.yml'\n\n";
+        }
+        $config = "{$root}/config/integration/packages/{$dir}.yaml";
+        if (is_file($config)) {
+            copy($config, "{$app}/config/packages/zz_integration_{$dir}.yaml");
+        }
+    }
+    file_put_contents($app.'/config/routes/zz_integration_bundles.yaml', $routes);
+}
+
+function countAnnotations(string $dir): array
+{
+    $counts = ['odm' => 0, 'route' => 0];
+    $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS));
+    foreach ($files as $file) {
+        if ('php' !== $file->getExtension() || str_contains($file->getPathname(), '/vendor/')) {
+            continue;
+        }
+        $code = file_get_contents($file->getPathname());
+        $counts['odm'] += preg_match_all('/@(?:MongoDB|ODM)\\\\/', $code);
+        $counts['route'] += preg_match_all('/@Route\(/', $code);
+    }
+
+    return $counts;
+}
+
+function runtimeVersions(string $app): array
+{
+    $versions = ['php' => PHP_VERSION, 'ext_mongodb' => phpversion('mongodb') ?: null];
+    $lock = is_file($app.'/composer.lock') ? json_decode(file_get_contents($app.'/composer.lock'), true) : [];
+    $wanted = [
+        'symfony/http-kernel' => 'symfony', 'doctrine/mongodb-odm' => 'doctrine_odm',
+        'mongodb/mongodb' => 'mongodb_library', 'phpunit/phpunit' => 'phpunit',
+    ];
+    foreach (array_merge($lock['packages'] ?? [], $lock['packages-dev'] ?? []) as $package) {
+        if (isset($wanted[$package['name']])) {
+            $versions[$wanted[$package['name']]] = ltrim($package['version'], 'v');
+        }
+    }
+
+    return $versions;
+}
+
+function countRoutes(string $app, string $logs, array &$bundles): array
+{
+    $result = console('debug:router --format=json', $app);
+    $check = check($result, $logs.'/router.log');
+    $routes = json_decode($result['out'], true);
+    if ('pass' !== $check['status'] || !is_array($routes)) {
+        return ['status' => 'fail'] + $check;
+    }
+
+    foreach ($bundles as &$bundle) {
+        if ($bundle['installed']) {
+            $bundle['checks']['routes'] = count(array_filter(
+                $routes,
+                fn (array $route) => str_starts_with((string) ($route['defaults']['_controller'] ?? ''), $bundle['namespace']),
+            ));
+        }
+    }
+
+    return $check + ['total' => count($routes)];
+}
+
+function countDeprecations(string $app, array &$bundles): array
+{
+    $logFile = glob($app.'/var/cache/test/*Deprecations.log')[0] ?? null;
+    $entries = $logFile ? (unserialize(file_get_contents($logFile), ['allowed_classes' => false]) ?: []) : [];
+
+    $core = 0;
+    foreach ($entries as $entry) {
+        $haystack = $entry['message'].' '.$entry['file'].' '.implode(' ', array_map(
+            fn (array $frame) => ($frame['file'] ?? '').' '.($frame['class'] ?? ''),
+            $entry['trace'] ?? [],
+        ));
+        $owned = false;
+        foreach ($bundles as &$bundle) {
+            if ($bundle['installed'] && (str_contains($haystack, $bundle['namespace']) || str_contains($haystack, '/dev-bundles/'.$bundle['dir'].'/'))) {
+                $bundle['checks']['deprecations'] = ($bundle['checks']['deprecations'] ?? 0) + 1;
+                $owned = true;
+            }
+        }
+        unset($bundle);
+        if (!$owned && str_contains($haystack, '/src/Pumukit/')) {
+            ++$core;
+        }
+    }
+    foreach ($bundles as &$bundle) {
+        if ($bundle['installed']) {
+            $bundle['checks']['deprecations'] ??= 0;
+        }
+    }
+
+    return ['status' => null === $logFile ? 'skip' : 'pass', 'total' => count($entries), 'core' => $core];
+}
+
+function runPhpstan(string $app, string $logs, array &$bundles): array
+{
+    $level = PHPSTAN_LEVEL;
+    file_put_contents($app.'/phpstan.integration.neon', <<<NEON
+        includes:
+            - vendor/phpstan/phpstan-doctrine/extension.neon
+            - vendor/phpstan/phpstan-symfony/extension.neon
+
+        parameters:
+            level: {$level}
+            reportUnmatchedIgnoredErrors: false
+            doctrine:
+                objectManagerLoader: bin/object-manager.php
+
+        NEON);
+
+    $installed = array_filter($bundles, fn (array $b) => $b['installed']);
+    $paths = implode(' ', array_map(fn (array $b) => escapeshellarg('vendor/'.$b['package']), $installed));
+    $result = run(
+        "vendor/bin/phpstan analyse -c phpstan.integration.neon --no-progress --error-format=json --memory-limit=2G {$paths}",
+        $app,
+        ['APP_ENV' => 'test'],
+    );
+    file_put_contents($logs.'/phpstan.json', $result['out']);
+    file_put_contents($logs.'/phpstan.log', $result['err']);
+
+    $json = json_decode($result['out'], true);
+    if (!is_array($json) || !in_array($result['code'], [0, 1], true)) {
+        return ['status' => 'fail', 'secs' => $result['secs'], 'log' => 'logs/phpstan.log'];
+    }
+
+    foreach ($bundles as &$bundle) {
+        if (!$bundle['installed']) {
+            continue;
+        }
+        $errors = 0;
+        foreach ($json['files'] ?? [] as $file => $data) {
+            if (str_contains($file, '/dev-bundles/'.$bundle['dir'].'/') || str_contains($file, '/vendor/'.$bundle['package'].'/')) {
+                $errors += $data['errors'];
+            }
+        }
+        $bundle['checks']['phpstan'] = $errors;
+    }
+
+    return [
+        'status' => 0 === $result['code'] ? 'pass' : 'fail',
+        'secs' => $result['secs'],
+        'errors' => ($json['totals']['file_errors'] ?? 0) + ($json['totals']['errors'] ?? 0),
+        'log' => 'logs/phpstan.json',
+    ];
+}
+
+function runPhpunit(string $app, string $logs, string $name, ?string $path): array
+{
+    $junit = "{$logs}/phpunit-{$name}.xml";
+    $result = run('vendor/bin/phpunit --log-junit '.escapeshellarg($junit).' '.($path ? escapeshellarg($path) : ''), $app, ['APP_ENV' => 'test']);
+    $check = check($result, "{$logs}/phpunit-{$name}.log");
+
+    if (is_file($junit) && ($suite = simplexml_load_file($junit)?->testsuite)) {
+        $check += [
+            'tests' => (int) $suite['tests'],
+            'failures' => (int) $suite['failures'] + (int) $suite['errors'],
+            'skipped' => (int) $suite['skipped'],
+        ];
+    }
+
+    return $check;
+}
+
+function hasFailures(array $report): bool
+{
+    foreach ($report['global'] as $check) {
+        if ('fail' === ($check['status'] ?? null)) {
+            return true;
+        }
+    }
+    foreach ($report['bundles'] as $bundle) {
+        foreach (['twig', 'yaml', 'tests'] as $name) {
+            if ('fail' === ($bundle['checks'][$name]['status'] ?? null)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+function bundleStatus(array $bundle): string
+{
+    $failed = array_filter(
+        array_intersect_key($bundle['checks'], array_flip(['twig', 'yaml', 'tests'])),
+        fn (array $check) => 'fail' === ($check['status'] ?? null),
+    );
+
+    return match (true) {
+        !$bundle['compatible'] => 'Sin migrar',
+        !$bundle['installed'] => 'No instala',
+        $failed || ($bundle['checks']['phpstan'] ?? 0) > 0 => 'Con errores',
+        default => 'OK',
+    };
+}
+
+function exportDashboard(string $root, string $work, array $report): void
+{
+    $dir = $work.'/dashboard';
+    @mkdir($dir, 0775, true);
+    $status = fn (?array $check) => match ($check['status'] ?? null) {
+        'pass' => 'ok', 'fail' => 'fallo', default => '—',
+    };
+
+    $bundles = array_map(fn (array $b) => [
+        'bundle' => $b['dir'],
+        'origin' => str_contains($b['git']['remote'], 'github.com') ? 'GitHub' : 'GitLab',
+        'status' => bundleStatus($b),
+        'pumukit' => $b['pumukit_constraint'],
+        'branch' => $b['git']['branch'],
+        'uncommitted' => $b['git']['uncommitted_files'],
+        'last_commit' => $b['git']['last_commit_date'],
+        'twig' => $status($b['checks']['twig'] ?? null),
+        'yaml' => $status($b['checks']['yaml'] ?? null),
+        'routes' => $b['checks']['routes'] ?? null,
+        'deprecations' => $b['checks']['deprecations'] ?? null,
+        'phpstan' => $b['checks']['phpstan'] ?? null,
+        'odm_annotations' => $b['annotations']['odm'],
+    ], $report['bundles']);
+    file_put_contents($dir.'/bundles.json', json_encode($bundles, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+
+    $core = $report['core'];
+    $targets = json_decode(file_get_contents($root.'/config/integration/targets.json'), true);
+    $components = [];
+    foreach ($targets as $key => $target) {
+        $current = $core[$key] ?? null;
+        $components[] = [
+            'component' => $target['label'],
+            'current' => $current,
+            'target' => $target['target'],
+            'status' => null !== $current && version_compare($current, $target['target'], '>=') ? 'Alcanzado' : 'Pendiente',
+        ];
+    }
+    file_put_contents($dir.'/core.json', json_encode($components, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+
+    $global = $report['global'];
+    $count = fn (string $status) => count(array_filter($bundles, fn (array $b) => $status === $b['status']));
+    $run = [
+        'run_at' => $report['generated_at'],
+        'core_commit' => $core['commit'],
+        'php' => $core['php'],
+        'symfony' => $core['symfony'] ?? null,
+        'bundles_total' => count($bundles),
+        'bundles_ok' => $count('OK'),
+        'bundles_with_errors' => $count('Con errores'),
+        'bundles_not_migrated' => $count('Sin migrar'),
+        'deprecations' => $global['deprecations']['total'] ?? null,
+        'deprecations_core' => $global['deprecations']['core'] ?? null,
+        'phpstan_errors' => $global['phpstan']['errors'] ?? null,
+        'odm_annotations_core' => $core['annotations']['odm'],
+        'odm_annotations_bundles' => array_sum(array_column($bundles, 'odm_annotations')),
+        'routes' => $global['router']['total'] ?? null,
+        'container_ok' => 'pass' === ($global['container']['status'] ?? null),
+    ];
+    $history = dirname($work).'/integration-history.jsonl';
+    file_put_contents($history, json_encode($run, JSON_UNESCAPED_SLASHES)."\n", FILE_APPEND);
+
+    $runs = array_map(
+        fn (string $line) => json_decode($line, true),
+        file($history, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES),
+    );
+    file_put_contents($dir.'/runs.json', json_encode($runs, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+}
+
+function renderMarkdown(array $report): string
+{
+    $mark = fn (?array $check) => match ($check['status'] ?? null) {
+        'pass' => 'ok', 'fail' => 'FAIL', 'skip' => '-', default => '',
+    };
+    $core = $report['core'];
+    $global = $report['global'];
+
+    $lines = [
+        "# Integración core + dev-bundles · {$report['generated_at']}",
+        '',
+        "Core {$core['version']} ({$core['branch']} @ {$core['commit']}, {$core['uncommitted_files']} ficheros sin commitear) · "
+            ."PHP {$core['php']} · Symfony ".($core['symfony'] ?? '?').' · ODM '.($core['doctrine_odm'] ?? '?')
+            .' · ext-mongodb '.($core['ext_mongodb'] ?? '?')." · {$report['duration_secs']} s",
+        '',
+        '| Check global | Estado | Detalle |',
+        '|---|---|---|',
+    ];
+    foreach ($global as $name => $check) {
+        $detail = $check['detail'] ?? '';
+        foreach (['total', 'core', 'errors', 'tests', 'failures'] as $key) {
+            if (isset($check[$key])) {
+                $detail .= " {$key}: {$check[$key]}";
+            }
+        }
+        $lines[] = "| {$name} | ".$mark($check).' | '.trim($detail).' |';
+    }
+
+    $lines[] = '';
+    $lines[] = '| Bundle | Rama | Sin commitear | pumukit | Instalado | Twig | YAML | Rutas | Deprec. | PHPStan | Tests |';
+    $lines[] = '|---|---|---|---|---|---|---|---|---|---|---|';
+    foreach ($report['bundles'] as $b) {
+        $c = $b['checks'];
+        $tests = isset($c['tests']) ? ($c['tests']['tests'] ?? '?').'/'.($c['tests']['failures'] ?? '?').' fallos' : '';
+        $lines[] = sprintf(
+            '| %s | %s | %d | %s | %s | %s | %s | %s | %s | %s | %s |',
+            $b['dir'], $b['git']['branch'], $b['git']['uncommitted_files'], $b['pumukit_constraint'] ?? '?',
+            $b['installed'] ? 'sí' : ($b['compatible'] ? 'FAIL' : 'no compatible'),
+            $mark($c['twig'] ?? null), $mark($c['yaml'] ?? null),
+            $c['routes'] ?? '', $c['deprecations'] ?? '', $c['phpstan'] ?? '', $tests,
+        );
+    }
+
+    return implode("\n", $lines)."\n";
+}

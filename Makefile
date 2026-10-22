@@ -3,6 +3,7 @@
         composer composer-install composer-update composer-validate fixtures \
         test-all test test-lint-yaml test-lint-twig test-lint-xliff test-lint-generic \
         test-php-cs-fixer test-php-stan test-rector fix-test-perms \
+        integration integration-tests integration-clean \
         shell php-shell ps logs
 
 .DEFAULT_GOAL := help
@@ -107,6 +108,15 @@ test-php-stan:
 
 test-rector:
 	$(call run_php_test,composer php-rector)
+
+integration: ## Check core + dev-bundles together: composer, container, routes, lints, deprecations, PHPStan
+	$(call run_php,php bin/integration-check $(ARGS))
+
+integration-tests: ## Same as integration plus PHPUnit (core suite and bundle tests)
+	$(call run_php_test,php bin/integration-check --tests $(ARGS))
+
+integration-clean: ## Remove the integration workspace (var/integration)
+	$(call run_php,rm -rf var/integration)
 
 fix-test-perms: ## Reset ownership of test fixture dirs (run after a stale root-owned state breaks make test)
 	@$(DC_TEST) run --rm --user root php sh -c 'chown -R www-data:www-data tests/tmp src/Pumukit/EncoderBundle/Tests/Resources .phpunit.cache'

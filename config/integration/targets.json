@@ -1,0 +1,8 @@
+{
+    "php": {"label": "PHP", "target": "8.5"},
+    "symfony": {"label": "Symfony", "target": "7.4"},
+    "doctrine_odm": {"label": "Doctrine ODM", "target": "2.16"},
+    "mongodb_library": {"label": "mongodb/mongodb", "target": "2.0"},
+    "ext_mongodb": {"label": "ext-mongodb", "target": "2.0"},
+    "phpunit": {"label": "PHPUnit", "target": "11.0"}
+}
