@@ -211,6 +211,23 @@ Removed templates and globals:
 | `@PumukitCore/Upload/uppy_tus.js.twig`, `@PumukitCore/Upload/uppy_dispatch.js.twig` | `{% include '@PumukitCore/Upload/uppy_tus.html.twig' %}` outside the `<script>` tag |
 | `uppyTUS` global variable | the `core--uppy-tus` controller |
 | `window.encoder_reload_timeout` | the `encoder--stats` controller |
+| `bundles/pumukitwebtv/js/announces_ajax.js` and the `url_latestuploads_pager` global | the `webtv--announces` controller (see `@PumukitWebTV/Announces/template.html.twig`) |
+| `@PumukitBaseLivePlayer/Advance/Sessions/*.js.twig` | `{% include '@PumukitBaseLivePlayer/Advance/sessions.html.twig' %}` outside the `<script>` tag |
+| `resizeFrame()` (player iframe) | `data-controller="webtv--player-frame"` on the iframe; cinema mode is its `cinema` value |
+| `submitForm()`, `toggleDateSelect()` (search filters) | the `webtv--search` controller on `#form_search` |
+| `postChatMessage()`, `updateChat()` (live chat) | the `webtv--chat` controller |
+| `insertCookieUser()`, `setCookie()`, `getCookie()` (cookie banner) | the `webtv--cookies` controller |
+
+`pumukit:check:assets` reports the use of these globals in the project templates unless the
+project defines them itself. The portal templates without inline JavaScript left are the ones
+of Paella, which keeps its own build.
+
+Generic controllers available to any template: `core--toggle` (shows or hides the elements of a
+selector), `core--select` (selects the text of an input on click, use `click->core--select#select`)
+and `core--external-script` (loads a third-party script once, by id).
+
+Stimulus listens to the `input` event by default on `<input>` elements: declare the event
+(`click->`, `change->`, `blur->`) when another one is needed.
 
 ## Doctrine annotations are no longer supported
 
