@@ -22,6 +22,7 @@ class CheckAssetsCommand extends Command
         'bundles/pumukitwebtv/js/bootstrap.min.js' => 'bundles/pumukitcore/vendor/bootstrap/js/bootstrap.min.js',
         'bundles/pumukitwebtv/js/moment-with-locales.min.js' => 'bundles/pumukitcore/vendor/moment/moment-with-locales.min.js',
         'bundles/pumukitstatsui/vendor/moment/moment.min.js' => 'bundles/pumukitcore/vendor/moment/moment-with-locales.min.js',
+        'bundles/pumukitlive/css/chat.css' => 'bundles/pumukitwebtv/css/live/chat.css',
     ];
 
     private const REFERENCE_PATTERN = '#(?<![\w./-])/?(bundles/([a-z0-9_]+)/[^\'"\s?\#{}()]*)#';
