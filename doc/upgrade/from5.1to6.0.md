@@ -4,7 +4,7 @@ PuMuKIT 6.0 has **two independent parts**:
 
 1. **Symfony core**: `5.4` (end of life) → `6.4` LTS, plus the dependency bumps it
    unblocked (api-platform 4, knp-menu 3, tus-php 2, pagerfanta 4, etc.).
-2. **MongoDB stack**: server `5.0` → `8.0`, `ext-mongodb` `1.14.2` → `1.21.0` and
+2. **MongoDB stack**: server `5.0` → `8.0`, `ext-mongodb` `1.14.2` → `1.21.12` and
    `mongodb/mongodb` `1.13` → `1.21`.
 
 This guide describes the **exact, reproducible steps** so it can be replayed on any
@@ -40,6 +40,11 @@ deployment:
   (overridden templates, services, controllers) should be reviewed against the SF6.4 APIs.
   The code-level changes are listed in [UPGRADE-6.0.md](../../UPGRADE-6.0.md).
 
+- **PHP 8.5.** The `php` image is built from `php:8.5-fpm` (it was `8.2`) and is rebuilt
+  in step A.2 / B.2. If you mount your own `php.ini`, remove `session.sid_length` and
+  `session.sid_bits_per_character` (deprecated) and `disable_classes` (removed in PHP 8.5).
+  New session IDs use the PHP defaults (32 characters); existing sessions stay valid.
+
 Informational (no action required):
 
 - **REST API.** The legacy controller API (`/api/media/*`, etc.) is kept as-is. 6.0 adds a
@@ -53,12 +58,12 @@ Informational (no action required):
 ## MongoDB stack upgrade
 
 - **MongoDB server**: `5.0` → `8.0` (must be upgraded one major at a time).
-- **PHP driver** (`ext-mongodb`): `1.14.2` → `1.21.0` (stays on the 1.x line).
+- **PHP driver** (`ext-mongodb`): `1.14.2` → `1.21.12` (stays on the 1.x line).
 - **PHP MongoDB library** (`mongodb/mongodb`): `1.13` → `1.21` (Doctrine ODM stays on `2.6`).
 - The denormalized **search text index must be rebuilt** after upgrading existing data.
 
 The 6.0 code already ships the final values (`docker-compose.yml` with `mongo:8.0`, the
-`Dockerfile` with `ext-mongodb 1.21.0`). You only need to align your **running
+`Dockerfile` with `ext-mongodb 1.21.12`). You only need to align your **running
 containers and data** with that code.
 
 Pick your scenario:
@@ -78,7 +83,7 @@ backfill** — you go straight to the values the 6.0 code ships.
 git clone <repository-url> pumukit && cd pumukit
 git checkout 6.0.x
 
-# 2. Build and start (ships mongo:8.0 and ext-mongodb 1.21.0)
+# 2. Build and start (ships mongo:8.0 and ext-mongodb 1.21.12)
 docker compose build
 docker compose up -d
 
@@ -129,7 +134,7 @@ git checkout 6.0.x
 ```
 
 > This updates `docker-compose.yml` to `mongo:8.0` and the `Dockerfile` to
-> `ext-mongodb 1.21.0`. **Do not** recreate the `db` container yet: your data volume still
+> `ext-mongodb 1.21.12`. **Do not** recreate the `db` container yet: your data volume still
 > holds 5.0 data and an 8.0 server would refuse to start on it. Leave `db` running on its
 > current 5.0 container until step **B.3**.
 

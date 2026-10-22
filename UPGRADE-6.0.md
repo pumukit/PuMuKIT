@@ -14,6 +14,20 @@ upgrade, indexes) are described in [doc/upgrade/from5.1to6.0.md](doc/upgrade/fro
   `6.0.x` branch and their first compatible release is tagged `v6.0.0`, regardless of the
   major version they had before.
 
+## PHP 8.5
+
+The core requires `"php": "^8.5"` and the Docker image is built from `php:8.5-fpm`. Code
+running on top of the core must not use what PHP 8.4 and 8.5 deprecate. The cases found in
+PuMuKIT code were:
+
+- `fgetcsv()`, `str_getcsv()` and `fputcsv()` must receive the `$escape` argument
+  explicitly. Pass `'\\'` to keep the previous behaviour.
+- `curl_close()` and `ReflectionMethod::setAccessible()`/`ReflectionProperty::setAccessible()`
+  have no effect and are deprecated: remove the calls.
+- Implicitly nullable parameters (`Foo $foo = null`) must be declared as `?Foo $foo = null`.
+- The `session.sid_length` and `session.sid_bits_per_character` INI settings are deprecated
+  and `disable_classes` was removed.
+
 ## Doctrine annotations are no longer supported
 
 The integration of Doctrine annotations is disabled (`framework.annotations.enabled: false`)
