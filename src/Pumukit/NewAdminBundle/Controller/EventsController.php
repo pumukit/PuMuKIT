@@ -527,7 +527,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     #[Route('series/suggest/', name: 'pumukit_new_admin_live_event_series_suggest')]
     public function seriesSuggestAction(Request $request)
     {
-        $value = $request->query->get('term');
+        $value = $request->query->getString('term');
 
         $aggregate = $this->documentManager->getDocumentCollection(Series::class);
 
@@ -817,7 +817,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     public function suggestChannelAction(Request $request): JsonResponse
     {
         $result = [];
-        $filterChannelName = $request->query->get('term');
+        $filterChannelName = $request->query->getString('term');
 
         $locale = $request->getLocale();
         $lives = $this->documentManager->getRepository(Live::class)->findBy(["name.{$locale}" => new Regex($filterChannelName, 'i')]);
