@@ -28,7 +28,7 @@ class StatsController extends AbstractController
     #[Route('/objects/{id}', name: 'pumukit_stats_mmobj_index_id')]
     public function indexAction(Request $request): Response
     {
-        $routeName = $request->get('_route');
+        $routeName = $request->attributes->get('_route');
 
         if ('pumukit_stats_series_index' === $routeName) {
             $title = 'General Statistics for Series';

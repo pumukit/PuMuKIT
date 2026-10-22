@@ -1,10 +1,10 @@
-{% if app.request.get('_route') == 'pumukit_stats_series_index' %}
+{% if app.request.attributes.get('_route') == 'pumukit_stats_series_index' %}
     {% set title = "Most viewed series"|trans %}
-{% elseif app.request.get('_route') == 'pumukit_stats_mmobj_index' %}
+{% elseif app.request.attributes.get('_route') == 'pumukit_stats_mmobj_index' %}
     {% set title = "Most viewed objects (videos/audios)"|trans %}
-{% elseif app.request.get('_route') == 'pumukit_stats_series_index_id' %}
+{% elseif app.request.attributes.get('_route') == 'pumukit_stats_series_index_id' %}
     {% set title = "Views of this series objects"|trans %}
-{% elseif app.request.get('_route') == 'pumukit_stats_mmobj_index_id' %}
+{% elseif app.request.attributes.get('_route') == 'pumukit_stats_mmobj_index_id' %}
     {% set title = "Video"|trans %}
 {% endif %}
 

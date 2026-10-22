@@ -13,7 +13,7 @@
 </div>
 <div class="clearfix"></div>
 
-{% if app.request.get('_route') != 'pumukit_stats_mmobj_index_id' %}
+{% if app.request.attributes.get('_route') != 'pumukit_stats_mmobj_index_id' %}
     <div class="col-md-7 block-results-objects">
         <div class="row">
             <div class="col-md-4">

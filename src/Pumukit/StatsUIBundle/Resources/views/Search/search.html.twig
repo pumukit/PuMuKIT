@@ -1,7 +1,7 @@
 <div class="col-md-6 col-md-offset-3 text-left">
     <h4>&nbsp;</h4>
     <div class="form-group">
-        {% if app.request.get('_route') != 'pumukit_stats_mmobj_index_id' %}
+        {% if app.request.attributes.get('_route') != 'pumukit_stats_mmobj_index_id' %}
             <label for="title">
                 {% trans %}Search by title{% endtrans %}:
             </label>

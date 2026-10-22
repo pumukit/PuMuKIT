@@ -2,7 +2,7 @@
     "use strict";
     var inputDatePicker = $('input[name="datefilter"]');
     var locale = "{{ app.request.getLocale() }}";
-    var page = "{{ app.request.get('page')|default(0) }}";
+    var page = "{{ app.request.query.get('page')|default(0) }}";
     $('.day').removeClass('active-button');
     $('.month').addClass('active-button');
     $('.year').removeClass('active-button');
@@ -18,7 +18,7 @@
                 'This Month': [moment().startOf('month'), moment().endOf('month')],
                 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
                 'This Year': [moment().startOf('year'), moment()],
-                {% if app.request.get('_route') == 'pumukit_stats_mmobj_index_id' or app.request.get('_route') == 'pumukit_stats_series_index_id' %}
+                {% if app.request.attributes.get('_route') == 'pumukit_stats_mmobj_index_id' or app.request.attributes.get('_route') == 'pumukit_stats_series_index_id' %}
                     'All History': [moment({year:1970}), moment()]
                 {% endif %}
             },
@@ -109,20 +109,20 @@
         url.searchParams.set('page', page_selected);
         window.history.pushState({}, '', url);
 
-        {% if app.request.get('_route') == 'pumukit_stats_series_index' %}
+        {% if app.request.attributes.get('_route') == 'pumukit_stats_series_index' %}
             window.most_viewed_series(data['criteria'], data['from_date'], data['to_date'], page_selected);
         {% endif %}
 
-        {% if app.request.get('_route') == 'pumukit_stats_mmobj_index' %}
+        {% if app.request.attributes.get('_route') == 'pumukit_stats_mmobj_index' %}
             window.most_viewed_mmobj(data['criteria'], data['from_date'], data['to_date'],page_selected);
         {% endif %}
 
-        {% if app.request.get('_route') == 'pumukit_stats_series_index_id' %}
+        {% if app.request.attributes.get('_route') == 'pumukit_stats_series_index_id' %}
         var series = "{{ app.request.attributes.get('_route_params')['id'] }}";
             window.most_viewed_series_by_id(series, data['criteria'], data['from_date'], data['to_date'], page_selected);
         {% endif %}
 
-        {% if app.request.get('_route') == 'pumukit_stats_mmobj_index_id' %}
+        {% if app.request.attributes.get('_route') == 'pumukit_stats_mmobj_index_id' %}
         var mmobj = "{{ app.request.attributes.get('_route_params')['id'] }}";
             window.most_viewed_mmobj_by_id(mmobj, data['criteria'], data['from_date'], data['to_date'], page_selected);
         {% endif %}
@@ -149,23 +149,23 @@
             group_by = 'month';
         }
 
-        {% if app.request.get('_route') == 'pumukit_stats_series_index' %}
+        {% if app.request.attributes.get('_route') == 'pumukit_stats_series_index' %}
             window.most_viewed_series(data['criteria'], data['from_date'], data['to_date'], page);
             window.views(data['criteria'], data['from_date'], data['to_date'], 0, group_by);
         {% endif %}
 
-        {% if app.request.get('_route') == 'pumukit_stats_mmobj_index' %}
+        {% if app.request.attributes.get('_route') == 'pumukit_stats_mmobj_index' %}
             window.most_viewed_mmobj(data['criteria'], data['from_date'], data['to_date'],page);
             window.views(data['criteria'], data['from_date'], data['to_date'], 0, group_by);
         {% endif %}
 
-        {% if app.request.get('_route') == 'pumukit_stats_series_index_id' %}
+        {% if app.request.attributes.get('_route') == 'pumukit_stats_series_index_id' %}
             var series = "{{ app.request.attributes.get('_route_params')['id'] }}";
             window.most_viewed_series_by_id(series, data['criteria'], data['from_date'], data['to_date'], page);
             window.views_series(series, data['criteria'], data['from_date'], data['to_date'], 0, group_by);
         {% endif %}
 
-        {% if app.request.get('_route') == 'pumukit_stats_mmobj_index_id' %}
+        {% if app.request.attributes.get('_route') == 'pumukit_stats_mmobj_index_id' %}
             var mmobj = "{{ app.request.attributes.get('_route_params')['id'] }}";
             window.most_viewed_mmobj_by_id(mmobj, data['criteria'], data['from_date'], data['to_date'], page);
             window.views_mmobj(mmobj, data['criteria'], data['from_date'], data['to_date'], 0, group_by);
@@ -173,23 +173,23 @@
     };
 
     window.initializeAjaxRequest = function() {
-        {% if app.request.get('_route') == 'pumukit_stats_series_index' %}
+        {% if app.request.attributes.get('_route') == 'pumukit_stats_series_index' %}
             window.most_viewed_series(null,null,null,0);
             window.views(null, null,null,0, 'month');
         {% endif %}
 
-        {% if app.request.get('_route') == 'pumukit_stats_mmobj_index' %}
+        {% if app.request.attributes.get('_route') == 'pumukit_stats_mmobj_index' %}
             window.most_viewed_mmobj(null,null,null, 0);
             window.views(null,null,null,0,'month');
         {% endif %}
 
-        {% if app.request.get('_route') == 'pumukit_stats_series_index_id' %}
+        {% if app.request.attributes.get('_route') == 'pumukit_stats_series_index_id' %}
             var series = "{{ app.request.attributes.get('_route_params')['id'] }}";
             window.most_viewed_series_by_id(series,null, null, null, 0);
             window.views_series(series,null, null,null, 0, 'month');
         {% endif %}
 
-        {% if app.request.get('_route') == 'pumukit_stats_mmobj_index_id' %}
+        {% if app.request.attributes.get('_route') == 'pumukit_stats_mmobj_index_id' %}
             var mmobj = "{{ app.request.attributes.get('_route_params')['id'] }}";
             window.most_viewed_mmobj_by_id(mmobj, null, null, null, 0);
             window.views_mmobj(mmobj,null, null, null, 0, 'month');
