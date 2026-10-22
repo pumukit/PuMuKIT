@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document\MediaType;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Attribute as MongoDB;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\Exif;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\MediaMetadata;

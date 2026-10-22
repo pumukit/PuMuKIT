@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Attribute as MongoDB;
 
 #[MongoDB\EmbeddedDocument]
 class EmbeddedEventSession

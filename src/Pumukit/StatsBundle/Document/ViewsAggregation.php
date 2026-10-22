@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\StatsBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Attribute as MongoDB;
 
 /**
  * Pumukit\StatsBundle\Document\ViewsAggregation.
