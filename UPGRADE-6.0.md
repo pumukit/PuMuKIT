@@ -110,6 +110,19 @@ affect bundles and custom code:
 - `MongoDB\Driver\ReadPreference` takes the mode as a string (`'primary'`, ...); the integer
   constants and `getMode()` are removed.
 
+## Tests: PHPUnit 13
+
+The core runs its suite on PHPUnit 13, which fails on any deprecation, PHPUnit deprecation or
+PHPUnit notice. Bundle test suites must follow the same rules:
+
+- Docblock annotations (`@dataProvider`, `@covers`, `@coversNothing`, `@group`, ...) are no
+  longer read: use the attributes of `PHPUnit\Framework\Attributes` (Rector:
+  `withAttributesSets(phpunit: true)`).
+- A mock without expectations triggers a notice: create test doubles that only return values
+  with `createStub()` instead of `createMock()`/`getMockBuilder()->getMock()`.
+- `expects($this->any())` is deprecated: use a stub and `->method(...)->willReturn(...)`.
+- Migrate `phpunit.xml.dist` with `vendor/bin/phpunit --migrate-configuration`.
+
 ## Doctrine annotations are no longer supported
 
 The integration of Doctrine annotations is disabled (`framework.annotations.enabled: false`)
