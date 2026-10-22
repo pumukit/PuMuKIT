@@ -448,7 +448,7 @@ class ModulesController extends AbstractController implements WebTVControllerInt
             'events' => $events,
             'channels' => $channels,
             'type' => $liveEventTypeSession,
-            'menu_selected' => $this->requestStack->getMainRequest()->get('_route'),
+            'menu_selected' => $this->requestStack->getMainRequest()->attributes->get('_route'),
             'home_title' => $this->menuHomeTitle,
             'announces_title' => $this->menuAnnouncesTitle,
             'search_title' => $this->menuSearchTitle,

@@ -215,7 +215,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
             $relatedLink = strpos($referer, 'magic');
         }
 
-        $multimediaObjectMagicUrl = $request->get('magicUrl', false);
+        $multimediaObjectMagicUrl = $request->attributes->get('magicUrl', false);
 
         $showMagicUrl = ($fromSecret || $relatedLink || $multimediaObjectMagicUrl);
         $fullMagicUrl = $this->getMagicUrlConfiguration();
@@ -246,13 +246,13 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
     #[Route('/video/{id}/info', name: 'pumukit_webtv_multimediaobject_info')]
     public function multimediaInfoAction(Request $request, MultimediaObject $multimediaObject): Response
     {
-        $requestRoute = $this->requestStack->getMainRequest()->get('_route');
+        $requestRoute = $this->requestStack->getMainRequest()->attributes->get('_route');
         $isMagicRoute = false;
         if (false !== strpos($requestRoute, 'magic')) {
             $isMagicRoute = true;
         }
 
-        $password = $request->get('broadcast_password');
+        $password = $request->request->get('broadcast_password');
         $showDownloads = true;
         $response = $this->embeddedBroadcastService->canUserPlayMultimediaObject($multimediaObject, $this->getUser(), $password);
         if ($response instanceof Response) {

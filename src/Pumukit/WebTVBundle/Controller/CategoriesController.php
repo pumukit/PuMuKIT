@@ -40,7 +40,7 @@ class CategoriesController extends AbstractController implements WebTVController
         $templateTitle = $this->translator->trans($this->menuCategoriesTitle);
         $this->breadcrumbService->addList($templateTitle ?: 'Videos by Category', 'pumukit_webtv_categories_index');
 
-        [$elements, $groundsRootTitle] = $this->categoriesService->getCategoriesElements($request->get('provider'));
+        [$elements, $groundsRootTitle] = $this->categoriesService->getCategoriesElements($request->query->get('provider'));
 
         return $this->render('@PumukitWebTV/Categories/template.html.twig', [
             'allGrounds' => $elements,

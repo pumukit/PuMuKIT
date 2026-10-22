@@ -76,7 +76,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
         $multimediaObjectRepository = $this->documentManager->getRepository(MultimediaObject::class);
 
         $breadCrumbOptions = ['tagCod' => $tag->getCod()];
-        if ($request->get('useTagAsGeneral')) {
+        if ($request->query->get('useTagAsGeneral')) {
             $objects = $multimediaObjectRepository->createBuilderWithGeneralTag($tag, ['record_date' => -1]);
             $title = $this->translator->trans('General %title%', ['%title%' => $tag->getTitle()]);
             $breadCrumbOptions['useTagAsGeneral'] = true;
@@ -201,7 +201,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
     {
         [$scroll_list, $numberCols, $limit, $roleCode] = $this->getParametersByUser();
 
-        $type = $request->get('type');
+        $type = $request->attributes->get('type');
 
         $dateRequest = $request->query->get('date', 0); // Use to queries for month and year to reduce formatting and unformatting.
         $date = \DateTime::createFromFormat('d/m/Y H:i:s', "01/{$dateRequest} 00:00:00");
@@ -232,7 +232,7 @@ class ListController extends AbstractController implements WebTVControllerInterf
     {
         [$scroll_list, $numberCols, $limit] = $this->getParametersByTag();
 
-        $type = $request->get('type');
+        $type = $request->attributes->get('type');
 
         $dateRequest = $request->query->get('date', 0); // Use to queries for month and year to reduce formatting and unformatting.
         $date = \DateTime::createFromFormat('d/m/Y H:i:s', "01/{$dateRequest} 00:00:00");

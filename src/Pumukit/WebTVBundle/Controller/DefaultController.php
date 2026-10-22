@@ -125,10 +125,10 @@ class DefaultController extends AbstractController
     #[Template('@PumukitWebTV/Live/Advance/iframe.html.twig')]
     public function iframeEventAction(#[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject, Request $request, bool $iframe = true)
     {
-        if (EmbeddedBroadcast::TYPE_PASSWORD === $multimediaObject->getEmbeddedBroadcast()->getType() && $multimediaObject->getEmbeddedBroadcast()->getPassword() !== $request->get('broadcast_password')) {
+        if (EmbeddedBroadcast::TYPE_PASSWORD === $multimediaObject->getEmbeddedBroadcast()->getType() && $multimediaObject->getEmbeddedBroadcast()->getPassword() !== $request->request->get('broadcast_password')) {
             return $this->render($iframe ? '@PumukitWebTV/Live/Basic/template_iframe_password.html.twig' : '@PumukitWebTV/Live/Basic/template_password.html.twig', [
                 'live' => $multimediaObject->getEmbeddedEvent(),
-                'invalid_password' => (bool) $request->get('broadcast_password'),
+                'invalid_password' => (bool) $request->request->get('broadcast_password'),
             ]);
         }
 
@@ -308,10 +308,10 @@ class DefaultController extends AbstractController
 
     protected function doLive(Live $live, Request $request, bool $iframe = true)
     {
-        if ($live->getPasswd() && $live->getPasswd() !== $request->get('broadcast_password')) {
+        if ($live->getPasswd() && $live->getPasswd() !== $request->request->get('broadcast_password')) {
             return $this->render($iframe ? '@PumukitWebTV/Live/Basic/template_iframe_password.html.twig' : '@PumukitWebTV/Live/Basic/template_password.html.twig', [
                 'live' => $live,
-                'invalid_password' => (bool) $request->get('broadcast_password'),
+                'invalid_password' => (bool) $request->request->get('broadcast_password'),
             ]);
         }
         $userAgent = $request->headers->get('user-agent');

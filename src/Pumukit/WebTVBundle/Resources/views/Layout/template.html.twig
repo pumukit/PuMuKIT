@@ -48,7 +48,7 @@
         </header>
 
         <main>
-            {% if app.request.get('_route') != 'pumukit_webtv_index_index' %}
+            {% if app.request.attributes.get('_route') != 'pumukit_webtv_index_index' %}
                 {{ render(controller('Pumukit\\WebTVBundle\\Controller\\ModulesController::breadcrumbsAction')) }}
             {% endif %}
 

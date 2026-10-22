@@ -73,9 +73,9 @@ class ChatController extends AbstractController
     public function postAction(#[MapDocument(id: 'id')] MultimediaObject $multimediaObject, Request $request): JsonResponse
     {
         $message = new Message();
-        $message->setAuthor($request->get('name'));
+        $message->setAuthor($request->request->get('name'));
         $message->setMultimediaObject($multimediaObject);
-        $message->setMessage($request->get('message'));
+        $message->setMessage($request->request->get('message'));
         $message->setInsertDate(new \DateTime());
         $sessionCookie = $request->cookies->get('PHPSESSID');
         $message->setCookie($sessionCookie);
@@ -94,9 +94,9 @@ class ChatController extends AbstractController
     public function postBasicAction(#[MapDocument(id: 'id')] Live $live, Request $request): JsonResponse
     {
         $message = new Message();
-        $message->setAuthor($request->get('name'));
+        $message->setAuthor($request->request->get('name'));
         $message->setChannel($live->getId());
-        $message->setMessage($request->get('message'));
+        $message->setMessage($request->request->get('message'));
         $message->setInsertDate(new \DateTime());
         $sessionCookie = $request->cookies->get('PHPSESSID');
         $message->setCookie($sessionCookie);
