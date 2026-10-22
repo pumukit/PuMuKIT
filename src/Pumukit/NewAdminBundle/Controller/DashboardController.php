@@ -33,7 +33,7 @@ class DashboardController extends AbstractController implements NewAdminControll
     #[Template('@PumukitNewAdmin/Dashboard/index.html.twig')]
     public function indexAction(Request $request): array
     {
-        $groupBy = $request->get('group_by', 'month');
+        $groupBy = $request->query->get('group_by', 'month');
         if (!in_array($groupBy, self::ALLOWED_GROUP_BY, true)) {
             $groupBy = 'month';
         }

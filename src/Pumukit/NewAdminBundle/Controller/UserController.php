@@ -58,7 +58,7 @@ class UserController extends AdminController
     #[Template('@PumukitNewAdmin/User/index.html.twig')]
     public function indexAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', []));
+        $criteria = $this->getCriteria($request->query->all('criteria'));
         $users = $this->getResources($request, $criteria);
         $repo = $this->documentManager->getRepository(PermissionProfile::class);
         $profiles = $repo->findAll();
@@ -75,7 +75,7 @@ class UserController extends AdminController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $userData = $request->get('pumukitnewadmin_user');
+                $userData = $request->request->all('pumukitnewadmin_user');
                 $this->createUserService->createUser(
                     $userData['username'],
                     $userData['plain_password']['first'],
@@ -153,7 +153,7 @@ class UserController extends AdminController
     {
         $repo = $this->documentManager->getRepository(User::class);
 
-        $ids = $request->get('ids');
+        $ids = $request->query->all()['ids'] ?? null;
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
@@ -187,11 +187,11 @@ class UserController extends AdminController
         $user = $this->findOr404($request);
 
         if ('POST' === $request->getMethod()) {
-            $addGroups = $request->get('addGroups', []);
+            $addGroups = $request->request->all('addGroups');
             if ('string' === gettype($addGroups)) {
                 $addGroups = json_decode($addGroups, true, 512, JSON_THROW_ON_ERROR);
             }
-            $deleteGroups = $request->get('deleteGroups', []);
+            $deleteGroups = $request->request->all('deleteGroups');
             if ('string' === gettype($deleteGroups)) {
                 $deleteGroups = json_decode($deleteGroups, true, 512, JSON_THROW_ON_ERROR);
             }

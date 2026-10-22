@@ -45,7 +45,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     #[Template('@PumukitNewAdmin/Pic/create.html.twig')]
     public function createAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $isEventPoster = $request->get('is_event_poster', false);
+        $isEventPoster = $request->query->get('is_event_poster', false);
 
         return [
             'resource' => $multimediaObject,
@@ -57,7 +57,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     #[Template('@PumukitNewAdmin/Pic/list.html.twig')]
     public function listAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $isEventPoster = $request->get('is_event_poster', false);
+        $isEventPoster = $request->query->get('is_event_poster', false);
 
         return [
             'resource' => $multimediaObject,
@@ -72,8 +72,8 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     #[Template('@PumukitNewAdmin/Pic/list.html.twig')]
     public function updateAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $isEventPoster = $request->get('is_event_poster', false);
-        if (($url = $request->get('url')) || ($url = $request->get('picUrl'))) {
+        $isEventPoster = $request->query->get('is_event_poster', false);
+        if (($url = $request->query->get('url')) || ($url = $request->query->get('picUrl'))) {
             $multimediaObject = $this->multimediaObjectPicService->addPicUrl($multimediaObject, $url, true, $isEventPoster);
         }
 
@@ -87,16 +87,16 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     #[Template('@PumukitNewAdmin/Pic/upload.html.twig')]
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $isEventPoster = $request->get('is_event_poster', false);
+        $isEventPoster = $request->query->get('is_event_poster', false);
 
         try {
             if (0 === $request->files->count() && 0 === $request->request->count()) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
-            if ($request->files->has('file') && (!$request->get('url', null))) {
+            if ($request->files->has('file') && (!$request->request->get('url', null))) {
                 $this->multimediaObjectPicService->addPicFile($multimediaObject, $request->files->get('file'), $isEventPoster);
-            } elseif ($request->get('url', null)) {
-                $this->multimediaObjectPicService->addPicUrl($multimediaObject, $request->get('url'), true, $isEventPoster);
+            } elseif ($request->request->get('url', null)) {
+                $this->multimediaObjectPicService->addPicUrl($multimediaObject, $request->request->get('url'), true, $isEventPoster);
             }
         } catch (\Exception $e) {
             return [
@@ -124,8 +124,8 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
      */
     public function deleteAction(Request $request)
     {
-        $isEventPoster = $request->get('is_event_poster', false);
-        $picId = $request->get('id');
+        $isEventPoster = $request->query->get('is_event_poster', false);
+        $picId = $request->attributes->get('id');
 
         $repo = $this->documentManager->getRepository(MultimediaObject::class);
 
@@ -143,7 +143,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
      */
     public function upAction(Request $request)
     {
-        $picId = $request->get('id');
+        $picId = $request->attributes->get('id');
 
         $repo = $this->documentManager->getRepository(MultimediaObject::class);
 
@@ -165,7 +165,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
      */
     public function downAction(Request $request)
     {
-        $picId = $request->get('id');
+        $picId = $request->attributes->get('id');
 
         $repo = $this->documentManager->getRepository(MultimediaObject::class);
 
@@ -185,10 +185,10 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
     #[Template('@PumukitNewAdmin/Pic/picstoaddlist.html.twig')]
     public function picstoaddlistAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $isEventPoster = $request->get('is_event_poster', false);
+        $isEventPoster = $request->attributes->get('is_event_poster', $request->query->get('is_event_poster', false));
 
-        if ($request->get('page', null)) {
-            $this->requestStack->getSession()->set('admin/mmspic/page', $request->get('page', 1));
+        if ($request->attributes->get('page', $request->query->get('page', null))) {
+            $this->requestStack->getSession()->set('admin/mmspic/page', $request->attributes->get('page', $request->query->get('page', 1)));
         }
         $page = (int) $this->requestStack->getSession()->get('admin/mmspic/page', 1);
         $limit = 12;
@@ -228,8 +228,8 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
                 $data = base64_decode($decodedData);
                 $this->multimediaObjectPicService->addPicMem($multimediaObject, $data, $format);
             } else {
-                $isEventPoster = $request->get('is_event_poster', false);
-                $this->multimediaObjectPicService->addPicUrl($multimediaObject, $request->get('img'), true, $isEventPoster);
+                $isEventPoster = $request->query->get('is_event_poster', false);
+                $this->multimediaObjectPicService->addPicUrl($multimediaObject, $request->request->get('img'), true, $isEventPoster);
             }
 
             return new JsonResponse('done');

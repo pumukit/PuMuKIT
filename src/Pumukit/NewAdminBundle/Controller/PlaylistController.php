@@ -157,7 +157,7 @@ class PlaylistController extends CollectionController
 
     public function batchDeleteAction(Request $request): RedirectResponse
     {
-        $ids = $request->get('ids');
+        $ids = $request->query->all()['ids'] ?? null;
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
@@ -182,7 +182,7 @@ class PlaylistController extends CollectionController
 
     public function searchAction(Request $req): RedirectResponse
     {
-        $q = $req->get('q');
+        $q = $req->query->get('q');
         $this->requestStack->getSession()->set('admin/playlist/criteria', ['search' => $q]);
 
         return $this->redirectToRoute('pumukitnewadmin_playlist_index');
@@ -190,7 +190,7 @@ class PlaylistController extends CollectionController
 
     public function getCriteria(Request $request): array
     {
-        $criteria = $request->get('criteria', []);
+        $criteria = $request->query->all('criteria');
 
         if (array_key_exists('reset', $criteria)) {
             $this->requestStack->getSession()->remove('admin/playlist/criteria');
@@ -216,7 +216,7 @@ class PlaylistController extends CollectionController
 
     private function getSorting(?Request $request = null): array
     {
-        if ($sorting = $request->get('sorting')) {
+        if ($sorting = $request->query->all('sorting')) {
             $this->requestStack->getSession()->set('admin/playlist/type', current($sorting));
             $this->requestStack->getSession()->set('admin/playlist/sort', key($sorting));
         }

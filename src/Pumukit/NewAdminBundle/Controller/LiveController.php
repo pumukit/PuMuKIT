@@ -108,17 +108,17 @@ class LiveController extends AdminController
         $session = $this->requestStack->getSession();
         $session_namespace = 'admin/live';
 
-        $newLiveId = $request->get('newLiveId');
+        $newLiveId = $request->query->get('newLiveId');
 
         $resources = $this->createPager($criteria, $sorting);
 
-        if ($request->get('page', null)) {
-            $session->set($session_namespace.'/page', $request->get('page', 1));
+        if ($request->query->get('page', null)) {
+            $session->set($session_namespace.'/page', $request->query->get('page', 1));
         }
         $page = $session->get($session_namespace.'/page', 1);
 
-        if ($request->get('paginate', null)) {
-            $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
+        if ($request->query->get('paginate', null)) {
+            $session->set($session_namespace.'/paginate', $request->query->get('paginate', 10));
         }
 
         $resources
@@ -158,7 +158,7 @@ class LiveController extends AdminController
 
     public function batchDeleteAction(Request $request)
     {
-        $ids = $request->get('ids');
+        $ids = $request->query->all()['ids'] ?? null;
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);

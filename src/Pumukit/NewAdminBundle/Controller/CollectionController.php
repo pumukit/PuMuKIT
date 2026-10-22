@@ -104,12 +104,12 @@ class CollectionController extends AbstractController implements NewAdminControl
     protected function createPager($queryBuilder, $request, $session_namespace = 'admin/collection')
     {
         $session = $this->requestStack->getSession();
-        if ($request->get('page', null)) {
-            $session->set($session_namespace.'/page', $request->get('page', 1));
+        if ($request->query->get('page', null)) {
+            $session->set($session_namespace.'/page', $request->query->get('page', 1));
         }
 
-        if ($request->get('paginate', null)) {
-            $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
+        if ($request->query->get('paginate', null)) {
+            $session->set($session_namespace.'/paginate', $request->query->get('paginate', 10));
         }
         $page = $session->get($session_namespace.'/page', 1);
         $limit = $session->get($session_namespace.'/paginate', 10);

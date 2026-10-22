@@ -58,7 +58,7 @@ class GroupController extends AdminController
     #[Template('@PumukitNewAdmin/Group/index.html.twig')]
     public function indexAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', []));
+        $criteria = $this->getCriteria($request->query->all('criteria'));
         $groups = $this->getResources($request, $criteria);
 
         $origins = $this->documentManager->createQueryBuilder(Group::class)->distinct('origin')->getQuery()->execute();
@@ -69,7 +69,7 @@ class GroupController extends AdminController
     #[Template('@PumukitNewAdmin/Group/list.html.twig')]
     public function listAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', []));
+        $criteria = $this->getCriteria($request->query->all('criteria'));
         $groups = $this->getResources($request, $criteria);
 
         return ['groups' => $groups];
@@ -136,7 +136,7 @@ class GroupController extends AdminController
     #[Template('@PumukitNewAdmin/Group/list.html.twig')]
     public function deleteAction(Request $request)
     {
-        $group = $this->groupService->findById($request->get('id'));
+        $group = $this->groupService->findById($request->attributes->get('id'));
 
         try {
             $this->groupService->delete($group);
@@ -149,7 +149,7 @@ class GroupController extends AdminController
 
     public function batchDeleteAction(Request $request)
     {
-        $ids = $request->get('ids');
+        $ids = $request->query->all()['ids'] ?? null;
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
@@ -201,12 +201,12 @@ class GroupController extends AdminController
 
         $resources = $this->createPager($criteria, $sorting);
 
-        if ($request->get('page', null)) {
-            $session->set($sessionNamespace.'/page', $request->get('page', 1));
+        if ($request->query->get('page', null)) {
+            $session->set($sessionNamespace.'/page', $request->query->get('page', 1));
         }
 
-        if ($request->get('paginate', null)) {
-            $session->set($sessionNamespace.'/paginate', $request->get('paginate', 10));
+        if ($request->query->get('paginate', null)) {
+            $session->set($sessionNamespace.'/paginate', $request->query->get('paginate', 10));
         }
 
         $resources
@@ -221,7 +221,7 @@ class GroupController extends AdminController
     public function getSorting(?Request $request = null, $session_namespace = null): array
     {
         $session = $this->requestStack->getSession();
-        if ($sorting = $request->get('sorting')) {
+        if ($sorting = $request->query->all('sorting')) {
             $session->set('admin/group/type', $sorting[key($sorting)]);
             $session->set('admin/group/sort', key($sorting));
         }
@@ -236,7 +236,7 @@ class GroupController extends AdminController
     {
         $group = $this->findOr404($request);
         $locale = $request->getLocale();
-        $action = $request->get('action', false);
+        $action = $request->query->get('action', false);
         $usersSort = ['username' => 1];
         $limit = 101;
         $users = $this->groupService->findUsersInGroup($group, $usersSort, $limit);
@@ -267,8 +267,8 @@ class GroupController extends AdminController
     #[Template('@PumukitNewAdmin/Group/dataresources.html.twig')]
     public function dataResourcesAction(Group $group, Request $request): array
     {
-        $action = $request->get('action', '0');
-        $resourceName = $request->get('resourceName', null);
+        $action = $request->query->get('action', '0');
+        $resourceName = $request->query->get('resourceName', null);
         if (!$resourceName) {
             throw new \Exception('Missing resource name');
         }
@@ -294,7 +294,7 @@ class GroupController extends AdminController
 
     public function deleteUserAction(#[MapDocument(id: 'userId')] User $user, Request $request)
     {
-        $action = $request->get('action', '0');
+        $action = $request->request->get('action', '0');
         $group = $this->findOr404($request);
         $user = $this->userService->deleteGroup($group, $user);
 
@@ -303,7 +303,7 @@ class GroupController extends AdminController
 
     public function deleteMultimediaObjectAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
-        $action = $request->get('action', '0');
+        $action = $request->request->get('action', '0');
         $group = $this->findOr404($request);
         $this->multimediaObjectService->deleteGroup($group, $multimediaObject);
 
@@ -312,7 +312,7 @@ class GroupController extends AdminController
 
     public function deleteEmbeddedBroadcastAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
-        $action = $request->get('action', '0');
+        $action = $request->request->get('action', '0');
         $group = $this->findOr404($request);
         $this->embeddedBroadcastService->deleteGroup($group, $multimediaObject);
 

@@ -51,7 +51,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
     public function updateAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
         $locale = $request->getLocale();
-        $material = $multimediaObject->getMaterialById($request->get('id'));
+        $material = $multimediaObject->getMaterialById($request->attributes->get('id'));
         $form = $this->createForm(MaterialType::class, $material, ['translator' => $this->translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
@@ -78,7 +78,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
     #[Template('@PumukitNewAdmin/Material/upload.html.twig')]
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {
-        $formData = $request->get('pumukitnewadmin_material', []);
+        $formData = $request->request->all('pumukitnewadmin_material');
 
         $materialService = $this->materialService;
 
@@ -86,10 +86,10 @@ class MaterialController extends AbstractController implements NewAdminControlle
             if (0 === $request->files->count() && 0 === $request->request->count()) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
             }
-            if ($request->files->has('file') && (!$request->get('url', null))) {
+            if ($request->files->has('file') && (!$request->request->get('url', null))) {
                 $multimediaObject = $materialService->addMaterialFile($multimediaObject, $request->files->get('file'), $formData);
-            } elseif ($request->get('url', null)) {
-                $multimediaObject = $materialService->addMaterialUrl($multimediaObject, $request->get('url'), $formData);
+            } elseif ($request->request->get('url', null)) {
+                $multimediaObject = $materialService->addMaterialUrl($multimediaObject, $request->request->get('url'), $formData);
             }
         } catch (\Exception $e) {
             return [
@@ -108,14 +108,14 @@ class MaterialController extends AbstractController implements NewAdminControlle
 
     public function deleteAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->materialService->removeMaterialFromMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->materialService->removeMaterialFromMultimediaObject($multimediaObject, $request->attributes->get('id'));
 
         return $this->redirectToRoute('pumukitnewadmin_material_list', ['id' => $multimediaObject->getId()]);
     }
 
     public function upAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->materialService->upMaterialInMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->materialService->upMaterialInMultimediaObject($multimediaObject, $request->attributes->get('id'));
 
         $this->addFlash('success', 'up');
 
@@ -124,7 +124,7 @@ class MaterialController extends AbstractController implements NewAdminControlle
 
     public function downAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->materialService->downMaterialInMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->materialService->downMaterialInMultimediaObject($multimediaObject, $request->attributes->get('id'));
 
         $this->addFlash('success', 'down');
 

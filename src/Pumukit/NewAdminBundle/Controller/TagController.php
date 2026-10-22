@@ -151,7 +151,7 @@ class TagController extends AbstractController implements NewAdminControllerInte
     {
         $repo = $this->documentManager->getRepository(Tag::class);
 
-        $ids = $request->get('ids');
+        $ids = $request->query->all()['ids'] ?? null;
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);

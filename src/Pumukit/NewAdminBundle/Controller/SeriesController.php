@@ -102,11 +102,11 @@ class SeriesController extends AdminController
     #[Template('@PumukitNewAdmin/Series/index.html.twig')]
     public function indexAction(Request $request)
     {
-        if ('reset_criteria' === $request->get('action') && !$request->get('criteria')) {
+        if ('reset_criteria' === $request->query->get('action') && !$request->query->all('criteria')) {
             $this->requestStack->getSession()->remove('admin/series/criteria');
         }
 
-        $criteria = $this->getCriteria($request->get('criteria', []));
+        $criteria = $this->getCriteria($request->query->all('criteria'));
         $resources = $this->getResources($request, $criteria);
 
         $update_session = true;
@@ -129,8 +129,8 @@ class SeriesController extends AdminController
     #[Template('@PumukitNewAdmin/Series/list.html.twig')]
     public function listAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', []));
-        $selectedSeriesId = $request->get('selectedSeriesId', null);
+        $criteria = $this->getCriteria($request->query->all('criteria'));
+        $selectedSeriesId = $request->query->get('selectedSeriesId', null);
         $resources = $this->getResources($request, $criteria, $selectedSeriesId);
 
         return ['series' => $resources];
@@ -171,7 +171,7 @@ class SeriesController extends AdminController
     public function updateAction(Request $request)
     {
         $resource = $this->findOr404($request);
-        $this->requestStack->getSession()->set('admin/series/id', $request->get('id'));
+        $this->requestStack->getSession()->set('admin/series/id', $request->attributes->get('id'));
 
         $locale = $request->getLocale();
         $disablePudenew = !$this->showLatestWithPudeNew;
@@ -186,7 +186,7 @@ class SeriesController extends AdminController
                 $this->sortedMultimediaObjectService->reorder($resource);
             }
 
-            $criteria = $this->getCriteria($request->get('criteria', []));
+            $criteria = $this->getCriteria($request->query->all('criteria'));
             $resources = $this->getResources($request, $criteria, $resource->getId());
 
             return $this->render(
@@ -289,7 +289,7 @@ class SeriesController extends AdminController
 
     public function batchDeleteAction(Request $request)
     {
-        $ids = $request->get('ids');
+        $ids = $request->query->all()['ids'] ?? null;
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
@@ -333,7 +333,7 @@ class SeriesController extends AdminController
 
     public function invertAnnounceAction(Request $request)
     {
-        $ids = $request->get('ids');
+        $ids = $request->query->all()['ids'] ?? null;
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
@@ -390,7 +390,7 @@ class SeriesController extends AdminController
     public function updatePubAction(Request $request)
     {
         if ('POST' === $request->getMethod()) {
-            $values = $request->get('values');
+            $values = $request->request->all()['values'] ?? null;
             if ('string' === gettype($values)) {
                 $values = json_decode($values, true, 512, JSON_THROW_ON_ERROR);
             }
@@ -445,7 +445,7 @@ class SeriesController extends AdminController
             $session->set('admin/series/sort', 'title');
         }
 
-        if ($sorting = $request->get('sorting')) {
+        if ($sorting = $request->query->all('sorting')) {
             $session->set('admin/series/type', current($sorting));
             $session->set('admin/series/sort', key($sorting));
         }
@@ -482,16 +482,16 @@ class SeriesController extends AdminController
             $resources = $this->createPager($criteria, $sorting);
         }
 
-        if ($request->get('page', null)) {
-            $page = (int) $request->get('page', 1);
+        if ($request->query->get('page', null)) {
+            $page = (int) $request->query->get('page', 1);
             if ($page < 1) {
                 $page = 1;
             }
             $session->set($session_namespace.'/page', $page);
         }
 
-        if ($request->get('paginate', null)) {
-            $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
+        if ($request->query->get('paginate', null)) {
+            $session->set($session_namespace.'/paginate', $request->query->get('paginate', 10));
         }
 
         if ($selectedSeriesId) {
@@ -528,7 +528,7 @@ class SeriesController extends AdminController
 
     public function searchAction(Request $req)
     {
-        $q = $req->get('q');
+        $q = $req->query->get('q');
         $this->requestStack->getSession()->set('admin/series/criteria', ['search' => $q]);
 
         return $this->redirectToRoute('pumukitnewadmin_series_index');
@@ -551,7 +551,7 @@ class SeriesController extends AdminController
         }
         if ($request->isMethod('PUT') || $request->isMethod('POST')) {
             if ($request->request->has('ids')) {
-                $ids = $request->get('ids');
+                $ids = $request->request->all('ids');
                 $multimediaObjects = $mmRepo
                     ->createStandardQueryBuilder()
                     ->field('_id')->in($ids)
@@ -560,13 +560,13 @@ class SeriesController extends AdminController
             }
 
             try {
-                $type = $request->get('type', null);
-                $password = $request->get('password', null);
-                $addGroups = $request->get('addGroups', []);
+                $type = $request->request->get('type', null);
+                $password = $request->request->get('password', null);
+                $addGroups = $request->request->all()['addGroups'] ?? [];
                 if ('string' === gettype($addGroups)) {
                     $addGroups = json_decode($addGroups, true, 512, JSON_THROW_ON_ERROR);
                 }
-                $deleteGroups = $request->get('deleteGroups', []);
+                $deleteGroups = $request->request->all()['deleteGroups'] ?? [];
                 if ('string' === gettype($deleteGroups)) {
                     $deleteGroups = json_decode($deleteGroups, true, 512, JSON_THROW_ON_ERROR);
                 }
@@ -614,7 +614,7 @@ class SeriesController extends AdminController
     #[Route('/info_series', name: 'pumukitnewadmin_info_series')]
     public function getMmsAndEventsBySeries(Request $request)
     {
-        $ids = $request->get('ids');
+        $ids = $request->query->all()['ids'] ?? null;
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }

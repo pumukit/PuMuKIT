@@ -180,16 +180,16 @@ class MultimediaObjectController extends SortableAdminController
             throw $this->createNotFoundException();
         }
 
-        if ($request->get('page')) {
-            $page = (int) $request->get('page', 1);
+        if ($request->query->get('page')) {
+            $page = (int) $request->query->get('page', 1);
             if ($page < 1) {
                 $page = 1;
             }
             $session->set('admin/mms/page', $page);
         }
 
-        if ($request->get('paginate', null)) {
-            $session->set('admin/mms/paginate', $request->get('paginate', 10));
+        if ($request->query->get('paginate', null)) {
+            $session->set('admin/mms/paginate', $request->query->get('paginate', 10));
         }
 
         $session->set('admin/series/id', $series->getId());
@@ -233,7 +233,7 @@ class MultimediaObjectController extends SortableAdminController
         $session = $this->requestStack->getSession();
 
         $sessionId = $session->get('admin/series/id', null);
-        $series = $this->factoryService->findSeriesById($request->get('id'), $sessionId);
+        $series = $this->factoryService->findSeriesById($request->attributes->get('id'), $sessionId);
         $session->set('admin/series/id', $series->getId());
 
         $mmobj = $this->factoryService->createMultimediaObject($series, true, $this->getUser());
@@ -442,7 +442,7 @@ class MultimediaObjectController extends SortableAdminController
         $sessionId = $this->requestStack->getSession()->get('admin/series/id', null);
         $series = $this->factoryService->findSeriesById(null, $resource->getSeries()->getId());
         if (null === $series) {
-            throw new \Exception('Series with id '.$request->get('id').' or with session id '.$sessionId.' not found.');
+            throw new \Exception('Series with id '.$request->attributes->get('id').' or with session id '.$sessionId.' not found.');
         }
         $this->requestStack->getSession()->set('admin/series/id', $series->getId());
 
@@ -483,7 +483,7 @@ class MultimediaObjectController extends SortableAdminController
             }
 
             if ($changePubChannel) {
-                $resource = $this->updateTags($request->get('pub_channels', null), 'PUCH', $resource);
+                $resource = $this->updateTags($request->request->has('pub_channels') ? $request->request->all('pub_channels') : null, 'PUCH', $resource);
             }
 
             if ($isPrototype) {
@@ -493,7 +493,7 @@ class MultimediaObjectController extends SortableAdminController
             $event = new PublicationSubmitEvent($resource, $request);
             $this->eventDispatcher->dispatch($event, BackofficeEvents::PUBLICATION_SUBMIT);
 
-            $resource = $this->updateTags($request->get('pub_decisions', null), 'PUDE', $resource);
+            $resource = $this->updateTags($request->request->has('pub_decisions') ? $request->request->all('pub_decisions') : null, 'PUDE', $resource);
 
             $this->update($resource);
 
@@ -551,8 +551,8 @@ class MultimediaObjectController extends SortableAdminController
         return [
             'nodes' => $tag->getChildren(),
             'parent' => $tag->getId(),
-            'mmId' => $request->get('mm_id'),
-            'block_tag' => $request->get('tag_id'),
+            'mmId' => $request->query->get('mm_id'),
+            'block_tag' => $request->query->get('tag_id'),
         ];
     }
 
@@ -561,7 +561,7 @@ class MultimediaObjectController extends SortableAdminController
         $resource = $this->findOr404($request);
 
         try {
-            $addedTags = $this->tagService->addTagToMultimediaObject($resource, $request->get('tagId'));
+            $addedTags = $this->tagService->addTagToMultimediaObject($resource, $request->query->get('tagId'));
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
@@ -586,7 +586,7 @@ class MultimediaObjectController extends SortableAdminController
         $resource = $this->findOr404($request);
 
         try {
-            $deletedTags = $this->tagService->removeTagFromMultimediaObject($resource, $request->get('tagId'));
+            $deletedTags = $this->tagService->removeTagFromMultimediaObject($resource, $request->attributes->get('tagId'));
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
@@ -610,13 +610,13 @@ class MultimediaObjectController extends SortableAdminController
     {
         $repo = $this->documentManager->getRepository(Tag::class);
 
-        $search_text = $request->get('search_text');
+        $search_text = $request->query->get('search_text');
         $search_text = $request->query->get('search_text');
 
         $lang = $request->getLocale();
-        $mmId = $request->get('mmId');
+        $mmId = $request->query->get('mmId');
 
-        $parent = $repo->findOneBy(['_id' => $request->get('parent')]);
+        $parent = $repo->findOneBy(['_id' => $request->query->get('parent')]);
         $parent_path = str_replace('|', '\|', $parent->getPath());
 
         $qb = $this->documentManager->createQueryBuilder(Tag::class);
@@ -697,7 +697,7 @@ class MultimediaObjectController extends SortableAdminController
 
     public function batchDeleteAction(Request $request)
     {
-        $ids = $request->get('ids');
+        $ids = ($request->query->all()['ids'] ?? null);
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
@@ -743,7 +743,7 @@ class MultimediaObjectController extends SortableAdminController
 
     public function invertAnnounceAction(Request $request)
     {
-        $ids = $request->get('ids');
+        $ids = ($request->query->all()['ids'] ?? null);
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
@@ -769,7 +769,7 @@ class MultimediaObjectController extends SortableAdminController
 
     public function listAction(Request $request)
     {
-        $seriesId = $request->get('seriesId', null);
+        $seriesId = $request->query->get('seriesId', null);
         $sessionId = $this->requestStack->getSession()->get('admin/series/id', null);
         $series = $this->factoryService->findSeriesById($seriesId, $sessionId);
 
@@ -777,7 +777,7 @@ class MultimediaObjectController extends SortableAdminController
             throw $this->createNotFoundException('Page not found!');
         }
 
-        $mms = $this->getListMultimediaObjects($series, $request->get('newMmId', null));
+        $mms = $this->getListMultimediaObjects($series, $request->query->get('newMmId', null));
 
         $update_session = true;
         foreach ($mms as $mm) {
@@ -801,7 +801,7 @@ class MultimediaObjectController extends SortableAdminController
 
     public function cutAction(Request $request)
     {
-        $ids = $request->get('ids');
+        $ids = ($request->query->all()['ids'] ?? null);
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
@@ -818,7 +818,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $ids = $this->requestStack->getSession()->get('admin/mms/cut');
 
-        $seriesId = $request->get('seriesId', null);
+        $seriesId = $request->query->get('seriesId', null);
         $sessionId = $this->requestStack->getSession()->get('admin/series/id', null);
         $series = $this->factoryService->findSeriesById($seriesId, $sessionId);
 
@@ -855,9 +855,9 @@ class MultimediaObjectController extends SortableAdminController
     public function reorderAction(Request $request)
     {
         $sessionId = $this->requestStack->getSession()->get('admin/series/id', null);
-        $series = $this->factoryService->findSeriesById($request->get('id'), $sessionId);
+        $series = $this->factoryService->findSeriesById($request->query->get('id'), $sessionId);
 
-        $series->setSorting($request->get('sorting', Series::SORT_MANUAL));
+        $series->setSorting($request->query->get('sorting', Series::SORT_MANUAL));
 
         $this->documentManager->persist($series);
         $this->documentManager->flush();
@@ -919,8 +919,8 @@ class MultimediaObjectController extends SortableAdminController
     {
         $repo = $this->documentManager->getRepository(Tag::class);
 
-        $mmId = $request->get('mmId');
-        $parent = $repo->findOneBy(['_id' => $request->get('parentId')]);
+        $mmId = $request->query->get('mmId');
+        $parent = $repo->findOneBy(['_id' => $request->query->get('parentId')]);
 
         return $this->render(
             '@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig',
@@ -935,11 +935,11 @@ class MultimediaObjectController extends SortableAdminController
         $series = $multimediaObject->getSeries();
         $seriesId = $series->getId();
         if ('POST' === $request->getMethod()) {
-            $addGroups = $request->get('addGroups', []);
+            $addGroups = ($request->request->all()['addGroups'] ?? []);
             if ('string' === gettype($addGroups)) {
                 $addGroups = json_decode($addGroups, true, 512, JSON_THROW_ON_ERROR);
             }
-            $deleteGroups = $request->get('deleteGroups', []);
+            $deleteGroups = ($request->request->all()['deleteGroups'] ?? []);
             if ('string' === gettype($deleteGroups)) {
                 $deleteGroups = json_decode($deleteGroups, true, 512, JSON_THROW_ON_ERROR);
             }
@@ -1015,13 +1015,13 @@ class MultimediaObjectController extends SortableAdminController
         $template = $multimediaObject->isPrototype() ? '_template' : '';
         if ($request->isMethod('PUT') || $request->isMethod('POST')) {
             try {
-                $type = $request->get('type', null);
-                $password = $request->get('password', null);
-                $addGroups = $request->get('addGroups', []);
+                $type = $request->request->get('type', null);
+                $password = $request->request->get('password', null);
+                $addGroups = ($request->request->all()['addGroups'] ?? []);
                 if ('string' === gettype($addGroups)) {
                     $addGroups = json_decode($addGroups, true, 512, JSON_THROW_ON_ERROR);
                 }
-                $deleteGroups = $request->get('deleteGroups', []);
+                $deleteGroups = ($request->request->all()['deleteGroups'] ?? []);
                 if ('string' === gettype($deleteGroups)) {
                     $deleteGroups = json_decode($deleteGroups, true, 512, JSON_THROW_ON_ERROR);
                 }
@@ -1057,10 +1057,10 @@ class MultimediaObjectController extends SortableAdminController
         }
         if ($request->isMethod('POST')) {
             try {
-                $mmId = $request->get('mmId', null);
-                $personId = $request->get('personId', null);
-                $owners = $request->get('owners', []);
-                $addGroups = $request->get('addGroups', []);
+                $mmId = $request->request->get('mmId', null);
+                $personId = $request->request->get('personId', null);
+                $owners = $request->request->all('owners');
+                $addGroups = ($request->request->all()['addGroups'] ?? []);
                 if ('string' === gettype($addGroups)) {
                     $addGroups = json_decode($addGroups, true, 512, JSON_THROW_ON_ERROR);
                 }
@@ -1083,7 +1083,7 @@ class MultimediaObjectController extends SortableAdminController
     #[Template('@PumukitNewAdmin/MultimediaObject/listExternalPlayer.html.twig')]
     public function listExternalPlayerAction(Request $request)
     {
-        $seriesId = $request->get('series');
+        $seriesId = $request->query->get('series');
 
         $form = $this->createFormBuilder()
             ->setAction($this->generateUrl('pumukitnewadmin_mms_listexternalproperties', ['series' => $seriesId]))
@@ -1154,7 +1154,7 @@ class MultimediaObjectController extends SortableAdminController
     public function getCriteria($criteria)
     {
         $request = $this->requestStack->getCurrentRequest();
-        $requestCriteria = $request->get('criteria', []);
+        $requestCriteria = $request->query->all('criteria');
 
         if (array_key_exists('reset', $requestCriteria)) {
             $this->requestStack->getSession()->remove('admin/'.$this->getResourceName().'/criteria');
@@ -1174,8 +1174,8 @@ class MultimediaObjectController extends SortableAdminController
 
         $resources = $this->createPager($criteria, $sorting);
 
-        if ($request->get('page', null)) {
-            $page = (int) $request->get('page', 1);
+        if ($request->query->get('page', null)) {
+            $page = (int) $request->query->get('page', 1);
             if ($page < 1) {
                 $page = 1;
             }
@@ -1183,8 +1183,8 @@ class MultimediaObjectController extends SortableAdminController
             $session->set($session_namespace.'/page', $page);
         }
 
-        if ($request->get('paginate', null)) {
-            $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
+        if ($request->query->get('paginate', null)) {
+            $session->set($session_namespace.'/paginate', $request->query->get('paginate', 10));
         }
 
         $resources
@@ -1200,7 +1200,7 @@ class MultimediaObjectController extends SortableAdminController
     {
         $session = $this->requestStack->getSession();
 
-        if ($sorting = $request->get('sorting')) {
+        if ($sorting = $request->query->all('sorting')) {
             $session->set('admin/'.$session_namespace.'/type', current($sorting));
             $session->set('admin/'.$session_namespace.'/sort', key($sorting));
         }
@@ -1218,17 +1218,17 @@ class MultimediaObjectController extends SortableAdminController
     public function getResourceName(): string
     {
         $request = $this->requestStack->getMainRequest();
-        $sRoute = $request->get('_route');
+        $sRoute = $request->attributes->get('_route');
 
         return (false === strpos($sRoute, 'all')) ? 'mms' : 'mmslist';
     }
 
     public function updatePropertyAction(Request $request): JsonResponse
     {
-        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($request->get('id'))]);
+        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($request->attributes->get('id'))]);
         $method = $request->getMethod();
         if (in_array($method, ['POST'])) {
-            $multimediaObject->setProperty('paellalayout', $request->get('paellalayout'));
+            $multimediaObject->setProperty('paellalayout', $request->request->get('paellalayout'));
             $this->documentManager->flush();
         }
 

@@ -36,7 +36,7 @@ class LegacyEventPicController extends AbstractController implements NewAdminCon
      */
     public function updateAction(Request $request, Event $event)
     {
-        if ($url = $request->get('url')) {
+        if ($url = $request->query->get('url', $request->request->get('url'))) {
             $this->legacyEventPicService->addPicUrl($event, $url);
         }
 

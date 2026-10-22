@@ -62,9 +62,9 @@ class SeriesPicController extends AbstractController implements NewAdminControll
     public function updateAction(Series $series, Request $request)
     {
         $isBanner = false;
-        if (($url = $request->get('url')) || ($url = $request->get('picUrl'))) {
+        if (($url = $request->request->get('url')) || ($url = $request->query->get('picUrl'))) {
             $isBanner = $request->query->get('banner', false);
-            $bannerTargetUrl = $request->get('url_bannerTargetUrl', null);
+            $bannerTargetUrl = $request->request->get('url_bannerTargetUrl', null);
             $series = $this->seriesPicService->addPicUrl($series, $url, $isBanner, $bannerTargetUrl);
         }
 
@@ -90,7 +90,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
             if ($request->files->has('file')) {
                 $picService = $this->seriesPicService;
                 $isBanner = $request->query->get('banner', false);
-                $bannerTargetUrl = $request->get('file_bannerTargetUrl', null);
+                $bannerTargetUrl = $request->request->get('file_bannerTargetUrl', null);
                 $this->seriesPicService->addPicFile($series, $request->files->get('file'), $isBanner, $bannerTargetUrl);
             }
         } catch (\Exception $e) {
@@ -114,7 +114,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
 
     public function deleteAction(Request $request)
     {
-        $picId = $request->get('id');
+        $picId = $request->attributes->get('id');
 
         $repo = $this->documentManager->getRepository(Series::class);
 
@@ -129,7 +129,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
 
     public function upAction(Request $request)
     {
-        $picId = $request->get('id');
+        $picId = $request->attributes->get('id');
 
         $repo = $this->documentManager->getRepository(Series::class);
         $series = $repo->findByPicId($picId);
@@ -148,7 +148,7 @@ class SeriesPicController extends AbstractController implements NewAdminControll
 
     public function downAction(Request $request)
     {
-        $picId = $request->get('id');
+        $picId = $request->attributes->get('id');
 
         $repo = $this->documentManager->getRepository(Series::class);
 
@@ -168,8 +168,8 @@ class SeriesPicController extends AbstractController implements NewAdminControll
     #[Template('@PumukitNewAdmin/Pic/picstoaddlist.html.twig')]
     public function picstoaddlistAction(Request $request, Series $series)
     {
-        if ($request->get('page', null)) {
-            $this->requestStack->getSession()->set('admin/seriespic/page', $request->get('page', 1));
+        if ($request->attributes->get('page', $request->query->get('page', null))) {
+            $this->requestStack->getSession()->set('admin/seriespic/page', $request->attributes->get('page', $request->query->get('page', 1)));
         }
         $page = (int) $this->requestStack->getSession()->get('admin/seriespic/page', 1);
         $limit = 12;

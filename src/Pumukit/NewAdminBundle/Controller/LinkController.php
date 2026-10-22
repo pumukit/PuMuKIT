@@ -69,7 +69,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
     public function updateAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
         $locale = $request->getLocale();
-        $link = $multimediaObject->getLinkById($request->get('id'));
+        $link = $multimediaObject->getLinkById($request->attributes->get('id'));
         $form = $this->createForm(LinkType::class, $link, ['translator' => $this->translator, 'locale' => $locale]);
 
         $form->handleRequest($request);
@@ -99,7 +99,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
     #[Template('@PumukitNewAdmin/Link/list.html.twig')]
     public function deleteAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->linkService->removeLinkFromMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->linkService->removeLinkFromMultimediaObject($multimediaObject, $request->attributes->get('id'));
 
         $this->addFlash('success', 'delete');
 
@@ -112,7 +112,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
     #[Template('@PumukitNewAdmin/Link/list.html.twig')]
     public function upAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->linkService->upLinkInMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->linkService->upLinkInMultimediaObject($multimediaObject, $request->attributes->get('id'));
 
         $this->addFlash('success', 'delete');
 
@@ -125,7 +125,7 @@ class LinkController extends AbstractController implements NewAdminControllerInt
     #[Template('@PumukitNewAdmin/Link/list.html.twig')]
     public function downAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)
     {
-        $multimediaObject = $this->linkService->downLinkInMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->linkService->downLinkInMultimediaObject($multimediaObject, $request->attributes->get('id'));
 
         $this->addFlash('success', 'delete');
 

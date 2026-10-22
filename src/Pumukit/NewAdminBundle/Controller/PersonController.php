@@ -61,8 +61,8 @@ class PersonController extends AdminController
     #[Template('@PumukitNewAdmin/Person/index.html.twig')]
     public function indexAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', []), $request->getLocale());
-        $selectedPersonId = $request->get('selectedPersonId', null);
+        $criteria = $this->getCriteria($request->query->all('criteria'), $request->getLocale());
+        $selectedPersonId = $request->query->get('selectedPersonId', null);
         $resources = $this->getResources($request, $criteria, $selectedPersonId);
 
         $countMmPeople = [];
@@ -112,7 +112,7 @@ class PersonController extends AdminController
     #[IsGranted('ROLE_ACCESS_PEOPLE')]
     public function updateAction(Request $request)
     {
-        $person = $this->personService->findPersonById($request->get('id'));
+        $person = $this->personService->findPersonById($request->attributes->get('id'));
 
         $locale = $request->getLocale();
         $form = $this->createForm(PersonType::class, $person, ['translator' => $this->translator, 'locale' => $locale]);
@@ -147,7 +147,7 @@ class PersonController extends AdminController
     #[Template('@PumukitNewAdmin/Person/show.html.twig')]
     public function showAction(Request $request)
     {
-        $person = $this->personService->findPersonById($request->get('id'));
+        $person = $this->personService->findPersonById($request->attributes->get('id'));
         $limit = 5;
         $series = $this->personService->findSeriesWithPerson($person, $limit);
 
@@ -161,9 +161,9 @@ class PersonController extends AdminController
     #[Template('@PumukitNewAdmin/Person/list.html.twig')]
     public function listAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', []), $request->getLocale());
+        $criteria = $this->getCriteria($request->query->all('criteria'), $request->getLocale());
 
-        $selectedPersonId = $request->get('selectedPersonId', null);
+        $selectedPersonId = $request->query->get('selectedPersonId', null);
         $resources = $this->getResources($request, $criteria, $selectedPersonId);
 
         $countMmPeople = [];
@@ -184,14 +184,14 @@ class PersonController extends AdminController
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
         }
 
-        $criteria = $this->getCriteria($request->get('criteria', []), $request->getLocale());
-        $selectedPersonId = $request->get('selectedPersonId', null);
+        $criteria = $this->getCriteria($request->query->all('criteria'), $request->getLocale());
+        $selectedPersonId = $request->query->get('selectedPersonId', null);
         $resources = $this->getResources($request, $criteria, $selectedPersonId);
 
         $template = $multimediaObject->isPrototype() ? '_template' : '';
         $ldapEnabled = $this->pumukitLdapEnable ?? false;
 
-        $owner = $request->get('owner', false);
+        $owner = $request->query->get('owner', false);
 
         try {
             $personalScopeRole = $this->personService->getPersonalScopeRole();
@@ -215,10 +215,10 @@ class PersonController extends AdminController
         if ($role->getCod() === $this->pumukitSchemaPersonalScopeRoleCode) {
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
         }
-        $owner = $request->get('owner', false);
+        $owner = $request->query->get('owner', false);
 
         $person = new Person();
-        $person->setName(preg_replace('/\d+ - /', '', $request->get('pumukitnewadmin_person')['name'] ?? $request->get('name') ?? ''));
+        $person->setName(preg_replace('/\d+ - /', '', $request->request->all('pumukitnewadmin_person')['name'] ?? $request->query->get('name') ?? ''));
 
         $locale = $request->getLocale();
 
@@ -280,9 +280,9 @@ class PersonController extends AdminController
         if ($role->getCod() === $this->pumukitSchemaPersonalScopeRoleCode) {
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
         }
-        $owner = $request->get('owner', false);
+        $owner = $request->query->get('owner', false);
 
-        $person = $this->personService->findPersonById($request->get('id'));
+        $person = $this->personService->findPersonById($request->attributes->get('id'));
         $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
 
         $locale = $request->getLocale();
@@ -344,7 +344,7 @@ class PersonController extends AdminController
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
         }
 
-        $person = $this->personService->findPersonById($request->get('id'));
+        $person = $this->personService->findPersonById($request->attributes->get('id'));
         $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
 
         try {
@@ -356,7 +356,7 @@ class PersonController extends AdminController
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()) {
             $template = '_template';
         }
-        $owner = $request->get('owner', false);
+        $owner = $request->query->get('owner', false);
         if ('owner' === $owner) {
             $twigTemplate = '@PumukitNewAdmin/MultimediaObject/listownerrelation.html.twig';
         } else {
@@ -377,7 +377,7 @@ class PersonController extends AdminController
 
     public function autoCompleteAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, #[MapDocument(id: 'roleId')] Role $role): JsonResponse
     {
-        $name = $request->get('term');
+        $name = $request->query->get('term');
 
         $excludedPeople = $multimediaObject->getPeopleByRole($role, true);
         $excludedPeopleIds = [];
@@ -405,7 +405,7 @@ class PersonController extends AdminController
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
         }
 
-        $person = $this->personService->findPersonById($request->get('id'));
+        $person = $this->personService->findPersonById($request->attributes->get('id'));
         $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
         $multimediaObject = $this->personService->upPersonWithRole($person, $role, $multimediaObject);
 
@@ -413,7 +413,7 @@ class PersonController extends AdminController
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()) {
             $template = '_template';
         }
-        $owner = $request->get('owner', false);
+        $owner = $request->query->get('owner', false);
         if ('owner' === $owner) {
             $twigTemplate = '@PumukitNewAdmin/MultimediaObject/listownerrelation.html.twig';
         } else {
@@ -438,7 +438,7 @@ class PersonController extends AdminController
             $this->denyAccessUnlessGranted('ROLE_ADD_OWNER');
         }
 
-        $person = $this->personService->findPersonById($request->get('id'));
+        $person = $this->personService->findPersonById($request->attributes->get('id'));
         $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
         $multimediaObject = $this->personService->downPersonWithRole($person, $role, $multimediaObject);
 
@@ -446,7 +446,7 @@ class PersonController extends AdminController
         if (MultimediaObject::STATUS_PROTOTYPE === $multimediaObject->getStatus()) {
             $template = '_template';
         }
-        $owner = $request->get('owner', false);
+        $owner = $request->query->get('owner', false);
         if ('owner' === $owner) {
             $twigTemplate = '@PumukitNewAdmin/MultimediaObject/listownerrelation.html.twig';
         } else {
@@ -467,15 +467,15 @@ class PersonController extends AdminController
 
     public function deleteRelationAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, #[MapDocument(id: 'roleId')] Role $role)
     {
-        $person = $this->personService->findPersonById($request->get('id'));
+        $person = $this->personService->findPersonById($request->attributes->get('id'));
 
         if ($role->getCod() === $this->pumukitSchemaPersonalScopeRoleCode) {
             $this->denyAccessUnlessGranted('ROLE_MODIFY_OWNER');
         }
-        $owner = $request->get('owner', false);
+        $owner = $request->query->get('owner', false);
 
         try {
-            $person = $this->personService->findPersonById($request->get('id'));
+            $person = $this->personService->findPersonById($request->attributes->get('id'));
             $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
             $multimediaObject = $this->personService->deleteRelation($person, $role, $multimediaObject);
         } catch (\Exception $e) {
@@ -508,7 +508,7 @@ class PersonController extends AdminController
     #[Template('@PumukitNewAdmin/Person/list.html.twig')]
     public function deleteAction(Request $request)
     {
-        $person = $this->personService->findPersonById($request->get('id'));
+        $person = $this->personService->findPersonById($request->attributes->get('id'));
 
         try {
             if (0 === $this->personService->countMultimediaObjectsWithPerson($person)) {
@@ -526,7 +526,7 @@ class PersonController extends AdminController
     #[IsGranted('ROLE_SCOPE_GLOBAL')]
     public function batchDeleteAction(Request $request)
     {
-        $ids = $request->get('ids');
+        $ids = $request->query->all()['ids'] ?? null;
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
@@ -600,7 +600,7 @@ class PersonController extends AdminController
     {
         $session = $this->requestStack->getSession();
 
-        if ($sorting = $request->get('sorting')) {
+        if ($sorting = $request->query->all('sorting')) {
             $session->set('admin/person/type', $sorting[key($sorting)]);
             $session->set('admin/person/sort', key($sorting));
         }
@@ -618,8 +618,8 @@ class PersonController extends AdminController
 
         $resources = $this->createPager($criteria, $sorting);
 
-        if ($request->get('page', null)) {
-            $session->set('admin/person/page', $request->get('page', 1));
+        if ($request->query->get('page', null)) {
+            $session->set('admin/person/page', $request->query->get('page', 1));
         }
 
         if ($selectedPersonId) {

@@ -113,9 +113,9 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     #[IsGranted('ROLE_ACCESS_ADVANCED_UPLOAD')]
     public function uploadAction(Request $request, MultimediaObject $multimediaObject): JsonResponse
     {
-        $profile = $request->get('profile_option');
-        $priority = (int) $request->get('priority', 2);
-        $formData = $request->get('pumukitnewadmin_track', []);
+        $profile = $request->request->get('profile_option');
+        $priority = (int) $request->request->get('priority', 2);
+        $formData = $request->request->all('pumukitnewadmin_track');
         [$language, $description] = $this->getArrayData($formData);
 
         try {
@@ -129,10 +129,10 @@ class TrackController extends AbstractController implements NewAdminControllerIn
                 $file = reset($files);
                 $jobOptions = new JobOptions($profile, $priority, $language, $description);
                 $this->jobCreator->fromUploadedFile($multimediaObject, $file, $jobOptions);
-            } elseif ($request->get('file')) {
+            } elseif ($request->request->get('file')) {
                 // Inbox server Upload
                 $jobOptions = new JobOptions($profile, $priority, $language, $description);
-                $path = Path::create($request->get('file'));
+                $path = Path::create($request->request->get('file'));
                 $this->assertPathIsWithinInbox($path->path());
                 $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
             } else {
@@ -161,7 +161,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     public function toggleHideAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
         try {
-            $track = $multimediaObject->getTrackById($request->get('id'));
+            $track = $multimediaObject->getTrackById($request->attributes->get('id'));
             $track->changeHide();
             $this->documentManager->flush();
         } catch (\Exception $e) {
@@ -173,7 +173,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     public function updateAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
-        $track = $multimediaObject->getTrackById($request->get('id'));
+        $track = $multimediaObject->getTrackById($request->attributes->get('id'));
         $isPlayable = $track->tags()->containsTag('display');
         $isPublished = $multimediaObject->containsTagWithCod(PumukitWebTVBundle::WEB_TV_TAG) && MultimediaObject::STATUS_PUBLISHED == $multimediaObject->getStatus();
         $job = null;
@@ -191,11 +191,11 @@ class TrackController extends AbstractController implements NewAdminControllerIn
                 $this->mediaUpdater->updateDownload($multimediaObject, $track, $download);
                 $this->mediaUpdater->updateHide($multimediaObject, $track, $hide);
 
-                $this->mediaUpdater->updateLanguage($multimediaObject, $track, $request->get('language'));
-                $tags = Tags::create(explode(',', $request->get('tags')));
+                $this->mediaUpdater->updateLanguage($multimediaObject, $track, $request->request->get('language'));
+                $tags = Tags::create(explode(',', $request->request->get('tags')));
                 $this->mediaUpdater->updateTags($multimediaObject, $track, $tags);
 
-                $i18nDescription = i18nText::create($this->i18nService->generateI18nText($request->get('i18n_description')));
+                $i18nDescription = i18nText::create($this->i18nService->generateI18nText($request->request->get('i18n_description')));
                 $this->mediaUpdater->updateDescription($multimediaObject, $track, $i18nDescription);
             } catch (\Exception $e) {
                 return new Response($e->getMessage(), 400);
@@ -219,14 +219,14 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     public function playAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
-        $track = $multimediaObject->getTrackById($request->get('id'));
+        $track = $multimediaObject->getTrackById($request->attributes->get('id'));
 
         return $this->render('@PumukitNewAdmin/Media/play.html.twig', ['track' => $track]);
     }
 
     public function deleteAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
-        $media = $multimediaObject->getMediaById($request->get('id'));
+        $media = $multimediaObject->getMediaById($request->attributes->get('id'));
         if ($media) {
             if ($media->tags()->contains('opencast') && $multimediaObject->isMultistream()) {
                 return new Response('You can\'t delete this track. It is an Opencast track and the multimedia object is multistream.', Response::HTTP_FORBIDDEN);
@@ -243,7 +243,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     public function upAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
-        $multimediaObject = $this->trackService->upTrackInMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->trackService->upTrackInMultimediaObject($multimediaObject, $request->attributes->get('id'));
 
         $this->addFlash('success', 'up');
 
@@ -252,7 +252,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     public function downAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
-        $multimediaObject = $this->trackService->downTrackInMultimediaObject($multimediaObject, $request->get('id'));
+        $multimediaObject = $this->trackService->downTrackInMultimediaObject($multimediaObject, $request->attributes->get('id'));
 
         $this->addFlash('success', 'down');
 
@@ -298,7 +298,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     public function deleteJobAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
-        $job = $this->jobRepository->searchJob($request->get('jobId'));
+        $job = $this->jobRepository->searchJob($request->query->get('jobId'));
         $this->jobRemover->delete($job);
 
         $this->addFlash('success', 'delete job');
@@ -308,8 +308,8 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     public function updateJobPriorityAction(Request $request): JsonResponse
     {
-        $priority = (int) $request->get('priority');
-        $job = $this->jobRepository->searchJob($request->get('jobId'));
+        $priority = (int) $request->request->get('priority');
+        $job = $this->jobRepository->searchJob($request->request->get('jobId'));
         $this->jobUpdater->updateJobPriority($job, $priority);
 
         return new JsonResponse(['jobId' => $job->getId(), 'priority' => $priority]);
@@ -317,8 +317,8 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     public function picAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
-        $track = $multimediaObject->getTrackById($request->get('id'));
-        $numFrame = $request->get('numframe');
+        $track = $multimediaObject->getTrackById($request->attributes->get('id'));
+        $numFrame = $request->query->get('numframe');
 
         $flagTrue = $this->picExtractorService->extractPic($multimediaObject, $track, $numFrame);
         if ($flagTrue) {
@@ -333,7 +333,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     public function downloadAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): BinaryFileResponse
     {
-        $track = $multimediaObject->getTrackById($request->get('id'));
+        $track = $multimediaObject->getTrackById($request->attributes->get('id'));
         $path = $track->storage()->path()->path();
 
         $response = new BinaryFileResponse($path);
@@ -349,8 +349,8 @@ class TrackController extends AbstractController implements NewAdminControllerIn
 
     public function retranscodeAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
-        $track = $multimediaObject->getTrackById($request->get('id'));
-        $profile = $request->get('profile');
+        $track = $multimediaObject->getTrackById($request->attributes->get('id'));
+        $profile = $request->attributes->get('profile');
         $priority = 2;
 
         $jobOptions = new JobOptions($profile, $priority, $track->language(), $track->description()->toArray(), []);

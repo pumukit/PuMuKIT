@@ -59,10 +59,11 @@ class ResourceController extends AbstractController
     {
         $default = [];
         if ($request->request->has('slug') || $request->attributes->has('slug') || $request->query->has('slug')) {
-            $default = ['slug' => $request->get('slug')];
+            $default = ['slug' => $request->attributes->get('slug', $request->query->get('slug', $request->request->get('slug')))];
         } elseif ($request->request->has('id') || $request->attributes->has('id') || $request->query->has('id')) {
-            if ('null' !== $request->get('id')) {
-                $default = ['id' => $request->get('id')];
+            $id = $request->attributes->get('id', $request->query->get('id', $request->request->get('id')));
+            if ('null' !== $id) {
+                $default = ['id' => $id];
             }
         }
 

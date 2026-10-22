@@ -62,9 +62,9 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     public function updateAction(Request $request, Series $playlist)
     {
         $isBanner = false;
-        if (($url = $request->get('url')) || ($url = $request->get('picUrl'))) {
+        if (($url = $request->request->get('url')) || ($url = $request->query->get('picUrl'))) {
             $isBanner = $request->query->get('banner', false);
-            $bannerTargetUrl = $request->get('url_bannerTargetUrl', null);
+            $bannerTargetUrl = $request->request->get('url_bannerTargetUrl', null);
             $playlist = $this->seriesPicService->addPicUrl($playlist, $url, $isBanner, $bannerTargetUrl);
         }
 
@@ -89,7 +89,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
             }
             if ($request->files->has('file')) {
                 $isBanner = $request->query->get('banner', false);
-                $bannerTargetUrl = $request->get('file_bannerTargetUrl', null);
+                $bannerTargetUrl = $request->request->get('file_bannerTargetUrl', null);
                 $this->seriesPicService->addPicFile($playlist, $request->files->get('file'), $isBanner, $bannerTargetUrl);
             }
         } catch (\Exception $e) {
@@ -113,7 +113,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
 
     public function deleteAction(Request $request)
     {
-        $picId = $request->get('id');
+        $picId = $request->attributes->get('id');
 
         $repo = $this->documentManager->getRepository(Series::class);
 
@@ -128,7 +128,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
 
     public function upAction(Request $request)
     {
-        $picId = $request->get('id');
+        $picId = $request->attributes->get('id');
 
         $repo = $this->documentManager->getRepository(Series::class);
         $playlist = $repo->findByPicId($picId);
@@ -146,7 +146,7 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
 
     public function downAction(Request $request)
     {
-        $picId = $request->get('id');
+        $picId = $request->attributes->get('id');
 
         $repo = $this->documentManager->getRepository(Series::class);
 
@@ -166,8 +166,8 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
     #[Template('@PumukitNewAdmin/Pic/picstoaddlist.html.twig')]
     public function picstoaddlistAction(Request $request, Series $playlist)
     {
-        if ($request->get('page', null)) {
-            $this->requestStack->getSession()->set('admin/playlistpic/page', $request->get('page', 1));
+        if ($request->attributes->get('page', $request->query->get('page', null))) {
+            $this->requestStack->getSession()->set('admin/playlistpic/page', $request->attributes->get('page', $request->query->get('page', 1)));
         }
         $page = (int) $this->requestStack->getSession()->get('admin/playlistpic/page', 1);
         $limit = 12;

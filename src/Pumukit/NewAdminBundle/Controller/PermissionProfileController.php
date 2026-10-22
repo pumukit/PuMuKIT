@@ -62,7 +62,7 @@ class PermissionProfileController extends AdminController
     #[Template('@PumukitNewAdmin/PermissionProfile/index.html.twig')]
     public function indexAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', []));
+        $criteria = $this->getCriteria($request->query->all('criteria'));
         $permissionProfiles = $this->getResources($request, $criteria);
 
         [$permissions, $dependencies] = $this->getPermissions();
@@ -81,12 +81,12 @@ class PermissionProfileController extends AdminController
     {
         $session = $this->requestStack->getSession();
 
-        $criteria = $this->getCriteria($request->get('criteria', []));
+        $criteria = $this->getCriteria($request->query->all('criteria'));
         $permissionProfiles = $this->getResources($request, $criteria);
 
         $page = $session->get('admin/permissionprofile/page', 1);
         $maxPerPage = $session->get('admin/permissionprofile/paginate', 9);
-        $newPermissionProfileId = $request->get('id');
+        $newPermissionProfileId = $request->query->get('id');
         if ($newPermissionProfileId && (($permissionProfiles->getNbResults() / $maxPerPage) > $page)) {
             $page = $permissionProfiles->getNbPages();
             $session->set('admin/permissionprofile/page', $page);
@@ -183,9 +183,9 @@ class PermissionProfileController extends AdminController
     {
         $repo = $this->documentManager->getRepository(PermissionProfile::class);
 
-        $selectedDefault = $request->get('selected_default');
-        $selectedScopes = $request->get('selected_scopes');
-        $checkedPermissions = $request->get('checked_permissions');
+        $selectedDefault = $request->request->get('selected_default');
+        $selectedScopes = $request->request->get('selected_scopes');
+        $checkedPermissions = $request->request->get('checked_permissions');
 
         if ('string' === gettype($selectedScopes)) {
             $selectedScopes = json_decode($selectedScopes, true, 512, JSON_THROW_ON_ERROR);
@@ -233,12 +233,12 @@ class PermissionProfileController extends AdminController
 
         $resources = $this->createPager($criteria, $sorting);
 
-        if ($request->get('page', null)) {
-            $session->set($session_namespace.'/page', $request->get('page', 1));
+        if ($request->query->get('page', null)) {
+            $session->set($session_namespace.'/page', $request->query->get('page', 1));
         }
 
-        if ($request->get('paginate', null)) {
-            $session->set($session_namespace.'/paginate', $request->get('paginate', 9));
+        if ($request->query->get('paginate', null)) {
+            $session->set($session_namespace.'/paginate', $request->query->get('paginate', 9));
         }
 
         $resources

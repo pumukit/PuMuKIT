@@ -165,7 +165,7 @@ class PlaylistMultimediaObjectController extends AbstractController
     #[Template('@PumukitNewAdmin/PlaylistMultimediaObject/modal.html.twig')]
     public function modalAction(Series $playlist, Request $request)
     {
-        $limit = $request->get('modal_limit', 20);
+        $limit = $request->query->get('modal_limit', 20);
         // Get all multimedia objects. The filter will do the rest.
         $mmobjs = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
         $total = $mmobjs->count()->getQuery()->execute();
@@ -193,8 +193,8 @@ class PlaylistMultimediaObjectController extends AbstractController
     #[Template('@PumukitNewAdmin/PlaylistMultimediaObject/modal_myvideos_list.html.twig')]
     public function modalMyMmobjsAction(Series $playlist, Request $request)
     {
-        $page = $request->get('modal_page', 1);
-        $limit = $request->get('modal_limit', 20);
+        $page = $request->query->get('modal_page', 1);
+        $limit = $request->query->get('modal_limit', 20);
 
         // Filter doesnt work here because add conditions like $or and createStandardQueryBuilder is a generic condition. This is a WA.
         if (!$this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
@@ -385,19 +385,19 @@ class PlaylistMultimediaObjectController extends AbstractController
             ]);
         }
 
-        $multimediaObject = $request->get('id') ? $repoMms->find($request->get('id')) : null;
+        $multimediaObject = $request->query->get('id') ? $repoMms->find($request->query->get('id')) : null;
 
         $count = 0;
-        if ($request->get('ids')) {
-            $ids = json_decode($request->get('ids'), null, 512, JSON_THROW_ON_ERROR);
+        if ($request->query->get('ids')) {
+            $ids = json_decode($request->query->get('ids'), null, 512, JSON_THROW_ON_ERROR);
             $count = is_countable($ids) ? count($ids) : 0;
         }
 
         return [
             'series' => $series,
             'multimediaObject' => $multimediaObject,
-            'id' => $request->get('id'),
-            'ids' => $request->get('ids'),
+            'id' => $request->query->get('id'),
+            'ids' => $request->query->get('ids'),
             'num_mm' => $count,
             'locales' => $this->locales,
         ];
@@ -430,12 +430,12 @@ class PlaylistMultimediaObjectController extends AbstractController
         $mmsList = $series->getPlaylist()->getMultimediaObjects();
 
         $session = $this->requestStack->getSession();
-        if ($request->get('page', null)) {
-            $session->set('admin/playlistmms/page', $request->get('page', 1));
+        if ($request->query->get('page', null)) {
+            $session->set('admin/playlistmms/page', $request->query->get('page', 1));
         }
 
-        if ($request->get('paginate', null)) {
-            $session->set('admin/playlistmms/paginate', $request->get('paginate', 10));
+        if ($request->query->get('paginate', null)) {
+            $session->set('admin/playlistmms/paginate', $request->query->get('paginate', 10));
         }
 
         $page = $session->get('admin/playlistmms/page', 1);

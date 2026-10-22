@@ -22,7 +22,7 @@ class LegacyEventController extends AdminController
     #[Template('@PumukitNewAdmin/LegacyEvent/index.html.twig')]
     public function indexAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', []));
+        $criteria = $this->getCriteria($request->query->all('criteria'));
         [$events, $month, $year, $calendar] = $this->getResources($request, $criteria);
 
         $update_session = true;
@@ -77,7 +77,7 @@ class LegacyEventController extends AdminController
     #[Template('@PumukitNewAdmin/LegacyEvent/list.html.twig')]
     public function listAction(Request $request)
     {
-        $criteria = $this->getCriteria($request->get('criteria', []));
+        $criteria = $this->getCriteria($request->query->all('criteria'));
         [$events, $month, $year, $calendar] = $this->getResources($request, $criteria);
 
         $repo = $this->documentManager->getRepository(Event::class);
@@ -95,7 +95,7 @@ class LegacyEventController extends AdminController
 
     public function updateSessionAction(Request $request)
     {
-        $activeTab = $request->get('activeTab', null);
+        $activeTab = $request->query->get('activeTab', null);
 
         if ($activeTab) {
             $this->requestStack->getSession()->set('admin/event/tab', $activeTab);
@@ -196,14 +196,14 @@ class LegacyEventController extends AdminController
 
         $resources = $this->createPager($criteria, $sorting);
 
-        if ($request->get('page', null)) {
-            $page = $request->get('page');
+        if ($request->query->get('page', null)) {
+            $page = $request->query->get('page');
             $session->set($session_namespace.'/page', $page);
         }
 
         // ADDED FROM ADMIN CONTROLLER
-        if ($request->get('paginate', null)) {
-            $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
+        if ($request->query->get('paginate', null)) {
+            $session->set($session_namespace.'/paginate', $request->query->get('paginate', 10));
         }
 
         $resources

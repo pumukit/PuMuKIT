@@ -61,7 +61,7 @@ class RoleController extends SortableAdminController
 
     public function updateAction(Request $request)
     {
-        $role = $this->personService->findRoleById($request->get('id'));
+        $role = $this->personService->findRoleById($request->attributes->get('id'));
 
         $locale = $request->getLocale();
         $form = $this->createForm(RoleType::class, $role, ['translator' => $this->translator, 'locale' => $locale]);
@@ -101,12 +101,12 @@ class RoleController extends SortableAdminController
 
         $resources = $this->createPager($criteria, $sorting);
 
-        if ($request->get('page', null)) {
-            $session->set($session_namespace.'/page', $request->get('page', 1));
+        if ($request->query->get('page', null)) {
+            $session->set($session_namespace.'/page', $request->query->get('page', 1));
         }
 
-        if ($request->get('paginate', null)) {
-            $session->set($session_namespace.'/paginate', $request->get('paginate', 10));
+        if ($request->query->get('paginate', null)) {
+            $session->set($session_namespace.'/paginate', $request->query->get('paginate', 10));
         }
 
         $resources
@@ -138,7 +138,7 @@ class RoleController extends SortableAdminController
 
     public function batchDeleteAction(Request $request)
     {
-        $ids = $request->get('ids');
+        $ids = $request->query->all()['ids'] ?? null;
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
