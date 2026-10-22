@@ -9,7 +9,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Added
 
-- Versioned read-only REST API based on API Platform 4 under `/api/v1`, with Swagger UI and ReDoc, protected by the API access permission and exposing MultimediaObject, Series, Tag and Person collections.
+- Versioned read-only REST API based on API Platform 5 under `/api/v1`, with Swagger UI and ReDoc, protected by the API access permission and exposing MultimediaObject, Series, Tag and Person collections.
 - Mailpit as a mail catcher for local development (web inbox at http://localhost:8025).
 - Functional tests for user creation, login and logout.
 - `make php-shell` and `make composer` targets to work inside the PHP container.
@@ -18,20 +18,24 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 #### Changed
 
 - Redesign the admin dashboard: drop the SIMILE Timeline 2.3.1 widget (and its `/dashboard/series/timeline.xml` feed) in favour of a Chart.js layout. The default view renders KPI cards (series, multimedia objects, total time, storage usage), a publication-activity bubble chart (date × 4-hour buckets, fed by a new `StatsService::getMmobjActivityByDayHour` aggregation over `properties.created`) with a day/month/year toggle that windows to the last 30 days / 12 months / 10 years, storage occupancy as HTML progress bars per `dir_out`, and a Last-5-series panel with owner username. The `?show_stats=1` gate is removed: everything renders on the default route. Scope-aware: users without `ROLE_SCOPE_GLOBAL` get storage hidden and their stats / recent series filtered by `properties.owners`. Chart.js (+ `chartjs-adapter-date-fns` + `chartjs-plugin-zoom`) is introduced as the planned successor for the D3 v3 + NVD3 stack still used in `StatsUIBundle`.
-- Upgrade the core to Symfony 6.4 LTS.
+- Upgrade the core to Symfony 7.4 LTS and PHP 8.5.
 - Single source of truth for the Symfony version through `extra.symfony.require` (Symfony components pinned with `*`).
 - Migrate the security layer from the legacy Guard system to the new authenticator system (existing sha512 passwords remain valid).
 - Replace Swiftmailer with `symfony/mailer`.
 - Migrate controllers from sensio annotations to native PHP 8 attributes (`#[Template]`, `#[IsGranted]`, `#[MapDocument]`).
 - Move PaellaPlayerBundle and StatsUIBundle into the core; they are no longer external packages.
 - Upgrade Pagerfanta to v4 and MobileDetect to v4.
-- Upgrade PHPUnit to 10 and migrate its configuration to the new schema.
-- Upgrade the MongoDB stack: server 5.0 → 8.0, `ext-mongodb` 1.14 → 1.21, `mongodb/mongodb` 1.13 → 1.21 and Doctrine ODM 2.6 → 2.15.
-- Update composer dependencies (gedmo/doctrine-extensions, php-cs-fixer, pagerfanta adapters, etc.).
+- Upgrade PHPUnit to 10 and migrate its configuration to the new schema. The suite fails on deprecations.
+- Upgrade the MongoDB stack: server 5.0 → 8.0, `ext-mongodb` 1.14 → 2.5, `mongodb/mongodb` 1.13 → 2.5, Doctrine ODM 2.6 → 2.17 and DoctrineMongoDBBundle 4.6 → 5.6.
+- Map documents with PHP attributes instead of Doctrine annotations; `doctrine/annotations` and `doctrine/cache` are no longer installed.
+- Read request parameters from an explicit source (route attributes, query string or body) instead of `Request::get()`.
+- Upgrade MonologBundle to 4, API Platform to 5 and phpdocumentor/reflection-docblock to 6.
+- Update composer dependencies (gedmo/doctrine-extensions, php-cs-fixer, pagerfanta, knp-menu-bundle, twig extensions, etc.).
 
 #### Fixed
 
 - Several Symfony 6 runtime issues in the backoffice menu, the web profiler and the pagination adapters.
+- Security advisories in `guzzlehttp/guzzle`, `guzzlehttp/psr7` and `api-platform/core`.
 - Media API endpoint failing on multimedia objects whose metadata was stored as a JSON array.
 - Video playback returning a 404 for local tracks: they are now served through `/trackfile` instead of redirecting to the blocked `/storage` path.
 - Image-type multimedia objects returning a 404 on the player: the image now goes through `track_url()` (i.e. `/trackfile`) like documents and video tracks, instead of the raw `/storage/downloads/...` URL.

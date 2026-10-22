@@ -5,8 +5,8 @@ PuMuKIT 6.0 has **two independent parts**:
 1. **Symfony core**: `5.4` (end of life) → `7.4` LTS on **PHP 8.5**, plus the dependency bumps it
    unblocked (api-platform 5, MonologBundle 4, knp-menu 3, tus-php 2, pagerfanta 4, DoctrineMongoDBBundle 5,
    etc.).
-2. **MongoDB stack**: server `5.0` → `8.0`, `ext-mongodb` `1.14.2` → `1.21.12` and
-   `mongodb/mongodb` `1.13` → `1.21`.
+2. **MongoDB stack**: server `5.0` → `8.0`, `ext-mongodb` `1.14.2` → `2.5.5`,
+   `mongodb/mongodb` `1.13` → `2.5` and Doctrine ODM `2.6` → `2.17`.
 
 This guide describes the **exact, reproducible steps** so it can be replayed on any
 deployment. PuMuKIT is **Docker-only** from 6.0; all commands assume the Docker Compose
@@ -63,12 +63,13 @@ Informational (no action required):
 ## MongoDB stack upgrade
 
 - **MongoDB server**: `5.0` → `8.0` (must be upgraded one major at a time).
-- **PHP driver** (`ext-mongodb`): `1.14.2` → `1.21.12` (stays on the 1.x line).
-- **PHP MongoDB library** (`mongodb/mongodb`): `1.13` → `1.21` (Doctrine ODM `2.6` → `2.15`).
+- **PHP driver** (`ext-mongodb`): `1.14.2` → `2.5.5`. The 2.x line is the one officially
+  supported on PHP 8.5, and it supports MongoDB servers from 4.2 to 9.0.
+- **PHP MongoDB library** (`mongodb/mongodb`): `1.13` → `2.5` (Doctrine ODM `2.6` → `2.17`).
 - The denormalized **search text index must be rebuilt** after upgrading existing data.
 
 The 6.0 code already ships the final values (`docker-compose.yml` with `mongo:8.0`, the
-`Dockerfile` with `ext-mongodb 1.21.12`). You only need to align your **running
+`Dockerfile` with `ext-mongodb 2.5.5`). You only need to align your **running
 containers and data** with that code.
 
 Pick your scenario:
@@ -88,7 +89,7 @@ backfill** — you go straight to the values the 6.0 code ships.
 git clone <repository-url> pumukit && cd pumukit
 git checkout 6.0.x
 
-# 2. Build and start (ships mongo:8.0 and ext-mongodb 1.21.12)
+# 2. Build and start (ships mongo:8.0 and ext-mongodb 2.5.5)
 docker compose build
 docker compose up -d
 
@@ -111,7 +112,7 @@ in the project README. You are done — skip section B.
 
 **Order matters.** Back up first, switch to the 6.0 code, upgrade the **driver** while the
 server is still on 5.0 (the old `1.14` driver only supports MongoDB up to 6.0, so it must
-be raised to `1.21` before the server reaches 7.0/8.0), and only then upgrade the **server**
+be raised to `2.5` before the server reaches 7.0/8.0), and only then upgrade the **server**
 in hops. Finally rebuild the indexes.
 
 ### B.0 Backup (mandatory)
@@ -139,7 +140,7 @@ git checkout 6.0.x
 ```
 
 > This updates `docker-compose.yml` to `mongo:8.0` and the `Dockerfile` to
-> `ext-mongodb 1.21.12`. **Do not** recreate the `db` container yet: your data volume still
+> `ext-mongodb 2.5.5`. **Do not** recreate the `db` container yet: your data volume still
 > holds 5.0 data and an 8.0 server would refuse to start on it. Leave `db` running on its
 > current 5.0 container until step **B.3**.
 
@@ -149,7 +150,7 @@ review custom `security.yaml` overrides.
 
 ### B.2 Upgrade the PHP driver and dependencies (server still on 5.0)
 
-Driver `1.21` is backward compatible with server `5.0`, so the app boots before the server
+Driver `2.5` is backward compatible with server `5.0`, so the app boots before the server
 upgrade.
 
 ```bash
@@ -158,13 +159,13 @@ docker compose build php
 docker compose up -d php
 
 # Verify the driver
-docker compose exec php php --ri mongodb | grep "MongoDB extension version"   # -> 1.21.x
+docker compose exec php php --ri mongodb | grep "MongoDB extension version"   # -> 2.5.x
 
-# Install the 6.0 dependencies (mongodb/mongodb 1.21)
+# Install the 6.0 dependencies (mongodb/mongodb 2.5)
 docker compose exec php composer install --no-dev --optimize-autoloader
 ```
 
-At this point you are running **6.0 code + driver 1.21 + server 5.0**, which is a supported
+At this point you are running **6.0 code + driver 2.5 + server 5.0**, which is a supported
 combination.
 
 ### B.3 Upgrade the MongoDB server (5.0 → 6.0 → 7.0 → 8.0)
@@ -246,7 +247,7 @@ docker compose exec php php bin/console cache:clear
 ## Verification checklist
 
 - `db.version()` reports `8.0.x` and FCV is `8.0`.
-- `php --ri mongodb` reports `1.21.x`.
+- `php --ri mongodb` reports `2.5.x`.
 - The backoffice (`/admin`) and the public portal load correctly.
 - Searching existing content by title returns results (text index rebuilt).
 - File upload (inbox) and video playback work.

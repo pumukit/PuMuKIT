@@ -5,8 +5,8 @@ PuMuKIT bundles and of projects that customize the core (own documents, services
 controllers or overridden templates). The deployment steps (Docker images, MongoDB server
 upgrade, indexes) are described in [doc/upgrade/from5.1to6.0.md](doc/upgrade/from5.1to6.0.md).
 
-> PuMuKIT 6.0 targets **PHP 8.5** and **Symfony 7.4 LTS**. This document is completed as each
-> step of the migration lands on the `6.0.x` branch.
+> PuMuKIT 6.0 targets **PHP 8.5**, **Symfony 7.4 LTS** and **MongoDB 8.0** with the 2.x PHP
+> driver. This document is completed as each step of the migration lands on the `6.0.x` branch.
 
 ## Bundles
 
@@ -84,6 +84,31 @@ where PuMuKIT sends it. External callers that relied on the old fallback must ad
 - The batch actions read `ids` from the query string (a JSON string or an array).
 - The encoder CPU actions read `cpu_name`, `activate` and `deactivate` from the query string.
 - The series and playlist picture update reads `url` from the request body.
+
+## MongoDB driver 2 and Doctrine ODM 2.17
+
+The core runs on `ext-mongodb` 2.5, `mongodb/mongodb` 2.5 and Doctrine ODM 2.17. Changes that
+affect bundles and custom code:
+
+- Import the ODM mapping attributes from `Doctrine\ODM\MongoDB\Mapping\Attribute` instead of
+  `Doctrine\ODM\MongoDB\Mapping\Annotations` (deprecated since ODM 2.16, removed in 3.0):
+  `use Doctrine\ODM\MongoDB\Mapping\Attribute as MongoDB;`.
+- Aggregation builders: call `->getAggregation()->getIterator()` (or `->getAggregation()->execute()`)
+  instead of `->execute()` on the builder or on a stage.
+- `DocumentManager::clear()` no longer accepts a document class. To discard stale managed
+  documents after a query that updates them in the database, reload them with a query that
+  uses `->refresh()`.
+- The BSON functions (`MongoDB\BSON\fromPHP()`, `toPHP()`, `toJSON()`, ...) are removed; use
+  `MongoDB\BSON\Document`.
+- `MongoDB\BSON\UTCDateTime` only accepts an `int` (milliseconds), a `DateTimeInterface` or an
+  `Int64`, not a `string` or a `float`.
+- `MongoDB\BSON\Regex` requires a `string` pattern. Passing `null` is deprecated; read
+  optional request values with `$request->query->getString()`.
+- `MongoDB\Collection::mapReduce()` is removed (use an aggregation pipeline), and `drop()`,
+  `dropIndex()`, `rename()` and the `Database::createCollection()`/`drop*()` methods return
+  `void` instead of the command result.
+- `MongoDB\Driver\ReadPreference` takes the mode as a string (`'primary'`, ...); the integer
+  constants and `getMode()` are removed.
 
 ## Doctrine annotations are no longer supported
 
