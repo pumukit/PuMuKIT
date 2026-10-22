@@ -13,7 +13,7 @@
         "ext-mongodb": "*",
         "ext-sysvsem": "*",
         "ankitpokhrel/tus-php": "^2.4",
-        "api-platform/core": "^4.3",
+        "api-platform/core": "^5.0",
         "babdev/pagerfanta-bundle": "^4",
         "doctrine/mongodb-odm": "2.15.*",
         "doctrine/mongodb-odm-bundle": "^5.6",
