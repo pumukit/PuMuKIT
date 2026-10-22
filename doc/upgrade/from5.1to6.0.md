@@ -72,6 +72,22 @@ The 6.0 code already ships the final values (`docker-compose.yml` with `mongo:8.
 `Dockerfile` with `ext-mongodb 2.5.5`). You only need to align your **running
 containers and data** with that code.
 
+> **Hosts with Linux kernel 6.19 or newer.** MongoDB 8.0.21 to 8.0.34 refuse to start on
+> these kernels ("MongoDB cannot start: Linux kernel versions 6.19 and newer has a known
+> incompatibility", [SERVER-121912](https://jira.mongodb.org/browse/SERVER-121912)). Use
+> MongoDB **8.0.35 or newer** (pull the `mongo:8.0` image again). Until that image is
+> available, the check can be bypassed by overriding the `db` service, e.g. in
+> `docker-compose.override.yml`:
+>
+> ```yaml
+>   db:
+>     entrypoint: ["setarch", "--uname-2.6", "docker-entrypoint.sh"]
+>     command: ["mongod"]
+> ```
+>
+> Remove the override once MongoDB 8.0.35 or newer is running. Check the kernel with
+> `uname -r` and the server with `db.version()`.
+
 Pick your scenario:
 
 - **[A. Fresh installation](#a-fresh-installation-no-existing-data)** — no existing data.
