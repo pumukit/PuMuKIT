@@ -51,7 +51,25 @@ The core runs on Symfony 7.4 LTS with DoctrineMongoDBBundle 5.6 (`doctrine/persi
   (`errors.php`, `wdt.php`, `profiler.php`) instead of the `.xml` ones, and the
   `twig.exception_controller` option is gone.
 - `Request::get()` is deprecated: read from `$request->attributes`, `$request->query` or
-  `$request->request` explicitly.
+  `$request->request` explicitly. Use `->all('key')` for array values, because
+  `InputBag::get()` throws a `BadRequestException` when the value is an array. In Twig,
+  use `app.request.attributes.get('_route')` instead of `app.request.get('_route')`.
+
+### Request parameters read from a single source
+
+The core no longer uses `Request::get()`, which accepted every parameter from the route
+attributes, the query string or the request body. Each parameter is now read from the place
+where PuMuKIT sends it. External callers that relied on the old fallback must adapt:
+
+- The public APIs (`/api/media/*`, recorded, stats, live) and the annotations API keep
+  accepting parameters both in the query string and in the body, in that order.
+- `broadcast_password` (password protected videos and series) is only read from the body
+  of the POST request, not from the query string.
+- The backoffice lists read `criteria`, `page`, `paginate` and `sorting` from the query
+  string only, and `criteria` and `sorting` must be arrays (`criteria[title]=...`).
+- The batch actions read `ids` from the query string (a JSON string or an array).
+- The encoder CPU actions read `cpu_name`, `activate` and `deactivate` from the query string.
+- The series and playlist picture update reads `url` from the request body.
 
 ## Doctrine annotations are no longer supported
 
