@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e14ce37c0492f7dc8763e9662a2d059",
+    "content-hash": "1c3528d063bc2a37d7bd9e2d72df203b",
     "packages": [
         {
             "name": "ankitpokhrel/tus-php",
@@ -2603,23 +2603,25 @@
         },
         {
             "name": "mongodb/mongodb",
-            "version": "1.21.5",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mongodb/mongo-php-library",
-                "reference": "8c0b165069ab29d52a80a379a947ac9a55734601"
+                "reference": "d70875dbb897a1cc7de15b6d21ceed43706f1937"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mongodb/mongo-php-library/zipball/8c0b165069ab29d52a80a379a947ac9a55734601",
-                "reference": "8c0b165069ab29d52a80a379a947ac9a55734601",
+                "url": "https://api.github.com/repos/mongodb/mongo-php-library/zipball/d70875dbb897a1cc7de15b6d21ceed43706f1937",
+                "reference": "d70875dbb897a1cc7de15b6d21ceed43706f1937",
                 "shasum": ""
             },
             "require": {
                 "composer-runtime-api": "^2.0",
-                "ext-mongodb": "^1.21.0",
+                "ext-mongodb": "^2.5",
                 "php": "^8.1",
-                "psr/log": "^1.1.4|^2|^3"
+                "psr/log": "^1.1.4|^2|^3",
+                "symfony/polyfill-php84": "^1.38",
+                "symfony/polyfill-php85": "^1.33"
             },
             "replace": {
                 "mongodb/builder": "*"
@@ -2627,9 +2629,9 @@
             "require-dev": {
                 "doctrine/coding-standard": "^12.0",
                 "phpunit/phpunit": "^10.5.35",
-                "rector/rector": "~2.5.9",
+                "rector/rector": "~2.6.4",
                 "squizlabs/php_codesniffer": "^3.7",
-                "vimeo/psalm": "6.5.*"
+                "vimeo/psalm": "~6.14.2"
             },
             "type": "library",
             "extra": {
@@ -2671,7 +2673,7 @@
                 "mongodb",
                 "persistence"
             ],
-            "time": "2026-09-10T14:53:17+00:00"
+            "time": "2026-09-29T12:27:47+00:00"
         },
         {
             "name": "monolog/monolog",
