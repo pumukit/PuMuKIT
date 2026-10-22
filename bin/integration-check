@@ -28,7 +28,7 @@ $startedAt = microtime(true);
 array_map('unlink', glob($logs.'/*') ?: []);
 
 $coreComposer = json_decode(file_get_contents($root.'/composer.json'), true, 512, JSON_THROW_ON_ERROR);
-$coreVersion = $coreComposer['version'] ?? throw new RuntimeException('composer.json of the core has no "version".');
+$coreVersion = Pumukit\PumukitVersion::VERSION;
 
 $report = [
     'generated_at' => date(DATE_ATOM),
@@ -45,7 +45,7 @@ step('Syncing core into var/integration/app');
 syncCore($root, $app);
 
 step('Installing '.count($compatible).' bundles with Composer');
-$global['composer'] = installBundles($root, $work, $app, $logs, $coreComposer, $compatible);
+$global['composer'] = installBundles($root, $work, $app, $logs, ['version' => $coreVersion] + $coreComposer, $compatible);
 foreach ($bundles as $dir => &$bundle) {
     $bundle['installed'] = $bundle['compatible'] && 'pass' === $global['composer']['status'];
 }
