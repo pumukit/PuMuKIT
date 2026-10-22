@@ -55,6 +55,20 @@ The core runs on Symfony 7.4 LTS with DoctrineMongoDBBundle 5.6 (`doctrine/persi
   `InputBag::get()` throws a `BadRequestException` when the value is an array. In Twig,
   use `app.request.attributes.get('_route')` instead of `app.request.get('_route')`.
 
+### Dependencies
+
+- **MonologBundle 4.** Custom Monolog configuration must not use the options and handler
+  types removed in 4.0: `excluded_404s` (use `excluded_http_codes`),
+  `console_formater_options` (use `console_formatter_options`), the `elasticsearch` type (use
+  `elastica` or `elastic_search`), the `mongo` type (use `mongodb`) and the `sentry`/`raven`
+  types (use a `service` handler with `sentry/sentry-symfony`).
+- **API Platform 5.** The `/api/v1` resources are declared with `#[ApiResource]` on the
+  documents of `SchemaBundle`. Bundles that declare their own resources must follow the
+  API Platform 5 changes: the legacy PropertyInfo `Type` system is removed (use
+  `symfony/type-info`), JSON:API uses `use_iri_as_id: false` by default, and
+  `ApiTestCase` moves to the `api-platform/test` package. The OpenAPI document of
+  `/api/v1/docs` is now generated as OpenAPI 3.2.
+
 ### Request parameters read from a single source
 
 The core no longer uses `Request::get()`, which accepted every parameter from the route

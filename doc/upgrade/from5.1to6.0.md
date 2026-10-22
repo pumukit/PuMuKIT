@@ -3,7 +3,8 @@
 PuMuKIT 6.0 has **two independent parts**:
 
 1. **Symfony core**: `5.4` (end of life) → `7.4` LTS on **PHP 8.5**, plus the dependency bumps it
-   unblocked (api-platform 4, knp-menu 3, tus-php 2, pagerfanta 4, DoctrineMongoDBBundle 5, etc.).
+   unblocked (api-platform 5, MonologBundle 4, knp-menu 3, tus-php 2, pagerfanta 4, DoctrineMongoDBBundle 5,
+   etc.).
 2. **MongoDB stack**: server `5.0` → `8.0`, `ext-mongodb` `1.14.2` → `1.21.12` and
    `mongodb/mongodb` `1.13` → `1.21`.
 
@@ -36,6 +37,10 @@ deployment:
   `security.yaml`** you must port it to the new keys (`custom_authenticators`,
   `password_hashers`, `PUBLIC_ACCESS` instead of `guard`, `encoders`,
   `anonymous`/`IS_AUTHENTICATED_ANONYMOUSLY`).
+- **Logging.** MonologBundle 4 removes some options and handler types. If you override the
+  `monolog` configuration, replace `excluded_404s` with `excluded_http_codes` and do not use
+  the `elasticsearch`, `mongo`, `sentry` or `raven` handler types (see
+  [UPGRADE-6.0.md](../../UPGRADE-6.0.md#dependencies)).
 - **Other local customizations.** Any code or config you maintain on top of the core
   (overridden templates, services, controllers) should be reviewed against the Symfony 7.4 APIs.
   The code-level changes are listed in [UPGRADE-6.0.md](../../UPGRADE-6.0.md).
@@ -48,7 +53,7 @@ deployment:
 Informational (no action required):
 
 - **REST API.** The legacy controller API (`/api/media/*`, etc.) is kept as-is. 6.0 adds a
-  new versioned, read-only api-platform 4 API under **`/api/v1`** (Swagger/ReDoc at
+  new versioned, read-only api-platform 5 API under **`/api/v1`** (Swagger/ReDoc at
   `/api/v1/docs`).
 - **Frontend assets are unchanged** in 6.0 (still vendorized + `assets:install`, handled
   by the Docker image). The AssetMapper/jQuery/Bootstrap modernization is deferred.
