@@ -94,10 +94,10 @@ class APIController extends AbstractController implements NewAdminControllerInte
         $options = [];
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
-        $groupBy = $request->get('group_by') ?: 'month';
+        $groupBy = $request->query->get('group_by', $request->request->get('group_by')) ?: 'month';
 
-        $criteria_mmobj = $request->get('criteria_mmobj') ?: $criteria;
-        $criteria_series = $request->get('criteria_series') ?: [];
+        $criteria_mmobj = ($request->query->all()['criteria_mmobj'] ?? $request->request->all()['criteria_mmobj'] ?? null) ?: $criteria;
+        $criteria_series = ($request->query->all()['criteria_series'] ?? $request->request->all()['criteria_series'] ?? null) ?: [];
 
         $options['from_date'] = $fromDate;
         $options['to_date'] = $toDate;
@@ -134,11 +134,11 @@ class APIController extends AbstractController implements NewAdminControllerInte
     public function viewsMmobjAction(Request $request)
     {
         $options = [];
-        $mmobjId = $request->get('mmobj');
+        $mmobjId = $request->query->get('mmobj', $request->request->get('mmobj'));
 
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
-        $groupBy = $request->get('group_by') ?: 'month';
+        $groupBy = $request->query->get('group_by', $request->request->get('group_by')) ?: 'month';
 
         $options['from_date'] = $fromDate;
         $options['to_date'] = $toDate;
@@ -170,11 +170,11 @@ class APIController extends AbstractController implements NewAdminControllerInte
     public function viewsSeriesAction(Request $request)
     {
         $options = [];
-        $seriesId = $request->get('series');
+        $seriesId = $request->query->get('series', $request->request->get('series'));
 
         [$criteria, $sort, $fromDate, $toDate, $limit, $page] = $this->processRequestData($request);
 
-        $groupBy = $request->get('group_by') ?: 'month';
+        $groupBy = $request->query->get('group_by', $request->request->get('group_by')) ?: 'month';
 
         $options['from_date'] = $fromDate;
         $options['to_date'] = $toDate;
@@ -206,12 +206,12 @@ class APIController extends AbstractController implements NewAdminControllerInte
     {
         $MAX_LIMIT = 1000;
         // Request variables.
-        $criteria = $request->get('criteria') ?: [];
-        $sort = (int) $request->get('sort');
-        $fromDate = $request->get('from_date');
-        $toDate = $request->get('to_date');
-        $limit = (int) $request->get('limit');
-        $page = (int) ($request->get('page')) ?: 0;
+        $criteria = ($request->query->all()['criteria'] ?? $request->request->all()['criteria'] ?? null) ?: [];
+        $sort = (int) ($request->query->all()['sort'] ?? $request->request->all()['sort'] ?? null);
+        $fromDate = $request->query->get('from_date', $request->request->get('from_date'));
+        $toDate = $request->query->get('to_date', $request->request->get('to_date'));
+        $limit = (int) $request->query->get('limit', $request->request->get('limit'));
+        $page = (int) ($request->query->get('page', $request->request->get('page'))) ?: 0;
 
         // Processing variables.
         if (!$limit || $limit > $MAX_LIMIT) {
