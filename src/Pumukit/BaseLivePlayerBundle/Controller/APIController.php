@@ -61,15 +61,15 @@ class APIController extends AbstractController
 
     private function getParameters(Request $request)
     {
-        $limit = $request->get('limit');
-        $sort = $request->get('sort') ?: [];
+        $limit = $request->query->get('limit', $request->request->get('limit'));
+        $sort = ($request->query->all()['sort'] ?? $request->request->all()['sort'] ?? null) ?: [];
 
         if (!$limit || $limit > 100) {
             $limit = 100;
         }
 
         try {
-            $criteria_type = $this->getCriteria($request->get('criteria'), $request->get('criteriajson'));
+            $criteria_type = $this->getCriteria($request->query->all()['criteria'] ?? $request->request->all()['criteria'] ?? null, $request->query->get('criteriajson', $request->request->get('criteriajson')));
         } catch (\Exception $e) {
             $error = ['error' => sprintf('Invalid criteria (%s)', $e->getMessage())];
             $data = $this->serializer->dataSerialize($error, $request->getRequestFormat());
