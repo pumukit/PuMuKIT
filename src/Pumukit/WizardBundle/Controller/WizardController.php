@@ -61,8 +61,8 @@ final class WizardController extends AbstractController
     #[Route('/{series}/server/upload', name: 'wizard_upload_from_server')]
     public function uploadFromServer(Request $request, string $series): JsonResponse
     {
-        $relativeFilePath = $request->get('filePath');
-        $profile = $request->get('profile');
+        $relativeFilePath = $request->request->get('filePath');
+        $profile = $request->request->get('profile');
 
         try {
             $inboxBasePath = realpath($this->inboxService->inboxPath());
