@@ -220,6 +220,8 @@ Removed templates and globals:
 | `bundles/pumukitwebtv/js/template_video.js` and the `dynamic_image` class | `data-controller="webtv--dynamic-pic"` on the image, with the `dynamic` and `static` values (see `@PumukitWebTV/Resources/template_video.html.twig`) |
 | `bundles/pumukitwebtv/js/jquery.countdown.js` | the `live-player--sessions` controller keeps the countdown itself |
 | `bundles/pumukitwebtv/js/modernizr-custom.js` and the `Modernizr` global | native feature detection (`'ontouchstart' in window`) |
+| `@PumukitStatsUI/Stats/js.html.twig` and its `window.*` functions (`getAjaxRequest`, `prepareSearch`, `createPager`…) | the `stats-ui--stats` controller on the container of `@PumukitStatsUI/Stats/index.html.twig`; the API URLs are its `urls` value |
+| `bundles/pumukitstatsui/vendor/d3/`, `bundles/pumukitstatsui/vendor/nvd3/` | Chart.js 4.5.1 from the importmap, loaded by the `stats-ui--stats` controller |
 
 `pumukit:check:assets` reports the use of these globals and of the `dynamic_image` class in the
 project templates unless the
