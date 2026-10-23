@@ -8,7 +8,6 @@ export default class extends Controller {
         event.preventDefault();
         const { id, title } = event.params;
         $('.name_of_children').text(title);
-        localStorage.setItem('place_tag', id);
         this.loadInto('.children-list', this.url('children', id));
     }
 
