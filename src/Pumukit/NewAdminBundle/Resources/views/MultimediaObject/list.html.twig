@@ -30,13 +30,13 @@
                     {% endif %}
                     {% include '@PumukitNewAdmin/MultimediaObject/lms_options.html.twig' %}
                     {% include '@PumukitNewAdmin/MultimediaObject/sortingactions.html.twig' %}
-                    <td headers="th-img" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')">
+                    <td headers="th-img" data-action="click->admin--actions#edit" data-admin--actions-name-param="mm" data-admin--actions-show-param="{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}">
                         {% include "@PumukitNewAdmin/Misc/img_list.html.twig"  with {'object' : mm, 'type': 'mm' } %}
                     </td>
-                    <td headers="th-title" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
+                    <td headers="th-title" data-action="click->admin--actions#edit" data-admin--actions-name-param="mm" data-admin--actions-show-param="{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}">
                         <span class="shorten-title">{{ mm.getTitle() }}</span>
                     </td>
-                    <td headers="th-type" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
+                    <td headers="th-type" class="text-center" data-action="click->admin--actions#edit" data-admin--actions-name-param="mm" data-admin--actions-show-param="{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}">
                         {% if mm.isVideoType() %}
                             <i class="fa fa-file-video" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
                         {% elseif mm.isAudioType() %}
@@ -49,29 +49,29 @@
                             <i class="fa fa-link" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
                         {% endif %}
                     </td>
-                    <td headers="th-media" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')">
+                    <td headers="th-media" class="text-center" data-action="click->admin--actions#edit" data-admin--actions-name-param="mm" data-admin--actions-show-param="{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}">
                         {{ mm.medias|length }}
                     </td>
-                    <td headers="th-duration" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')">
+                    <td headers="th-duration" class="text-center" data-action="click->admin--actions#edit" data-admin--actions-name-param="mm" data-admin--actions-show-param="{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}">
                         {% if mm.isVideoAudioType() %}{{ mm.getRealDuration()| duration_string }}{% else %}0{% endif %}
                         {% if mm.getProperty('soft-editing-duration') %}
                             <i class="mdi-content-content-cut" data-toggle="tooltip" data-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
                         {% endif %}
                     </td>
-                    <td headers="th-rec-date" class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
+                    <td headers="th-rec-date" class="text-nowrap" data-action="click->admin--actions#edit" data-admin--actions-name-param="mm" data-admin--actions-show-param="{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}">
                         {{ mm.getRecordDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
                     </td>
-                    <td headers="th-pub-date" class="text-nowrap" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
+                    <td headers="th-pub-date" class="text-nowrap" data-action="click->admin--actions#edit" data-admin--actions-name-param="mm" data-admin--actions-show-param="{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}">
                         {{ mm.getPublicDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
                     </td>
-                    <td headers="th-channel" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')" >
+                    <td headers="th-channel" class="text-center" data-action="click->admin--actions#edit" data-admin--actions-name-param="mm" data-admin--actions-show-param="{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}">
                         {% if mm.containsTagWithCod('PUCHWEBTV') %}
                             <i class="fa fa-check text-success"></i>
                         {% else %}
                             <i class="fa fa-times text-danger"></i>
                         {% endif %}
                     </td>
-                    <td headers="th-broadcast" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')">
+                    <td headers="th-broadcast" class="text-center" data-action="click->admin--actions#edit" data-admin--actions-name-param="mm" data-admin--actions-show-param="{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}">
                         {% if mm.getEmbeddedBroadcast().getType() == 'public' %}
                             <i class="fa fa-globe" data-toggle="tooltip" data-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
                         {% elseif mm.getEmbeddedBroadcast().getType() == 'password' %}
@@ -82,10 +82,10 @@
                             <i class="fa fa-users" data-toggle="tooltip" data-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
                         {% endif %}
                     </td>
-                    <td headers="th-views" class="text-center" onclick="click_fila_edit_urls('mm', this, '{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', '{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}')">
+                    <td headers="th-views" class="text-center" data-action="click->admin--actions#edit" data-admin--actions-name-param="mm" data-admin--actions-show-param="{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}">
                         <span>{{ mm.getNumview() }}</span>
                     </td>
-                    <td headers="th-play" class="text-nowrap" onclick="dblclick_preview_mm('{{ mm.id }}')">
+                    <td headers="th-play" class="text-nowrap" data-action="click->admin--actions#openModal" data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_modal_preview', {'id': mm.id}) }}">
                         <small><i class="fa fa-play" style="color: grey"></i></small>
                     </td>
                 </tr>
@@ -155,9 +155,9 @@
                                     <input title="{% trans %}Go to page{% endtrans %}" type="number"
                                            style="width: 25px;text-align:center;cursor:pointer;"
                                            value="{{ mms.getCurrentPage() }}"
-                                           onchange="window.location.search = '?id={{ series.id }}&page=' + this.value; return false;"/>
+                                           data-action="change->admin--actions#go" data-admin--actions-url-param="?id={{ series.id }}&page="/>
 
-                                    <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_mms_index') }}' + '?id={{ series.id }}&page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of multimedia objects to display per page.{% endtrans %}">
+                                    <select data-action="change->admin--actions#go" data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_index') }}?id={{ series.id }}&page=1&paginate=" aria-label="{% trans %}Select the number of multimedia objects to display per page.{% endtrans %}">
                                         <option {% if mms.maxPerPage == 10 %}selected{% endif %} value="10">10</option>
                                         <option {% if mms.maxPerPage == 20 %}selected{% endif %} value="20">20</option>
                                         <option {% if mms.maxPerPage == 50 %}selected{% endif %} value="50">50</option>

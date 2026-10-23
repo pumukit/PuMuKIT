@@ -15,7 +15,7 @@ export default class extends Controller {
 
     remove(event) {
         event.preventDefault();
-        const { url, target, confirm, blocked, success, error, reload, errorMarker, hideModal, refresh, clear } = event.params;
+        const { url, target, confirm, blocked, success, error, reload, errorMarker, hideModal, refresh, clear, notFound } = event.params;
         if (blocked) {
             window.alert(blocked);
 
@@ -48,6 +48,11 @@ export default class extends Controller {
 
         const selected = clear ? $($('tr.success').find(`input.${clear.name}_checkbox`)[0]).attr('id') : null;
         $(target).load(url, { _method: 'DELETE' }, (responseText, textStatus, xhr) => {
+            if (notFound && 404 === xhr.status) {
+                window.location.href = notFound;
+
+                return;
+            }
             if ('error' === textStatus || xhr.status >= 400) {
                 window.no_success(`${error || xhr.statusText}: ${responseText}`);
 
@@ -115,6 +120,30 @@ export default class extends Controller {
                 });
                 window.success(success);
             });
+    }
+
+    openModal(event) {
+        event.preventDefault();
+        $.ajax({ url: event.params.url, type: 'GET' }).done((response) => {
+            const modal = $('#myModal');
+            modal.modal({ backdrop: 'static' });
+            modal.find('.modal-content').html(response);
+        });
+    }
+
+    request(event) {
+        event.preventDefault();
+        const { url, method, success, error, reload } = event.params;
+        $.ajax({ url, type: method ?? 'POST' })
+            .done(() => {
+                if (reload) {
+                    window.location.reload();
+                }
+                if (success) {
+                    window.success(success);
+                }
+            })
+            .fail(() => window.no_success(error));
     }
 
     send(event) {

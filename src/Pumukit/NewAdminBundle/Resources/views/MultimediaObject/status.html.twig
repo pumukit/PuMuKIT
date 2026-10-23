@@ -10,7 +10,5 @@
 {% endif %}
 
 {% if 'XMLHttpRequest' == app.request.headers.get('X-Requested-With') %}
-<script type="text/javascript">
-window.check_for_new_pics('{{ mm.id }}', {{mm.getPics()|length}} );
-</script>
+<span hidden data-controller="admin--pic-sync" data-admin--pic-sync-resource-value="{{ mm.id }}" data-admin--pic-sync-count-value="{{ mm.getPics()|length }}" data-admin--pic-sync-url-value="{{ path('pumukitnewadmin_mmspic_list', {'id': mm.id}) }}"></span>
 {% endif %}

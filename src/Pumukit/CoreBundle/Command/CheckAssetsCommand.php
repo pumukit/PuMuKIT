@@ -125,6 +125,14 @@ class CheckAssetsCommand extends Command
         'update_playlistpic' => 'the admin--pic-list controller',
         'change_pics_page' => 'admin--actions#load (see @PumukitNewAdmin/Pic/picstoaddlist.html.twig)',
         'pmk_translate' => 'admin--actions#translate (see @PumukitNewAdmin/Themes/fields.html.twig)',
+        'submit_delete_mms' => 'admin--actions#remove (see @PumukitNewAdmin/MultimediaObject/updatemenu.html.twig)',
+        'submit_clone_mms' => 'admin--actions#load (see @PumukitNewAdmin/MultimediaObject/updatemenu.html.twig)',
+        'update_mms_status_wrapper' => 'the admin--job-status controller (see @PumukitNewAdmin/MultimediaObject/index.html.twig)',
+        'check_for_new_pics' => 'the admin--pic-sync controller (see @PumukitNewAdmin/MultimediaObject/status.html.twig)',
+        'upload_mmspic' => 'the admin--pic-sync controller (see @PumukitNewAdmin/MultimediaObject/status.html.twig)',
+        'change_select' => 'the admin--batch controller (see @PumukitNewAdmin/MultimediaObject/index.html.twig)',
+        'get_batch_delete_route' => 'the urls value of the admin--batch controller',
+        'sort_optiont_change' => 'the data-url of the sort options of the admin--batch controller',
     ];
 
     private const REFERENCE_PATTERN = '#(?<![\w./-])/?(bundles/([a-z0-9_]+)/[^\'"\s?\#{}()]*)#';

@@ -12,8 +12,11 @@ export default class extends Controller {
     };
 
     run() {
+        const option = this.element.selectedOptions[0];
         const action = this.element.value;
-        if (action in this.actions()) {
+        if ('sort' === option?.dataset.type) {
+            this.reorder(option);
+        } else if (action in this.actions()) {
             this.actions()[action]();
         }
         this.element.value = 'default';
@@ -24,6 +27,9 @@ export default class extends Controller {
             delete_selected: () => this.deleteSelected(),
             delete_selected_series: () => this.deleteSelectedSeries(),
             invert_announce_selected: () => this.invertAnnounce(),
+            cut_mm: () => this.cut(),
+            paste_mm: () => this.paste(),
+            add_playlist: () => this.addToPlaylist(),
             delete_selected_groups: () => this.deleteSelectedGroups(),
             promote_to: () => this.promote(),
         };
@@ -115,6 +121,57 @@ export default class extends Controller {
         if (1 === announce.length) {
             announce[0].checked = !announce[0].checked;
         }
+    }
+
+    reorder(option) {
+        $(`#list_${this.pluralValue}`).load(option.dataset.url, { _method: 'POST' }, () => {
+            const active = this.message('active');
+            $(this.element).find("option[data-type='sort'][data-active='1']").each((index, current) => {
+                current.dataset.active = '0';
+                current.textContent = current.textContent.replace(active, '');
+            });
+            option.dataset.active = '1';
+            option.textContent += active;
+        });
+    }
+
+    cut() {
+        const ids = this.selectedIds();
+        if (0 === ids.length) {
+            window.no_success(this.message('noneSelected'));
+
+            return;
+        }
+        $.ajax({ url: this.urlsValue.cut.replace('__ids__', JSON.stringify(ids)), type: 'GET' }).done((cut) => {
+            const paste = $(this.element).find('#paste_mm');
+            paste.text(`${this.message('paste')} (${cut.join(', ')})`).show();
+            $(`.${this.nameValue}_checkbox:checked`).prop('checked', false);
+            window.success(this.message(1 === ids.length ? 'cutOne' : 'cutMany'));
+        });
+    }
+
+    paste() {
+        if (!window.confirm(this.message('pasteConfirm'))) {
+            return;
+        }
+        $(`#list_${this.pluralValue}`).load(this.urlsValue.paste, { _method: 'POST' }, () => {
+            $(this.element).find('#paste_mm').hide();
+            window.success(this.message('pasted'));
+        });
+    }
+
+    addToPlaylist() {
+        const ids = this.selectedIds();
+        if (0 === ids.length) {
+            window.no_success(this.message('noneSelected'));
+
+            return;
+        }
+        $.ajax({ url: this.urlsValue.playlist.replace('__ids__', JSON.stringify(ids)), type: 'GET' }).done((response) => {
+            const modal = $('#myModal');
+            modal.modal({ backdrop: 'static' });
+            modal.find('.modal-content').html(response);
+        });
     }
 
     clearDeletedPreview(ids) {

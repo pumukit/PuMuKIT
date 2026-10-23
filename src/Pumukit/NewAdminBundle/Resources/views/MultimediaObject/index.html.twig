@@ -24,14 +24,18 @@
 
     <div class="row">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-            <div id="tv_admin_content" class="col-md-10">
+            <div id="tv_admin_content" class="col-md-10" data-controller="admin--job-status" data-admin--job-status-url-value="{{ path('pumukitnewadmin_mms_status', {'id': '__id__'}) }}">
                 <div class="well">
                     <div id="list_mms">
                         {% include '@PumukitNewAdmin/MultimediaObject/list.html.twig' %}
                     </div>
                     <div class="row">
                         <div class="col-xs-4">
-                            <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('mm', $(this), 'mms', '{{ series.id }}');">
+                            <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
+                                    data-admin--batch-name-value="mm" data-admin--batch-plural-value="mms" data-admin--batch-preview-value="mm"
+                                    data-admin--batch-urls-value="{{ {delete: path('pumukitnewadmin_mms_batch_delete', {'ids': '__ids__'}), invert: path('pumukitnewadmin_mms_invert_announce', {'ids': '__ids__'}), cut: path('pumukitnewadmin_mms_cut', {'ids': '__ids__'}), paste: path('pumukitnewadmin_mms_paste', {'seriesId': series.id}), playlist: path('pumukitnewadmin_playlistmms_modal_add', {'ids': '__ids__'})}|json_encode }}"
+                                    data-admin--batch-announce-value="{{ {edit: '#inputMMId', checkbox: '#list_pubdecisions___id__ #pub_decisions_PUDENEW'}|json_encode }}"
+                                    data-admin--batch-messages-value="{{ {confirm: 'Are you sure?'|trans, success: 'Multimedia Object(s) successfully deleted.'|trans, selectAny: 'Select any multimedia object.'|trans, active: '(active)'|trans, noneSelected: 'No multimedia object selected'|trans, paste: 'Paste multimedia objects'|trans, cutOne: 'Multimedia Object cut. Paste it in the desire Series.'|trans, cutMany: 'Multimedia Objects cut. Paste them in the desire Series.'|trans, pasteConfirm: 'Paste multimedia object(s) in this series?'|trans, pasted: 'Multimedia Object(s) pasted in the Series.'|trans}|json_encode }}">
                                 <option value="default" selected="selected">{% trans %}Select an action{% endtrans %}...</option>
                                 <option disabled="">---</option>
                                 <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
@@ -41,27 +45,27 @@
                                 {% endif %}
 
                                 <option disabled="">---</option>
-                                <option value="order_manual" data-type="sort" {% if series.sorting == constant('SORT_MANUAL', series) %}data-active="1"{% endif %}>
+                                <option value="order_manual" data-type="sort" data-url="{{ path('pumukitnewadmin_mms_reorder', {'seriesId': series.id, 'sorting': 0, 'fieldName': 'rank', 'order': 'asc'}) }}" {% if series.sorting == constant('SORT_MANUAL', series) %}data-active="1"{% endif %}>
                                     {% trans %}List multimedia objects in a manual order{% endtrans %}
                                     {% if series.sorting == constant('SORT_MANUAL', series) %}{% trans %}(active){% endtrans %}{% endif %}
                                 </option>
-                                <option value="order_pub_date_desc" data-type="sort" {% if series.sorting == constant('SORT_PUB_DES', series) %}data-active="1"{% endif %}>
+                                <option value="order_pub_date_desc" data-type="sort" data-url="{{ path('pumukitnewadmin_mms_reorder', {'seriesId': series.id, 'sorting': 2, 'fieldName': 'public_date', 'order': 'desc'}) }}" {% if series.sorting == constant('SORT_PUB_DES', series) %}data-active="1"{% endif %}>
                                     {% trans %}List multimedia objects in descending order of publication date{% endtrans %}
                                     {% if series.sorting == constant('SORT_PUB_DES', series) %}{% trans %}(active){% endtrans %}{% endif %}
                                 </option>
-                                <option value="order_pub_date_asc" data-type="sort" {% if series.sorting == constant('SORT_PUB_ASC', series) %}data-active="1"{% endif %}>
+                                <option value="order_pub_date_asc" data-type="sort" data-url="{{ path('pumukitnewadmin_mms_reorder', {'seriesId': series.id, 'sorting': 1, 'fieldName': 'public_date', 'order': 'asc'}) }}" {% if series.sorting == constant('SORT_PUB_ASC', series) %}data-active="1"{% endif %}>
                                     {% trans %}List multimedia objects in ascending order of publication date{% endtrans %}
                                     {% if series.sorting == constant('SORT_PUB_ASC', series) %}{% trans %}(active){% endtrans %}{% endif %}
                                 </option>
-                                <option value="order_rec_date_desc" data-type="sort" {% if series.sorting == constant('SORT_REC_DES', series) %}data-active="1"{% endif %}>
+                                <option value="order_rec_date_desc" data-type="sort" data-url="{{ path('pumukitnewadmin_mms_reorder', {'seriesId': series.id, 'sorting': 3, 'fieldName': 'record_date', 'order': 'desc'}) }}" {% if series.sorting == constant('SORT_REC_DES', series) %}data-active="1"{% endif %}>
                                     {% trans %}List multimedia objects in descending order of recording date{% endtrans %}
                                     {% if series.sorting == constant('SORT_REC_DES', series) %}{% trans %}(active){% endtrans %}{% endif %}
                                 </option>
-                                <option value="order_rec_date_asc" data-type="sort" {% if series.sorting == constant('SORT_REC_ASC', series) %}data-active="1"{% endif %}>
+                                <option value="order_rec_date_asc" data-type="sort" data-url="{{ path('pumukitnewadmin_mms_reorder', {'seriesId': series.id, 'sorting': 4, 'fieldName': 'record_date', 'order': 'asc'}) }}" {% if series.sorting == constant('SORT_REC_ASC', series) %}data-active="1"{% endif %}>
                                     {% trans %}List multimedia objects in ascending order of recording date{% endtrans %}
                                     {% if series.sorting == constant('SORT_REC_ASC', series) %}{% trans %}(active){% endtrans %}{% endif %}
                                 </option>
-                                <option value="order_abc" data-type="sort" {% if series.sorting == constant('SORT_ALPHAB', series) %}data-active="1"{% endif %}>
+                                <option value="order_abc" data-type="sort" data-url="{{ path('pumukitnewadmin_mms_reorder', {'seriesId': series.id, 'sorting': 5, 'fieldName': 'title.es', 'order': 'asc'}) }}" {% if series.sorting == constant('SORT_ALPHAB', series) %}data-active="1"{% endif %}>
                                     {% trans %}List multimedia objects in ascending order of title{% endtrans %}
                                     {% if series.sorting == constant('SORT_ALPHAB', series) %}{% trans %}(active){% endtrans %}{% endif %}
                                 </option>
@@ -136,8 +140,6 @@
 
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
         <script type="text/javascript">
-            window.setInterval(window.update_mms_status_wrapper, 15000);
-
             window.update_preview_mms = function (id) {
                 var route = "{{ path('pumukitnewadmin_mms_show', {id: '__id__'}) }}";
                 $.ajax({
@@ -148,19 +150,6 @@
                     }
                 });
             }
-
-            var url = "{{ path('pumukit_schema_apikeywords_mmobj', {'_format':'json'})|raw }}";
-            window.mmobjkeywords = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                prefetch: {
-                    url: url,
-                    ttl: 1800000
-                }
-            });
-
-            window.mmobjkeywords.initialize();
-
         </script>
     {% endif %}
 {% endblock %}

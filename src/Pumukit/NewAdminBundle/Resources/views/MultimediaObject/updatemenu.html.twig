@@ -4,7 +4,13 @@
     <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_mm_{{ mm.id }}">
 
         <li>
-            <a href="#" class="qa-button-delete-mms" onclick="window.submit_delete_mms('{{ mm.id }}'); return false;">
+            <a href="#" class="qa-button-delete-mms" data-action="click->admin--actions#remove"
+               data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_delete', {'id': mm.id}) }}"
+               data-admin--actions-target-param="#list_mms"
+               data-admin--actions-clear-param="{{ {name: 'mm', id: mm.id, message: 'Select any multimedia object.'|trans}|json_encode }}"
+               data-admin--actions-not-found-param="{{ path('pumukitnewadmin_series_index') }}"
+               data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this multimedia object?'|trans }}"
+               data-admin--actions-success-param="{{ 'Multimedia Object successfully deleted.'|trans }}">
                 <i class="mdi-content-clear"></i>{% trans %}Delete multimedia object{% endtrans %}
             </a>
         </li>
@@ -12,7 +18,12 @@
         {% include "@PumukitNewAdmin/MultimediaObject/Menu/_playlist.html.twig" %}
 
         <li>
-            <a href="#" class="qa-button-clone-mms" onclick="window.submit_clone_mms('{{ mm.id }}'); return false;">
+            <a href="#" class="qa-button-clone-mms" data-action="click->admin--actions#load"
+               data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_clone', {'id': mm.id}) }}"
+               data-admin--actions-target-param="#list_mms"
+               data-admin--actions-data-param="{{ {_method: 'POST'}|json_encode }}"
+               data-admin--actions-confirm-param="{{ 'Are you sure you want to clone this multimedia object?'|trans }}"
+               data-admin--actions-success-param="{{ 'Multimedia Object successfully cloned.'|trans }}">
                 <i class="mdi-content-content-copy"></i>{% trans %}Clone multimedia object{% endtrans %}
             </a>
         </li>

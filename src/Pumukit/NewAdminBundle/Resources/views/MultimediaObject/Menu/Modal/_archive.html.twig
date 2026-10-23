@@ -35,28 +35,12 @@
                 <button type="button" class="btn btn-block btn-default btn-raised" data-dismiss="modal">{{ "Cancel"|trans}}</button>
             </div>
             <div class="col-md-6">
-                <a href="#" class="btn btn-block btn-danger btn-archive">{{ "Archive"|trans }}</a>
+                <a href="#" class="btn btn-block btn-danger btn-archive" data-action="click->admin--actions#request"
+               data-admin--actions-url-param="{{ path('pumukit_multimedia_object_save_and_archive', {'id': multimediaObject.id}) }}"
+               data-admin--actions-reload-param="true"
+               data-admin--actions-success-param="{{ 'Multimedia Object archive complete'|trans }}"
+               data-admin--actions-error-param="{{ 'Multimedia Object archive ERROR'|trans }}">{{ "Archive"|trans }}</a>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    $('.btn-archive').on('click', function(event) {
-        event.preventDefault();
-        $.ajax({
-            url: '{{ path('pumukit_multimedia_object_save_and_archive', {'id': multimediaObject.id}) }}',
-            type: 'POST',
-            error: function(request, json) {
-                var message = '{{ "Multimedia Object archive ERROR"|trans|e("js") }}';
-                no_success(message);
-            },
-            success: function(response) {
-                location.reload();
-                var message = '{{ "Multimedia Object archive complete"|trans|e("js") }}';
-                success(message);
-            }
-        });
-        return false;
-    })
-</script>
