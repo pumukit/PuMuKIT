@@ -382,6 +382,7 @@ functions, reported by `pumukit:check:assets` (also when called as `window.…`)
 | `submit_delete_material()`, `submit_delete_track()`, `update_list()` | `admin--actions#remove` |
 | `getAllDnDChecked()`, `dragEndCheckbox()`, `dragItem()`, `dragEnd()`, `dropTagItem()`, `updateMultimediaObjectByTag()`, `dropItem()`, `updateMultimediaObject()` | `admin--unesco` |
 | `procesaOk()` | `admin--meta-form#hideRemember` |
+| `dblclick_fila_url()` | `admin--actions#navigate` |
 | `extract_pic()` | `admin--track-list#extractPic` |
 | `toggleHide()` | `admin--actions#load` |
 | `select_group()`, `add_group()`, `delete_group()`, `create_element_group_in_add_groups()`, `create_element_group_in_delete_groups()`, `delete_element_group_from_select()` | `admin--group-lists` |

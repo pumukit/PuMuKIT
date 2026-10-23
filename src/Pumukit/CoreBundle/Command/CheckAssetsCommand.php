@@ -190,6 +190,7 @@ class CheckAssetsCommand extends Command
         'dropItem' => 'the admin--unesco controller (see @PumukitNewAdmin/UNESCO/_controller.html.twig)',
         'updateMultimediaObject' => 'the admin--unesco controller (see @PumukitNewAdmin/UNESCO/_controller.html.twig)',
         'procesaOk' => 'admin--meta-form#hideRemember (see @PumukitNewAdmin/UNESCO/updatepub.html.twig)',
+        'dblclick_fila_url' => 'admin--actions#navigate',
         'checkRecordDateAndPublicDate' => 'the dates value of the admin--meta-form controller (see @PumukitNewAdmin/MultimediaObject/updatemeta.html.twig)',
     ];
 
