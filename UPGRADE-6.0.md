@@ -217,8 +217,12 @@ Removed templates and globals:
 | `submitForm()`, `toggleDateSelect()` (search filters) | the `webtv--search` controller on `#form_search` |
 | `postChatMessage()`, `updateChat()` (live chat) | the `webtv--chat` controller |
 | `insertCookieUser()`, `setCookie()`, `getCookie()` (cookie banner) | the `webtv--cookies` controller |
+| `bundles/pumukitwebtv/js/template_video.js` and the `dynamic_image` class | `data-controller="webtv--dynamic-pic"` on the image, with the `dynamic` and `static` values (see `@PumukitWebTV/Resources/template_video.html.twig`) |
+| `bundles/pumukitwebtv/js/jquery.countdown.js` | the `live-player--sessions` controller keeps the countdown itself |
+| `bundles/pumukitwebtv/js/modernizr-custom.js` and the `Modernizr` global | native feature detection (`'ontouchstart' in window`) |
 
-`pumukit:check:assets` reports the use of these globals in the project templates unless the
+`pumukit:check:assets` reports the use of these globals and of the `dynamic_image` class in the
+project templates unless the
 project defines them itself. The portal templates without inline JavaScript left are the ones
 of Paella, which keeps its own build.
 
