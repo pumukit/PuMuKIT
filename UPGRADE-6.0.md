@@ -291,7 +291,12 @@ Migrated zones: roles, series types, live channels, legacy events, users, groups
 person relations, permission profiles, tags, links, the inbox explorer, series, playlists, the
 head and tail manager, pictures and the i18n fields of the form theme. `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
 `@PumukitNewAdmin/Playlist/changepub.html.twig` are removed, and so is
-`@PumukitNewAdmin/LiveEvent/create.html.twig`, which pointed to a route that no longer exists. The series and playlist indexes no
+`@PumukitNewAdmin/LiveEvent/create.html.twig`, which pointed to a route that no longer exists.
+The picture upload actions (series, playlists, multimedia objects and legacy events) always answer
+JSON (`{uploaded, message}`), so `@PumukitNewAdmin/Pic/upload.html.twig` and
+`@PumukitNewAdmin/Pic/upload_event.html.twig`, the old iframe responses, are removed, together
+with the hidden banner URL form of `@PumukitNewAdmin/Pic/banner.html.twig` and its
+`test_form_url()` and `test_url_generation()` functions. The series and playlist indexes no
 longer define the `serieskeywords` and `mmobjkeywords` globals: `admin--meta-form` creates them
 when a metadata form needs them. Removed global
 functions, reported by `pumukit:check:assets` (also when called as `window.…`):
