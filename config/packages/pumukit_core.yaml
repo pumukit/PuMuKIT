@@ -85,6 +85,11 @@ services:
     tags:
       - { name: "twig.extension" }
 
+  Pumukit\CoreBundle\Twig\UploaderExtension:
+    class: Pumukit\CoreBundle\Twig\UploaderExtension
+    tags:
+      - { name: "twig.extension" }
+
   Pumukit\CoreBundle\EventListener\InboxUploadListener:
     class: Pumukit\CoreBundle\EventListener\InboxUploadListener
     arguments:

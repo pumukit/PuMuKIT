@@ -38,6 +38,14 @@ class TUSUploadControllerTest extends PumukitTestCase
         $this->client->loginUser($user, 'pumukit');
     }
 
+    #[DataProvider('rejectedMetadata')]
+    public function testRejectsUploadsWhoseStoredNameIsNotTheValidatedOne(array $metadata): void
+    {
+        $this->createUpload($metadata);
+
+        $this->assertResponseStatusCodeSame(400);
+    }
+
     public static function rejectedMetadata(): array
     {
         return [
@@ -50,17 +58,20 @@ class TUSUploadControllerTest extends PumukitTestCase
         ];
     }
 
-    #[DataProvider('rejectedMetadata')]
-    public function testRejectsUploadsWhoseStoredNameIsNotTheValidatedOne(array $metadata): void
-    {
-        $this->createUpload($metadata);
-
-        $this->assertResponseStatusCodeSame(400);
-    }
-
     public function testAcceptsAConsistentUpload(): void
     {
         $this->createUpload(['name' => 'video.mp4', 'filename' => 'video.mp4', 'type' => 'video/mp4', 'filetype' => 'video/mp4']);
+
+        $this->assertNotSame(400, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testAcceptsTheMetadataSentByUppy(): void
+    {
+        $this->client->request('POST', '/tus', [], [], [
+            'HTTP_TUS_RESUMABLE' => '1.0.0',
+            'HTTP_UPLOAD_LENGTH' => '10',
+            'HTTP_UPLOAD_METADATA' => 'series bWkgY2FycGV0YQ==,name MTc5Mjc0MzI5NTEwMl9NaV92X2Rlb19maW5hbF9tcDQubXA0,type dmlkZW8vbXA0,filetype dmlkZW8vbXA0,filename MTc5Mjc0MzI5NTEwMl9NaV92X2Rlb19maW5hbF9tcDQubXA0',
+        ]);
 
         $this->assertNotSame(400, $this->client->getResponse()->getStatusCode());
     }

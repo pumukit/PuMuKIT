@@ -65,6 +65,10 @@
         <source>Back</source>
         <target>Back</target>
       </trans-unit>
+      <trans-unit id="UtKUPLn" resname="The file was uploaded but could not be imported">
+        <source>The file was uploaded but could not be imported</source>
+        <target state="translated">The file was uploaded but could not be imported</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

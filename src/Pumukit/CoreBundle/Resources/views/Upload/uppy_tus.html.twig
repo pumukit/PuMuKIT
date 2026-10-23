@@ -4,26 +4,15 @@
 {% if isNaked and lmsUrl %}
     {% set endpoint = lmsUrl ~ '?' ~ {'series': currentSeries, 'username': username|default(''), 'email': email|default(''), 'hash': hash|default('')}|url_encode %}
 {% else %}
-    {% set endpoint = inboxUploadURL ~ '?' ~ {'series': currentSeries, 'temporaryFolder': folder is defined ? '0' : '1'}|url_encode %}
+    {% set endpoint = inboxUploadURL|default(inbox_upload_url()) ~ '?' ~ {'series': currentSeries, 'temporaryFolder': folder is defined ? '0' : '1'}|url_encode %}
 {% endif %}
-<div hidden
-     data-controller="core--uppy-tus"
-     data-core--uppy-tus-target-value="#uploader_drag_and_drop"
-     data-core--uppy-tus-endpoint-value="{{ endpoint }}"
-     data-core--uppy-tus-series-value="{{ currentSeries }}"
-     data-core--uppy-tus-locale-value="{{ app.request.getLocale() }}"
-     data-core--uppy-tus-debug-value="{{ inbox_debug() }}"
-     data-core--uppy-tus-min-file-size-value="{{ inbox_min_file_size() }}"
-     data-core--uppy-tus-max-file-size-value="{{ inbox_max_file_size() }}"
-     data-core--uppy-tus-max-number-of-files-value="{{ inbox_max_number_of_files() }}"
-     data-core--uppy-tus-allowed-file-types-value="{{ allowed_type_files() }}"
-     data-core--uppy-tus-override-patch-method-value="{{ inbox_override_patch_method() }}"
-     data-core--uppy-tus-limit-value="{{ inbox_upload_limit() }}"
-     data-core--uppy-tus-naked-value="{{ isNaked ? 'true' : 'false' }}"
-     {% if isNaked %}
-     data-core--uppy-tus-import-url-value="{{ path('moodle_dispatch_import') }}"
-     data-core--uppy-tus-import-params-value="{{ {'username': username|default(''), 'email': email|default(''), 'hash': hash|default('')}|json_encode }}"
-     {% else %}
-     data-core--uppy-tus-import-url-value="{{ path('inbox_auto_import') }}"
-     {% endif %}
-></div>
+<div hidden {{ uploader_attributes({
+    transport: 'tus',
+    endpoint: endpoint,
+    renameFiles: true,
+    meta: {series: currentSeries},
+    dashboard: {target: '#uploader_drag_and_drop'},
+    import: isNaked
+        ? {url: path('moodle_dispatch_import'), params: {username: username|default(''), email: email|default(''), hash: hash|default('')}, sendUuid: true}
+        : {url: path('inbox_auto_import')}
+}) }}></div>

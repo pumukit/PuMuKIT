@@ -65,6 +65,10 @@
         <source>Back</source>
         <target state="translated">Atrás</target>
       </trans-unit>
+      <trans-unit id="UtKUPLn" resname="The file was uploaded but could not be imported">
+        <source>The file was uploaded but could not be imported</source>
+        <target state="translated">El fichero se ha subido pero no se ha podido importar</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

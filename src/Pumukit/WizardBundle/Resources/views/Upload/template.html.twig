@@ -2,7 +2,6 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('bundles/pumukitcore/css/uppy.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
     <link href="{{ asset('bundles/pumukitcore/css/inbox.css') }}" type="text/css" rel="stylesheet" media="screen"/>
 {% endblock %}
 
@@ -22,8 +21,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('bundles/pumukitcore/js/uppy.min.js') }}"></script>
-    {% include "@PumukitCore/Upload/uppy_languages.html.twig" %}
     {% include "@PumukitCore/Upload/uppy_tus.html.twig" %}
 
 {% endblock %}

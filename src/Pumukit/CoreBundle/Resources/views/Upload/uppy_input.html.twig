@@ -1,30 +1,18 @@
-<style>
-    .uppy-StatusBar-progress {
-        background-color: {{ inbox_progress_bar_color() }} !important;
-    }
-</style>
-
 <div class="form-group" id="pumukit_file_input">
-    <label for="url" class="control-label">{{ "Audio/video file"|trans }}:
-        <span style="color: red">
+    <label for="input-file" class="control-label">{{ "Audio/video file"|trans }}:
+        <span class="text-danger">
             ({{ "Max."|trans }} {{ php_upload_max_filesize() }})
         </span>
     </label>
-    <div class="UppyForm">
-        <h5>{{ "There was an error loading uppy plugin" |trans }}</h5>
-        <input id="input-file" type="file" name="resource[]">
+    <input id="input-file" type="file" class="form-control" data-core--uploader-target="input" data-action="change->core--uploader#select">
+    <div class="progress uploader-progress" data-core--uploader-target="progress" hidden>
+        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-core--uploader-target="progressBar"></div>
     </div>
-    <div class="grid">
-        <div class="column-full">
-            <div class="UppyInput"></div>
-            <div class="UppyInput-Progress"></div>
-        </div>
-    </div>
-    <div class="file-data" style="display:none;">
+    <div class="file-data" data-core--uploader-target="file" hidden>
         <p><b>{{ "File to upload"|trans }}:</b></p>
-        <span class="label label-default file-title"></span>
-        <span class="label label-primary file-size"></span>
-        <a href="#" id="uppy-remove-file" class="file-id uppy-remove-file" style="margin-left:10px;">
+        <span class="label label-default file-title" data-core--uploader-target="fileName"></span>
+        <span class="label label-primary file-size" data-core--uploader-target="fileSize"></span>
+        <a href="#" id="uppy-remove-file" class="file-id uppy-remove-file" style="margin-left:10px;" data-action="core--uploader#remove">
             <i class="glyphicon glyphicon-remove"></i>
         </a>
     </div>
