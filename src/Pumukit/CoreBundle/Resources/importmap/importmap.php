@@ -49,4 +49,120 @@ return [
     '@kurkle/color' => [
         'version' => '0.3.4',
     ],
+    '@uppy/core' => [
+        'version' => '6.2.0',
+    ],
+    '@uppy/dashboard' => [
+        'version' => '6.0.1',
+    ],
+    '@uppy/tus' => [
+        'version' => '6.0.0',
+    ],
+    '@uppy/xhr-upload' => [
+        'version' => '6.0.1',
+    ],
+    '@uppy/locales/lib/es_ES.js' => [
+        'version' => '5.3.0',
+    ],
+    '@uppy/locales/lib/en_US.js' => [
+        'version' => '5.3.0',
+    ],
+    '@uppy/locales/lib/gl_ES.js' => [
+        'version' => '5.3.0',
+    ],
+    '@uppy/core/dist/style.min.css' => [
+        'version' => '6.2.0',
+        'type' => 'css',
+    ],
+    '@uppy/dashboard/dist/style.min.css' => [
+        'version' => '6.0.1',
+        'type' => 'css',
+    ],
+    'preact/jsx-runtime' => [
+        'version' => '10.29.8',
+    ],
+    'preact/hooks' => [
+        'version' => '10.29.8',
+    ],
+    '@transloadit/prettier-bytes' => [
+        'version' => '2.0.0',
+    ],
+    'mime-match' => [
+        'version' => '1.0.2',
+    ],
+    'preact' => [
+        'version' => '10.29.8',
+    ],
+    'lodash/throttle.js' => [
+        'version' => '4.18.1',
+    ],
+    'namespace-emitter' => [
+        'version' => '2.0.1',
+    ],
+    'nanoid/non-secure' => [
+        'version' => '6.0.1',
+    ],
+    '@uppy/core/provider-views' => [
+        'version' => '6.2.0',
+    ],
+    '@uppy/core/utils' => [
+        'version' => '6.2.0',
+    ],
+    '@uppy/thumbnail-generator' => [
+        'version' => '6.0.1',
+    ],
+    'classnames' => [
+        'version' => '2.5.1',
+    ],
+    '@uppy/core/utils/preact' => [
+        'version' => '6.2.0',
+    ],
+    '@uppy/core/utils/preact/hooks' => [
+        'version' => '6.2.0',
+    ],
+    'shallow-equal' => [
+        'version' => '3.1.0',
+    ],
+    'lodash/debounce.js' => [
+        'version' => '4.18.1',
+    ],
+    'tus-js-client' => [
+        'version' => '4.3.1',
+    ],
+    'wildcard' => [
+        'version' => '1.1.2',
+    ],
+    'preact/compat' => [
+        'version' => '10.29.8',
+    ],
+    'p-retry' => [
+        'version' => '8.0.1',
+    ],
+    'p-queue' => [
+        'version' => '9.3.3',
+    ],
+    'exifr/dist/mini.esm.mjs' => [
+        'version' => '7.1.3',
+    ],
+    'js-base64' => [
+        'version' => '3.7.7',
+    ],
+    'url-parse' => [
+        'version' => '1.5.10',
+    ],
+    'is-network-error' => [
+        'version' => '1.3.2',
+    ],
+    'eventemitter3' => [
+        'version' => '5.0.4',
+    ],
+    'p-timeout' => [
+        'version' => '7.0.1',
+    ],
+    'requires-port' => [
+        'version' => '1.0.0',
+    ],
+    'querystringify' => [
+        'version' => '2.2.0',
+    ],
 ];
