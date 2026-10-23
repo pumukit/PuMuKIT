@@ -52,6 +52,18 @@ class InlineJavascriptTest extends PumukitTestCase
         $this->client->loginUser($user, 'pumukit');
     }
 
+    public function testTheLayoutLoadsTheBackofficeModule(): void
+    {
+        $this->client->request('GET', static::getContainer()->get('router')->generate('pumukitnewadmin_role_index'));
+
+        $this->assertResponseIsSuccessful();
+        $html = (string) $this->client->getResponse()->getContent();
+        $this->assertStringContainsString("import '@pumukit/new-admin/backoffice';", $html);
+        $this->assertSelectorNotExists('[data-naked-backoffice]');
+        preg_match('#<script type="importmap"[^>]*>(.*?)</script>#s', $html, $importmap);
+        $this->assertArrayHasKey('@pumukit/new-admin/backoffice', json_decode($importmap[1], true)['imports']);
+    }
+
     #[DataProvider('migratedPages')]
     public function testThePageHasNoInlineJavascript(string $route): void
     {
@@ -65,7 +77,7 @@ class InlineJavascriptTest extends PumukitTestCase
         $this->assertSame([], $handlers[0]);
 
         preg_match_all('#<script\b(?![^>]*\bsrc=)(?![^>]*type="importmap")[^>]*>(.*?)</script>#is', $html, $scripts);
-        $inline = array_values(array_filter(array_map('trim', $scripts[1]), static fn (string $code): bool => '' !== $code && "import 'pumukit';" !== $code));
+        $inline = array_values(array_filter(array_map('trim', $scripts[1]), static fn (string $code): bool => '' !== $code && !preg_match("/^(import '[^']+';\\s*)+$/", $code)));
         $this->assertSame([], $inline);
     }
 

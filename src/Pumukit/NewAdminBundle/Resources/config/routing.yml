@@ -8,26 +8,6 @@ pumukit_new_admin:
     type:     attribute
     prefix:   /admin
 
-pumukitnewadmin_js:
-    path: /admin/pumukit.js
-    methods: [GET]
-    defaults:
-        _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
-        template: '@PumukitNewAdmin/pumukit.js.twig'
-        maxAge:       86400
-        private:      true
-        _format: js
-
-pumukitnewadmin_locale_js:
-    path: /admin/pumukit.{_locale}.js
-    methods: [GET]
-    defaults:
-        _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
-        template: '@PumukitNewAdmin/pumukit.js.twig'
-        maxAge:       86400
-        private:      true
-        _format: js
-
 pumukitnewadmin_css:
     path: /admin/pumukit.css
     methods: [GET]

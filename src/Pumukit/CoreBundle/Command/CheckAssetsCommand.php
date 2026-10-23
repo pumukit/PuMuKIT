@@ -62,6 +62,7 @@ class CheckAssetsCommand extends Command
         'bundles/pumukitnewadmin/vendor/chartjs/chartjs-plugin-zoom.min.js' => 'nothing: no page used it',
         '@PumukitNewAdmin/Material/upload.html.twig' => 'nothing: the material uploads answer JSON to the admin--upload-form controller',
         '@PumukitNewAdmin/MultimediaObject/updatebroadcast.js.twig' => 'nothing: the admin--broadcast controller of @PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig handles the form',
+        '@PumukitNewAdmin/pumukit.js.twig' => 'the @pumukit/new-admin/backoffice importmap entrypoint (see @PumukitNewAdmin/layout.html.twig)',
         '@PumukitNewAdmin/UNESCO/listtagsajax.html.twig' => '@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig (the admin--tag-picker controller of the tag tab handles the clicks)',
     ];
 
@@ -198,6 +199,7 @@ class CheckAssetsCommand extends Command
         'playlist_mms_options' => 'the batch action of the admin--playlist-mms controller (see @PumukitNewAdmin/PlaylistMultimediaObject/index.html.twig)',
         'mm_delete_selected' => 'the batch action of the admin--playlist-mms controller (see @PumukitNewAdmin/PlaylistMultimediaObject/index.html.twig)',
         'delete_mm' => 'the remove action of the admin--playlist-mms controller (see @PumukitNewAdmin/PlaylistMultimediaObject/updatemenu.html.twig)',
+        'init_tabs' => 'the admin--tabs controller (see @PumukitNewAdmin/Series/update.html.twig)',
         'click_checkbox_all' => 'admin--actions#checkAll (see @PumukitNewAdmin/Place/parent_listth.html.twig)',
         'checkRecordDateAndPublicDate' => 'the dates value of the admin--meta-form controller (see @PumukitNewAdmin/MultimediaObject/updatemeta.html.twig)',
     ];

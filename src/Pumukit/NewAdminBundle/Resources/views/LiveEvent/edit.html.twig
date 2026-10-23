@@ -4,7 +4,7 @@
         {% include '@PumukitNewAdmin/LiveEvent/links.html.twig' %}
     </div>
     <div role="tabpanel">
-        <ul id="menuTab" class="nav nav-tabs" role="tablist">
+        <ul id="menuTab" class="nav nav-tabs" role="tablist" data-controller="admin--tabs" data-admin--tabs-key-value="lastMmTab">
             <li class="active">
                 <a href="#event" aria-controls="event" role="tab" data-toggle="tab">{% trans %}Event{% endtrans %}</a>
             </li>

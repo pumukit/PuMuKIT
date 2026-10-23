@@ -16,6 +16,10 @@ return [
         'path' => '@pumukit/core/app.js',
         'entrypoint' => true,
     ],
+    '@pumukit/new-admin/backoffice' => [
+        'path' => '@pumukit/new-admin/backoffice.js',
+        'entrypoint' => true,
+    ],
     '@pumukit/translator' => [
         'path' => '@pumukit/core/translator.js',
     ],

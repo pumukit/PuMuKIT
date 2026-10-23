@@ -26,7 +26,7 @@
       {% include '@PumukitNewAdmin/Playlist/updatemeta.html.twig' %}
     {% else %}
       <div role="tabpanel">
-        <ul id="seriesTab" class="nav nav-tabs" role="tablist">
+        <ul id="seriesTab" class="nav nav-tabs" role="tablist" data-controller="admin--tabs" data-admin--tabs-key-value="lastSeriesTab">
           <li class="active">
             <a href="#editSeries" aria-controls="editSeries" role="tab" data-toggle="tab" class="main-pmk-tab">{% trans %}Playlist Metadata{% endtrans %}</a>
           </li>

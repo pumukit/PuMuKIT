@@ -37,17 +37,16 @@
     <script src="{{ asset('bundles/pumukitnewadmin/js/material.min.js') }}"></script>
     <script src="{{ asset('bundles/pumukitnewadmin/js/snackbar.min.js') }}"></script>
     <script src="{{ asset('bundles/pumukitnewadmin/js/jquery.nouislider.min.js') }}"></script>
-    <script type="text/javascript" src="{{ path('pumukitnewadmin_locale_js') }}"></script>
     <script src="{{ asset('bundles/pumukitnewadmin/js/hinclude.js') }}"></script>
     <script src="{{ asset('bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('bundles/pumukitnewadmin/js/typeahead.bundle.min.js') }}"></script>
     <script src="{{ asset('bundles/pumukitnewadmin/js/materialize-tags.min.js') }}"></script>
 
-    {{ importmap('pumukit') }}
+    {{ importmap(['pumukit', '@pumukit/new-admin/backoffice']) }}
 {% endblock %}
 
 {% block body_base %}
-    <div data-controller="admin--actions">
+    <div data-controller="admin--actions"{% if is_naked() %} data-naked-backoffice{% endif %}>
     {% block naked_menu %}
         {% include is_naked() ? '@PumukitNewAdmin/naked_menu.html.twig' : '@PumukitNewAdmin/menu.html.twig' %}
     {% endblock %}

@@ -63,6 +63,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Remove the email check of the profile page of the backoffice (`pumukitnewadmin_profile_user_check_user` route and `UserProfileController::checkEmailToUseOnUser()`): the email field is read-only and the form was submitted whatever the check answered.
 - Show a warning instead of failing with an error 500 on the profile page of the backoffice when the user has no associated person, and in the video search of the add to playlist modal.
 - Do not fail with an error 500 when the video search of the add to playlist modal is empty.
+- Replace `@PumukitNewAdmin/pumukit.js.twig` and its routes with the `@pumukit/new-admin/backoffice` importmap entrypoint and the `admin--tabs` Stimulus controller; opening `#myModal` empties only its own content, and the unused `$.ajaxSetup({cache: true})` and `#iframeUpload` NGINX check are removed.
 - Answer the picture uploads with JSON only and remove the old iframe responses and the hidden banner URL form.
 - Configure the default protocol of the URL form fields (live channel, person, link and external player), deprecated since Symfony 7.1.
 - Upload thumbnails, banners, materials, live event images and tracks through the Uppy Dashboard; the upload actions answer JSON on request and adding a track to an object without type no longer fails.

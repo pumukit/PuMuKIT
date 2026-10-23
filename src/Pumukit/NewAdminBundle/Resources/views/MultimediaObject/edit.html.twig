@@ -10,7 +10,7 @@
         {% endif %}
 
         <div role="tabpanel">
-            <ul id="menuTab" class="nav nav-tabs" role="tablist">
+            <ul id="menuTab" class="nav nav-tabs" role="tablist" data-controller="admin--tabs" data-admin--tabs-key-value="lastMmTab">
 
                 {% if not is_naked() and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}
                     <li class="{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}active{% endif %} task_publication">

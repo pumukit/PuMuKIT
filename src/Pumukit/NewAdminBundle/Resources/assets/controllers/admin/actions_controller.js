@@ -101,7 +101,7 @@ export default class extends Controller {
     edit(event) {
         const { name, show, update } = event.params;
         $(`#preview_${name}`).load(show);
-        $(`#edit_${name}`).load(update, () => window.init_tabs?.());
+        $(`#edit_${name}`).load(update);
         $('.success').removeClass('success');
         $(event.currentTarget.parentNode).addClass('success');
     }
@@ -121,7 +121,7 @@ export default class extends Controller {
                 const id = response[key];
                 $(list).load(listUrl.replace('__id__', id), () => {
                     $(`#preview_${name}`).load(showUrl.replace('__id__', id));
-                    $(`#edit_${name}`).load(editUrl.replace('__id__', id), () => window.init_tabs?.());
+                    $(`#edit_${name}`).load(editUrl.replace('__id__', id));
                 });
                 window.success(success);
             });

@@ -9,7 +9,7 @@ export default class extends Controller {
         $('.success').removeClass('success');
         $(event.currentTarget).addClass('success');
         $('#preview_playlistmm').load(this.urlsValue.show.replace('__ID__', id).replace('__POS__', pos));
-        $('#edit_playlistmm').load(this.urlsValue.info.replace('__ID__', id), () => window.init_tabs?.());
+        $('#edit_playlistmm').load(this.urlsValue.info.replace('__ID__', id));
     }
 
     remove(event) {

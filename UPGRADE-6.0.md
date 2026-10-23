@@ -238,9 +238,22 @@ Stimulus listens to the `input` event by default on `<input>` elements: declare 
 ## Backoffice JavaScript (NewAdminBundle)
 
 The backoffice moves its inline JavaScript (`onclick`, `onsubmit`, `<script>` blocks) and the
-global functions of `@PumukitNewAdmin/pumukit.js.twig` to Stimulus controllers, zone by zone.
-`pumukit.js.twig` keeps the functions of the zones that are not migrated yet and is now cached
-only by the browser (`private`), because its content depends on the permissions of the user.
+global functions of `@PumukitNewAdmin/pumukit.js.twig` to Stimulus controllers. Only the editor of
+the Paella video editor bundle keeps inline JavaScript.
+
+`@PumukitNewAdmin/pumukit.js.twig` and its `pumukitnewadmin_js` and `pumukitnewadmin_locale_js`
+routes are removed. The admin layout loads the `@pumukit/new-admin/backoffice` importmap
+entrypoint next to `pumukit` (`{{ importmap(['pumukit', '@pumukit/new-admin/backoffice']) }}`): a
+project or bundle that overrides `@PumukitNewAdmin/layout.html.twig` must replace its
+`<script src="{{ path('pumukitnewadmin_locale_js') }}">` with that call. The module keeps the global
+`success()` and `no_success()` functions, the Material and tooltip initialisation, the reload on a
+403 AJAX response, the cleanup and focus of the `.pmk-modal` modals and the position of the modals
+of the naked backoffice (now read from the `data-naked-backoffice` attribute of the layout). Opening
+`#myModal` empties only its own content, no longer the content of every modal of the page. The
+last open tab of the multimedia object, series and playlist editors is remembered by the
+`admin--tabs` controller (`key` value) instead of `init_tabs()`. Removed as unused: the global
+`$.ajaxSetup({cache: true})` (the jQuery 3 default already caches every request but `$.getScript()`)
+and the NGINX error check of the `#iframeUpload` upload iframe, which no template has any more.
 
 The admin layout wraps the page in `admin--actions`, so these actions work in any backoffice
 template, including the content of `#myModal` loaded by AJAX:
@@ -421,6 +434,7 @@ functions, reported by `pumukit:check:assets` (also when called as `window.…`)
 | `toggleHide()` | `admin--actions#load` |
 | `select_group()`, `add_group()`, `delete_group()`, `create_element_group_in_add_groups()`, `create_element_group_in_delete_groups()`, `delete_element_group_from_select()` | `admin--group-lists` |
 | `submit_delete_person_relation()`, `is_last_user_relation_to_admin_mm()`, `pumukitnewadmin_mm_updategroup_submit()`, `pumukitnewadmin_mm_updategroup_reset()` | `admin--mm-groups` |
+| `init_tabs()` | `admin--tabs` |
 | `check_pass()`, `generate_random_password()`, `can_enable_broadcast_groups_save_button()`, `can_enable_broadcast_password_save_button()`, `get_submit_button_id()`, `click_checkbox_change_pub_mms()`, `click_changepub_selection()` | `admin--broadcast` |
 
 Names, titles and file names are now rendered as text: the group picker, the group deletion
