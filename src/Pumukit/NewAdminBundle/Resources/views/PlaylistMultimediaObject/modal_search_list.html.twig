@@ -1,4 +1,7 @@
 <hr>
+{% if noPerson is defined %}
+<p class="alert alert-warning">{% trans %}Your user has no associated person, so its videos cannot be searched.{% endtrans %}</p>
+{% else %}
 <b>{{ (mmobjs.getNbResults <= 50)? mmobjs.getNbResults : 50 }} {% trans %}Mm. Obj.{% endtrans %}:</b>
 <br>
 <br>
@@ -15,3 +18,4 @@
     </div>
   {% endfor %}
 </div>
+{% endif %}

@@ -4089,6 +4089,10 @@
         <source>Your user has no associated person, so its stats cannot be shown.</source>
         <target>Your user has no associated person, so its stats cannot be shown.</target>
       </trans-unit>
+      <trans-unit id="hdYwpBP" resname="Your user has no associated person, so its videos cannot be searched.">
+        <source>Your user has no associated person, so its videos cannot be searched.</source>
+        <target>Your user has no associated person, so its videos cannot be searched.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

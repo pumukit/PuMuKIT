@@ -4091,6 +4091,10 @@ una acció...</target>
         <source>Your user has no associated person, so its stats cannot be shown.</source>
         <target state="translated">El teu usuari no té una persona associada, així que no es poden mostrar les seues estadístiques.</target>
       </trans-unit>
+      <trans-unit id="hdYwpBP" resname="Your user has no associated person, so its videos cannot be searched.">
+        <source>Your user has no associated person, so its videos cannot be searched.</source>
+        <target state="translated">El teu usuari no té una persona associada, així que no pot cercar vídeos.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

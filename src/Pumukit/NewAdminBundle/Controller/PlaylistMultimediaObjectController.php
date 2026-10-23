@@ -218,6 +218,11 @@ class PlaylistMultimediaObjectController extends AbstractController
         $limit = 50;
         $value = $request->query->get('search', '');
 
+        $user = $this->getUser();
+        if (!$user instanceof User || !$user->getPerson()) {
+            return ['noPerson' => true];
+        }
+
         // Filter doesnt work here because add conditions like $or and createStandardQueryBuilder is a generic condition. This is a WA.
         $queryBuilder = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
         $queryBuilder = $this->searchVideos($queryBuilder, $value, $request->getLocale());

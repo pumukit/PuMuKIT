@@ -4087,6 +4087,10 @@
         <source>Your user has no associated person, so its stats cannot be shown.</source>
         <target state="translated">Tu usuario no tiene una persona asociada, así que no se pueden mostrar sus estadísticas.</target>
       </trans-unit>
+      <trans-unit id="hdYwpBP" resname="Your user has no associated person, so its videos cannot be searched.">
+        <source>Your user has no associated person, so its videos cannot be searched.</source>
+        <target state="translated">Tu usuario no tiene una persona asociada, así que no puede buscar vídeos.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
