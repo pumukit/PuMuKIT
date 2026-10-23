@@ -59,6 +59,7 @@ class CheckAssetsCommand extends Command
         '@PumukitNewAdmin/Pic/upload_event.html.twig' => 'nothing: the picture uploads answer JSON to the admin--upload-form controller',
         '@PumukitNewAdmin/MultimediaObject/acordeon.html.twig' => 'nothing: no page used it',
         '@PumukitNewAdmin/MultimediaObject/updatesocial.html.twig' => 'nothing: no page used it',
+        '@PumukitNewAdmin/UNESCO/listtagsajax.html.twig' => '@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig (the admin--tag-picker controller of the tag tab handles the clicks)',
     ];
 
     public const REMOVED_JAVASCRIPT_GLOBALS = [
@@ -137,6 +138,19 @@ class CheckAssetsCommand extends Command
         'sort_optiont_change' => 'the data-url of the sort options of the admin--batch controller',
         'update_preview_mms' => 'nothing: it was never called',
         'procesaReset' => 'nothing: the elements it hid no longer exist',
+        'select_tree_tag' => 'the admin--tag-picker controller (see @PumukitNewAdmin/MultimediaObject/updatetag.html.twig)',
+        'toggle_tree_tag' => 'the admin--tag-picker controller (see @PumukitNewAdmin/MultimediaObject/updatetag.html.twig)',
+        'add_tree_tag' => 'the admin--tag-picker controller (see @PumukitNewAdmin/MultimediaObject/updatetag.html.twig)',
+        'del_tree_tag' => 'the admin--tag-picker controller (see @PumukitNewAdmin/MultimediaObject/updatetag.html.twig)',
+        'add_tree_tag_unesco' => 'the admin--tag-picker controller (see @PumukitNewAdmin/MultimediaObject/updatetag.html.twig)',
+        'del_tree_tag_unesco' => 'the admin--tag-picker controller (see @PumukitNewAdmin/MultimediaObject/updatetag.html.twig)',
+        'search_tags_wrapper' => 'the admin--tag-picker controller (see @PumukitNewAdmin/MultimediaObject/updatetag.html.twig)',
+        'search_tags' => 'the admin--tag-picker controller (see @PumukitNewAdmin/MultimediaObject/updatetag.html.twig)',
+        'reset_tags' => 'the admin--tag-picker controller (see @PumukitNewAdmin/MultimediaObject/updatetag.html.twig)',
+        'inc_num_mm' => 'the admin--tag-picker controller (see @PumukitNewAdmin/MultimediaObject/updatetag.html.twig)',
+        'create_element_in_select' => 'the admin--tag-picker controller (see @PumukitNewAdmin/MultimediaObject/updatetag.html.twig)',
+        'submit_generate_magic_mms' => 'admin--actions#magicUrl (see @PumukitNewAdmin/MultimediaObject/links.html.twig)',
+        'sync_tags_mms' => 'admin--actions#request with a confirm param (see @PumukitNewAdmin/UNESCO/updatetag.html.twig)',
         'checkRecordDateAndPublicDate' => 'the dates value of the admin--meta-form controller (see @PumukitNewAdmin/MultimediaObject/updatemeta.html.twig)',
     ];
 

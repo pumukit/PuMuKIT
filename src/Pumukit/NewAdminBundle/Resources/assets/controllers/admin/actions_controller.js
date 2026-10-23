@@ -133,7 +133,10 @@ export default class extends Controller {
 
     request(event) {
         event.preventDefault();
-        const { url, method, success, error, reload } = event.params;
+        const { url, method, confirm, success, error, reload } = event.params;
+        if (confirm && !window.confirm(confirm)) {
+            return;
+        }
         $.ajax({ url, type: method ?? 'POST' })
             .done(() => {
                 if (reload) {

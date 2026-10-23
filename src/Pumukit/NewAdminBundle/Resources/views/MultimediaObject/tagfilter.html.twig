@@ -5,7 +5,8 @@
            class="tag_filter form-control empty"
            placeholder="{% trans %}Insert filter...{% endtrans %}"
            id="filter_tags_{{ parentId }}"
-           oninput="javascript:search_tags_wrapper('{{ mmId }}','{{ parentId }}')" />
+           data-action="input->admin--tag-picker#filter"
+           data-admin--tag-picker-block-param="{{ parentId|json_encode }}" />
     <span class="material-input"></span>
   </div>
   <span class="input-group-addon">
@@ -15,7 +16,8 @@
            value="reset search"
            size="20"
            pattern=""
-           onclick='$("#filter_tags_{{ parentId }}").val("").focus(); reset_tags("{{ mmId }}","{{ parentId }}");' />
+           data-action="click->admin--tag-picker#reset"
+           data-admin--tag-picker-block-param="{{ parentId|json_encode }}" />
   </span>
   <img id="tag_filter_{{parentId}}_loader"
        alt="{% trans %}Spinner{% endtrans %}"

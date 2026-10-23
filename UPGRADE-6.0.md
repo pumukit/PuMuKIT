@@ -264,7 +264,7 @@ template, including the content of `#myModal` loaded by AJAX:
 | `click->admin--actions#magicUrl` | `url`, `template` (`__secret__`), `confirm`, `success`, `input`, `link` | `submit_generate_magic_series()` |
 | `click->admin--actions#notifyParent` | `message` (JSON) | `parent.window.postMessage(…, '*')` |
 | `click->admin--actions#openModal` | `url` | `dblclick_preview_mm()` in the multimedia object list |
-| `click->admin--actions#request` | `url`, `method` (POST), `success`, `error`, `reload` | the archive button |
+| `click->admin--actions#request` | `url`, `method` (POST), `confirm`, `success`, `error`, `reload` | the archive button |
 | `click->admin--actions#copy` | `input` (id) | the copy buttons of the i18n fields |
 | `click->admin--actions#translate` | `url`, `locale`, `field` (`input` or `textarea`), `question`, `error`; a double click skips the prompt | `pmk_translate()` |
 
@@ -294,16 +294,21 @@ preview thumbnails after reloading a picture list), `admin--pic-generator` (thum
 from a frame of the video), `admin--job-status` (refreshes the status of the multimedia objects with
 running jobs every 15 seconds), `admin--pic-sync` (reloads the thumbnails when a refreshed status
 reports a different number of pictures), `admin--modal-cleanup` (removes the player of the
-preview modal when it closes) and `admin--external-player` (preview and save of the external player
-modals). `admin--batch` now covers every option of the multimedia object list:
+preview modal when it closes), `admin--external-player` (preview and save of the external player
+modals) and `admin--tag-picker` (tag tab of the multimedia object editor: `mm`, `addUrl`,
+`deleteUrl`, `childrenUrl`, `searchUrl` and `reloadUrl` with a `__tag__` placeholder where needed,
+`codes`, and `refresh`, the blocks reloaded after adding or removing a tag). `admin--batch` now covers every option of the multimedia object list:
 deleting, announcing, the sort options (each with its `data-url`), cutting, pasting and adding to a
 playlist.
 
 Migrated zones: roles, series types, live channels, legacy events, users, groups, people and
 person relations, permission profiles, tags, links, the inbox explorer, series, playlists, the
 head and tail manager, pictures, the i18n fields of the form theme and the multimedia object list
-(rows, pager, batch actions, row menu, archive, status and preview) and its metadata, publication,
-metadata sync, LMS, properties, head and tail and external player forms. `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
+(rows, pager, batch actions, row menu, archive, status and preview), its metadata, publication,
+metadata sync, LMS, properties, head and tail and external player forms, and its tag tab and links block,
+also in the UNESCO catalogue. `@PumukitNewAdmin/UNESCO/listtagsajax.html.twig` is removed: the UNESCO tag
+tab uses `@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig`, and the `admin--tag-picker`
+controller of the tab decides which blocks to refresh after adding or removing a tag. `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
 `@PumukitNewAdmin/Playlist/changepub.html.twig` are removed, and so is
 `@PumukitNewAdmin/LiveEvent/create.html.twig`, which pointed to a route that no longer exists.
 The picture upload actions (series, playlists, multimedia objects and legacy events) always answer
@@ -346,6 +351,9 @@ functions, reported by `pumukit:check:assets` (also when called as `window.…`)
 | `check_for_new_pics()`, `upload_mmspic()` | `admin--pic-sync` |
 | `checkRecordDateAndPublicDate()` | the `dates` value of `admin--meta-form` |
 | `procesaReset()` | nothing |
+| `select_tree_tag()`, `toggle_tree_tag()`, `add_tree_tag()`, `del_tree_tag()`, `add_tree_tag_unesco()`, `del_tree_tag_unesco()`, `search_tags_wrapper()`, `search_tags()`, `reset_tags()`, `inc_num_mm()`, `create_element_in_select()` | `admin--tag-picker` |
+| `submit_generate_magic_mms()` | `admin--actions#magicUrl` |
+| `sync_tags_mms()` | `admin--actions#request` with a `confirm` param |
 
 Names, titles and file names are now rendered as text: the group picker, the group deletion
 button, the person suggestions and the inbox explorer used to build HTML and inline handlers by

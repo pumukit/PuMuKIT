@@ -1,4 +1,4 @@
 <div style="text-align: center; height: 240px; line-height: 240px;">
   {% trans %}No tags found with this criteria{% endtrans %}
-  (<a href="#" onclick='$("#filter_tags_{{ parentId }}").val("").focus(); reset_tags("{{ mmId }}","{{ parentId }}"); return false;'>{% trans %}reset{% endtrans %}</a>).
+  (<a href="#" data-action="click->admin--tag-picker#reset" data-admin--tag-picker-block-param="{{ parentId|json_encode }}">{% trans %}reset{% endtrans %}</a>).
 </div>

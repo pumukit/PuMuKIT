@@ -1,4 +1,13 @@
-<div id="tv_admin_container_tag" class="well">
+<div id="tv_admin_container_tag" class="well"
+     data-controller="admin--tag-picker"
+     data-admin--tag-picker-mm-value="{{ mm.id }}"
+     data-admin--tag-picker-add-url-value="{{ path('pumukitnewadmin_mms_addtag', {'id': mm.id, 'tagId': '__tag__'}) }}"
+     data-admin--tag-picker-delete-url-value="{{ path('pumukitnewadmin_mms_deletetag', {'id': mm.id, 'tagId': '__tag__'}) }}"
+     data-admin--tag-picker-children-url-value="{{ path('pumukitnewadmin_mms_getchildrentag', {'id': '__tag__'}) }}"
+     data-admin--tag-picker-search-url-value="{{ path('pumukitnewadmin_mms_searchtag') }}"
+     data-admin--tag-picker-reload-url-value="{{ path('pumukitnewadmin_mms_reloadtags') }}"
+     data-admin--tag-picker-codes-value="{{ is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) ? 'true' : 'false' }}"
+     data-admin--tag-picker-refresh-value="{{ [{target: '#preview_mm', url: path('pumukitnewadmin_mms_show', {'id': mm.id})}]|json_encode }}">
     <div style="max-height:800px;overflow-y:auto;padding: 7px;">
         {% for parent in parent_tags | filter(parent => parent.getDisplay() and parent.getChildren()|length != 0 and not parent.getProperty('hide_in_tag_group')) %}
             <div class="panel panel-default panel-tag-{{ parent.cod }}">
@@ -24,8 +33,8 @@
 
 
                         <div style="float: left; padding: 150px 5px 0px">
-                            <a href="#" onclick="$('#select_ul_tag_cod_{{ parent.cod }} > a.active').trigger('dblclick'); return false;">&#8592;</a>
-                            <a href="#" onclick="$('#all_tag_{{ parent.id }} > a.active').trigger('dblclick'); return false;">&#8594;</a>
+                            <a href="#" data-action="click->admin--tag-picker#removeActive" data-admin--tag-picker-cod-param="{{ parent.cod|json_encode }}">&#8592;</a>
+                            <a href="#" data-action="click->admin--tag-picker#addActive" data-admin--tag-picker-block-param="{{ parent.id|json_encode }}">&#8594;</a>
                         </div>
 
                         {# Added tags#}
@@ -34,8 +43,8 @@
                                 {% for embedded_tag in mm.getTags() | filter(embedded_tag => embedded_tag.isDescendantOf(parent)) %}
                                     <a href="#" class="list-group-item tag-rm-{{ embedded_tag.cod }}"
                                        id="select_li_{{ embedded_tag.id }}"
-                                       onclick="javascript:return select_tree_tag(this);"
-                                       ondblclick="javascript:del_tree_tag('{{ embedded_tag.id }}', '{{ mm.id }}');">
+                                       data-action="click->admin--tag-picker#select dblclick->admin--tag-picker#remove"
+                                       data-admin--tag-picker-id-param="{{ embedded_tag.id|json_encode }}">
                                         {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
                                             {{ embedded_tag.getCod() }} -
                                         {% endif %}

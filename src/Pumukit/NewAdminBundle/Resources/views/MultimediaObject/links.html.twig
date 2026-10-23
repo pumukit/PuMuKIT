@@ -11,17 +11,17 @@
                     <div class="form-group col-lg-6">
                         <label for="inputMMId" class="col-xs-2 control-label">Id:</label>
                         <div class="col-xs-10 input-group">
-                            <input type="text" class="form-control" id="inputMMId" readonly onclick="select()" value="{{ mm.id }}">
+                            <input type="text" class="form-control" id="inputMMId" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ mm.id }}">
                         </div>
                         <label for="inputMMTitle" class="col-xs-2 control-label">{% trans %}Title{% endtrans %}:</label>
                         <div class="col-xs-10 input-group">
-                            <input type="text" class="form-control" id="inputMMTitle" readonly onclick="select()" value="{{ mm.title }}">
+                            <input type="text" class="form-control" id="inputMMTitle" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ mm.title }}">
                         </div>
                     </div>
                     <div class="form-group col-lg-6">
                         <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">Url:</label>
                         <div class="col-xs-10 input-group hidden-naked">
-                            <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ video_url }}">
+                            <input type="text" class="form-control" id="inputROUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ video_url }}">
                             {% if is_published and is_playable %}
                                 <span class="input-group-addon"><a href="{{ video_url }}" target="_blank" title="{% trans %}Video URL{% endtrans %}"><i class="mdi-action-exit-to-app"></i></a></span>
                             {% else %}
@@ -36,7 +36,7 @@
                             {% trans %}Magic Url{% endtrans %}:
                         </label>
                         <div class="col-xs-10 input-group hidden-naked">
-                            <input type="text" class="form-control" id="inputROMagicUrl" readonly onclick="select()" value="{{ magic_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}" />
+                            <input type="text" class="form-control" id="inputROMagicUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ magic_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}" />
                             {% if (is_hidden or is_published) and is_playable %}
                                 <span class="input-group-addon">
                                     <a id="alinkROMagicUrl" href="{{ magic_url }}" target="_blank" title="{% trans %}Magic Url{% endtrans %}">
@@ -49,7 +49,14 @@
                                 </span>
                             {% endif %}
                             <span class="input-group-addon">
-                                <a href="#" onclick="window.submit_generate_magic_mms('{{ mm.id }}'); return false;" title="{% trans %}Submit generate magic URL{% endtrans %}">
+                                <a href="#" data-action="click->admin--actions#magicUrl"
+                                   data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_generate_magic_url', {'id': mm.id}) }}"
+                                   data-admin--actions-template-param="{{ url('pumukit_webtv_multimediaobject_magicindex', {secret: '__secret__'}) }}"
+                                   data-admin--actions-confirm-param="{{ 'Are you sure you want to regenerate the magic url for this multimedia object?'|trans }}"
+                                   data-admin--actions-success-param="{{ 'Magic Url successfully generated.'|trans }}"
+                                   data-admin--actions-input-param="#inputROMagicUrl"
+                                   data-admin--actions-link-param="#alinkROMagicUrl"
+                                   title="{% trans %}Submit generate magic URL{% endtrans %}">
                                     <i class="mdi-av-loop"></i>
                                 </a>
                             </span>
@@ -63,7 +70,7 @@
                             {% endif %}
                             <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">Broadcast:</label>
                             <div class="col-xs-10 input-group hidden-naked">
-                                <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ video_url }}">
+                                <input type="text" class="form-control" id="inputROUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ video_url }}">
 
                                 <span class="input-group-addon">
                                     <a href="{{ video_url }}" target="_blank" title="{% trans %}Video URL{% endtrans %}">

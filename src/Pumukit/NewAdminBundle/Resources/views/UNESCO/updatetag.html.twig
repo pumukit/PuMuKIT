@@ -1,9 +1,21 @@
-<div id="tv_admin_container_tag" class="well">
+<div id="tv_admin_container_tag" class="well"
+     data-controller="admin--tag-picker"
+     data-admin--tag-picker-mm-value="{{ mm.id }}"
+     data-admin--tag-picker-add-url-value="{{ path('pumukitnewadmin_mms_addtag', {'id': mm.id, 'tagId': '__tag__'}) }}"
+     data-admin--tag-picker-delete-url-value="{{ path('pumukitnewadmin_mms_deletetag', {'id': mm.id, 'tagId': '__tag__'}) }}"
+     data-admin--tag-picker-children-url-value="{{ path('pumukitnewadmin_mms_getchildrentag', {'id': '__tag__'}) }}"
+     data-admin--tag-picker-search-url-value="{{ path('pumukitnewadmin_mms_searchtag') }}"
+     data-admin--tag-picker-reload-url-value="{{ path('pumukitnewadmin_mms_reloadtags') }}"
+     data-admin--tag-picker-codes-value="{{ is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) ? 'true' : 'false' }}"
+     data-admin--tag-picker-refresh-value="{{ [{target: '#preview_mms', url: path('pumukitnewadmin_unesco_show', {'id': app.session.get('admin/unesco/id')})}, {target: '#tag_list_unesco', url: path('pumukitnewadmin_unesco_menu_tags')}]|json_encode }}">
     {% if not template %}
         <div class="row">
             <div class="col-md-12 text-right">
-                <button type="submit" class="btn btn-pumukit btn-raised" onclick="sync_tags_mms('{{mm.id}}')"
-                        id="pumukitnewadmin_mms_sync-tags" data-mmobj="{{mm.id}}"
+                <button type="button" class="btn btn-pumukit btn-raised" id="pumukitnewadmin_mms_sync-tags"
+                        data-action="click->admin--actions#request"
+                        data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_sync_tags', {'id': mm.id}) }}"
+                        data-admin--actions-confirm-param="{{ 'Are you sure you want to sync this tags? The tags in other objects from this series will be lost.'|trans }}"
+                        data-admin--actions-reload-param="true"
                         data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans %}Apply these tags to all multimedia objects of this series.{% endtrans %}">
                     {% trans %}Sync in this series{% endtrans %}
                 </button>
@@ -23,7 +35,7 @@
                         {# Available tags #}
                         <div style="width:40%; max-width:400px; float: left; height: 260px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="all_tag_{{ parent.id }}">
                             {% if (0 != parent.getChildren()|length) %}
-                                {% include '@PumukitNewAdmin/UNESCO/listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
+                                {% include '@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
                             {% endif %}
                         </div>
 
@@ -33,8 +45,8 @@
 
 
                         <div style="float: left; padding: 150px 5px 0px">
-                            <a href="#" onclick="$('#select_ul_tag_cod_{{ parent.cod }} > a.active').trigger('dblclick'); return false;">&#8592;</a>
-                            <a href="#" onclick="$('#all_tag_{{ parent.id }} > a.active').trigger('dblclick'); return false;">&#8594;</a>
+                            <a href="#" data-action="click->admin--tag-picker#removeActive" data-admin--tag-picker-cod-param="{{ parent.cod|json_encode }}">&#8592;</a>
+                            <a href="#" data-action="click->admin--tag-picker#addActive" data-admin--tag-picker-block-param="{{ parent.id|json_encode }}">&#8594;</a>
                         </div>
 
                         {# Added tags#}
@@ -43,8 +55,8 @@
                                 {% for embedded_tag in mm.getTags() | filter(embedded_tag => embedded_tag.isDescendantOf(parent)) %}
                                     <a href="#" class="list-group-item tag-rm-{{ embedded_tag.cod }}"
                                        id="select_li_{{ embedded_tag.id }}"
-                                       onclick="javascript:return select_tree_tag(this);"
-                                       ondblclick="javascript:del_tree_tag_unesco('{{ embedded_tag.id }}', '{{ mm.id }}');">
+                                       data-action="click->admin--tag-picker#select dblclick->admin--tag-picker#remove"
+                                       data-admin--tag-picker-id-param="{{ embedded_tag.id|json_encode }}">
                                         {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
                                             {{ embedded_tag.getCod() }} -
                                         {% endif %}
@@ -61,25 +73,3 @@
     <div style="height:41px"></div>
 </div>
 
-<script type="text/javascript">
-    function del_tree_tag_unesco(tag_id, mm_id)
-    {
-        var route = "{{ path('pumukitnewadmin_mms_deletetag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
-        route = route.replace('PLACEHOLDER_TAG_ID', tag_id).replace('PLACEHOLDER_MM_ID', mm_id);
-        $.ajax({
-            url: route,
-            type: 'DELETE',
-            parameters: {'_method': 'DELETE'},
-            success: function(response){
-                for (var i=0; i<response.deleted.length; i++) {
-                    var c = response.deleted[i];
-                    var $_element = $("#select_li_" + c.id);
-                    if ($_element)  $_element.remove();
-                    !response.prototype && inc_num_mm(c.id, -1);
-                }
-                $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show', {'id': app.session.get('admin/unesco/id')}) }}");
-                $('#tag_list_unesco').load("{{ path('pumukitnewadmin_unesco_menu_tags') }}");
-            }
-        });
-    }
-</script>

@@ -7,6 +7,7 @@ namespace Pumukit\NewAdminBundle\Tests\Controller;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
+use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\FactoryService;
@@ -75,18 +76,58 @@ class InlineJavascriptTest extends PumukitTestCase
             'playlists' => ['pumukitnewadmin_playlist_index'],
             'head and tail' => ['pumukit_newadmin_head_and_tail'],
             'multimedia objects' => ['pumukitnewadmin_mms_index'],
+            'multimedia object links' => ['pumukitnewadmin_mms_links'],
+            'multimedia object tag tree' => ['pumukitnewadmin_mms_reloadtags'],
+            'multimedia object tag search' => ['pumukitnewadmin_mms_searchtag'],
+            'multimedia object tag children' => ['pumukitnewadmin_mms_getchildrentag'],
         ];
     }
 
     private function parameters(string $route): array
     {
-        if ('pumukitnewadmin_mms_index' !== $route) {
+        if ('pumukitnewadmin_mms_index' === $route) {
+            $factory = static::getContainer()->get(FactoryService::class);
+            $series = $factory->createSeries();
+            $factory->createMultimediaObject($series, true);
+
+            return ['id' => $series->getId()];
+        }
+        if ('pumukitnewadmin_mms_links' === $route) {
+            $factory = static::getContainer()->get(FactoryService::class);
+
+            return ['id' => $factory->createMultimediaObject($factory->createSeries(), true)->getId()];
+        }
+        if (!str_contains($route, 'tag')) {
             return [];
         }
-        $factory = static::getContainer()->get(FactoryService::class);
-        $series = $factory->createSeries();
-        $factory->createMultimediaObject($series, true);
 
-        return ['id' => $series->getId()];
+        $factory = static::getContainer()->get(FactoryService::class);
+        $mmId = $factory->createMultimediaObject($factory->createSeries(), true)->getId();
+        $block = $this->tag('BLOCK', 'ROOT|BLOCK|');
+        $branch = $this->tag('BRANCH', 'ROOT|BLOCK|BRANCH|', $block);
+        $this->tag('LEAF', 'ROOT|BLOCK|BRANCH|LEAF|', $branch);
+        $this->dm->flush();
+
+        return match ($route) {
+            'pumukitnewadmin_mms_reloadtags' => ['mmId' => $mmId, 'parentId' => $block->getId()],
+            'pumukitnewadmin_mms_searchtag' => ['search_text' => 'Leaf', 'mmId' => $mmId, 'parent' => $block->getId()],
+            default => ['id' => $branch->getId(), 'tag_id' => $block->getId(), 'mm_id' => $mmId],
+        };
+    }
+
+    private function tag(string $cod, string $path, ?Tag $parent = null): Tag
+    {
+        $tag = new Tag();
+        $tag->setCod($cod);
+        $tag->setPath($path);
+        $tag->setDisplay(true);
+        $tag->setTitle(ucfirst(strtolower($cod)), 'en');
+        $tag->setTitle(ucfirst(strtolower($cod)), 'es');
+        if ($parent) {
+            $tag->setParent($parent);
+        }
+        $this->dm->persist($tag);
+
+        return $tag;
     }
 }
