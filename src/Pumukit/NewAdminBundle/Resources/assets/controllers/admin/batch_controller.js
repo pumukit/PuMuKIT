@@ -53,7 +53,7 @@ export default class extends Controller {
             return;
         }
         if (this.pluralValue.includes('user')) {
-            const users = parseInt($.trim($('#numberUsers').html().replace(/(\r\n|\n|\r)/gm, '')).split(' ')[0], 10);
+            const users = parseInt($('#numberUsers').html().replace(/(\r\n|\n|\r)/gm, '').trim().split(' ')[0], 10);
             if (ids.length === users || 1 === users) {
                 window.no_success(this.message('cannotDeleteAll'));
 

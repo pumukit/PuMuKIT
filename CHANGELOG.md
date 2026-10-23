@@ -34,7 +34,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Read request parameters from an explicit source (route attributes, query string or body) instead of `Request::get()`.
 - Upgrade MonologBundle to 4, API Platform to 5 and phpdocumentor/reflection-docblock to 6.
 - Serve bundle assets through Symfony AssetMapper; jQuery, Bootstrap 3.4.1, moment 2.30.1, jQuery UI and bootstrap-datetimepicker are shared from `bundles/pumukitcore/vendor/`.
-- Upgrade jQuery 1.10.2 → 3.7.1 (with jQuery Migrate 3.6.0 during the transition), jQuery UI 1.11.3 → 1.14.2 and bootstrap-datetimepicker 4.14.30 → 4.17.49.
+- Upgrade jQuery 1.10.2 → 3.7.1 (without jQuery Migrate), jQuery UI 1.11.3 → 1.14.2 and bootstrap-datetimepicker 4.14.30 → 4.17.49.
 - Move the inline JavaScript of CoreBundle, EncoderBundle, WizardBundle, WebTVBundle and BaseLivePlayerBundle templates to Stimulus controllers; `@PumukitCore/Upload/uppy_tus.js.twig` and `@PumukitBaseLivePlayer/Advance/Sessions/*.js.twig` are replaced by `uppy_tus.html.twig` and `sessions.html.twig`, `announces_ajax.js` by the `webtv--announces` controller and `template_video.js` by the `webtv--dynamic-pic` controller.
 - Remove jQuery Countdown and Modernizr from WebTVBundle; the live player countdown and the mobile detection of the search filters are native.
 - Move the StatsUIBundle JavaScript to the `stats-ui--stats` Stimulus controller and replace D3 3 and NVD3 with Chart.js 4.5.1; titles are rendered as text, no longer as HTML.
@@ -64,6 +64,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Show a warning instead of failing with an error 500 on the profile page of the backoffice when the user has no associated person, and in the video search of the add to playlist modal.
 - Do not fail with an error 500 when the video search of the add to playlist modal is empty.
 - Replace `@PumukitNewAdmin/pumukit.js.twig` and its routes with the `@pumukit/new-admin/backoffice` importmap entrypoint and the `admin--tabs` Stimulus controller; opening `#myModal` empties only its own content, and the unused `$.ajaxSetup({cache: true})` and `#iframeUpload` NGINX check are removed.
+- Remove jQuery Migrate from the backoffice and portal layouts: no core script uses the APIs removed in jQuery 3.
 - Answer the picture uploads with JSON only and remove the old iframe responses and the hidden banner URL form.
 - Configure the default protocol of the URL form fields (live channel, person, link and external player), deprecated since Symfony 7.1.
 - Upload thumbnails, banners, materials, live event images and tracks through the Uppy Dashboard; the upload actions answer JSON on request and adding a track to an object without type no longer fails.

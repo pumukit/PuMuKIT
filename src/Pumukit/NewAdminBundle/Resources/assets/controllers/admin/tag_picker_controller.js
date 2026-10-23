@@ -90,7 +90,7 @@ export default class extends Controller {
     reset(event) {
         event.preventDefault();
         const { block } = event.params;
-        $(`#filter_tags_${block}`).val('').focus();
+        $(`#filter_tags_${block}`).val('').trigger('focus');
         this.reload(block);
     }
 

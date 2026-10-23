@@ -24,7 +24,7 @@ $(() => {
 
     $('body').on('shown.bs.modal loaded.bs.modal', '.pmk-modal', (event) => {
         if (0 !== $('.modal.fade.in:focus').length) {
-            $(event.currentTarget).find('input:text').first().focus();
+            $(event.currentTarget).find('input:text').first().trigger('focus');
         }
     });
 

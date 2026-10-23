@@ -149,13 +149,14 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
   | `bundles/pumukitwebtv/js/bootstrap-datetimepicker.min.js` | `bundles/pumukitcore/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js` |
   | `bundles/pumukitwebtv/css/bootstrap-datetimepicker(.min).css` | `bundles/pumukitcore/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css` |
 
-  The shared versions are jQuery 3.7.1, jQuery Migrate 3.6.0, Bootstrap 3.4.1, moment 2.30.1,
+  The shared versions are jQuery 3.7.1, Bootstrap 3.4.1, moment 2.30.1,
   jQuery UI 1.14.2 (autocomplete and menu only, so it does not replace the Bootstrap tooltip)
   and bootstrap-datetimepicker 4.17.49.
-- **jQuery 3.** Load `bundles/pumukitcore/vendor/jquery-migrate/jquery-migrate.min.js` right after
-  jQuery while custom scripts are migrated: it restores the removed APIs and logs a
-  `JQMIGRATE` warning in the browser console for each one. It will be removed before 6.0.0.
-  The removed APIs found in PuMuKIT code were:
+- **jQuery 3.** The backoffice and portal layouts no longer load jQuery Migrate, and
+  `bundles/pumukitcore/vendor/jquery-migrate/jquery-migrate.min.js` is removed: the scripts of a
+  project must not use the APIs removed in jQuery 3. A project can load its own copy of jQuery
+  Migrate 3 while its scripts are migrated, to restore them and log a `JQMIGRATE` warning for each
+  one. The removed APIs found in PuMuKIT code were:
   - `$.get(...).success()`/`.error()`/`.complete()`: use `.done()`/`.fail()`/`.always()`.
   - `.size()`: use `.length`.
   - `.load(function)`, `.unload()` and `.error(function)` as event shorthands: use

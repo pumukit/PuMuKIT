@@ -20,6 +20,7 @@ class CheckAssetsCommand extends Command
         'bundles/pumukitnewadmin/js/bootstrap.min.js' => 'bundles/pumukitcore/vendor/bootstrap/js/bootstrap.min.js',
         'bundles/pumukitnewadmin/css/bootstrap.min.css' => 'bundles/pumukitcore/vendor/bootstrap/css/bootstrap.min.css',
         'bundles/pumukitwebtv/js/jquery.min.js' => 'bundles/pumukitcore/vendor/jquery/jquery.min.js',
+        'bundles/pumukitcore/vendor/jquery-migrate/jquery-migrate.min.js' => 'nothing: replace the jQuery APIs removed in jQuery 3 (see UPGRADE-6.0.md)',
         'bundles/pumukitwebtv/js/bootstrap.min.js' => 'bundles/pumukitcore/vendor/bootstrap/js/bootstrap.min.js',
         'bundles/pumukitwebtv/js/moment-with-locales.min.js' => 'bundles/pumukitcore/vendor/moment/moment-with-locales.min.js',
         'bundles/pumukitstatsui/vendor/moment/moment.min.js' => 'bundles/pumukitcore/vendor/moment/moment-with-locales.min.js',
