@@ -209,7 +209,7 @@ Removed templates and globals:
 | Removed | Replacement |
 |---|---|
 | `@PumukitCore/Upload/uppy_tus.js.twig`, `@PumukitCore/Upload/uppy_dispatch.js.twig` | `{% include '@PumukitCore/Upload/uppy_tus.html.twig' %}` outside the `<script>` tag |
-| `uppyTUS` global variable | the `core--uppy-tus` controller |
+| `uppyTUS` global variable | the `core--uploader` controller (see "File uploads (Uppy 6)") |
 | `window.encoder_reload_timeout` | the `encoder--stats` controller |
 | `bundles/pumukitwebtv/js/announces_ajax.js` and the `url_latestuploads_pager` global | the `webtv--announces` controller (see `@PumukitWebTV/Announces/template.html.twig`) |
 | `@PumukitBaseLivePlayer/Advance/Sessions/*.js.twig` | `{% include '@PumukitBaseLivePlayer/Advance/sessions.html.twig' %}` outside the `<script>` tag |
@@ -234,6 +234,86 @@ and `core--external-script` (loads a third-party script once, by id).
 
 Stimulus listens to the `input` event by default on `<input>` elements: declare the event
 (`click->`, `change->`, `blur->`) when another one is needed.
+
+## File uploads (Uppy 6)
+
+Every file upload goes through Uppy. PuMuKIT 6.0 moves from the Uppy 1 global bundle
+(`bundles/pumukitcore/js/uppy.min.js`, `window.Uppy`) to Uppy 6 (`@uppy/core` 6.2.0,
+`@uppy/dashboard` 6.0.1, `@uppy/tus` 6.0.0, `@uppy/xhr-upload` 6.0.1, `@uppy/locales` 5.3.0) loaded
+from the importmap by a single generic controller, `core--uploader`. Pages that upload files no
+longer load any Uppy script or stylesheet: the controller adds the Uppy styles itself.
+
+An upload point is declared with the `uploader_attributes()` Twig function on the element that
+holds the uploader. The defaults come from the `pumukit` inbox configuration (`minFileSize`,
+`maxFileSize`, `maxNumberOfFiles`, `inboxUploadURL`, `inboxUploadLIMIT`,
+`inboxOverridePatchMethod`, `inboxProgressBarColor`, `inboxDebug`) and the allowed types from
+`MediaMimeTypeUtils`; pass only what changes:
+
+```twig
+{# Drag and drop to the inbox through TUS #}
+<div id="my_dropzone"></div>
+<div hidden {{ uploader_attributes({
+    endpoint: inbox_upload_url() ~ '?' ~ {series: series.id}|url_encode,
+    meta: {series: series.id},
+    renameFiles: true,
+    dashboard: {target: '#my_dropzone'},
+    import: {url: path('inbox_auto_import')}
+}) }}></div>
+
+{# One file posted with a form (XHR) #}
+<form {{ uploader_attributes({
+    transport: 'xhr',
+    endpoint: path('my_upload_route'),
+    formMeta: true,
+    restrictions: {maxNumberOfFiles: 1, allowedFileTypes: uploader_allowed_types(multimediaObject)},
+    xhr: {fieldName: 'resource[]'}
+}) }}>
+    {% include '@PumukitCore/Upload/uppy_input.html.twig' %}
+    <button type="submit" data-core--uploader-target="submit" data-action="core--uploader#upload" disabled>OK</button>
+</form>
+```
+
+| Option | Default | Meaning |
+|---|---|---|
+| `transport` | `tus` | `tus` (resumable, inbox) or `xhr` (multipart POST) |
+| `endpoint` | `inboxUploadURL` for TUS | upload URL |
+| `autoProceed` | `true` for TUS, `false` for XHR | start uploading as soon as a file is added |
+| `restrictions` | inbox sizes, `maxNumberOfFiles`, all allowed types | Uppy restrictions; only the given keys are replaced |
+| `meta` | `{}` | metadata sent with every file |
+| `renameFiles` | `false` | prefix the name with a timestamp and replace non-word characters (inbox uploads) |
+| `formMeta` | `false` | send the fields of the enclosing form as metadata when uploading |
+| `dashboard` | `null` | `{target: selector}` for the Uppy Dashboard; a `dashboard` target also works |
+| `import` | `null` | `{url, params, profileSelector, sendUuid}`: POST to `url` after each TUS upload with `fileName`, `series`, `profile` and `params` |
+| `tus` | inbox `overridePatchMethod` and `limit` | TUS options |
+| `xhr` | `fieldName: files[]`, `limit: 10`, `timeout: 1800000` | XHR options |
+
+Without a Dashboard the controller uses the targets of `@PumukitCore/Upload/uppy_input.html.twig`
+(`input`, `progress`, `progressBar`, `file`, `fileName`, `fileSize`) and enables its `submit`
+targets when a file is selected. Actions: `core--uploader#upload`, `#select` (on the file input)
+and `#remove`.
+
+The controller dispatches DOM events instead of exposing globals: `core--uploader:added`,
+`:removed`, `:success`, `:complete`, `:imported`, and the cancelable `:error`,
+`:restriction-failed`, `:failed` (XHR response with `uploaded: failed`) and `:import-failed`.
+`event.detail` carries the file and the server response; call `preventDefault()` on a cancelable
+event to replace the default notice (Dashboard info or `alert()`). After an XHR upload the
+response keys keep their meaning: `endPage` redirects and `mmId` is posted to the parent window
+as `{mmId}` (LMS plugins).
+
+Changes to take into account:
+
+- `@PumukitCore/Upload/uppy_xhr.js.twig`, `common.js.twig` and `uppy_languages.html.twig` are
+  removed, as well as the `Uppy`, `convertSizeToBytes`, `sendInboxXHRImportRequest`,
+  `show_file_added` and `file_data_clear` globals, which `pumukit:check:assets` reports, and the
+  `uppy` variable that `uppy_xhr.js.twig` created.
+- `bundles/pumukitcore/js/uppy.min.js`, `js/uppy-locales/*`, `css/uppy.min.css` and
+  `css/uppy_custom.css` are removed. Overrides of the Uppy 1 CSS classes (`.uppy-FileInput-*`,
+  `.uppy-StatusBar-*`) no longer apply: the file input is a native `<input type="file">` and the
+  progress bar a Bootstrap `.progress`.
+- `@PumukitCore/Upload/uppy_tus.html.twig` keeps its name and variables (`folder` or `series`,
+  `inboxUploadURL`, and `username`, `email`, `hash` in naked mode).
+- The TUS server validates the same `name`/`type` metadata that tus-php stores, and rejects
+  uploads whose `name` and `filename` (or `type` and `filetype`) differ or repeat a key.
 
 ## Doctrine annotations are no longer supported
 
