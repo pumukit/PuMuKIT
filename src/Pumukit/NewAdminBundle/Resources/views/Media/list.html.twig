@@ -1,4 +1,4 @@
-{% set need_reload_status = false %}
+{% set need_reload_status = jobs|filter(job => not job.isExecuted())|length > 0 %}
 {% set can_access = app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 <table data-controller="admin--track-list"
        data-admin--track-list-error-message-value="{{ 'Error extracting thumbnail'|trans }}"

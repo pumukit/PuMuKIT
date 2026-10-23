@@ -51,6 +51,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Move the owners, admin groups and broadcast profile modals of the multimedia object and series editors to Stimulus controllers (`admin--group-lists`, `admin--mm-groups`, `admin--broadcast`); group names are rendered as text.
 - Do not save the broadcast of a series when no multimedia object is selected: the request had no `ids` and changed every multimedia object of the series.
 - Move the tracks, jobs and materials of the multimedia object editor to Stimulus controllers (`admin--track-list`, `admin--job-priority`); the material uploads answer JSON only and the multimedia object editor has no inline JavaScript left.
+- Refresh again the track list every 8 seconds while the multimedia object has pending jobs; it stopped in 5.0.0 because the flag was set inside an included template.
 - Answer the picture uploads with JSON only and remove the old iframe responses and the hidden banner URL form.
 - Configure the default protocol of the URL form fields (live channel, person, link and external player), deprecated since Symfony 7.1.
 - Upload thumbnails, banners, materials, live event images and tracks through the Uppy Dashboard; the upload actions answer JSON on request and adding a track to an object without type no longer fails.

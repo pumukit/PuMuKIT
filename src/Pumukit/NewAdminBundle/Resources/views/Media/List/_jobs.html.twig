@@ -22,9 +22,6 @@
                 </a>
             {% endif %}
 
-            {% if not job.isExecuted() %}
-                {% set need_reload_status = true %}
-            {% endif %}
 {#            <small>{{ job.getStatusText() }}</small>#}
         </td>
         <td>
