@@ -43,4 +43,10 @@ return [
     '@formatjs/icu-skeleton-parser' => [
         'version' => '2.1.12',
     ],
+    'chart.js' => [
+        'version' => '4.5.1',
+    ],
+    '@kurkle/color' => [
+        'version' => '0.3.4',
+    ],
 ];
