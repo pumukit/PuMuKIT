@@ -14,7 +14,7 @@
       <directory>src/*/Bundle/*Bundle/Tests</directory>
     </testsuite>
   </testsuites>
-  <source ignoreSuppressionOfDeprecations="true">
+  <source baseline="phpunit-baseline.xml" ignoreSuppressionOfDeprecations="true">
     <include>
       <directory>src</directory>
     </include>

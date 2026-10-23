@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<files version="1">
+ <file path="vendor/ankitpokhrel/tus-php/src/Config.php">
+  <line number="61" hash="12513c5b80aad00f30df5fd1f7e08c2541f396b8">
+   <issue><![CDATA[TusPhp\Config::get(): Implicitly marking parameter $key as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+ </file>
+ <file path="vendor/ankitpokhrel/tus-php/src/Response.php">
+  <line number="117" hash="ea5bc0200345f61dc6f6f4ac5a0f50028f557e1d">
+   <issue><![CDATA[TusPhp\Response::download(): Implicitly marking parameter $name as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+ </file>
+</files>
