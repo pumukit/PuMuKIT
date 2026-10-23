@@ -62,7 +62,7 @@ export default class extends Controller {
                 $(`#preview_${clear.name}`).html(clear.message);
                 $(`#edit_${clear.name}`).html('');
             }
-            (refresh ?? []).forEach((item) => $(item.target).load(item.url));
+            (refresh ?? []).forEach((item) => $(item.target).load($(item.target).attr('data-refresh-url') ?? item.url));
             if (success) {
                 window.success(success);
             }
@@ -86,7 +86,12 @@ export default class extends Controller {
         if (confirm && !window.confirm(confirm)) {
             return;
         }
-        $(target).load(url, data, () => {
+        $(target).load(url, data, (responseText, textStatus, xhr) => {
+            if ('error' === textStatus) {
+                window.no_success(`${xhr.statusText}: ${responseText}`);
+
+                return;
+            }
             if (success) {
                 window.success(success);
             }

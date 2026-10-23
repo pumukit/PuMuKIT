@@ -77,7 +77,6 @@ class MaterialController extends AbstractController implements NewAdminControlle
         );
     }
 
-    #[Template('@PumukitNewAdmin/Material/upload.html.twig')]
     public function uploadAction(MultimediaObject $multimediaObject, Request $request)
     {
         $formData = $request->request->all('pumukitnewadmin_material');
@@ -94,18 +93,10 @@ class MaterialController extends AbstractController implements NewAdminControlle
                 $multimediaObject = $materialService->addMaterialUrl($multimediaObject, $request->request->get('url'), $formData);
             }
         } catch (\Exception $e) {
-            return $this->uploadResponse($request, [
-                'mm' => $multimediaObject,
-                'uploaded' => 'failed',
-                'message' => $e->getMessage(),
-            ]);
+            return $this->uploadJsonResponse('failed', $e->getMessage());
         }
 
-        return $this->uploadResponse($request, [
-            'mm' => $multimediaObject,
-            'uploaded' => 'success',
-            'message' => 'New Material added.',
-        ]);
+        return $this->uploadJsonResponse('success', 'New Material added.');
     }
 
     public function deleteAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)

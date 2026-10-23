@@ -1,5 +1,10 @@
 <td>
-    <a href="" onclick="toggleHide('{{track.id}}'); return false;" title="{% trans %}Show/Hide track{% endtrans %} {{ track.id }}">
+    <a href="#" data-action="click->admin--actions#load"
+       data-admin--actions-url-param="{{ path('pumukitnewadmin_track_toggle_hide', {'id': track.id, 'mmId': mm.id}) }}"
+       data-admin--actions-target-param="#tracks_mms_{{ mm.id }}"
+       data-admin--actions-data-param="{{ {}|json_encode }}"
+       data-admin--actions-success-param="{{ 'Track successfully updated.'|trans }}"
+       title="{% trans %}Show/Hide track{% endtrans %} {{ track.id }}">
         {% if track.isHide() %}
             <i class="glyphicon glyphicon-eye-close"></i>
         {% else %}

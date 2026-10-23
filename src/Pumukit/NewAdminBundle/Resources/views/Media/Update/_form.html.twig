@@ -1,5 +1,9 @@
 <div>
-    <form id="update_media" action="#" method="POST">
+    <form id="update_media" action="{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mm.getId()}) }}" method="POST"
+          data-controller="admin--modal-form"
+          data-action="submit->admin--modal-form#submit"
+          data-admin--modal-form-refresh-value="{{ [{target: '#tracks_mms_' ~ mm.getId(), url: path('pumukitnewadmin_track_list', {'id': mm.getId()})}]|json_encode }}"
+          data-admin--modal-form-success-message-value="{{ 'Track successfully updated.'|trans }}">
         <input type="hidden" name="track" id="track" value="{{ track.id }}" />
         <input type="hidden" name="mmId" id="mmId" value="{{ mm.getId() }}" />
         <input type="hidden" name="preview" id="preview" value="true" />
@@ -27,25 +31,3 @@
     </form>
 </div>
 
-<script>
-$('#update_media').on('submit', function(event){
-    event.preventDefault();
-    $('#myModal').modal('hide');
-    $.ajax({
-        url: '{{ path('pumukitnewadmin_track_update', {'id': track.id, 'mmId': mm.getId()}) }}',
-        type: 'POST',
-        data: $(this).serialize(),
-        error: function(jqXHR, textStatus, errorThrown){
-            $('#myModal').modal('hide');
-            let textError = jqXHR.responseText;
-            let message = errorThrown+': '+textError;
-            no_success(message);
-        },
-        success: function(response){
-            $('#tracks_mms_{{ mm.getId() }}').load("{{ path('pumukitnewadmin_track_list', {'id': mm.getId()}) }}");
-            let message = '{{ "Track successfully updated."|trans|e("js") }}';
-            success(message);
-        }
-    });
-});
-</script>

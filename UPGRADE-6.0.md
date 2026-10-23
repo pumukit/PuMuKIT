@@ -247,10 +247,10 @@ template, including the content of `#myModal` loaded by AJAX:
 
 | Action | Params | Replaces |
 |---|---|---|
-| `click->admin--actions#remove` | `url`, `target`, `confirm`, `success`, `error`, `blocked` (alert instead of deleting), `refresh` (JSON list of `{target, url}`), `reload` + `errorMarker` (DELETE then reload `target`), `hideModal` | `submit_delete_*()` |
+| `click->admin--actions#remove` | `url`, `target`, `confirm`, `success`, `error`, `blocked` (alert instead of deleting), `refresh` (JSON list of `{target, url}`; a target with a `data-refresh-url` attribute is reloaded from that URL instead), `reload` + `errorMarker` (DELETE then reload `target`), `hideModal` | `submit_delete_*()` |
 | `click->admin--actions#preview` | `name`, `url` | `click_fila_url()` |
 | `click->admin--actions#checkAll` | `name` | `click_checkbox_all()` |
-| `click->admin--actions#load` | `url`, `target`, `data` (JSON), `confirm`, `success` | `$('#…').load(…)` in `onclick` |
+| `click->admin--actions#load` | `url`, `target`, `data` (JSON), `confirm`, `success` (not shown when the request fails, `no_success()` is called instead) | `$('#…').load(…)` in `onclick` |
 | `click->admin--actions#navigate` | `url` | `window.location.href = …` in `onclick` |
 | `click->admin--actions#cancel` | | `onclick="return false;"` |
 | `click->admin--actions#edit` | `name`, `show`, `update` | `click_fila_edit_urls()` |
@@ -295,7 +295,8 @@ from a frame of the video), `admin--job-status` (refreshes the status of the mul
 running jobs every 15 seconds), `admin--pic-sync` (reloads the thumbnails when a refreshed status
 reports a different number of pictures), `admin--modal-cleanup` (removes the player of the
 preview modal when it closes), `admin--external-player` (preview and save of the external player
-modals), `admin--group-lists` (the available and selected group lists of the admin groups and the
+modals), `admin--track-list` (reloads the links after a track change and captures frames),
+`admin--job-priority` (priority of a pending job), `admin--group-lists` (the available and selected group lists of the admin groups and the
 broadcast groups: `name`, `showCodes`, `editable`, `message`; it dispatches `admin--group-lists:changed`
 after a move and rebuilds the lists on `admin--group-lists:load`), `admin--mm-groups` (save and reset
 of the admin groups, owner deletion and the warning shown when the user would lose access),
@@ -313,14 +314,19 @@ head and tail manager, pictures, the i18n fields of the form theme and the multi
 metadata sync, LMS, properties, head and tail and external player forms, its tag tab and links block,
 also in the UNESCO catalogue, its owners and admin groups, and the broadcast profile modals of
 multimedia objects and series. `@PumukitNewAdmin/MultimediaObject/updatebroadcast.js.twig` is removed:
-the `admin--broadcast` controller handles both broadcast modals. `@PumukitNewAdmin/UNESCO/listtagsajax.html.twig` is removed: the UNESCO tag
+the `admin--broadcast` controller handles both broadcast modals. The tracks, jobs and materials of the
+editor use `admin--actions`, `admin--modal-form` and two zone controllers, `admin--track-list` and
+`admin--job-priority`. The UNESCO catalogue no longer defines `window.update_list()` to reload its list
+after a track is deleted: its `#list_mms` carries `data-refresh-url`, and `pumukit:check:assets`
+reports the projects that still define the hook. `@PumukitNewAdmin/UNESCO/listtagsajax.html.twig` is removed: the UNESCO tag
 tab uses `@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig`, and the `admin--tag-picker`
 controller of the tab decides which blocks to refresh after adding or removing a tag. `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
 `@PumukitNewAdmin/Playlist/changepub.html.twig` are removed, and so is
 `@PumukitNewAdmin/LiveEvent/create.html.twig`, which pointed to a route that no longer exists.
-The picture upload actions (series, playlists, multimedia objects and legacy events) always answer
-JSON (`{uploaded, message}`), so `@PumukitNewAdmin/Pic/upload.html.twig` and
-`@PumukitNewAdmin/Pic/upload_event.html.twig`, the old iframe responses, are removed, together
+The picture upload actions (series, playlists, multimedia objects and legacy events) and the
+material upload action always answer JSON (`{uploaded, message}`), so
+`@PumukitNewAdmin/Pic/upload.html.twig`, `@PumukitNewAdmin/Pic/upload_event.html.twig` and
+`@PumukitNewAdmin/Material/upload.html.twig`, the old iframe responses, are removed, together
 with the hidden banner URL form of `@PumukitNewAdmin/Pic/banner.html.twig` and its
 `test_form_url()` and `test_url_generation()` functions. Unused code removed as well:
 `@PumukitNewAdmin/MultimediaObject/acordeon.html.twig`, the `update_preview_mms()` function defined
@@ -361,6 +367,9 @@ functions, reported by `pumukit:check:assets` (also when called as `window.…`)
 | `select_tree_tag()`, `toggle_tree_tag()`, `add_tree_tag()`, `del_tree_tag()`, `add_tree_tag_unesco()`, `del_tree_tag_unesco()`, `search_tags_wrapper()`, `search_tags()`, `reset_tags()`, `inc_num_mm()`, `create_element_in_select()` | `admin--tag-picker` |
 | `submit_generate_magic_mms()` | `admin--actions#magicUrl` |
 | `sync_tags_mms()` | `admin--actions#request` with a `confirm` param |
+| `submit_delete_material()`, `submit_delete_track()`, `update_list()` | `admin--actions#remove` |
+| `extract_pic()` | `admin--track-list#extractPic` |
+| `toggleHide()` | `admin--actions#load` |
 | `select_group()`, `add_group()`, `delete_group()`, `create_element_group_in_add_groups()`, `create_element_group_in_delete_groups()`, `delete_element_group_from_select()` | `admin--group-lists` |
 | `submit_delete_person_relation()`, `is_last_user_relation_to_admin_mm()`, `pumukitnewadmin_mm_updategroup_submit()`, `pumukitnewadmin_mm_updategroup_reset()` | `admin--mm-groups` |
 | `check_pass()`, `generate_random_password()`, `can_enable_broadcast_groups_save_button()`, `can_enable_broadcast_password_save_button()`, `get_submit_button_id()`, `click_checkbox_change_pub_mms()`, `click_changepub_selection()` | `admin--broadcast` |

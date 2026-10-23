@@ -3,7 +3,11 @@
         <i class="mdi-content-block" style="color:#009587"></i>
     {% else %}
         <a title="{% trans %}Delete track{% endtrans %} {{ track.id }}" href="#"
-           onclick="window.submit_delete_track('{{ track.id }}', '{{ mm.id }}', '{{ mm.getSeries().getId() }}'); return false;">
+           data-action="click->admin--actions#remove"
+           data-admin--actions-url-param="{{ path('pumukitnewadmin_track_delete', {'id': track.id, 'mmId': mm.id}) }}"
+           data-admin--actions-target-param="#tracks_mms_{{ mm.id }}"
+           data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this track?'|trans }}"
+           data-admin--actions-refresh-param="{{ [{target: '#list_mms', url: path('pumukitnewadmin_mms_list', {'seriesId': mm.getSeries().getId()})}, {target: '#preview_mm', url: path('pumukitnewadmin_mms_show', {'id': mm.id})}]|json_encode }}">
             <i class="mdi-content-clear"></i>
         </a>
     {% endif %}

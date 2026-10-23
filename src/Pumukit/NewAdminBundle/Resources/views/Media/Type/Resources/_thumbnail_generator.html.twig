@@ -6,12 +6,14 @@
             {% set percentages = ['Auto', '10%', '25%', '50%', '75%', '90%'] %}
             {% for percentage in percentages %}
                 <li>
-                    <a href="#" onclick="extract_pic('{{ track.id }}', '{{ mm.id }}', '{{ (percentage == 'Auto')?0:percentage }}'); return false;">
+                    <a href="#" data-action="click->admin--track-list#extractPic"
+                       data-admin--track-list-url-param="{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': (percentage == 'Auto') ? 0 : percentage}) }}"
+                       data-admin--track-list-mm-param="{{ mm.id|json_encode }}">
                         <i class="mdi-image-camera"></i> {{ percentage }}
                     </a>
                 </li>
             {% endfor %}
-            <li class="cancel"><a href="#" onclick="return false;"><strong>{% trans %}Cancel{% endtrans %}...</strong></a></li>
+            <li class="cancel"><a href="#" data-action="click->admin--actions#cancel"><strong>{% trans %}Cancel{% endtrans %}...</strong></a></li>
         </ul>
     </div>
 </td>

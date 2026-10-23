@@ -32,18 +32,20 @@
                     : {{ job.getTimeend()| format_datetime('medium','medium',app.request.getLocale()) }}
                 </dd>
                 <dt>{% trans %}Priority{% endtrans %}</dt>
-                <dd>
+                <dd{% if job.isPending() %} data-controller="admin--job-priority"
+                    data-admin--job-priority-url-value="{{ path('pumukitnewadmin_track_update_job', {'mmId': multimediaObject.Id}) }}"
+                    data-admin--job-priority-job-value="{{ job.id }}"{% endif %}>
                     {% if job.isPending() %}
-                        <span id="job_info_priority_show" class="job_info_priority">
-                            <span id="job_info_priority_show_val">{{ job.getPriority() }}</span>
-                            <a href="#" onclick="$('.job_info_priority').toggle(); return false;" title="{% trans %}Edit priority{% endtrans %}">
+                        <span id="job_info_priority_show" class="job_info_priority" data-admin--job-priority-target="show">
+                            <span id="job_info_priority_show_val" data-admin--job-priority-target="value">{{ job.getPriority() }}</span>
+                            <a href="#" data-action="click->admin--job-priority#toggle" title="{% trans %}Edit priority{% endtrans %}">
                                 <i class="mdi-editor-mode-edit"></i>
                             </a>
                         </span>
-                        <span id="job_info_priority_edit" class="job_info_priority" style="display:none">
-                            <input type="number" max="3" min="1" value="{{ job.getPriority() }}" id="job_info_priority_edit_input"/>
+                        <span id="job_info_priority_edit" class="job_info_priority" style="display:none" data-admin--job-priority-target="edit">
+                            <input type="number" max="3" min="1" value="{{ job.getPriority() }}" id="job_info_priority_edit_input" data-admin--job-priority-target="input"/>
                             <a href="#"
-                                onclick="$.post('{{ path('pumukitnewadmin_track_update_job', {'mmId': multimediaObject.Id}) }}', {'jobId': '{{ job.id }}', 'priority': $('#job_info_priority_edit_input').val()}).done(function(v){$('#job_info_priority_show_val').html(v.priority); $('.job_info_priority').toggle();}); return false;"
+                                data-action="click->admin--job-priority#save"
                                 title="{% trans %}Edit priority{% endtrans %}">
                                 <i class="mdi-content-save"></i>
                             </a>
@@ -75,12 +77,17 @@
                         data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
                 {% if constant('STATUS_ERROR', job) == job.getStatus() %}
                     <button type="submit" class="btn btn-pumukit btn-raised"
-                            onclick="$('#tracks_mms_{{ multimediaObject.Id }}').load('{{ path('pumukitnewadmin_track_retry_job', {'mmId': multimediaObject.Id, 'jobId': job.id, 'preview': 1}) }}'); return false;"
+                            data-action="click->admin--actions#load"
+                            data-admin--actions-url-param="{{ path('pumukitnewadmin_track_retry_job', {'mmId': multimediaObject.Id, 'jobId': job.id, 'preview': 1}) }}"
+                            data-admin--actions-target-param="#tracks_mms_{{ multimediaObject.Id }}"
                             data-dismiss="modal">{% trans %}RETRY{% endtrans %}</button>
                 {% endif %}
                 {% if constant('STATUS_ERROR', job) == job.getStatus() or constant('STATUS_WAITING', job) == job.getStatus() %}
                     <button type="submit" class="btn btn-danger btn-raised"
-                            onclick="$('#tracks_mms_{{ multimediaObject.Id }}').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': multimediaObject.Id, 'jobId': job.id, 'preview': 1}) }}', {'_method': 'DELETE'}); return false;"
+                            data-action="click->admin--actions#load"
+                            data-admin--actions-url-param="{{ path('pumukitnewadmin_track_delete_job', {'mmId': multimediaObject.Id, 'jobId': job.id, 'preview': 1}) }}"
+                            data-admin--actions-target-param="#tracks_mms_{{ multimediaObject.Id }}"
+                            data-admin--actions-data-param="{{ {_method: 'DELETE'}|json_encode }}"
                             data-dismiss="modal">{% trans %}DELETE{% endtrans %}</button>
                 {% endif %}
             </div>

@@ -151,6 +151,23 @@ class CheckAssetsCommandTest extends PumukitTestCase
         $this->assertStringContainsString('Problems found: 1', $display);
     }
 
+    public function testReportsRemovedJavascriptHooksThatTheProjectStillDefines(): void
+    {
+        file_put_contents(
+            $this->tmpDir.'/index.html.twig',
+            "<script>\nwindow.update_list = function(seriesId) {};\nif (window.update_list == null) {}\n</script>\n"
+        );
+
+        $tester = $this->commandTester();
+        $tester->execute(['--path' => $this->tmpDir]);
+
+        $display = $tester->getDisplay();
+        $this->assertSame(Command::FAILURE, $tester->getStatusCode());
+        $this->assertStringContainsString('Removed JavaScript hook: update_list in index.html.twig:2', $display);
+        $this->assertStringContainsString('use a data-refresh-url attribute on #list_mms', $display);
+        $this->assertStringContainsString('Problems found: 1', $display);
+    }
+
     public function testFailsWhenPathDoesNotExist(): void
     {
         $tester = $this->commandTester();

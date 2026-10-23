@@ -17,7 +17,7 @@
             {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\UNESCOController::advancedSearchFormAction')) }}
 
         </div>
-        <div id="list_mms">
+        <div id="list_mms" data-refresh-url="{{ path('pumukitnewadmin_unesco_list') }}">
             {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\UNESCOController::listAction')) }}
         </div>
         <div id="edit_mms">
@@ -162,10 +162,6 @@
             window.init_mmobj_materialtags();
             $('#remember_save_mm').hide();
         });
-
-        window.update_list = function(seriesId) {
-            $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
-        }
 
     </script>
 {% endblock %}

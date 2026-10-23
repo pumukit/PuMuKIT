@@ -7,10 +7,13 @@ namespace Pumukit\NewAdminBundle\Tests\Controller;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
+use Pumukit\SchemaBundle\Document\Material;
+use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\MediaCreator;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 /**
@@ -76,7 +79,10 @@ class InlineJavascriptTest extends PumukitTestCase
             'playlists' => ['pumukitnewadmin_playlist_index'],
             'head and tail' => ['pumukit_newadmin_head_and_tail'],
             'multimedia objects' => ['pumukitnewadmin_mms_index'],
+            'multimedia object editor' => ['pumukitnewadmin_mms_edit'],
             'multimedia object links' => ['pumukitnewadmin_mms_links'],
+            'multimedia object tracks' => ['pumukitnewadmin_track_list'],
+            'multimedia object materials' => ['pumukitnewadmin_material_list'],
             'multimedia object broadcast' => ['pumukitnewadmin_mms_updatebroadcast'],
             'series broadcast' => ['pumukitnewadmin_series_updatebroadcast'],
             'multimedia object tag tree' => ['pumukitnewadmin_mms_reloadtags'],
@@ -100,6 +106,23 @@ class InlineJavascriptTest extends PumukitTestCase
             $factory->createMultimediaObject($series, true);
 
             return ['id' => $series->getId()];
+        }
+        if (in_array($route, ['pumukitnewadmin_mms_edit', 'pumukitnewadmin_track_list', 'pumukitnewadmin_material_list'], true)) {
+            $owner = new Role();
+            $owner->setCod('owner');
+            $owner->setName('Owner');
+            $this->dm->persist($owner);
+            $this->tag('ROOT', 'ROOT|');
+            $factory = static::getContainer()->get(FactoryService::class);
+            $multimediaObject = $factory->createMultimediaObject($factory->createSeries(), true);
+            $material = new Material();
+            $material->setName('Notes');
+            $material->setUrl('https://example.org/notes.pdf');
+            $multimediaObject->addMaterial($material);
+            static::getContainer()->get(MediaCreator::class)->createMediaFromExternalURL($multimediaObject, 'https://example.org/player');
+            $this->dm->flush();
+
+            return ['id' => $multimediaObject->getId()];
         }
         if (in_array($route, ['pumukitnewadmin_mms_links', 'pumukitnewadmin_mms_updatebroadcast'], true)) {
             $factory = static::getContainer()->get(FactoryService::class);

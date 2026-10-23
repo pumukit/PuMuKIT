@@ -1,7 +1,18 @@
 {% set need_reload_status = false %}
-<table>
+{% set can_access = app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+<table data-controller="admin--track-list"
+       data-admin--track-list-error-message-value="{{ 'Error extracting thumbnail'|trans }}"
+       {% if can_access and reload_links is defined and reload_links %}
+       data-admin--track-list-refresh-value="{{ [{target: '#links_mm_' ~ mm.id, url: path('pumukitnewadmin_mms_links', {'id': mm.id})}]|json_encode }}"
+       {% endif %}
+       {% if can_access and need_reload_status %}
+       data-admin--track-list-poll-value="{{ [{target: '#tracks_mms_' ~ mm.id, url: url('pumukitnewadmin_track_list', {'id': mm.id})}, {target: '#list_mms', url: path('pumukitnewadmin_mms_list', {'seriesId': mm.getSeries().getId()})}, {target: '#preview_mm', url: path('pumukitnewadmin_mms_show', {'id': mm.id})}]|json_encode }}"
+       {% if 'XMLHttpRequest' == app.request.headers.get('X-Requested-With') %}
+       data-admin--track-list-status-value="{{ {target: '#table_mms_status_wrapper_' ~ mm.id, html: '<i class="mdi-navigation-refresh pmk-job-animate table_mms_job_animate" data-toggle="tooltip" data-placement="right" title="' ~ ('{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.'|trans({'%count%': mm.getProperty('pending_jobs')|length}) ~ ' ' ~ '{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.'|trans({'%count%': mm.getProperty('executing_jobs')|length}))|trim|e ~ '"></i>'}|json_encode }}"
+       {% endif %}
+       {% endif %}>
     <tbody>
-    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
+    {% if can_access %}
 
         {% include '@PumukitNewAdmin/Media/List/_jobs.html.twig' %}
 
@@ -31,49 +42,3 @@
     {% endif %}
     </tbody>
 </table>
-
-{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-
-    {% if reload_links is defined and reload_links %}
-        <script type="text/javascript">
-            $('#links_mm_{{mm.id}}').load('{{ path('pumukitnewadmin_mms_links', {'id': mm.id}) }}');
-        </script>
-    {% endif %}
-
-    {% if need_reload_status %}
-        <script type="text/javascript">
-            {% if 'XMLHttpRequest' == app.request.headers.get('X-Requested-With')  %}
-            $('#table_mms_status_wrapper_{{ mm.id }}').html('<i class="mdi-navigation-refresh pmk-job-animate table_mms_job_animate" data-toggle="tooltip" data-placement="right" title="{% apply pumukit_spaceless %}
-            {{ "{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs."|trans({'%count%':  mm.getProperty('pending_jobs')|length}) }}
-            {{ "{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs."|trans({'%count%':  mm.getProperty('executing_jobs')|length}) }}
-            {% endapply %}"></i>');
-            {% endif %}
-            setTimeout(function(){
-                $('#tracks_mms_{{ mm.id }}').load('{{ url('pumukitnewadmin_track_list', {'id': mm.id})}}');
-                $('#list_mms').load('{{ path('pumukitnewadmin_mms_list', {'seriesId': mm.getSeries().getId()})|raw }}');
-                $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id })|raw }}');
-            }, 8000);
-        </script>
-    {% endif %}
-{% endif %}
-<script>
-    function toggleHide(trackId){
-        var url = '{{ path('pumukitnewadmin_track_toggle_hide', {'id': '__ID__', 'mmId': mm.id}) }}';
-        url = url.replace('__ID__', trackId);
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: $(this).serialize(),
-            error: function(jqXHR, textStatus, errorThrown){
-                var textError = jqXHR.responseText;
-                var message = errorThrown+': '+textError;
-                no_success(message);
-            },
-            success: function(response){
-                $('#tracks_mms_{{ mm.id }}').html(response);
-                var message = '{{ "Track successfully updated."|trans|e("js") }}';
-                success(message);
-            }
-        });
-    }
-</script>

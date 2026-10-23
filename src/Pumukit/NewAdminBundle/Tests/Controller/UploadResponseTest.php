@@ -85,6 +85,15 @@ class UploadResponseTest extends PumukitTestCase
         $this->assertSame('failed', $this->json()['uploaded']);
     }
 
+    public function testMaterialUploadsAnswerJsonWithoutAcceptHeader(): void
+    {
+        $url = static::getContainer()->get('router')->generate('pumukitnewadmin_material_upload', ['id' => $this->multimediaObject->getId()]);
+        $this->client->request('POST', $url, ['file_type' => 'url', 'url' => 'https://example.org/notes.pdf']);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSame(['uploaded' => 'success', 'message' => 'New Material added.'], $this->json());
+    }
+
     public function testPicUploadsAnswerJsonWithoutAcceptHeader(): void
     {
         $this->client->request('POST', $this->picUploadUrl(), ['url' => 'https://example.org/poster.jpg']);

@@ -59,8 +59,13 @@ class CheckAssetsCommand extends Command
         '@PumukitNewAdmin/Pic/upload_event.html.twig' => 'nothing: the picture uploads answer JSON to the admin--upload-form controller',
         '@PumukitNewAdmin/MultimediaObject/acordeon.html.twig' => 'nothing: no page used it',
         '@PumukitNewAdmin/MultimediaObject/updatesocial.html.twig' => 'nothing: no page used it',
+        '@PumukitNewAdmin/Material/upload.html.twig' => 'nothing: the material uploads answer JSON to the admin--upload-form controller',
         '@PumukitNewAdmin/MultimediaObject/updatebroadcast.js.twig' => 'nothing: the admin--broadcast controller of @PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig handles the form',
         '@PumukitNewAdmin/UNESCO/listtagsajax.html.twig' => '@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig (the admin--tag-picker controller of the tag tab handles the clicks)',
+    ];
+
+    public const REMOVED_JAVASCRIPT_HOOKS = [
+        'update_list' => 'a data-refresh-url attribute on #list_mms (see @PumukitNewAdmin/UNESCO/index.html.twig)',
     ];
 
     public const REMOVED_JAVASCRIPT_GLOBALS = [
@@ -169,6 +174,11 @@ class CheckAssetsCommand extends Command
         'get_submit_button_id' => 'the admin--broadcast controller (see @PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig)',
         'click_checkbox_change_pub_mms' => 'the checkOne action of the admin--broadcast controller (see @PumukitNewAdmin/Series/updatebroadcast.html.twig)',
         'click_changepub_selection' => 'the selectAll action of the admin--broadcast controller (see @PumukitNewAdmin/Series/updatebroadcast.html.twig)',
+        'submit_delete_material' => 'admin--actions#remove (see @PumukitNewAdmin/Material/list.html.twig)',
+        'submit_delete_track' => 'admin--actions#remove with a refresh param (see @PumukitNewAdmin/Media/Type/Resources/_delete.html.twig)',
+        'update_list' => 'the refresh param of admin--actions#remove',
+        'extract_pic' => 'the extractPic action of the admin--track-list controller (see @PumukitNewAdmin/Media/Type/Resources/_thumbnail_generator.html.twig)',
+        'toggleHide' => 'admin--actions#load (see @PumukitNewAdmin/Media/Type/Resources/_visibility.html.twig)',
         'checkRecordDateAndPublicDate' => 'the dates value of the admin--meta-form controller (see @PumukitNewAdmin/MultimediaObject/updatemeta.html.twig)',
     ];
 
@@ -242,6 +252,14 @@ EOT
                         ++$missing;
                         $output->writeln('Removed JavaScript global: <info>'.$global.'</info> in '.$location);
                         $output->writeln('    use <comment>'.self::REMOVED_JAVASCRIPT_GLOBALS[$global].'</comment>');
+                    }
+                }
+
+                foreach (self::REMOVED_JAVASCRIPT_HOOKS as $hook => $replacement) {
+                    if (preg_match('/(?<![\w$.])(?:window\.)?'.$hook.'\s*=(?!=)/', $line)) {
+                        ++$missing;
+                        $output->writeln('Removed JavaScript hook: <info>'.$hook.'</info> in '.$location.', the backoffice no longer calls it');
+                        $output->writeln('    use <comment>'.$replacement.'</comment>');
                     }
                 }
 

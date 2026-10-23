@@ -9,12 +9,12 @@
         {% endif %}
         <div class="form-group">
             <label for="embed" class="control-label">{% trans %}Embedded Iframe{% endtrans %}:</label>
-            <input id="embed_code" name="embed_code" readonly="readonly" class="form-control" onclick="this.select()" value='<iframe src="{{ iframe_url }}" width="560" height="315" frameborder="0" allowfullscreen></iframe>' />
+            <input id="embed_code" name="embed_code" readonly="readonly" class="form-control" data-controller="core--select" data-action="click->core--select#select" value='<iframe src="{{ iframe_url }}" width="560" height="315" frameborder="0" allowfullscreen></iframe>' />
         </div>
         <div class="form-group">
             <label for="embed" class="control-label">{% trans %}Video track{% endtrans %}:</label>
             <div class="input-group">
-                <input type="text" onclick="this.select()" class="form-control" value="{{ track_url }}" readonly />
+                <input type="text" data-controller="core--select" data-action="click->core--select#select" class="form-control" value="{{ track_url }}" readonly />
                 {% if is_published %}
                     <span class="input-group-addon">
                         <a id="alinkROMagicUrl" href="{{ track_url }}" target="_blank" title="{% trans %}Video track{% endtrans %}">
@@ -35,7 +35,7 @@
     <br />
     <label for="embed" class="control-label">{% trans %}Series{% endtrans %}:</label>
     <div class="input-group">
-        <input type="text" onclick="this.select()" class="form-control" value="{{ series_url }}" readonly/>
+        <input type="text" data-controller="core--select" data-action="click->core--select#select" class="form-control" value="{{ series_url }}" readonly/>
         <span class="input-group-addon">
             <a id="alinkROMagicUrl" href="{{ series_url }}" target="_blank" title="{% trans %}Series URL{% endtrans %}">
                 <i class="mdi-action-exit-to-app"></i>

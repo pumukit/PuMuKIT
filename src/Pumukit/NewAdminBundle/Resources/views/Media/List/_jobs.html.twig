@@ -14,7 +14,10 @@
                 <a title="{% trans %}Delete Encoder Job{% endtrans %}"
                    style="color:inherit;"
                    href="#"
-                   onclick="$('#tracks_mms_{{ mm.Id }}').load('{{ path('pumukitnewadmin_track_delete_job', {'mmId': mm.Id, 'jobId': job.id, 'preview': 1}) }}', {'_method': 'DELETE'}); return false;">
+                   data-action="click->admin--actions#load"
+                   data-admin--actions-url-param="{{ path('pumukitnewadmin_track_delete_job', {'mmId': mm.Id, 'jobId': job.id, 'preview': 1}) }}"
+                   data-admin--actions-target-param="#tracks_mms_{{ mm.Id }}"
+                   data-admin--actions-data-param="{{ {_method: 'DELETE'}|json_encode }}">
                     <i class="mdi-content-clear"></i>
                 </a>
             {% endif %}

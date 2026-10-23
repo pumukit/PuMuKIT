@@ -5,17 +5,10 @@
 <div class="modal-body">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
-  <form onsubmit="$('#myModal').modal('hide');
-                  $.ajax({
-                          url: '{{ path('pumukitnewadmin_material_update', {'id': material.id, 'mmId': mmId}) }}',
-                          type: 'POST',
-                          data: $(this).serialize(),
-                          success: function(response){
-                                                      $('#materials_mms_{{ mmId }}').html(response);
-                                                      success('{{ "Material successfully updated."|trans|e("js")}}');
-                                                      }
-                  });
-                  return false;"
+  <form data-controller="admin--modal-form"
+        data-action="submit->admin--modal-form#submit"
+        data-admin--modal-form-target-value="#materials_mms_{{ mmId }}"
+        data-admin--modal-form-success-message-value="{{ 'Material successfully updated.'|trans }}"
         action="{{ path('pumukitnewadmin_material_update', {'id': material.id, 'mmId': mmId}) }}" method="POST">
     <input type="hidden" name="id" id="material_id" value="{{ material.id }}" />
     <input type="hidden" name="mmId" id="mmId" value="{{ mmId }}" />
