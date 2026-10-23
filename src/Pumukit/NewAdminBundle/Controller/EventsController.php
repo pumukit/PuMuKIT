@@ -591,6 +591,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
             'series' => $series,
             'exclude_fields' => $exclude_fields,
             'show_later_fields' => $show_later_fields,
+            'pic_container' => '#series',
         ];
     }
 

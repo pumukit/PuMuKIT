@@ -151,6 +151,35 @@ export default class extends Controller {
         toDate[0].setCustomValidity('' !== toDate.val() && fromDate.val() >= toDate.val() ? message : '');
     }
 
+    copy(event) {
+        const input = document.getElementById(event.params.input);
+        const display = input.style.display;
+        input.style.display = 'block';
+        input.select();
+        document.execCommand('copy');
+        input.style.display = display;
+    }
+
+    translate(event) {
+        const button = $(event.currentTarget);
+        const { url, locale, field, question, error } = event.params;
+        const ask = 'dblclick' !== event.type;
+        const text = button.parent().parent().find(field).val();
+        button.children().addClass('pmk-job-animate');
+        $.post(url, { q: text, target_lang: locale })
+            .done((data) => {
+                button.children().removeClass('pmk-job-animate');
+                const translation = ask ? window.prompt(question, data.text) : data.text;
+                if (translation) {
+                    button.parent().find(field).val(translation);
+                }
+            })
+            .fail(() => {
+                window.no_success(error);
+                button.children().removeClass('pmk-job-animate');
+            });
+    }
+
     validity(event) {
         event.currentTarget.setCustomValidity('invalid' === event.type ? event.params.message : '');
     }

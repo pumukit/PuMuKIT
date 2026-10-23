@@ -108,6 +108,21 @@ class CheckAssetsCommand extends Command
         'click_checkbox_channel_changepub_all' => 'the admin--changepub controller',
         'submit_series_change_pub' => 'the admin--changepub controller',
         'init_series_materialtags' => 'the admin--meta-form controller',
+        'up_seriespic' => 'admin--actions#load (see @PumukitNewAdmin/Pic/list.html.twig)',
+        'down_seriespic' => 'admin--actions#load (see @PumukitNewAdmin/Pic/list.html.twig)',
+        'up_playlistpic' => 'admin--actions#load (see @PumukitNewAdmin/Pic/list.html.twig)',
+        'down_playlistpic' => 'admin--actions#load (see @PumukitNewAdmin/Pic/list.html.twig)',
+        'up_mmspic' => 'admin--actions#load (see @PumukitNewAdmin/Pic/list.html.twig)',
+        'down_mmspic' => 'admin--actions#load (see @PumukitNewAdmin/Pic/list.html.twig)',
+        'delete_seriespic' => 'admin--actions#remove (see @PumukitNewAdmin/Pic/list.html.twig)',
+        'delete_playlistpic' => 'admin--actions#remove (see @PumukitNewAdmin/Pic/list.html.twig)',
+        'delete_mmspic' => 'admin--actions#remove (see @PumukitNewAdmin/Pic/list.html.twig)',
+        'delete_eventspic' => 'admin--actions#remove (see @PumukitNewAdmin/Pic/list.html.twig)',
+        'update_mmspic' => 'the admin--pic-list controller',
+        'update_seriespic' => 'the admin--pic-list controller',
+        'update_playlistpic' => 'the admin--pic-list controller',
+        'change_pics_page' => 'admin--actions#load (see @PumukitNewAdmin/Pic/picstoaddlist.html.twig)',
+        'pmk_translate' => 'admin--actions#translate (see @PumukitNewAdmin/Themes/fields.html.twig)',
     ];
 
     private const REFERENCE_PATTERN = '#(?<![\w./-])/?(bundles/([a-z0-9_]+)/[^\'"\s?\#{}()]*)#';

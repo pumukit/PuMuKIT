@@ -1,5 +1,5 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-<div id="pic_list_thumbnails">
+<div id="pic_list_thumbnails"{% if 'XMLHttpRequest' == app.request.headers.get('X-Requested-With') %} data-controller="admin--pic-list" data-admin--pic-list-resource-value="{{ resource.id }}" data-admin--pic-list-default-pic-value="{{ {'series': '/bundles/pumukitschema/images/series_folder.png', 'playlist': '/bundles/pumukitschema/images/playlist_folder.png'}[resource_name]|default('/images/none.jpg') }}"{% endif %}>
   {% set event_poster = (is_event_poster is defined ? is_event_poster : false) %}
   {% for index,pic in resource.getPics() | filter(pic => event_poster and pic.containsTag('poster') or (not event_poster and not pic.containsTag('poster'))) %}
   <div style="float: left; padding : 10px; ">
@@ -10,29 +10,23 @@
     </div>
     <div style="text-align : center">
       {% if (0 != index) and not event_poster %}
-      <a href="#" onclick="window.up_{{ resource_name }}pic('{{ pic.id }}', '{{ resource.id }}'); return false;" title="{% trans %}Move up thumbnail{% endtrans %}" class="thumbnail_arrow_move_pic {{ (event_poster and pic.containsTag('poster')) ? 'is_poster':'no_poster'}}">&#8592;</a>
+      <a href="#" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukitnewadmin_' ~ resource_name ~ 'pic_up', {'id': pic.id}) }}" data-admin--actions-target-param="#pic_{{ resource_name }}_{{ resource.id }}" data-admin--actions-data-param="{{ {method: 'POST'}|json_encode }}" title="{% trans %}Move up thumbnail{% endtrans %}" class="thumbnail_arrow_move_pic {{ (event_poster and pic.containsTag('poster')) ? 'is_poster':'no_poster'}}">&#8592;</a>
       {% endif %}
       {% if event_poster %}
-      <a href="#" onclick="window.delete_eventspic('{{ pic.id }}', '{{ resource.id }}'); return false;" title="{% trans %}Delete thumbnail{% endtrans %}" class="thumbnail_pic {{ (event_poster and pic.containsTag('poster')) ? 'is_poster':'no_poster'}}">
+      <a href="#" data-action="click->admin--actions#remove" data-admin--actions-url-param="{{ path('pumukitnewadmin_mmspic_delete', {'id': pic.id, 'is_event_poster': true}) }}" data-admin--actions-target-param="#pic_events_{{ resource.id }}" data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this event poster?'|trans }}" data-admin--actions-success-param="{{ 'Event poster removed.'|trans }}" title="{% trans %}Delete thumbnail{% endtrans %}" class="thumbnail_pic {{ (event_poster and pic.containsTag('poster')) ? 'is_poster':'no_poster'}}">
         <i class="mdi-content-clear"></i>
       </a>
       {% else %}
-      <a href="#" onclick="window.delete_{{ resource_name }}pic('{{ pic.id }}', '{{ resource.id }}'); return false;" title="{% trans %}Delete thumbnail{% endtrans %}" class="thumbnail_pic {{ (event_poster and pic.containsTag('poster')) ? 'is_poster':'no_poster'}}">
+      <a href="#" {% if 'series' == resource_name %} data-action="click->admin--actions#remove" data-admin--actions-url-param="{{ path('pumukitnewadmin_seriespic_delete', {'id': pic.id}) }}" data-admin--actions-target-param="{{ pic_container|default('#edit_series') }}" data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this thumbnail?'|trans }} {{ 'If it corresponds to the one associated with the banner, the entire header will also be removed.'|trans }}" data-admin--actions-success-param="{{ 'Thumbnail removed.'|trans }}" {% elseif 'playlist' == resource_name %} data-action="click->admin--actions#remove" data-admin--actions-url-param="{{ path('pumukitnewadmin_seriespic_delete', {'id': pic.id}) }}" data-admin--actions-target-param="#edit_playlist" data-admin--actions-reload-param="{{ path('pumukitnewadmin_playlist_update', {'id': resource.id}) }}" data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this thumbnail?'|trans }}" data-admin--actions-success-param="{{ 'Thumbnail removed.'|trans }}" {% else %} data-action="click->admin--actions#remove" data-admin--actions-url-param="{{ path('pumukitnewadmin_' ~ resource_name ~ 'pic_delete', {'id': pic.id}) }}" data-admin--actions-target-param="#pic_{{ resource_name }}_{{ resource.id }}" data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this thumbnail?'|trans }}" data-admin--actions-success-param="{{ 'Thumbnail removed.'|trans }}" {% endif %} title="{% trans %}Delete thumbnail{% endtrans %}" class="thumbnail_pic {{ (event_poster and pic.containsTag('poster')) ? 'is_poster':'no_poster'}}">
         <i class="mdi-content-clear"></i>
       </a>
       {% endif %}
       {% if ((resource.getPics()|length - 1) != index) and not event_poster %}
-      <a href="#" onclick="window.down_{{ resource_name }}pic('{{ pic.id }}', '{{ resource.id }}'); return false;" title="{% trans %}Move down thumbnail{% endtrans %}" class="thumbnail_arrow_move_pic {{ (event_poster and pic.containsTag('poster')) ? 'is_poster':'no_poster'}}">&#8594;</a>
+      <a href="#" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukitnewadmin_' ~ resource_name ~ 'pic_down', {'id': pic.id}) }}" data-admin--actions-target-param="#pic_{{ resource_name }}_{{ resource.id }}" data-admin--actions-data-param="{{ {method: 'POST'}|json_encode }}" title="{% trans %}Move down thumbnail{% endtrans %}" class="thumbnail_arrow_move_pic {{ (event_poster and pic.containsTag('poster')) ? 'is_poster':'no_poster'}}">&#8594;</a>
       {% endif %}
     </div>
   </div>
   {% endfor %}
-  <script type="text/javascript">
-    var picElements = $('.thumbnail_pic.no_poster').length;
-    if (picElements < 2) {
-        $('.thumbnail_arrow_move_pic.no_poster').css('display', 'none');
-    }
-  </script>
   {% if event_poster and not resource.getPicWithTag('poster') %}
   <div style="float: left; padding : 10px; ">
     <div style="padding: 10px; float:left; text-align : center">
@@ -41,7 +35,7 @@
       </div></div></div></div>
     </div>
     <div style="text-align : center">
-      <a href="#" onclick="return false;" title="{% trans %}Default live screen image{% endtrans %}">
+      <a href="#" data-action="click->admin--actions#cancel" title="{% trans %}Default live screen image{% endtrans %}">
         {% trans %}Default live screen image{% endtrans %}
       </a>
     </div>
@@ -73,8 +67,3 @@
 
 <div style="clear:left"></div>
 
-{% if 'XMLHttpRequest' == app.request.headers.get('X-Requested-With') %}
-<script type="text/javascript">
-window.update_{{ resource_name }}pic('{{ resource.id }}', '{{ resource_name }}');
-</script>
-{% endif %}

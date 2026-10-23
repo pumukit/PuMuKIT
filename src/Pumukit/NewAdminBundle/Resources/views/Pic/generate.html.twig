@@ -5,29 +5,36 @@
     <h4 class="modal-title" id="myModalLabel">{% trans %}generate new thumbnail{% endtrans %}</h4>
 </div>
 
-<div class="modal-body">
+<div class="modal-body" data-controller="admin--pic-generator"
+     data-admin--pic-generator-width-value="{{ thumbnail_width }}"
+     data-admin--pic-generator-height-value="{{ thumbnail_height }}"
+     data-admin--pic-generator-generate-url-value="{{ path('pumukitnewadmin_mmspic_generate', {'id': mm.id}) }}"
+     data-admin--pic-generator-mm-id-value="{{ mm.id }}"
+     data-admin--pic-generator-list-url-value="{{ path('pumukitnewadmin_mmspic_list', {'id': mm.id}) }}"
+     data-admin--pic-generator-list-target-value="#pic_mms_{{ mm.id }}"
+     data-admin--pic-generator-message-value="{{ 'Thumbnail generated.'|trans }}">
 
     <div id="tv_admin_container">
         <div class="row">
             <div class="col-md-5 text-center">
                 <!-- PLAYER -->
-                <video id="gen_pic_player" src="{{ track_url(track)|raw }}" controls crossorigin="" style="background: black; width: 100%;"></video>
+                <video id="gen_pic_player" data-admin--pic-generator-target="video" src="{{ track_url(track)|raw }}" controls crossorigin="" style="background: black; width: 100%;"></video>
             </div>
             <div class="col-md-2">
 
                 <!-- CONTROLS -->
-                <div class="buttons" id="gen_pic_buttons" style="text-align:center">
+                <div class="buttons" id="gen_pic_buttons" data-admin--pic-generator-target="buttons" style="text-align:center">
 
                     <div class="btn-group btn-group-raised" style="margin-top: 0px;">
-                        <button id="prev-frame-button" title="{% trans %}Prev Frame{% endtrans %}" class="btn btn-raised btn-xs" style="padding: 8px 25px">
+                        <button id="prev-frame-button" data-action="click->admin--pic-generator#previousFrame" title="{% trans %}Prev Frame{% endtrans %}" class="btn btn-raised btn-xs" style="padding: 8px 25px">
                             «
                         </button>
-                        <button id="next-frame-button" title="{% trans %}Next Frame{% endtrans %}" class="btn btn-raised btn-xs" style="padding: 8px 25px">
+                        <button id="next-frame-button" data-action="click->admin--pic-generator#nextFrame" title="{% trans %}Next Frame{% endtrans %}" class="btn btn-raised btn-xs" style="padding: 8px 25px">
                             »
                         </button>
                     </div>
 
-                    <button id="take-img-button" title="Take image." style="padding: 8px; white-space: normal" class="btn btn-raised btn-primary">{% trans %}Take image{% endtrans %}</button>
+                    <button id="take-img-button" data-action="click->admin--pic-generator#take" title="Take image." style="padding: 8px; white-space: normal" class="btn btn-raised btn-primary">{% trans %}Take image{% endtrans %}</button>
 
 
                     <div class="btn-group">
@@ -36,13 +43,13 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" class="take-burst-button" data-num="10">10 pictures</a></li>
-                            <li><a href="#" class="take-burst-button" data-num="30">30 pictures</a></li>
-                            <li><a href="#" class="take-burst-button" data-num="50">50 pictures</a></li>
+                            <li><a href="#" class="take-burst-button" data-num="10" data-action="click->admin--pic-generator#burst" data-admin--pic-generator-num-param="10">10 pictures</a></li>
+                            <li><a href="#" class="take-burst-button" data-num="30" data-action="click->admin--pic-generator#burst" data-admin--pic-generator-num-param="30">30 pictures</a></li>
+                            <li><a href="#" class="take-burst-button" data-num="50" data-action="click->admin--pic-generator#burst" data-admin--pic-generator-num-param="50">50 pictures</a></li>
                         </ul>
                     </div>
 
-                    <button id="advanced-button" title="Show advanced" style="margin-top: 0px; padding: 1px 5px; white-space: nowrap" class="btn btn-raised btn-xs">
+                    <button id="advanced-button" data-action="click->admin--pic-generator#toggleAdvanced" title="Show advanced" style="margin-top: 0px; padding: 1px 5px; white-space: nowrap" class="btn btn-raised btn-xs">
                         {% trans %}Show advanced{% endtrans %}
                     </button>
 
@@ -50,22 +57,22 @@
 
             </div>
             <div class="col-md-5 text-center">
-                <span id="pic-size" class="label label-default" style="position: absolute;"></span>
+                <span id="pic-size" data-admin--pic-generator-target="size" class="label label-default" style="position: absolute;"></span>
                 <!-- PREVIEW -->
-                <img class="image" style="width: 100%; height: auto; aspect-ratio: {{ thumbnail_width }}/{{ thumbnail_height }}; object-fit: contain;" id="gen_pic_img" src="{{ asset('bundles/pumukitnewadmin/images/admin/arrows/redarrow.png') }}">
+                <img class="image" style="width: 100%; height: auto; aspect-ratio: {{ thumbnail_width }}/{{ thumbnail_height }}; object-fit: contain;" id="gen_pic_img" data-admin--pic-generator-target="image" src="{{ asset('bundles/pumukitnewadmin/images/admin/arrows/redarrow.png') }}">
             </div>
 
         </div>
 
-        <div class="row" id="advanced" style="display: none;">
+        <div class="row" id="advanced" data-admin--pic-generator-target="advanced" style="display: none;">
             {% if mm.isMultistream() %}
 
             {% trans %}Show{% endtrans %}:
             <div class="btn-group btn-group-raised">
-              <button title="{% trans %}Show presenter{% endtrans %}" id="show-presenter" class="btn btn-xs">
+              <button title="{% trans %}Show presenter{% endtrans %}" id="show-presenter" class="btn btn-xs{{ 'presenter/delivery' in track.tags ? ' btn-primary' }}" data-admin--pic-generator-target="stream" data-action="click->admin--pic-generator#showStream" data-admin--pic-generator-url-param="{{ track_url(mm.getFilteredTrackWithTags(['presenter/delivery'])) }}">
                 {% trans %}presenter{% endtrans %}
               </button>
-              <button title="{% trans %}Show presentation{% endtrans %}" id="show-presentation" class="btn btn-xs">
+              <button title="{% trans %}Show presentation{% endtrans %}" id="show-presentation" class="btn btn-xs{{ 'presenter/delivery' not in track.tags and 'presentation/delivery' in track.tags ? ' btn-primary' }}" data-admin--pic-generator-target="stream" data-action="click->admin--pic-generator#showStream" data-admin--pic-generator-url-param="{{ track_url(mm.getFilteredTrackWithTags(['presentation/delivery'])) }}">
                 {% trans %}presentation{% endtrans %}
               </button>
             </div>
@@ -73,15 +80,15 @@
             {% endif %}
 
             {% trans %}Format{% endtrans %}:
-            <select id="pic-format">
+            <select id="pic-format" data-admin--pic-generator-target="format" data-action="change->admin--pic-generator#changeFormat">
                 <option value="jpeg">jpeg</option>
                 <option value="png">png</option>
                 {#<option value="webp">webp (experimental)</option>#}
             </select>
 
-            <div id="quality_image" style="display:inline-block">
+            <div id="quality_image" data-admin--pic-generator-target="qualityBox" style="display:inline-block">
                 {% trans %}Quality{% endtrans %}:
-                <select id="pic-quality">
+                <select id="pic-quality" data-admin--pic-generator-target="quality">
                     <option>1.0</option>
                     <option selected="selected">0.92</option>
                     <option>0.85</option>
@@ -92,279 +99,26 @@
         </div>
 
         <div class="row">
-            <div id="frames" style="overflow-y: scroll; height: 210px; margin-top: 15px;"></div>
+            <div id="frames" data-admin--pic-generator-target="frames" style="overflow-y: scroll; height: 210px; margin-top: 15px;"></div>
         </div>
 
     </div>
 
     <div class="col-xs-12">
         <label for="url">{% trans %}URL{% endtrans %}</label>
-        <input type="text" id="url-file-button" name="url" class="form-control"/>
+        <input type="text" id="url-file-button" data-action="input->admin--pic-generator#addUrl" name="url" class="form-control"/>
     </div>
     <div style="clear:both"></div>
     <div class="modal-footer">
         <div class="row">
             <div class="col-xs-4">
-                <input type="file" id="file-upload-button" name="file" style="btn btn-default btn-raised" title="{% trans %}Upload a local file.{% endtrans %}" accept="image/*"/>
+                <input type="file" id="file-upload-button" data-action="change->admin--pic-generator#upload" name="file" style="btn btn-default btn-raised" title="{% trans %}Upload a local file.{% endtrans %}" accept="image/*"/>
             </div>
             <div class="col-xs-8">
                 <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-                <button type="submit" id="gen_pic_submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
+                <button type="submit" id="gen_pic_submit" data-action="click->admin--pic-generator#submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
             </div>
         </div>
     </div>
+    <canvas id="canvas-draw-frames" data-admin--pic-generator-target="canvas" style="display:none;"></canvas>
 </div>
-
-
-<canvas id="canvas-draw-frames" style="display:none;"></canvas>
-
-
-<script type="text/javascript">
-
-    $('#pic-format').on('change', function (event) {
-        event.preventDefault();
-        var pic_format = $("select#pic-format option:checked").val();
-        if(pic_format == "png") {
-            $('#quality_image').css('display','none');
-        } else {
-            $('#quality_image').css('display','inline-block');
-        }
-    });
-
-    $(function () {
-        var video = document.querySelector("#gen_pic_player");
-        var img = document.querySelector("#gen_pic_img");
-        var prev_frame = document.querySelector("#prev-frame-button");
-        var next_frame = document.querySelector("#next-frame-button");
-        var take_img = document.querySelector("#take-img-button");
-        var take_burst = $(".take-burst-button");
-        var advanced = document.querySelector("#advanced-button");
-        var canvas_draw = document.querySelector("#canvas-draw-frames");
-        var frames = document.querySelector("#frames");
-        var submit = document.querySelector("#gen_pic_submit");
-        var init_img = img.src;
-        var upload_img = document.querySelector("#file-upload-button");
-        var url_img = document.querySelector("#url-file-button");
-        var pic_size = document.querySelector("#pic-size");
-        var pic_format = document.querySelector("#pic-format");
-        var pic_quality = document.querySelector("#pic-quality");
-        var ctx_draw = canvas_draw.getContext("2d");
-
-        {% if mm.isMultistream() %}
-
-        {% if 'presenter/delivery' in track.tags %}
-            $("#show-presenter").addClass('btn-primary');
-            $("#show-presentation").removeClass('btn-primary');
-        {% elseif 'presentation/delivery' in track.tags %}
-            $("#show-presentation").addClass('btn-primary');
-            $("#show-presenter").removeClass('btn-primary');
-        {% endif %}
-
-        var show_presenter = document.querySelector("#show-presenter");
-        var show_presentation = document.querySelector("#show-presentation");
-
-        show_presenter.addEventListener("click", function () {
-            video.src = "{{ track_url(mm.getFilteredTrackWithTags(['presenter/delivery']))|raw }}";
-            $("#show-presenter").addClass('btn-primary');
-            $("#show-presentation").removeClass('btn-primary');
-        }, false);
-
-        show_presentation.addEventListener("click", function () {
-            video.src = "{{ track_url(mm.getFilteredTrackWithTags(['presentation/delivery']))|raw }}";
-            $("#show-presentation").addClass('btn-primary');
-            $("#show-presenter").removeClass('btn-primary');
-        }, false);
-
-        {% endif %}
-
-        if (video.readyState == 4) {
-            init_extractpic();
-        } else {
-            video.addEventListener("canplaythrough", init_extractpic, false);
-        }
-
-
-        function init_extractpic() {
-            $('#gen_pic_buttons').show();
-            canvas_draw.width = {{ thumbnail_width }};
-            canvas_draw.height = {{ thumbnail_height }};
-            img.height = video.clientHeight;
-        }
-
-
-        prev_frame.addEventListener("click", function () {
-            video.currentTime -= 0.25;
-        }, false);
-
-        next_frame.addEventListener("click", function () {
-            video.currentTime += 0.25;
-        }, false);
-
-
-        take_img.addEventListener("click", function () {
-            var new_img = take_pic();
-            img.src = new_img.src;
-            update_pic_size();
-        }, false);
-
-
-        advanced.addEventListener("click", function () {
-            $('#advanced').toggle();
-        }, false);
-
-        function update_pic_size() {
-            var subindex = img.src.substr(11, 3) == "png" ? 22 : 23;
-            var size = atob(img.src.substr(subindex)).length;
-            if (size < 3000) {
-                var size_text = size + " B";
-            } else {
-                var size_text = Math.ceil(size / 1024) + " KB";
-            }
-            pic_size.innerHTML = `${canvas_draw.width}x${canvas_draw.height} - ${size_text}`;
-        }
-
-        function take_pic() {
-            ctx_draw.clearRect(0, 0, canvas_draw.width, canvas_draw.height);
-
-            ctx_draw.fillStyle = "black";
-            ctx_draw.fillRect(0, 0, canvas_draw.width, canvas_draw.height);
-
-            var videoAspect = video.videoWidth / video.videoHeight;
-            var canvasAspect = canvas_draw.width / canvas_draw.height;
-
-            let renderWidth, renderHeight, offsetX, offsetY;
-
-            if (videoAspect > canvasAspect) {
-                renderWidth = canvas_draw.width;
-                renderHeight = canvas_draw.width / videoAspect;
-                offsetX = 0;
-                offsetY = (canvas_draw.height - renderHeight) / 2;
-            } else {
-                renderHeight = canvas_draw.height;
-                renderWidth = canvas_draw.height * videoAspect;
-                offsetY = 0;
-                offsetX = (canvas_draw.width - renderWidth) / 2;
-            }
-
-            ctx_draw.drawImage(
-                video,
-                0, 0, video.videoWidth, video.videoHeight,
-                offsetX, offsetY, renderWidth, renderHeight
-            );
-
-            var new_img = new Image();
-            new_img.classList.add("new_img");
-            new_img.classList.add("btn");
-            new_img.style.padding = "0px"
-            var format = "image/" + pic_format.value;
-            var quality = parseFloat(pic_quality.value);
-            new_img.src = canvas_draw.toDataURL(format, quality);
-            new_img.width = 120;
-
-            new_img.addEventListener("click", function () {
-                img.src = this.src;
-                update_pic_size();
-            })
-
-            frames.appendChild(new_img);
-            return new_img;
-        }
-
-
-        take_burst.on("click", function (event) {
-            event.preventDefault();
-
-            var numThumbnails = parseInt(event.target.dataset.num);
-            var TotalTime = Math.ceil(parseInt(video.duration));
-            var interval = TotalTime / numThumbnails;
-
-            if ($('.new_img')) {
-                $('.new_img').remove();
-                ctx_draw.clearRect(0, 0, canvas_draw.width, canvas_draw.height);
-            }
-
-            var thumbnailsTaken = 0;
-            video.addEventListener("seeked", burst = function (e) {
-                if (!video.seeking) {
-                    take_pic();
-                    video.currentTime = (video.currentTime + interval);
-                    thumbnailsTaken += 1;
-                    if ((video.currentTime >= video.duration - interval) || (thumbnailsTaken >= numThumbnails)) {
-                        video.removeEventListener("seeked", burst);
-                        thumbnailsTaken = 0;
-                    }
-                }
-            });
-
-            video.currentTime = 0;
-        });
-
-
-        submit.addEventListener("click", function (event) {
-            event.preventDefault();
-
-            var data = img.src;
-            var init = init_img;
-
-            if (data == init) {
-                $('#myModal').modal('hide');
-                return;
-            }
-
-            var route = "{{ path('pumukitnewadmin_mmspic_generate', {'id': mm.id}) }}";
-            $.post(route, {img: data, mm: '{{ mm.id }}'}, function (data, textStatus, jqXHR) {
-                success('{% trans %}Thumbnail generated.{% endtrans %}');
-                upload_mmspic('{{ mm.id }}');
-                $('#myModal').modal('hide');
-            });
-
-        });
-
-        upload_img.addEventListener("change", function (e) {
-            e.preventDefault();
-            var file = e.target.files[0];
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                // Render thumbnail.
-                img.src = e.target.result;
-
-                var new_img = new Image();
-                new_img.classList.add("new_img");
-                new_img.classList.add("btn");
-                new_img.style.padding = "0px"
-                new_img.src = e.target.result;
-                ;
-                new_img.width = 120;
-
-                new_img.addEventListener("click", function () {
-                    img.src = this.src;
-                });
-
-                frames.appendChild(new_img);
-            };
-            reader.readAsDataURL(file);
-        }, false);
-
-        url_img.addEventListener("input", function (e) {
-            e.preventDefault();
-            var new_img = new Image();
-            new_img.classList.add("new_img");
-            new_img.classList.add("btn");
-            new_img.style.padding = "0px";
-            new_img.src = e.target.value;
-            /* Check if img url exists */
-            new_img.addEventListener("load", function () {
-                if (this.width > 0) {
-                    new_img.width = 120;
-
-                    new_img.addEventListener("click", function () {
-                        img.src = this.src;
-                    });
-
-                    frames.appendChild(new_img);
-                }
-            });
-        }, false);
-    })
-
-</script>

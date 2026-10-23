@@ -246,7 +246,7 @@
         {% set locale = form.vars.locales[0] %}
         <div class="input-group">
             <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
-            <span class="input-group-addon copy-button" style="color: #767676;cursor:pointer;" data-copy="{{ form.vars.id }}_{{ locale }}">
+            <span class="input-group-addon copy-button" style="color: #767676;cursor:pointer;" data-copy="{{ form.vars.id }}_{{ locale }}" data-action="click->admin--actions#copy" data-admin--actions-input-param="{{ (form.vars.id ~ '_' ~ locale)|json_encode }}">
                 <span class="mdi-content-content-copy" title="{% trans %}Copy{% endtrans %}"></span>
             </span>
         </div>
@@ -255,28 +255,17 @@
             <div class="input-group">
                 <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
                 {% if locale in form.vars.translators %}
-                    <span class="input-group-addon translate-button" style="color: #767676;cursor:pointer;" ondblclick="pmk_translate(this, 'input', false)" onclick="pmk_translate(this, 'input', true)" data-locale="{{ locale }}">
+                    <span class="input-group-addon translate-button" style="color: #767676;cursor:pointer;" data-locale="{{ locale }}" data-action="click->admin--actions#translate dblclick->admin--actions#translate" data-admin--actions-url-param="{{ path('pumukitnewadmin_metadata_translate') }}" data-admin--actions-locale-param="{{ locale|json_encode }}" data-admin--actions-field-param="input" data-admin--actions-question-param="{{ 'Please enter your translation:'|trans }}" data-admin--actions-error-param="{{ 'Error'|trans }}">
                         <span class="mdi-action-translate" title="{% trans %}Translate{% endtrans %}"></span>
                     </span>
                 {% endif %}
                 <span class="input-group-addon" style="color: #767676;">{{ locale }}</span>&nbsp;
-                <span class="input-group-addon copy-button" style="color: #767676;cursor:pointer;" data-copy="{{ form.vars.id }}_{{ locale }}">
+                <span class="input-group-addon copy-button" style="color: #767676;cursor:pointer;" data-copy="{{ form.vars.id }}_{{ locale }}" data-action="click->admin--actions#copy" data-admin--actions-input-param="{{ (form.vars.id ~ '_' ~ locale)|json_encode }}">
                     <span class="mdi-content-content-copy" title="{% trans %}Copy{% endtrans %}"></span>
                 </span>
             </div>
         {% endfor -%}
     {% endif -%}
-    <script>
-        $('.copy-button').on('click', function(event) {
-            var id = $(this).data('copy');
-            var input = document.getElementById(id);
-            var originalStyle = input.style.display;
-            input.style.display = 'block';
-            input.select();
-            document.execCommand("copy");
-            input.style.display = originalStyle;
-        });
-    </script>
 {% endblock texti18nadvance_widget %}
 
 {% block texti18n_widget -%}
@@ -288,7 +277,7 @@
             <div class="input-group">
                 <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
                 {% if locale in form.vars.translators %}
-                    <span class="input-group-addon translate-button" style="color: #767676;cursor:pointer;" ondblclick="pmk_translate(this, 'input', false)" onclick="pmk_translate(this, 'input', true)" data-locale="{{ locale }}">
+                    <span class="input-group-addon translate-button" style="color: #767676;cursor:pointer;" data-locale="{{ locale }}" data-action="click->admin--actions#translate dblclick->admin--actions#translate" data-admin--actions-url-param="{{ path('pumukitnewadmin_metadata_translate') }}" data-admin--actions-locale-param="{{ locale|json_encode }}" data-admin--actions-field-param="input" data-admin--actions-question-param="{{ 'Please enter your translation:'|trans }}" data-admin--actions-error-param="{{ 'Error'|trans }}">
                         <span class="mdi-action-translate" title="{% trans %}Translate{% endtrans %}"></span>
                     </span>
                 {% endif %}
@@ -307,7 +296,7 @@
           <div class="input-group">
               <textarea {{ block('widgeti18n_attributes') }}>{{ value[locale]|default("") }}</textarea>
               {% if locale in form.vars.translators %}
-                  <span class="input-group-addon translate-button" style="color: #767676;cursor:pointer;" ondblclick="pmk_translate(this, 'textarea', false)" onclick="pmk_translate(this, 'textarea', true)" data-locale="{{ locale }}">
+                  <span class="input-group-addon translate-button" style="color: #767676;cursor:pointer;" data-locale="{{ locale }}" data-action="click->admin--actions#translate dblclick->admin--actions#translate" data-admin--actions-url-param="{{ path('pumukitnewadmin_metadata_translate') }}" data-admin--actions-locale-param="{{ locale|json_encode }}" data-admin--actions-field-param="textarea" data-admin--actions-question-param="{{ 'Please enter your translation:'|trans }}" data-admin--actions-error-param="{{ 'Error'|trans }}">
                       <span class="mdi-action-translate" title="{% trans %}Translate{% endtrans %}"></span>
                   </span>
               {% endif %}
