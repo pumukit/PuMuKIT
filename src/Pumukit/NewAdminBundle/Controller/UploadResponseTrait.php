@@ -15,9 +15,14 @@ trait UploadResponseTrait
             return $result;
         }
 
+        return $this->uploadJsonResponse($result['uploaded'], $result['message']);
+    }
+
+    private function uploadJsonResponse(string $uploaded, string $message): JsonResponse
+    {
         return new JsonResponse([
-            'uploaded' => $result['uploaded'],
-            'message' => $result['message'],
+            'uploaded' => $uploaded,
+            'message' => $message,
         ]);
     }
 }

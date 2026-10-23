@@ -8,6 +8,7 @@ use Pumukit\SchemaBundle\Document\Event;
 use Pumukit\SchemaBundle\Services\LegacyEventPicService;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -45,8 +46,7 @@ class LegacyEventPicController extends AbstractController implements NewAdminCon
         return $this->redirectToRoute('pumukitnewadmin_event_list');
     }
 
-    #[Template('@PumukitNewAdmin/Pic/upload_event.html.twig')]
-    public function uploadAction(Event $event, Request $request)
+    public function uploadAction(Event $event, Request $request): JsonResponse
     {
         try {
             if (0 === $request->files->count() && 0 === $request->request->count()) {
@@ -56,18 +56,10 @@ class LegacyEventPicController extends AbstractController implements NewAdminCon
                 $this->legacyEventPicService->addPicFile($event, $request->files->get('file'));
             }
         } catch (\Exception $e) {
-            return $this->uploadResponse($request, [
-                'event' => $event,
-                'uploaded' => 'failed',
-                'message' => $e->getMessage(),
-            ]);
+            return $this->uploadJsonResponse('failed', $e->getMessage());
         }
 
-        return $this->uploadResponse($request, [
-            'event' => $event,
-            'uploaded' => 'success',
-            'message' => 'New Pic added.',
-        ]);
+        return $this->uploadJsonResponse('success', 'New Pic added.');
     }
 
     public function deleteAction(Request $request, Event $event)

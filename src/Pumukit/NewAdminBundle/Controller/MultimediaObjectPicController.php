@@ -86,8 +86,7 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
         ];
     }
 
-    #[Template('@PumukitNewAdmin/Pic/upload.html.twig')]
-    public function uploadAction(MultimediaObject $multimediaObject, Request $request)
+    public function uploadAction(MultimediaObject $multimediaObject, Request $request): JsonResponse
     {
         $isEventPoster = $request->query->get('is_event_poster', false);
 
@@ -101,24 +100,10 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
                 $this->multimediaObjectPicService->addPicUrl($multimediaObject, $request->request->get('url'), true, $isEventPoster);
             }
         } catch (\Exception $e) {
-            return $this->uploadResponse($request, [
-                'resource' => $multimediaObject,
-                'resource_name' => 'mms',
-                'uploaded' => 'failed',
-                'message' => $e->getMessage(),
-                'isBanner' => false,
-                'is_event_poster' => $isEventPoster,
-            ]);
+            return $this->uploadJsonResponse('failed', $e->getMessage());
         }
 
-        return $this->uploadResponse($request, [
-            'resource' => $multimediaObject,
-            'resource_name' => 'mms',
-            'uploaded' => 'success',
-            'message' => 'New Pic added.',
-            'isBanner' => false,
-            'is_event_poster' => $isEventPoster,
-        ]);
+        return $this->uploadJsonResponse('success', 'New Pic added.');
     }
 
     /**

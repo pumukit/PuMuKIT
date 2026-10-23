@@ -55,6 +55,8 @@ class CheckAssetsCommand extends Command
         'bundles/pumukitstatsui/vendor/nvd3/nv.d3.min.js' => 'Chart.js in the stats-ui--stats controller',
         'bundles/pumukitstatsui/vendor/nvd3/nv.d3.min.css' => 'Chart.js in the stats-ui--stats controller',
         '@PumukitNewAdmin/Playlist/listthjs.html.twig' => 'nothing: the sort links of @PumukitNewAdmin/Playlist/listth.html.twig use admin--actions#sort',
+        '@PumukitNewAdmin/Pic/upload.html.twig' => 'nothing: the picture uploads answer JSON to the admin--upload-form controller',
+        '@PumukitNewAdmin/Pic/upload_event.html.twig' => 'nothing: the picture uploads answer JSON to the admin--upload-form controller',
     ];
 
     public const REMOVED_JAVASCRIPT_GLOBALS = [

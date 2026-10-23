@@ -85,13 +85,12 @@ class UploadResponseTest extends PumukitTestCase
         $this->assertSame('failed', $this->json()['uploaded']);
     }
 
-    public function testIframeUploadsStillGetTheHtmlResponse(): void
+    public function testPicUploadsAnswerJsonWithoutAcceptHeader(): void
     {
         $this->client->request('POST', $this->picUploadUrl(), ['url' => 'https://example.org/poster.jpg']);
 
         $this->assertResponseIsSuccessful();
-        $this->assertStringContainsString('text/html', (string) $this->client->getResponse()->headers->get('Content-Type'));
-        $this->assertStringContainsString("var uploaded = 'success';", (string) $this->client->getResponse()->getContent());
+        $this->assertSame(['uploaded' => 'success', 'message' => 'New Pic added.'], $this->json());
     }
 
     private function picUploadUrl(): string

@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Services\SeriesPicService;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -80,11 +81,8 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
         ];
     }
 
-    #[Template('@PumukitNewAdmin/Pic/upload.html.twig')]
-    public function uploadAction(Request $request, Series $playlist)
+    public function uploadAction(Request $request, Series $playlist): JsonResponse
     {
-        $isBanner = false;
-
         try {
             if (0 === $request->files->count() && 0 === $request->request->count()) {
                 throw new \Exception('PHP ERROR: File exceeds post_max_size ('.ini_get('post_max_size').')');
@@ -95,22 +93,10 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
                 $this->seriesPicService->addPicFile($playlist, $request->files->get('file'), $isBanner, $bannerTargetUrl);
             }
         } catch (\Exception $e) {
-            return $this->uploadResponse($request, [
-                'resource' => $playlist,
-                'resource_name' => 'playlist',
-                'uploaded' => 'failed',
-                'message' => $e->getMessage(),
-                'isBanner' => $isBanner,
-            ]);
+            return $this->uploadJsonResponse('failed', $e->getMessage());
         }
 
-        return $this->uploadResponse($request, [
-            'resource' => $playlist,
-            'resource_name' => 'playlist',
-            'uploaded' => 'success',
-            'message' => 'New Pic added.',
-            'isBanner' => $isBanner,
-        ]);
+        return $this->uploadJsonResponse('success', 'New Pic added.');
     }
 
     public function deleteAction(Request $request)
