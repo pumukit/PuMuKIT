@@ -38,8 +38,8 @@ class LinkType extends AbstractType
                     'required' => true,
                     'attr' => [
                         'aria-label' => $this->translator->trans('URL', [], null, $this->locale),
-                        'oninvalid' => "setCustomValidity('Please enter a URL with scheme (example http://pumukit.org/path/file.pdf) ')",
-                        'onchange' => "setCustomValidity('')",
+                        'data-action' => 'invalid->admin--actions#validity change->admin--actions#validity',
+                        'data-admin--actions-message-param' => 'Please enter a URL with scheme (example http://pumukit.org/path/file.pdf) ',
                     ],
                     'label' => $this->translator->trans('URL', [], null, $this->locale),
                 ]

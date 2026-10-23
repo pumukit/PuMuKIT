@@ -60,25 +60,6 @@ window.submit_generate_magic_mms = function(id)
     }
 }
 
-window.submit_generate_magic_series = function(id, seriesTitle)
-{
-    if (window.confirm("{% trans %}Are you sure you want to regenerate the magic url for the Series: "+seriesTitle+"?{% endtrans %}")){
-        var url = "{{ path('pumukitnewadmin_series_generate_magic_url', {'id': '__id__'})|raw }}";
-        var magicUrl = "{{url('pumukit_webtv_series_magicindex', {secret: '__secret__'})}}"
-        var message = '{{ "Magic Url successfully generated."|trans|e("js") }}';
-        $('#inputROMagicUrl').load(url.replace('__id__', id), {'_method': 'POST'}, function(responseText, textStatus, XMLHttpRequest){
-            if (textStatus !== "error") {
-                success(message);
-                magicUrl = magicUrl.replace('__secret__', responseText)
-                $('#inputROMagicUrl').val(magicUrl);
-                $('#alinkROMagicUrl').attr("href",magicUrl);
-            } else {
-                no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
-            }
-        });
-    }
-}
-
 window.submit_clone_mms = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to clone this multimedia object?{% endtrans %}")){
@@ -86,57 +67,6 @@ window.submit_clone_mms = function(id)
         var message = '{{ "Multimedia Object successfully cloned."|trans|e("js") }}';
         $('#list_mms').load(url.replace('__id__', id), {'_method': 'POST'}, function(){
             success(message)
-        });
-    }
-}
-
-window.submit_clone_series = function(id)
-{
-    if (window.confirm("{% trans %}Are you sure you want to clone this series?{% endtrans %}")){
-        var url = "{{ path('pumukitnewadmin_series_clone', {'id': '__id__'})|raw }}";
-        var message = '{{ "Series successfully cloned."|trans|e("js") }}';
-        $('#list_series').load(url.replace('__id__', id), {'_method': 'POST'}, function(){
-            success(message);
-        });
-    }
-}
-
-window.submit_delete_series = function(id, seriesTitle, countMm, countLives)
-{
-    var url = "{{ path('pumukitnewadmin_series_delete', {'id': '__id__'})|raw }}";
-    if (window.confirm('{% trans %}Are you sure you want to delete the series{% endtrans %} "'+seriesTitle+'"? {% trans %}This series has{% endtrans %} '+countMm+' {% trans %}multimedia object(s){% endtrans %} {% trans %}and{% endtrans %} '+countLives+' {% trans %}live event(s){% endtrans %}.')){
-        var message = '{{ "Series"|trans|e("js") }} "'+seriesTitle+'" {{ "successfully deleted"|trans|e("js") }}.';
-        var sessionId = $($('tr.success').find('input.series_checkbox')[0]).attr('id');
-        $('#list_series').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
-            if (textStatus !== "error") {
-                if (id === sessionId) {
-                    $('#preview_series').html('{% trans %}Select any series.{% endtrans %}');
-                    $('#edit_series').html('');
-                }
-                success(message);
-            } else {
-                no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
-            }
-        });
-    }
-}
-
-window.submit_delete_playlist = function(id, playlistTitle, countMm)
-{
-    var url = "{{ path('pumukitnewadmin_playlist_delete', {'id': '__id__'})|raw }}";
-    if (window.confirm('{% trans %}Are you sure you want to delete the playlist{% endtrans %} "'+playlistTitle+'"? {% trans %}This playlist has{% endtrans %} '+countMm+' {% trans %}multimedia object(s){% endtrans %}.')){
-        var message = '{{ "Playlist"|trans|e("js") }} "'+playlistTitle+'" {{ "successfully deleted"|trans|e("js") }}.';
-        var sessionId = $($('tr.success').find('input.playlist_checkbox')[0]).attr('id');
-        $('#list_playlists').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
-            if (textStatus !== "error") {
-                if (id === sessionId) {
-                    $('#preview_playlist').html('{% trans %}Select any playlist.{% endtrans %}');
-                    $('#edit_playlist').html('');
-                }
-                success(message);
-            } else {
-                no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
-            }
         });
     }
 }
@@ -374,11 +304,6 @@ window.click_checkbox_all = function(element, value)
   $('input.'+element+'_checkbox').prop('checked', value);
 }
 
-window.click_checkbox_changepub_all = function(element, value)
-{
-  $('input.checkbox_change_pub_mms').prop('checked', value);
-}
-
 window.click_checkbox_change_pub_mms = function()
 {
   if ($('input.checkbox_change_pub_mms:checked').length == $('input.checkbox_change_pub_mms').length ) {
@@ -398,56 +323,6 @@ window.click_changepub_selection = function(element, value)
 {
     $('input.checkbox_change_pub_mms_all').each(function(){$(this)[0].checked=value});
     $('input.checkbox_change_pub_mms').each(function(){$(this)[0].checked=value});
-    return false;
-}
-
-window.check_checkbox_all = function(value)
-{
-    var checkbox_all = $('input.checkbox_change_pub_mms_all');
-    if (checkbox_all.prop('checked') && (!value)){
-        checkbox_all.prop('checked', value);
-    }
-}
-
-window.check_checkbox_channel_all = function(channelId, value)
-{
-    var checkbox_channels = $('input.checkbox_change_pub_channel_'+channelId);
-    if (checkbox_channels.prop('checked') && (!value)){
-        checkbox_channels.prop('checked', value);
-    }
-}
-
-window.click_checkbox_channel_changepub_all = function(channelId, value)
-{
-    $('input.pub_channel_input_checkbox.pub_channel_change_pub_'+channelId).prop('checked', value);
-}
-
-window.submit_series_change_pub = function()
-{
-    $('#myModal').modal('hide');
-
-    var channelsId = [];
-    $('input.checkbox_all_channels').each(function(){
-        channelsId.push($(this).attr("id"));
-    });
-
-    var values = {};
-    $('.checkbox_change_pub_mms:checked').each(function(){
-        var $this = $(this);
-        var mmId = $this.attr("id");
-        var channelValues = [];
-        var channels = {};
-        for (var i = 0; i < channelsId.length; i++){
-            var channel = $('#pub_channel_change_pub_'+channelsId[i]+'_mm_'+mmId);
-            channels[channelsId[i]] = channel.prop('checked')
-        }
-        values[mmId] = {'status': $('#status_change_pub_'+mmId+' option:selected').val(), 'channels': channels};
-    });
-    if (values.size == 0) return false;
-
-    var route = '{{ path('pumukitnewadmin_series_updatepub') }}';
-    $('#list_series').load(route, {'_method':'POST', 'values': values});
-
     return false;
 }
 
@@ -497,41 +372,6 @@ window.change_select = function(element, selector, pluralName, seriesId)
         }
         break;
 */
-    case 'delete_selected_series':
-            var ids = [];
-            $('.' + element + '_checkbox:checked').each(function(){
-                var $this = $(this);
-                ids.push($this.attr("id"));
-            });
-
-            if (ids.length == 0) break;
-
-            var route = '{{ path('pumukitnewadmin_info_series', {'ids': '__ids__'})|raw }}';
-            $.ajax({
-                    url: route.replace('__ids__', JSON.stringify(ids)),
-                    type: 'GET',
-                    success: function(response) {                        
-                        if (confirm('{% trans %}Are you sure you want to delete this/these series{% endtrans %}? {% trans %}This/these series has/have{% endtrans %} '+response.mms+' {% trans %}multimedia object(s){% endtrans %} {% trans %}and{% endtrans %} '+response.events+' {% trans %}live event(s){% endtrans %}.')) {
-                            var route = get_batch_delete_route(element, ids);        
-                            $.ajax({
-                                url: route,
-                                type: 'POST',
-                                data: {'_method': 'DELETE'},
-                                error: function(jqXHR, textStatus, errorThrown){
-                                    no_success(errorThrown + ': ' + jqXHR.responseText);
-                                },
-                                success: function(response){
-                                    var message = '{{ "Series"|trans|e("js") }}&nbsp;{{ "successfully deleted"|trans|e("js") }}.';
-                                    $('#list_'+pluralName).html(response);
-                                    success(message);
-                                }
-                            });
-                        }
-                    }
-            });
-
-        break;
-
     case 'delete_selected':
         var ids = [];
         $('.' + element + '_checkbox:checked').each(function(){
@@ -1008,7 +848,6 @@ $(function() {
   });
 
   init_tabs();
-  init_event_tab();
 
   $('#pumukitnewadmin_mms_new_button').on('click', function () {
     var seriesId = $('#mms_series_id').val();
@@ -1045,63 +884,6 @@ $(function() {
     return false;
   });
 
-  $('#pumukitnewadmin_series_new_button').on('click', function () {
-    var route = "{{ path('pumukitnewadmin_series_create') }}";
-    $('#filter_series')[0].reset();
-    $.ajax(route, {
-            type: 'GET',
-            error: function(jqXHR, textStatus, errorThrown){
-                        var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
-                        var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
-                        no_success(errorThrown+': '+textStatus+', '+message);
-            },
-            success: function(response, textStatus, jqXHR){
-                var seriesId = response['seriesId'];
-
-                // NOTE: Important to call listAction first to update series id in session
-                var routeList = "{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__seriesId__'})|raw }}";
-                $('#list_series').load(routeList.replace('__seriesId__', seriesId), function(){
-                    var routeShow = "{{ path('pumukitnewadmin_series_show', {'id': '__seriesId__'})|raw }}";
-                    $('#preview_series').load(routeShow.replace('__seriesId__', seriesId));
-                    var routeUpdate = "{{ path('pumukitnewadmin_series_update', {'id': '__seriesId__'})|raw }}";
-                    $('#edit_series').load(routeUpdate.replace('__seriesId__', seriesId), function(){
-                        init_tabs();
-                    });
-                });
-                success('{{ "Series successfully created."|trans|e("js") }}');
-            }
-    });
-    return false;
-  });
-  $('#pumukitnewadmin_playlist_new_button').on('click', function () {
-    var route = "{{ path('pumukitnewadmin_playlist_create') }}";
-    $('#filter_playlist')[0].reset();
-    $.ajax(route, {
-            type: 'POST',
-            error: function(jqXHR, textStatus, errorThrown){
-                        var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
-                        var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
-                        no_success(errorThrown+': '+textStatus+', '+message);
-            },
-            success: function(response, textStatus, jqXHR){
-                var playlistId = response['playlistId'];
-
-                // NOTE: Important to call listAction first to update series id in session
-                var routeList = "{{ path('pumukitnewadmin_playlist_list', {'selectedSeriesId': '__playlistId__'})|raw }}";
-                $('#list_playlists').load(routeList.replace('__playlistId__', playlistId), function(){
-                    var routeShow = "{{ path('pumukitnewadmin_playlist_show', {'id': '__playlistId__'})|raw }}";
-                    $('#preview_playlist').load(routeShow.replace('__playlistId__', playlistId));
-                    var routeUpdate = "{{ path('pumukitnewadmin_playlist_update', {'id': '__playlistId__'})|raw }}";
-                    $('#edit_playlist').load(routeUpdate.replace('__playlistId__', playlistId), function(){
-                        init_tabs();
-                    });
-                });
-                success('{{ "Playlist successfully created."|trans|e("js") }}');
-            }
-    });
-    return false;
-  });
-
   {% if is_naked() %}
     var naked_modal_handler = function (e) {
       var modal_dialog = $(e.currentTarget).find('.modal-dialog');
@@ -1115,253 +897,6 @@ $(function() {
   $('#myAuxModal').on('shown.bs.modal', naked_modal_handler);
   {% endif %}
 
-});
-
-$(document).on('click', '#pumukitnewadmin_series_title_sort_selected', function(){
-    var inputROId = $('#inputROId').val();
-    var type = $('#pumukitnewadmin_series_sort_change_type').val();
-    if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__inputROId__', 'sorting': {'title': '__type__'}})|raw }}";
-        route = route.replace('__inputROId__', inputROId);
-    } else {
-        var route = "{{ path('pumukitnewadmin_series_list', {'sorting': {'title': '__type__'}})|raw }}";
-    }
-    $('#list_series').load(route.replace('__type__', type), {'_method':'POST'});
-    return false;
-});
-$(document).on('click', '#pumukitnewadmin_series_title_sort_not_selected', function(){
-    var inputROId = $('#inputROId').val();
-    if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__inputROId__', 'sorting': {'title': 'asc'}})|raw }}";
-        route = route.replace('__inputROId__', inputROId);
-    } else {
-        var route = "{{ path('pumukitnewadmin_series_list', {'sorting': {'title': 'asc'}})|raw }}";
-    }
-    $('#list_series').load(route, {'_method':'POST'});
-    return false;
-});
-
-$(document).on('click', '#pumukitnewadmin_series_public_date_sort_selected', function(){
-    var inputROId = $('#inputROId').val();
-    var type = $('#pumukitnewadmin_series_sort_change_type').val();
-    if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__inputROId__', 'sorting': {'public_date': '__type__'}})|raw }}";
-        route = route.replace('__inputROId__', inputROId);
-    } else {
-        var route = "{{ path('pumukitnewadmin_series_list', {'sorting': {'public_date': '__type__'}})|raw }}";
-    }
-    $('#list_series').load(route.replace('__type__', type), {'_method':'POST'});
-    return false;
-});
-
-$(document).on('click', '#pumukitnewadmin_series_public_date_sort_not_selected', function(){
-    var inputROId = $('#inputROId').val();
-    if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__inputROId__', 'sorting': {'public_date': 'asc'}})|raw }}";
-        route = route.replace('__inputROId__', inputROId);
-    } else {
-        var route = "{{ path('pumukitnewadmin_series_list', {'sorting': {'public_date': 'asc'}})|raw }}";
-    }
-    $('#list_series').load(route, {'_method':'POST'});
-    return false;
-});
-
-$(document).on('click', '#pumukitnewadmin_series_multimedia_objects_sort_selected', function(){
-    var inputROId = $('#inputROId').val();
-    var type = $('#pumukitnewadmin_series_sort_change_type').val();
-    if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__inputROId__', 'sorting': {'multimedia_objects': '__type__'}})|raw }}";
-        route = route.replace('__inputROId__', inputROId);
-    } else {
-        var route = "{{ path('pumukitnewadmin_series_list', {'sorting': {'multimedia_objects': '__type__'}})|raw }}";
-    }
-    $('#list_series').load(route.replace('__type__', type), {'_method':'POST'});
-    return false;
-});
-
-$(document).on('click', '#pumukitnewadmin_series_multimedia_objects_sort_not_selected', function(){
-    var inputROId = $('#inputROId').val();
-    if (inputROId) {
-        var route = "{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__inputROId__', 'sorting': {'multimedia_objects': 'asc'}})|raw }}";
-        route = route.replace('__inputROId__', inputROId);
-    } else {
-        var route = "{{ path('pumukitnewadmin_series_list', {'sorting': {'multimedia_objects': 'asc'}})|raw }}";
-    }
-    $('#list_series').load(route, {'_method':'POST'});
-    return false;
-});
-
-$(document).on('click', '#pumukitnewadmin_person_post_sort_selected', function(){
-    var inputRawId = $('#inputRawId').val();
-    var type = $('#pumukitnewadmin_person_sort_change_type').val();
-    var locale = "{{ app.request.getLocale() }}";
-    if (inputRawId) {
-        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'post.__lang__': '__type__'}})|raw }}";
-        route = route.replace('__inputRawId__', inputRawId);
-    } else {
-        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'post.__lang__': '__type__'}})|raw }}";
-    }
-    route = route.replace('__lang__', locale);
-    $('#list_people').load(route.replace('__type__', type), {'_method':'POST'});
-    return false;
-});
-
-$(document).on('click', '#pumukitnewadmin_person_post_sort_not_selected', function(){
-    var inputRawId = $('#inputRawId').val();
-    var locale = "{{ app.request.getLocale() }}";
-    if (inputRawId) {
-        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'post': 'asc'}})|raw }}";
-        route = route.replace('__inputRawId__', inputRawId);
-    } else {
-        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'post.__lang__': 'asc'}})|raw }}";
-    }
-    route = route.replace('__lang__', locale);
-    $('#list_people').load(route, {'_method':'POST'});
-    return false;
-});
-
-$(document).on('click', '#pumukitnewadmin_person_id_sort_selected', function(){
-    var inputRawId = $('#inputRawId').val();
-    var type = $('#pumukitnewadmin_person_sort_change_type').val();
-    if (inputRawId) {
-        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'id': '__type__'}})|raw }}";
-        route = route.replace('__inputRawId__', inputRawId);
-    } else {
-        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'id': '__type__'}})|raw }}";
-    }
-    $('#list_people').load(route.replace('__type__', type), {'_method':'POST'});
-    return false;
-});
-$(document).on('click', '#pumukitnewadmin_person_id_sort_not_selected', function(){
-    var inputRawId = $('#inputRawId').val();
-    if (inputRawId) {
-        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'id': 'asc'}})|raw }}";
-        route = route.replace('__inputRawId__', inputRawId);
-    } else {
-        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'id': 'asc'}})|raw }}";
-    }
-    $('#list_people').load(route, {'_method':'POST'});
-    return false;
-});
-
-$(document).on('click', '#pumukitnewadmin_person_name_sort_selected', function(){
-    var inputRawId = $('#inputRawId').val();
-    var type = $('#pumukitnewadmin_person_sort_change_type').val();
-    if (inputRawId) {
-        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'name': '__type__'}})|raw }}";
-        route = route.replace('__inputRawId__', inputRawId);
-    } else {
-        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'name': '__type__'}})|raw }}";
-    }
-    $('#list_people').load(route.replace('__type__', type), {'_method':'POST'});
-    return false;
-});
-$(document).on('click', '#pumukitnewadmin_person_name_sort_not_selected', function(){
-    var inputRawId = $('#inputRawId').val();
-    if (inputRawId) {
-        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'name': 'asc'}})|raw }}";
-        route = route.replace('__inputRawId__', inputRawId);
-    } else {
-        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'name': 'asc'}})|raw }}";
-    }
-    $('#list_people').load(route, {'_method':'POST'});
-    return false;
-});
-
-$(document).on('click', '#pumukitnewadmin_person_email_sort_selected', function(){
-    var inputRawId = $('#inputRawId').val();
-    var type = $('#pumukitnewadmin_person_sort_change_type').val();
-    if (inputRawId) {
-        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'email': '__type__'}})|raw }}";
-        route = route.replace('__inputRawId__', inputRawId);
-    } else {
-        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'email': '__type__'}})|raw }}";
-    }
-    $('#list_people').load(route.replace('__type__', type), {'_method':'POST'});
-    return false;
-});
-$(document).on('click', '#pumukitnewadmin_person_email_sort_not_selected', function(){
-    var inputRawId = $('#inputRawId').val();
-    if (inputRawId) {
-        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'email': 'asc'}})|raw }}";
-        route = route.replace('__inputRawId__', inputRawId);
-    } else {
-        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'email': 'asc'}})|raw }}";
-    }
-    $('#list_people').load(route, {'_method':'POST'});
-    return false;
-});
-
-$(document).on('click', '#pumukitnewadmin_person_phone_sort_selected', function(){
-    var inputRawId = $('#inputRawId').val();
-    var type = $('#pumukitnewadmin_person_sort_change_type').val();
-    if (inputRawId) {
-        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'phone': '__type__'}})|raw }}";
-        route = route.replace('__inputRawId__', inputRawId);
-    } else {
-        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'phone': '__type__'}})|raw }}";
-    }
-    $('#list_people').load(route.replace('__type__', type), {'_method':'POST'});
-    return false;
-});
-$(document).on('click', '#pumukitnewadmin_person_phone_sort_not_selected', function(){
-    var inputRawId = $('#inputRawId').val();
-    if (inputRawId) {
-        var route = "{{ path('pumukitnewadmin_person_list', {'selectedPersonId': '__inputRawId__', 'sorting': {'phone': 'asc'}})|raw }}";
-        route = route.replace('__inputRawId__', inputRawId);
-    } else {
-        var route = "{{ path('pumukitnewadmin_person_list', {'sorting': {'phone': 'asc'}})|raw }}";
-    }
-    $('#list_people').load(route, {'_method':'POST'});
-    return false;
-});
-
-$(document).on('click', '#pumukitnewadmin_group_name_sort_selected', function(){
-    var type = $('#pumukitnewadmin_group_sort_change_type').val();
-    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'name': '__type__'}})|raw }}";
-    $('#list_groups').load(route.replace('__type__', type), {'_method':'POST'});
-    return false;
-});
-$(document).on('click', '#pumukitnewadmin_group_name_sort_not_selected', function(){
-    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'name': 'asc'}})|raw }}";
-    $('#list_groups').load(route, {'_method':'POST'});
-    return false;
-});
-
-$(document).on('click', '#pumukitnewadmin_group_key_sort_selected', function(){
-    var type = $('#pumukitnewadmin_group_sort_change_type').val();
-    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'key': '__type__'}})|raw }}";
-    $('#list_groups').load(route.replace('__type__', type), {'_method':'POST'});
-    return false;
-});
-$(document).on('click', '#pumukitnewadmin_group_key_sort_not_selected', function(){
-    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'key': 'asc'}})|raw }}";
-    $('#list_groups').load(route, {'_method':'POST'});
-    return false;
-});
-
-$(document).on('click', '#pumukitnewadmin_group_origin_sort_selected', function(){
-    var type = $('#pumukitnewadmin_group_sort_change_type').val();
-    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'origin': '__type__'}})|raw }}";
-    $('#list_groups').load(route.replace('__type__', type), {'_method':'POST'});
-    return false;
-});
-$(document).on('click', '#pumukitnewadmin_group_origin_sort_not_selected', function(){
-    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'origin': 'asc'}})|raw }}";
-    $('#list_groups').load(route, {'_method':'POST'});
-    return false;
-});
-
-$(document).on('click', '#pumukitnewadmin_group_comments_sort_selected', function(){
-    var type = $('#pumukitnewadmin_group_sort_change_type').val();
-    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'comments': '__type__'}})|raw }}";
-    $('#list_groups').load(route.replace('__type__', type), {'_method':'POST'});
-    return false;
-});
-$(document).on('click', '#pumukitnewadmin_group_comments_sort_not_selected', function(){
-    var route = "{{ path('pumukitnewadmin_group_list', {'sorting': {'comments': 'asc'}})|raw }}";
-    $('#list_groups').load(route, {'_method':'POST'});
-    return false;
 });
 
 /**
@@ -1405,60 +940,6 @@ function init_tabs()
     var lastTemplateTab = localStorage.getItem('lastTemplateTab');
     if (lastTemplateTab) {
       $('#templateTab a[href="#' + lastTemplateTab+ '"]').tab('show');
-    }
-  }
-}
-
-$(document).on('load', '#list_events', function() {init_event_tab();});
-
-updatesession = function(tab){
-    if ('calEvent' == tab) var route = '{{ path('pumukitnewadmin_event_updatesession', {'activeTab': 'calEvent'})|raw }}';
-    else var route = '{{ path('pumukitnewadmin_event_updatesession')|raw }}';
-    $.ajax({
-            url: route,
-            type: 'GET',
-    });
-}
-
-$(document).on('click', '#previousMonth', function(){
-    $('#list_events').load('{{ path('pumukitnewadmin_event_list', {'month': 'previous'})|raw }}', {'_method':'POST'});
-    return false;
-});
-
-$(document).on('click', '#todayMonth', function(){
-    $('#list_events').load('{{ path('pumukitnewadmin_event_list', {'month': 'today'})|raw }}', {'_method':'POST'});
-    return false;
-});
-
-$(document).on('click', '#nextMonth', function(){
-    $('#list_events').load('{{ path('pumukitnewadmin_event_list', {'month': 'next'})|raw }}', {'_method':'POST'});
-    return false;
-});
-
-// To keep listening on the event after jquery load
-$(document).on('show.bs.tab', '#eventTab', function(e){
-    where = e.target.href.split('#')[1];
-    localStorage.setItem('lastEventTab', where);
-    // Update session
-    if ('calEvent' == where) updatesession('calEvent');
-    else updatesession('');
-});
-
-/**
- * Event List/Calendar Tabs
- */
-function init_event_tab()
-{
-  $eventTab = $('#eventTab');
-  if($eventTab) {
-    $eventTab.on('show.bs.tab', function (e) {
-      where = e.target.href.split('#')[1];
-      localStorage.setItem('lastEventTab', where);
-    });
-
-    var lastEventTab = localStorage.getItem('lastEventTab');
-    if (lastEventTab) {
-      $('#eventTab a[href="#' + lastEventTab+ '"]').tab('show');
     }
   }
 }
@@ -1604,88 +1085,6 @@ function generate_random_password(pass1_id, pass2_id) {
     can_enable_broadcast_password_save_button();
 }
 
-$(document).on('submit', '#pumukitnewadmin_event_create_form', function() {
-    $(this).find(':submit').prop('disabled', true);
-    $('#myModal').modal('hide');
-    $.ajax({
-            url: "{{ path('pumukitnewadmin_event_create')|raw }}",
-            method: 'POST',
-            data: $(this).serialize(),
-            success: function(response, textStatus, jqXHR){
-                if (jqXHR.responseText.indexOf('modal-header') != -1){
-                    var message = '{{ "There was an error in creating the Live event."|trans|e("js") }}';
-                    no_success(message);
-                }else{
-                    var eventId = response['eventId'];
-                    var routeList = "{{ path('pumukitnewadmin_event_list', {'newEventId': '__eventId__'})|raw }}";
-                    $('#list_events').load(routeList.replace('__eventId__', eventId), {'_method':'POST'}, function(){
-                        var routeShow = "{{ path('pumukitnewadmin_event_show', {'id': '__eventId__'})|raw }}";
-                        $('#preview_event').load(routeShow.replace('__eventId__', eventId));
-                    });
-                    var message = '{{ "Live event successfully created."|trans|e("js") }}';
-                    success(message);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                no_success(errorThrown+': '+textStatus);
-            }
-    });
-    return false;
-});
-
-$(document).on('submit', '#pumukitnewadmin_live_create_form', function() {
-    $(this).find(':submit').prop('disabled', true);
-    $('#myModal').modal('hide');
-    $.ajax({
-            url: "{{ path('pumukitnewadmin_live_create')|raw }}",
-            method: 'POST',
-            data: $(this).serialize(),
-            success: function(response, textStatus, jqXHR){
-                if (jqXHR.responseText.indexOf('modal-header') != -1){
-                    var message = '{{ "There was an error in creating the Live channel."|trans|e("js") }}';
-                    no_success(message);
-                }else{
-                    var liveId = response['liveId'];
-                    var routeList = "{{ path('pumukitnewadmin_live_list', {'newLiveId': '__liveId__'})|raw }}";
-                    $('#list_lives').load(routeList.replace('__liveId__', liveId), {'_method':'POST'}, function(){
-                        var routeShow = "{{ path('pumukitnewadmin_live_show', {'id': '__liveId__'})|raw }}";
-                        $('#preview_live').load(routeShow.replace('__liveId__', liveId));
-                    });
-                    var message = '{{ "Live channel successfully created."|trans|e("js") }}';
-                    success(message);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                no_success(errorThrown+': '+textStatus);
-            }
-    });
-    return false;
-});
-
-$(document).on('submit', '#pumukitnewadmin_seriestype_create_form', function() {
-    $(this).find(':submit').prop('disabled', true);
-    $('#myModal').modal('hide');
-    $.ajax({
-            url: "{{ path('pumukitnewadmin_seriestype_create')|raw }}",
-            method: 'POST',
-            data: $(this).serialize(),
-            success: function(response, textStatus, jqXHR){
-                if (jqXHR.responseText.indexOf('modal-header') != -1){
-                    var message = '{{ "There was an error in creating the Live channel."|trans|e("js") }}';
-                    no_success(message);
-                }else{
-                    $('#list_seriestypes').html(response);
-                    var message = '{{ "Series type channel successfully created."|trans|e("js") }}';
-                    success(message);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                no_success(errorThrown+': '+textStatus);
-            }
-    });
-    return false;
-});
-
 function checkRecordDateAndPublicDate(recordDate, publicDate) {
     if (publicDate.getTime() < recordDate.getTime()){
         var message = '{{ "Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date."|trans|e("js") }}';
@@ -1730,12 +1129,6 @@ $(document).on('submit', '#pumukitnewadmin_mms_updatemeta_form', function(event)
     return false;
 });
 
-$(document).on('change', "*[id^='pumukitnewadmin_series_']", function(e){
-    if ('checkbox' == e.target.type || e.target.value != e.target.defaultValue) {
-        $('#remember_save_series').css('display', 'inline-block');
-    }
-});
-
 $(document).on('change', "*[id^='pumukitnewadmin_mms_meta_']", function(e){
     if ('checkbox' == e.target.type || e.target.value != e.target.defaultValue) {
         $('#remember_save_mm').css('display', 'inline-block');
@@ -1744,13 +1137,6 @@ $(document).on('change', "*[id^='pumukitnewadmin_mms_meta_']", function(e){
 
 $(document).on('change', 'form#pumukitnewadmin_mms_updatepub_form input, form#pumukitnewadmin_mms_updatepub_form select', function(){
     $('#remember_save_mm_pub').show();
-});
-
-$(document).on('click', '#pumukitnewadmin_series_updatemeta_cancel', function(){
-    $('#pumukitnewadmin_series_updatemeta_form')[0].reset();
-    $('input.series.materialtags').materialtags('destroy');
-    window.init_series_materialtags();
-    $('#remember_save_series').hide();
 });
 
 $(document).on('click', '#pumukitnewadmin_mms_updatepub_cancel', function(){
@@ -1770,126 +1156,6 @@ $(document).on('click', '#pumukitnewadmin_mmtemplate_updatemeta_cancel', functio
     $('input.mmobj.materialtags').materialtags('destroy');
     window.init_mmobj_materialtags();
     $('#remember_save_mm_template').hide();
-});
-
-$(document).on('submit', '#pumukitnewadmin_user_form_update', function(event){
-    $('#myModal').modal('hide');
-
-    var route = '{{ path('pumukitnewadmin_user_update', {'id': '__userId__'}) }}';
-    var userId = $('#userId').val();
-
-    route = route.replace('__userId__', userId);
-
-    $.ajax({
-            url: route,
-            method: 'POST',
-            data: $(this).serialize(),
-            success: function(response, textStatus, jqXHR){
-                        if (jqXHR.responseText.indexOf('modal-header') != -1){
-                            var message = '{{ "There was an error in updating the User."|trans|e("js") }}';
-                            no_success(message);
-                        }else{
-                            $('#list_users').html(response);
-                            var message = '{{ "User successfully updated."|trans|e("js") }}';
-                            success(message);
-                        }
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                        var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
-                        var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
-                        no_success(errorThrown+': '+textStatus+', '+message);
-            }
-    });
-    return false;
-});
-
-$(document).on('submit', '#pumukitnewadmin_user_form_create', function(event){
-    $(event.currentTarget).find(':submit').prop('disabled', true);
-    $('#myModal').modal('hide');
-
-    var route = '{{ path('pumukitnewadmin_user_create') }}';
-    $.ajax({
-            url: route,
-            method: 'POST',
-            data: $(this).serialize(),
-            success: function(response, textStatus, jqXHR){
-                if (jqXHR.responseText.indexOf('modal-header') != -1){
-                    var message = '{{ "There was an error in creating the User."|trans|e("js") }}';
-                    no_success(message);
-                }else{
-                    $('#list_users').html(response);
-                    var message = '{{ "User successfully created."|trans|e("js") }}';
-                    success(message);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
-                var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
-                no_success(message);
-            }
-    });
-    return false;
-});
-
-$(document).on('submit', '#pumukitnewadmin_permissionprofile_form_create', function(event){
-    $(event.currentTarget).find(':submit').prop('disabled', true);
-    $('#myModal').modal('hide');
-
-    var route = '{{ path('pumukitnewadmin_permissionprofile_create') }}';
-    $.ajax({
-            url: route,
-            method: 'POST',
-            data: $(this).serialize(),
-            success: function(response, textStatus, jqXHR){
-                        if (jqXHR.responseText.indexOf('modal-header') != -1){
-                            var message = '{{ "There was an error in creating the Permission Profile."|trans|e("js") }}';
-                            no_success(message);
-                        }else{
-                            $('#list_permissionprofiles').html(response);
-                            $('[data-toggle="tooltip"]').tooltip()
-                            var message = '{{ "Permission Profile successfully created."|trans|e("js") }}';
-                            success(message);
-                        }
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                        var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
-                        var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
-                        no_success(errorThrown+': '+textStatus+', '+message);
-            }
-    });
-    return false;
-});
-
-$(document).on('submit', '#pumukitnewadmin_permissionprofile_form_update', function(event){
-    $('#myModal').modal('hide');
-
-    var route = '{{ path('pumukitnewadmin_permissionprofile_update', {'id': '__permissionProfileId__'}) }}';
-    var permissionProfileId = $('#permissionProfileId').val();
-
-    route = route.replace('__permissionProfileId__', permissionProfileId);
-
-    $.ajax({
-            url: route,
-            method: 'POST',
-            data: $(this).serialize(),
-            success: function(response, textStatus, jqXHR){
-                        if (jqXHR.responseText.indexOf('modal-header') != -1){
-                            var message = '{{ "There was an error in updating the Permission Profile."|trans|e("js") }}';
-                            no_success(message);
-                        }else{
-                            $('#list_permissionprofiles').html(response);
-                            $('[data-toggle="tooltip"]').tooltip();
-                            var message = '{{ "Permission Profile successfully updated."|trans|e("js") }}';
-                            success(message);
-                        }
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                        var responseText = jqXHR.responseText.split("<title>").pop().split("</title>").shift();
-                        var message = responseText.replace(/(\r\n|\n|\r)/gm,"");
-                        no_success(errorThrown+': '+textStatus+', '+message);
-            }
-    });
-    return false;
 });
 
 window.change_pics_page = function(route)
@@ -2312,22 +1578,6 @@ is_last_user_relation_to_admin_mm = function(resource, person_id, roleId, mmId, 
 }
 
 //
-window.init_series_materialtags = function() {
-    $inputs = $('input.series.materialtags')
-    $inputs.materialtags({
-        typeaheadjs: {
-            name: 'keywords',
-            displayKey: '_id',
-            valueKey: '_id',
-            source: window.serieskeywords.ttAdapter()
-        }
-    });
-
-    $inputs.on('itemAdded', function(event) {
-        window.serieskeywords.add({'_id': event.item})
-    });
-}
-
 window.init_mmobj_materialtags = function() {
     $inputs = $('input.mmobj.materialtags');
     $inputs.materialtags({

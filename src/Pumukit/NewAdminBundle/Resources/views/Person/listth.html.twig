@@ -14,33 +14,33 @@
 
 <th id="th-name">
     {% if 'name' == sort %}
-        <a href="#" id="pumukitnewadmin_person_name_sort_selected">{% trans %}Name{% endtrans %}{{ typeIcon|raw }}</a>
+        <a href="#" id="pumukitnewadmin_person_name_sort_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_person_list', {'sorting': {'name': '__type__'}}) }}" data-admin--actions-target-param="#list_people" data-admin--actions-type-param="#pumukitnewadmin_person_sort_change_type" data-admin--actions-selected-param="#inputRawId" data-admin--actions-selected-key-param="selectedPersonId">{% trans %}Name{% endtrans %}{{ typeIcon|raw }}</a>
     {% else %}
-        <a href="#" id="pumukitnewadmin_person_name_sort_not_selected">{% trans %}Name{% endtrans %}</a>
+        <a href="#" id="pumukitnewadmin_person_name_sort_not_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_person_list', {'sorting': {'name': 'asc'}}) }}" data-admin--actions-target-param="#list_people" data-admin--actions-selected-param="#inputRawId" data-admin--actions-selected-key-param="selectedPersonId">{% trans %}Name{% endtrans %}</a>
     {% endif %}
 </th>
 
 <th id="th-post">
     {% if ('post.' ~ app.request.getLocale())  == sort %}
-        <a href="#" id="pumukitnewadmin_person_post_sort_selected">{% trans %}Post{% endtrans %}{{ typeIcon|raw  }}</a>
+        <a href="#" id="pumukitnewadmin_person_post_sort_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_person_list', {'sorting': {('post.' ~ app.request.getLocale()): '__type__'}}) }}" data-admin--actions-target-param="#list_people" data-admin--actions-type-param="#pumukitnewadmin_person_sort_change_type" data-admin--actions-selected-param="#inputRawId" data-admin--actions-selected-key-param="selectedPersonId">{% trans %}Post{% endtrans %}{{ typeIcon|raw  }}</a>
     {% else %}
-        <a href="#" id="pumukitnewadmin_person_post_sort_not_selected">{% trans %}Post{% endtrans %}</a>
+        <a href="#" id="pumukitnewadmin_person_post_sort_not_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_person_list', {'sorting': {('post.' ~ app.request.getLocale()): 'asc'}}) }}" data-admin--actions-target-param="#list_people" data-admin--actions-selected-param="#inputRawId" data-admin--actions-selected-key-param="selectedPersonId">{% trans %}Post{% endtrans %}</a>
     {% endif %}
 </th>
 
 <th id="th-email">
     {% if 'email' == sort %}
-        <a href="#" id="pumukitnewadmin_person_email_sort_selected">{% trans %}Email{% endtrans %}{{ typeIcon|raw  }}</a>
+        <a href="#" id="pumukitnewadmin_person_email_sort_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_person_list', {'sorting': {'email': '__type__'}}) }}" data-admin--actions-target-param="#list_people" data-admin--actions-type-param="#pumukitnewadmin_person_sort_change_type" data-admin--actions-selected-param="#inputRawId" data-admin--actions-selected-key-param="selectedPersonId">{% trans %}Email{% endtrans %}{{ typeIcon|raw  }}</a>
     {% else %}
-        <a href="#" id="pumukitnewadmin_person_email_sort_not_selected">{% trans %}Email{% endtrans %}</a>
+        <a href="#" id="pumukitnewadmin_person_email_sort_not_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_person_list', {'sorting': {'email': 'asc'}}) }}" data-admin--actions-target-param="#list_people" data-admin--actions-selected-param="#inputRawId" data-admin--actions-selected-key-param="selectedPersonId">{% trans %}Email{% endtrans %}</a>
     {% endif %}
 </th>
 
 <th id="th-phone">
     {% if 'phone' == sort %}
-        <a href="#" id="pumukitnewadmin_person_phone_sort_selected">{% trans %}Phone{% endtrans %}{{ typeIcon|raw  }}</a>
+        <a href="#" id="pumukitnewadmin_person_phone_sort_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_person_list', {'sorting': {'phone': '__type__'}}) }}" data-admin--actions-target-param="#list_people" data-admin--actions-type-param="#pumukitnewadmin_person_sort_change_type" data-admin--actions-selected-param="#inputRawId" data-admin--actions-selected-key-param="selectedPersonId">{% trans %}Phone{% endtrans %}{{ typeIcon|raw  }}</a>
     {% else %}
-        <a href="#" id="pumukitnewadmin_person_phone_sort_not_selected">{% trans %}Phone{% endtrans %}</a>
+        <a href="#" id="pumukitnewadmin_person_phone_sort_not_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_person_list', {'sorting': {'phone': 'asc'}}) }}" data-admin--actions-target-param="#list_people" data-admin--actions-selected-param="#inputRawId" data-admin--actions-selected-key-param="selectedPersonId">{% trans %}Phone{% endtrans %}</a>
     {% endif %}
 </th>
 

@@ -31,10 +31,10 @@
                                 <div class="row">
                                     <div class="col-md-11 col-md-offset-1">
                                         {% trans %}From{% endtrans %}:&nbsp;
-                                        <input type="date" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="Format YYYY-MM-DD" name="criteria[date][from]" onChange="on_filter_series_list()" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
+                                        <input type="date" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="Format YYYY-MM-DD" name="criteria[date][from]" data-action="change->admin--actions#validateRange" data-admin--actions-from-param="#filters_date_from" data-admin--actions-to-param="#filters_date_to" data-admin--actions-message-param="{{ 'From date must be less than to date'|trans }}" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
                                         <br/>
                                         {% trans %}To{% endtrans %}:&nbsp;&nbsp;
-                                        <input type="date" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="Format YYYY-MM-DD" name="criteria[date][to]" id="filters_date_to" onChange="on_filter_series_list()" value="{{ criteria['date']['to']|default("") }}">
+                                        <input type="date" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="Format YYYY-MM-DD" name="criteria[date][to]" id="filters_date_to" data-action="change->admin--actions#validateRange" data-admin--actions-from-param="#filters_date_from" data-admin--actions-to-param="#filters_date_to" data-admin--actions-message-param="{{ 'From date must be less than to date'|trans }}" value="{{ criteria['date']['to']|default("") }}">
                                     </div>
                                 </div>
                             </div>
@@ -107,32 +107,8 @@
         </fieldset>
 
         <div class="text-right">
-            <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
+            <input class="btn btn-default btn-raised" data-action="click->admin--actions#navigate" data-admin--actions-url-param="?criteria[reset]=true" type="button" value="{% trans %}reset{% endtrans %}">
             <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
         </div>
     </form>
 </div>
-
-<script type="text/javascript">
-    function resetSearchForm() {
-        $('filters_title').value = '';
-        $('filters_person').value = '';
-        $('filters_date_from').value = '';
-        $('filters_date_to').value = '';
-        $('filters_announce').value = 'diff';
-        $('filters_status').value = 'all';
-        $('filters_search_subtitle').value = '';
-    }
-
-    function on_filter_series_list(event) {
-        "use strict";
-        var from_date = $('#filters_date_from');
-        var to_date = $('#filters_date_to');
-        if (to_date.val() != "" && from_date.val() >= to_date.val()) {
-            to_date[0].setCustomValidity("{% trans %}From date must be less than to date{% endtrans %}");
-        } else {
-            to_date[0].setCustomValidity("");
-        }
-        return false;
-    }
-</script>

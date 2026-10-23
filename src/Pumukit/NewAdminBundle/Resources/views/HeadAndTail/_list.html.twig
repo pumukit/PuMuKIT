@@ -33,7 +33,7 @@
                     <td>{{ element.containsTagWithCod('PUCHWEBTV') ? greenIcon|raw : redIcon|raw }}</td>
                     <td>{{ element.getDisplayTrack() ? greenIcon|raw : redIcon|raw }}</td>
                     <td>
-                        <a class="{{ type }}_element_actions" href="#" title="{{ ("Remove " ~ type)|trans }}">
+                        <a class="{{ type }}_element_actions" href="#" title="{{ ("Remove " ~ type)|trans }}" data-action="click->admin--actions#send" data-admin--actions-url-param="{{ path('pumukit_newadmin_head_and_tail_manager_remove_item', {'type': type, 'element': element.id}) }}" data-admin--actions-reload-param="true">
                             <i class="fa fa-trash" data-type="{{ type }}" data-element="{{ element.id }}"></i>
                         </a>
                     </td>
@@ -47,27 +47,3 @@
         </table>
     </div>
 </div>
-
-<script>
-    $('.'+ "{{ type }}" +'_element_actions').on('click', function(event) {
-        event.preventDefault();
-        let route =  '{{ path('pumukit_newadmin_head_and_tail_manager_remove_item', {
-            'type': '__type__',
-            'element': '__element__'
-        }) }}';
-
-        route = route.replace('__element__', event.target.getAttribute('data-element'));
-        route = route.replace('__type__', event.target.getAttribute('data-type'));
-        $.ajax({
-            url: route,
-            method: 'POST',
-            success: function (response) {
-                success(response.success);
-                location.reload();
-            },
-            error: function (response) {
-                success(response.error);
-            }
-        });
-    });
-</script>

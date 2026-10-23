@@ -1,10 +1,10 @@
 {% if 'title' == app.session.get('admin/playlist/sort') %}
   <th id="th-title">
-    <a href="#" id="pumukitnewadmin_playlist_title_sort_selected">{% trans %}Title{% endtrans %}&nbsp;{{ app.session.get('admin/playlist/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
+    <a href="#" id="pumukitnewadmin_playlist_title_sort_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_playlist_list', {'sorting': {'title': '__type__'}}) }}" data-admin--actions-target-param="#list_playlists" data-admin--actions-type-param="#pumukitnewadmin_playlist_sort_change_type" data-admin--actions-selected-param="#inputROId" data-admin--actions-selected-key-param="selectedPlaylistId">{% trans %}Title{% endtrans %}&nbsp;{{ app.session.get('admin/playlist/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
   </th>
 {% else %}
   <th id="th-title">
-    <a href="#" id="pumukitnewadmin_playlist_title_sort_not_selected">{% trans %}Title{% endtrans %}</a>
+    <a href="#" id="pumukitnewadmin_playlist_title_sort_not_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_playlist_list', {'sorting': {'title': 'asc'}}) }}" data-admin--actions-target-param="#list_playlists" data-admin--actions-selected-param="#inputROId" data-admin--actions-selected-key-param="selectedPlaylistId">{% trans %}Title{% endtrans %}</a>
   </th>
 {% endif %}
 <th id="th-mm" style="width:2%;">{% trans %}Mm.Obj.{% endtrans %}</th>

@@ -18,13 +18,23 @@
                 </a>
             </li>
             <li>
-                <a class="qa-button-clone-series" href="#" onclick="window.submit_clone_series('{{ oneseries.id }}'); return false;">
+                <a class="qa-button-clone-series" href="#" data-action="click->admin--actions#load"
+                   data-admin--actions-url-param="{{ path('pumukitnewadmin_series_clone', {'id': oneseries.id}) }}"
+                   data-admin--actions-target-param="#list_series"
+                   data-admin--actions-data-param="{{ {_method: 'POST'}|json_encode }}"
+                   data-admin--actions-confirm-param="{{ 'Are you sure you want to clone this series?'|trans }}"
+                   data-admin--actions-success-param="{{ 'Series successfully cloned.'|trans }}">
                     <i class="mdi-content-content-copy"></i> {% trans %}Clone series{% endtrans %}
                 </a>
             </li>
         {% endif %}
         <li>
-            <a href="#" class="qa-button-delete-series" onclick="window.submit_delete_series('{{ oneseries.id }}', '{{ oneseries.getTitle() }}', '{{ numV }}', '{{ numL }}'); return false;">
+            <a href="#" class="qa-button-delete-series" data-action="click->admin--actions#remove"
+               data-admin--actions-url-param="{{ path('pumukitnewadmin_series_delete', {'id': oneseries.id}) }}"
+               data-admin--actions-target-param="#list_series"
+               data-admin--actions-clear-param="{{ {name: 'series', id: oneseries.id, message: 'Select any series.'|trans}|json_encode }}"
+               data-admin--actions-confirm-param="{{ 'Are you sure you want to delete the series'|trans }} &quot;{{ oneseries.getTitle() }}&quot;? {{ 'This series has'|trans }} {{ numV }} {{ 'multimedia object(s)'|trans }} {{ 'and'|trans }} {{ numL }} {{ 'live event(s)'|trans }}."
+               data-admin--actions-success-param="{{ 'Series'|trans }} &quot;{{ oneseries.getTitle() }}&quot; {{ 'successfully deleted'|trans }}.">
                 <i class="mdi-content-clear"></i> {% trans %}Delete the series{% endtrans %}
             </a>
         </li>
@@ -46,7 +56,7 @@
             {% endif %}
         {% endfor %}
         <li>
-            <a href="#" onclick="return false;">
+            <a href="#" data-action="click->admin--actions#cancel">
                 <strong>{% trans %}Cancel{% endtrans %}...</strong>
             </a>
         </li>

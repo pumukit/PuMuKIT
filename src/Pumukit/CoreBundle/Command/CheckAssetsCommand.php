@@ -54,6 +54,7 @@ class CheckAssetsCommand extends Command
         'bundles/pumukitstatsui/vendor/d3/d3.min.js' => 'Chart.js in the stats-ui--stats controller',
         'bundles/pumukitstatsui/vendor/nvd3/nv.d3.min.js' => 'Chart.js in the stats-ui--stats controller',
         'bundles/pumukitstatsui/vendor/nvd3/nv.d3.min.css' => 'Chart.js in the stats-ui--stats controller',
+        '@PumukitNewAdmin/Playlist/listthjs.html.twig' => 'nothing: the sort links of @PumukitNewAdmin/Playlist/listth.html.twig use admin--actions#sort',
     ];
 
     public const REMOVED_JAVASCRIPT_GLOBALS = [
@@ -97,6 +98,16 @@ class CheckAssetsCommand extends Command
         'updateChat' => 'the webtv--chat controller',
         'Modernizr' => 'native feature detection',
         'dynamic_image' => 'data-controller="webtv--dynamic-pic" on the image',
+        'submit_generate_magic_series' => 'admin--actions#magicUrl (see @PumukitNewAdmin/Series/links.html.twig)',
+        'submit_clone_series' => 'admin--actions#load (see @PumukitNewAdmin/Series/updatemenu.html.twig)',
+        'submit_delete_series' => 'admin--actions#remove (see @PumukitNewAdmin/Series/updatemenu.html.twig)',
+        'submit_delete_playlist' => 'admin--actions#remove (see @PumukitNewAdmin/Playlist/updatemenu.html.twig)',
+        'click_checkbox_changepub_all' => 'the admin--changepub controller',
+        'check_checkbox_all' => 'the admin--changepub controller',
+        'check_checkbox_channel_all' => 'the admin--changepub controller',
+        'click_checkbox_channel_changepub_all' => 'the admin--changepub controller',
+        'submit_series_change_pub' => 'the admin--changepub controller',
+        'init_series_materialtags' => 'the admin--meta-form controller',
     ];
 
     private const REFERENCE_PATTERN = '#(?<![\w./-])/?(bundles/([a-z0-9_]+)/[^\'"\s?\#{}()]*)#';

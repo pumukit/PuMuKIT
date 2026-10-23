@@ -9,11 +9,11 @@
             <div class="form-group">
               <label for="inputROId" class="col-xs-2 control-label">{% trans %}Id:{% endtrans %}</label>
               <div class="col-xs-10 input-group">
-                <input type="text" class="form-control" id="inputROId" readonly onclick="select()" value="{{ series.id }}">
+                <input type="text" class="form-control" id="inputROId" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ series.id }}">
               </div>
               <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">{% trans %}Preview:{% endtrans %}</label>
               <div class="col-xs-10 input-group hidden-naked">
-                <input type="text" class="form-control" id="inputROUrl" readonly onclick="select()" value="{{ url('pumukit_playlistplayer_index', {id: series.id}) }}">
+                <input type="text" class="form-control" id="inputROUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ url('pumukit_playlistplayer_index', {id: series.id}) }}">
                 <span class="input-group-addon"><a href="{{ url('pumukit_playlistplayer_index', {id: series.id}) }}" target="_blank" title="{% trans %}Preview{% endtrans %}"><i class="mdi-action-exit-to-app"></i></a></span>
               </div>
             </div>

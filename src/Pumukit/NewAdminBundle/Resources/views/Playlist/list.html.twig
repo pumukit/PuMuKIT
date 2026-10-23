@@ -7,7 +7,7 @@
                 <th width="1%" id="th-checkbox">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" onclick="window.click_checkbox_all('playlist', this.checked)">
+                            <input type="checkbox" data-action="click->admin--actions#checkAll" data-admin--actions-name-param="playlist">
                         </label>
                     </div>
                 </th>
@@ -32,19 +32,19 @@
                     </td>
                     {% if is_naked() %}
                         <td headers="th-icons">
-                            <a class="moodlepr-add" href="#" title="{% trans %}Publish to LMS{% endtrans %}" onclick="parent.window.postMessage({'playlist': '{{ oneseries.id }}'}, '*'); return false;"><i class="mdi-editor-insert-photo"></i></a>
+                            <a class="moodlepr-add" href="#" title="{% trans %}Publish to LMS{% endtrans %}" data-action="click->admin--actions#notifyParent" data-admin--actions-message-param="{{ {playlist: oneseries.id}|json_encode }}"><i class="mdi-editor-insert-photo"></i></a>
                         </td>
                     {% endif %}
-                    <td headers="th-img" onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
+                    <td headers="th-img" data-action="click->admin--actions#edit dblclick->admin--actions#navigate" data-admin--actions-name-param="playlist" data-admin--actions-show-param="{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}" data-admin--actions-url-param="{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}">
                         {% include "@PumukitNewAdmin/Misc/img_list.html.twig"  with {'object' : oneseries, 'type': 'playlist' } %}
                     </td>
-                    <td headers="th-title" onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
+                    <td headers="th-title" data-action="click->admin--actions#edit dblclick->admin--actions#navigate" data-admin--actions-name-param="playlist" data-admin--actions-show-param="{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}" data-admin--actions-url-param="{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}">
                         <a title="{% trans %}List multimedia objects of the playlist{% endtrans %}" href="{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}">
                             {{ oneseries.getTitle() }}
                         </a>
 
                     </td>
-                    <td headers="th-mm" onclick="click_fila_edit_urls('playlist', this, '{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}')">
+                    <td headers="th-mm" data-action="click->admin--actions#edit dblclick->admin--actions#navigate" data-admin--actions-name-param="playlist" data-admin--actions-show-param="{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}" data-admin--actions-url-param="{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}">
                         {{ oneseries.getPlaylist().getMultimediaObjects()|length }}
                     </td>
                     <td headers="th-play">
@@ -94,7 +94,7 @@
                                 {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_playlist_index", "routeParams": sorting} %}
                                 {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : series, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
                                 {% if not is_naked() %}
-                                    <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_playlist_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of playlists to display per page.{% endtrans %}">
+                                    <select data-action="change->admin--actions#go" data-admin--actions-url-param="{{ path('pumukitnewadmin_playlist_index') }}?page=1&paginate=" aria-label="{% trans %}Select the number of playlists to display per page.{% endtrans %}">
                                         <option {% if series.maxPerPage == 10 %}selected{% endif %} value="10">
                                             10
                                         </option>
@@ -113,7 +113,6 @@
             </tr>
             </tfoot>
         </table>
-        {% include '@PumukitNewAdmin/Playlist/listthjs.html.twig' %}
     {% else %}
         {% trans %}You don't have enough permissions to access this content.{% endtrans %}
     {% endif %}

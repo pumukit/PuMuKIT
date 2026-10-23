@@ -46,8 +46,8 @@ class RoleType extends AbstractType
                 [
                     'attr' => [
                         'pattern' => '^\w*$',
-                        'oninvalid' => "setCustomValidity('The code can not have blank spaces neither special characters')",
-                        'oninput' => "setCustomValidity('')",
+                        'data-action' => 'invalid->admin--actions#validity input->admin--actions#validity',
+                        'data-admin--actions-message-param' => 'The code can not have blank spaces neither special characters',
                     ],
                     'label' => $this->translator->trans('Code', [], null, $this->locale),
                 ]

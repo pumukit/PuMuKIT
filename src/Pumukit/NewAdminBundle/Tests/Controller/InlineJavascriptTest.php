@@ -70,6 +70,9 @@ class InlineJavascriptTest extends PumukitTestCase
             'people' => ['pumukitnewadmin_person_index'],
             'permission profiles' => ['pumukitnewadmin_permissionprofile_index'],
             'tags' => ['pumukitnewadmin_tag_index'],
+            'series' => ['pumukitnewadmin_series_index'],
+            'playlists' => ['pumukitnewadmin_playlist_index'],
+            'head and tail' => ['pumukit_newadmin_head_and_tail'],
         ];
     }
 }

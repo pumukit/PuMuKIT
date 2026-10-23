@@ -6,7 +6,9 @@
 
 <div class="modal-body">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-  <form onsubmit="window.submit_series_change_pub(); return false;"
+  <form data-controller="admin--changepub" data-action="submit->admin--changepub#submit"
+        data-admin--changepub-url-value="{{ path('pumukitnewadmin_series_updatepub') }}"
+        data-admin--changepub-target-value="#list_series"
         action="{{ path('pumukitnewadmin_series_updatepub') }}" method="POST">
     <fieldset>
       <legend hidden>{% trans %}change status of multimedia objects inside the series{% endtrans %}</legend>
@@ -30,16 +32,13 @@
                 <td>
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox" checked="checked" onclick="window.click_checkbox_changepub_all('series', this.checked)" class="checkbox_change_pub_mms_all">
+                      <input type="checkbox" checked="checked" data-action="click->admin--changepub#checkAll" class="checkbox_change_pub_mms_all">
                     </label>
                   </div>
                 </td>
                 <td><span style="font-weight: bold">{% trans %}ALL{% endtrans %}</span></td>
                 <td>
-                  <select onchange="var status_selected = $('#all_status_change_pub option:selected').val();
-                                    if (status_selected.length != 0){
-                                        $('select.status_change_pub').each(function(){$(this).val(status_selected)});
-                                    }"
+                  <select data-action="change->admin--changepub#status"
                           {% if not is_granted('ROLE_CHANGE_MMOBJECT_STATUS') %} disabled="disabled" {% endif %}
                           id="all_status_change_pub" class="form-control">
                     <option selected="selected"></option>
@@ -57,7 +56,7 @@
                              {% if disabled %}
                              disabled="disabled"
                              {% else %}
-                             onclick="window.click_checkbox_channel_changepub_all('{{ channel.id }}', this.checked);"
+                             data-action="click->admin--changepub#checkChannel" data-admin--changepub-channel-param="{{ channel.id|json_encode }}"
                              id="{{ channel.id }}"
                              class="checkbox_all_channels checkbox_change_pub_channel_{{ channel.id }}"
                              {% endif %}/>
@@ -72,7 +71,7 @@
                 <td>
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox" id="{{ mm.id }}" class="checkbox_change_pub_mms" checked="checked" onclick="window.check_checkbox_all(this.checked)">
+                      <input type="checkbox" id="{{ mm.id }}" class="checkbox_change_pub_mms" checked="checked" data-action="click->admin--changepub#checkOne">
                     </label>
                   </div>
                 </td>
@@ -106,7 +105,7 @@
                   <div class="checkbox">
                     <label>
                       <input type="checkbox"
-                             onclick="window.check_checkbox_channel_all('{{ channel.id }}', this.checked);"
+                             data-action="click->admin--changepub#checkOneChannel" data-admin--changepub-channel-param="{{ channel.id|json_encode }}"
                              name="data[{{ mm.id }}][pub_channels][{{ channel.id }}]"
                              class="pub_channel_input_checkbox pub_channel_change_pub_{{ channel.id }}"
                              id="pub_channel_change_pub_{{ channel.id }}_mm_{{ mm.id }}"
@@ -124,8 +123,8 @@
           </div>
         </div>
         <div style="text-align: right">{% trans %}Select{% endtrans %}:
-          <a href="#" onclick="window.click_changepub_selection($(this), false); return false;">{% trans %}nothing{% endtrans %}</a>
-          <a href="#" onclick="window.click_changepub_selection($(this), true); return false;">{% trans %}all{% endtrans %}</a>
+          <a href="#" data-action="click->admin--changepub#select" data-admin--changepub-checked-param="false">{% trans %}nothing{% endtrans %}</a>
+          <a href="#" data-action="click->admin--changepub#select" data-admin--changepub-checked-param="true">{% trans %}all{% endtrans %}</a>
         </div>
       </div>
     </fieldset>

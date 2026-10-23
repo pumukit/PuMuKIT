@@ -7,12 +7,17 @@
       </a>
     </li>
     <li>
-      <a href="#" onclick="window.submit_delete_playlist('{{ oneseries.id }}', '{{ oneseries.getTitle() }}', '{{ oneseries|count_multimedia_objects }}'); return false;">
+      <a href="#" data-action="click->admin--actions#remove"
+         data-admin--actions-url-param="{{ path('pumukitnewadmin_playlist_delete', {'id': oneseries.id}) }}"
+         data-admin--actions-target-param="#list_playlists"
+         data-admin--actions-clear-param="{{ {name: 'playlist', id: oneseries.id, message: 'Select any playlist.'|trans}|json_encode }}"
+         data-admin--actions-confirm-param="{{ 'Are you sure you want to delete the playlist'|trans }} &quot;{{ oneseries.getTitle() }}&quot;? {{ 'This playlist has'|trans }} {{ oneseries|count_multimedia_objects }} {{ 'multimedia object(s)'|trans }}."
+         data-admin--actions-success-param="{{ 'Playlist'|trans }} &quot;{{ oneseries.getTitle() }}&quot; {{ 'successfully deleted'|trans }}.">
         <i class="mdi-content-clear"></i> {% trans %}Delete the playlist{% endtrans %}
       </a>
     </li>
     <li>
-      <a href="#" onclick="return false;">
+      <a href="#" data-action="click->admin--actions#cancel">
         <strong>{% trans %}Cancel{% endtrans %}...</strong>
       </a>
     </li>

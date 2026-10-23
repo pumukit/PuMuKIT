@@ -27,7 +27,10 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-4">
-                            <select id="options_series" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('playlist', $(this), 'playlists');">
+                            <select id="options_series" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
+                                    data-admin--batch-name-value="playlist" data-admin--batch-plural-value="playlists"
+                                    data-admin--batch-urls-value="{{ {delete: path('pumukitnewadmin_playlist_batch_delete', {'ids': '__ids__'})}|json_encode }}"
+                                    data-admin--batch-messages-value="{{ {confirm: 'Are you sure?'|trans, success: 'Playlists ' ~ 'successfully deleted.'|trans}|json_encode }}">
                                 <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
                                 <option disabled="">---</option>
                                 <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
@@ -35,7 +38,17 @@
                         </div>
                         <div class="col-xs-8 text-right">
                             {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
-                                <a title="{% trans %}Create new playlist{% endtrans %}" id="pumukitnewadmin_playlist_new_button" class="btn btn-pumukit btn-raised" href="#">{% trans %}New{% endtrans %}</a>
+                                <a title="{% trans %}Create new playlist{% endtrans %}" id="pumukitnewadmin_playlist_new_button" class="btn btn-pumukit btn-raised" href="#" data-action="click->admin--actions#create"
+                                   data-admin--actions-url-param="{{ path('pumukitnewadmin_playlist_create') }}"
+                                   data-admin--actions-method-param="POST"
+                                   data-admin--actions-key-param="playlistId"
+                                   data-admin--actions-name-param="playlist"
+                                   data-admin--actions-list-param="#list_playlists"
+                                   data-admin--actions-list-url-param="{{ path('pumukitnewadmin_playlist_list', {'selectedSeriesId': '__id__'}) }}"
+                                   data-admin--actions-show-url-param="{{ path('pumukitnewadmin_playlist_show', {'id': '__id__'}) }}"
+                                   data-admin--actions-edit-url-param="{{ path('pumukitnewadmin_playlist_update', {'id': '__id__'}) }}"
+                                   data-admin--actions-reset-param="#filter_playlist"
+                                   data-admin--actions-success-param="{{ 'Playlist successfully created.'|trans }}">{% trans %}New{% endtrans %}</a>
                             {% endif %}
                         </div>
                     </div>

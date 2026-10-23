@@ -8,6 +8,7 @@ export default class extends Controller {
         preview: String,
         urls: Object,
         messages: Object,
+        announce: Object,
     };
 
     run() {
@@ -21,6 +22,8 @@ export default class extends Controller {
     actions() {
         return {
             delete_selected: () => this.deleteSelected(),
+            delete_selected_series: () => this.deleteSelectedSeries(),
+            invert_announce_selected: () => this.invertAnnounce(),
             delete_selected_groups: () => this.deleteSelectedGroups(),
             promote_to: () => this.promote(),
         };
@@ -75,6 +78,42 @@ export default class extends Controller {
                 $(`#list_${this.pluralValue}`).html(response);
                 window.success(this.message('success'));
             });
+    }
+
+    deleteSelectedSeries() {
+        const ids = this.selectedIds();
+        if (0 === ids.length) {
+            return;
+        }
+        $.ajax({ url: this.urlsValue.info.replace('__ids__', JSON.stringify(ids)), type: 'GET' }).done((info) => {
+            const { seriesConfirm, objects, and, events } = this.messagesValue;
+            if (!window.confirm(`${seriesConfirm} ${info.mms} ${objects} ${and} ${info.events} ${events}.`)) {
+                return;
+            }
+            $.ajax({ url: this.deleteUrl(ids), type: 'POST', data: { _method: 'DELETE' } })
+                .fail((xhr, textStatus, errorThrown) => window.no_success(`${errorThrown}: ${xhr.responseText}`))
+                .done((response) => {
+                    $(`#list_${this.pluralValue}`).html(response);
+                    window.success(this.message('success'));
+                });
+        });
+    }
+
+    invertAnnounce() {
+        const ids = this.selectedIds();
+        if (0 === ids.length || !window.confirm(this.message('confirm'))) {
+            return;
+        }
+        $(`#list_${this.pluralValue}`).load(this.urlsValue.invert.replace('__ids__', JSON.stringify(ids)));
+        const { edit, checkbox } = this.announceValue;
+        const editing = $(edit).val();
+        if (!ids.includes(editing)) {
+            return;
+        }
+        const announce = $(checkbox.replace('__id__', editing));
+        if (1 === announce.length) {
+            announce[0].checked = !announce[0].checked;
+        }
     }
 
     clearDeletedPreview(ids) {

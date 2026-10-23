@@ -7,7 +7,7 @@
                 <th width="1%" id="th-checkbox">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" onclick="window.click_checkbox_all('series', this.checked)">
+                            <input type="checkbox" data-action="click->admin--actions#checkAll" data-admin--actions-name-param="series">
                         </label>
                     </div>
                 </th>
@@ -50,18 +50,18 @@
                     <td headers="th-icons">
                         {% include '@PumukitNewAdmin/Series/updatemenu.html.twig' with {'oneseries': oneseries, 'numV': numV} %}
                     </td>
-                    <td headers="th-img" onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
+                    <td headers="th-img" data-action="click->admin--actions#edit dblclick->admin--actions#navigate" data-admin--actions-name-param="series" data-admin--actions-show-param="{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}" data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}">
                         {% include "@PumukitNewAdmin/Misc/img_list.html.twig" with {'object': oneseries, 'type' : 'series'} %}
                     </td>
-                    <td headers="th-title" onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
+                    <td headers="th-title" data-action="click->admin--actions#edit dblclick->admin--actions#navigate" data-admin--actions-name-param="series" data-admin--actions-show-param="{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}" data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}">
                         <a href="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}">
                             <span class="shorten-title">{{ oneseries.getTitle() }}</span>
                         </a>
                     </td>
-                    <td headers="th-date" class="text-nowrap" onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
+                    <td headers="th-date" class="text-nowrap" data-action="click->admin--actions#edit dblclick->admin--actions#navigate" data-admin--actions-name-param="series" data-admin--actions-show-param="{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}" data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}">
                         {{ oneseries.getPublicDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
                     </td>
-                    <td headers="th-mm" onclick="click_fila_edit_urls('series', this, '{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}', '{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}')" ondblclick="dblclick_fila_url('series', this, '{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}')">
+                    <td headers="th-mm" data-action="click->admin--actions#edit dblclick->admin--actions#navigate" data-admin--actions-name-param="series" data-admin--actions-show-param="{{ path('pumukitnewadmin_series_show', {'id': oneseries.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_series_update', {'id': oneseries.id}) }}" data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id }) }}">
                         {{ numV }}
                     </td>
                     <td headers="th-lives">
@@ -115,9 +115,9 @@
                                     <input title="{% trans %}Go to page{% endtrans %}" type="number"
                                            style="width: 25px;text-align:center;cursor:pointer;"
                                            value="{{ series.getCurrentPage() }}"
-                                           onchange="window.location.search = '?page=' + this.value; return false;"/>
+                                           data-action="change->admin--actions#go" data-admin--actions-url-param="?page="/>
 
-                                    <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_series_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of series to display per page.{% endtrans %}">
+                                    <select data-action="change->admin--actions#go" data-admin--actions-url-param="{{ path('pumukitnewadmin_series_index') }}?page=1&paginate=" aria-label="{% trans %}Select the number of series to display per page.{% endtrans %}">
                                         <option {% if series.maxPerPage == 10 %}selected{% endif %} value="10">10
                                         </option>
                                         <option {% if series.maxPerPage == 20 %}selected{% endif %} value="20">20

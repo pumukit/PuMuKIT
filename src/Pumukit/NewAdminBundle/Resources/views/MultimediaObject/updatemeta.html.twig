@@ -2,7 +2,7 @@
 
 <div id="tv_admin_container_meta" class="well">
 
-    <form id="pumukitnewadmin_mms_updatemeta_form" action="{{ path('pumukitnewadmin_mms_update_meta', {'id': mm.id}) }}" method="POST">
+    <form id="pumukitnewadmin_mms_updatemeta_form" data-controller="admin--meta-form" data-admin--meta-form-keywords-value="{{ {mmobj: path('pumukit_schema_apikeywords_mmobj', {'_format': 'json'})}|json_encode }}" action="{{ path('pumukitnewadmin_mms_update_meta', {'id': mm.id}) }}" method="POST">
         <input type="hidden" name="id" id="mm_id_meta" value="{{ mm.id }}">
         <input type="hidden" name="series_id" id="series_id_updatemeta" value="{{ mm.series.id }}">
 
@@ -30,9 +30,3 @@
         </fieldset>
     </form>
 </div>
-
-<script type="text/javascript">
-    $(function () {
-        window.init_mmobj_materialtags();
-    });
-</script>

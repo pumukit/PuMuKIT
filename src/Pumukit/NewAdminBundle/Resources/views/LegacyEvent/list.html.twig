@@ -1,7 +1,9 @@
 <div class="well">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_EVENTS')) %}
   <div role="tabpanel">
-    <ul id="eventTab" class="nav nav-tabs" role="tablist">
+    <ul id="eventTab" class="nav nav-tabs" role="tablist" data-controller="admin--event-tabs"
+        data-admin--event-tabs-list-url-value="{{ path('pumukitnewadmin_event_updatesession') }}"
+        data-admin--event-tabs-calendar-url-value="{{ path('pumukitnewadmin_event_updatesession', {'activeTab': 'calEvent'}) }}">
       <li class="{{ app.session.get('admin/event/tab')?'':'active' }}">
         <a href="#listEvent" aria-controls="listEvent" role="tab" data-toggle="tab">{% trans %}List{% endtrans %}</a>
       </li>

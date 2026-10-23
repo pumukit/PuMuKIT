@@ -29,8 +29,8 @@ class GroupType extends AbstractType
                     'attr' => [
                         'aria-label' => $this->translator->trans('Key', [], null, $this->locale),
                         'pattern' => '^\w*$',
-                        'oninvalid' => "setCustomValidity('The key can not have blank spaces neither special characters')",
-                        'oninput' => "setCustomValidity('')",
+                        'data-action' => 'invalid->admin--actions#validity input->admin--actions#validity',
+                        'data-admin--actions-message-param' => 'The key can not have blank spaces neither special characters',
                     ],
                     'label' => $this->translator->trans('Key', [], null, $this->locale),
                 ]

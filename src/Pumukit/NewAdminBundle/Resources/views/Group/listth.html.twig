@@ -1,39 +1,39 @@
 {% if 'key' == app.session.get('admin/group/sort') %}
   <th id="th-key">
-    <a href="#" id="pumukitnewadmin_group_key_sort_selected">{% trans %}Key{% endtrans %}{{ app.session.get('admin/group/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
+    <a href="#" id="pumukitnewadmin_group_key_sort_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_group_list', {'sorting': {'key': '__type__'}}) }}" data-admin--actions-target-param="#list_groups" data-admin--actions-type-param="#pumukitnewadmin_group_sort_change_type">{% trans %}Key{% endtrans %}{{ app.session.get('admin/group/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
   </th>
 {% else %}
   <th id="th-key">
-    <a href="#" id="pumukitnewadmin_group_key_sort_not_selected">{% trans %}Key{% endtrans %}</a>
+    <a href="#" id="pumukitnewadmin_group_key_sort_not_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_group_list', {'sorting': {'key': 'asc'}}) }}" data-admin--actions-target-param="#list_groups">{% trans %}Key{% endtrans %}</a>
   </th>
 {% endif %}
 
 {% if 'name' == app.session.get('admin/group/sort') %}
   <th id="th-name">
-    <a href="#" id="pumukitnewadmin_group_name_sort_selected">{% trans %}Name{% endtrans %}{{ app.session.get('admin/group/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
+    <a href="#" id="pumukitnewadmin_group_name_sort_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_group_list', {'sorting': {'name': '__type__'}}) }}" data-admin--actions-target-param="#list_groups" data-admin--actions-type-param="#pumukitnewadmin_group_sort_change_type">{% trans %}Name{% endtrans %}{{ app.session.get('admin/group/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
   </th>
 {% else %}
   <th id="th-name">
-    <a href="#" id="pumukitnewadmin_group_name_sort_not_selected">{% trans %}Name{% endtrans %}</a>
+    <a href="#" id="pumukitnewadmin_group_name_sort_not_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_group_list', {'sorting': {'name': 'asc'}}) }}" data-admin--actions-target-param="#list_groups">{% trans %}Name{% endtrans %}</a>
   </th>
 {% endif %}
 
 {% if 'origin' == app.session.get('admin/group/sort') %}
   <th id="th-origin">
-    <a href="#" id="pumukitnewadmin_group_origin_sort_selected">{% trans %}Origin{% endtrans %}{{ app.session.get('admin/group/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
+    <a href="#" id="pumukitnewadmin_group_origin_sort_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_group_list', {'sorting': {'origin': '__type__'}}) }}" data-admin--actions-target-param="#list_groups" data-admin--actions-type-param="#pumukitnewadmin_group_sort_change_type">{% trans %}Origin{% endtrans %}{{ app.session.get('admin/group/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
   </th>
   {% else %}
   <th id="th-origin">
-    <a href="#" id="pumukitnewadmin_group_origin_sort_not_selected">{% trans %}Origin{% endtrans %}</a>
+    <a href="#" id="pumukitnewadmin_group_origin_sort_not_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_group_list', {'sorting': {'origin': 'asc'}}) }}" data-admin--actions-target-param="#list_groups">{% trans %}Origin{% endtrans %}</a>
   </th>
 {% endif %}
 
 {% if 'comments' == app.session.get('admin/group/sort') %}
   <th id="th-comments">
-    <a href="#" id="pumukitnewadmin_group_comments_sort_selected">{% trans %}Comments{% endtrans %}{{ app.session.get('admin/group/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
+    <a href="#" id="pumukitnewadmin_group_comments_sort_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_group_list', {'sorting': {'comments': '__type__'}}) }}" data-admin--actions-target-param="#list_groups" data-admin--actions-type-param="#pumukitnewadmin_group_sort_change_type">{% trans %}Comments{% endtrans %}{{ app.session.get('admin/group/type')=='asc'?'&nbsp;&#x25B4;':'&nbsp;&#x25BE;' }}</a>
   </th>
   {% else %}
   <th id="th-comments">
-    <a href="#" id="pumukitnewadmin_group_comments_sort_not_selected">{% trans %}Comments{% endtrans %}</a>
+    <a href="#" id="pumukitnewadmin_group_comments_sort_not_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_group_list', {'sorting': {'comments': 'asc'}}) }}" data-admin--actions-target-param="#list_groups">{% trans %}Comments{% endtrans %}</a>
   </th>
 {% endif %}

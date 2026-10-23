@@ -6,13 +6,7 @@
     <fieldset>
       <legend hidden>{% trans %}Series properties{% endtrans %}</legend>
       <div class="form-group">
-        <pre id="series_properties_code" style="white-space: pre-wrap;"></pre>
-        {% autoescape 'js' %}
-        <script type="text/javascript">
-          var str = JSON.stringify({{ series.getProperties()|json_encode|raw }}, null, 4);
-          document.getElementById('series_properties_code').innerText = str;
-        </script>
-        {% endautoescape %}
+        <pre id="series_properties_code" style="white-space: pre-wrap;">{{ series.getProperties()|json_encode(constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_UNESCAPED_UNICODE')) }}</pre>
       </div>
     </fieldset>
     <div class="modal-footer">

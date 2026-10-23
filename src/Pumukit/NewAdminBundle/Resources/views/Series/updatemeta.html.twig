@@ -1,18 +1,16 @@
 <div class="well">
-    <form id="pumukitnewadmin_series_updatemeta_form" onsubmit="$.ajax({
-                    url: '{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}',
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    error: function(request, json){var message = '{{ "Series saved ERROR"|trans|e("js") }}'; no_success(message);},
-                    success: function(response){
-                        $('#list_series').html(response);
-                        $('#preview_series').load('{{ path('pumukitnewadmin_series_show', {'id': series.id}) }}');
-                        $('#links_series_{{ series.id }}').load('{{ path('pumukitnewadmin_series_links', {'id': series.id}) }}');
-                        var message = '{{ "Series saved OK"|trans|e("js") }}';
-                        success(message);
-                    }
-                });
-              return false;" action="{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}" method="POST">
+    <form id="pumukitnewadmin_series_updatemeta_form"
+          data-controller="admin--modal-form admin--meta-form"
+          data-action="submit->admin--modal-form#submit change->admin--meta-form#changed"
+          data-admin--modal-form-target-value="#list_series"
+          data-admin--modal-form-refresh-value="{{ [{target: '#preview_series', url: path('pumukitnewadmin_series_show', {'id': series.id})}, {target: '#links_series_' ~ series.id, url: path('pumukitnewadmin_series_links', {'id': series.id})}]|json_encode }}"
+          data-admin--modal-form-modal-value=""
+          data-admin--modal-form-success-message-value="{{ 'Series saved OK'|trans }}"
+          data-admin--modal-form-fail-message-value="{{ 'Series saved ERROR'|trans }}"
+          data-admin--meta-form-remember-value="#remember_save_series"
+          data-admin--meta-form-prefix-value="pumukitnewadmin_series_"
+          data-admin--meta-form-keywords-value="{{ {series: path('pumukit_schema_apikeywords_series', {'_format': 'json'})}|json_encode }}"
+          action="{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}" method="POST">
         {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
         <input type="hidden" name="id" id="series_id_updatemeta" value="{{ series.id }}">
 
@@ -22,8 +20,8 @@
             </div>
 
             <div class="col-xs-6 text-right">
-                <button id="pumukitnewadmin_series_updatemeta_cancel" type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
-                <button type="submit" class="btn btn-pumukit btn-raised" onclick="$('#remember_save_series').hide();">{% trans %}OK{% endtrans %}</button>
+                <button id="pumukitnewadmin_series_updatemeta_cancel" type="button" class="btn btn-default btn-raised" data-action="click->admin--meta-form#cancel">{% trans %}Cancel{% endtrans %}</button>
+                <button type="submit" class="btn btn-pumukit btn-raised" data-action="click->admin--meta-form#hideRemember">{% trans %}OK{% endtrans %}</button>
             </div>
         </div>
 
@@ -67,12 +65,3 @@
         </div>
     </form>
 </div>
-
-<script type="text/javascript">
-
-    $(function () {
-        window.init_series_materialtags();
-        window.init_mmobj_materialtags();
-    });
-
-</script>

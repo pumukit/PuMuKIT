@@ -42,8 +42,8 @@ class UserType extends AbstractType
                         'aria-label' => $this->translator->trans('Username', [], null, $this->locale),
                         'autocomplete' => 'off',
                         'pattern' => '^[a-zA-Z0-9_\-\.@]{4,32}$',
-                        'oninvalid' => "setCustomValidity('The username can not have blank spaces neither special characters')",
-                        'oninput' => "setCustomValidity('')",
+                        'data-action' => 'invalid->admin--actions#validity input->admin--actions#validity',
+                        'data-admin--actions-message-param' => 'The username can not have blank spaces neither special characters',
                     ],
                     'label' => $this->translator->trans('Username', [], null, $this->locale),
                 ]

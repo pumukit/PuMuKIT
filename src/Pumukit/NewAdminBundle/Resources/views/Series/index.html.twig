@@ -24,7 +24,11 @@
                     <div class="row">
                         <div class="col-xs-4">
                             {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_META_GROUP_LIST_OPTIONS')) %}
-                            <select id="options_series" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('series', $(this), 'series');">
+                            <select id="options_series" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
+                                    data-admin--batch-name-value="series" data-admin--batch-plural-value="series"
+                                    data-admin--batch-urls-value="{{ {delete: path('pumukitnewadmin_series_batch_delete', {'ids': '__ids__'}), info: path('pumukitnewadmin_info_series', {'ids': '__ids__'}), invert: path('pumukitnewadmin_series_invert_announce', {'ids': '__ids__'})}|json_encode }}"
+                                    data-admin--batch-announce-value="{{ {edit: '#inputROId', checkbox: '#pumukitnewadmin_series_announce'}|json_encode }}"
+                                    data-admin--batch-messages-value="{{ {confirm: 'Are you sure?'|trans, seriesConfirm: 'Are you sure you want to delete this/these series'|trans ~ '? ' ~ 'This/these series has/have'|trans, objects: 'multimedia object(s)'|trans, and: 'and'|trans, events: 'live event(s)'|trans, success: 'Series'|trans ~ ' ' ~ 'successfully deleted'|trans ~ '.'}|json_encode }}">
                                 <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
                                 <option disabled="">---</option>
                                 <option value="delete_selected_series">{% trans %}Delete selected{% endtrans %}</option>
@@ -38,7 +42,17 @@
                         </div>
                         <div class="col-xs-8 text-right">
                             {% if is_granted('ROLE_ACCESS_ADVANCED_UPLOAD') or is_granted('ROLE_ACCESS_WIZARD_UPLOAD') %}
-                                <a title="{% trans %}Create new series{% endtrans %}" id="pumukitnewadmin_series_new_button" class="btn btn-pumukit btn-raised" href="#">
+                                <a title="{% trans %}Create new series{% endtrans %}" id="pumukitnewadmin_series_new_button" class="btn btn-pumukit btn-raised" href="#" data-action="click->admin--actions#create"
+                                   data-admin--actions-url-param="{{ path('pumukitnewadmin_series_create') }}"
+                                   data-admin--actions-method-param="GET"
+                                   data-admin--actions-key-param="seriesId"
+                                   data-admin--actions-name-param="series"
+                                   data-admin--actions-list-param="#list_series"
+                                   data-admin--actions-list-url-param="{{ path('pumukitnewadmin_series_list', {'selectedSeriesId': '__id__'}) }}"
+                                   data-admin--actions-show-url-param="{{ path('pumukitnewadmin_series_show', {'id': '__id__'}) }}"
+                                   data-admin--actions-edit-url-param="{{ path('pumukitnewadmin_series_update', {'id': '__id__'}) }}"
+                                   data-admin--actions-reset-param="#filter_series"
+                                   data-admin--actions-success-param="{{ 'Series successfully created.'|trans }}">
                                     <i class="mdi-content-add"></i>
                                     {% trans %}New{% endtrans %}
                                 </a>
@@ -78,31 +92,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        var url = "{{ path('pumukit_schema_apikeywords_mmobj', {'_format':'json'})|raw }}";
-        window.mmobjkeywords = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            prefetch: {
-                url: url,
-                ttl: 1800000
-            }
-        });
-
-        window.mmobjkeywords.initialize();
-
-        var url = "{{ path('pumukit_schema_apikeywords_series', {'_format':'json'})|raw }}";
-        window.serieskeywords = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('_id'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            prefetch: {
-                url: url,
-                ttl: 1800000
-            }
-        });
-
-        window.serieskeywords.initialize();
-
-    </script>
 {% endblock %}

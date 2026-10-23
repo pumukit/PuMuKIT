@@ -1,20 +1,20 @@
 {% if 'title' == app.session.get('admin/series/sort') %}
   <th id="th-title">
-    <a href="#" id="pumukitnewadmin_series_title_sort_selected">{% trans %}Title{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
+    <a href="#" id="pumukitnewadmin_series_title_sort_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_series_list', {'sorting': {'title': '__type__'}}) }}" data-admin--actions-target-param="#list_series" data-admin--actions-type-param="#pumukitnewadmin_series_sort_change_type" data-admin--actions-selected-param="#inputROId" data-admin--actions-selected-key-param="selectedSeriesId">{% trans %}Title{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
   </th>
 {% else %}
   <th id="th-title">
-    <a href="#" id="pumukitnewadmin_series_title_sort_not_selected">{% trans %}Title{% endtrans %}</a>
+    <a href="#" id="pumukitnewadmin_series_title_sort_not_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_series_list', {'sorting': {'title': 'asc'}}) }}" data-admin--actions-target-param="#list_series" data-admin--actions-selected-param="#inputROId" data-admin--actions-selected-key-param="selectedSeriesId">{% trans %}Title{% endtrans %}</a>
   </th>
 {% endif %}
 
 {% if 'public_date' == app.session.get('admin/series/sort', 'public_date') %}
   <th id="th-date" width="8%">
-    <a href="#" id="pumukitnewadmin_series_public_date_sort_selected">{% trans %}Date{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
+    <a href="#" id="pumukitnewadmin_series_public_date_sort_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_series_list', {'sorting': {'public_date': '__type__'}}) }}" data-admin--actions-target-param="#list_series" data-admin--actions-type-param="#pumukitnewadmin_series_sort_change_type" data-admin--actions-selected-param="#inputROId" data-admin--actions-selected-key-param="selectedSeriesId">{% trans %}Date{% endtrans %}&nbsp;{{ app.session.get('admin/series/type')=='asc'?'&#x25B4;':'&#x25BE;' }}</a>
   </th>
 {% else %}
   <th id="th-date" width="8%">
-    <a href="#" id="pumukitnewadmin_series_public_date_sort_not_selected">{% trans %}Date{% endtrans %}</a>
+    <a href="#" id="pumukitnewadmin_series_public_date_sort_not_selected" data-action="click->admin--actions#sort" data-admin--actions-url-param="{{ path('pumukitnewadmin_series_list', {'sorting': {'public_date': 'asc'}}) }}" data-admin--actions-target-param="#list_series" data-admin--actions-selected-param="#inputROId" data-admin--actions-selected-key-param="selectedSeriesId">{% trans %}Date{% endtrans %}</a>
   </th>
 {% endif %}
 <th id="th-mm" width="1%">{% trans %}Mm.Obj.{% endtrans %}</th>
