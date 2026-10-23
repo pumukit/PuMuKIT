@@ -2,17 +2,17 @@
     {% if (user_group.isLocal() and user.isLocal()) or (user_group.isLocal() and not user.isLocal()) or (not user_group.isLocal() and user.isLocal()) %}
         <a href="#" class="list-group-item pumukitnewadmin-trim-row group_{{ user_group.key }}"
            id="add_group_{{ user_group.id }}"
-           onclick="return select_group(this);"
-           ondblclick="delete_group_user('{{ user_group.id }}', '{{ user_group.key }}', '{{ user_group.name }}', '{{ user_group.origin }}', '{{ user.getOrigin() }}');">
+           data-group-id="{{ user_group.id }}" data-editable="1"
+           data-action="click->admin--group-picker#select dblclick->admin--group-picker#toggle">
             <i class="mdi-social-group"></i>
             {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
         </a>
     {% else %}
-        {% set message = 'External defined group and user. Contact your directory service administrator to change membership.' %}
+        {% set message = 'External defined group and user. Contact your directory service administrator to change membership.'|trans %}
         <a href="#" class="list-group-item disabled-group-item group_{{ user_group.key }}"
            id="add_group_{{ user_group.id }}"
-           onclick="return false;"
-           ondblclick="window.alert('{{ message }}');">
+           data-group-id="{{ user_group.id }}" data-editable="0" data-message="{{ message }}"
+           data-action="click->admin--group-picker#select dblclick->admin--group-picker#toggle">
             <i class="mdi-social-group"></i>
             {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
         </a>

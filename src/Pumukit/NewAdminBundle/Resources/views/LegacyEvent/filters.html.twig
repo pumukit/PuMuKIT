@@ -1,5 +1,5 @@
 <div class="well">
-    <form id="filter_events" class="form" onsubmit="$('#list_events').load('{{ path('pumukitnewadmin_event_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_event_index') }}" method="GET">
+    <form id="filter_events" class="form" data-controller="admin--filter-form" data-action="submit->admin--filter-form#submit" data-admin--filter-form-url-value="{{ path('pumukitnewadmin_event_list') }}" data-admin--filter-form-target-value="#list_events" action="{{ path('pumukitnewadmin_event_index') }}" method="GET">
         <fieldset>
             <legend hidden>{% trans %}Filter Live Events{% endtrans %}</legend>
             <div class="panel panel-default">
@@ -31,7 +31,7 @@
             </div>
         </fieldset>
         <div class="text-right">
-            <input type="button" class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" value="{% trans %}reset{% endtrans %}">
+            <input type="button" class="btn btn-default btn-raised" data-action="click->admin--actions#navigate" data-admin--actions-url-param="?criteria[reset]=true" value="{% trans %}reset{% endtrans %}">
             <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
         </div>
     </form>

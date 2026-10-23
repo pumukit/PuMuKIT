@@ -36,13 +36,17 @@
               {% for day_event in calendar_events %}
                 {% set total_event = total_event + 1 %}
                 <li>
-                  <a href="#" onclick="window.submit_delete_event('{{ day_event.id }}'); return false;" title="{% trans %}Delete event{% endtrans %}">
+                  <a href="#" data-action="click->admin--actions#remove"
+               data-admin--actions-url-param="{{ path('pumukitnewadmin_event_delete', {'id': day_event.id}) }}"
+               data-admin--actions-target-param="#list_events"
+               data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this live event?'|trans }}"
+               data-admin--actions-success-param="{{ 'Live event successfully deleted.'|trans }}" title="{% trans %}Delete event{% endtrans %}">
                     <i class="mdi-content-clear"></i>
                   </a>
                   <span class="dropdown">
                     {% include '@PumukitNewAdmin/LegacyEvent/updatemenu.html.twig' with {'event': day_event} %}
                   </span>
-                  <span onclick="click_fila_url('event', this, '{{ path('pumukitnewadmin_event_show', {'id': day_event.id}) }}')">
+                  <span data-action="click->admin--actions#preview" data-admin--actions-name-param="event" data-admin--actions-url-param="{{ path('pumukitnewadmin_event_show', {'id': day_event.id}) }}">
                     {% if day_event.getPic() is not empty %}
                     <img src="{{ day_event.getPic() }}" height="16" width="18" />
                     {% endif %}

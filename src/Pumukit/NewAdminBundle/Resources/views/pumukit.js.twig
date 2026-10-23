@@ -5,82 +5,6 @@ $.extend($.expr[":"], {
     }
 });
 
-window.submit_delete_role = function(id, countMm)
-{
-    if (countMm == 0){
-        if (window.confirm("{% trans %}Are you sure you want to delete this role?{% endtrans %}")){
-            var url = "{{ path('pumukitnewadmin_role_delete', {'id': '__id__'})|raw }}";
-            var message = "{{ "Role successfully deleted."|trans|e("js") }}";
-            $('#list_roles').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
-        }
-    }else{
-        window.alert("{% trans %}Impossible to delete, role with{% endtrans %} "+countMm+" {% trans %}people{% endtrans %}");
-    }
-}
-
-window.submit_delete_user = function(id, userFullname)
-{
-    if (window.confirm("{{ "Are you sure you want to delete the user"|trans|e("js") }} "+userFullname+"?")) {
-        var url = "{{ path('pumukitnewadmin_user_delete', {'id': '__id__'})|raw }}";
-        $('#list_users').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
-          if(XMLHttpRequest.status >= 400){
-            no_success('{{ "Error deleting user"|trans|e("js") }}: ' + responseText);
-          }else{
-            success('{{ "User"|trans|e("js") }} "'+userFullname+'" {{ "successfully deleted."|trans|e("js") }}');
-          }
-        });
-    }
-}
-
-window.submit_delete_live = function(id)
-{
-    if (window.confirm("{% trans %}Are you sure you want to delete this live channel?{% endtrans %}")){
-        var url = "{{ path('pumukitnewadmin_live_delete', {'id': '__id__'})|raw }}";
-
-        $.ajax({
-            url: url.replace('__id__', id),
-            method: 'DELETE',
-            success: function (response) {
-                if(-1 !== response.indexOf('error')) {
-                    var message = '{{ "Delete error. Live channel channel is associated to live event."|trans|e("js") }}';
-                    no_success(message);
-                } else {
-                    var message = '{{ "Live channel successfully deleted."|trans|e("js") }}';
-                    success(message);
-                    $('#list_lives').load("{{ path('pumukitnewadmin_live_list') }}");
-                }
-            },
-            error: function() {
-                var message = '{{ "Delete error. Live channel channel is associated to live event."|trans|e("js") }}';
-                no_success(message);
-            }
-        });
-
-        return false;
-    }
-}
-
-
-window.submit_delete_seriestype = function(id)
-{
-    if (window.confirm("{% trans %}Are you sure you want to delete this series type?{% endtrans %}")){
-        var url = "{{ path('pumukitnewadmin_seriestype_delete', {'id': '__id__'})|raw }}";
-        var message = '{{ "Series type successfully deleted."|trans|e("js") }}';
-        $('#list_seriestypes').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
-    }
-}
-
-
-window.submit_delete_event = function(id)
-{
-    if (window.confirm("{% trans %}Are you sure you want to delete this live event?{% endtrans %}")){
-        var url = "{{ path('pumukitnewadmin_event_delete', {'id': '__id__'})|raw }}";
-        var message = '{{ "Live event successfully deleted."|trans|e("js") }}';
-        $('#list_events').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(){success(message)});
-    }
-}
-
-
 window.sync_tags_mms = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to sync this tags? The tags in other objects from this series will be lost.{% endtrans %}")){
@@ -94,7 +18,6 @@ window.sync_tags_mms = function(id)
       });
     }
 }
-
 
 window.submit_delete_mms = function(id)
 {
@@ -218,22 +141,6 @@ window.submit_delete_playlist = function(id, playlistTitle, countMm)
     }
 }
 
-window.submit_delete_permissionprofile = function(id, permissionProfileName)
-{
-    if (window.confirm('{% trans %}Are you sure you want to delete the Permission Profile{% endtrans %} "'+permissionProfileName+'"?.')){
-        var url = "{{ path('pumukitnewadmin_permissionprofile_delete', {'id': '__id__'})|raw }}";
-        var message = '{{ "Permission Profile"|trans|e("js") }} "'+permissionProfileName+'" {{ "successfully deleted"|trans|e("js") }}.';
-        $('#list_permissionprofiles').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
-            $('[data-toggle="tooltip"]').tooltip();
-            if (textStatus !== "error") {
-                success(message);
-            } else {
-                no_success(XMLHttpRequest['statusText'] + ': ' + responseText);
-            }
-        });
-    }
-}
-
 success = function(message){
     $("#div_messages_span_info").attr("data-content", message);
     $("#div_messages_span_info").snackbar("show");
@@ -244,23 +151,11 @@ no_success = function(message){
     $("#div_messages_span_error").snackbar("show");
 }
 
-
 window.update_mms_status_wrapper = function() {
    var url = "{{ path('pumukitnewadmin_mms_status', {'id': '__id__'})|raw }}";
    $('.pmk-job-animate')
       .map(function(i, e) {return e.parentElement.dataset.id; })
       .each(function(i, id){$('#table_mms_status_wrapper_' + id).load(url.replace('__id__', id));})
-}
-
-window.delete_eventpic = function(eventId) {
-    if (window.confirm('{% trans %}Are you sure you want to delete this thumbnail?{% endtrans %}')) {
-        var url = '{{ path('pumukitnewadmin_eventpic_delete', {'id': '___id___'})|raw }}';
-        $('#list_events').load(url.replace('___id___', eventId), {'_method': 'DELETE'}, function(){
-            var show_url = "{{ path('pumukitnewadmin_event_show', {'id': '___id___'})|raw }}";
-            $('#preview_event').load(show_url.replace('___id___', eventId));
-            success('{{ "Thumbnail removed."|trans|e("js") }}');
-        });
-    }
 }
 
 window.delete_seriespic = function(id, seriesId) {
@@ -360,18 +255,6 @@ window.submit_delete_person_relation = function(id, roleId, mmId, hName, templat
     }
 }
 
-window.submit_delete_link = function(id, mmId)
-{
-    if (window.confirm('{% trans %}Are you sure you want to delete this link?{% endtrans %}')){
-        var url = "{{ path('pumukitnewadmin_link_delete', {'id': '__id__', 'mmId': '__mmId__'})|raw }}";
-        url = url.replace('__id__', id);
-        url = url.replace('__mmId__', mmId);
-        var div_id = '#links_mms___mmId__';
-        div_id = div_id.replace('__mmId__', mmId);
-        $(div_id).load(url, {'_method': 'DELETE'});
-    }
-}
-
 window.update_mmspic = function(mm_id, resource_type) {
     var resource_type = typeof resource_type !== 'undefined' ? resource_type : 'mms';
     var element = document.querySelector('img.pic-' + mm_id + '.first');
@@ -422,7 +305,6 @@ window.upload_mmspic = function(resourceId) {
     div_id = div_id.replace('__resourceId__', resourceId);
     $(div_id).load(url.replace('___id___', resourceId));
 }
-
 
 window.check_for_new_pics = function(resourceId, numPics) {
     var uiNumPics = $('.admin-pic-' + resourceId).length;
@@ -485,50 +367,6 @@ window.extract_pic = function(trackId, mmId, numframe)
             no_success('{{ "Error extracting thumbnail"|trans|e("js") }}');
         }
     });
-}
-
-window.submit_delete_person = function(id, countMm, personHName)
-{
-    if (countMm == 0){
-        if (window.confirm("{% trans %}Are you sure you want to delete the data of{% endtrans %} "+personHName+"?")){
-            var url = "{{ path('pumukitnewadmin_person_delete', {'id': '__id__'})|raw }}";
-            $('#list_people').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
-                if(XMLHttpRequest.status >= 400){
-                    no_success('{{ "Error deleting Person"|trans|e("js") }} "'+personHName+'": ' + responseText);
-                }else{
-                    success('{{ "Person"|trans|e("js") }} "'+personHName+'" {{ "successfully deleted."|trans|e("js") }}');
-                }
-            });
-    }
-    }else{
-        window.alert('{{ "Cannot delete the data of"|trans|e("js") }} '+personHName+'. '+ countMm+' {{ "multimedia object(s) contain(s) this person"|trans|e("js") }}.');
-    }
-}
-
-window.submit_delete_group = function(id, groupName, deleteMessage, canBeDeleted)
-{
-    if (canBeDeleted == 0) {
-        window.alert(deleteMessage);
-    } else if (window.confirm(deleteMessage)){
-        $('#myModal').modal('hide');
-        var url = "{{ path('pumukitnewadmin_group_delete', {'id': '__id__'})|raw }}";
-        $('#list_groups').load(url.replace('__id__', id), {'_method': 'DELETE'}, function(responseText, textStatus, XMLHttpRequest){
-            if(XMLHttpRequest.status >= 400){
-                no_success('{{ "Error deleting Group"|trans|e("js") }} "'+groupName+'": ' + responseText);
-            }else{
-                success('{{ "Group"|trans|e("js") }} "'+groupName+'" {{ "successfully deleted."|trans|e("js") }}');
-            }
-        });
-    }
-    return false;
-}
-
-window.click_fila_url = function(element, tr, url)
-{
-  $('#preview_'+element).load(url);
-
-  $('.success').removeClass('success');
-  $(tr.parentNode).addClass('success');
 }
 
 window.click_checkbox_all = function(element, value)
@@ -611,14 +449,6 @@ window.submit_series_change_pub = function()
     $('#list_series').load(route, {'_method':'POST', 'values': values});
 
     return false;
-}
-
-window.filter_click_letter = function(letter)
-{
-  $(".pmk-person-letter.text-pumukit").removeClass("text-pumukit");
-  $("#pmk-person-letter-" + letter).addClass("text-pumukit");
-  $('#filters_letter').val(letter);
-  $('#list_people').load('{{ path('pumukitnewadmin_person_list')|raw }}', $('#filter_people').serialize());
 }
 
 window.change_select = function(element, selector, pluralName, seriesId)
@@ -955,7 +785,6 @@ window.change_select = function(element, selector, pluralName, seriesId)
     selector.val('default');
 }
 
-
 function sort_optiont_change(target_val)
 {
   e = $("#options_mms option[data-type='sort'][data-active='1']");
@@ -1010,7 +839,6 @@ function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod)
 
 // TODO
 
-
 function create_element_in_select(tag, block_tag_id, mm_id) {
   var $ul = $("#select_ul_tag_cod_" + block_tag_id);
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
@@ -1046,7 +874,6 @@ function add_tree_tag(tag_id, mm_id, block_tag_id)
   });
 }
 
-
 function del_tree_tag(tag_id, mm_id)
 {
   var route = "{{ path('pumukitnewadmin_mms_deletetag', {'id': 'PLACEHOLDER_MM_ID', 'tagId': 'PLACEHOLDER_TAG_ID' })|raw }}";
@@ -1067,7 +894,6 @@ function del_tree_tag(tag_id, mm_id)
     }
   });
 }
-
 
 var filter_wrapper_timeout;
 function search_tags_wrapper(mmId, parentid){
@@ -1133,7 +959,6 @@ window.dblclick_preview_mm = function(id)
     });
 }
 
-
 procesaOk = function(){
   $('#remember_save_mm_pub').hide();
   return true;
@@ -1165,7 +990,6 @@ $(document).ajaxError(function(event, xhr, settings) {
     window.location.href = window.location.href;
   }
 });
-
 
 /**
  * Init material on load
@@ -1278,7 +1102,6 @@ $(function() {
     return false;
   });
 
-
   {% if is_naked() %}
     var naked_modal_handler = function (e) {
       var modal_dialog = $(e.currentTarget).find('.modal-dialog');
@@ -1291,7 +1114,6 @@ $(function() {
   $('#myModal').on('shown.bs.modal', naked_modal_handler);
   $('#myAuxModal').on('shown.bs.modal', naked_modal_handler);
   {% endif %}
-
 
 });
 
@@ -1660,7 +1482,6 @@ test_url_generation = function(url){
     return !re.test(url);
 }
 
-
 /**
  * Initialize all tooltips
  */
@@ -1714,211 +1535,11 @@ get_batch_delete_route = function(element, ids)
     return route.replace('__ids__', JSON.stringify(ids)) ;
 }
 
-window.fileServerSelect = function(element, path)
-{
-    $(element).siblings(".active").removeClass("active").end().addClass("active");
-    $('#server_selected_path').val(path);
-}
-
-
-window.fileServerTree = function(element, type, dir, num, input)
-{
-    baseelement = $(element);
-    if (baseelement.hasClass('collapsed')) {
-        baseelement.removeClass("collapsed").addClass("expanded");
-        if (baseelement.hasClass('noload')) {
-            $.get('{{ path('pumukit_newadmin_inbox_dir')|raw }}?type=' + type + '&dir=' + encodeURIComponent(dir), function(files){
-                links = "";
-                for(var i in files) {
-                  var file = files[i];
-                  if (file.is_file) {
-                    links += '<a data-hash="' + file.hash + '" data-path="' + baseelement.data('path') + ' ' + file.hash + ' " ' +
-                           ' class="list-group-item elem ' + baseelement.data('path') + ' p_' + baseelement.data('hash') + '" onclick="fileServerSelect(this, \'' + file.path +
-                           '\'); return false;" href="#"><span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span><span title="' +
-                           file.relativepath + '">' +
-                           ((file.relativepath.length > 50) ? (file.relativepath.slice(0, 35) + '...' + file.relativepath.slice(-15)) : (file.relativepath)) +
-                           ((file.content) ? ' [' + (file.content) + ' video(s)]' : '') +
-                           '</span></a>';
-                  } else {
-                    links += '<a data-hash="' + file.hash + '" data-path="' + baseelement.data('path') + ' ' + file.hash + ' " ' +
-                           ' class="list-group-item collapsed noload ' + baseelement.data('path') + ' p_' + baseelement.data('hash') + '" onclick="fileServerTree(this, \'' + type + '\', \'' + file.path +
-                           '\', ' + (num + 1) + ', \'' + input + '\'); return false;" href="#"><span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span><span title="' +
-                           file.relativepath + '">' +
-                           ((file.relativepath.length > 50) ? (file.relativepath.slice(0, 35) + '...' + file.relativepath.slice(-15)) : (file.relativepath)) +
-                           ((file.content) ? ' [' + (file.content) + ' video(s)]' : '') +
-                           '</span></a>';
-                    if(type == 'dir' || type == 'both') {
-                        links += '<a style="color:blue; text-decoration: underline" class="list-group-item element ' + baseelement.data('path') + ' p_' + baseelement.data('hash') + '" href="#" onclick="fileServerSelect(this, \'' + file.path + '\');">' +
-                                 '<span style="padding-left: ' + (10 *num)  + 'px"><i class="mdi- tag_icon"></i></span>' +
-                                 '{% trans %}This directory{% endtrans %}' +
-                                 '</a>';
-                    }
-                  }
-                }
-                baseelement.after(links);
-                baseelement.removeClass('noload')
-            }, 'json').fail(function(e){
-                var error = e.responseJSON.error;
-                no_success(error.message + ": (" + error.exception[0].message + ")")
-
-            });
-        } else {
-            //show loaded
-            $(".p_" + baseelement.data('hash')).show();
-            baseelement.addClass("expanded").removeClass("collapsed");
-        }
-    } else {
-        // Hide all elements (files and dirs)
-        $("."+baseelement.data('hash')).hide();
-
-        // Change the status only of the directories
-        $("."+baseelement.data('hash')).not(".elem").addClass("collapsed").removeClass("expanded");
-        baseelement.addClass("collapsed").removeClass("expanded");
-    }
-
-}
-
-
 // TAG SECTION //
-
-function load_children_tag(id, cod) {
-  $(".c_" + cod).remove();
-  var tr = $('#row_tag_' +id);
-  var level = tr.data('level');
-  var url = '{{ path('pumukitnewadmin_tag_children', {'id': '___id___'}) }}';
-  $.ajax(url.replace('___id___', id) , {
-    type: 'GET',
-    success: function(response) {
-      var t = tr.closest('tbody');
-      var ss = t.children();
-      tr.after(response);
-      if ($('.d_' + cod).length != 0) {
-        $('#row_tag_' + id + ' .collapsed').addClass("expanded").removeClass("collapsed");
-      }
-    }
-  });
-
-}
-
-function toggle_section_tag(id, element, level, cod) {
-
-  if(element.parentElement.classList.contains("expanded")){
-    $(".c_" + cod).hide();
-    $(".c_" + cod + " .expanded").removeClass("expanded").addClass("collapsed");
-  }else{
-    if(element.parentElement.classList.contains("noload")) {
-      element.parentElement.classList.remove("noload");
-      load_children_tag(id, cod);
-    }else {
-      $(".d_" + cod).show();
-    }
-  }
-  element.parentElement.classList.toggle("collapsed");
-  element.parentElement.classList.toggle("expanded");
-}
-
-
-function tag_delete(id, cod, pid, numberMultimediaObjects) {
-  if (0 < numberMultimediaObjects) {
-    window.alert('{% trans %}Can not delete tag with code{% endtrans %} ' + cod + '. ' + numberMultimediaObjects + ' {% trans %}Multimedia Object(s) has/have this tag{% endtrans %}.');
-  } else  if (window.confirm('{{ "Are you sure you want to delete the tag with code"|trans|e("js") }} ' + cod + '?')) {
-    var url = '{{ path('pumukitnewadmin_tag_delete', {'id': '___id___'}) }}';
-    $.ajax(url.replace('___id___', id), {
-      type: 'DELETE',
-      data:  {'_method': 'DELETE'},
-      error: function() {
-        window.alert('{% trans %}Tags with children can not be deleted.{% endtrans %}')
-      },
-      success: function(response) {
-        $('#row_tag_' +id).remove();
-        if ($('.d_' + pid).length == 0) {
-          $('#row_tag_' + pid + ' .expanded').removeClass("expanded").addClass("element");
-        }
-        var message = '{{ "Tag"|trans|e("js") }} "'+cod+'" {{ "successfully deleted"|trans|e("js") }}.';
-        success(message);
-      }
-    });
-  }
-  return false;
-}
 
 // END OF TAG SECTION //
 
 $(document).ready(function(){
-    $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_user', function(event) {
-        if (window.confirm('{{ "ATTENTION: Are you sure you want to delete all User from this Group?"|trans|e("js") }}')) {
-            var route = "{{ path('pumukitnewadmin_group_delete_all_users', {'id': '__groupId__'})|raw }}";
-            var group_id = $('#pumukitnewadmin_group_id').val();
-            route = route.replace('__groupId__', group_id);
-            $.ajax({
-                    url: route,
-                    type: 'POST',
-                    data: {'_method': 'DELETE'},
-                    error: function(jqXHR, textStatus, errorThrown) {
-                    no_success(errorThrown + ': ' + jqXHR.responseText);
-                },
-                success: function (response, textStatus, jqXHR) {
-                    $('#pumukitnewadmin_group_added_users').html(response);
-                    $('#pumukitnewadmin_group_delete_all_relation_user').attr('disabled', 'disabled');
-                    var message = 'Successfully delete User from Group.';
-                    success(message);
-                }
-            }).done(function() {can_be_deleted(group_id);});
-        }
-        event.preventDefault();
-        event.stopPropagation();
-        return false;
-    });
-
-    $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_multimediaobject', function(event) {
-        if (window.confirm('{{ "ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?"|trans|e("js") }}')) {
-            var route = "{{ path('pumukitnewadmin_group_delete_all_multimediaobjects', {'id': '__groupId__'})|raw }}";
-            var group_id = $('#pumukitnewadmin_group_id').val();
-            route = route.replace('__groupId__', group_id);
-            $.ajax({
-                    url: route,
-                    type: 'POST',
-                    data: {'_method': 'DELETE'},
-                    error: function(jqXHR, textStatus, errorThrown) {
-                    no_success(errorThrown + ': ' + jqXHR.responseText);
-                },
-                success: function (response, textStatus, jqXHR) {
-                    $('#pumukitnewadmin_group_added_multimediaobjects').html(response);
-                    $('#pumukitnewadmin_group_delete_all_relation_multimediaobject').attr('disabled', 'disabled');
-                    var message = 'Successfully delete admin MultimediaObjects from Group.';
-                    success(message);
-                }
-            }).done(function() {can_be_deleted(group_id);});
-        }
-        event.preventDefault();
-        event.stopPropagation();
-        return false;
-    });
-
-    $(document).on('click', '#pumukitnewadmin_group_delete_all_relation_embeddedbroadcast', function(event) {
-        if (window.confirm('{{ "ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?"|trans|e("js") }}')) {
-            var route = "{{ path('pumukitnewadmin_group_delete_all_embeddedbroadcasts', {'id': '__groupId__'})|raw }}";
-            var group_id = $('#pumukitnewadmin_group_id').val();
-            route = route.replace('__groupId__', group_id);
-            $.ajax({
-                    url: route,
-                    type: 'POST',
-                    data: {'_method': 'DELETE'},
-                    error: function(jqXHR, textStatus, errorThrown) {
-                    no_success(errorThrown + ': ' + jqXHR.responseText);
-                },
-                success: function (response, textStatus, jqXHR) {
-                    $('#pumukitnewadmin_group_added_embeddedbroadcasts').html(response);
-                    $('#pumukitnewadmin_group_delete_all_relation_embeddedbroadcast').attr('disabled', 'disabled');
-                    var message = 'Successfully delete play MultimediaObjects from Group.';
-                    success(message);
-                }
-            }).done(function() {can_be_deleted(group_id);});
-        }
-        event.preventDefault();
-        event.stopPropagation();
-        return false;
-    });
 
     $('#myModal')
     .on('shown.bs.modal', function () {
@@ -2271,238 +1892,16 @@ $(document).on('submit', '#pumukitnewadmin_permissionprofile_form_update', funct
     return false;
 });
 
-$(document).on('change', 'form#pumukitnewadmin_permissionprofile_table_form', function(){
-    $('#remember_save_permissionprofile').show();
-});
-
-$(document).on('click', '#pumukitnewadmin_permissionprofile_update_cancel', function(){
-    $('#pumukitnewadmin_permissionprofile_table_form')[0].reset();
-    $('#remember_save_permissionprofile').hide();
-});
-
-processPermissionProfilesOk = function(){
-    $('#remember_save_permissionprofile').hide();
-    var selected_default = '';
-    $('input.pumukitnewadmin_permissionprofile_default:checked').each(function(){
-            var $this = $(this);
-            selected_default = $this.attr("value");
-    });
-    var selected_scopes = [];
-    $('select.permissionprofile_scope:not([disabled]) option:selected').each(function(){
-            var $this = $(this);
-            selected_scopes.push($this.attr("value"));
-    });
-    var checked_permissions = [];
-    $('.permission_permissionprofile_checkbox:checked:not([disabled])').each(function(){
-            var $this = $(this);
-            checked_permissions.push($this.attr("id"));
-    });
-
-    var message = '{{ "Permission Profiles successfully updated."|trans|e("js") }}';
-    var route = '{{ path('pumukitnewadmin_permissionprofile_batch_update')|raw }}';
-    $.ajax({
-            url: route,
-            type: 'POST',
-            data: {'selected_default': selected_default, 'selected_scopes': JSON.stringify(selected_scopes), 'checked_permissions': JSON.stringify(checked_permissions)},
-            error: function(jqXHR, textStatus, errorThrown){
-                no_success(errorThrown + ': ' + jqXHR.responseText);
-            },
-            success: function(response){
-                $('#list_permissionprofiles').html(response);
-                $('[data-toggle="tooltip"]').tooltip();
-                success(message);
-            }
-    });
-
-    return false;
-}
-
-$(document).on('click', '.permission_permissionprofile_checkbox:not([disabled])', function(event){
-    var element = event.target;
-    var checkedElement = element.checked;
-    var elementId = element.id.split('__')[1];
-    var selectedScope = $('select#pumukitnewadmin_permissionprofile_scope_' + elementId + ' option:selected');
-    var scope = selectedScope.attr("value");
-    if (checkedElement) {
-        var dependencies = get_permission_dependencies(element, scope);
-        var dependenciesLength = dependencies.length;
-        for (var i = 0; i < dependenciesLength; i++) {
-            $("#"+dependencies[i]).prop("checked", "checked");
-        }
-    } else {
-        delete_dependent_permissions(elementId, scope, element.id);
-        fix_permission_dependencies(elementId, scope);
-    }
-});
-
-function get_permission_dependencies(element, scope) {
-    if (scope.indexOf('GLOBAL') > -1) {
-        var rawDependencies = element.getAttribute('data-dependencies-global');
-    } else {
-        var rawDependencies = element.getAttribute('data-dependencies-personal');
-    }
-    return rawDependencies.split(' ');
-}
-
-function delete_dependent_permissions(elementId, scope, fullPermission){
-    var permissionProfileId = '__' + elementId + '__permission';
-    var elementsToDelete = [];
-    var elementsDescriptionToDelete = "";
-    $("[id^='ROLE_'][id$="+permissionProfileId+"]:checked").each(function (i, element) {
-        var dependencies = get_permission_dependencies(element, scope);
-        var dependenciesLength = dependencies.length;
-        for (var i = 0; i < dependenciesLength; i++) {
-            if (dependencies[i] == fullPermission) {
-                elementsToDelete.push(element.id);
-                var permission = element.id.split("__")[0];
-                var fullDescription = $("#"+permission).html().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-                var description = fullDescription.split(' <i')[0];
-                elementsDescriptionToDelete += '"' + description + '", ';
-                break;
-            }
-        }
-    });
-    if (elementsDescriptionToDelete.slice(-2) == ', ') {
-        elementsDescriptionToDelete = elementsDescriptionToDelete.slice(0, -2);
-    }
-    var elementsToDeleteLength = elementsToDelete.length;
-    if (elementsToDeleteLength > 0) {
-        var permissionToDelete = fullPermission.split("__")[0];
-        var permissionFullDescription = $("#"+permissionToDelete).html().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-        var permissionDescription = '"' + permissionFullDescription.split(' <i')[0] + '"';
-        if (window.confirm("{% trans %}The permission{% endtrans %} " + permissionDescription + " {% trans %}is dependent of the permission(s){% endtrans %}: " + elementsDescriptionToDelete + ". {% trans %}If you click OK you will uncheck all these permissions. Are you sure?{% endtrans %}")) {
-            for (var i = 0; i < elementsToDeleteLength; i++) {
-                $("#"+elementsToDelete[i]).prop("checked", "");
-            }
-        }
-    }
-}
-
-function fix_permission_dependencies(elementId, scope){
-    var permissionProfileId = '__' + elementId + '__permission';
-    $("[id^='ROLE_'][id$="+permissionProfileId+"]:checked").each(function (i, element) {
-        var dependencies = get_permission_dependencies(element, scope);
-        var dependenciesLength = dependencies.length;
-        for (var i = 0; i < dependenciesLength; i++) {
-            if (!$("#"+dependencies[i]).prop("checked")) {
-                $("#"+dependencies[i]).prop("checked", "checked");
-            }
-        }
-    });
-}
-
-function fix_permission_scope_none(elementId){
-    var permissionProfileId = '__' + elementId + '__permission';
-    $("[id^='ROLE_'][id$="+permissionProfileId+"]:checked").each(function (i, element) {
-        $("#"+element.id).prop("checked", "");
-    });
-}
-
-
 window.change_pics_page = function(route)
 {
     $('#pics_to_add_list').load(route);
 }
-
-function checkScope(id)
-{
-    var scope_id = $('#pumukitnewadmin_permissionprofile_scope_'+id+' option:selected').val();
-    var values = scope_id.split('__');
-    var permissions = $("input[id$=__"+id+"__permission]");
-    var scope = values[0];
-    for (var i = 0; i < permissions.length; i++){
-       if (scope == 'ROLE_SCOPE_NONE') {
-           if ($(permissions[i]).attr("disabled") != "disabled") {
-               $(permissions[i]).attr("disabled", "disabled");
-           }
-           if ($(permissions[i]).attr("checked") == "checked") {
-               $(permissions[i]).removeAttr("checked");
-           }
-           if ($(permissions[i]).closest("div").attr("class") != "checkbox pmk_disabled_checkbox") {
-               $(permissions[i]).closest("div").attr("class", "checkbox pmk_disabled_checkbox");
-           }
-           fix_permission_scope_none(id);
-       } else {
-           if ($(permissions[i]).attr("disabled") == "disabled") {
-               $(permissions[i]).removeAttr("disabled");
-           }
-           if ($(permissions[i]).closest("div").attr("class") == "checkbox pmk_disabled_checkbox") {
-               $(permissions[i]).closest("div").attr("class", "checkbox");
-           }
-           fix_permission_dependencies(id, scope_id);
-       }
-    }
-}
-
 
 function select_group(element)
 {
   $(element).siblings(".active").removeClass("active").end().addClass("active");
   return false;
 }
-
-function add_group_user(group_id, group_key, group_name, group_origin, user_origin, reset) {
-
-    create_element_group_in_add_groups_user(group_id, group_key, group_name, group_origin, user_origin);
-    var element_to_delete = "#delete_group_" + group_id;
-
-    delete_element_group_from_select(element_to_delete);
-}
-
-function create_element_group_in_add_groups_user(group_id, group_key, group_name, group_origin, user_origin) {
-
-    var item_id = 'id="add_group_' + group_id;
-    var add_groups_list = $('#add_groups');
-
-    var local_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')}}';
-    if ((group_origin == local_origin) || ((group_origin != local_origin) && user_origin == local_origin)) {
-        var item_class = 'class="list-group-item add-group-item pumukitnewadmin-trim-row group_' + group_key +'"';
-        var item_onclick = 'onclick="return select_group(this);"';
-        var item_ondblclick = 'ondblclick="delete_group_user(\''+group_id+'\', \''+group_key+'\', \''+group_name+'\', \''+group_origin+'\', \''+user_origin+'\');"';
-    } else {
-        var item_class = 'class="list-group-item disabled-group-item pumukitnewadmin-trim-row group_' + group_key +'"';
-        var item_onclick = 'onclick="return false;"';
-        var item_ondblclick = 'ondblclick="window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
-    }
-
-    var item_text = '<a href="#" '+item_class+' '+item_onclick+' '+item_ondblclick+' '+item_id+'"><i class="mdi-social-group"></i> ' + group_name + '</a>';
-    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
-        item_text = '<a href="#" '+item_class+' '+item_onclick+' '+item_ondblclick+' '+item_id+'"><i class="mdi-social-group"></i> '+group_key+' - '+group_name+' - ('+group_origin+')</a>';
-    {% endif %}
-    add_groups_list.append(item_text);
-}
-
-function delete_group_user(group_id, group_key, group_name, group_origin, user_origin, reset) {
-
-    create_element_group_in_delete_groups_user(group_id, group_key, group_name, group_origin, user_origin);
-
-    var element_to_delete = "#add_group_" + group_id;
-    delete_element_group_from_select(element_to_delete);
-}
-
-function create_element_group_in_delete_groups_user(group_id, group_key, group_name, group_origin, user_origin) {
-
-    var local_origin = '{{ constant('Pumukit\\SchemaBundle\\Document\\Group::ORIGIN_LOCAL')}}';
-    var item_id = 'id="delete_group_' + group_id;
-    var delete_groups_list = $('#delete_groups');
-
-    if ((group_origin == local_origin) || ((group_origin != local_origin) && user_origin == local_origin)) {
-        var item_class = 'class="list-group-item delete-group-item pumukitnewadmin-trim-row group_' + group_key +'"';
-        var item_onclick = 'onclick="return select_group(this);"';
-        var item_ondblclick = 'ondblclick="add_group_user(\'' + group_id + '\', \'' + group_key + '\', \'' + group_name + '\', \'' + group_origin + '\', \'' + user_origin + '\');"';
-    } else {
-        var item_class = 'class="list-group-item disabled-group-item pumukitnewadmin-trim-row group_' + group_key +'"';
-        var item_onclick = 'onclick="return false;"';
-        var item_ondblclick = 'ondblclick="window.alert(\'External defined groups. Contact your directory service administrator to change membership.\');"';
-    }
-
-    var item_text = '<a href="#" '+item_class+' '+item_onclick+' '+item_ondblclick+' '+item_id+'"><i class="mdi-social-group"></i> ' + group_name + '</a>';
-    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
-        var item_text = '<a href="#" '+item_class+' '+item_onclick+' '+item_ondblclick+' '+item_id+'"><i class="mdi-social-group"></i> '+group_key+' - '+group_name+' - ('+group_origin+')</a>';
-    {% endif %}
-    delete_groups_list.append(item_text);
-}
-
 
 function add_group(group_id, group_key, group_name, group_origin, resource, reset)
 {
@@ -2616,66 +2015,6 @@ function delete_element_group_from_select(element_id) {
     var $_element = $(element_id);
     if ($_element) $_element.remove();
 }
-
-$(document).on('click', '#pumukitnewadmin_user_groups_submit', function() {
-    $('#myModal').modal('hide');
-    var user_id = $('#user_id').val();
-    var route = "{{ path('pumukitnewadmin_user_updategroups', {'id': '__id__'})|raw }}";
-    route = route.replace('__id__', user_id);
-    var addGroups = [];
-    var deleteGroups = [];
-    $('a.add-group-item').each(function(){
-        addGroups.push($(this).attr("id"));
-    });
-    $('a.delete-group-item').each(function(){
-        deleteGroups.push($(this).attr("id"));
-    });
-    $.ajax({
-        url: route,
-        type: 'POST',
-        data: {'addGroups': addGroups, 'deleteGroups': deleteGroups},
-        error: function(jqXHR, textStatus, errorThrown){
-            no_success(errorThrown + ': ' + jqXHR.responseText);
-        },
-        success: function(response){
-            $('#list_users').html(response);
-            var message = '{{ "Successfully updated groups in User."|trans|e("js") }}';
-            success(message);
-        }
-    });
-});
-
-$(document).on('click', '#pumukitnewadmin_user_groups_reset', function() {
-    var user_id = $('#user_id').val();
-    var route = "{{ path('pumukitnewadmin_user_getgroups', {'id': '__id__'})|raw }}";
-    route = route.replace('__id__', user_id);
-    $.ajax({
-        url: route,
-        type: 'GET',
-        error: function(jqXHR, textStatus, errorThrown){
-            no_success(errorThrown + ': ' + jqXHR.responseText);
-        },
-        success: function(response){
-            var addGroups = response.add;
-            var deleteGroups = response.delete;
-            var userData = response.userOrigin;
-            $('#add_groups').empty();
-            $('#delete_groups').empty();
-            for (var group_id in addGroups) {
-                var group_key = addGroups[group_id].key;
-                var group_name = addGroups[group_id].name;
-                var group_origin = addGroups[group_id].origin;
-                add_group_user(group_id, group_key, group_name, group_origin, userData, true);
-            }
-            for (var group_id in deleteGroups) {
-                var group_key = deleteGroups[group_id].key;
-                var group_name = deleteGroups[group_id].name;
-                var group_origin = deleteGroups[group_id].origin;
-                delete_group_user(group_id, group_key, group_name, group_origin, userData, true);
-            }
-        }
-    });
-});
 
 function pumukitnewadmin_mm_updategroup_submit(mm_id, template) {
     $('#remember_save_mm' + template + '_group').hide();
@@ -2884,105 +2223,6 @@ $(document).on('submit', '#pumukitnewadmin_series_updatebroadcast_submit', funct
     return false;
 });
 
-delete_user_from_group = function(user_id, group_id, count, action)
-{
-    if (window.confirm('{{ "ATTENTION: Are you sure you want to delete this User from this Group?"|trans|e("js") }}')) {
-        var route = "{{ path('pumukitnewadmin_group_delete_user', {'id': '__groupId__', 'userId': '__userId__'})|raw }}";
-        route = route.replace('__groupId__', group_id);
-        route = route.replace('__userId__', user_id);
-        $.ajax({
-                url: route,
-                type: 'POST',
-                data: {'_method': 'DELETE', 'action': action},
-                error: function(jqXHR, textStatus, errorThrown) {
-                    no_success(errorThrown + ': ' + jqXHR.responseText);
-                },
-                success: function (response, textStatus, jqXHR) {
-                    $('#pumukitnewadmin_group_added_users').html(response);
-                    if (count == 1) {
-                        $('#pumukitnewadmin_group_delete_all_relation_user').attr('disabled', 'disabled');
-                    }
-                    var message = 'Successfully delete User from Group.';
-                    success(message);
-                }
-        }).done(function() {can_be_deleted(group_id);});
-    }
-    return false;
-}
-
-delete_multimediaobject_from_group = function(mm_id, group_id, count, action)
-{
-    if (window.confirm('{{ "ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?"|trans|e("js") }}')) {
-        var route = "{{ path('pumukitnewadmin_group_delete_multimediaobject', {'id': '__groupId__', 'mmId': '__mmId__'})|raw }}";
-        route = route.replace('__groupId__', group_id);
-        route = route.replace('__mmId__', mm_id);
-        $.ajax({
-                url: route,
-                type: 'POST',
-                data: {'_method': 'DELETE', 'action': action},
-                error: function(jqXHR, textStatus, errorThrown) {
-                no_success(errorThrown + ': ' + jqXHR.responseText);
-                },
-                success: function (response, textStatus, jqXHR) {
-                    $('#pumukitnewadmin_group_added_multimediaobjects').html(response);
-                    if (count == 1) {
-                        $('#pumukitnewadmin_group_delete_all_relation_multimediaobject').attr('disabled', 'disabled');
-                    }
-                    var message = 'Successfully delete MultimediaObject from Group.';
-                    success(message);
-                }
-        }).done(function() {can_be_deleted(group_id);});
-    }
-    return false;
-}
-
-delete_embeddedbroadcast_from_group = function(mm_id, group_id, count, action)
-{
-    if (window.confirm('{{ "ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?"|trans|e("js") }}')) {
-        var route = "{{ path('pumukitnewadmin_group_delete_embeddedbroadcast', {'id': '__groupId__', 'mmId': '__mmId__'})|raw }}";
-        route = route.replace('__groupId__', group_id);
-        route = route.replace('__mmId__', mm_id);
-        $.ajax({
-                url: route,
-                type: 'POST',
-                data: {'_method': 'DELETE', 'action': action},
-                error: function(jqXHR, textStatus, errorThrown) {
-                no_success(errorThrown + ': ' + jqXHR.responseText);
-                },
-                success: function (response, textStatus, jqXHR) {
-                    $('#pumukitnewadmin_group_added_embeddedbroadcasts').html(response);
-                    if (count == 1) {
-                        $('#pumukitnewadmin_group_delete_all_relation_embeddedbroadcast').attr('disabled', 'disabled');
-                    }
-                    var message = 'Successfully delete MultimediaObject from Group.';
-                    success(message);
-                }
-        }).done(function() {can_be_deleted(group_id);});
-    }
-    return false;
-}
-
-can_be_deleted = function(group_id)
-{
-    var route = "{{ path('pumukitnewadmin_group_can_be_deleted', {'id': '__groupId__'})|raw }}";
-    route = route.replace('__groupId__', group_id);
-    $.ajax({
-            url: route,
-            type: 'GET',
-            error: function(jqXHR, textStatus, errorThrown) {
-                no_success(errorThrown + ': ' + jqXHR.responseText);
-            },
-            success: function (response, textStatus, jqXHR) {
-                var group_name = {% autoescape 'js' %}response.groupName{% endautoescape %};
-                var delete_message = {% autoescape 'js' %}response.deleteMessage{% endautoescape %};
-                var can_be_deleted = response.canbedeleted;
-                var onclick_value = "window.submit_delete_group('"+group_id+"', '"+group_name+"', '"+delete_message+"', '"+can_be_deleted+"'); return false;";
-                $('#pumukitnewadmin_group_delete').attr('onclick', onclick_value);
-            }
-    });
-    return false;
-}
-
 can_enable_broadcast_groups_save_button = function(resource)
 {
     var submit_button = get_submit_button_id();
@@ -3070,7 +2310,6 @@ is_last_user_relation_to_admin_mm = function(resource, person_id, roleId, mmId, 
 
     return false;
 }
-
 
 //
 window.init_series_materialtags = function() {

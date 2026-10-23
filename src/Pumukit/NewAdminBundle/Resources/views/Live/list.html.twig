@@ -6,7 +6,7 @@
     <th width="1%" id="th-checkbox">
       <div class="checkbox">
         <label>
-              <input type="checkbox" onclick="window.click_checkbox_all('live', this.checked)">
+              <input type="checkbox" data-action="click->admin--actions#checkAll" data-admin--actions-name-param="live">
         </label>
       </div>
     </th>
@@ -40,20 +40,27 @@
               </a>
             </td>
             <td headers="th-icons">
-              <a href="#" onclick="window.submit_delete_live('{{ live.id }}'); return false;" title="{% trans %}Delete live channel{% endtrans %}">
+              <a href="#" data-action="click->admin--actions#remove"
+               data-admin--actions-url-param="{{ path('pumukitnewadmin_live_delete', {'id': live.id}) }}"
+               data-admin--actions-target-param="#list_lives"
+               data-admin--actions-reload-param="{{ path('pumukitnewadmin_live_list') }}"
+               data-admin--actions-error-marker-param="error"
+               data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this live channel?'|trans }}"
+               data-admin--actions-success-param="{{ 'Live channel successfully deleted.'|trans }}"
+               data-admin--actions-error-param="{{ 'Delete error. Live channel channel is associated to live event.'|trans }}" title="{% trans %}Delete live channel{% endtrans %}">
                 <i class="mdi-content-clear"></i>
               </a>
             </td>
-            <td headers="th-name" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
+            <td headers="th-name" data-action="click->admin--actions#preview" data-admin--actions-name-param="live" data-admin--actions-url-param="{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}">
               {{ live.name }}
             </td>
-            <td headers="th-url" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
+            <td headers="th-url" data-action="click->admin--actions#preview" data-admin--actions-name-param="live" data-admin--actions-url-param="{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}">
               {{ live.url }}
             </td>
-            <td headers="th-source-name" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
+            <td headers="th-source-name" data-action="click->admin--actions#preview" data-admin--actions-name-param="live" data-admin--actions-url-param="{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}">
               {{ live.getSourceName() }}
             </td>
-            <td headers="th-type" onclick="click_fila_url('live', this, '{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}');">
+            <td headers="th-type" data-action="click->admin--actions#preview" data-admin--actions-name-param="live" data-admin--actions-url-param="{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}">
               {{ live.getLiveType }}
             </td>
           </tr>

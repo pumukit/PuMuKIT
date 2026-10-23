@@ -12,7 +12,10 @@
         <div class="col-md-12">
             <div class="well">
                 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PERMISSION_PROFILES')) %}
-                    <div id="list_permissionprofiles">
+                    <div id="list_permissionprofiles"
+                         data-controller="admin--permission-profiles"
+                         data-admin--permission-profiles-save-url-value="{{ path('pumukitnewadmin_permissionprofile_batch_update') }}"
+                         data-admin--permission-profiles-messages-value="{{ {saved: 'Permission Profiles successfully updated.'|trans, permission: 'The permission'|trans, dependent: 'is dependent of the permission(s)'|trans, confirm: 'If you click OK you will uncheck all these permissions. Are you sure?'|trans}|json_encode }}">
                         {% include '@PumukitNewAdmin/PermissionProfile/list.html.twig' %}
                     </div>
                 {% else %}

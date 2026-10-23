@@ -5,42 +5,35 @@
         <strong>create</strong> a new entrance with the written name{% endtrans %}.
     </p>
 </div>
-<div class="modal-body">
+<div class="modal-body"
+     data-controller="admin--person-picker"
+     data-admin--person-picker-autocomplete-url-value="{{ path('pumukitnewadmin_person_auto_complete', {'mmId': mm.id, 'roleId': role.id}) }}"
+     data-admin--person-picker-link-url-value="{{ path('pumukitnewadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id, 'owner': owner}) }}"
+     data-admin--person-picker-create-url-value="{{ path('pumukitnewadmin_person_create_relation', {'mmId': mm.id, 'roleId': role.id, 'name': '__aux__', 'owner': owner}) }}"
+     data-admin--person-picker-target-value="#{{ role.id }}_person_mms{{ template }}"
+     data-admin--person-picker-preview-value="{{ template != '_template' ? path('pumukitnewadmin_mms_show', {'id': mm.id}) : '' }}"
+     data-admin--person-picker-modal-value="#myAuxModal{{ template }}"
+     data-admin--person-picker-messages-value="{{ {linked: 'Person successfully associated to Multimedia Object'|trans ~ ' \'' ~ mm.getTitle() ~ '\' ' ~ 'with role'|trans ~ ' \'' ~ role.getName() ~ '\'', selectFirst: 'Select before a person'|trans}|json_encode }}">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
         <fieldset>
             <legend hidden>{% trans %}Search person{% endtrans %}</legend>
             <div class="form-group">
                 <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
-                <input type="text" name="name" id="name" placeholder="{% trans %}name to search for{% endtrans %}" class="form-control"/>
+                <input type="text" name="name" id="name" placeholder="{% trans %}name to search for{% endtrans %}" class="form-control" data-admin--person-picker-target="name" data-action="input->admin--person-picker#clear"/>
                 <span id="indicator1" style="display: none" class="input-group-addon"><img alt="{% trans %}working{% endtrans %}..." src="{{ asset('bundles/pumukitnewadmin/images/admin/load/spinner.gif') }}" height="18" width="18"></span>
-                <input type="hidden" name="person_id" value="" id="person_id"/>
+                <input type="hidden" name="person_id" value="" id="person_id" data-admin--person-picker-target="person"/>
             </div>
         </fieldset>
         <div class="modal-footer">
             {% if ldap_enabled  and role.cod != personal_scope_role_code %}
                 {{ render(controller('Pumukit\\LDAPBundle\\Controller\\PersonController::buttonAction', {'mmId': mm.id, 'roleId': role.id})) }}
             {% endif %}
-            <button type="button" class="btn btn-primary btn-raised"
-                    onclick="if('' != $('#person_id').val()){
-                            var route = '{{ path('pumukitnewadmin_person_link', {'id': '__personId__', 'roleId': role.id, 'mmId': mm.id, 'owner': owner} ) }}';
-                            var personId = $('#person_id').val();
-                            $('#{{ role.id }}_person_mms{{ template }}').load(route.replace('__personId__', personId), {'_method':'POST'}, function(){
-                            success('{{ "Person successfully associated to Multimedia Object"|trans|e("js") }} \'{{ mm.getTitle()|e('js') }}\' {% trans %}with role{% endtrans %} \'{{ role.getName()|e('js') }}\'');
-                    {% if template != '_template' %} $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}', {'_method':'POST'}); {% endif %}
-                            });
-                            $('#myAuxModal{{ template }}').modal('hide');
-                            }else{
-                            alert('{% trans %}Select before a person{% endtrans %}');
-                            }
-                            return false;">
+            <button type="button" class="btn btn-primary btn-raised" data-action="click->admin--person-picker#use">
                 {% trans %}Use{% endtrans %}
             </button>
             {% if app.user and ((role.cod != personal_scope_role_code) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE'))) or ((role.cod == personal_scope_role_code) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER'))) %}
                 <button type="button" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
-                        id="create_relation" href="#"
-                        onclick="var aux = $('#name').val();
-                                var route = '{{ path('pumukitnewadmin_person_create_relation', {'mmId': mm.id, 'roleId': role.id, 'name': '__aux__', 'owner': owner}) }}';
-                                $('#create_relation').attr('href', encodeURI(route.replace('__aux__', aux))); return true;">
+                        id="create_relation" href="#" data-admin--person-picker-target="create" data-action="click->admin--person-picker#create">
                     {% trans %}New{% endtrans %}
                 </button>
             {% endif %}
@@ -53,23 +46,3 @@
 
 <div style="clear:right"></div>
 
-{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
-    <script type="text/javascript">
-        $("#name").autocomplete({
-            source: "{{ path('pumukitnewadmin_person_auto_complete', {'mmId': mm.id, 'roleId': role.id})|raw }}",
-            delay: 250,
-            minLength: 2,
-            select: function (event, ui) {
-                $("#person_id").val(ui.item.id)
-            }
-        }).autocomplete("instance")._renderItem = function (ul, item) {
-            return $("<li>")
-                .append("<a title=\"" + item.id + "\">" + item.label + "<br><span class='form-control'>" + item.desc + "</span></a>")
-                .appendTo(ul);
-        };
-
-        $("#name").on("input", function () {
-            $("#person_id").val("");
-        });
-    </script>
-{% endif %}

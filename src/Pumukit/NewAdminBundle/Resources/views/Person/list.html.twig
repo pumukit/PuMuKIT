@@ -42,24 +42,29 @@
                         {% elseif countMmPeople[person.id] != 0 %}
                             <i title="{% trans %}Cannot delete the data of{% endtrans %} '{{ person.name }}'. '{{ countMmPeople[person.id] }}' {% trans %}multimedia object(s) contain(s) this person{% endtrans %}." class="mdi-content-block" style="color:#009587"></i>
                         {% else %}
-                            <a href="#" title="Delete Person '{{ person.name }}'" onclick="window.submit_delete_person('{{ person.id }}', '{{ countMmPeople[person.id] }}', '{% autoescape 'js' %}{{ person.getHName() }}{% endautoescape %}'); return false;">
+                            <a href="#" title="Delete Person '{{ person.name }}'" data-action="click->admin--actions#remove"
+                               data-admin--actions-url-param="{{ path('pumukitnewadmin_person_delete', {'id': person.id}) }}"
+                               data-admin--actions-target-param="#list_people"
+                               data-admin--actions-confirm-param="{{ 'Are you sure you want to delete the data of'|trans }} {{ person.getHName() }}?"
+                               data-admin--actions-success-param="{{ 'Person'|trans }} &quot;{{ person.getHName() }}&quot; {{ 'successfully deleted.'|trans }}"
+                               data-admin--actions-error-param="{{ 'Error deleting Person'|trans }} &quot;{{ person.getHName() }}&quot;">
                                 <i class="mdi-content-clear"></i>
                             </a>
                         {% endif %}
                     </td>
-                    <td headers="th-name" onclick="click_fila_url('person', this, '{{ urlShowPerson }}');">
+                    <td headers="th-name" data-action="click->admin--actions#preview" data-admin--actions-name-param="person" data-admin--actions-url-param="{{ urlShowPerson }}">
                         <span style="color:gray">{{ person.getHonorific() }}</span> {{ person.getName() }}
                     </td>
-                    <td headers="th-post" onclick="click_fila_url('person', this, '{{ urlShowPerson }}');">
+                    <td headers="th-post" data-action="click->admin--actions#preview" data-admin--actions-name-param="person" data-admin--actions-url-param="{{ urlShowPerson }}">
                         {{ person.getPost() }}
                     </td>
-                    <td headers="th-email" onclick="click_fila_url('person', this, '{{ urlShowPerson }}');">
+                    <td headers="th-email" data-action="click->admin--actions#preview" data-admin--actions-name-param="person" data-admin--actions-url-param="{{ urlShowPerson }}">
                         {{ person.getEmail() }}
                     </td>
-                    <td headers="th-phone" onclick="click_fila_url('person', this, '{{ urlShowPerson }}');">
+                    <td headers="th-phone" data-action="click->admin--actions#preview" data-admin--actions-name-param="person" data-admin--actions-url-param="{{ urlShowPerson }}">
                         {{ person.getPhone() }}
                     </td>
-                    <td headers="th-mm" onclick="click_fila_url('person', this, '{{ urlShowPerson }}');">
+                    <td headers="th-mm" data-action="click->admin--actions#preview" data-admin--actions-name-param="person" data-admin--actions-url-param="{{ urlShowPerson }}">
                         {{ countMmPeople[person.id] }}
                     </td>
                 </tr>

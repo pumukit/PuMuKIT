@@ -6,26 +6,7 @@
 <div class="modal-body">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_TAGS')) %}
         {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
-        <form onsubmit="$('#myModal').modal('hide');
-                $.ajax({
-                    url: '{{ path('pumukitnewadmin_tag_update', {'id': tag.id}) }}',
-                    method: 'POST',
-                    data: $(this).serialize(),
-                    success: function(response, textStatus, jqXHR){
-                        if (jqXHR.responseText.indexOf('modal-header') != -1){
-                            var message = '{{ "There was an error in updating the Tag."|trans|e("js")}}';
-                            no_success(message);
-                        } else{
-                            $('#list_tags').html(response);
-                            var message = '{{ "Tag successfully updated."|trans|e("js")}}';
-                            success(message);
-                        }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown){
-                        no_success(errorThrown + ': ' + jqXHR.responseJSON.status);
-                    }
-                });
-                return false;"
+        <form data-controller="admin--modal-form" data-action="submit->admin--modal-form#submit" data-admin--modal-form-target-value="#list_tags" data-admin--modal-form-success-message-value="{{ "Tag successfully updated."|trans }}" data-admin--modal-form-error-message-value="{{ "There was an error in updating the Tag."|trans }}"
               action="{{ path('pumukitnewadmin_tag_update', {'id': tag.id}) }}" method="POST">
             <fieldset>
                 {% for child in form %}

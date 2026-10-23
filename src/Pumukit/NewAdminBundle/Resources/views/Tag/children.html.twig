@@ -13,7 +13,11 @@
                     </div>
                 </td>
                 <td headers="th-icons">
-                    <a href="#" title="{% trans %}delete{% endtrans %}" onclick="return tag_delete('{{ tag.id }}', '{{ tag.cod }}', '{{ tag.parent.id }}', parseInt('{{ tag.getNumberMultimediaObjects() }}'));" class="tag_delete_{{ tag.cod }}">
+                    <a href="#" title="{% trans %}delete{% endtrans %}" data-action="click->admin--tag-tree#remove"
+                       data-admin--tag-tree-id-param="{{ tag.id }}" data-admin--tag-tree-pid-param="{{ tag.parent.id }}"
+                       {% if tag.getNumberMultimediaObjects() > 0 %}data-admin--tag-tree-blocked-param="{{ 'Can not delete tag with code'|trans }} {{ tag.cod }}. {{ tag.getNumberMultimediaObjects() }} {{ 'Multimedia Object(s) has/have this tag'|trans }}."{% endif %}
+                       data-admin--tag-tree-confirm-param="{{ 'Are you sure you want to delete the tag with code'|trans }} {{ tag.cod }}?"
+                       data-admin--tag-tree-success-param="{{ 'Tag'|trans }} &quot;{{ tag.cod }}&quot; {{ 'successfully deleted'|trans }}." class="tag_delete_{{ tag.cod }}">
                         <i class="mdi-content-clear"></i>
                     </a>
                 </td>
@@ -28,18 +32,18 @@
                     </a>
                 </td>
                 <td headers="th-code" class="{{ has_children?'collapsed noload':'element' }}">
-                    <span style="padding-left:{{ 10 * tag.level }}px" onclick="javascript:toggle_section_tag('{{ tag.id }}', this, {{ tag.level }}, '{{ tag.cod }}')">
+                    <span style="padding-left:{{ 10 * tag.level }}px" data-action="click->admin--tag-tree#toggle" data-admin--tag-tree-id-param="{{ tag.id }}" data-admin--tag-tree-cod-param="{{ tag.cod }}">
                     {{ tag.cod }}
                     </span>
                 </td>
                 <td headers="th-name" class="{{ has_children?'collapsed noload':'element' }}">
-                    <span style="padding-left:{{ 10 * tag.level }}px" onclick="javascript:toggle_section_tag('{{ tag.id }}', this, {{ tag.level }}, '{{ tag.cod }}')">
+                    <span style="padding-left:{{ 10 * tag.level }}px" data-action="click->admin--tag-tree#toggle" data-admin--tag-tree-id-param="{{ tag.id }}" data-admin--tag-tree-cod-param="{{ tag.cod }}">
                       <i class="mdi- tag_icon tag_children_{{ tag.cod }}"></i>
                         {{ tag.title }}
                     </span>
                 </td>
                 <td headers="th-num">
-                    <span style="padding-left:{{ 10 * tag.level }}px" onclick="javascript:toggle_section_tag('{{ tag.id }}', this, {{ tag.level }}, '{{ tag.cod }}')">
+                    <span style="padding-left:{{ 10 * tag.level }}px" data-action="click->admin--tag-tree#toggle" data-admin--tag-tree-id-param="{{ tag.id }}" data-admin--tag-tree-cod-param="{{ tag.cod }}">
                     {{ tag.getNumberMultimediaObjects() }}
                     </span>
                 </td>

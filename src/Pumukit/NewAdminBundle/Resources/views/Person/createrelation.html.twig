@@ -6,26 +6,13 @@
 </div>
 <div class="modal-body">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
-        <form onsubmit="$('#myModal').modal('hide');
-                $.ajax({
-                    url: '{{ path('pumukitnewadmin_person_create_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': owner}) }}',
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    success: function(response){
-                        $('#{{ role.id }}_person_mms{{ template }}').html(response);
-                        {% if template != '_template' %}
-                            $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
-                        {% endif %}
-                        success('{{ "Person successfully associated to Multimedia Object"|trans|e("js") }} \'{{ mm.getTitle()|e('js') }}\' {% trans %}with role{% endtrans %} \'{{ role.getName()|e('js') }}\'');
-                    },
-                    error: function(jqXHR, textStatus, errorThrown){
-                        var textError = jqXHR.responseText;
-                        var message = errorThrown+': '+textError;
-                        no_success(message);
-                    }
-                });
-                return false;"
-              action="{{ path('pumukitnewadmin_person_create_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" method="POST">
+        <form action="{{ path('pumukitnewadmin_person_create_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': owner}) }}"
+              data-controller="admin--modal-form" data-action="submit->admin--modal-form#submit"
+              data-admin--modal-form-target-value="#{{ role.id }}_person_mms{{ template }}"
+              data-admin--modal-form-modal-value="#myModal"
+              data-admin--modal-form-refresh-value="{{ (template != '_template' ? [{target: '#preview_mm', url: path('pumukitnewadmin_mms_show', {'id': mm.id})}] : [])|json_encode }}"
+              data-admin--modal-form-success-message-value="{{ 'Person successfully associated to Multimedia Object'|trans }} '{{ mm.getTitle() }}' {{ 'with role'|trans }} '{{ role.getName() }}'"
+              method="POST">
             {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
             <input type="hidden" name="id" id="person_id" value="{{ person.id }}">
             <input type="hidden" name="roleId" id="roleId" value="{{ role.id }}">

@@ -1,7 +1,7 @@
 {% set criteria = app.session.get('admin/person/criteria') %}
 
 <div class="well">
-    <form class="form" id="filter_people" onsubmit="$('#list_people').load('{{ path('pumukitnewadmin_person_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_person_list') }}" method="post">
+    <form class="form" id="filter_people" data-controller="admin--filter-form" data-action="submit->admin--filter-form#submit" data-admin--filter-form-url-value="{{ path('pumukitnewadmin_person_list') }}" data-admin--filter-form-target-value="#list_people" data-admin--filter-form-letters-value=".pmk-person-letter" action="{{ path('pumukitnewadmin_person_list') }}" method="post">
         <fieldset>
             <legend hidden>{% trans %}Filter People{% endtrans %}</legend>
 
@@ -37,10 +37,10 @@
                                 <label for="filters_letter" class="control-label">
                                     {% trans %}Letter{% endtrans %}:
                                 </label>
-                                <input id="filters_letter" class="reset form-control" type="hidden" value="{{ criteria['letter']|default("") }}" name="criteria[letter]">
+                                <input id="filters_letter" class="reset form-control" type="hidden" data-admin--filter-form-target="letter" value="{{ criteria['letter']|default("") }}" name="criteria[letter]">
                                 <div class="text-center">
                                 {% for letter in "A".."Z" %}
-                                    <a href="#" id="pmk-person-letter-{{ letter }}" class="pmk-person-letter {% if criteria['letter']|default("") == letter %}text-pumukit{% endif %}" onclick="window.filter_click_letter('{{ letter }}')">
+                                    <a href="#" id="pmk-person-letter-{{ letter }}" class="pmk-person-letter {% if criteria['letter']|default("") == letter %}text-pumukit{% endif %}" data-action="click->admin--filter-form#letter" data-admin--filter-form-letter-param="{{ letter }}">
                                         <span style="padding:1px">{{ letter }}</span>
                                     </a>
                                     {% if loop.index % 13 == 0 %}
@@ -56,7 +56,7 @@
         </fieldset>
 
         <div class="text-right">
-            <input class="btn btn-default btn-raised" onclick="$('.pmk-person-letter.text-pumukit').removeClass('text-pumukit'); $('#filter_people input.reset').val(''); $('#list_people').load('{{ path('pumukitnewadmin_person_list') }}?criteria[reset]=true'); return false;" type="button" value="{% trans %}reset{% endtrans %}" />
+            <input class="btn btn-default btn-raised" data-action="click->admin--filter-form#reset" type="button" value="{% trans %}reset{% endtrans %}" />
             <input class="btn btn-pumukit btn-raised" type="submit" name="filter" value="{% trans %}filter{% endtrans %}">
         </div>
     </form>

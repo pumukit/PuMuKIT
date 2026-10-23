@@ -12,13 +12,18 @@
     <a href="#">
       <i class="mdi-image-camera-alt"></i> {% trans %}Add thumbnail{% endtrans %}
     </a>
-    <a href="#" onclick="window.delete_eventpic('{{ event.id }}'); return false;" data-toggle="modal" data-target="#myModal">
+    <a href="#" data-action="click->admin--actions#remove"
+               data-admin--actions-url-param="{{ path('pumukitnewadmin_eventpic_delete', {'id': event.id}) }}"
+               data-admin--actions-target-param="#list_events"
+               data-admin--actions-refresh-param="{{ [{target: '#preview_event', url: path('pumukitnewadmin_event_show', {'id': event.id})}]|json_encode }}"
+               data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this thumbnail?'|trans }}"
+               data-admin--actions-success-param="{{ 'Thumbnail removed.'|trans }}" data-toggle="modal" data-target="#myModal">
       <i class="mdi-content-clear"></i> {% trans %}Delete thumbnail{% endtrans %}
     </a>
     {% endif %}
   </li>
   <li>
-    <a href="#" onclick="return false;">
+    <a href="#" data-action="click->admin--actions#cancel">
       <strong>{% trans %}Cancel{% endtrans %}...</strong>
     </a>
   </li>

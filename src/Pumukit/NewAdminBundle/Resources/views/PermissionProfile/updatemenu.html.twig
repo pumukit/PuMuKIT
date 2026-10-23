@@ -7,12 +7,16 @@
       </a>
     </li>
     <li>
-      <a href="#" onclick="window.submit_delete_permissionprofile('{{ permissionprofile.id }}', '{{ permissionprofile.name }}'); return false;">
+      <a href="#" data-action="click->admin--actions#remove"
+         data-admin--actions-url-param="{{ path('pumukitnewadmin_permissionprofile_delete', {'id': permissionprofile.id}) }}"
+         data-admin--actions-target-param="#list_permissionprofiles"
+         data-admin--actions-confirm-param="{{ 'Are you sure you want to delete the Permission Profile'|trans }} &quot;{{ permissionprofile.name }}&quot;?."
+         data-admin--actions-success-param="{{ 'Permission Profile'|trans }} &quot;{{ permissionprofile.name }}&quot; {{ 'successfully deleted'|trans }}.">
         <i class="mdi-content-clear"></i> {% trans %}Delete the permission profile{% endtrans %}
       </a>
     </li>
     <li>
-      <a href="#" onclick="return false;">
+      <a href="#" data-action="click->admin--actions#cancel">
         <strong>{% trans %}Cancel{% endtrans %}...</strong>
       </a>
     </li>

@@ -20,7 +20,13 @@
                         </a>
                     </td>
                     <td>
-                        <a href="#" onclick="window.submit_delete_person_relation('{{ person.id }}', '{{ role.id }}', '{{ mm.id }}', '{{ person.getHName() }}', '{{ template }}', false); return false;">
+                        <a href="#" data-action="click->admin--actions#remove"
+                           data-admin--actions-url-param="{{ path('pumukitnewadmin_person_delete_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': false}) }}"
+                           data-admin--actions-target-param="#{{ role.id }}_person_mms{{ template }}"
+                           data-admin--actions-refresh-param="{{ [{target: '#preview_mm', url: path('pumukitnewadmin_mms_show', {'id': mm.id})}]|json_encode }}"
+                           data-admin--actions-confirm-param="{{ 'Are you sure you want to delete the relation of'|trans }} {{ person.getHName() }}?"
+                           data-admin--actions-success-param="{{ 'Person successfully removed from Multimedia Object'|trans }}"
+                           data-admin--actions-error-param="{{ 'Error deleting Person'|trans }} &quot;{{ person.getHName() }} from MultimediaObject&quot;">
                             <i class="mdi-content-clear"></i>
                         </a>
                     </td>
@@ -28,14 +34,18 @@
                         {% if loop.first %}
                             &nbsp;&nbsp;
                         {% else %}
-                            <a href="#" onclick="$('#{{ role.id }}_person_mms{{ template }}').load('{{ path('pumukitnewadmin_person_up', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}'); return false;">&#8593;</a>
+                            <a href="#" data-action="click->admin--actions#load"
+                               data-admin--actions-url-param="{{ path('pumukitnewadmin_person_up', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}"
+                               data-admin--actions-target-param="#{{ role.id }}_person_mms{{ template }}">&#8593;</a>
                         {% endif %}
                     </td>
                     <td>
                         {% if loop.last %}
                             &nbsp;&nbsp;
                         {% else %}
-                            <a href="#" onclick="$('#{{ role.id }}_person_mms{{ template }}').load('{{ path('pumukitnewadmin_person_down', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}'); return false;">&#8595;</a>
+                            <a href="#" data-action="click->admin--actions#load"
+                               data-admin--actions-url-param="{{ path('pumukitnewadmin_person_down', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}"
+                               data-admin--actions-target-param="#{{ role.id }}_person_mms{{ template }}">&#8595;</a>
                         {% endif %}
                     </td>
                 {% endif %}

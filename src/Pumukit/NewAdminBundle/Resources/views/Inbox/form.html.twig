@@ -2,12 +2,17 @@
 
 {% block inbox_body %}
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
+        <div data-controller="admin--file-tree"
+             data-admin--file-tree-url-value="{{ path('pumukit_newadmin_inbox_dir') }}"
+             data-admin--file-tree-type-value="{{ selection }}"
+             data-admin--file-tree-messages-value="{{ {thisDirectory: 'This directory'|trans}|json_encode }}">
         <input type="hidden" id="server_selected_path" value="">
         <a data-hash="root" data-path="root" class="list-group-item collapsed noload" href="#"
-           onclick="fileServerTree(this, '{{ selection }}', '{{ dir }}', 1, 'explorer_videoserv'); return false;">
+           data-action="click->admin--file-tree#toggle" data-admin--file-tree-dir-param="{{ dir }}" data-admin--file-tree-num-param="1">
                <span style="padding-left: 0"><i class="mdi- tag_icon"></i></span>
                <span>{{ displayDir }}</span>
         </a>
+        </div>
     {% else %}
         {% trans %}You don't have enough permissions to access this content.{% endtrans %}
     {% endif %}

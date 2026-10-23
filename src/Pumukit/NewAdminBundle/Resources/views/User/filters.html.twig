@@ -65,7 +65,7 @@
         </fieldset>
 
         <div class="text-right">
-            <input class="btn btn-default btn-raised" onclick="window.location.href='?criteria[reset]=true'" type="button" value="{% trans %}reset{% endtrans %}">
+            <input class="btn btn-default btn-raised" data-action="click->admin--actions#navigate" data-admin--actions-url-param="?criteria[reset]=true" type="button" value="{% trans %}reset{% endtrans %}">
             <input class="btn btn-pumukit btn-raised" type="submit" name="filter" value="{% trans %}filter{% endtrans %}">
         </div>
     </form>

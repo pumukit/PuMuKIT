@@ -6,7 +6,7 @@
           <th id="th-checkbox" width="1%">
             <div class="checkbox">
               <label>
-                <input type="checkbox" onclick="window.click_checkbox_all('user', this.checked)">
+                <input type="checkbox" data-action="click->admin--actions#checkAll" data-admin--actions-name-param="user">
               </label>
             </div>
           </th>
@@ -55,7 +55,12 @@
           </td>
           <td headers="th-icons">
             {% if user.isLocal() or is_granted('ROLE_SUPER_ADMIN') %}
-            <a href="#" onclick="window.submit_delete_user('{{ user.id }}', '{% autoescape 'js' %}{{ user.fullname }}{% endautoescape %}'); return false;" title="{% trans %}Delete User{% endtrans %}">
+            <a href="#" data-action="click->admin--actions#remove"
+               data-admin--actions-url-param="{{ path('pumukitnewadmin_user_delete', {'id': user.id}) }}"
+               data-admin--actions-target-param="#list_users"
+               data-admin--actions-confirm-param="{{ 'Are you sure you want to delete the user'|trans }} {{ user.fullname }}?"
+               data-admin--actions-success-param="{{ 'User'|trans }} &quot;{{ user.fullname }}&quot; {{ 'successfully deleted.'|trans }}"
+               data-admin--actions-error-param="{{ 'Error deleting user'|trans }}" title="{% trans %}Delete User{% endtrans %}">
               <i class="mdi-content-clear"></i>
             </a>
             {% else %}

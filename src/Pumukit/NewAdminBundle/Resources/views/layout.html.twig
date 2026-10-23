@@ -47,6 +47,7 @@
 {% endblock %}
 
 {% block body_base %}
+    <div data-controller="admin--actions">
     {% block naked_menu %}
         {% include is_naked() ? '@PumukitNewAdmin/naked_menu.html.twig' : '@PumukitNewAdmin/menu.html.twig' %}
     {% endblock %}
@@ -60,4 +61,5 @@
         </div>
     </div>
     {% include '@PumukitNewAdmin/footer.html.twig' %}
+    </div>
 {% endblock body_base %}

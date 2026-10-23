@@ -11,7 +11,10 @@
         </a>
       </td>
       <td>
-          <a href="#" onclick="window.submit_delete_link('{{ link.id }}', '{{ mmId }}'); return false;">
+          <a href="#" data-action="click->admin--actions#remove"
+               data-admin--actions-url-param="{{ path('pumukitnewadmin_link_delete', {'id': link.id, 'mmId': mmId}) }}"
+               data-admin--actions-target-param="#links_mms_{{ mmId }}"
+               data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this link?'|trans }}">
              <i class="mdi-content-clear"></i>
           </a>
       </td>
@@ -19,14 +22,20 @@
         {% if loop.first %}
       &nbsp;
     {% else %}
-      <a href="#" onclick="$('#links_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_link_up', {'id': link.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8593;</a>
+      <a href="#" data-action="click->admin--actions#load"
+               data-admin--actions-url-param="{{ path('pumukitnewadmin_link_up', {'id': link.id, 'mmId': mmId}) }}"
+               data-admin--actions-target-param="#links_mms_{{ mmId }}"
+               data-admin--actions-data-param="{{ {'_method': 'POST'}|json_encode }}">&#8593;</a>
     {% endif %}
       </td>
       <td>
     {% if loop.last %}
           &nbsp;
     {% else %}
-      <a href="#" onclick="$('#links_mms_{{ mmId }}').load('{{ path('pumukitnewadmin_link_down', {'id': link.id, 'mmId': mmId}) }}', {'_method': 'POST'}); return false;">&#8595;</a>
+      <a href="#" data-action="click->admin--actions#load"
+               data-admin--actions-url-param="{{ path('pumukitnewadmin_link_down', {'id': link.id, 'mmId': mmId}) }}"
+               data-admin--actions-target-param="#links_mms_{{ mmId }}"
+               data-admin--actions-data-param="{{ {'_method': 'POST'}|json_encode }}">&#8595;</a>
     {% endif %}
       </td>
       <td>

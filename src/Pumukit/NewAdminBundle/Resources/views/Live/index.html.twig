@@ -17,7 +17,10 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-4">
-                            <select id="options_lives" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('live', $(this), 'lives')">
+                            <select id="options_lives" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
+                                    data-admin--batch-name-value="live" data-admin--batch-plural-value="lives"
+                                    data-admin--batch-urls-value="{{ {delete: path('pumukitnewadmin_live_batch_delete', {'ids': '__ids__'})}|json_encode }}"
+                                    data-admin--batch-messages-value="{{ {confirm: 'Are you sure?'|trans, success: 'Lives ' ~ 'successfully deleted.'|trans}|json_encode }}">
                                 <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
                                 <option disabled="">---</option>
                                 <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>

@@ -1,3 +1,10 @@
+<div data-controller="admin--group-info"
+     data-admin--group-info-delete-url-value="{{ path('pumukitnewadmin_group_delete', {'id': group.id}) }}"
+     data-admin--group-info-check-url-value="{{ path('pumukitnewadmin_group_can_be_deleted', {'id': group.id}) }}"
+     data-admin--group-info-name-value="{{ group.getName() }}"
+     data-admin--group-info-delete-message-value="{{ delete_group_message }}"
+     data-admin--group-info-can-delete-value="{{ can_delete ? 'true' : 'false' }}"
+     data-admin--group-info-messages-value="{{ {error: 'Error deleting Group'|trans, group: 'Group'|trans, deleted: 'successfully deleted.'|trans}|json_encode }}">
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
     </button>
@@ -32,10 +39,11 @@
             <button type="button" class="btn btn-default btn-raised"
                     data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
             <button id="pumukitnewadmin_group_delete" type="submit" class="btn btn-pumukit btn-raised"
-                    onclick="window.submit_delete_group('{{ group.id }}', '{% autoescape 'js' %}{{ group.getName() }}{% endautoescape %}', '{% autoescape 'js' %}{{ delete_group_message }}{% endautoescape %}', '{{ can_delete }}'); return false;">{% trans %}Delete Group{% endtrans %}</button>
+                    data-action="click->admin--group-info#deleteGroup">{% trans %}Delete Group{% endtrans %}</button>
         {% else %}
             <button type="button" class="btn btn-default btn-raised"
                     data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
         {% endif %}
     </div>
+</div>
 </div>

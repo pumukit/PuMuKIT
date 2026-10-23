@@ -1,6 +1,6 @@
 <!-- Filter -->
 <div class="well">
-    <form id="filter_groups" onsubmit="$('#list_groups').load('{{ path('pumukitnewadmin_group_list') }}', $(this).serialize()); return false;" action="{{ path('pumukitnewadmin_group_list') }}" method="post">
+    <form id="filter_groups" data-controller="admin--filter-form" data-action="submit->admin--filter-form#submit" data-admin--filter-form-url-value="{{ path('pumukitnewadmin_group_list') }}" data-admin--filter-form-target-value="#list_groups" data-admin--filter-form-letters-value=".pmk-group-letter" action="{{ path('pumukitnewadmin_group_list') }}" method="post">
         <fieldset>
             <legend hidden>{% trans %}Filter Groups{% endtrans %}</legend>
             <div id="accordion" class="panel-group" role="tablist" aria-roledescription="tablist" aria-multiselectable="true">
@@ -53,7 +53,7 @@
         </fieldset>
 
         <div class="text-right">
-            <input class="btn btn-default btn-raised" onclick="$('.pmk-group-letter.text-pumukit').removeClass('text-pumukit'); $('#filter_groups input.reset').val(''); $('#list_groups').load('{{ path('pumukitnewadmin_group_list') }}?criteria[reset]=true'); return false;" type="button" value="{% trans %}reset{% endtrans %}">
+            <input class="btn btn-default btn-raised" data-action="click->admin--filter-form#reset" type="button" value="{% trans %}reset{% endtrans %}">
             <input class="btn btn-pumukit btn-raised" type="submit" name="filter" value="{% trans %}filter{% endtrans %}">
         </div>
     </form>

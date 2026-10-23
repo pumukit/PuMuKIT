@@ -1,3 +1,8 @@
+{% set group_resource_messages = {
+    user: {one: 'ATTENTION: Are you sure you want to delete this User from this Group?'|trans, all: 'ATTENTION: Are you sure you want to delete all User from this Group?'|trans, removed: 'Successfully delete User from Group.'|trans, removedAll: 'Successfully delete User from Group.'|trans, route: 'pumukitnewadmin_group_delete_user', routeAll: 'pumukitnewadmin_group_delete_all_users', param: 'userId'},
+    multimediaobject: {one: 'ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?'|trans, all: 'ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?'|trans, removed: 'Successfully delete MultimediaObject from Group.'|trans, removedAll: 'Successfully delete admin MultimediaObjects from Group.'|trans, route: 'pumukitnewadmin_group_delete_multimediaobject', routeAll: 'pumukitnewadmin_group_delete_all_multimediaobjects', param: 'mmId'},
+    embeddedbroadcast: {one: 'ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?'|trans, all: 'ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?'|trans, removed: 'Successfully delete MultimediaObject from Group.'|trans, removedAll: 'Successfully delete play MultimediaObjects from Group.'|trans, route: 'pumukitnewadmin_group_delete_embeddedbroadcast', routeAll: 'pumukitnewadmin_group_delete_all_embeddedbroadcasts', param: 'mmId'}
+}[resource_name] %}
 {% for resource in resources %}
     {% if 'user' == resource_name and not group.isLocal() %}
         <p>
@@ -8,7 +13,14 @@
     {% else %}
         <p>
             {% if action %}
-                <a href="#" onclick="delete_{{ resource_name }}_from_group('{{ resource.id }}', '{{ group.id }}', '{{ loop.length }}', '{{ action }}');">
+                <a href="#" data-action="click->admin--group-info#removeResource"
+                   data-admin--group-info-url-param="{{ path(group_resource_messages.route, {'id': group.id, (group_resource_messages.param): resource.id}) }}"
+                   data-admin--group-info-action-param="{{ action }}"
+                   data-admin--group-info-target-param="#pumukitnewadmin_group_added_{{ resource_name }}s"
+                   data-admin--group-info-count-param="{{ loop.length }}"
+                   data-admin--group-info-button-param="#pumukitnewadmin_group_delete_all_relation_{{ resource_name }}"
+                   data-admin--group-info-confirm-param="{{ group_resource_messages.one }}"
+                   data-admin--group-info-success-param="{{ group_resource_messages.removed }}">
                     <i class="mdi-content-clear"/>
                 </a>
             {% else %}

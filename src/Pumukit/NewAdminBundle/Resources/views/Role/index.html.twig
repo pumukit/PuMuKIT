@@ -17,7 +17,10 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-4">
-                            <select id="options_roles" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('role', $(this), 'roles');">
+                            <select id="options_roles" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
+                                    data-admin--batch-name-value="role" data-admin--batch-plural-value="roles"
+                                    data-admin--batch-urls-value="{{ {delete: path('pumukitnewadmin_role_batch_delete', {'ids': '__ids__'})}|json_encode }}"
+                                    data-admin--batch-messages-value="{{ {confirm: 'Are you sure?'|trans, success: 'Roles ' ~ 'successfully deleted.'|trans}|json_encode }}">
                                 <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
                                 <option disabled="">---</option>
                                 <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>

@@ -12,12 +12,19 @@
         <div class="col-md-12">
             <div class="well">
                 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_TAGS')) %}
-                    <div id="list_tags">
+                    <div id="list_tags"
+                         data-controller="admin--tag-tree"
+                         data-admin--tag-tree-children-url-value="{{ path('pumukitnewadmin_tag_children', {'id': '___id___'}) }}"
+                         data-admin--tag-tree-delete-url-value="{{ path('pumukitnewadmin_tag_delete', {'id': '___id___'}) }}"
+                         data-admin--tag-tree-messages-value="{{ {withChildren: 'Tags with children can not be deleted.'|trans}|json_encode }}">
                         {% include '@PumukitNewAdmin/Tag/list.html.twig' %}
                     </div>
                     <div class="row">
                         <div class="col-xs-4">
-                            <select id="options_tags" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" onchange="window.change_select('tag', $(this), 'tags')">
+                            <select id="options_tags" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
+                                    data-admin--batch-name-value="tag" data-admin--batch-plural-value="tags"
+                                    data-admin--batch-urls-value="{{ {delete: path('pumukitnewadmin_tag_batch_delete', {'ids': '__ids__'})}|json_encode }}"
+                                    data-admin--batch-messages-value="{{ {confirm: 'Are you sure?'|trans, success: 'Tags ' ~ 'successfully deleted.'|trans, tagsWithChildren: 'Tags with children can not be deleted.'|trans}|json_encode }}">
                                 <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
                                 <option disabled="">---</option>
                                 <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>

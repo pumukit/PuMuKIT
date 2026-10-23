@@ -31,15 +31,15 @@
         </div>
       </div>
       <div class="col-md-3 text-right">
-        <button id="pumukitnewadmin_permissionprofile_update_cancel" type="button" class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
-        <button id="pumukitnewadmin_permissionprofile_update_ok" type="submit" class="btn btn-primary btn-raised" onclick="return processPermissionProfilesOk();">{% trans %}Save{% endtrans %}</button>
+        <button id="pumukitnewadmin_permissionprofile_update_cancel" type="button" class="btn btn-default btn-raised" data-action="click->admin--permission-profiles#cancel">{% trans %}Cancel{% endtrans %}</button>
+        <button id="pumukitnewadmin_permissionprofile_update_ok" type="submit" class="btn btn-primary btn-raised" data-action="click->admin--permission-profiles#save">{% trans %}Save{% endtrans %}</button>
         <a href="{{ path('pumukitnewadmin_permissionprofile_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
           {% if is_granted('ROLE_SUPER_ADMIN') %}
             <a href="{{ path('pumukitnewadmin_permissionprofile_export') }}" class="btn btn-primary" download>{% trans %}Export{% endtrans %}</a>
           {% endif %}
       </div>
     </div>
-    <form method="POST" id="pumukitnewadmin_permissionprofile_table_form">
+    <form method="POST" id="pumukitnewadmin_permissionprofile_table_form" data-action="change->admin--permission-profiles#changed">
     <input type="submit" style="display:none" value="submit-hidden" aria-hidden="true" />
     <table class="table table-striped table-hover">
       <thead>
@@ -96,6 +96,7 @@
                        data-dependencies-global="{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL')] %}{{ dependency }}__{{ permissionprofile.id}}__permission{% if not loop.last %} {% endif %}{% endfor %}"
                        data-dependencies-personal="{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_PERSONAL')] %}{{ dependency }}__{{ permissionprofile.id}}__permission{% if not loop.last %} {% endif %}{% endfor %}"
                        form="pumukitnewadmin_permissionprofile_table_form"
+                       data-action="click->admin--permission-profiles#toggle"
                        class="{{ permissionprofile.system ? 'system':'not_system' }}_permission_permissionprofile_checkbox permission_permissionprofile_checkbox"
                        type="checkbox" size="1"
                        {{ permissionprofile.containsPermission(key) ? 'checked=" checked"':'' }}

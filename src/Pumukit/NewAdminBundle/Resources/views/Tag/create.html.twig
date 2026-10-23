@@ -6,28 +6,7 @@
 <div class="modal-body">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_TAGS')) %}
         {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
-        <form onsubmit="
-                $(this).find(':submit').prop('disabled', true);
-                $('#myModal').modal('hide');
-                $.ajax({
-                    url: '{{ path('pumukitnewadmin_tag_create', {'parent': tag.parent.id}) }}',
-                    method: 'POST',
-                    data: $(this).serialize(),
-                    success: function(response, textStatus, jqXHR){
-                        if (jqXHR.responseText.indexOf('modal-header') != -1){
-                            var message = '{{ "There was an error in creating the Tag."|trans|e("js")}}';
-                            no_success(message);
-                        } else {
-                            $('#list_tags').html(response);
-                            var message = '{{ "Tag successfully created."|trans|e("js")}}';
-                            success(message);
-                        }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown){
-                        no_success(errorThrown + ': ' + jqXHR.responseJSON.status);
-                    }
-                });
-                return false;"
+        <form data-controller="admin--modal-form" data-action="submit->admin--modal-form#submit" data-admin--modal-form-target-value="#list_tags" data-admin--modal-form-success-message-value="{{ "Tag successfully created."|trans }}" data-admin--modal-form-error-message-value="{{ "There was an error in creating the Tag."|trans }}" data-admin--modal-form-disable-submit-value="true"
               action="{{ path('pumukitnewadmin_tag_create', {'parent': tag.parent.id}) }}" method="POST">
             <fieldset>
                 {% for child in form %}
