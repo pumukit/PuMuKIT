@@ -107,6 +107,7 @@ class InlineJavascriptTest extends PumukitTestCase
             'place create' => ['pumukitnewadmin_places_create'],
             'place update' => ['pumukitnewadmin_places_update'],
             'slider' => ['pumukit_newadmin_slider'],
+            'dashboard' => ['pumukit_newadmin_dashboard_index_default'],
         ];
     }
 
@@ -173,6 +174,12 @@ class InlineJavascriptTest extends PumukitTestCase
             $this->dm->flush();
 
             return in_array($route, ['pumukitnewadmin_unesco_list', 'pumukitnewadmin_unesco_advance_search_form'], true) ? [] : ['id' => $multimediaObject->getId()];
+        }
+        if ('pumukit_newadmin_dashboard_index_default' === $route) {
+            $factory = static::getContainer()->get(FactoryService::class);
+            $factory->createMultimediaObject($factory->createSeries(), true);
+
+            return [];
         }
         if ('pumukit_newadmin_slider' === $route) {
             $factory = static::getContainer()->get(FactoryService::class);

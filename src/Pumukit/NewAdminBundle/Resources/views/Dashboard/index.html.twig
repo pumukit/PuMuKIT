@@ -79,7 +79,11 @@
                     {% if activity|length == 0 %}
                         <p class="text-muted text-center">{% trans %}No data to display yet.{% endtrans %}</p>
                     {% else %}
-                        <div class="dashboard-chart-wrap dashboard-chart-wrap-tall"><canvas id="activity-chart"></canvas></div>
+                        <div class="dashboard-chart-wrap dashboard-chart-wrap-tall"><canvas id="activity-chart" data-controller="admin--dashboard"
+                            data-admin--dashboard-activity-value="{{ activity|json_encode }}"
+                            data-admin--dashboard-range-value="{{ activity_window|json_encode }}"
+                            data-admin--dashboard-group-by-value="{{ group_by }}"
+                            data-admin--dashboard-messages-value="{{ {dataset: 'Multimedia objects created'|trans, hour: 'Hour of day'|trans, unit: 'multimedia objects'|trans}|json_encode }}"></canvas></div>
                     {% endif %}
                 </div>
             </div>
@@ -142,88 +146,4 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        (function () {
-            const activityRaw = {{ activity|json_encode|raw }};
-            const activityWindow = {{ activity_window|json_encode|raw }};
-            const groupBy = "{{ group_by|e('js') }}";
-
-            const numberFmt = new Intl.NumberFormat(navigator.language || 'en-US');
-
-            const HOUR_BUCKETS = [
-                { start: 0,  label: '00–04' },
-                { start: 4,  label: '04–08' },
-                { start: 8,  label: '08–12' },
-                { start: 12, label: '12–16' },
-                { start: 16, label: '16–20' },
-                { start: 20, label: '20–24' },
-            ];
-
-            const activityCanvas = document.getElementById('activity-chart');
-            if (activityCanvas) {
-                // Each bubble sits at the bucket centre (start + 2) so it visually fills its row.
-                const points = activityRaw.map(function (r) {
-                    return {
-                        x: r.date,
-                        y: r.hour + 2,
-                        r: Math.max(4, Math.min(22, Math.sqrt(r.count) * 5)),
-                        bucketStart: r.hour,
-                        count: r.count,
-                    };
-                });
-                new Chart(activityCanvas.getContext('2d'), {
-                    type: 'bubble',
-                    data: {
-                        datasets: [{
-                            label: "{{ 'Multimedia objects created'|trans|e('js') }}",
-                            data: points,
-                            backgroundColor: 'rgba(59, 139, 186, 0.55)',
-                            borderColor: 'rgba(59, 139, 186, 1)',
-                            borderWidth: 1,
-                        }],
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            x: {
-                                type: 'time',
-                                min: activityWindow.from,
-                                max: activityWindow.to,
-                                time: { unit: groupBy === 'year' ? 'year' : (groupBy === 'month' ? 'month' : 'day') },
-                                grid: { display: false },
-                            },
-                            y: {
-                                min: 0,
-                                max: 24,
-                                ticks: {
-                                    stepSize: 4,
-                                    callback: function (v) {
-                                        const bucket = HOUR_BUCKETS.find(function (b) { return b.start === v; });
-                                        return bucket ? bucket.label : '';
-                                    },
-                                },
-                                title: { display: true, text: "{{ 'Hour of day'|trans|e('js') }}" },
-                            },
-                        },
-                        plugins: {
-                            legend: { display: false },
-                            tooltip: {
-                                callbacks: {
-                                    title: function (items) {
-                                        const it = items[0];
-                                        const bucket = HOUR_BUCKETS.find(function (b) { return b.start === it.raw.bucketStart; });
-                                        return it.raw.x + ' · ' + (bucket ? bucket.label + ' h' : '');
-                                    },
-                                    label: function (ctx) {
-                                        return numberFmt.format(ctx.raw.count) + ' {{ 'multimedia objects'|trans|e('js') }}';
-                                    },
-                                },
-                            },
-                        },
-                    },
-                });
-            }
-        })();
-    </script>
 {% endblock %}
