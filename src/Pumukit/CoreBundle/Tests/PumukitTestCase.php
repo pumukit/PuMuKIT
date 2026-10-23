@@ -51,6 +51,8 @@ class PumukitTestCase extends WebTestCase
 
     public function clearBBDD(): void
     {
+        self::ensureTestDatabase($this->dm);
+
         $this->dm->getDocumentCollection(Annotation::class)->deleteMany([]);
         $this->dm->getDocumentCollection(CpuStatus::class)->deleteMany([]);
         $this->dm->getDocumentCollection(Event::class)->deleteMany([]);
@@ -70,5 +72,13 @@ class PumukitTestCase extends WebTestCase
         $this->dm->getDocumentCollection(ViewsAggregation::class)->deleteMany([]);
         $this->dm->getDocumentCollection(ViewsLog::class)->deleteMany([]);
         $this->dm->flush();
+    }
+
+    public static function ensureTestDatabase(DocumentManager $dm): void
+    {
+        $database = (string) $dm->getConfiguration()->getDefaultDB();
+        if (!str_ends_with($database, '_test')) {
+            throw new \RuntimeException(sprintf('Refusing to clear the "%s" database: tests only run against a database whose name ends with "_test".', $database));
+        }
     }
 }

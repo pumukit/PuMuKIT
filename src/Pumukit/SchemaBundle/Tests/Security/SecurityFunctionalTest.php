@@ -6,6 +6,7 @@ namespace Pumukit\SchemaBundle\Tests\Security;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use PHPUnit\Framework\Attributes\CoversNothing;
+use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\CreateUserService;
@@ -115,6 +116,8 @@ class SecurityFunctionalTest extends WebTestCase
 
     private function clearCollections(): void
     {
+        PumukitTestCase::ensureTestDatabase($this->dm);
+
         $this->dm->getDocumentCollection(User::class)->deleteMany([]);
         $this->dm->getDocumentCollection(PermissionProfile::class)->deleteMany([]);
         $this->dm->flush();

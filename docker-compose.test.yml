@@ -1,3 +1,5 @@
+name: pumukit-test
+
 services:
   php:
     env_file:
