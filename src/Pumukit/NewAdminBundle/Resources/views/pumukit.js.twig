@@ -71,7 +71,6 @@ window.submit_delete_seriestype = function(id)
 }
 
 
-
 window.submit_delete_event = function(id)
 {
     if (window.confirm("{% trans %}Are you sure you want to delete this live event?{% endtrans %}")){
@@ -245,11 +244,6 @@ no_success = function(message){
     $("#div_messages_span_error").snackbar("show");
 }
 
-window.update_preview = function(id) {
-  var route = '{{ path('pumukitnewadmin_series_show', {'id': 'PLACEHOLDER'})|raw }}';
-  route.replace('PLACEHOLDER', id);
-  $('#preview_series').load(route, {method:'POST'});
-}
 
 window.update_mms_status_wrapper = function() {
    var url = "{{ path('pumukitnewadmin_mms_status', {'id': '__id__'})|raw }}";
@@ -962,7 +956,6 @@ window.change_select = function(element, selector, pluralName, seriesId)
 }
 
 
-
 function sort_optiont_change(target_val)
 {
   e = $("#options_mms option[data-type='sort'][data-active='1']");
@@ -1016,34 +1009,6 @@ function toggle_tree_tag(element, id, mm_id, tag_id, tag_cod)
 }
 
 // TODO
-function toggle_show_all()
-{
-  // SHOW - Quito el punto a los nodos que muestran sus hijos al desocultar
-  $$(".expanded.element, .collapsed.element").each(function(e){
-    e.removeClassName("element");
-  });
-
-  // SHOW & HIDE - Oculto/Muestro elementos finales que no tiene objetos multimedia
-  $$(".nomm.element").each(function(e){
-    e.toggleClassName("nodisplayall");
-  });
-
-  // SHOW & HIDE - Oculto/Muestro elementos todos sus hijos son finales sin objetos multimedia
-  $$(".nomm.expanded, .nomm.collapsed").each(function(e){
-    if (e.getElementsBySelector("li.nomm").length == e.getElementsBySelector("li").length) {
-      e.toggleClassName("nodisplayall");
-    }
-  });
-
-  // HIDE - Pongo el punto a los nodos que se quedan sin hijos al ocultar
-  $$(".nomm").each(function(e){
-    p = e.parentElement.parentElement;
-    if (p.getElementsBySelector("li.nodisplayall").length == p.getElementsBySelector("li").length) {
-      p.addClassName("element");
-    }
-  });
-
-}
 
 
 function create_element_in_select(tag, block_tag_id, mm_id) {
@@ -1168,24 +1133,6 @@ window.dblclick_preview_mm = function(id)
     });
 }
 
-
-function filter_series(form)
-{
-    var from_date = $('#filters_date_from');
-    var to_date = $('#filters_date_to');
-
-    if (to_date.val() != "" && from_date.val() >= to_date.val()) {
-        to_date[0].setCustomValidity("{% trans %}From date must be less than to date{% endtrans %}");
-    }else{
-        $('#list_series').load('{{ path('pumukitnewadmin_series_list')|raw }}', $(form).serialize());
-    }
-
-    return false;
-}
-
-function comprobar_date(date, re){
-    return !re.test(date);
-}
 
 procesaOk = function(){
   $('#remember_save_mm_pub').hide();
@@ -1330,7 +1277,6 @@ $(function() {
     });
     return false;
   });
-
 
 
   {% if is_naked() %}
@@ -1714,13 +1660,6 @@ test_url_generation = function(url){
     return !re.test(url);
 }
 
-comprobar_form_file_nmb = function(file){
-    if (file == ""){
-    $('#error_file').show();
-    return false;
-    }
-    return true;
-}
 
 /**
  * Initialize all tooltips
@@ -2458,29 +2397,6 @@ function fix_permission_scope_none(elementId){
         $("#"+element.id).prop("checked", "");
     });
 }
-
-
-function test_material_form_url(url){
-    $('.error').hide();
-
-    if (test_url_generation(url)){
-        $('#error_url').show();
-        return false;
-    }
-    $('#myModal').modal('hide');
-    return true;
-}
-
-function test_material_form_file_nmb(file){
-    $('.error').hide();
-    if (file == ""){
-        $('#error_file').show();
-        return false;
-    }
-
-    return true;
-}
-
 
 
 window.change_pics_page = function(route)
