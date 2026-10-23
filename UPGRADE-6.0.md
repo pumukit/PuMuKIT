@@ -296,7 +296,7 @@ running jobs every 15 seconds), `admin--pic-sync` (reloads the thumbnails when a
 reports a different number of pictures), `admin--modal-cleanup` (removes the player of the
 preview modal when it closes), `admin--external-player` (preview and save of the external player
 modals), `admin--track-list` (reloads the links after a track change and captures frames),
-`admin--job-priority` (priority of a pending job), `admin--group-lists` (the available and selected group lists of the admin groups and the
+`admin--job-priority` (priority of a pending job), `admin--unesco` (UNESCO catalogue), `admin--group-lists` (the available and selected group lists of the admin groups and the
 broadcast groups: `name`, `showCodes`, `editable`, `message`; it dispatches `admin--group-lists:changed`
 after a move and rebuilds the lists on `admin--group-lists:load`), `admin--mm-groups` (save and reset
 of the admin groups, owner deletion and the warning shown when the user would lose access),
@@ -318,7 +318,19 @@ the `admin--broadcast` controller handles both broadcast modals. The tracks, job
 editor use `admin--actions`, `admin--modal-form` and two zone controllers, `admin--track-list` and
 `admin--job-priority`. The UNESCO catalogue no longer defines `window.update_list()` to reload its list
 after a track is deleted: its `#list_mms` carries `data-refresh-url`, and `pumukit:check:assets`
-reports the projects that still define the hook. `@PumukitNewAdmin/UNESCO/listtagsajax.html.twig` is removed: the UNESCO tag
+reports the projects that still define the hook.
+
+The UNESCO catalogue (list, folder menu, drag and drop of tags and rows, preview, search, custom
+fields, batch actions, row menu, metadata and publication forms) uses the `admin--unesco` controller.
+Every fragment that the catalogue reloads (`list`, `menuTags`, `show`, `search_view`,
+`custom_fields`) starts its own instance through `@PumukitNewAdmin/UNESCO/_controller.html.twig`,
+so the fragments keep working inside a project override of `@PumukitNewAdmin/UNESCO/index.html.twig`.
+The index no longer defines `submit_delete_mms_unesco()`, `submit_clone_mms_unesco()` nor the
+keyword indexes: `pumukit:check:assets` reports the overrides that still define them. The metadata
+form uses `admin--meta-form` and `admin--modal-form` like the multimedia object one, with a `block`
+flag in its `dates` value so a publication date before the recording date stops the save. An
+override of `@PumukitNewAdmin/UNESCO/updatemeta.html.twig` no longer gets the "Press OK" notice
+from `pumukit.js.twig`: copy the attributes of the bundle template. `@PumukitNewAdmin/UNESCO/listtagsajax.html.twig` is removed: the UNESCO tag
 tab uses `@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig`, and the `admin--tag-picker`
 controller of the tab decides which blocks to refresh after adding or removing a tag. `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
 `@PumukitNewAdmin/Playlist/changepub.html.twig` are removed, and so is
@@ -368,6 +380,8 @@ functions, reported by `pumukit:check:assets` (also when called as `window.…`)
 | `submit_generate_magic_mms()` | `admin--actions#magicUrl` |
 | `sync_tags_mms()` | `admin--actions#request` with a `confirm` param |
 | `submit_delete_material()`, `submit_delete_track()`, `update_list()` | `admin--actions#remove` |
+| `getAllDnDChecked()`, `dragEndCheckbox()`, `dragItem()`, `dragEnd()`, `dropTagItem()`, `updateMultimediaObjectByTag()`, `dropItem()`, `updateMultimediaObject()` | `admin--unesco` |
+| `procesaOk()` | `admin--meta-form#hideRemember` |
 | `extract_pic()` | `admin--track-list#extractPic` |
 | `toggleHide()` | `admin--actions#load` |
 | `select_group()`, `add_group()`, `delete_group()`, `create_element_group_in_add_groups()`, `create_element_group_in_delete_groups()`, `delete_element_group_from_select()` | `admin--group-lists` |

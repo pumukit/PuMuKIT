@@ -2,7 +2,7 @@
 {% set allFields = all_custom_fields() %}
 
 <br />
-<div class="well">
+<div class="well" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
     <div class="row">
         <h4 class="text-center"><strong>{% trans %}Configure your fields list{% endtrans %}</strong></h4>
         <hr />
@@ -23,7 +23,7 @@
                     </div>
                 {% endfor %}
                 <div class="col-md-12">
-                    <button class="btn btn-pumukit btn-raised choose_fields_send pull-right">
+                    <button class="btn btn-pumukit btn-raised choose_fields_send pull-right" data-action="click->admin--unesco#saveFields">
                         {% trans %}Change{% endtrans %}
                     </button>
                 </div>
@@ -32,31 +32,3 @@
     </div>
 </div>
 
-<script>
-    "use strict";
-    $('.choose_fields_send').on('click', function (event) {
-        event.preventDefault();
-        $.ajax({
-            url: "{{ path('pumukitnewadmin_catalogue_custom_fields') }}",
-            type: 'POST',
-            data: {
-                'custom_field_1' : $('#custom_field_1').val(),
-                'custom_field_2' : $('#custom_field_2').val(),
-                'custom_field_3' : $('#custom_field_3').val(),
-                'custom_field_4' : $('#custom_field_4').val(),
-                'custom_field_5' : $('#custom_field_5').val(),
-                'custom_field_6' : $('#custom_field_6').val(),
-                'custom_field_7' : $('#custom_field_7').val(),
-                'custom_field_8' : $('#custom_field_8').val(),
-                'custom_field_9' : $('#custom_field_9').val(),
-                'custom_field_10' : $('#custom_field_10').val(),
-            },
-            success: function(response){
-                //location.reload();
-                $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
-                let message = "Change fields successfully";
-                success(message);
-            }
-        });
-    });
-</script>

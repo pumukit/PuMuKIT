@@ -66,6 +66,8 @@ class CheckAssetsCommand extends Command
 
     public const REMOVED_JAVASCRIPT_HOOKS = [
         'update_list' => 'a data-refresh-url attribute on #list_mms (see @PumukitNewAdmin/UNESCO/index.html.twig)',
+        'submit_delete_mms_unesco' => 'admin--unesco#remove (see @PumukitNewAdmin/UNESCO/updatemenu.html.twig)',
+        'submit_clone_mms_unesco' => 'admin--unesco#clone (see @PumukitNewAdmin/UNESCO/updatemenu.html.twig)',
     ];
 
     public const REMOVED_JAVASCRIPT_GLOBALS = [
@@ -179,6 +181,15 @@ class CheckAssetsCommand extends Command
         'update_list' => 'the refresh param of admin--actions#remove',
         'extract_pic' => 'the extractPic action of the admin--track-list controller (see @PumukitNewAdmin/Media/Type/Resources/_thumbnail_generator.html.twig)',
         'toggleHide' => 'admin--actions#load (see @PumukitNewAdmin/Media/Type/Resources/_visibility.html.twig)',
+        'getAllDnDChecked' => 'the admin--unesco controller (see @PumukitNewAdmin/UNESCO/_controller.html.twig)',
+        'dragEndCheckbox' => 'the admin--unesco controller (see @PumukitNewAdmin/UNESCO/_controller.html.twig)',
+        'dragItem' => 'the admin--unesco controller (see @PumukitNewAdmin/UNESCO/_controller.html.twig)',
+        'dragEnd' => 'the admin--unesco controller (see @PumukitNewAdmin/UNESCO/_controller.html.twig)',
+        'dropTagItem' => 'the admin--unesco controller (see @PumukitNewAdmin/UNESCO/_controller.html.twig)',
+        'updateMultimediaObjectByTag' => 'the admin--unesco controller (see @PumukitNewAdmin/UNESCO/_controller.html.twig)',
+        'dropItem' => 'the admin--unesco controller (see @PumukitNewAdmin/UNESCO/_controller.html.twig)',
+        'updateMultimediaObject' => 'the admin--unesco controller (see @PumukitNewAdmin/UNESCO/_controller.html.twig)',
+        'procesaOk' => 'admin--meta-form#hideRemember (see @PumukitNewAdmin/UNESCO/updatepub.html.twig)',
         'checkRecordDateAndPublicDate' => 'the dates value of the admin--meta-form controller (see @PumukitNewAdmin/MultimediaObject/updatemeta.html.twig)',
     ];
 

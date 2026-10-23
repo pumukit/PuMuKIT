@@ -2,7 +2,19 @@
 
 <div id="tv_admin_container_meta" class="well">
 
-    <form id="pumukitnewadmin_unesco_updatemeta_form"  action="" method="POST">
+    <form id="pumukitnewadmin_unesco_updatemeta_form"
+          data-controller="admin--meta-form admin--modal-form"
+          data-action="submit->admin--meta-form#hideRemember submit->admin--meta-form#checkDates submit->admin--modal-form#submit change->admin--meta-form#changed admin--modal-form:saved->admin--meta-form#saved"
+          data-admin--meta-form-remember-value="#remember_save_mm"
+          data-admin--meta-form-prefix-value="pumukitnewadmin_mms_meta_"
+          data-admin--meta-form-keywords-value="{{ {mmobj: path('pumukit_schema_apikeywords_mmobj', {'_format': 'json'})}|json_encode }}"
+          data-admin--meta-form-dates-value="{{ {record: '#pumukitnewadmin_mms_meta_record_date', publication: '#pumukitnewadmin_mms_meta_public_date', message: 'Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.'|trans, block: true}|json_encode }}"
+          data-admin--meta-form-title-value="{{ {source: '#pumukitnewadmin_mms_meta_i18n_title_' ~ app.request.getLocale(), target: '#inputMMTitle'}|json_encode }}"
+          data-admin--modal-form-refresh-value="{{ [{target: '#list_mms', url: path('pumukitnewadmin_unesco_list')}, {target: '#preview_mms', url: path('pumukitnewadmin_unesco_show', {'id': mm.id})}]|json_encode }}"
+          data-admin--modal-form-modal-value=""
+          data-admin--modal-form-success-message-value="{{ 'Multimedia Object saved OK'|trans }}"
+          data-admin--modal-form-fail-message-value="{{ 'Multimedia Object saved ERROR'|trans }}"
+          action="{{ path('pumukitnewadmin_mms_update_meta', {'id': mm.id}) }}" method="POST">
 
         <input type="hidden" name="id" id="mm_id_meta" value="{{ mm.id }}">
         <input type="hidden" name="series_id" id="series_id_updatemeta" value="{{ mm.series.id }}">
@@ -14,7 +26,7 @@
             </div>
 
             <div class="col-xs-6 text-right">
-                <button id="pumukitnewadmin_mms_updatemeta_cancel_unesco" type="button" class="btn btn-default btn-raised">{% trans %}
+                <button id="pumukitnewadmin_mms_updatemeta_cancel_unesco" type="button" class="btn btn-default btn-raised" data-action="click->admin--meta-form#cancel">{% trans %}
                     Cancel{% endtrans %}</button>
                 <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
             </div>
@@ -32,48 +44,3 @@
         </fieldset>
     </form>
 </div>
-
-<script type="text/javascript">
-
-    $(function () {
-        window.init_mmobj_materialtags();
-    });
-
-    $('#pumukitnewadmin_unesco_updatemeta_form').on('submit',function(event) {
-        event.preventDefault();
-        $('#remember_save_mm').hide();
-
-        var publicDateVal = $('#pumukitnewadmin_mms_meta_public_date').val();
-        var recordDateVal = $('#pumukitnewadmin_mms_meta_record_date').val();
-
-        var publicDate = new Date(publicDateVal);
-        var recordDate = new Date(recordDateVal);
-
-        if (publicDate.getTime() < recordDate.getTime()){
-            var message = '{{ "Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date."|trans|e("js") }}';
-            no_success(message);
-            return false;
-        }
-
-        var route = '{{ path('pumukitnewadmin_mms_update_meta', {'id': '__mmId__'}) }}';
-        var mmId = $('#mm_id_meta').val();
-        route = route.replace('__mmId__', mmId);
-
-        $.ajax({
-            url: route,
-            type: 'POST',
-            data: $(this).serialize(),
-            error: function(request, json){var message = '{{ "Multimedia Object saved ERROR"|trans|e("js") }}'; no_success(message);},
-            success: function(response){
-                $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}");
-                $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show', {'id' :mm.id }) }}");
-                $('#inputMMTitle').val($('#pumukitnewadmin_mms_meta_i18n_title_{{ app.request.getLocale() }}').val());
-                var message = '{{ "Multimedia Object saved OK"|trans|e("js") }}';
-                success(message);
-            }
-        });
-
-        return false;
-    });
-
-</script>

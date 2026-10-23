@@ -1,4 +1,4 @@
-<div class="table-responsive well" style="overflow:visible;">
+<div class="table-responsive well" style="overflow:visible;" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
     <div class="collapse" id="collapseCustomFields">
         {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\UNESCOController::customFieldsAction')) }}
     </div>
@@ -51,10 +51,10 @@
                             <input title="{% trans %}Go to page{% endtrans %}" type="number"
                                    style="width: 25px;text-align:center;cursor:pointer;"
                                    value="{{ mms.getCurrentPage() }}"
-                                   onchange="window.location.search = '?page=' + this.value; return false;" />
+                                   data-action="change->admin--actions#go" data-admin--actions-url-param="?page=" />
 
 
-                                <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_unesco_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of multimedia objects to display per page.{% endtrans %}">
+                                <select data-action="change->admin--actions#go" data-admin--actions-url-param="{{ path('pumukitnewadmin_unesco_index') }}?page=1&paginate=" aria-label="{% trans %}Select the number of multimedia objects to display per page.{% endtrans %}">
                                     <option {% if mms.maxPerPage == 10 %}selected{% endif %} value="10">10</option>
                                     <option {% if mms.maxPerPage == 20 %}selected{% endif %} value="20">20</option>
                                     <option {% if mms.maxPerPage == 50 %}selected{% endif %} value="50">50</option>
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}">
+                        <select id="options_mms" class="form-control" data-action="change->admin--unesco#batch" title="{% trans %}Actions on selected items{% endtrans %}">
                             <option value="default" selected="selected">{% trans %}Select an action{% endtrans %}...</option>
                             <option disabled="">---</option>
                             <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
@@ -80,85 +80,3 @@
     </table>
 </div>
 
-<script type="text/javascript">
-
-    function getAllDnDChecked(item, event) {
-        var data = [];
-        var i = 0;
-        $("input.mm_checkbox:checkbox:checked").each(function() {
-             data.push($(this).data('id'));
-             i = i + 1;
-        });
-
-        var dragIcon = document.createElement('img');
-        dragIcon.src = document.getElementById('dnd_image_' + i).src;
-        dragIcon.width = 35;
-        event.dataTransfer.setDragImage(dragIcon, 0, 0);
-        event.dataTransfer.setData('data', data);
-    }
-
-    function dragEndCheckbox(item, event) {
-        $('.draggableTag').css('background-color','transparent');
-        item.style.opacity = '';
-    }
-
-   $('#options_mms').on('change', function(event) {
-        event.preventDefault();
-        var mmobjs = [];
-        $("input.mm_checkbox:checkbox:checked").each(function() {
-            mmobjs.push($(this).data('id'));
-        });
-
-        var option = $( "#options_mms option:selected" ).val();
-        if (confirm('{% trans %} Are you sure? {% endtrans %}')) {
-            var url = "{{ path('pumukitnewadmin_unesco_options_list', {'option': '__option__'}) }}";
-            var url = url.replace('__option__', option);
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: {'data': mmobjs},
-                success: function (response) {
-                    location.reload();
-                }
-            });
-            $( "#options_mms option:selected" ).val('default');
-        } else {
-            $( "#options_mms option:selected" ).val('default');
-            location.reload();
-        }
-   });
-
-    $('.sort_unesco').on('click',function(event){
-        event.preventDefault();
-
-        var sort = $('#pumukitnewadmin_unesco_sort_change_type').val();
-        var type = $(this).data('id');
-        $.ajax({
-            url: '{{ path('pumukitnewadmin_unesco_addcriteria') }}',
-            method: 'POST',
-            data: {'sort' : sort, 'sort_type': type},
-            success: function (response) {
-                $('#list_mms').load("{{ path('pumukitnewadmin_unesco_list') }}", function() {
-                if($('tr.success input.mm_checkbox').length > 0) {
-                    var id = $('tr.success input.mm_checkbox').data('id');
-                    var path = "{{ path('pumukit_new_admin_unesco_edit', {'id' : '__ID__'}) }}";
-                    path = path.replace('__ID__', id);
-                    $('#edit_mms').load(path);
-
-                    var url = "{{ path('pumukitnewadmin_unesco_show', {'id' : '__ID__'}) }}";
-                    url = url.replace('__ID__', id);
-                    $('#preview_mms').load(url);
-                } else {
-                    $('#edit_mms').html('');
-                    $('#preview_mms').load("{{ path('pumukitnewadmin_unesco_show') }}");
-                }});
-            },
-            error: function (response) {
-                alert('error');
-            }
-        });
-        return false;
-
-    })
-
-</script>

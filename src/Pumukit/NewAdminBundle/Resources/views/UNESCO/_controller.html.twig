@@ -1,0 +1,15 @@
+data-controller="admin--unesco"
+data-admin--unesco-urls-value="{{ {
+    list: path('pumukitnewadmin_unesco_list'),
+    edit: path('pumukit_new_admin_unesco_edit', {'id': '__ID__'}),
+    show: path('pumukitnewadmin_unesco_show', {'id': '__ID__'}),
+    emptyShow: path('pumukitnewadmin_unesco_show'),
+    menuTags: path('pumukitnewadmin_unesco_menu_tags'),
+    criteria: path('pumukitnewadmin_unesco_addcriteria'),
+    removeSession: path('pumukitnewadmin_unesco_removesession'),
+    addTag: path('pumukitnewadmin_unesco_add_tag', {'tagCod': '__COD__', 'multimediaObjectId': '__ID__'}),
+    options: path('pumukitnewadmin_unesco_options_list', {'option': '__OPTION__'}),
+    fields: path('pumukitnewadmin_catalogue_custom_fields')
+}|json_encode }}"
+data-admin--unesco-current-value="{{ app.session.get('admin/unesco/id') }}"
+data-admin--unesco-messages-value="{{ {saved: 'Saved'|trans, savingError: 'Saving error'|trans, confirm: 'Are you sure?'|trans, fields: 'Change fields successfully'|trans}|json_encode }}"

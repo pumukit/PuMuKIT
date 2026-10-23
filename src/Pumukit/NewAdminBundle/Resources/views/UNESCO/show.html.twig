@@ -4,7 +4,7 @@
     }
 </style>
 
-<div class="well">
+<div class="well" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
     {% if mm is defined and mm is not null %}
         <p>
             {% trans %}Is part of {% endtrans %}:
@@ -32,11 +32,11 @@
                     <h3 class="panel-title-preview panel-title">Tags {{ configuredTag.getTitle()|upper }}</h3>
                 </div>
                 <div class="panel-body-preview panel-body">
-                    <div id="list_unesco" draggable="false" onDrop="dropItem(this, event)" onDragEnter="return false" onDragOver="return false">
+                    <div id="list_unesco" draggable="false" data-action="drop->admin--unesco#dropTag dragenter->admin--unesco#allowDrop dragover->admin--unesco#allowDrop">
                         {% for mtag in mm.tags | filter(mtag => mtag.isDescendantOfByCod(configuredTag.getCod())) %}
                             <div id="taglist_{{ mtag.getCod() }}" class="unesco_tags" draggable="false">
                                 <span class="label label-default">{{ mtag.title }} |
-                                    <a href="#" data-cod="{{ mtag.getCod() }}" data-href="{{ path('pumukitnewadmin_unesco_delete_tag', {'tagCod': mtag.getCod(), "multimediaObjectId": mm.getId() }) }}" class="delete_tag_unesco">
+                                    <a href="#" data-cod="{{ mtag.getCod() }}" data-href="{{ path('pumukitnewadmin_unesco_delete_tag', {'tagCod': mtag.getCod(), "multimediaObjectId": mm.getId() }) }}" class="delete_tag_unesco" data-action="click->admin--unesco#removeTag" data-admin--unesco-url-param="{{ path('pumukitnewadmin_unesco_delete_tag', {'tagCod': mtag.getCod(), "multimediaObjectId": mm.getId() }) }}" data-admin--unesco-cod-param="{{ mtag.getCod()|json_encode }}">
                                         <i class="mdi-content-clear"></i>
                                     </a>
                                 </span>
@@ -91,75 +91,3 @@
     {% endif %}
 </div>
 
-<script type="text/javascript">
-
-    function dropItem(item, e) {
-        var cod = e.dataTransfer.getData('cod');
-        if($('#taglist_' + cod).length == 0) {
-            updateMultimediaObject(cod);
-        }
-    }
-
-    $('.delete_tag_unesco').on('click',function(event) {
-        event.preventDefault();
-        var cod = $(this).data('cod');
-        $.ajax({
-            url: $(this).data('href'),
-            type: 'GET',
-            success: function (response) {
-
-                if(response.error) {
-                    no_success(response.error);
-                } else {
-                    var mmoid = "{% if app.session.has('admin/unesco/id') %}{{ app.session.get('admin/unesco/id') }}{% else %}__MMO__{% endif %}";
-                    var edit = "{{ url('pumukit_new_admin_unesco_edit', {'id': "__MMO__" }) }}";
-                    var edit = edit.replace("__MMO__", mmoid);
-
-                    var preview = "{{ path('pumukitnewadmin_unesco_show', {'id': "__MMO__" }) }}";
-                    var preview = preview.replace("__MMO__", mmoid);
-
-                    $('#edit_mms').load(edit);
-                    count = $('#count_tag_' + cod).text();
-                    count = parseInt(count) - 1;
-                    $('#count_tag_' + cod).text(count);
-                    $('#preview_mms').load(preview);
-                    var message = '{{ "Saved"|trans|e("js") }}';
-                    success(message);
-                }
-            }
-        });
-        return false;
-    });
-
-    function updateMultimediaObject(cod) {
-        var path = "{{ path('pumukitnewadmin_unesco_add_tag', {'tagCod': "__COD__", "multimediaObjectId": "__MMO__" }) }}";
-        var path = path.replace("__COD__", cod);
-        var path = path.replace("__MMO__", "{{ app.session.get('admin/unesco/id') }}");
-        $.ajax({
-            url: path,
-            type: 'GET',
-            error: function (request, json) {
-                var message = '{{ "Saving error"|trans|e("js") }}';
-                no_success(message);
-            },
-            success: function (response) {
-                var mmoid = "{% if app.session.has('admin/unesco/id') %}{{ app.session.get('admin/unesco/id') }}{% else %}__MMO__{% endif %}";
-                var edit = "{{ url('pumukit_new_admin_unesco_edit', {'id': "__MMO__" })  }}";
-                var edit = edit.replace("__MMO__", mmoid);
-
-                var preview = "{{ path('pumukitnewadmin_unesco_show', {'id': "__MMO__" }) }}";
-                var preview = preview.replace("__MMO__", mmoid);
-
-                $('#edit_mms').load(edit);
-                $('#preview_mms').load(preview);
-                count = $('#count_tag_' + cod).text();
-                count = parseInt(count) + 1;
-                $('#count_tag_' + cod).text(count);
-                var message = '{{ "Saved"|trans|e("js") }}';
-                success(message);
-            }
-        });
-        return false;
-    }
-
-</script>

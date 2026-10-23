@@ -25,8 +25,8 @@ export default class extends Controller {
         $(this.rememberValue).hide();
     }
 
-    checkDates() {
-        const { record, publication, message } = this.datesValue;
+    checkDates(event) {
+        const { record, publication, message, block } = this.datesValue;
         if (!record) {
             return;
         }
@@ -34,6 +34,10 @@ export default class extends Controller {
         const publicationDate = new Date($(publication).val());
         if (publicationDate.getTime() < recordDate.getTime()) {
             window.no_success(message);
+            if (block) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+            }
         }
     }
 

@@ -80,6 +80,10 @@ class InlineJavascriptTest extends PumukitTestCase
             'head and tail' => ['pumukit_newadmin_head_and_tail'],
             'multimedia objects' => ['pumukitnewadmin_mms_index'],
             'multimedia object editor' => ['pumukitnewadmin_mms_edit'],
+            'unesco editor' => ['pumukit_new_admin_unesco_edit'],
+            'unesco list' => ['pumukitnewadmin_unesco_list'],
+            'unesco preview' => ['pumukitnewadmin_unesco_show'],
+            'unesco search' => ['pumukitnewadmin_unesco_advance_search_form'],
             'multimedia object links' => ['pumukitnewadmin_mms_links'],
             'multimedia object tracks' => ['pumukitnewadmin_track_list'],
             'multimedia object materials' => ['pumukitnewadmin_material_list'],
@@ -107,12 +111,14 @@ class InlineJavascriptTest extends PumukitTestCase
 
             return ['id' => $series->getId()];
         }
-        if (in_array($route, ['pumukitnewadmin_mms_edit', 'pumukitnewadmin_track_list', 'pumukitnewadmin_material_list'], true)) {
+        if (in_array($route, ['pumukitnewadmin_mms_edit', 'pumukit_new_admin_unesco_edit', 'pumukitnewadmin_unesco_list', 'pumukitnewadmin_unesco_show', 'pumukitnewadmin_unesco_advance_search_form', 'pumukitnewadmin_track_list', 'pumukitnewadmin_material_list'], true)) {
             $owner = new Role();
             $owner->setCod('owner');
             $owner->setName('Owner');
             $this->dm->persist($owner);
-            $this->tag('ROOT', 'ROOT|');
+            $root = $this->tag('ROOT', 'ROOT|');
+            $unesco = $this->tag('UNESCO', 'ROOT|UNESCO|', $root);
+            $this->tag('U110000', 'ROOT|UNESCO|U110000|', $unesco);
             $factory = static::getContainer()->get(FactoryService::class);
             $multimediaObject = $factory->createMultimediaObject($factory->createSeries(), true);
             $material = new Material();
@@ -122,7 +128,7 @@ class InlineJavascriptTest extends PumukitTestCase
             static::getContainer()->get(MediaCreator::class)->createMediaFromExternalURL($multimediaObject, 'https://example.org/player');
             $this->dm->flush();
 
-            return ['id' => $multimediaObject->getId()];
+            return in_array($route, ['pumukitnewadmin_unesco_list', 'pumukitnewadmin_unesco_advance_search_form'], true) ? [] : ['id' => $multimediaObject->getId()];
         }
         if (in_array($route, ['pumukitnewadmin_mms_links', 'pumukitnewadmin_mms_updatebroadcast'], true)) {
             $factory = static::getContainer()->get(FactoryService::class);

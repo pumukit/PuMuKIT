@@ -42,11 +42,6 @@ window.dblclick_preview_mm = function(id)
     });
 }
 
-procesaOk = function(){
-  $('#remember_save_mm_pub').hide();
-  return true;
-}
-
 /**
  * Global Ajax Event Handlers and Config
  */
@@ -174,12 +169,6 @@ $(document).ready(function(){
     .on('show.bs.modal', function() {
         $('.modal-content').html('');
     });
-});
-
-$(document).on('change', "#pumukitnewadmin_unesco_updatemeta_form [id^='pumukitnewadmin_mms_meta_']", function(e){
-    if ('checkbox' == e.target.type || e.target.value != e.target.defaultValue) {
-        $('#remember_save_mm').css('display', 'inline-block');
-    }
 });
 
 window.init_mmobj_materialtags = function() {

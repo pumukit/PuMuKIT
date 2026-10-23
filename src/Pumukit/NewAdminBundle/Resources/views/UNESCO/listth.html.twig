@@ -12,7 +12,7 @@
     <th width="1%" id="th-checkbox">
         <div class="checkbox pumukit-mms-checkbox">
             <label>
-                <input type="checkbox" onclick="window.click_checkbox_all('mm', this.checked)">
+                <input type="checkbox" data-action="click->admin--actions#checkAll" data-admin--actions-name-param="mm">
             </label>
         </div>
     </th>
@@ -25,7 +25,7 @@
     {% for key, field in selected_fields %}
         <th id="th-{{ loop.index }}">
             {% if custom_fields[field]['render_params']['sort'] %}
-                <a href="#" class="sort_unesco" data-id="{{ field }}">
+                <a href="#" class="sort_unesco" data-id="{{ field }}" data-action="click->admin--unesco#sort" data-admin--unesco-field-param="{{ field|json_encode }}">
                     {% if sort and field in app.session.get('admin/unesco/element_sort') %}
                         {% if field == 'title' and 'subtitle' in app.session.get('admin/unesco/element_sort') %}
                             {{ custom_fields[field]['label'] }}
