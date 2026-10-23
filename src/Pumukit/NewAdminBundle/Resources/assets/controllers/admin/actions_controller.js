@@ -122,6 +122,11 @@ export default class extends Controller {
         const { url, reload } = event.params;
         $.ajax({ url: url.replace('__value__', encodeURIComponent(event.currentTarget.value ?? '')), method: 'POST' })
             .done((response) => {
+                if (response.error) {
+                    window.no_success(response.error);
+
+                    return;
+                }
                 window.success(response.success);
                 if (reload) {
                     window.location.reload();
