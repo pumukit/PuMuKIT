@@ -42,6 +42,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Validate in TUS uploads the file name and type that tus-php stores, closing a bypass of the blocked extensions list.
 - Keep inbox imports inside the inbox directory: the file name and folder of `/dispatchImport` could point to any readable file of the server.
 - Move the roles, series types, live channels, legacy events, users, groups, people, permission profiles, tags, links and inbox explorer zones of the backoffice to Stimulus controllers (`admin--actions`, `admin--modal-form`, `admin--filter-form`, `admin--batch` and zone controllers); `pumukit.js.twig` loses 39 global functions and is cached privately.
+- Move the series, playlists and head and tail manager zones of the backoffice, and the create and update forms of the zones already moved, to Stimulus controllers (`admin--meta-form`, `admin--changepub`, `admin--event-tabs`); the head and tail selects of a series no longer stop saving after opening a second series.
 - Upload thumbnails, banners, materials, live event images and tracks through the Uppy Dashboard; the upload actions answer JSON on request and adding a track to an object without type no longer fails.
 - Update composer dependencies (gedmo/doctrine-extensions, php-cs-fixer, pagerfanta, knp-menu-bundle, twig extensions, etc.).
 

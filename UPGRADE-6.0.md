@@ -250,22 +250,45 @@ template, including the content of `#myModal` loaded by AJAX:
 | `click->admin--actions#remove` | `url`, `target`, `confirm`, `success`, `error`, `blocked` (alert instead of deleting), `refresh` (JSON list of `{target, url}`), `reload` + `errorMarker` (DELETE then reload `target`), `hideModal` | `submit_delete_*()` |
 | `click->admin--actions#preview` | `name`, `url` | `click_fila_url()` |
 | `click->admin--actions#checkAll` | `name` | `click_checkbox_all()` |
-| `click->admin--actions#load` | `url`, `target`, `data` (JSON) | `$('#…').load(…)` in `onclick` |
+| `click->admin--actions#load` | `url`, `target`, `data` (JSON), `confirm`, `success` | `$('#…').load(…)` in `onclick` |
 | `click->admin--actions#navigate` | `url` | `window.location.href = …` in `onclick` |
 | `click->admin--actions#cancel` | | `onclick="return false;"` |
+| `click->admin--actions#edit` | `name`, `show`, `update` | `click_fila_edit_urls()` |
+| `click->admin--actions#create` | `url`, `method`, `key`, `name`, `list`, `listUrl`, `showUrl`, `editUrl` (`__id__`), `reset`, `success` | the "New" buttons of series and playlists |
+| `click->admin--actions#sort` | `url` (`__type__`), `target`, `type`, `selected`, `selectedKey` | the sort links of the list headers |
+| `change->admin--actions#go` | `url` (the value is appended) | the pager inputs |
+| `click->admin--actions#toggle` | `selectors` (JSON list) | `$('#…').toggle()` in `onclick` |
+| `change->admin--actions#send` | `url` (`__value__`), `reload` | the head and tail selects |
+| `change->admin--actions#validateRange` | `from`, `to`, `message` | date range checks |
+| `invalid->admin--actions#validity` | `message` | `oninvalid="setCustomValidity(…)"` in form types |
+| `click->admin--actions#magicUrl` | `url`, `template` (`__secret__`), `confirm`, `success`, `input`, `link` | `submit_generate_magic_series()` |
+| `click->admin--actions#notifyParent` | `message` (JSON) | `parent.window.postMessage(…, '*')` |
 
-Other generic controllers: `admin--modal-form` (AJAX forms of the modals: `target`,
-`successMessage`, `errorMessage` when the response is the form again, `refresh`, `modal`,
-`disableSubmit`), `admin--filter-form` (filters: `url`, `target`, `letters`, with the `reset` and
+`remove` also takes `clear` (`{name, id, message}`): when the deleted row is the selected one,
+`#preview_<name>` shows `message` and `#edit_<name>` is emptied. Action params are parsed as JSON,
+so ids are passed with `|json_encode`: a MongoDB id such as `5e1234…` would otherwise become a
+number.
+
+Other generic controllers: `admin--modal-form` (AJAX forms: `target`, `successMessage`,
+`errorMessage` when the response is the form again, `failMessage`, `titleError` (show the
+`<title>` of the error page), `refresh`, `modal` (empty for forms outside a modal),
+`disableSubmit`, and `created` (`{key, list, listUrl, preview, showUrl}`: reload the list and the
+preview of the created element)), `admin--meta-form` (metadata forms: the "press OK" reminder,
+the cancel button and the keyword inputs, whose suggestion indexes it creates on demand), `admin--filter-form` (filters: `url`, `target`, `letters`, with the `reset` and
 `letter` actions) and `admin--batch` (the "Actions on selected items" select: `name`, `plural`,
 `preview`, `urls`, `messages`). Messages are translated in Twig and passed as values or params,
 so the controllers carry no translations. Zone controllers: `admin--group-picker` (groups of a
 user), `admin--group-info` (group deletion), `admin--person-picker` (person search of a
-relation), `admin--permission-profiles`, `admin--tag-tree` and `admin--file-tree` (inbox
-explorer of the server tab).
+relation), `admin--permission-profiles`, `admin--tag-tree`, `admin--file-tree` (inbox
+explorer of the server tab), `admin--changepub` (status of the multimedia objects of a series) and
+`admin--event-tabs` (list and calendar tabs of the legacy events).
 
 Migrated zones: roles, series types, live channels, legacy events, users, groups, people and
-person relations, permission profiles, tags, links and the inbox explorer. Removed global
+person relations, permission profiles, tags, links, the inbox explorer, series, playlists and the
+head and tail manager. `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
+`@PumukitNewAdmin/Playlist/changepub.html.twig` are removed. The series and playlist indexes no
+longer define the `serieskeywords` and `mmobjkeywords` globals: `admin--meta-form` creates them
+when a metadata form needs them. Removed global
 functions, reported by `pumukit:check:assets` (also when called as `window.…`):
 
 | Removed | Replacement |
@@ -278,6 +301,11 @@ functions, reported by `pumukit:check:assets` (also when called as `window.…`)
 | `processPermissionProfilesOk()`, `checkScope()` | `admin--permission-profiles` |
 | `toggle_section_tag()`, `tag_delete()` | `admin--tag-tree` |
 | `fileServerTree()`, `fileServerSelect()` | `admin--file-tree` |
+| `submit_generate_magic_series()` | `admin--actions#magicUrl` |
+| `submit_clone_series()` | `admin--actions#load` |
+| `submit_delete_series()`, `submit_delete_playlist()` | `admin--actions#remove` |
+| `click_checkbox_changepub_all()`, `check_checkbox_all()`, `check_checkbox_channel_all()`, `click_checkbox_channel_changepub_all()`, `submit_series_change_pub()` | `admin--changepub` |
+| `init_series_materialtags()` | `admin--meta-form` |
 
 Names, titles and file names are now rendered as text: the group picker, the group deletion
 button, the person suggestions and the inbox explorer used to build HTML and inline handlers by
