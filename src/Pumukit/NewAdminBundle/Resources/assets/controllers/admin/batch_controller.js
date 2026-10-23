@@ -93,6 +93,7 @@ export default class extends Controller {
             $.ajax({ url: this.deleteUrl(ids), type: 'POST', data: { _method: 'DELETE' } })
                 .fail((xhr, textStatus, errorThrown) => window.no_success(`${errorThrown}: ${xhr.responseText}`))
                 .done((response) => {
+                    this.clearDeletedPreview(ids);
                     $(`#list_${this.pluralValue}`).html(response);
                     window.success(this.message('success'));
                 });

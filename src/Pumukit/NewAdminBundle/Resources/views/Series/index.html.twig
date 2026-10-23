@@ -25,10 +25,10 @@
                         <div class="col-xs-4">
                             {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_META_GROUP_LIST_OPTIONS')) %}
                             <select id="options_series" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
-                                    data-admin--batch-name-value="series" data-admin--batch-plural-value="series"
+                                    data-admin--batch-name-value="series" data-admin--batch-plural-value="series" data-admin--batch-preview-value="series"
                                     data-admin--batch-urls-value="{{ {delete: path('pumukitnewadmin_series_batch_delete', {'ids': '__ids__'}), info: path('pumukitnewadmin_info_series', {'ids': '__ids__'}), invert: path('pumukitnewadmin_series_invert_announce', {'ids': '__ids__'})}|json_encode }}"
                                     data-admin--batch-announce-value="{{ {edit: '#inputROId', checkbox: '#pumukitnewadmin_series_announce'}|json_encode }}"
-                                    data-admin--batch-messages-value="{{ {confirm: 'Are you sure?'|trans, seriesConfirm: 'Are you sure you want to delete this/these series'|trans ~ '? ' ~ 'This/these series has/have'|trans, objects: 'multimedia object(s)'|trans, and: 'and'|trans, events: 'live event(s)'|trans, success: 'Series'|trans ~ ' ' ~ 'successfully deleted'|trans ~ '.'}|json_encode }}">
+                                    data-admin--batch-messages-value="{{ {confirm: 'Are you sure?'|trans, seriesConfirm: 'Are you sure you want to delete this/these series'|trans ~ '? ' ~ 'This/these series has/have'|trans, objects: 'multimedia object(s)'|trans, and: 'and'|trans, events: 'live event(s)'|trans, success: 'Series'|trans ~ ' ' ~ 'successfully deleted'|trans ~ '.', selectAny: 'Select any series.'|trans}|json_encode }}">
                                 <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
                                 <option disabled="">---</option>
                                 <option value="delete_selected_series">{% trans %}Delete selected{% endtrans %}</option>
