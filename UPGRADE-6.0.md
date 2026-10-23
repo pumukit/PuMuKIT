@@ -350,7 +350,9 @@ activity chart of the dashboard uses `admin--dashboard` on `#activity-chart`, wi
 time window and the grouping as values; it still draws with the Chart.js build of the dashboard page. The unused
 `bundles/pumukitnewadmin/vendor/chartjs/chartjs-plugin-zoom.min.js` is removed. The series styles
 manager uses `admin--series-styles`, started by `@PumukitNewAdmin/SeriesStyle/crud.html.twig`; the
-`show_style` and `delete_style` classes are kept for styling only.
+`show_style` and `delete_style` classes are kept for styling only. The profile page submits its form
+without JavaScript: the `pumukitnewadmin_profile_user_check_user` route and
+`UserProfileController::checkEmailToUseOnUser()` are removed.
 
 The multimedia objects of a playlist use `admin--playlist-mms` (row selection, preview, removal and
 batch removal; the list starts its own instance, so it keeps working inside a project override of

@@ -7,13 +7,11 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateProfileType;
 use Pumukit\NewAdminBundle\Services\UserStatsService;
-use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\SeriesService;
 use Pumukit\SchemaBundle\Services\UpdateUserService;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -86,23 +84,5 @@ class UserProfileController extends AbstractController
             'userStorage' => $userStorage,
             'userDuration' => $userDuration,
         ];
-    }
-
-    #[Route('/check/email/{updateEmail}', name: 'pumukitnewadmin_profile_user_check_user')]
-    public function checkEmailToUseOnUser(string $updateEmail): JsonResponse
-    {
-        $user = $this->documentManager->getRepository(User::class)->findOneBy([
-            'email' => $updateEmail,
-            'username' => ['$ne' => $this->getUser()->getUsername()],
-        ]);
-
-        $jsonResponseStatus = -1;
-        $message = $this->translator->trans('Email already in use');
-        if (!$user || $this->getUser()->getEmail() === $updateEmail) {
-            $jsonResponseStatus = 0;
-            $message = $this->translator->trans('User info updated');
-        }
-
-        return new JsonResponse(['status' => $jsonResponseStatus, 'message' => $message]);
     }
 }

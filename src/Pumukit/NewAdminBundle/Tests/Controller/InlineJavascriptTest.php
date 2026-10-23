@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\EmbeddedEvent;
 use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\SeriesStyle;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -112,6 +113,7 @@ class InlineJavascriptTest extends PumukitTestCase
             'series styles' => ['pumukit_newadmin_series_styles'],
             'series style list' => ['pumukit_newadmin_series_styles_list'],
             'series style' => ['pumukit_newadmin_series_styles_show'],
+            'my profile' => ['pumukitnewadmin_profile_user_index'],
         ];
     }
 
@@ -178,6 +180,16 @@ class InlineJavascriptTest extends PumukitTestCase
             $this->dm->flush();
 
             return in_array($route, ['pumukitnewadmin_unesco_list', 'pumukitnewadmin_unesco_advance_search_form'], true) ? [] : ['id' => $multimediaObject->getId()];
+        }
+        if ('pumukitnewadmin_profile_user_index' === $route) {
+            $person = new Person();
+            $person->setName('Inline JS');
+            $person->setEmail('inlinejs@pumukit.local');
+            $this->dm->persist($person);
+            $this->dm->getRepository(User::class)->findOneBy(['username' => 'inlinejs'])->setPerson($person);
+            $this->dm->flush();
+
+            return [];
         }
         if (str_starts_with($route, 'pumukit_newadmin_series_styles')) {
             $style = new SeriesStyle();

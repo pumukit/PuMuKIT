@@ -12,21 +12,3 @@
     </fieldset>
     <button type="submit" class="btn btn-pumukit btn-raised">{{ "Save"|trans }}</button>
 </form>
-
-<script>
-    $('#pumukitnewadmin_user_form_update_profile').on('submit', function(event) {
-        event.preventDefault();
-
-        var route = "{{ path('pumukitnewadmin_profile_user_check_user', {'updateEmail' : '__EMAIL__'}) }}";
-        route = route.replace('__EMAIL__', $('#pumukitnewadmin_user_email').val());
-        $.ajax({
-            url: route,
-            error: function (response) {
-
-            },
-            success: function (response) {
-                document.getElementById("pumukitnewadmin_user_form_update_profile").submit();
-            }
-        });
-    });
-</script>
