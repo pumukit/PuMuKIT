@@ -263,10 +263,13 @@ template, including the content of `#myModal` loaded by AJAX:
 | `invalid->admin--actions#validity` | `message` | `oninvalid="setCustomValidity(…)"` in form types |
 | `click->admin--actions#magicUrl` | `url`, `template` (`__secret__`), `confirm`, `success`, `input`, `link` | `submit_generate_magic_series()` |
 | `click->admin--actions#notifyParent` | `message` (JSON) | `parent.window.postMessage(…, '*')` |
+| `click->admin--actions#openModal` | `url` | `dblclick_preview_mm()` in the multimedia object list |
+| `click->admin--actions#request` | `url`, `method` (POST), `success`, `error`, `reload` | the archive button |
 | `click->admin--actions#copy` | `input` (id) | the copy buttons of the i18n fields |
 | `click->admin--actions#translate` | `url`, `locale`, `field` (`input` or `textarea`), `question`, `error`; a double click skips the prompt | `pmk_translate()` |
 
-`remove` also takes `clear` (`{name, id, message}`): when the deleted row is the selected one,
+`remove` also takes `notFound` (go to that URL when the response is a 404) and `clear`
+(`{name, id, message}`): when the deleted row is the selected one,
 `#preview_<name>` shows `message` and `#edit_<name>` is emptied. Action params are parsed as JSON,
 so ids are passed with `|json_encode`: a MongoDB id such as `5e1234…` would otherwise become a
 number.
@@ -284,20 +287,26 @@ user), `admin--group-info` (group deletion), `admin--person-picker` (person sear
 relation), `admin--permission-profiles`, `admin--tag-tree`, `admin--file-tree` (inbox
 explorer of the server tab), `admin--changepub` (status of the multimedia objects of a series) and
 `admin--event-tabs` (list and calendar tabs of the legacy events), `admin--pic-list` (updates the
-preview thumbnails after reloading a picture list) and `admin--pic-generator` (thumbnail generation
-from a frame of the video).
+preview thumbnails after reloading a picture list), `admin--pic-generator` (thumbnail generation
+from a frame of the video), `admin--job-status` (refreshes the status of the multimedia objects with
+running jobs every 15 seconds), `admin--pic-sync` (reloads the thumbnails when a refreshed status
+reports a different number of pictures) and `admin--modal-cleanup` (removes the player of the
+preview modal when it closes). `admin--batch` now covers every option of the multimedia object list:
+deleting, announcing, the sort options (each with its `data-url`), cutting, pasting and adding to a
+playlist.
 
 Migrated zones: roles, series types, live channels, legacy events, users, groups, people and
 person relations, permission profiles, tags, links, the inbox explorer, series, playlists, the
-head and tail manager, pictures and the i18n fields of the form theme. `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
+head and tail manager, pictures, the i18n fields of the form theme and the multimedia object list
+(rows, pager, batch actions, row menu, archive, status and preview). `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
 `@PumukitNewAdmin/Playlist/changepub.html.twig` are removed, and so is
 `@PumukitNewAdmin/LiveEvent/create.html.twig`, which pointed to a route that no longer exists.
 The picture upload actions (series, playlists, multimedia objects and legacy events) always answer
 JSON (`{uploaded, message}`), so `@PumukitNewAdmin/Pic/upload.html.twig` and
 `@PumukitNewAdmin/Pic/upload_event.html.twig`, the old iframe responses, are removed, together
 with the hidden banner URL form of `@PumukitNewAdmin/Pic/banner.html.twig` and its
-`test_form_url()` and `test_url_generation()` functions. The series and playlist indexes no
-longer define the `serieskeywords` and `mmobjkeywords` globals: `admin--meta-form` creates them
+`test_form_url()` and `test_url_generation()` functions. The series, playlist and multimedia object
+indexes no longer define the `serieskeywords` and `mmobjkeywords` globals: `admin--meta-form` creates them
 when a metadata form needs them. Removed global
 functions, reported by `pumukit:check:assets` (also when called as `window.…`):
 
@@ -320,6 +329,11 @@ functions, reported by `pumukit:check:assets` (also when called as `window.…`)
 | `delete_seriespic()`, `delete_playlistpic()`, `delete_mmspic()`, `delete_eventspic()` | `admin--actions#remove` |
 | `update_mmspic()`, `update_seriespic()`, `update_playlistpic()` | `admin--pic-list` |
 | `pmk_translate()` | `admin--actions#translate` |
+| `submit_delete_mms()` | `admin--actions#remove` |
+| `submit_clone_mms()` | `admin--actions#load` |
+| `change_select()`, `get_batch_delete_route()`, `sort_optiont_change()` | `admin--batch` |
+| `update_mms_status_wrapper()` | `admin--job-status` |
+| `check_for_new_pics()`, `upload_mmspic()` | `admin--pic-sync` |
 
 Names, titles and file names are now rendered as text: the group picker, the group deletion
 button, the person suggestions and the inbox explorer used to build HTML and inline handlers by
