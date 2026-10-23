@@ -2,26 +2,26 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h3 class="modal-title pumukitnewadmin-modal-title-margin" id="myModalLabel">{% trans %}External media{% endtrans %}</h3>
 </div>
-<div class="modal-body">
+<div class="modal-body" data-controller="admin--external-player">
     <fieldset>
         <div class="form-group">
             {% set urlexternal = '' %}
-            <iframe id="externalplayer" height="100%" width="100%" onload="resizeFrame(this)" src="{{ urlexternal }}"></iframe>
+            <iframe id="externalplayer" height="100%" width="100%" data-admin--external-player-target="frame" data-action="load->admin--external-player#resize" src="{{ urlexternal }}"></iframe>
         </div>
     </fieldset>
-    {{ form_start(form, {'attr': {'id': 'externalplayerform'}}) }}
+    {{ form_start(form, {'attr': {'id': 'externalplayerform', 'data-action': 'submit->admin--external-player#submit'}}) }}
     {% if is_granted('ROLE_ADD_EXTERNAL_PLAYER') %}
         <div class="row form-update-external">
 
             <div class="col-xs-12 col-sm-9 col-md-9">
                 {% set placeholder = 'No external media set' %}
                 {% if urlexternal != '' %}
-                    {{ form_row(form.url, {'value': urlexternal}) }}
+                    {{ form_row(form.url, {'value': urlexternal, 'attr': {'data-admin--external-player-target': 'url'}}) }}
                 {% else %}
-                    {{ form_row(form.url, {'attr' : {'placeholder': placeholder|trans }}) }}
+                    {{ form_row(form.url, {'attr' : {'placeholder': placeholder|trans, 'data-admin--external-player-target': 'url'}}) }}
                 {% endif %}
             </div>
-            <div class="col-xs-12 col-sm-3 col-md-3"><a href="#" id="previewIframe" class="btn btn-block btn-primary" title="{% trans %}Preview{% endtrans %}">{% trans %}Preview{% endtrans %}</a></div>
+            <div class="col-xs-12 col-sm-3 col-md-3"><a href="#" id="previewIframe" class="btn btn-block btn-primary" data-action="click->admin--external-player#preview" title="{% trans %}Preview{% endtrans %}">{% trans %}Preview{% endtrans %}</a></div>
             <div class="col-xs-12" style="margin-top:15px">
                 {{ form_row(form.title) }}
             </div>
@@ -41,33 +41,3 @@
     </div>
     {{ form_end(form) }}
 </div>
-<script>
-    function resizeFrame(elem){
-        var width = $(elem).width();
-        var height = width/16*9;
-        $(elem).height(height);
-    }
-
-    $(window).resize(function(){
-        resizeFrame($('#externalplayer'));
-    });
-
-    $('#previewIframe').on('click', function(event) {
-        event.preventDefault();
-        $('#externalplayer').attr('src',$('#form_url').val());
-    });
-
-    $('#externalplayerform').on('submit', function(event) {
-        event.preventDefault();
-        $('#myModal').modal('hide');
-        $.ajax({
-            url: "{{ path('pumukitnewadmin_mms_listexternalproperties', {'series' : series} ) }}",
-            type: 'POST',
-            data: $(this).serialize(),
-            success: function(response){
-                location.reload();
-            }
-        });
-        return false;
-    })
-</script>

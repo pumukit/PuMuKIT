@@ -135,6 +135,7 @@ class CheckAssetsCommand extends Command
         'get_batch_delete_route' => 'the urls value of the admin--batch controller',
         'sort_optiont_change' => 'the data-url of the sort options of the admin--batch controller',
         'update_preview_mms' => 'nothing: it was never called',
+        'checkRecordDateAndPublicDate' => 'the dates value of the admin--meta-form controller (see @PumukitNewAdmin/MultimediaObject/updatemeta.html.twig)',
     ];
 
     private const REFERENCE_PATTERN = '#(?<![\w./-])/?(bundles/([a-z0-9_]+)/[^\'"\s?\#{}()]*)#';

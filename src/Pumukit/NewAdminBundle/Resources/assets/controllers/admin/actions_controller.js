@@ -149,7 +149,9 @@ export default class extends Controller {
     send(event) {
         event.preventDefault();
         const { url, reload } = event.params;
-        $.ajax({ url: url.replace('__value__', encodeURIComponent(event.currentTarget.value ?? '')), method: 'POST' })
+        const field = event.currentTarget;
+        const value = 'checkbox' === field.type ? String(field.checked) : (field.value ?? '');
+        $.ajax({ url: url.replace('__value__', encodeURIComponent(value)), method: 'POST' })
             .done((response) => {
                 if (response.error) {
                     window.no_success(response.error);

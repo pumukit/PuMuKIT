@@ -528,70 +528,10 @@ function generate_random_password(pass1_id, pass2_id) {
     can_enable_broadcast_password_save_button();
 }
 
-function checkRecordDateAndPublicDate(recordDate, publicDate) {
-    if (publicDate.getTime() < recordDate.getTime()){
-        var message = '{{ "Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date."|trans|e("js") }}';
-        no_success(message);
-        return false;
-    }
-}
-
-$(document).on('submit', '#pumukitnewadmin_mms_updatemeta_form', function(event){
-    $('#remember_save_mm').hide();
-
-    var publicDateVal = $('#pumukitnewadmin_mms_meta_public_date').val();
-    var recordDateVal = $('#pumukitnewadmin_mms_meta_record_date').val();
-
-    var publicDate = new Date(publicDateVal);
-    var recordDate = new Date(recordDateVal);
-
-    checkRecordDateAndPublicDate(recordDate, publicDate);
-
-    var route = '{{ path('pumukitnewadmin_mms_update_meta', {'id': '__mmId__'}) }}';
-    var mmId = $('#mm_id_meta').val();
-
-    route = route.replace('__mmId__', mmId);
-
-    var showRoute = '{{ path('pumukitnewadmin_mms_show', {'id': '__mmId__'}) }}';
-    showRoute = showRoute.replace('__mmId__', mmId);
-
-    $.ajax({
-            url: route,
-            type: 'POST',
-            data: $(this).serialize(),
-            error: function(request, json){var message = '{{ "Multimedia Object saved ERROR"|trans|e("js") }}'; no_success(message);},
-            success: function(response){
-                                        $('#list_mms').html(response);
-                                        $('#preview_mm').load(showRoute);
-                                        $('#inputMMTitle').val($('#pumukitnewadmin_mms_meta_i18n_title_{{ app.request.getLocale() }}').val());
-                                        var message = '{{ "Multimedia Object saved OK"|trans|e("js") }}';
-                                        success(message);
-                                        }
-            });
-
-    return false;
-});
-
-$(document).on('change', "*[id^='pumukitnewadmin_mms_meta_']", function(e){
+$(document).on('change', "#pumukitnewadmin_unesco_updatemeta_form [id^='pumukitnewadmin_mms_meta_']", function(e){
     if ('checkbox' == e.target.type || e.target.value != e.target.defaultValue) {
         $('#remember_save_mm').css('display', 'inline-block');
     }
-});
-
-$(document).on('change', 'form#pumukitnewadmin_mms_updatepub_form input, form#pumukitnewadmin_mms_updatepub_form select', function(){
-    $('#remember_save_mm_pub').show();
-});
-
-$(document).on('click', '#pumukitnewadmin_mms_updatepub_cancel', function(){
-    $('#pumukitnewadmin_mms_updatepub_form')[0].reset();
-    return procesaReset();
-});
-
-$(document).on('click', '#pumukitnewadmin_mms_updatemeta_cancel', function(){
-    $('#pumukitnewadmin_mms_updatemeta_form')[0].reset();
-    $('input.mmobj.materialtags').materialtags('destroy');
-    window.init_mmobj_materialtags();
-    $('#remember_save_mm').hide();
 });
 
 $(document).on('click', '#pumukitnewadmin_mmtemplate_updatemeta_cancel', function(){

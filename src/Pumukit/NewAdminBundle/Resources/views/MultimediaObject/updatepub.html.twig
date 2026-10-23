@@ -2,20 +2,15 @@
 
 <div id="tv_admin_container_pub" class="well">
     <form id="pumukitnewadmin_mms_updatepub_form"
-          onsubmit="$.ajax({
-                  url: '{{ path('pumukitnewadmin_mms_update_pub', {'id': mm.id}) }}',
-                  type: 'POST',
-                  data: $(this).serialize(),
-                  error: function(request, json){var message = '{{ "Multimedia Object saved ERROR"|trans|e("js") }}'; no_success(message);},
-                  success: function(response){
-                  $('#list_mms').html(response);
-                  $('#preview_mm').load('{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}');
-                  $('#links_mm_{{ mm.id }}').load('{{ path('pumukitnewadmin_mms_links', {'id': mm.id}) }}');
-                  var message = '{{ "Multimedia Object saved OK"|trans|e("js") }}';
-                  success(message);
-                  }
-                  });
-                  return false;"
+          data-controller="admin--meta-form admin--modal-form"
+          data-action="submit->admin--modal-form#submit change->admin--meta-form#changed"
+          data-admin--meta-form-remember-value="#remember_save_mm_pub"
+          data-admin--meta-form-always-value="true"
+          data-admin--modal-form-target-value="#list_mms"
+          data-admin--modal-form-refresh-value="{{ [{target: '#preview_mm', url: path('pumukitnewadmin_mms_show', {'id': mm.id})}, {target: '#links_mm_' ~ mm.id, url: path('pumukitnewadmin_mms_links', {'id': mm.id})}]|json_encode }}"
+          data-admin--modal-form-modal-value=""
+          data-admin--modal-form-success-message-value="{{ 'Multimedia Object saved OK'|trans }}"
+          data-admin--modal-form-fail-message-value="{{ 'Multimedia Object saved ERROR'|trans }}"
           action="{{ path('pumukitnewadmin_mms_update_pub', {'id': mm.id}) }}" method="POST">
 
         <input type="hidden" name="id" id="mm_id_pub" value="{{ mm.id }}">
@@ -29,9 +24,9 @@
                 </div>
             </div>
             <div class="col-xs-6 text-right">
-                <button id="pumukitnewadmin_mms_updatepub_cancel" type="button" class="btn btn-default btn-raised">{% trans %}
+                <button id="pumukitnewadmin_mms_updatepub_cancel" type="button" class="btn btn-default btn-raised" data-action="click->admin--meta-form#cancel">{% trans %}
                     Cancel{% endtrans %}</button>
-                <button type="submit" class="btn btn-pumukit btn-raised" onclick="return procesaOk();">{% trans %}
+                <button type="submit" class="btn btn-pumukit btn-raised" data-action="click->admin--meta-form#hideRemember">{% trans %}
                     OK{% endtrans %}</button>
             </div>
         </div>
@@ -77,12 +72,12 @@
                     <label style="margin-top:1rem;">{{ "Video options"|trans }}</label>
                     <div class="checkbox" style="margin-bottom:4px;">
                         <label>
-                            <input id="video_head_option" type="checkbox" name="video_head_option" {% if mm.isHead()|default(false) %}checked{% endif %}> {{ "Video head"|trans }}
+                            <input id="video_head_option" type="checkbox" name="video_head_option" data-action="change->admin--actions#send" data-admin--actions-url-param="{{ path('pumukit_newadmin_head_and_tail_set_head', {'multimediaObject': mm.id, 'isHead': '__value__'}) }}" {% if mm.isHead()|default(false) %}checked{% endif %}> {{ "Video head"|trans }}
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input id="video_tail_option" type="checkbox" name="video_tail_option" {% if mm.isTail()|default(false) %}checked{% endif %}> {{ "Video tail"|trans }}
+                            <input id="video_tail_option" type="checkbox" name="video_tail_option" data-action="change->admin--actions#send" data-admin--actions-url-param="{{ path('pumukit_newadmin_head_and_tail_set_tail', {'multimediaObject': mm.id, 'isTail': '__value__'}) }}" {% if mm.isTail()|default(false) %}checked{% endif %}> {{ "Video tail"|trans }}
                         </label>
                     </div>
                 {% endif %}
@@ -90,44 +85,3 @@
         </fieldset>
     </form>
 </div>
-
-{% if app.user and is_granted('ROLE_ACCESS_HEAD_AND_TAIL_MANAGER') and not mm.isMultistream() %}
-<script>
-    $('#video_head_option').on('click', function(){
-        let route =  '{{ path('pumukit_newadmin_head_and_tail_set_head', {
-            'multimediaObject': '__multimediaObject__',
-            'isHead': '__isHead__'
-        }) }}';
-        route = route.replace('__multimediaObject__', "{{ mm.id }}");
-        route = route.replace('__isHead__', $('#video_head_option').is(":checked"));
-        $.ajax({
-            url: route,
-            method: 'POST',
-            success: function (response) {
-                success(response.success);
-            },
-            error: function (response) {
-                success(response.error);
-            }
-        });
-    });
-
-    $('#video_tail_option').on('click', function(){
-        let route =  '{{ path('pumukit_newadmin_head_and_tail_set_tail', {
-            'multimediaObject': '__multimediaObject__',
-            'isTail': '__isTail__'
-        }) }}';
-        route = route.replace('__multimediaObject__', "{{ mm.id }}");
-        route = route.replace('__isTail__', $('#video_tail_option').is(":checked"));
-        $.ajax({
-            url: route,
-            method: 'POST',
-            success: function (response) {
-                success(response.success);
-            },
-            error: function (response) {
-                success(response.error);
-            }
-        });    });
-</script>
-{% endif %}

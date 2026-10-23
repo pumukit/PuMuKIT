@@ -40,6 +40,7 @@ export default class extends Controller {
                 if (this.successMessageValue) {
                     window.success(this.successMessageValue);
                 }
+                this.dispatch('saved', { detail: { response } });
             })
             .fail((xhr, textStatus, errorThrown) => window.no_success(this.failure(xhr, textStatus, errorThrown)));
     }

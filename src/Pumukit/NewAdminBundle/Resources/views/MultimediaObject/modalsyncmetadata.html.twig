@@ -13,7 +13,12 @@
     <hr/>
 </div>
 
-<form id="sync_metadata_mmo" action="{{ path('pumukitnewadmin_mms_update_sync_metadata', {'id' : multimediaObject.getId() } ) }}" method="POST">
+<form id="sync_metadata_mmo" data-controller="admin--modal-form" data-action="submit->admin--modal-form#submit"
+      data-admin--modal-form-refresh-value="{{ [{target: '#list_mms', url: path('pumukitnewadmin_mms_list', {'id': multimediaObject.series.getId()})}]|json_encode }}"
+      data-admin--modal-form-success-message-value="{{ 'Sync up metadata was successfully.'|trans }}"
+      data-admin--modal-form-error-message-value="{{ 'There was an error sync up metadata.'|trans }}"
+      data-admin--modal-form-title-error-value="true"
+      action="{{ path('pumukitnewadmin_mms_update_sync_metadata', {'id' : multimediaObject.getId() } ) }}" method="POST">
     <div class="modal-body">
         <div class="row">
             <div class="col-md-4">
@@ -87,33 +92,3 @@
     </div>
 
 </form>
-
-<script>
-    $('#sync_metadata_mmo').on('submit', function (event) {
-        "use strict";
-
-        event.preventDefault();
-        var url_list = "{{ path('pumukitnewadmin_mms_list', {'id': multimediaObject.series.getId() }) }}";
-
-        $('#myModal').modal('hide');
-        $.ajax({
-            url: '{{ path('pumukitnewadmin_mms_update_sync_metadata', {'id':  multimediaObject.getId() }) }}',
-            method: 'POST',
-            data: $('#sync_metadata_mmo').serialize(),
-            success: function (response, textStatus, jqXHR) {
-                var message = '{{ "There was an error sync up metadata."|trans|e("js") }}';
-                if (jqXHR.responseText.indexOf('modal-header') !== -1) {
-                    no_success(message);
-                } else {
-                    $('#list_mms').load(url_list);
-                    message = '{{ "Sync up metadata was successfully."|trans|e("js") }}';
-                    success(message);
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                no_success(errorThrown + ': ' + textStatus);
-            }
-        });
-        return false;
-    });
-</script>

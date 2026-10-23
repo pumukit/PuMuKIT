@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
-    static values = { remember: String, prefix: String, keywords: Object };
+    static values = { remember: String, prefix: String, always: Boolean, keywords: Object, dates: Object, title: Object };
 
     connect() {
         this.initKeywords();
@@ -16,13 +16,33 @@ export default class extends Controller {
         if (!event.target.id?.startsWith(this.prefixValue)) {
             return;
         }
-        if ('checkbox' === event.target.type || event.target.value !== event.target.defaultValue) {
+        if (this.alwaysValue || 'checkbox' === event.target.type || event.target.value !== event.target.defaultValue) {
             $(this.rememberValue).css('display', 'inline-block');
         }
     }
 
     hideRemember() {
         $(this.rememberValue).hide();
+    }
+
+    checkDates() {
+        const { record, publication, message } = this.datesValue;
+        if (!record) {
+            return;
+        }
+        const recordDate = new Date($(record).val());
+        const publicationDate = new Date($(publication).val());
+        if (publicationDate.getTime() < recordDate.getTime()) {
+            window.no_success(message);
+        }
+    }
+
+    saved() {
+        const { source, target } = this.titleValue;
+        const title = $(source);
+        if (title.length) {
+            $(target).val(title.val());
+        }
     }
 
     cancel(event) {

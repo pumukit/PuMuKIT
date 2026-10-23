@@ -2,7 +2,20 @@
 
 <div id="tv_admin_container_meta" class="well">
 
-    <form id="pumukitnewadmin_mms_updatemeta_form" data-controller="admin--meta-form" data-admin--meta-form-keywords-value="{{ {mmobj: path('pumukit_schema_apikeywords_mmobj', {'_format': 'json'})}|json_encode }}" action="{{ path('pumukitnewadmin_mms_update_meta', {'id': mm.id}) }}" method="POST">
+    <form id="pumukitnewadmin_mms_updatemeta_form"
+          data-controller="admin--meta-form admin--modal-form"
+          data-action="submit->admin--meta-form#checkDates submit->admin--meta-form#hideRemember submit->admin--modal-form#submit change->admin--meta-form#changed admin--modal-form:saved->admin--meta-form#saved"
+          data-admin--meta-form-remember-value="#remember_save_mm"
+          data-admin--meta-form-prefix-value="pumukitnewadmin_mms_meta_"
+          data-admin--meta-form-keywords-value="{{ {mmobj: path('pumukit_schema_apikeywords_mmobj', {'_format': 'json'})}|json_encode }}"
+          data-admin--meta-form-dates-value="{{ {record: '#pumukitnewadmin_mms_meta_record_date', publication: '#pumukitnewadmin_mms_meta_public_date', message: 'Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.'|trans}|json_encode }}"
+          data-admin--meta-form-title-value="{{ {source: '#pumukitnewadmin_mms_meta_i18n_title_' ~ app.request.getLocale(), target: '#inputMMTitle'}|json_encode }}"
+          data-admin--modal-form-target-value="#list_mms"
+          data-admin--modal-form-refresh-value="{{ [{target: '#preview_mm', url: path('pumukitnewadmin_mms_show', {'id': mm.id})}]|json_encode }}"
+          data-admin--modal-form-modal-value=""
+          data-admin--modal-form-success-message-value="{{ 'Multimedia Object saved OK'|trans }}"
+          data-admin--modal-form-fail-message-value="{{ 'Multimedia Object saved ERROR'|trans }}"
+          action="{{ path('pumukitnewadmin_mms_update_meta', {'id': mm.id}) }}" method="POST">
         <input type="hidden" name="id" id="mm_id_meta" value="{{ mm.id }}">
         <input type="hidden" name="series_id" id="series_id_updatemeta" value="{{ mm.series.id }}">
 
@@ -15,7 +28,7 @@
 
             <div class="col-xs-6 text-right">
                 <button id="pumukitnewadmin_mms_updatemeta_cancel" type="button"
-                        class="btn btn-default btn-raised">{% trans %}Cancel{% endtrans %}</button>
+                        class="btn btn-default btn-raised" data-action="click->admin--meta-form#cancel">{% trans %}Cancel{% endtrans %}</button>
                 <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
             </div>
         </div>
