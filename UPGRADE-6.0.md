@@ -278,8 +278,11 @@ Other generic controllers: `admin--modal-form` (AJAX forms: `target`, `successMe
 `errorMessage` when the response is the form again, `failMessage`, `titleError` (show the
 `<title>` of the error page), `refresh`, `modal` (empty for forms outside a modal),
 `disableSubmit`, and `created` (`{key, list, listUrl, preview, showUrl}`: reload the list and the
-preview of the created element)), `admin--meta-form` (metadata forms: the "press OK" reminder,
-the cancel button and the keyword inputs, whose suggestion indexes it creates on demand), `admin--filter-form` (filters: `url`, `target`, `letters`, with the `reset` and
+preview of the created element); it dispatches `admin--modal-form:saved` after saving),
+`admin--meta-form` (metadata forms: the "press OK" reminder, with `prefix` or `always`, the cancel
+button, the keyword inputs, whose suggestion indexes it creates on demand, and for the multimedia
+objects the recording/publication date warning, `dates`, and the title of the links panel,
+`title`), `admin--filter-form` (filters: `url`, `target`, `letters`, with the `reset` and
 `letter` actions) and `admin--batch` (the "Actions on selected items" select: `name`, `plural`,
 `preview`, `urls`, `messages`). Messages are translated in Twig and passed as values or params,
 so the controllers carry no translations. Zone controllers: `admin--group-picker` (groups of a
@@ -290,15 +293,17 @@ explorer of the server tab), `admin--changepub` (status of the multimedia object
 preview thumbnails after reloading a picture list), `admin--pic-generator` (thumbnail generation
 from a frame of the video), `admin--job-status` (refreshes the status of the multimedia objects with
 running jobs every 15 seconds), `admin--pic-sync` (reloads the thumbnails when a refreshed status
-reports a different number of pictures) and `admin--modal-cleanup` (removes the player of the
-preview modal when it closes). `admin--batch` now covers every option of the multimedia object list:
+reports a different number of pictures), `admin--modal-cleanup` (removes the player of the
+preview modal when it closes) and `admin--external-player` (preview and save of the external player
+modals). `admin--batch` now covers every option of the multimedia object list:
 deleting, announcing, the sort options (each with its `data-url`), cutting, pasting and adding to a
 playlist.
 
 Migrated zones: roles, series types, live channels, legacy events, users, groups, people and
 person relations, permission profiles, tags, links, the inbox explorer, series, playlists, the
 head and tail manager, pictures, the i18n fields of the form theme and the multimedia object list
-(rows, pager, batch actions, row menu, archive, status and preview). `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
+(rows, pager, batch actions, row menu, archive, status and preview) and its metadata, publication,
+social, metadata sync, LMS, properties, head and tail and external player forms. `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
 `@PumukitNewAdmin/Playlist/changepub.html.twig` are removed, and so is
 `@PumukitNewAdmin/LiveEvent/create.html.twig`, which pointed to a route that no longer exists.
 The picture upload actions (series, playlists, multimedia objects and legacy events) always answer
@@ -337,6 +342,7 @@ functions, reported by `pumukit:check:assets` (also when called as `window.…`)
 | `change_select()`, `get_batch_delete_route()`, `sort_optiont_change()` | `admin--batch` |
 | `update_mms_status_wrapper()` | `admin--job-status` |
 | `check_for_new_pics()`, `upload_mmspic()` | `admin--pic-sync` |
+| `checkRecordDateAndPublicDate()` | the `dates` value of `admin--meta-form` |
 
 Names, titles and file names are now rendered as text: the group picker, the group deletion
 button, the person suggestions and the inbox explorer used to build HTML and inline handlers by
