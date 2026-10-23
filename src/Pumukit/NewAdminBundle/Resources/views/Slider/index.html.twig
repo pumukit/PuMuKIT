@@ -10,7 +10,10 @@
         </ul>
     </h3>
 
-    <div class="well slider-manager">
+    <div class="well slider-manager" data-controller="admin--slider"
+         data-admin--slider-url-value="{{ path('pumukit_newadmin_slider_order') }}"
+         data-admin--slider-token-value="{{ csrf_token('slider_order') }}"
+         data-admin--slider-messages-value="{{ {saved: 'Order saved successfully'|trans, error: 'Error saving order'|trans}|json_encode }}">
 
         <p class="text-muted slider-description">
             {% trans %}Drag and drop the contents to change their order in the slider.{% endtrans %}
@@ -18,12 +21,12 @@
 
         <div id="slider-sortable">
             {% for mm in multimediaObjects %}
-                <div class="slider-item" data-id="{{ mm.id }}" draggable="true">
+                <div class="slider-item" data-id="{{ mm.id }}" draggable="true" data-admin--slider-target="item" data-action="dragstart->admin--slider#start dragend->admin--slider#end dragover->admin--slider#over">
                     <div class="slider-handle" title="{% trans %}Drag to reorder{% endtrans %}">
                         <i class="fa fa-bars"></i>
                     </div>
 
-                    <div class="slider-position">
+                    <div class="slider-position" data-admin--slider-target="position">
                         {{ loop.index }}
                     </div>
 
@@ -113,101 +116,12 @@
 
         {% if multimediaObjects|length %}
             <div class="slider-actions">
-                <button id="save-slider-order" type="button" class="btn btn-primary">
+                <button id="save-slider-order" type="button" class="btn btn-primary" data-action="click->admin--slider#save">
                     {% trans %}Save{% endtrans %}
                 </button>
             </div>
         {% endif %}
 
     </div>
-
-    <script>
-        $(function () {
-            var draggedItem = null;
-
-            function updatePositions() {
-                $('#slider-sortable .slider-item').each(function (index) {
-                    $(this)
-                        .find('.slider-position')
-                        .text(index + 1);
-                });
-            }
-
-            $('.slider-item').on('dragstart', function (event) {
-                draggedItem = this;
-
-                $(this).addClass('dragging');
-
-                if (event.originalEvent.dataTransfer) {
-                    event.originalEvent.dataTransfer.effectAllowed = 'move';
-                }
-            });
-
-            $('.slider-item').on('dragend', function () {
-                $(this).removeClass('dragging');
-
-                draggedItem = null;
-
-                updatePositions();
-            });
-
-            $('.slider-item').on('dragover', function (event) {
-                event.preventDefault();
-
-                if (!draggedItem || draggedItem === this) {
-                    return;
-                }
-
-                var rect = this.getBoundingClientRect();
-                var middle = rect.top + (rect.height / 2);
-
-                if (event.originalEvent.clientY < middle) {
-                    this.parentNode.insertBefore(
-                        draggedItem,
-                        this
-                    );
-                } else {
-                    this.parentNode.insertBefore(
-                        draggedItem,
-                        this.nextSibling
-                    );
-                }
-            });
-
-            $('#save-slider-order').on('click', function () {
-                var order = [];
-                var button = $(this);
-
-                $('#slider-sortable .slider-item').each(function () {
-                    order.push($(this).data('id'));
-                });
-
-                button.prop('disabled', true);
-
-                $.ajax({
-                    url: '{{ path('pumukit_newadmin_slider_order') }}',
-                    type: 'POST',
-                    data: {
-                        order: order,
-                        _token: '{{ csrf_token('slider_order') }}'
-                    },
-                    success: function (response) {
-                        button.prop('disabled', false);
-
-                        if (response.success) {
-                            success('{{ 'Order saved successfully'|trans }}');
-                        } else {
-                            no_success('{{ 'Error saving order'|trans }}');
-                        }
-                    },
-                    error: function () {
-                        button.prop('disabled', false);
-
-                        no_success('{{ 'Error saving order'|trans }}');
-                    }
-                });
-            });
-        });
-    </script>
 
 {% endblock %}

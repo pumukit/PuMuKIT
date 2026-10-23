@@ -36,7 +36,7 @@ class InlineJavascriptTest extends PumukitTestCase
 
         $roles = array_values(array_filter(
             (new \ReflectionClass(Permission::class))->getConstants(),
-            static fn ($value): bool => is_string($value) && str_starts_with($value, 'ROLE_')
+            static fn ($value): bool => is_string($value) && str_starts_with($value, 'ROLE_') && 'ROLE_TAG_DISABLE_PUDEWALL' !== $value
         ));
         $user = new User();
         $user->setUsername('inlinejs');
@@ -106,6 +106,7 @@ class InlineJavascriptTest extends PumukitTestCase
             'precinct list' => ['pumukitnewadmin_places_children'],
             'place create' => ['pumukitnewadmin_places_create'],
             'place update' => ['pumukitnewadmin_places_update'],
+            'slider' => ['pumukit_newadmin_slider'],
         ];
     }
 
@@ -172,6 +173,16 @@ class InlineJavascriptTest extends PumukitTestCase
             $this->dm->flush();
 
             return in_array($route, ['pumukitnewadmin_unesco_list', 'pumukitnewadmin_unesco_advance_search_form'], true) ? [] : ['id' => $multimediaObject->getId()];
+        }
+        if ('pumukit_newadmin_slider' === $route) {
+            $factory = static::getContainer()->get(FactoryService::class);
+            $multimediaObject = $factory->createMultimediaObject($factory->createSeries(), true);
+            $multimediaObject->setStatus(MultimediaObject::STATUS_PUBLISHED);
+            $multimediaObject->addTag($this->tag('PUDEWALL', 'ROOT|PUBDECISIONS|PUDEWALL|'));
+            $multimediaObject->addTag($this->tag('PUCHWEBTV', 'ROOT|PUBCHANNELS|PUCHWEBTV|'));
+            $this->dm->flush();
+
+            return [];
         }
         if (str_starts_with($route, 'pumukitnewadmin_places_')) {
             $places = $this->tag('PLACES', 'ROOT|PLACES|');
