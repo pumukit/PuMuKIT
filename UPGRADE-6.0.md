@@ -235,6 +235,54 @@ and `core--external-script` (loads a third-party script once, by id).
 Stimulus listens to the `input` event by default on `<input>` elements: declare the event
 (`click->`, `change->`, `blur->`) when another one is needed.
 
+## Backoffice JavaScript (NewAdminBundle)
+
+The backoffice moves its inline JavaScript (`onclick`, `onsubmit`, `<script>` blocks) and the
+global functions of `@PumukitNewAdmin/pumukit.js.twig` to Stimulus controllers, zone by zone.
+`pumukit.js.twig` keeps the functions of the zones that are not migrated yet and is now cached
+only by the browser (`private`), because its content depends on the permissions of the user.
+
+The admin layout wraps the page in `admin--actions`, so these actions work in any backoffice
+template, including the content of `#myModal` loaded by AJAX:
+
+| Action | Params | Replaces |
+|---|---|---|
+| `click->admin--actions#remove` | `url`, `target`, `confirm`, `success`, `error`, `blocked` (alert instead of deleting), `refresh` (JSON list of `{target, url}`), `reload` + `errorMarker` (DELETE then reload `target`), `hideModal` | `submit_delete_*()` |
+| `click->admin--actions#preview` | `name`, `url` | `click_fila_url()` |
+| `click->admin--actions#checkAll` | `name` | `click_checkbox_all()` |
+| `click->admin--actions#load` | `url`, `target`, `data` (JSON) | `$('#…').load(…)` in `onclick` |
+| `click->admin--actions#navigate` | `url` | `window.location.href = …` in `onclick` |
+| `click->admin--actions#cancel` | | `onclick="return false;"` |
+
+Other generic controllers: `admin--modal-form` (AJAX forms of the modals: `target`,
+`successMessage`, `errorMessage` when the response is the form again, `refresh`, `modal`,
+`disableSubmit`), `admin--filter-form` (filters: `url`, `target`, `letters`, with the `reset` and
+`letter` actions) and `admin--batch` (the "Actions on selected items" select: `name`, `plural`,
+`preview`, `urls`, `messages`). Messages are translated in Twig and passed as values or params,
+so the controllers carry no translations. Zone controllers: `admin--group-picker` (groups of a
+user), `admin--group-info` (group deletion), `admin--person-picker` (person search of a
+relation), `admin--permission-profiles`, `admin--tag-tree` and `admin--file-tree` (inbox
+explorer of the server tab).
+
+Migrated zones: roles, series types, live channels, legacy events, users, groups, people and
+person relations, permission profiles, tags, links and the inbox explorer. Removed global
+functions, reported by `pumukit:check:assets` (also when called as `window.…`):
+
+| Removed | Replacement |
+|---|---|
+| `submit_delete_role()`, `submit_delete_user()`, `submit_delete_live()`, `submit_delete_seriestype()`, `submit_delete_event()`, `submit_delete_permissionprofile()`, `submit_delete_person()`, `submit_delete_link()`, `delete_eventpic()` | `admin--actions#remove` |
+| `click_fila_url()` | `admin--actions#preview` |
+| `filter_click_letter()` | `admin--filter-form#letter` |
+| `submit_delete_group()`, `can_be_deleted()`, `delete_user_from_group()`, `delete_multimediaobject_from_group()`, `delete_embeddedbroadcast_from_group()` | `admin--group-info` |
+| `add_group_user()`, `delete_group_user()` | `admin--group-picker` |
+| `processPermissionProfilesOk()`, `checkScope()` | `admin--permission-profiles` |
+| `toggle_section_tag()`, `tag_delete()` | `admin--tag-tree` |
+| `fileServerTree()`, `fileServerSelect()` | `admin--file-tree` |
+
+Names, titles and file names are now rendered as text: the group picker, the group deletion
+button, the person suggestions and the inbox explorer used to build HTML and inline handlers by
+concatenating them.
+
 ## File uploads (Uppy 6)
 
 Every file upload goes through Uppy. PuMuKIT 6.0 moves from the Uppy 1 global bundle

@@ -41,6 +41,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Replace Uppy 1 with Uppy 6 behind a generic `core--uploader` Stimulus controller configured with the `uploader_attributes()` Twig function; `uppy_xhr.js.twig`, `common.js.twig`, `uppy_languages.html.twig` and the Uppy 1 bundle are removed.
 - Validate in TUS uploads the file name and type that tus-php stores, closing a bypass of the blocked extensions list.
 - Keep inbox imports inside the inbox directory: the file name and folder of `/dispatchImport` could point to any readable file of the server.
+- Move the roles, series types, live channels, legacy events, users, groups, people, permission profiles, tags, links and inbox explorer zones of the backoffice to Stimulus controllers (`admin--actions`, `admin--modal-form`, `admin--filter-form`, `admin--batch` and zone controllers); `pumukit.js.twig` loses 39 global functions and is cached privately.
 - Upload thumbnails, banners, materials, live event images and tracks through the Uppy Dashboard; the upload actions answer JSON on request and adding a track to an object without type no longer fails.
 - Update composer dependencies (gedmo/doctrine-extensions, php-cs-fixer, pagerfanta, knp-menu-bundle, twig extensions, etc.).
 
