@@ -2,13 +2,21 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h3 class="modal-title pumukitnewadmin-modal-title-margin" id="myModalLabel">{% trans %}Modify broadcast profile of all multimedia objects in this Series{% endtrans %}</h3>
 
-    <div class="modal-body">
-        <span id="warning_modify_series" class="alert alert-dismissable alert-danger" style="vertical-align:middle;">
+    <div class="modal-body"
+         data-controller="admin--broadcast"
+         data-action="admin--group-lists:changed->admin--broadcast#groupsChanged"
+         data-admin--broadcast-url-value="{{ path('pumukitnewadmin_series_updatebroadcast', {'id': series.id}) }}"
+         data-admin--broadcast-password-type-value="{{ constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') }}"
+         data-admin--broadcast-groups-type-value="{{ constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_GROUPS') }}"
+         data-admin--broadcast-description-value="#pumukitnewadmin_mm_template_broadcast_description"
+         data-admin--broadcast-messages-value="{{ {saved: 'Successfully updated Broadcast in all Multimedia Objects.'|trans, mismatch: 'Passwords do not match'|trans}|json_encode }}">
+        <span id="warning_modify_series" data-admin--broadcast-target="warning" class="alert alert-dismissable alert-danger" style="vertical-align:middle;">
             {% trans %}WARNING: All Multimedia Objects in this Series will be modified with the selected Broadcast.{% endtrans %}
         </span>
 
         <form id="pumukitnewadmin_series_updatebroadcast_submit"
-              action="{{ path('pumukitnewadmin_series_updatebroadcast', {'id': series.id}) }}" method="POST">
+              action="{{ path('pumukitnewadmin_series_updatebroadcast', {'id': series.id}) }}" method="POST"
+              data-action="submit->admin--broadcast#save">
 
             <details style="margin: 25px 0px 15px">
                 <summary style="cursor:pointer">{% trans %}Select objects{% endtrans %}</summary>
@@ -28,7 +36,8 @@
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox" id="{{ mm.id }}" class="checkbox_change_pub_mms" checked="checked"
-                                                   onclick="window.click_checkbox_change_pub_mms()">
+                                                   data-admin--broadcast-target="mm"
+                                                   data-action="click->admin--broadcast#checkOne">
                                         </label>
                                     </div>
                                 </td>
@@ -39,8 +48,8 @@
                     </table>
                 </div>
                 <div style="text-align: right">{% trans %}Select{% endtrans %}:
-                    <a href="#" onclick="window.click_changepub_selection($(this), false); $('#warning_modify_series').hide(); return false;">{% trans %}nothing{% endtrans %}</a>
-                    <a href="#" onclick="window.click_changepub_selection($(this), true); $('#warning_modify_series').show(); return false;">{% trans %}all{% endtrans %}</a>
+                    <a href="#" data-action="click->admin--broadcast#selectAll" data-admin--broadcast-checked-param="false">{% trans %}nothing{% endtrans %}</a>
+                    <a href="#" data-action="click->admin--broadcast#selectAll" data-admin--broadcast-checked-param="true">{% trans %}all{% endtrans %}</a>
                 </div>
             </details>
 
@@ -54,7 +63,7 @@
                         {% for broadcast_type, broadcast_name in broadcasts %}
                             <div class="radio">
                                 <label class="required">
-                                    <input id="pumukitnewadmin_series_broadcast_type_{{ broadcast_type }}" name="pumukitnewadmin_mms_broadcast" required="required" value="{{ broadcast_type }}" type="radio" {{ embeddedBroadcast ? ((embeddedBroadcast.getType() == broadcast_type) ? ' checked="checked"':'') : '' }}><span class="circle"></span><span class="check"></span>
+                                    <input id="pumukitnewadmin_series_broadcast_type_{{ broadcast_type }}" name="pumukitnewadmin_mms_broadcast" required="required" value="{{ broadcast_type }}" data-action="change->admin--broadcast#type" type="radio" {{ embeddedBroadcast ? ((embeddedBroadcast.getType() == broadcast_type) ? ' checked="checked"':'') : '' }}><span class="circle"></span><span class="check"></span>
                                     {{ broadcast_name|trans }}
                                 </label>
                                 {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PUBLIC') %}
@@ -78,9 +87,8 @@
             </fieldset>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
-                <button type="submit" id="pumukitnewadmin_series_broadcast_updategroup_submit" class="btn btn-pumukit btn-raised"{{ embeddedBroadcast ? '':' disabled' }}>{% trans %}Save changes{% endtrans %}</button>
+                <button type="submit" id="pumukitnewadmin_series_broadcast_updategroup_submit" data-admin--broadcast-target="submit" class="btn btn-pumukit btn-raised"{{ embeddedBroadcast ? '':' disabled' }}>{% trans %}Save changes{% endtrans %}</button>
             </div>
         </form>
     </div>
 </div>
-{% include '@PumukitNewAdmin/MultimediaObject/updatebroadcast.js.twig' %}

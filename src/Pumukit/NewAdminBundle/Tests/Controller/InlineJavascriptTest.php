@@ -77,6 +77,8 @@ class InlineJavascriptTest extends PumukitTestCase
             'head and tail' => ['pumukit_newadmin_head_and_tail'],
             'multimedia objects' => ['pumukitnewadmin_mms_index'],
             'multimedia object links' => ['pumukitnewadmin_mms_links'],
+            'multimedia object broadcast' => ['pumukitnewadmin_mms_updatebroadcast'],
+            'series broadcast' => ['pumukitnewadmin_series_updatebroadcast'],
             'multimedia object tag tree' => ['pumukitnewadmin_mms_reloadtags'],
             'multimedia object tag search' => ['pumukitnewadmin_mms_searchtag'],
             'multimedia object tag children' => ['pumukitnewadmin_mms_getchildrentag'],
@@ -92,7 +94,14 @@ class InlineJavascriptTest extends PumukitTestCase
 
             return ['id' => $series->getId()];
         }
-        if ('pumukitnewadmin_mms_links' === $route) {
+        if ('pumukitnewadmin_series_updatebroadcast' === $route) {
+            $factory = static::getContainer()->get(FactoryService::class);
+            $series = $factory->createSeries();
+            $factory->createMultimediaObject($series, true);
+
+            return ['id' => $series->getId()];
+        }
+        if (in_array($route, ['pumukitnewadmin_mms_links', 'pumukitnewadmin_mms_updatebroadcast'], true)) {
             $factory = static::getContainer()->get(FactoryService::class);
 
             return ['id' => $factory->createMultimediaObject($factory->createSeries(), true)->getId()];

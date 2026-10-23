@@ -31,7 +31,11 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="#" title="{% trans %}Delete{% endtrans %}" onclick="is_last_user_relation_to_admin_mm('mm'+'{{ template }}', '{{ person.id }}', '{{ role.id }}', '{{ mm.id }}', '{{ person.getHName() }}', '{{ template }}', 'owner'); return false;">
+                                <a href="#" title="{% trans %}Delete{% endtrans %}" data-action="click->admin--mm-groups#removeOwner"
+                                   data-admin--mm-groups-url-param="{{ path('pumukitnewadmin_person_delete_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': 'owner'}) }}"
+                                   data-admin--mm-groups-person-param="{{ person.id|json_encode }}"
+                                   data-admin--mm-groups-role-param="{{ role.id|json_encode }}"
+                                   data-admin--mm-groups-name-param="{{ person.getHName()|json_encode }}">
                                     <i class="mdi-content-clear"></i>
                                 </a>
                             </td>
@@ -44,14 +48,18 @@
                                 {% if loop.first %}
                                     &nbsp;&nbsp;
                                 {% else %}
-                                    <a href="#" onclick="$('#{{ role.id }}_person_mms{{ template }}').load('{{ path('pumukitnewadmin_person_up', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': 'owner'}) }}'); return false;">&#8593;</a>
+                                    <a href="#" data-action="click->admin--actions#load"
+                                       data-admin--actions-url-param="{{ path('pumukitnewadmin_person_up', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': 'owner'}) }}"
+                                       data-admin--actions-target-param="#{{ role.id }}_person_mms{{ template }}">&#8593;</a>
                                 {% endif %}
                             </td>
                             <td>
                                 {% if loop.last %}
                                     &nbsp;&nbsp;
                                 {% else %}
-                                    <a href="#" onclick="$('#{{ role.id }}_person_mms{{ template }}').load('{{ path('pumukitnewadmin_person_down', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': 'owner'}) }}'); return false;">&#8595;</a>
+                                    <a href="#" data-action="click->admin--actions#load"
+                                       data-admin--actions-url-param="{{ path('pumukitnewadmin_person_down', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': 'owner'}) }}"
+                                       data-admin--actions-target-param="#{{ role.id }}_person_mms{{ template }}">&#8595;</a>
                                 {% endif %}
                             </td>
                         {% endif %}

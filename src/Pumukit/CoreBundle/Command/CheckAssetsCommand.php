@@ -59,6 +59,7 @@ class CheckAssetsCommand extends Command
         '@PumukitNewAdmin/Pic/upload_event.html.twig' => 'nothing: the picture uploads answer JSON to the admin--upload-form controller',
         '@PumukitNewAdmin/MultimediaObject/acordeon.html.twig' => 'nothing: no page used it',
         '@PumukitNewAdmin/MultimediaObject/updatesocial.html.twig' => 'nothing: no page used it',
+        '@PumukitNewAdmin/MultimediaObject/updatebroadcast.js.twig' => 'nothing: the admin--broadcast controller of @PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig handles the form',
         '@PumukitNewAdmin/UNESCO/listtagsajax.html.twig' => '@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig (the admin--tag-picker controller of the tag tab handles the clicks)',
     ];
 
@@ -151,6 +152,23 @@ class CheckAssetsCommand extends Command
         'create_element_in_select' => 'the admin--tag-picker controller (see @PumukitNewAdmin/MultimediaObject/updatetag.html.twig)',
         'submit_generate_magic_mms' => 'admin--actions#magicUrl (see @PumukitNewAdmin/MultimediaObject/links.html.twig)',
         'sync_tags_mms' => 'admin--actions#request with a confirm param (see @PumukitNewAdmin/UNESCO/updatetag.html.twig)',
+        'select_group' => 'the admin--group-lists controller (see @PumukitNewAdmin/MultimediaObject/listgrouprelation.html.twig)',
+        'add_group' => 'the admin--group-lists controller (see @PumukitNewAdmin/MultimediaObject/listgrouprelation.html.twig)',
+        'delete_group' => 'the admin--group-lists controller (see @PumukitNewAdmin/MultimediaObject/listgrouprelation.html.twig)',
+        'create_element_group_in_add_groups' => 'the admin--group-lists controller (see @PumukitNewAdmin/MultimediaObject/listgrouprelation.html.twig)',
+        'create_element_group_in_delete_groups' => 'the admin--group-lists controller (see @PumukitNewAdmin/MultimediaObject/listgrouprelation.html.twig)',
+        'delete_element_group_from_select' => 'the admin--group-lists controller (see @PumukitNewAdmin/MultimediaObject/listgrouprelation.html.twig)',
+        'submit_delete_person_relation' => 'the admin--mm-groups controller (see @PumukitNewAdmin/MultimediaObject/updategroup.html.twig)',
+        'is_last_user_relation_to_admin_mm' => 'the admin--mm-groups controller (see @PumukitNewAdmin/MultimediaObject/updategroup.html.twig)',
+        'pumukitnewadmin_mm_updategroup_submit' => 'the admin--mm-groups controller (see @PumukitNewAdmin/MultimediaObject/updategroup.html.twig)',
+        'pumukitnewadmin_mm_updategroup_reset' => 'the admin--mm-groups controller (see @PumukitNewAdmin/MultimediaObject/updategroup.html.twig)',
+        'check_pass' => 'the admin--broadcast controller (see @PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig)',
+        'generate_random_password' => 'the admin--broadcast controller (see @PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig)',
+        'can_enable_broadcast_groups_save_button' => 'the admin--broadcast controller (see @PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig)',
+        'can_enable_broadcast_password_save_button' => 'the admin--broadcast controller (see @PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig)',
+        'get_submit_button_id' => 'the admin--broadcast controller (see @PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig)',
+        'click_checkbox_change_pub_mms' => 'the checkOne action of the admin--broadcast controller (see @PumukitNewAdmin/Series/updatebroadcast.html.twig)',
+        'click_changepub_selection' => 'the selectAll action of the admin--broadcast controller (see @PumukitNewAdmin/Series/updatebroadcast.html.twig)',
         'checkRecordDateAndPublicDate' => 'the dates value of the admin--meta-form controller (see @PumukitNewAdmin/MultimediaObject/updatemeta.html.twig)',
     ];
 

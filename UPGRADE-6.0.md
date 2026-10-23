@@ -295,7 +295,12 @@ from a frame of the video), `admin--job-status` (refreshes the status of the mul
 running jobs every 15 seconds), `admin--pic-sync` (reloads the thumbnails when a refreshed status
 reports a different number of pictures), `admin--modal-cleanup` (removes the player of the
 preview modal when it closes), `admin--external-player` (preview and save of the external player
-modals) and `admin--tag-picker` (tag tab of the multimedia object editor: `mm`, `addUrl`,
+modals), `admin--group-lists` (the available and selected group lists of the admin groups and the
+broadcast groups: `name`, `showCodes`, `editable`, `message`; it dispatches `admin--group-lists:changed`
+after a move and rebuilds the lists on `admin--group-lists:load`), `admin--mm-groups` (save and reset
+of the admin groups, owner deletion and the warning shown when the user would lose access),
+`admin--broadcast` (broadcast profile modals: type, password checks and generator, groups, reset and
+the multimedia objects of a series) and `admin--tag-picker` (tag tab of the multimedia object editor: `mm`, `addUrl`,
 `deleteUrl`, `childrenUrl`, `searchUrl` and `reloadUrl` with a `__tag__` placeholder where needed,
 `codes`, and `refresh`, the blocks reloaded after adding or removing a tag). `admin--batch` now covers every option of the multimedia object list:
 deleting, announcing, the sort options (each with its `data-url`), cutting, pasting and adding to a
@@ -305,8 +310,10 @@ Migrated zones: roles, series types, live channels, legacy events, users, groups
 person relations, permission profiles, tags, links, the inbox explorer, series, playlists, the
 head and tail manager, pictures, the i18n fields of the form theme and the multimedia object list
 (rows, pager, batch actions, row menu, archive, status and preview), its metadata, publication,
-metadata sync, LMS, properties, head and tail and external player forms, and its tag tab and links block,
-also in the UNESCO catalogue. `@PumukitNewAdmin/UNESCO/listtagsajax.html.twig` is removed: the UNESCO tag
+metadata sync, LMS, properties, head and tail and external player forms, its tag tab and links block,
+also in the UNESCO catalogue, its owners and admin groups, and the broadcast profile modals of
+multimedia objects and series. `@PumukitNewAdmin/MultimediaObject/updatebroadcast.js.twig` is removed:
+the `admin--broadcast` controller handles both broadcast modals. `@PumukitNewAdmin/UNESCO/listtagsajax.html.twig` is removed: the UNESCO tag
 tab uses `@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig`, and the `admin--tag-picker`
 controller of the tab decides which blocks to refresh after adding or removing a tag. `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
 `@PumukitNewAdmin/Playlist/changepub.html.twig` are removed, and so is
@@ -354,6 +361,9 @@ functions, reported by `pumukit:check:assets` (also when called as `window.…`)
 | `select_tree_tag()`, `toggle_tree_tag()`, `add_tree_tag()`, `del_tree_tag()`, `add_tree_tag_unesco()`, `del_tree_tag_unesco()`, `search_tags_wrapper()`, `search_tags()`, `reset_tags()`, `inc_num_mm()`, `create_element_in_select()` | `admin--tag-picker` |
 | `submit_generate_magic_mms()` | `admin--actions#magicUrl` |
 | `sync_tags_mms()` | `admin--actions#request` with a `confirm` param |
+| `select_group()`, `add_group()`, `delete_group()`, `create_element_group_in_add_groups()`, `create_element_group_in_delete_groups()`, `delete_element_group_from_select()` | `admin--group-lists` |
+| `submit_delete_person_relation()`, `is_last_user_relation_to_admin_mm()`, `pumukitnewadmin_mm_updategroup_submit()`, `pumukitnewadmin_mm_updategroup_reset()` | `admin--mm-groups` |
+| `check_pass()`, `generate_random_password()`, `can_enable_broadcast_groups_save_button()`, `can_enable_broadcast_password_save_button()`, `get_submit_button_id()`, `click_checkbox_change_pub_mms()`, `click_changepub_selection()` | `admin--broadcast` |
 
 Names, titles and file names are now rendered as text: the group picker, the group deletion
 button, the person suggestions and the inbox explorer used to build HTML and inline handlers by

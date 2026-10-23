@@ -1,9 +1,14 @@
-<div id="broadcast_groups" class="panel panel-default pumukitnewadmin-broadcast-margin{{ embeddedBroadcast ? ((embeddedBroadcast.getType() == broadcast_type) ? '':' pumukitnewadmin-broadcast-hidden') : ' pumukitnewadmin-broadcast-hidden' }}">
+<div id="broadcast_groups" data-admin--broadcast-target="groupsPanel" class="panel panel-default pumukitnewadmin-broadcast-margin{{ embeddedBroadcast ? ((embeddedBroadcast.getType() == broadcast_type) ? '':' pumukitnewadmin-broadcast-hidden') : ' pumukitnewadmin-broadcast-hidden' }}">
   <input type="hidden" id="series_id_broadcast" value="{{ series.id }}"/>
   <div class="panel-heading">
     {% trans %}BROADCAST GROUPS{% endtrans %}
   </div>
-  <div class="panel-body" id="group_broadcast">
+  <div class="panel-body" id="group_broadcast"
+       data-controller="admin--group-lists"
+       data-admin--broadcast-target="lists"
+       data-action="admin--group-lists:load->admin--group-lists#load"
+       data-admin--group-lists-name-value="broadcast"
+       data-admin--group-lists-show-codes-value="{{ is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) ? 'true' : 'false' }}">
     <div class="row pumukitnewadmin-groups-list-title-row">
       <div class="pumukitnewadmin-groups-list-title list-title-1">
         {% trans %}Available Groups{% endtrans %}:
@@ -13,7 +18,7 @@
       </div>
     </div>
     <div class="pumukitnewadmin-groups-boxes">
-	  <div class="tag list-group pmk-tag-tree pumukitnewadmin-groups-list-box" id="delete_broadcast_groups">
+	  <div class="tag list-group pmk-tag-tree pumukitnewadmin-groups-list-box" id="delete_broadcast_groups" data-admin--group-lists-target="available">
         {% if embeddedBroadcast %}
         {% set resource_groups = embeddedBroadcast.getGroups() %}
         {% else %}
@@ -22,12 +27,12 @@
         {% include '@PumukitNewAdmin/Series/availablegroups.html.twig' with {'resource_groups': resource_groups, 'groups': groups, 'resource_name': 'broadcast'} %}
 	  </div>
 	  <div class="pumukitnewadmin-groups-arrows">
-	    <a href="#" onclick="$('#add_broadcast_groups > a.active').trigger('dblclick'); return false;">&#8592;</a>
-	    <a href="#" onclick="$('#delete_broadcast_groups > a.active').trigger('dblclick'); return false;">&#8594;</a>
+	    <a href="#" data-action="click->admin--group-lists#moveFromCurrent">&#8592;</a>
+	    <a href="#" data-action="click->admin--group-lists#moveFromAvailable">&#8594;</a>
 	  </div>
       {# Groups added to all the multimedia object in the series #}
 	  <div class="tag pumukitnewadmin-groups-list-box" id="added_broadcast_groups">
-	    <div class="tag_tree list-group" id="add_broadcast_groups" >
+	    <div class="tag_tree list-group" id="add_broadcast_groups" data-admin--group-lists-target="current" data-admin--broadcast-target="current">
           {% if embeddedBroadcast %}
           {% include '@PumukitNewAdmin/Series/selectedgroups.html.twig' with {'resource': embeddedBroadcast, 'groups': groups, 'resource_name': 'broadcast'} %}
           {% endif %}

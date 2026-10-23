@@ -1,15 +1,25 @@
-<div class="well">
+<div class="well"
+     data-controller="admin--mm-groups"
+     data-action="admin--group-lists:changed->admin--mm-groups#changed"
+     data-admin--mm-groups-mm-value="{{ mm.id }}"
+     data-admin--mm-groups-template-value="{{ template }}"
+     data-admin--mm-groups-update-url-value="{{ path('pumukitnewadmin_mms_updategroups', {'id': mm.id}) }}"
+     data-admin--mm-groups-groups-url-value="{{ path('pumukitnewadmin_mms_getgroups', {'id': mm.id}) }}"
+     data-admin--mm-groups-last-relation-url-value="{{ path('pumukitnewadmin_mms_user_last_relation') }}"
+     data-admin--mm-groups-preview-url-value="{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}"
+     data-admin--mm-groups-series-url-value="{{ path('pumukitnewadmin_series_index') }}"
+     data-admin--mm-groups-messages-value="{{ {saved: 'Successfully updated groups in Mm.'|trans, confirm: 'Are you sure you want to delete the relation of'|trans, noAccess: 'WARNING: You will no longer have access to this Multimedia Object.'|trans, deleted: 'Person successfully removed from Multimedia Object'|trans, deleteError: 'Error deleting Person'|trans}|json_encode }}">
     <input type="hidden" name="id" id="mm_id_group" value="{{ mm.id }}">
     <input type="hidden" name="series_id" id="series_id_updategroup" value="{{ mm.series.id }}">
     <input type="hidden" name="template" id="template" value="{{ template }}">
     <div class="row">
       <div class="col-xs-6">
-        <span id="remember_save_mm{{ template }}_group" class="alert alert-dismissable alert-danger" style="display:none;vertical-align:middle;">{% trans %}Press OK for changes to take effect{% endtrans %}</span> &nbsp;
-        <span id="warning_personal_user_mm{{ template }}_group" class="alert alert-dismissable alert-danger" style="display:none;vertical-align:middle;">{% trans %}WARNING: If you press OK, you will no longer have access to this Multimedia Object{% endtrans %}</span> &nbsp;
+        <span id="remember_save_mm{{ template }}_group" data-admin--mm-groups-target="remember" class="alert alert-dismissable alert-danger" style="display:none;vertical-align:middle;">{% trans %}Press OK for changes to take effect{% endtrans %}</span> &nbsp;
+        <span id="warning_personal_user_mm{{ template }}_group" data-admin--mm-groups-target="warning" class="alert alert-dismissable alert-danger" style="display:none;vertical-align:middle;">{% trans %}WARNING: If you press OK, you will no longer have access to this Multimedia Object{% endtrans %}</span> &nbsp;
       </div>
       <div class="col-xs-6 text-right">
-        <button type="button" class="btn btn-default btn-raised" id="pumukitnewadmin_mm{{ template }}_updategroup_reset">{% trans %}Cancel{% endtrans %}</button>
-        <button type="submit" class="btn btn-pumukit btn-raised" id="pumukitnewadmin_mm{{ template }}_updategroup_submit">{% trans %}OK{% endtrans %}</button>
+        <button type="button" class="btn btn-default btn-raised" id="pumukitnewadmin_mm{{ template }}_updategroup_reset" data-action="click->admin--mm-groups#reset">{% trans %}Cancel{% endtrans %}</button>
+        <button type="submit" class="btn btn-pumukit btn-raised" id="pumukitnewadmin_mm{{ template }}_updategroup_submit" data-action="click->admin--mm-groups#save">{% trans %}OK{% endtrans %}</button>
       </div>
     </div>
     <fieldset class="">

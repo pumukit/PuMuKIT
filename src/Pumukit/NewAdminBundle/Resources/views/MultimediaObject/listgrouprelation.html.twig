@@ -8,7 +8,15 @@
     <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Groups that can admin this multimedia object{% endtrans %}"></i>
     {% endif %}
   </div>
-  <div class="panel-body" id="group_mm{{ template }}">
+  {% set can_modify_groups = app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER')) %}
+  <div class="panel-body" id="group_mm{{ template }}"
+       data-controller="admin--group-lists"
+       data-admin--mm-groups-target="lists"
+       data-action="admin--group-lists:load->admin--group-lists#load"
+       data-admin--group-lists-name-value="mm{{ template }}"
+       data-admin--group-lists-show-codes-value="{{ is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) ? 'true' : 'false' }}"
+       data-admin--group-lists-editable-value="{{ can_modify_groups ? 'true' : 'false' }}"
+       data-admin--group-lists-message-value="{{ 'WARNING: You do not have enough permissions to modify admin groups.'|trans }}">
     <div class="row pumukitnewadmin-groups-list-title-row">
       <div class="pumukitnewadmin-groups-list-title"  style="width:45%;max-width:430px">
         {% trans %}Available Groups{% endtrans %}:
@@ -18,34 +26,17 @@
       </div>
     </div>
     <div class="pumukitnewadmin-groups-boxes">
-      {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER')) %}
-      {% set can_modify_groups = true %}
-      {% else %}
-      {% set can_modify_groups = false %}
-      {% endif %}
-      {% if can_modify_groups %}
-      <input type="hidden" id="can_modify_groups" value="yes"/>
-      {% else %}
-      <input type="hidden" id="can_modify_groups" value="no"/>
-      {% endif %}
-	  <div class="tag list-group pmk-tag-tree pumukitnewadmin-groups-list-box list-box-width" id="delete_mm{{ template }}_groups">
-        {% include '@PumukitNewAdmin/MultimediaObject/availablegroups.html.twig' with {'resource': mm, 'groups': groups, 'resource_name': 'mm'~template, 'can_modify_groups': can_modify_groups} %}
+	  <div class="tag list-group pmk-tag-tree pumukitnewadmin-groups-list-box list-box-width" id="delete_mm{{ template }}_groups" data-admin--group-lists-target="available">
+        {% include '@PumukitNewAdmin/MultimediaObject/availablegroups.html.twig' with {'resource': mm, 'groups': groups, 'resource_name': 'mm'~template} %}
 	  </div>
-      {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER')) %}
 	  <div class="pumukitnewadmin-groups-arrows">
-	    <a href="#" onclick="$('#add_mm{{ template }}_groups > a.active').trigger('dblclick'); return false;">&#8592;</a>
-	    <a href="#" onclick="$('#delete_mm{{ template }}_groups > a.active').trigger('dblclick'); return false;">&#8594;</a>
+	    <a href="#" data-action="click->admin--group-lists#moveFromCurrent">&#8592;</a>
+	    <a href="#" data-action="click->admin--group-lists#moveFromAvailable">&#8594;</a>
 	  </div>
-      {% else %}
-	  <div class="pumukitnewadmin-groups-arrows">
-	    <a href="#" onclick="window.alert('{% trans %}WARNING: You do not have enough permissions to modify admin groups.{% endtrans %}');return false;">&#8592;</a>
-	    <a href="#" onclick="window.alert('{% trans %}WARNING: You do not have enough permissions to modify admin groups.{% endtrans %}');return false;">&#8594;</a>
-	  </div>
-      {% endif %}
       {# Groups added to the multimedia object #}
 	  <div class="tag pumukitnewadmin-groups-list-box list-box-width" id="added_mm{{ template }}_groups">
-	    <div class="tag_tree list-group" id="add_mm{{ template }}_groups" >
-          {% include '@PumukitNewAdmin/MultimediaObject/selectedgroups.html.twig' with {'resource': mm, 'groups': groups, 'resource_name': 'mm'~template, 'can_modify_groups': can_modify_groups} %}
+	    <div class="tag_tree list-group" id="add_mm{{ template }}_groups" data-admin--group-lists-target="current">
+          {% include '@PumukitNewAdmin/MultimediaObject/selectedgroups.html.twig' with {'resource': mm, 'groups': groups, 'resource_name': 'mm'~template} %}
 	    </div>
       </div>
 	</div>
