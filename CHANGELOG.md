@@ -45,7 +45,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Move the series, playlists and head and tail manager zones of the backoffice, and the create and update forms of the zones already moved, to Stimulus controllers (`admin--meta-form`, `admin--changepub`, `admin--event-tabs`); the head and tail selects of a series no longer stop saving after opening a second series.
 - Move the pictures (list, existing pictures, thumbnail generator) and the copy and translate buttons of the i18n fields of the backoffice to Stimulus.
 - Move the multimedia object list of the backoffice (rows, pager, batch actions, row menu, archive, job status and preview) to Stimulus controllers (`admin--job-status`, `admin--pic-sync`, `admin--modal-cleanup`).
-- Remove unused backoffice code: the multimedia object filter template, `update_preview_mms()` and the handler of the multimedia object "New" button.
+- Remove unused backoffice code: the multimedia object filter template, `update_preview_mms()`, `procesaReset()`, the handlers of the multimedia object "New" and template "Cancel" buttons, and the hidden multimedia object social form with its route and action.
 - Move the metadata, publication, social, metadata sync, LMS, properties, head and tail and external player forms of the multimedia object editor to Stimulus controllers (`admin--external-player`).
 - Answer the picture uploads with JSON only and remove the old iframe responses and the hidden banner URL form.
 - Configure the default protocol of the URL form fields (live channel, person, link and external player), deprecated since Symfony 7.1.

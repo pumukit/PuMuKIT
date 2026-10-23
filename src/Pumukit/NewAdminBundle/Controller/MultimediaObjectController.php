@@ -20,7 +20,6 @@ use Pumukit\NewAdminBundle\Form\Type\MultimediaObjectTemplateMetaType;
 use Pumukit\NewAdminBundle\Services\MultimediaObjectSearchService;
 use Pumukit\NewAdminBundle\Services\MultimediaObjectSyncService;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
-use Pumukit\SchemaBundle\Document\EmbeddedSocial;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -368,28 +367,6 @@ class MultimediaObjectController extends SortableAdminController
             'is_playable' => $this->multimediaObjectService->hasPlayableResource($resource),
             'warning_on_unpublished' => $this->warningOnUnpublished,
         ];
-    }
-
-    #[Template('@PumukitNewAdmin/MultimediaObject/updatesocial.html.twig')]
-    public function updatesocialAction(Request $request)
-    {
-        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($request->request->get('id'))]);
-        $method = $request->getMethod();
-        if (in_array($method, ['POST', 'PUT', 'PATCH'])) {
-            $social = $multimediaObject->getEmbeddedSocial();
-            if (!$social) {
-                $social = new EmbeddedSocial();
-            }
-            $social->setTwitter($request->request->get('twitter'));
-            $social->setEmail($request->request->get('email'));
-            $this->documentManager->persist($social);
-
-            $multimediaObject->setEmbeddedSocial($social);
-
-            $this->documentManager->flush();
-        }
-
-        return ['mm' => $multimediaObject];
     }
 
     public function updatemetaAction(Request $request)

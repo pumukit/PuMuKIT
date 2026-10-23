@@ -34,9 +34,6 @@
                     <a href="#editorMm" aria-controls="editorMm" role="tab" data-toggle="tab">{% trans %}Media Edition{% endtrans %}</a>
                 </li>
             {% endif %}
-            {#<li>
-                <a href="#socialMm" aria-controls="socialMm" role="tab" data-toggle="tab">{% trans %}Social{% endtrans %}</a>
-            </li>#}
         </ul>
 
         <div class="tab-content">
@@ -74,9 +71,6 @@
                     {% include '@PumukitNewAdmin/MultimediaObject/editor.html.twig' with {'mm': mm, 'jobs': jobs} %}
                 </div>
             {% endif %}
-            {#<div id="socialMm" role="tabpanel" class="tab-pane">
-                {% include '@PumukitNewAdmin/MultimediaObject/updatesocial.html.twig' with {'mm': mm} %}
-            </div>#}
         </div>
     </div>
 </div>

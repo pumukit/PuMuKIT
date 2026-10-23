@@ -346,13 +346,6 @@ procesaOk = function(){
   $('#remember_save_mm_pub').hide();
   return true;
 }
-procesaReset = function(){
-  $('#remember_save_mm_pub').hide();
-  $('#error_start1').hide();
-  $('#error_end1').hide();
-  $('#error_start2').hide();
-  $('#error_end2').hide();
-}
 
 /**
  * Global Ajax Event Handlers and Config
@@ -532,13 +525,6 @@ $(document).on('change', "#pumukitnewadmin_unesco_updatemeta_form [id^='pumukitn
     if ('checkbox' == e.target.type || e.target.value != e.target.defaultValue) {
         $('#remember_save_mm').css('display', 'inline-block');
     }
-});
-
-$(document).on('click', '#pumukitnewadmin_mmtemplate_updatemeta_cancel', function(){
-    $('#pumukitnewadmin_mmtemplate_updatemeta_form')[0].reset();
-    $('input.mmobj.materialtags').materialtags('destroy');
-    window.init_mmobj_materialtags();
-    $('#remember_save_mm_template').hide();
 });
 
 function select_group(element)

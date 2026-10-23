@@ -38,12 +38,6 @@ pumukitnewadmin_mms_update_pub:
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::updatepubAction
 
-pumukitnewadmin_mms_update_social:
-    path: /{id}/update/social
-    methods: [POST]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::updatesocialAction
-
 pumukitnewadmin_mms_batch_delete:
     path: /batch_delete
     methods: [DELETE]

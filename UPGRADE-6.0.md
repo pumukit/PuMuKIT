@@ -303,7 +303,7 @@ Migrated zones: roles, series types, live channels, legacy events, users, groups
 person relations, permission profiles, tags, links, the inbox explorer, series, playlists, the
 head and tail manager, pictures, the i18n fields of the form theme and the multimedia object list
 (rows, pager, batch actions, row menu, archive, status and preview) and its metadata, publication,
-social, metadata sync, LMS, properties, head and tail and external player forms. `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
+metadata sync, LMS, properties, head and tail and external player forms. `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
 `@PumukitNewAdmin/Playlist/changepub.html.twig` are removed, and so is
 `@PumukitNewAdmin/LiveEvent/create.html.twig`, which pointed to a route that no longer exists.
 The picture upload actions (series, playlists, multimedia objects and legacy events) always answer
@@ -312,8 +312,10 @@ JSON (`{uploaded, message}`), so `@PumukitNewAdmin/Pic/upload.html.twig` and
 with the hidden banner URL form of `@PumukitNewAdmin/Pic/banner.html.twig` and its
 `test_form_url()` and `test_url_generation()` functions. Unused code removed as well:
 `@PumukitNewAdmin/MultimediaObject/acordeon.html.twig`, the `update_preview_mms()` function defined
-by the multimedia object and playlist indexes, and the handler of the multimedia object "New" button,
-which no template rendered. The series, playlist and multimedia object
+by the multimedia object and playlist indexes, the `procesaReset()` function, and the handlers of the multimedia object "New" button
+and of the multimedia object template "Cancel" button, which no template rendered. The multimedia object social form, hidden
+since 5.x, is removed with its `pumukitnewadmin_mms_update_social` route,
+`MultimediaObjectController::updatesocialAction()` and `@PumukitNewAdmin/MultimediaObject/updatesocial.html.twig`. The series, playlist and multimedia object
 indexes no longer define the `serieskeywords` and `mmobjkeywords` globals: `admin--meta-form` creates them
 when a metadata form needs them. Removed global
 functions, reported by `pumukit:check:assets` (also when called as `window.…`):
@@ -343,6 +345,7 @@ functions, reported by `pumukit:check:assets` (also when called as `window.…`)
 | `update_mms_status_wrapper()` | `admin--job-status` |
 | `check_for_new_pics()`, `upload_mmspic()` | `admin--pic-sync` |
 | `checkRecordDateAndPublicDate()` | the `dates` value of `admin--meta-form` |
+| `procesaReset()` | nothing |
 
 Names, titles and file names are now rendered as text: the group picker, the group deletion
 button, the person suggestions and the inbox explorer used to build HTML and inline handlers by

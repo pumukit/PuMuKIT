@@ -58,6 +58,7 @@ class CheckAssetsCommand extends Command
         '@PumukitNewAdmin/Pic/upload.html.twig' => 'nothing: the picture uploads answer JSON to the admin--upload-form controller',
         '@PumukitNewAdmin/Pic/upload_event.html.twig' => 'nothing: the picture uploads answer JSON to the admin--upload-form controller',
         '@PumukitNewAdmin/MultimediaObject/acordeon.html.twig' => 'nothing: no page used it',
+        '@PumukitNewAdmin/MultimediaObject/updatesocial.html.twig' => 'nothing: no page used it',
     ];
 
     public const REMOVED_JAVASCRIPT_GLOBALS = [
@@ -135,6 +136,7 @@ class CheckAssetsCommand extends Command
         'get_batch_delete_route' => 'the urls value of the admin--batch controller',
         'sort_optiont_change' => 'the data-url of the sort options of the admin--batch controller',
         'update_preview_mms' => 'nothing: it was never called',
+        'procesaReset' => 'nothing: the elements it hid no longer exist',
         'checkRecordDateAndPublicDate' => 'the dates value of the admin--meta-form controller (see @PumukitNewAdmin/MultimediaObject/updatemeta.html.twig)',
     ];
 
