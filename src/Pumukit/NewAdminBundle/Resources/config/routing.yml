@@ -15,7 +15,7 @@ pumukitnewadmin_js:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
         template: '@PumukitNewAdmin/pumukit.js.twig'
         maxAge:       86400
-        sharedAge:    86400
+        private:      true
         _format: js
 
 pumukitnewadmin_locale_js:
@@ -25,7 +25,7 @@ pumukitnewadmin_locale_js:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
         template: '@PumukitNewAdmin/pumukit.js.twig'
         maxAge:       86400
-        sharedAge:    86400
+        private:      true
         _format: js
 
 pumukitnewadmin_css:
