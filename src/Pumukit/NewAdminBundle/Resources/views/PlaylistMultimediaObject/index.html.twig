@@ -95,20 +95,6 @@
         </div>
     </div>
 
-    {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
-        <script type="text/javascript">
-            window.update_preview_mms = function (id) {
-                var route = "{{ path('pumukitnewadmin_mms_show', {id: '__id__'}) }}";
-                $.ajax({
-                    url: route.replace('__id__', id),
-                    type: 'POST',
-                    success: function (response) {
-                        $('#preview').html(response);
-                    }
-                });
-            }
-        </script>
-    {% endif %}
     <script type="text/javascript">
         function playlist_mms_options(element, selector, pluralName, playlistId) {
             var option = selector.val();

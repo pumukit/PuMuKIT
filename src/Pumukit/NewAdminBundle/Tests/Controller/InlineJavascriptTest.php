@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\Permission;
+use Pumukit\SchemaBundle\Services\FactoryService;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 /**
@@ -45,7 +46,7 @@ class InlineJavascriptTest extends PumukitTestCase
     #[DataProvider('migratedPages')]
     public function testThePageHasNoInlineJavascript(string $route): void
     {
-        $this->client->request('GET', static::getContainer()->get('router')->generate($route));
+        $this->client->request('GET', static::getContainer()->get('router')->generate($route, $this->parameters($route)));
 
         $this->assertResponseIsSuccessful();
         $html = (string) $this->client->getResponse()->getContent();
@@ -73,6 +74,19 @@ class InlineJavascriptTest extends PumukitTestCase
             'series' => ['pumukitnewadmin_series_index'],
             'playlists' => ['pumukitnewadmin_playlist_index'],
             'head and tail' => ['pumukit_newadmin_head_and_tail'],
+            'multimedia objects' => ['pumukitnewadmin_mms_index'],
         ];
+    }
+
+    private function parameters(string $route): array
+    {
+        if ('pumukitnewadmin_mms_index' !== $route) {
+            return [];
+        }
+        $factory = static::getContainer()->get(FactoryService::class);
+        $series = $factory->createSeries();
+        $factory->createMultimediaObject($series, true);
+
+        return ['id' => $series->getId()];
     }
 }

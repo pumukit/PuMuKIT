@@ -57,6 +57,7 @@ class CheckAssetsCommand extends Command
         '@PumukitNewAdmin/Playlist/listthjs.html.twig' => 'nothing: the sort links of @PumukitNewAdmin/Playlist/listth.html.twig use admin--actions#sort',
         '@PumukitNewAdmin/Pic/upload.html.twig' => 'nothing: the picture uploads answer JSON to the admin--upload-form controller',
         '@PumukitNewAdmin/Pic/upload_event.html.twig' => 'nothing: the picture uploads answer JSON to the admin--upload-form controller',
+        '@PumukitNewAdmin/MultimediaObject/acordeon.html.twig' => 'nothing: no page used it',
     ];
 
     public const REMOVED_JAVASCRIPT_GLOBALS = [
@@ -133,6 +134,7 @@ class CheckAssetsCommand extends Command
         'change_select' => 'the admin--batch controller (see @PumukitNewAdmin/MultimediaObject/index.html.twig)',
         'get_batch_delete_route' => 'the urls value of the admin--batch controller',
         'sort_optiont_change' => 'the data-url of the sort options of the admin--batch controller',
+        'update_preview_mms' => 'nothing: it was never called',
     ];
 
     private const REFERENCE_PATTERN = '#(?<![\w./-])/?(bundles/([a-z0-9_]+)/[^\'"\s?\#{}()]*)#';

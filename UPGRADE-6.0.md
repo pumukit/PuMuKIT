@@ -305,7 +305,10 @@ The picture upload actions (series, playlists, multimedia objects and legacy eve
 JSON (`{uploaded, message}`), so `@PumukitNewAdmin/Pic/upload.html.twig` and
 `@PumukitNewAdmin/Pic/upload_event.html.twig`, the old iframe responses, are removed, together
 with the hidden banner URL form of `@PumukitNewAdmin/Pic/banner.html.twig` and its
-`test_form_url()` and `test_url_generation()` functions. The series, playlist and multimedia object
+`test_form_url()` and `test_url_generation()` functions. Unused code removed as well:
+`@PumukitNewAdmin/MultimediaObject/acordeon.html.twig`, the `update_preview_mms()` function defined
+by the multimedia object and playlist indexes, and the handler of the multimedia object "New" button,
+which no template rendered. The series, playlist and multimedia object
 indexes no longer define the `serieskeywords` and `mmobjkeywords` globals: `admin--meta-form` creates them
 when a metadata form needs them. Removed global
 functions, reported by `pumukit:check:assets` (also when called as `window.…`):
