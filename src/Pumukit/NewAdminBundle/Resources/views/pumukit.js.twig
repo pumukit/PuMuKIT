@@ -13,20 +13,6 @@ window.click_checkbox_all = function(element, value)
   $('input.'+element+'_checkbox').prop('checked', value);
 }
 
-window.dblclick_preview_mm = function(id)
-{
-    var url = "{{ path('pumukitnewadmin_mms_modal_preview', {'id': '__id__'})|raw }}";
-    $.ajax({
-        url: url.replace('__id__', id),
-        type: 'GET',
-        success: function(response){
-            var $modal = $('#myModal');
-            $modal.modal({backdrop: 'static'});
-            $modal.find('.modal-content').html(response);
-        }
-    });
-}
-
 /**
  * Global Ajax Event Handlers and Config
  */

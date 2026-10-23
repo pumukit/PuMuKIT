@@ -1,11 +1,11 @@
-<div class="table-responsive">
+<div class="table-responsive" {% include '@PumukitNewAdmin/PlaylistMultimediaObject/_controller.html.twig' %}>
     <table class="table table-striped table-hover">
         <thead>
         <tr>
             <th width="1%">
                 <div class="checkbox pumukit-mms-checkbox">
                     <label>
-                        <input type="checkbox" onclick="window.click_checkbox_all('playlistmm', this.checked)">
+                        <input type="checkbox" data-action="click->admin--actions#checkAll" data-admin--actions-name-param="playlistmm">
                     </label>
                 </div>
             </th>
@@ -29,7 +29,11 @@
         {% for mm in mms %}
             {% set mm_pos = loop.index0 + mms_offset %}
             {% set is_selected = (app.session.get('admin/playlistmms/id') == mm.id)  and (app.session.get('admin/playlistmms/pos', -1) == mm_pos) %}
-            <tr style="cursor: pointer" class="mm_listed {{ is_selected?'success':'' }}" data-id="{{ mm.id }}" data-pos="{{ mm_pos }}">
+            <tr style="cursor: pointer" class="mm_listed {{ is_selected?'success':'' }}" data-id="{{ mm.id }}" data-pos="{{ mm_pos }}"
+                data-action="click->admin--playlist-mms#select dblclick->admin--actions#openModal"
+                data-admin--playlist-mms-id-param="{{ mm.id|json_encode }}"
+                data-admin--playlist-mms-pos-param="{{ mm_pos }}"
+                data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_modal_preview', {'id': mm.id}) }}">
                 <td>
                     <div class="checkbox pumukit-mms-checkbox">
                         <label>
@@ -124,7 +128,7 @@
                 <td class="text-center">
                     <span>{{ mm.getNumview() }}</span>
                 </td>
-                <td onclick="dblclick_preview_mm('{{ mm.id }}')">
+                <td data-action="click->admin--actions#openModal" data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_modal_preview', {'id': mm.id}) }}">
                     <small><i class="fa fa-play" style="color: grey"></i></small>
                 </td>
             </tr>
@@ -186,7 +190,7 @@
                             {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : mms, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
 
                             {% if not is_naked() %}
-                                <select onchange="javascript: window.location.href = '{{ path('pumukitnewadmin_playlistmms_index') }}' + '?page=1&paginate=' + this.value" aria-label="{% trans %}Select the number of playlists to display per page.{% endtrans %}">
+                                <select data-action="change->admin--actions#go" data-admin--actions-url-param="{{ path('pumukitnewadmin_playlistmms_index') }}?page=1&paginate=" aria-label="{% trans %}Select the number of playlists to display per page.{% endtrans %}">
                                     <option {% if mms.maxPerPage == 10 %}selected{% endif %} value="10">10</option>
                                     <option {% if mms.maxPerPage == 20 %}selected{% endif %} value="20">20</option>
                                     <option {% if mms.maxPerPage == 50 %}selected{% endif %} value="50">50</option>
@@ -201,24 +205,3 @@
         </tfoot>
     </table>
 </div>
-<script type="text/javascript">
-    $('.mm_listed').click(function () {
-        var show_url = "{{ path('pumukitnewadmin_playlistmms_show', {'id': '__mmid__', 'pos':'__pos__'}) }}";
-        var edit_url = "{{ path('pumukitnewadmin_playlistmms_info', {'id': '__mmid__'}) }}";
-        var id = $(this).data('id');
-        var pos = $(this).data('pos');
-        $('.success').removeClass('success');
-        $(this).addClass('success');
-        show_url = show_url.replace('__mmid__', id);
-        show_url = show_url.replace('__pos__', pos);
-        edit_url = edit_url.replace('__mmid__', id);
-        $('#preview_playlistmm').load(show_url);
-        $('#edit_playlistmm').load(edit_url, function () {
-            init_tabs();
-        });
-    }).dblclick(function () {
-        var id = $(this).data('id');
-        dblclick_preview_mm(id);
-    });
-
-</script>

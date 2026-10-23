@@ -27,7 +27,7 @@
 
     <div class="row">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
-            <div id="tv_admin_content" class="col-md-10">
+            <div id="tv_admin_content" class="col-md-10" {% include '@PumukitNewAdmin/PlaylistMultimediaObject/_controller.html.twig' %}>
                 <div class="well">
                     <div id="list_playlistmms">
                         {% include '@PumukitNewAdmin/PlaylistMultimediaObject/list.html.twig' %}
@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="col-xs-4">
                             <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}"
-                                    onchange="playlist_mms_options('playlistmm', $(this), 'playlistmms', '{{ playlist.id }}');">
+                                    data-action="change->admin--playlist-mms#batch">
                                 <option disabled="" value="default" selected="selected">{% trans %}Select an action{% endtrans %}
                                     ...
                                 </option>
@@ -95,29 +95,4 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        function playlist_mms_options(element, selector, pluralName, playlistId) {
-            var option = selector.val();
-            switch (option) {
-                case 'delete_selected':
-                    mm_delete_selected(element, pluralName, playlistId);
-                    break;
-            }
-            selector.val('default');
-        }
-
-        function mm_delete_selected(element, pluralName, playlistId) {
-            var ids = {};
-            $('.' + element + '_checkbox:checked').each(function () {
-                var $this = $(this);
-                ids[$this.data('pos')] = $this.attr("id");
-            });
-            if (Object.keys(ids).length == 0) return;
-            var url = "{{ path('pumukitnewadmin_playlistmms_batch_delete', {'id': playlist.id , 'ids':'__ids__'} ) }}";
-            url = url.replace('__ids__', JSON.stringify(ids));
-            $('#list_playlistmms').load(url, function () {
-            });
-        }
-
-    </script>
 {% endblock %}

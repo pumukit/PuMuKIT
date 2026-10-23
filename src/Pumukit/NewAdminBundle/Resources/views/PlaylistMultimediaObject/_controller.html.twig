@@ -1,0 +1,6 @@
+data-controller="admin--playlist-mms"
+data-admin--playlist-mms-urls-value="{{ {
+    delete: path('pumukitnewadmin_playlistmms_batch_delete', {'id': playlist.id, 'ids': '__ids__'}),
+    show: path('pumukitnewadmin_playlistmms_show', {'id': '__ID__', 'pos': '__POS__'}),
+    info: path('pumukitnewadmin_playlistmms_info', {'id': '__ID__'})
+}|json_encode }}"

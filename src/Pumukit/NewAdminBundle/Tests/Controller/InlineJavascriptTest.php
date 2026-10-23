@@ -85,6 +85,9 @@ class InlineJavascriptTest extends PumukitTestCase
             'multimedia object editor' => ['pumukitnewadmin_mms_edit'],
             'unesco editor' => ['pumukit_new_admin_unesco_edit'],
             'live events' => ['pumukit_new_admin_live_event_index'],
+            'playlist objects' => ['pumukitnewadmin_playlistmms_index'],
+            'playlist add objects' => ['pumukitnewadmin_playlistmms_modal'],
+            'add to playlist' => ['pumukitnewadmin_playlistmms_modal_add'],
             'live event editor' => ['pumukit_new_admin_live_event_edit'],
             'unesco list' => ['pumukitnewadmin_unesco_list'],
             'unesco preview' => ['pumukitnewadmin_unesco_show'],
@@ -128,6 +131,15 @@ class InlineJavascriptTest extends PumukitTestCase
             $this->dm->flush();
 
             return 'pumukit_new_admin_live_event_index' === $route ? [] : ['id' => $multimediaObject->getId()];
+        }
+        if (str_starts_with($route, 'pumukitnewadmin_playlistmms_')) {
+            $factory = static::getContainer()->get(FactoryService::class);
+            $multimediaObject = $factory->createMultimediaObject($factory->createSeries(), true);
+            $playlist = $factory->createPlaylist(null, ['en' => 'Playlist']);
+            $playlist->getPlaylist()->addMultimediaObject($multimediaObject);
+            $this->dm->flush();
+
+            return ['id' => 'pumukitnewadmin_playlistmms_modal_add' === $route ? $multimediaObject->getId() : $playlist->getId()];
         }
         if ('pumukitnewadmin_series_updatebroadcast' === $route) {
             $factory = static::getContainer()->get(FactoryService::class);

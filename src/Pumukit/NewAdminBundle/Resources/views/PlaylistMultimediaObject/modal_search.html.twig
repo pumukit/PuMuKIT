@@ -1,31 +1,11 @@
 SEARCH:
-<input type="search" id="modal_search"/>
-<button type="button" id="modal_search_button">SEARCH</button>
-<form class="modal_form"
+<input type="search" id="modal_search" data-admin--playlist-modal-target="search" data-action="keyup->admin--playlist-modal#searchKey"/>
+<button type="button" id="modal_search_button" data-action="click->admin--playlist-modal#search">SEARCH</button>
+<form class="modal_form" data-action="change->admin--playlist-modal#changed"
       method="post" style="height:78%">
-  <div id="modal_search_loader" style="display:none">
+  <div id="modal_search_loader" style="display:none" data-admin--playlist-modal-target="searchLoader">
     {% include "@PumukitNewAdmin/Misc/loader_img.html.twig" %}
   </div>
-  <fieldset id="modal_search_list" style="height:100%">
+  <fieldset id="modal_search_list" style="height:100%" data-admin--playlist-modal-target="searchList">
   </fieldset>
 </form>
-<script type="text/javascript">
-$('#modal_search_button').on('click', function(){
-    var search_text=$('#modal_search').val();
-    var url = '{{ path('pumukitnewadmin_playlistmms_modal_search' , {'search':'__search__'})}}';
-    url = url.replace('__search__', encodeURI(search_text));
-    $('#modal_search_loader').show();
-    $('#modal_search_list').hide();
-    $('#modal_search_list').load(url, function(){
-        $('#modal_search_loader').hide();
-        $('#modal_search_list').show();
-    });
-});
-
-
-$("#modal_search").keyup(function (e) {
-    if (e.keyCode == 13) {
-        $('#modal_search_button').click();
-    }
-});
-</script>

@@ -9,24 +9,14 @@
     </li>
     {% endif %}
     <li>
-      <a href="#" onclick="delete_mm('{{ mm.id }}','{{ mm_pos }}')">
+      <a href="#" data-action="click->admin--playlist-mms#remove" data-admin--playlist-mms-id-param="{{ mm.id|json_encode }}" data-admin--playlist-mms-pos-param="{{ mm_pos }}">
         <i class="mdi-content-clear"></i>{% trans %}Delete multimedia object from the playlist{% endtrans %}
       </a>
     </li>
     <li>
-      <a href="#" onclick="return false;">
+      <a href="#" data-action="click->admin--actions#cancel">
         <strong>{% trans %}Cancel{% endtrans %}...</strong>
       </a>
     </li>
   </ul>
 </div>
-<script type="text/javascript">
- function delete_mm(id, pos ){
-     var ids = {};
-     ids[pos] = id;
-     var url ="{{ path('pumukitnewadmin_playlistmms_batch_delete', {'id': playlist.id , 'ids':'__ids__'} ) }}";
-     url = url.replace('__ids__', JSON.stringify(ids));
-     $('#list_playlistmms').load(url, function(){
-     });
- }
-</script>

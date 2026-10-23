@@ -193,6 +193,10 @@ class CheckAssetsCommand extends Command
         'dblclick_fila_url' => 'admin--actions#navigate',
         'click_fila_edit_urls' => 'admin--actions#edit (see @PumukitNewAdmin/LiveEvent/list.html.twig)',
         'init_mmobj_materialtags' => 'the keywords value of the admin--meta-form controller (see @PumukitNewAdmin/UNESCO/updatemeta.html.twig)',
+        'dblclick_preview_mm' => 'admin--actions#openModal (see @PumukitNewAdmin/PlaylistMultimediaObject/list.html.twig)',
+        'playlist_mms_options' => 'the batch action of the admin--playlist-mms controller (see @PumukitNewAdmin/PlaylistMultimediaObject/index.html.twig)',
+        'mm_delete_selected' => 'the batch action of the admin--playlist-mms controller (see @PumukitNewAdmin/PlaylistMultimediaObject/index.html.twig)',
+        'delete_mm' => 'the remove action of the admin--playlist-mms controller (see @PumukitNewAdmin/PlaylistMultimediaObject/updatemenu.html.twig)',
         'checkRecordDateAndPublicDate' => 'the dates value of the admin--meta-form controller (see @PumukitNewAdmin/MultimediaObject/updatemeta.html.twig)',
     ];
 
@@ -265,7 +269,7 @@ EOT
                     if (preg_match('/(?:(?<![\w$.])|(?<=window\.))'.$global.'\b/', $line)) {
                         ++$missing;
                         $output->writeln('Removed JavaScript global: <info>'.$global.'</info> in '.$location);
-                        $output->writeln('    use <comment>'.self::REMOVED_JAVASCRIPT_GLOBALS[$global].'</comment>');
+                        $output->writeln('    use <comment>'.self::removedGlobals()[$global].'</comment>');
                     }
                 }
 
@@ -309,12 +313,17 @@ EOT
         return $missing > 0 ? Command::FAILURE : Command::SUCCESS;
     }
 
+    private static function removedGlobals(): array
+    {
+        return self::REMOVED_JAVASCRIPT_GLOBALS;
+    }
+
     private function removedGlobalsNotDefinedIn(array $files): array
     {
         $content = implode('', array_merge(...array_values($files)));
 
         return array_values(array_filter(
-            array_keys(self::REMOVED_JAVASCRIPT_GLOBALS),
+            array_keys(self::removedGlobals()),
             static fn (string $global): bool => !preg_match('/(function\s+'.$global.'\b|\b(var|let|const)\s+'.$global.'\b|(?:(?<![\w$.])|(?<=window\.))'.$global.'\s*=(?!=))/', $content)
         ));
     }

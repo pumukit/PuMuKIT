@@ -2,21 +2,30 @@
   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <h3 class="modal-title" id="myModalLabel">{% trans %}Add Multimedia Object to Playlist{% endtrans %}</h3>
 </div>
-<div class="modal-body">
+<div class="modal-body"
+     data-controller="admin--playlist-modal"
+     data-action="resize@window->admin--playlist-modal#resize"
+     data-admin--playlist-modal-urls-value="{{ {
+        add: path('pumukitnewadmin_playlistmms_batch_add', {'id': playlist.id, 'ids': '__ids__'}),
+        search: path('pumukitnewadmin_playlistmms_modal_search', {'search': '__search__'}),
+        url: path('pumukitnewadmin_playlistmms_modal_url', {'mmid': '__id__'}),
+        videos: url('pumukitnewadmin_playlistmms_modal_mymmobjs', {'id': playlist.id, 'modal_page': '__page__', 'modal_limit': mmobjs_limit})
+     }|json_encode }}"
+     data-admin--playlist-modal-pages-value="{{ ((mmobjs_total|length) / mmobjs_limit)|round(0, 'ceil') }}">
   <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist">
       <li role="search" class="active">
-        <a href="#search" aria-controls="search" role="tab" data-toggle="tab">
+        <a href="#search" aria-controls="search" role="tab" data-toggle="tab" data-action="click->admin--playlist-modal#tab">
           SEARCH
         </a>
       </li>
       <li role="url">
-        <a href="#url" aria-controls="url" role="tab" data-toggle="tab">
+        <a href="#url" aria-controls="url" role="tab" data-toggle="tab" data-action="click->admin--playlist-modal#tab">
           URL
         </a>
       </li>
       <li role="my_videos">
-        <a href="#my_videos" aria-controls="my_videos" role="tab" data-toggle="tab">
+        <a href="#my_videos" aria-controls="my_videos" role="tab" data-toggle="tab" data-action="click->admin--playlist-modal#tab">
           MY VIDEOS
         </a>
       </li>
@@ -40,47 +49,11 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-pumukit btn-raised" data-dismiss="modal" id="add_videos_modal_button" disabled="disabled">{% trans %}Add videos{% endtrans %}</button>
+    <button type="button" class="btn btn-pumukit btn-raised" data-dismiss="modal" id="add_videos_modal_button" disabled="disabled" data-admin--playlist-modal-target="add" data-action="click->admin--playlist-modal#add">{% trans %}Add videos{% endtrans %}</button>
     <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
   </div>
 </div>
-{# STYLE + JAVASCRIPT #}
-<script type="text/javascript">
- //Enables the add_videos button if any valid video is selected:
- //We check if the form under the opened tab has a checked element.
- $('ul.nav li a').click(function(event){
-     var id = $(this).attr('aria-controls');
-     $('#add_videos_modal_button').prop('disabled', true);
-     $('#'+id+' form.modal_form input:checkbox').each(function(){
-         if($(this).prop('checked')) {
-             $('#add_videos_modal_button').prop('disabled', false);
-             return false;
-         }
-     });
- });
- //We check if the form we just changed has a checked element.
- $('form.modal_form').on('change', function(){
-     $(this).find('input:checkbox').each(function(){
-         $('#add_videos_modal_button').prop('disabled', true);
-         if($(this).prop('checked')) {
-             $('#add_videos_modal_button').prop('disabled', false);
-             return false;
-         }
-     });
- });
- //The 'Add video' logic consist on sending the selected object ids and updating the view through ajax.
- $('#add_videos_modal_button').click(function(){
-     var ids = [];
-     $('.tab-pane.active fieldset input:checkbox').each(function(elem){
-         if($(this).prop('checked'))
-             ids.push($(this).val());
-     });
-     //Does ajax to add objects and update view.
-     var route = "{{ path('pumukitnewadmin_playlistmms_batch_add',{'id': playlist.id ,'ids':'__ids__'}) }}";
-     route = route.replace('__ids__', JSON.stringify(ids));
-     $('#list_playlistmms').load(route);
- });
-</script>
+{# STYLE #}
 <style type="text/css">
  .mmobj_elem {
    padding: 5px;
@@ -99,4 +72,4 @@
    margin: -4px;
  }
 </style>
-{# END STYLE + JAVASCRIPT #}
+{# END STYLE #}
