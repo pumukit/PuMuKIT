@@ -82,6 +82,7 @@ class PersonType extends AbstractType
                 'web',
                 UrlType::class,
                 [
+                    'default_protocol' => 'http',
                     'required' => false,
                     'attr' => ['aria-label' => $this->translator->trans('Web', [], null, $this->locale)],
                     'label' => $this->translator->trans('Web', [], null, $this->locale),

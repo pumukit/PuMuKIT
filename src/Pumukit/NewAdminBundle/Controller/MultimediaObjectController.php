@@ -1088,7 +1088,7 @@ class MultimediaObjectController extends SortableAdminController
         $form = $this->createFormBuilder()
             ->setAction($this->generateUrl('pumukitnewadmin_mms_listexternalproperties', ['series' => $seriesId]))
             ->add('title', TextType::class, ['required' => true, 'attr' => ['class' => 'form-control']])
-            ->add('url', UrlType::class, ['required' => true, 'attr' => ['class' => 'form-control']])
+            ->add('url', UrlType::class, ['required' => true, 'default_protocol' => 'http', 'attr' => ['class' => 'form-control']])
             ->getForm()
         ;
 
@@ -1119,7 +1119,7 @@ class MultimediaObjectController extends SortableAdminController
         $form = $this->createFormBuilder()
             ->setAction($this->generateUrl('pumukitnewadmin_external_player_update', ['id' => $multimediaObject->getId()]))
             ->add('title', TextType::class, ['required' => true, 'attr' => ['class' => 'form-control']])
-            ->add('url', UrlType::class, ['required' => true, 'attr' => ['class' => 'form-control']])
+            ->add('url', UrlType::class, ['required' => true, 'default_protocol' => 'http', 'attr' => ['class' => 'form-control']])
             ->getForm()
         ;
 

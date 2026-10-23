@@ -35,6 +35,7 @@ class LinkType extends AbstractType
                 'url',
                 UrlType::class,
                 [
+                    'default_protocol' => 'http',
                     'required' => true,
                     'attr' => [
                         'aria-label' => $this->translator->trans('URL', [], null, $this->locale),

@@ -50,6 +50,7 @@ class LiveType extends AbstractType
                 'url',
                 UrlType::class,
                 [
+                    'default_protocol' => 'http',
                     'attr' => ['aria-label' => $this->translator->trans('URL', [], null, $this->locale)],
                     'label' => $this->translator->trans('URL', [], null, $this->locale),
                 ]
