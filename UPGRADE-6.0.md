@@ -296,7 +296,7 @@ running jobs every 15 seconds), `admin--pic-sync` (reloads the thumbnails when a
 reports a different number of pictures), `admin--modal-cleanup` (removes the player of the
 preview modal when it closes), `admin--external-player` (preview and save of the external player
 modals), `admin--track-list` (reloads the links after a track change and captures frames),
-`admin--job-priority` (priority of a pending job), `admin--unesco` (UNESCO catalogue), `admin--live-event` (live events), `admin--playlist-mms`, `admin--playlist-modal` and `admin--playlist-add` (playlists), `admin--group-lists` (the available and selected group lists of the admin groups and the
+`admin--job-priority` (priority of a pending job), `admin--unesco` (UNESCO catalogue), `admin--live-event` (live events), `admin--places` (places and precincts), `admin--playlist-mms`, `admin--playlist-modal` and `admin--playlist-add` (playlists), `admin--group-lists` (the available and selected group lists of the admin groups and the
 broadcast groups: `name`, `showCodes`, `editable`, `message`; it dispatches `admin--group-lists:changed`
 after a move and rebuilds the lists on `admin--group-lists:load`), `admin--mm-groups` (save and reset
 of the admin groups, owner deletion and the warning shown when the user would lose access),
@@ -339,6 +339,12 @@ selected event) and on the series modal. Its event form uses `admin--meta-form` 
 notice and the cancel button, and the index no longer defines the keyword indexes. The
 `event_option`, `sort_field`, `filterSearchEvents`, `resetSession`, `edit_session`, `clone_session` and
 `delete_session` classes are kept for styling only.
+
+The places and precincts zone (lists, select all, preview, deletion and batch deletion) uses the
+`admin--places` controller, started by `@PumukitNewAdmin/Place/index.html.twig`, and its create and
+update modals use `admin--modal-form`. The `load_children`, `data_children`, `delete_parent_tag` and
+`delete_children_tag` classes are kept for styling only. `admin--modal-form` now shows the `status`
+of a JSON error response instead of the raw body.
 
 The multimedia objects of a playlist use `admin--playlist-mms` (row selection, preview, removal and
 batch removal; the list starts its own instance, so it keeps working inside a project override of
@@ -400,6 +406,7 @@ functions, reported by `pumukit:check:assets` (also when called as `window.…`)
 | `dblclick_fila_url()` | `admin--actions#navigate` |
 | `click_fila_edit_urls()` | `admin--actions#edit` |
 | `dblclick_preview_mm()` | `admin--actions#openModal` |
+| `click_checkbox_all()` | `admin--actions#checkAll` |
 | `playlist_mms_options()`, `mm_delete_selected()`, `delete_mm()` | `admin--playlist-mms` |
 | `init_mmobj_materialtags()` | the `keywords` value of `admin--meta-form` |
 | `extract_pic()` | `admin--track-list#extractPic` |

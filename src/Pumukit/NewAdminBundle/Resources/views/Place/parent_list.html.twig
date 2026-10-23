@@ -9,7 +9,7 @@
         </td>
 
         <td headers="th-icons">
-            <a class="delete_parent_tag" data-id="{{ tag.id }}" href="#" title="{% trans %}delete{% endtrans %}">
+            <a class="delete_parent_tag" href="#" data-action="click->admin--places#remove" data-admin--places-id-param="{{ tag.id|json_encode }}" data-admin--places-success-param="{{ 'Place successfully deleted.'|trans }}" title="{% trans %}delete{% endtrans %}">
                 <i class="mdi-content-clear"></i>
             </a>
         </td>
@@ -26,74 +26,16 @@
             </a>
         </td>#}
 
-        <td class="load_children" data-id="{{ tag.getId() }}" data-title="{{ tag.getTitle() }}" headers="th-name">
+        <td class="load_children" data-action="click->admin--places#children" data-admin--places-id-param="{{ tag.getId()|json_encode }}" data-admin--places-title-param="{{ tag.getTitle()|json_encode }}" headers="th-name">
             {{ tag.getTitle() }}
         </td>
-        <td class="load_children" data-id="{{ tag.getId() }}" data-title="{{ tag.getTitle() }}" headers="th-dir">
+        <td class="load_children" data-action="click->admin--places#children" data-admin--places-id-param="{{ tag.getId()|json_encode }}" data-admin--places-title-param="{{ tag.getTitle()|json_encode }}" headers="th-dir">
             {% if tag.getProperty('address') is not empty %}
                 {{ tag.getProperty('address')[app.request.getLocale()] }}
             {% endif %}
         </td>
-        <td class="load_children text-center" data-id="{{ tag.getId() }}" data-title="{{ tag.getTitle() }}" headers="th-num-precinct">
+        <td class="load_children text-center" data-action="click->admin--places#children" data-admin--places-id-param="{{ tag.getId()|json_encode }}" data-admin--places-title-param="{{ tag.getTitle()|json_encode }}" headers="th-num-precinct">
             {{ tag.getChildren()|length }}
         </td>
     </tr>
 {% endfor %}
-
-<script type="text/javascript">
-    $('.load_children').on('click', function(event){
-        'use strict';
-        event.preventDefault();
-
-        $('.name_of_children').html($(this).data('title'));
-
-        var id = $(this).data('id');
-        var route = '{{ path('pumukitnewadmin_places_children', {'id': '__id__'}) }}';
-        route = route.replace('__id__', id);
-
-        $('.children-list').html("<tr class=\"text-center\" style=\"font-size:12px\"><td colspan=\"8\"><img class=\"center\" src=\"{{ asset('bundles/pumukitwebtv/images/icons/spinner.gif') }}\"/></td></tr>");
-        $('html,body').scrollTop(0);
-
-        localStorage.setItem('place_tag', id);
-
-        $.ajax({
-            url: route,
-            type: 'GET',
-            error: function() {
-                var message = '{{ "Error loading tag"|trans|e("js") }}';
-                no_success(message);
-            },
-            success: function(response) {
-                $('.children-list').html(response);
-            }
-        });
-        return false;
-    });
-
-    $('.delete_parent_tag').on('click', function(event) {
-        'use strict';
-        event.preventDefault();
-
-        var id = $(this).data('id');
-        var route = '{{ path('pumukitnewadmin_places_delete', {'id': '__id__'}) }}';
-        route = route.replace('__id__', id);
-
-        if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
-            $.ajax({
-                url: route,
-                type: 'GET',
-                error: function () {
-                    var message = '{{ "Error deleting tag"|trans|e("js") }}';
-                    no_success(message);
-                },
-                success: function (response) {
-                    $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
-                    var message = '{{ "Place successfully deleted."|trans|e("js") }}';
-                    success(message);
-                }
-            });
-            return false;
-        }
-    });
-</script>
-

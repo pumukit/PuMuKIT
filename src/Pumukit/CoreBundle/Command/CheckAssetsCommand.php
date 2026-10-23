@@ -197,6 +197,7 @@ class CheckAssetsCommand extends Command
         'playlist_mms_options' => 'the batch action of the admin--playlist-mms controller (see @PumukitNewAdmin/PlaylistMultimediaObject/index.html.twig)',
         'mm_delete_selected' => 'the batch action of the admin--playlist-mms controller (see @PumukitNewAdmin/PlaylistMultimediaObject/index.html.twig)',
         'delete_mm' => 'the remove action of the admin--playlist-mms controller (see @PumukitNewAdmin/PlaylistMultimediaObject/updatemenu.html.twig)',
+        'click_checkbox_all' => 'admin--actions#checkAll (see @PumukitNewAdmin/Place/parent_listth.html.twig)',
         'checkRecordDateAndPublicDate' => 'the dates value of the admin--meta-form controller (see @PumukitNewAdmin/MultimediaObject/updatemeta.html.twig)',
     ];
 

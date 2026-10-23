@@ -5,7 +5,15 @@
 </div>
 <div class="modal-body">
     {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
-    <form id="update_tag" action="{{ path('pumukitnewadmin_places_update', {'id': tag.id}) }}" method="POST">
+    {% set refresh = [{target: '.parent-list', url: path('pumukitnewadmin_places_parent')}] %}
+    {% if tag.parent.cod != 'PLACES' %}
+        {% set refresh = refresh|merge([{target: '.children-list', url: path('pumukitnewadmin_places_children', {'id': tag.parent.id})}]) %}
+    {% endif %}
+    <form id="update_tag" action="{{ path('pumukitnewadmin_places_update', {'id': tag.id}) }}" method="POST"
+          data-controller="admin--modal-form" data-action="submit->admin--modal-form#submit"
+          data-admin--modal-form-refresh-value="{{ refresh|json_encode }}"
+          data-admin--modal-form-success-message-value="{{ 'Tag successfully updated.'|trans }}"
+          data-admin--modal-form-error-message-value="{{ 'There was an error in updating the Tag.'|trans }}">
         <fieldset>
             {% for child in form %}
                 {{ form_row(child) }}
@@ -17,36 +25,3 @@
         </div>
     </form>
 </div>
-
-<script type="text/javascript">
-    $('#update_tag').on('submit', function(event) {
-        'use strict';
-        event.preventDefault();
-
-        var isPlace = "{% if tag.parent.cod != 'PLACES' %}false{% else %}true{% endif %}";
-
-        $('#myModal').modal('hide');
-        $.ajax({
-            url: '{{ path('pumukitnewadmin_places_update', {'id': tag.id}) }}',
-            method: 'POST',
-            data: $(this).serialize(),
-            success: function(response, textStatus, jqXHR){
-                if (jqXHR.responseText.indexOf('modal-header') != -1){
-                    var message = '{{ "There was an error in updating the Tag."|trans|e("js")}}';
-                    no_success(message);
-                } else{
-                    $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
-                    if(isPlace == "false") {
-                        $('.children-list').load("{{ path('pumukitnewadmin_places_children', {'id': tag.parent.id}) }}");
-                    }
-                    var message = '{{ "Tag successfully updated."|trans|e("js")}}';
-                    success(message);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                no_success(errorThrown + ': ' + jqXHR.responseJSON.status);
-            }
-        });
-        return false;
-    });
-</script>

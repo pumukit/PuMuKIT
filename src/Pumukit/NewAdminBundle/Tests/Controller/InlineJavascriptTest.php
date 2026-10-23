@@ -54,6 +54,7 @@ class InlineJavascriptTest extends PumukitTestCase
     public function testThePageHasNoInlineJavascript(string $route): void
     {
         $this->client->request('GET', static::getContainer()->get('router')->generate($route, $this->parameters($route)));
+        $this->dm->clear();
 
         $this->assertResponseIsSuccessful();
         $html = (string) $this->client->getResponse()->getContent();
@@ -100,6 +101,11 @@ class InlineJavascriptTest extends PumukitTestCase
             'multimedia object tag tree' => ['pumukitnewadmin_mms_reloadtags'],
             'multimedia object tag search' => ['pumukitnewadmin_mms_searchtag'],
             'multimedia object tag children' => ['pumukitnewadmin_mms_getchildrentag'],
+            'places' => ['pumukitnewadmin_places_index'],
+            'place list' => ['pumukitnewadmin_places_parent'],
+            'precinct list' => ['pumukitnewadmin_places_children'],
+            'place create' => ['pumukitnewadmin_places_create'],
+            'place update' => ['pumukitnewadmin_places_update'],
         ];
     }
 
@@ -166,6 +172,18 @@ class InlineJavascriptTest extends PumukitTestCase
             $this->dm->flush();
 
             return in_array($route, ['pumukitnewadmin_unesco_list', 'pumukitnewadmin_unesco_advance_search_form'], true) ? [] : ['id' => $multimediaObject->getId()];
+        }
+        if (str_starts_with($route, 'pumukitnewadmin_places_')) {
+            $places = $this->tag('PLACES', 'ROOT|PLACES|');
+            $place = $this->tag('PLACE1', 'ROOT|PLACES|PLACE1|', $places);
+            $precinct = $this->tag('PLACE1PRECINCT1', 'ROOT|PLACES|PLACE1|PLACE1PRECINCT1|', $place);
+            $this->dm->flush();
+
+            return match ($route) {
+                'pumukitnewadmin_places_children', 'pumukitnewadmin_places_create' => ['id' => $place->getId()],
+                'pumukitnewadmin_places_update' => ['id' => $precinct->getId()],
+                default => [],
+            };
         }
         if (in_array($route, ['pumukitnewadmin_mms_links', 'pumukitnewadmin_mms_updatebroadcast'], true)) {
             $factory = static::getContainer()->get(FactoryService::class);

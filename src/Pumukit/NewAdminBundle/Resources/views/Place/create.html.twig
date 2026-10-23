@@ -6,7 +6,15 @@
 </div>
 <div class="modal-body">
     {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
-    <form id="create_place" action="{{ path('pumukitnewadmin_places_create') }}" method="POST">
+    {% set refresh = [{target: '.parent-list', url: path('pumukitnewadmin_places_parent')}] %}
+    {% if parent.cod != 'PLACES' %}
+        {% set refresh = refresh|merge([{target: '.children-list', url: path('pumukitnewadmin_places_children', {'id': parent.id})}]) %}
+    {% endif %}
+    <form id="create_place" action="{{ parent.cod != 'PLACES' ? path('pumukitnewadmin_places_create', {'id': parent.id}) : path('pumukitnewadmin_places_create') }}" method="POST"
+          data-controller="admin--modal-form" data-action="submit->admin--modal-form#submit"
+          data-admin--modal-form-refresh-value="{{ refresh|json_encode }}"
+          data-admin--modal-form-success-message-value="{{ 'Place successfully created.'|trans }}"
+          data-admin--modal-form-error-message-value="{{ 'There was an error in creating the Tag.'|trans }}">
         <fieldset>
             {% for child in form %}
                 {{ form_row(child) }}
@@ -18,43 +26,3 @@
         </div>
     </form>
 </div>
-
-<script type="text/javascript">
-    $('#create_place').on('submit', function(event) {
-        'use strict';
-        event.preventDefault();
-        $('#myModal').modal('hide');
-
-        var parent_cod = "{{ parent.cod }}";
-
-        if(parent_cod != 'PLACES') {
-            var route = '{{ path('pumukitnewadmin_places_create', {'id': parent.id }) }}';
-        } else {
-            var route = '{{ path('pumukitnewadmin_places_create') }}';
-        }
-        $.ajax({
-            url: route,
-            method: 'POST',
-            data: $(this).serialize(),
-            success: function(response, textStatus, jqXHR){
-                if (jqXHR.responseText.indexOf('modal-header') != -1){
-                    var message = '{{ "There was an error in creating the Tag."|trans|e("js")}}';
-                    no_success(message);
-                } else {
-                    $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}", function() {
-                        $('html,body').scrollTop(0);
-                    });
-                    if(parent_cod != 'PLACES') {
-                        $('.children-list').load("{{ path('pumukitnewadmin_places_children', {'id': parent.id }) }}");
-                    }
-                    var message = '{{ "Place successfully created."|trans|e("js")}}';
-                    success(message);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                no_success(errorThrown + ': ' + jqXHR.responseJSON.status);
-            }
-        });
-        return false;
-    });
-</script>

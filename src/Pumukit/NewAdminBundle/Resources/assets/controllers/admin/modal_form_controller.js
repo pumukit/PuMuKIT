@@ -64,6 +64,6 @@ export default class extends Controller {
             return `${errorThrown}: ${textStatus}, ${title}`;
         }
 
-        return `${errorThrown}: ${xhr.responseText || textStatus}`;
+        return `${errorThrown}: ${xhr.responseJSON?.status ?? (xhr.responseText || textStatus)}`;
     }
 }

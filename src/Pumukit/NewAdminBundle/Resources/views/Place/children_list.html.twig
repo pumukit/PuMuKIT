@@ -11,7 +11,7 @@
             </td>
 
             <td headers="th-icons">
-                <a class="delete_children_tag" data-id="{{ tag.id }}" data-parent="{{ tag.parent.id }}" href="#" title="{% trans %}delete{% endtrans %}">
+                <a class="delete_children_tag" href="#" data-action="click->admin--places#remove" data-admin--places-id-param="{{ tag.id|json_encode }}" data-admin--places-parent-param="{{ tag.parent.id|json_encode }}" data-admin--places-success-param="{{ 'Precinct successfully deleted.'|trans }}" title="{% trans %}delete{% endtrans %}">
                     <i class="mdi-content-clear"></i>
                 </a>
             </td>
@@ -28,11 +28,11 @@
                 </a>
             </td>#}
 
-            <td class="data_children" data-id="{{ tag.getId() }}" headers="th-name">
+            <td class="data_children" data-action="click->admin--places#preview" data-admin--places-id-param="{{ tag.getId()|json_encode }}" headers="th-name">
                 {{ tag.getTitle() }}
             </td>
 
-            <td class="data_children text-center" data-id="{{ tag.getId() }}" headers="th-num-video">
+            <td class="data_children text-center" data-action="click->admin--places#preview" data-admin--places-id-param="{{ tag.getId()|json_encode }}" headers="th-num-video">
                 {{ tag.getNumberMultimediaObjects() }}
             </td>
         </tr>
@@ -44,7 +44,7 @@
     <tr>
         <td colspan="6">
             <div class="col-md-8">
-            <select id="options_precinct" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}">
+            <select id="options_precinct" class="form-control" data-action="change->admin--places#batch" data-admin--places-name-param="tag_children" data-admin--places-parent-param="{{ parent.id|json_encode }}" data-admin--places-success-param="{{ 'Precinct successfully deleted.'|trans }}" title="{% trans %}Actions on selected items{% endtrans %}">
                 <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
                 <option disabled="">---</option>
                 <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
@@ -63,100 +63,3 @@
         <td colspan="8">{% trans %}Select one place to load data{% endtrans %}</td>
     </tr>
 {% endif %}
-
-
-<script type="text/javascript">
-    $('.data_children').on('click', function(event){
-        'use strict';
-        event.preventDefault();
-
-        var id = $(this).data('id');
-        var route = '{{ path('pumukitnewadmin_places_children_preview', {'id': '__id__'}) }}';
-        route = route.replace('__id__', id);
-
-        $('.preview-precinct').html("<tr class=\"text-center\" style=\"font-size:12px\"><td colspan=\"8\"><img class=\"center\" src=\"{{ asset('bundles/pumukitwebtv/images/icons/spinner.gif') }}\"/></td></tr>");
-        $('html,body').scrollTop(0);
-
-        $.ajax({
-            url: route,
-            type: 'GET',
-            error: function() {
-                var message = '{{ "Error loading tag"|trans|e("js") }}';
-                no_success(message);
-            },
-            success: function(response) {
-                $('.preview-precinct').html(response);
-            }
-        });
-        return false;
-    });
-
-    $('.delete_children_tag').on('click', function(event) {
-        'use strict';
-        event.preventDefault();
-
-        var id = $(this).data('id');
-        var route = '{{ path('pumukitnewadmin_places_delete', {'id': '__id__'}) }}';
-        route = route.replace('__id__', id);
-
-        var parent = $(this).data('parent');
-        var route2 = '{{ path('pumukitnewadmin_places_children', {'id': '__id__'}) }}';
-        route2 = route2.replace('__id__', parent);
-
-        if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
-            $.ajax({
-                url: route,
-                type: 'GET',
-                error: function () {
-                    var message = '{{ "Error deleting tag"|trans|e("js") }}';
-                    no_success(message);
-                },
-                success: function (response) {
-                    $('.children-list').load(route2);
-                    $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
-                    var message = '{{ "Precinct successfully deleted."|trans|e("js") }}';
-                    success(message);
-                }
-            });
-            return false;
-        }
-    });
-
-    {% if parent is defined %}
-        $('#options_precinct').on('change', function(event) {
-            'use strict';
-            event.preventDefault();
-            var ids = [];
-            $('.tag_children_checkbox:checked').each(function(){
-                ids.push($(this).attr("id"));
-            });
-            if (ids.length == 0) return true;
-            var option = $("#options_precinct").val();
-
-            if(option != 'delete_selected') return true;
-
-            var route = "{{ path('pumukitnewadmin_tag_batch_delete', {'ids': '__ids__'})|raw }}";
-            route = route.replace('__ids__', JSON.stringify(ids));
-
-            if (confirm('{% trans %}Are you sure?{% endtrans %}')) {
-                $.ajax({
-                    url: route,
-                    type: 'POST',
-                    data: {'_method': 'DELETE'},
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        var textError = eval('(' + jqXHR.responseText + ')');
-                        var statusError = textError.status;
-                        var message = errorThrown + ': {% trans %}Tags with children can not be deleted.{% endtrans %} ' + statusError;
-                        no_success(message);
-                    },
-                    success: function (response) {
-                        $('.parent-list').load("{{ path('pumukitnewadmin_places_parent') }}");
-                        $('.children-list').load("{{ path('pumukitnewadmin_places_children', {'id': parent.id }) }}");
-                        var message = '{{ "Precinct successfully deleted."|trans|e("js") }}';
-                        success(message);
-                    }
-                });
-            }
-        });
-    {% endif %}
-</script>

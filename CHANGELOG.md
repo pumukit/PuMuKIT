@@ -55,6 +55,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Move the UNESCO catalogue of the backoffice to the `admin--unesco` Stimulus controller; its fragments work inside project overrides of the catalogue index, and a failed delete or clone shows the server error.
 - Move the live events zone of the backoffice to the `admin--live-event` Stimulus controller; series suggestions are rendered as text.
 - Move the multimedia objects of a playlist and the add to playlist modals to Stimulus controllers (`admin--playlist-mms`, `admin--playlist-modal`, `admin--playlist-add`); new playlist titles are rendered as text.
+- Move the places and precincts zone of the backoffice to the `admin--places` Stimulus controller; place names above the precinct list are rendered as text and the create and update modals show the server error of a conflict.
 - Answer the picture uploads with JSON only and remove the old iframe responses and the hidden banner URL form.
 - Configure the default protocol of the URL form fields (live channel, person, link and external player), deprecated since Symfony 7.1.
 - Upload thumbnails, banners, materials, live event images and tracks through the Uppy Dashboard; the upload actions answer JSON on request and adding a track to an object without type no longer fails.

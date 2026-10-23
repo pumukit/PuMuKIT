@@ -8,8 +8,24 @@
         </ul>
     </h3>
 
-    {% include "@PumukitNewAdmin/Place/parent.html.twig" %}
-    {% include "@PumukitNewAdmin/Place/children.html.twig" %}
-    {% include "@PumukitNewAdmin/Place/preview.html.twig" %}
+    <div data-controller="admin--places"
+         data-admin--places-urls-value="{{ {
+             parent: path('pumukitnewadmin_places_parent'),
+             children: path('pumukitnewadmin_places_children', {'id': '__id__'}),
+             preview: path('pumukitnewadmin_places_children_preview', {'id': '__id__'}),
+             delete: path('pumukitnewadmin_places_delete', {'id': '__id__'}),
+             batchDelete: path('pumukitnewadmin_tag_batch_delete', {'ids': '__ids__'})
+         }|json_encode }}"
+         data-admin--places-messages-value="{{ {
+             confirm: 'Are you sure?'|trans,
+             loadError: 'Error loading tag'|trans,
+             deleteError: 'Error deleting tag'|trans,
+             withChildren: 'Tags with children can not be deleted.'|trans
+         }|json_encode }}"
+         data-admin--places-spinner-value="{{ asset('bundles/pumukitwebtv/images/icons/spinner.gif') }}">
+        {% include "@PumukitNewAdmin/Place/parent.html.twig" %}
+        {% include "@PumukitNewAdmin/Place/children.html.twig" %}
+        {% include "@PumukitNewAdmin/Place/preview.html.twig" %}
+    </div>
 
 {% endblock %}
