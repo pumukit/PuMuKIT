@@ -296,7 +296,7 @@ running jobs every 15 seconds), `admin--pic-sync` (reloads the thumbnails when a
 reports a different number of pictures), `admin--modal-cleanup` (removes the player of the
 preview modal when it closes), `admin--external-player` (preview and save of the external player
 modals), `admin--track-list` (reloads the links after a track change and captures frames),
-`admin--job-priority` (priority of a pending job), `admin--unesco` (UNESCO catalogue), `admin--live-event` (live events), `admin--places` (places and precincts), `admin--slider` (order of the slider manager), `admin--dashboard` (activity chart of the dashboard), `admin--playlist-mms`, `admin--playlist-modal` and `admin--playlist-add` (playlists), `admin--group-lists` (the available and selected group lists of the admin groups and the
+`admin--job-priority` (priority of a pending job), `admin--unesco` (UNESCO catalogue), `admin--live-event` (live events), `admin--places` (places and precincts), `admin--slider` (order of the slider manager), `admin--dashboard` (activity chart of the dashboard), `admin--series-styles` (series styles manager), `admin--playlist-mms`, `admin--playlist-modal` and `admin--playlist-add` (playlists), `admin--group-lists` (the available and selected group lists of the admin groups and the
 broadcast groups: `name`, `showCodes`, `editable`, `message`; it dispatches `admin--group-lists:changed`
 after a move and rebuilds the lists on `admin--group-lists:load`), `admin--mm-groups` (save and reset
 of the admin groups, owner deletion and the warning shown when the user would lose access),
@@ -348,7 +348,9 @@ of a JSON error response instead of the raw body. The slider manager uses `admin
 (drag and drop of the `.slider-item` rows and the save button, still `#save-slider-order`). The
 activity chart of the dashboard uses `admin--dashboard` on `#activity-chart`, with the activity, the
 time window and the grouping as values; it still draws with the Chart.js build of the dashboard page. The unused
-`bundles/pumukitnewadmin/vendor/chartjs/chartjs-plugin-zoom.min.js` is removed.
+`bundles/pumukitnewadmin/vendor/chartjs/chartjs-plugin-zoom.min.js` is removed. The series styles
+manager uses `admin--series-styles`, started by `@PumukitNewAdmin/SeriesStyle/crud.html.twig`; the
+`show_style` and `delete_style` classes are kept for styling only.
 
 The multimedia objects of a playlist use `admin--playlist-mms` (row selection, preview, removal and
 batch removal; the list starts its own instance, so it keeps working inside a project override of

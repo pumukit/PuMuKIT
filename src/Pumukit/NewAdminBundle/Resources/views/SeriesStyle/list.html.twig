@@ -6,8 +6,8 @@
 <ul class="list-group">
     {% for style in styles %}
         <li class="list-group-item" style="padding:10px 15px; background-color:#fff; border: 1px solid #ddd">
-            <a class="show_style" data-id="{{ style.getId() }}" style="text-decoration:none;cursor:pointer;">{{ style.getName() }}</a>
-            <a href="#" data-href="{{ path('pumukit_newadmin_series_styles_delete', {'id' : style.getId() }) }}" class="pull-right delete_style" style="text-decoration:none;cursor:pointer;">
+            <a class="show_style" data-action="click->admin--series-styles#show" data-admin--series-styles-id-param="{{ style.getId()|json_encode }}" style="text-decoration:none;cursor:pointer;">{{ style.getName() }}</a>
+            <a href="#" data-action="click->admin--series-styles#remove" data-admin--series-styles-url-param="{{ path('pumukit_newadmin_series_styles_delete', {'id' : style.getId() })|json_encode }}" class="pull-right delete_style" style="text-decoration:none;cursor:pointer;">
                 <i class="mdi-content-clear"></i>
             </a>
         </li>
@@ -20,66 +20,10 @@
 
 <div class="col-xs-12">
     <p>Crear un estilo:</p>
-    <form id="styleform" method="GET" action="{{ path('pumukit_newadmin_series_styles_create') }}" class="form-inline">
+    <form id="styleform" method="GET" action="{{ path('pumukit_newadmin_series_styles_create') }}" class="form-inline" data-action="submit->admin--series-styles#create">
         <div class="form-group">
             <input type="text" name="name" class="form-control"/>
         </div>
         <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}New{% endtrans %}</button>
     </form>
 </div>
-
-
-<script type="text/javascript">
-    $('#styleform').on('submit', function(event){
-        event.preventDefault();
-        $('#series_style_msg').hide();
-        $.ajax({
-            url: '{{ path('pumukit_newadmin_series_styles_create') }}',
-            type: 'GET',
-            data: $(this).serialize(),
-            error: function (data) {
-                var message = '{{ "Style created ERROR"|trans|e("js") }}';
-                no_success(message);
-            },
-            success: function (data) {
-                $('#style_list').load("{{ path('pumukit_newadmin_series_styles_list') }}");
-                var path = "{{ path('pumukit_newadmin_series_styles_show',{'id': '__ID__'}) }}";
-                path = path.replace('__ID__', data.id);
-                $('#style_show').load(path);
-                var message = '{{ "Style created OK"|trans|e("js") }}';
-                success(message);
-            }
-        });
-        return false;
-    });
-
-    $('.show_style').on('click', function(event) {
-        event.preventDefault();
-        $('#series_style_msg').hide();
-        var path = "{{ path('pumukit_newadmin_series_styles_show',{'id': '__ID__'}) }}";
-        path = path.replace('__ID__', $(this).data('id'));
-        $('#style_show').load(path);
-    });
-
-    $('.delete_style').on('click', function(event) {
-        event.preventDefault();
-        $.ajax({
-            url: $(this).data('href'),
-            type: 'GET',
-            data: $(this).serialize(),
-            success: function (data) {
-                $('#style_list').load("{{ path('pumukit_newadmin_series_styles_list') }}");
-                var path = "{{ path('pumukit_newadmin_series_styles_show') }}";
-                $('#style_show').load(path);
-                var message = data.msg;
-                if(data[0] == 'error') {
-                    no_success(message);
-                } else {
-                    success(message);
-                }
-            }
-        });
-        return false;
-    });
-
-</script>

@@ -8,7 +8,19 @@
         </ul>
     </h3>
 
-    <div class="well">
+    <div class="well" data-controller="admin--series-styles"
+         data-admin--series-styles-urls-value="{{ {
+             list: path('pumukit_newadmin_series_styles_list'),
+             create: path('pumukit_newadmin_series_styles_create'),
+             edit: path('pumukit_newadmin_series_styles_edit'),
+             show: path('pumukit_newadmin_series_styles_show', {'id': '__ID__'}),
+             empty: path('pumukit_newadmin_series_styles_show')
+         }|json_encode }}"
+         data-admin--series-styles-messages-value="{{ {
+             created: 'Style created OK'|trans,
+             createError: 'Style created ERROR'|trans,
+             editError: 'Style edited ERROR'|trans
+         }|json_encode }}">
         <div class="row">
             <div id="style_list" class="col-md-3">
                 {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\SeriesStylesController::listAction')) }}

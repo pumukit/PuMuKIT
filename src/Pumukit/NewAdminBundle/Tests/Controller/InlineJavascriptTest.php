@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
 use Pumukit\SchemaBundle\Document\Material;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\SeriesStyle;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\Permission;
@@ -108,6 +109,9 @@ class InlineJavascriptTest extends PumukitTestCase
             'place update' => ['pumukitnewadmin_places_update'],
             'slider' => ['pumukit_newadmin_slider'],
             'dashboard' => ['pumukit_newadmin_dashboard_index_default'],
+            'series styles' => ['pumukit_newadmin_series_styles'],
+            'series style list' => ['pumukit_newadmin_series_styles_list'],
+            'series style' => ['pumukit_newadmin_series_styles_show'],
         ];
     }
 
@@ -174,6 +178,15 @@ class InlineJavascriptTest extends PumukitTestCase
             $this->dm->flush();
 
             return in_array($route, ['pumukitnewadmin_unesco_list', 'pumukitnewadmin_unesco_advance_search_form'], true) ? [] : ['id' => $multimediaObject->getId()];
+        }
+        if (str_starts_with($route, 'pumukit_newadmin_series_styles')) {
+            $style = new SeriesStyle();
+            $style->setName('Style');
+            $style->setText('body { color: red; }');
+            $this->dm->persist($style);
+            $this->dm->flush();
+
+            return 'pumukit_newadmin_series_styles_show' === $route ? ['id' => $style->getId()] : [];
         }
         if ('pumukit_newadmin_dashboard_index_default' === $route) {
             $factory = static::getContainer()->get(FactoryService::class);
