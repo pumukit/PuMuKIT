@@ -6,9 +6,7 @@
             <form id="form_style_edit" name="form_style_edit" action="" method="POST" data-action="submit->admin--series-styles#save">
                 <input type="hidden" name="id" value="{{ style.getId() }}" />
                 <div class="form-group">
-                    <textarea name="style_text" rows="14" cols="100">
-                        {{ style.getText()| raw }}
-                    </textarea>
+                    <textarea name="style_text" rows="14" cols="100">{{ style.getText() }}</textarea>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}Save changes{% endtrans %}</button>

@@ -24,15 +24,17 @@ export default class extends Controller {
 
     remove(event) {
         event.preventDefault();
-        $.ajax({ url: event.params.url, type: 'GET' }).done((response) => {
-            this.reloadList();
-            $('#style_show').load(this.urlsValue.empty);
-            if ('error' === response[0]) {
-                window.no_success(response.msg);
-            } else {
-                window.success(response.msg);
-            }
-        });
+        $.ajax({ url: event.params.url, type: 'GET' })
+            .done((response) => {
+                this.reloadList();
+                $('#style_show').load(this.urlsValue.empty);
+                if ('error' === response[0]) {
+                    window.no_success(response.msg);
+                } else {
+                    window.success(response.msg);
+                }
+            })
+            .fail((xhr, textStatus, errorThrown) => window.no_success(`${errorThrown}: ${xhr.responseJSON?.msg ?? textStatus}`));
     }
 
     save(event) {

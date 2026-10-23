@@ -59,6 +59,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Move the slider manager of the backoffice to the `admin--slider` Stimulus controller.
 - Move the activity chart of the backoffice dashboard to the `admin--dashboard` Stimulus controller and remove the unused Chart.js zoom plugin.
 - Move the series styles manager of the backoffice to the `admin--series-styles` Stimulus controller; saving a style shows the translated message and a failed save shows the error.
+- Render the text of a series style escaped in its editor, so a `</textarea>` in the CSS no longer breaks the page, and stop adding the template indentation to the text on every save; a failed series style deletion shows the error.
 - Answer the picture uploads with JSON only and remove the old iframe responses and the hidden banner URL form.
 - Configure the default protocol of the URL form fields (live channel, person, link and external player), deprecated since Symfony 7.1.
 - Upload thumbnails, banners, materials, live event images and tracks through the Uppy Dashboard; the upload actions answer JSON on request and adding a track to an object without type no longer fails.
