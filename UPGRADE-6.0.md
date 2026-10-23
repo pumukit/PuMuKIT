@@ -286,7 +286,8 @@ explorer of the server tab), `admin--changepub` (status of the multimedia object
 Migrated zones: roles, series types, live channels, legacy events, users, groups, people and
 person relations, permission profiles, tags, links, the inbox explorer, series, playlists and the
 head and tail manager. `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
-`@PumukitNewAdmin/Playlist/changepub.html.twig` are removed. The series and playlist indexes no
+`@PumukitNewAdmin/Playlist/changepub.html.twig` are removed, and so is
+`@PumukitNewAdmin/LiveEvent/create.html.twig`, which pointed to a route that no longer exists. The series and playlist indexes no
 longer define the `serieskeywords` and `mmobjkeywords` globals: `admin--meta-form` creates them
 when a metadata form needs them. Removed global
 functions, reported by `pumukit:check:assets` (also when called as `window.…`):
