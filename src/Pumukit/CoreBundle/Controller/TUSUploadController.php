@@ -58,9 +58,8 @@ class TUSUploadController extends AbstractController
                 }
 
                 if ($request->isMethod('POST')) {
-                    $metadata = $request->headers->get('Upload-Metadata');
-                    if ($metadata && preg_match('/filename (?P<name>[^\s,]+)/', $metadata, $matches)) {
-                        $filename = base64_decode($matches['name']);
+                    $filename = $this->uploadFileName($this->uploadMetadata($request));
+                    if ('' !== $filename) {
                         $targetFile = $path.DIRECTORY_SEPARATOR.$filename;
 
                         if (file_exists($targetFile)) {
@@ -101,21 +100,13 @@ class TUSUploadController extends AbstractController
 
     private function validateFileExtension(Request $request): void
     {
-        $metadata = $request->headers->get('Upload-Metadata');
-        if (!$metadata) {
+        $metadata = $this->uploadMetadata($request);
+        $filename = $this->uploadFileName($metadata);
+        if ('' === $filename) {
             throw new BadRequestHttpException('Missing file metadata.');
         }
 
-        $filename = '';
-        $declaredMimeType = '';
-
-        if (preg_match('/filename (?P<name>[^\s,]+)/', $metadata, $matches)) {
-            $filename = base64_decode($matches['name']);
-        }
-        if (preg_match('/filetype (?P<type>[^\s,]+)/', $metadata, $matches)) {
-            $declaredMimeType = base64_decode($matches['type']);
-        }
-
+        $declaredMimeType = $this->consistentMetadata($metadata, 'type', 'filetype');
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
         if (BlackListExtensions::isBlackListed($extension)) {
@@ -129,5 +120,38 @@ class TUSUploadController extends AbstractController
 
             throw new BadRequestHttpException('File type not allowed by policy.');
         }
+    }
+
+    private function uploadMetadata(Request $request): array
+    {
+        $metadata = [];
+        foreach (explode(',', (string) $request->headers->get('Upload-Metadata')) as $chunk) {
+            $pieces = explode(' ', trim($chunk));
+            if ('' === $pieces[0]) {
+                continue;
+            }
+            if (array_key_exists($pieces[0], $metadata)) {
+                throw new BadRequestHttpException('Inconsistent file metadata.');
+            }
+            $metadata[$pieces[0]] = base64_decode($pieces[1] ?? '');
+        }
+
+        return $metadata;
+    }
+
+    private function uploadFileName(array $metadata): string
+    {
+        return $this->consistentMetadata($metadata, 'name', 'filename');
+    }
+
+    private function consistentMetadata(array $metadata, string $key, string $alias): string
+    {
+        $value = (string) ($metadata[$key] ?? '');
+        $aliasValue = (string) ($metadata[$alias] ?? '');
+        if ('' !== $value && '' !== $aliasValue && $value !== $aliasValue) {
+            throw new BadRequestHttpException('Inconsistent file metadata.');
+        }
+
+        return '' !== $value ? $value : $aliasValue;
     }
 }
