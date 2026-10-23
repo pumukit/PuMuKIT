@@ -26,6 +26,9 @@ jobs:
       - name: Docker ps
         run:  make ps
 
+      - name: Give the workspace to www-data
+        run:  docker compose -f docker-compose.test.yml run --rm --user root php chown -R www-data:www-data /srv/pumukit
+
       - name: Validate composer.json and composer.lock
         run:  make composer-validate
 
