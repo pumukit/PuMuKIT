@@ -63,7 +63,7 @@ export default class extends Controller {
     }
 
     checkOne() {
-        const checked = this.mmTargets.filter((input) => input.checked).length;
+        const checked = this.checkedIds().length;
         $(this.warningTarget).toggle(checked === this.mmTargets.length);
         this.submitTarget.disabled = 0 === checked;
     }
@@ -75,6 +75,7 @@ export default class extends Controller {
             input.checked = checked;
         });
         $(this.warningTarget).toggle(checked);
+        this.submitTarget.disabled = !checked;
     }
 
     reset(event) {
@@ -99,6 +100,11 @@ export default class extends Controller {
 
     save(event) {
         event.preventDefault();
+        if (this.hasMmTarget && 0 === this.checkedIds().length) {
+            this.submitTarget.disabled = true;
+
+            return;
+        }
         $('#myModal').modal('hide');
         const type = this.element.querySelector('input[type=radio]:checked')?.value;
         if (this.passwordTypeValue === type && !this.check()) {
@@ -113,7 +119,7 @@ export default class extends Controller {
             deleteGroups: this.ids('a.delete-broadcast-group-item'),
         };
         if (this.hasMmTarget) {
-            data.ids = this.mmTargets.filter((input) => input.checked).map((input) => input.id);
+            data.ids = this.checkedIds();
         }
         $.ajax({ url: this.urlValue, type: 'POST', data })
             .fail((xhr, textStatus, errorThrown) => window.no_success(`${errorThrown}: ${xhr.responseText}`))
@@ -132,6 +138,10 @@ export default class extends Controller {
 
     updateGroupsButton() {
         this.submitTarget.disabled = !this.hasCurrentTarget || '' === this.currentTarget.innerHTML.trim();
+    }
+
+    checkedIds() {
+        return this.mmTargets.filter((input) => input.checked).map((input) => input.id);
     }
 
     passwords() {
