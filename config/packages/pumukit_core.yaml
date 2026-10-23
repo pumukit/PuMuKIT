@@ -93,7 +93,6 @@ services:
   Pumukit\CoreBundle\EventListener\InboxUploadListener:
     class: Pumukit\CoreBundle\EventListener\InboxUploadListener
     arguments:
-      $inboxPath: '%pumukit.inbox%'
       $kernelProjectDir: '%kernel.project_dir%'
     tags:
       - { name: "kernel.event_listener", event: "upload.inbox", method: "autoImport" }

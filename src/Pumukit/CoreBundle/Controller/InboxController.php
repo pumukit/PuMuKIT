@@ -53,7 +53,7 @@ class InboxController extends AbstractController
         $inboxPath = $this->inboxService->inboxPath();
 
         $folder = trim($formData['folder']);
-        $folder = $this->sanitizeFolderName($folder);
+        $folder = $this->inboxService->folderName($folder);
         $urlUpload = $inboxPath.'/'.$folder;
 
         if (!$formData || empty($folder) || !$this->checkFolderAndCreateIfNotExist($folder)) {
@@ -107,25 +107,14 @@ class InboxController extends AbstractController
         try {
             $this->uploadDispatcherService->dispatchUploadFromInbox(
                 $this->getUser(),
-                $request->request->get('fileName'),
-                $request->request->get('series'),
-                $request->request->get('profile', 'master_copy')
+                (string) $request->request->get('fileName'),
+                (string) $request->request->get('series'),
+                (string) $request->request->get('profile', 'master_copy')
             );
         } catch (\Exception $exception) {
             return new JsonResponse(['success' => false]);
         }
 
         return new JsonResponse(['success' => true]);
-    }
-
-    private function sanitizeFolderName($folder): string
-    {
-        $clean = preg_replace('/[^a-zA-Z0-9_ -]/', '', $folder);
-
-        if (empty($clean)) {
-            throw new \Exception('Folder name must contain at least one valid character (letters, numbers, underscores, or dashes).');
-        }
-
-        return $clean;
     }
 }

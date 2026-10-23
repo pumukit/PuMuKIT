@@ -45,7 +45,7 @@ class TUSUploadController extends AbstractController
 
         if (!empty($series)) {
             try {
-                $folder = $this->sanitizeFolderName($series);
+                $folder = $this->inboxService->folderName($series);
 
                 $basePath = realpath($this->inboxService->inboxPath());
                 if (!$basePath) {
@@ -85,17 +85,6 @@ class TUSUploadController extends AbstractController
         $server->middleware()->skip(Cors::class);
 
         return $server->serve();
-    }
-
-    private function sanitizeFolderName($folder): string
-    {
-        $clean = preg_replace('/[^a-zA-Z0-9_ -]/', '', $folder);
-
-        if (empty($clean)) {
-            throw new \Exception('Folder name must contain at least one valid character (letters, numbers, underscores, or dashes).');
-        }
-
-        return $clean;
     }
 
     private function validateFileExtension(Request $request): void

@@ -6,32 +6,21 @@ namespace Pumukit\CoreBundle\EventListener;
 
 use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Event\UploadFileEvent;
+use Pumukit\CoreBundle\Services\InboxService;
 use Symfony\Component\Process\Process;
 
 class InboxUploadListener
 {
-    private $inboxPath;
-    private $kernelProjectDir;
-    private LoggerInterface $logger;
-
-    public function __construct(LoggerInterface $logger, string $inboxPath, string $kernelProjectDir)
-    {
-        $this->inboxPath = $inboxPath;
-        $this->kernelProjectDir = $kernelProjectDir;
-        $this->logger = $logger;
-    }
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        private readonly InboxService $inboxService,
+        private readonly string $kernelProjectDir,
+    ) {}
 
     public function autoImport(UploadFileEvent $event): void
     {
-        $fileName = $event->getFileName();
+        $filePath = $this->inboxService->uploadedFilePath($event->getFileName(), $event->getSeries());
         $series = $event->getSeries();
-
-        $subdirectoryPath = $this->inboxPath.'/'.$series;
-        if (is_dir($subdirectoryPath)) {
-            $filePath = $subdirectoryPath.'/'.$fileName;
-        } else {
-            $filePath = $this->inboxPath.'/'.$fileName;
-        }
 
         $command = [
             'php',
