@@ -1,7 +1,13 @@
 {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
 
 <div class="well" style="overflow:hidden">
-    {{ form_start(form, {'attr': {'id': 'form_event'}}) }}
+    {{ form_start(form, {'attr': {
+        'id': 'form_event',
+        'data-controller': 'admin--meta-form',
+        'data-action': 'submit->admin--live-event#saveEvent change->admin--meta-form#changed',
+        'data-admin--live-event-url-param': path('pumukit_new_admin_live_event_eventtab', {'id': multimediaObject.getId()}),
+        'data-admin--meta-form-remember-value': '#remember_save_event'
+    }}) }}
     <div class="col-xs-12">
         <div class="row">
             <div class="col-xs-8">
@@ -12,12 +18,12 @@
                 </div>
             </div>
             <div class="col-xs-4 text-right">
-                <button id="pumukit_new_admin_event_cancel" type="button" class="btn btn-default btn-raised">
+                <button id="pumukit_new_admin_event_cancel" type="button" class="btn btn-default btn-raised" data-action="click->admin--meta-form#cancel">
                     {% trans %}Cancel{% endtrans %}
                     <div class="ripple-wrapper"></div>
                 </button>
                 {% if autocomplete_series is defined and autocomplete_series %}
-                    <button id="pumukit_new_admin_autocomplete_series" type="button" class="btn btn-primary btn-raised" data-id="{{ multimediaObject.id }}">
+                    <button id="pumukit_new_admin_autocomplete_series" type="button" class="btn btn-primary btn-raised" data-id="{{ multimediaObject.id }}" data-action="click->admin--live-event#autocompleteSeries" data-admin--live-event-id-param="{{ multimediaObject.id|json_encode }}">
                         {% trans %}Autocomplete series{% endtrans %}
                     </button>
                 {% endif %}
@@ -52,7 +58,7 @@
             <div class="form-group row">
                 <div class="col-sm-6">
                     <label for="live_channel_select">{% trans %}Search Channels{% endtrans %}</label>
-                    <select id="live_channel_select" class="form-control"></select>
+                    <select id="live_channel_select" class="form-control" data-admin--live-event-target="channel"></select>
                 </div>
                 <div class="col-sm-6">
                     <label for="live_channel_input_name">{% trans %}Selected Channel{% endtrans %}</label>
@@ -69,7 +75,7 @@
                 <div class="checkbox">
                     <strong>{% trans %}External URL{% endtrans %}</strong>
                     <label for="allowExternalURL">
-                        <input type="checkbox" id="allowExternalURL" name="allowURLExternal" {{ externalURL }}>
+                        <input type="checkbox" id="allowExternalURL" name="allowURLExternal" data-action="click->admin--live-event#toggleExternalUrl" {{ externalURL }}>
                     </label>
                 </div>
                 {% set iframeURL = '' %}
@@ -107,7 +113,7 @@
                 <div class="checkbox">
                     <strong>{% trans %}Contact{% endtrans %}</strong>
                     <label for="allowContact">
-                        <input type="checkbox" id="allowContact" {{ contact }}>
+                        <input type="checkbox" id="allowContact" data-action="click->admin--live-event#toggleContact" {{ contact }}>
                     </label>
                 </div>
                 <input id="contact" type="email" name="pumukitnewadmin_live_event[contact]" class="form-control" {% if contact != '' %}value="{{ multimediaObject.getEmbeddedSocial().getEmail() }}" {% else %}disabled{% endif %}/>
@@ -135,11 +141,8 @@
 
             <div class="form-group">
               <a style="color:#666; text-decoration:underline" href="#"
-                 onclick="$('#pumukitnewadmin_live_event_i18n_already_held_message').toggle();
-                          $('#pumukitnewadmin_live_event_i18n_not_yet_held_message').toggle();
-                          $('#pumukitnewadmin_live_event_poster_image').toggle();
-                          $('#pumukitnewadmin_live_event_poster_text_color').toggle();
-                          return false;">
+                 data-action="click->admin--actions#toggle"
+                 data-admin--actions-selectors-param="{{ ['#pumukitnewadmin_live_event_i18n_already_held_message', '#pumukitnewadmin_live_event_i18n_not_yet_held_message', '#pumukitnewadmin_live_event_poster_image', '#pumukitnewadmin_live_event_poster_text_color']|json_encode }}">
                 <span id="html_text_arr_1">&#9654;</span> <span style="display:none" id="html_text_arr_2">&#9660;</span>
                 {% trans %}Show configuration for messages, poster image and color text.{% endtrans %}
                 <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Click to edit messages, poster image and color text{% endtrans %}"></i>
@@ -184,9 +187,8 @@
             {% if enableTwitter %}
             <div class="form-group">
               <a style="color:#666; text-decoration:underline" href="#"
-                 onclick="$('#pumukitnewadmin_live_event_twitter_hashtag').toggle();
-                          $('#pumukitnewadmin_live_event_twitter_widget_id').toggle();
-                          return false;">
+                 data-action="click->admin--actions#toggle"
+                 data-admin--actions-selectors-param="{{ ['#pumukitnewadmin_live_event_twitter_hashtag', '#pumukitnewadmin_live_event_twitter_widget_id']|json_encode }}">
                 <span id="html_text_arr_1">&#9654;</span> <span style="display:none" id="html_text_arr_2">&#9660;</span>
                 {% trans %}Show configuration for Twitter.{% endtrans %}
                 <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Click to edit Twitter configuration{% endtrans %}"></i>
@@ -199,7 +201,7 @@
             </div>
             <div class="form-group" style="display:none" id="pumukitnewadmin_live_event_twitter_widget_id">
               <label for="twitter_widget_id">{% trans %}Twitter widget id{% endtrans %}</label>
-              <i id="twitter-widget-id-tooltip" class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans with {'%twitterAccountsLinkColor%': twitterAccountsLinkColor} %}Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.{% endtrans %}"></i>
+              <i id="twitter-widget-id-tooltip" data-admin--live-event-target="tooltip" class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans with {'%twitterAccountsLinkColor%': twitterAccountsLinkColor} %}Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.{% endtrans %}"></i>
               <input id="twitter_widget_id" type="text" name="pumukitnewadmin_live_event[twitter_widget_id]" class="form-control"  value="{{ multimediaObject.getEmbeddedSocial() ? multimediaObject.getEmbeddedSocial().getTwitter() : '' }}" />
             </div>
             {% endif %}
@@ -207,119 +209,3 @@
     </div>
     {{ form_end(form) }}
 </div>
-
-<script type="text/javascript">
-
-    $('#form_event').on('change', function(e){
-        if ('checkbox' == e.target.type || e.target.value != e.target.defaultValue) {
-            $('#remember_save_event').css('display', 'inline-block');
-        }
-    });
-
-    $('#form_event').on('submit', function (event) {
-        event.preventDefault();
-        $('#remember_save_event').hide();
-        $.ajax({
-            url: '{{ path('pumukit_new_admin_live_event_eventtab', {'id': multimediaObject.getId() }) }}',
-            method: 'POST',
-            data: $('#form_event').serialize(),
-            success: function (response) {
-                if (response.error){
-                    no_success(response.error);
-                }else{
-                    var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
-                    $('#list_events').load(mm);
-
-                    $('#inputMMTitle').val($('#pumukitnewadmin_live_event_i18n_name_{{ app.request.getLocale() }}').val());
-
-                    var message = '{{ "Event successfully updated."|trans|e("js") }}';
-                    success(message);
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                if (textStatus != 'error') {
-                    no_success(errorThrown + ': ' + textStatus);
-                } else {
-                    no_success(errorThrown + ': ' + jqXHR.responseJSON.status);
-                }
-            }
-        });
-        return false;
-    });
-
-    {% if enableContactForm %}
-    $('#allowContact').on('click', function () {
-        var contact = $('#contact');
-        var isDisabled = contact.prop('disabled');
-        if (isDisabled) {
-            contact.prop('disabled', false);
-        } else {
-            contact.prop('disabled', true);
-        }
-    });
-    {% endif %}
-
-    $('#allowExternalURL').on('click', function () {
-        var externalURL = $('#externalURL');
-        var iframe = $('#iframeURL');
-        var isDisabled = externalURL.prop('disabled');
-        if (isDisabled) {
-            externalURL.prop('disabled', false);
-            iframe.prop('disabled', false);
-        } else {
-            externalURL.prop('disabled', true);
-            iframe.prop('disabled', true);
-            $('#externalURL').val("");
-        }
-    });
-
-    {% if enableTwitter %}
-    $("#twitter-widget-id-tooltip").tooltip({container: 'body'});
-    {% endif %}
-
-
-    $('#pumukit_new_admin_autocomplete_series').on('click',function(event) {
-        event.preventDefault();
-        var id = $(this).data('id');
-        var path = "{{ path('pumukit_new_admin_autocomplete_series_with_event_data', {'id': '__ID__'}) }}";
-        $.ajax({
-            url: path.replace('__ID__', id),
-            method: 'POST',
-            success: function () {
-                var url = "{{ path('pumukit_new_admin_live_event_edit', {'id': '__ID__'}) }}";
-                url = url.replace('__ID__', id);
-                $('#edit_events').load(url);
-                var message = '{{ "Series successfully updated."|trans|e("js") }}';
-                success(message);
-            }
-        });
-        return false;
-    });
-
-    $("#live_channel_select").select2({
-        ajax: {
-            url: "{{ path('pumukit_new_admin_live_event_channel_suggest') }}",
-            delay: 250,
-            processResults: function (data) {
-                return {
-                    results: data
-                };
-            },
-        },
-        language: "{{ app.request.locale }}",
-        placeholder: "{% trans %}Search Channels{% endtrans %}",
-        allowClear: true
-    });
-
-    $("#live_channel_select").on('select2:select', function (e) {
-        var data = e.params.data;
-
-        $("#live_channel_input_name").val(data.text);
-        $("#live_channel_input_id").val(data.id);
-    });
-
-    $("#live_channel_select").on('select2:unselect', function (e) {
-        $("#live_channel_input_name").val("");
-        $("#live_channel_input_id").val("");
-    });
-</script>

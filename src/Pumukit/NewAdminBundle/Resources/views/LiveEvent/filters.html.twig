@@ -4,18 +4,18 @@
             <p><strong>{% trans %}Filter by{% endtrans %}:</strong></p>
             <ul class="list-unstyled">
                 <li>
-                    - <a class="filterSearchEvents" data-type="now" href="#">{% trans %}Live events{% endtrans %}</a>
+                    - <a class="filterSearchEvents" data-type="now" href="#" data-action="click->admin--live-event#filterType" data-admin--live-event-type-param="now">{% trans %}Live events{% endtrans %}</a>
                 </li>
                 <li>
-                    - <a class="filterSearchEvents" data-type="future" href="#">{% trans %}Future events{% endtrans %}</a>
+                    - <a class="filterSearchEvents" data-type="future" href="#" data-action="click->admin--live-event#filterType" data-admin--live-event-type-param="future">{% trans %}Future events{% endtrans %}</a>
                 </li>
                 <li>
-                    - <a class="filterSearchEvents" data-type="today" href="#">{% trans %}Today events list{% endtrans %}</a>
+                    - <a class="filterSearchEvents" data-type="today" href="#" data-action="click->admin--live-event#filterType" data-admin--live-event-type-param="today">{% trans %}Today events list{% endtrans %}</a>
                 </li>
             </ul>
         </div>
     </div>
-    <form id="filter_events" class="form" onsubmit="$('#list_events').load('{{ path('pumukit_new_admin_live_event_list') }}', $(this).serialize()); return false;" action="{{ path('pumukit_new_admin_live_event_list') }}" method="GET">
+    <form id="filter_events" class="form" data-action="submit->admin--live-event#filter" action="{{ path('pumukit_new_admin_live_event_list') }}" method="GET">
         <fieldset>
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -52,35 +52,8 @@
             </div>
         </fieldset>
         <div class="text-right">
-            <input type="button" class="btn btn-default btn-raised resetSession" value="{% trans %}reset{% endtrans %}">
+            <input type="button" class="btn btn-default btn-raised resetSession" data-action="click->admin--live-event#resetFilters" value="{% trans %}reset{% endtrans %}">
             <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
         </div>
     </form>
 </div>
-
-<script type="text/javascript">
-    $('.filterSearchEvents').on('click', function(event) {
-        event.preventDefault();
-        var url = "{{ path('pumukit_new_admin_live_event_list', {'type' : '__type__'}) }}";
-        url = url.replace('__type__', $(this).data('type'));
-        $.ajax({
-            url: url,
-            method: 'GET',
-            success: function(response){
-                $('#list_events').html(response);
-            }
-        });
-    });
-
-    $('.resetSession').on('click', function(event) {
-        event.preventDefault();
-        $('#filter_events')[0].reset();
-        $.ajax({
-            url: "{{ path('pumukit_newadmin_live_events_reset_session') }}",
-            method: 'GET',
-            success: function(response){
-                $('#list_events').load("{{ path('pumukit_new_admin_live_event_list') }}");
-            }
-        });
-    })
-</script>

@@ -53,6 +53,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Move the tracks, jobs and materials of the multimedia object editor to Stimulus controllers (`admin--track-list`, `admin--job-priority`); the material uploads answer JSON only and the multimedia object editor has no inline JavaScript left.
 - Refresh again the track list every 8 seconds while the multimedia object has pending jobs; it stopped in 5.0.0 because the flag was set inside an included template.
 - Move the UNESCO catalogue of the backoffice to the `admin--unesco` Stimulus controller; its fragments work inside project overrides of the catalogue index, and a failed delete or clone shows the server error.
+- Move the live events zone of the backoffice to the `admin--live-event` Stimulus controller; series suggestions are rendered as text.
 - Answer the picture uploads with JSON only and remove the old iframe responses and the hidden banner URL form.
 - Configure the default protocol of the URL form fields (live channel, person, link and external player), deprecated since Symfony 7.1.
 - Upload thumbnails, banners, materials, live event images and tracks through the Uppy Dashboard; the upload actions answer JSON on request and adding a track to an object without type no longer fails.

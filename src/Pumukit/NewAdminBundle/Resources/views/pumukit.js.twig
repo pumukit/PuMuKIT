@@ -13,16 +13,6 @@ window.click_checkbox_all = function(element, value)
   $('input.'+element+'_checkbox').prop('checked', value);
 }
 
-window.click_fila_edit_urls = function(element, tr, show_url, update_url)
-{
-    $('#preview_'+element).load(show_url);
-
-    $('#edit_'+element).load(update_url, function(){init_tabs();});
-
-    $('.success').removeClass('success');
-    $(tr.parentNode).addClass('success');
-}
-
 window.dblclick_preview_mm = function(id)
 {
     var url = "{{ path('pumukitnewadmin_mms_modal_preview', {'id': '__id__'})|raw }}";
@@ -165,20 +155,3 @@ $(document).ready(function(){
         $('.modal-content').html('');
     });
 });
-
-window.init_mmobj_materialtags = function() {
-    $inputs = $('input.mmobj.materialtags');
-    $inputs.materialtags({
-        typeaheadjs: {
-            name: 'keywords',
-            displayKey: '_id',
-            valueKey: '_id',
-            source: window.mmobjkeywords.ttAdapter()
-        }
-    });
-
-    $inputs.on('itemAdded', function(event) {
-        window.mmobjkeywords.add({'_id': event.item})
-    });
-
-}

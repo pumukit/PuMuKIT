@@ -9,15 +9,15 @@
                     <div class="form-group">
                         <label for="inputMMId" class="col-xs-2 control-label">Id:</label>
                         <div class="col-xs-10 input-group">
-                            <input type="text" class="form-control" id="inputMMId" readonly onclick="select()" value="{{ multimediaObject.id }}">
+                            <input type="text" class="form-control" id="inputMMId" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ multimediaObject.id }}">
                         </div>
                         <label for="inputMMTitle" class="col-xs-2 control-label">{% trans %}Title{% endtrans %}:</label>
                         <div class="col-xs-10 input-group">
-                            <input type="text" class="form-control" id="inputMMTitle" readonly onclick="select()" value="{{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}">
+                            <input type="text" class="form-control" id="inputMMTitle" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}">
                         </div>
                         <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">Url:</label>
                         <div class="col-xs-10 input-group hidden-naked">
-                            <input type="text" class="form-control" id="inputMMUrl" readonly onclick="select()" value="{{ video_url }}">
+                            <input type="text" class="form-control" id="inputMMUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ video_url }}">
                             <span class="input-group-addon">
                                 <a href="{{ video_url }}" target="_blank" title="{% trans %}Video URL{% endtrans %}">
                                     <i class="mdi-action-exit-to-app"></i>
@@ -26,7 +26,7 @@
                         </div>
                         <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">Iframe:</label>
                         <div class="col-xs-10 input-group hidden-naked">
-                            <input type="text" class="form-control" id="inputIframeUrl" readonly onclick="select()" value="{{ video_iframe_url }}">
+                            <input type="text" class="form-control" id="inputIframeUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ video_iframe_url }}">
                             <span class="input-group-addon">
                                 <a href="{{ video_iframe_url }}" target="_blank" title="{% trans %}Iframe URL{% endtrans %}">
                                     <i class="mdi-action-exit-to-app"></i>

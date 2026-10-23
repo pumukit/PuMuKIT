@@ -5,7 +5,12 @@
     <h4 class="modal-title" id="myModalLabel">{% trans %}Create/Update session{% endtrans %}</h4>
 </div>
 
-{{ form_start(form, {'attr' : {'id': 'event_session_form'}}) }}
+{{ form_start(form, {'attr' : {
+    'id': 'event_session_form',
+    'data-action': 'submit->admin--live-event#saveSession',
+    'data-admin--live-event-url-param': path('pumukit_new_admin_live_event_sessiontab', {'id': multimediaObject.getId()}),
+    'data-admin--live-event-list-param': path('pumukit_new_admin_live_event_session_list', {'id': multimediaObject.getId()})
+}}) }}
     <div class="modal-body">
         {% if session_id is defined %}
             <div class="col-xs-12">
@@ -35,41 +40,3 @@
         </div>
     </div>
 {{ form_end(form)}}
-
-<script type="text/javascript">
-    $('#event_session_form').on('submit',function(event){
-        event.preventDefault();
-
-        var start = $('#pumukitnewadmin_event_session_start').val();
-        var end = $('#pumukitnewadmin_event_session_ends').val();
-
-        if(start <= end) {
-            $('#updatesessionmodal').modal('hide');
-            $.ajax({
-                url: '{{ path('pumukit_new_admin_live_event_sessiontab', {'id': multimediaObject.getId() }) }}',
-                method: 'POST',
-                data: $('#event_session_form').serialize(),
-                success: function (response, textStatus, jqXHR) {
-                    if (jqXHR.responseText.indexOf('modal-header') != -1) {
-                        var message = '{{ "There was an error in updating the event session."|trans|e("js") }}';
-                        no_success(message);
-                    } else {
-                        var mm = "{{ path('pumukit_new_admin_live_event_session_list', {'id': multimediaObject.getId()}) }}";
-                        var pathList = "{{ path('pumukit_new_admin_live_event_list') }}";
-                        $('#list_events').load(pathList);
-                        $('#list_live_events').load(mm);
-                        $('#updatesessionmodal').hide();
-                        var message = '{{ "Live session successfully updated."|trans|e("js") }}';
-                        success(message);
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    no_success(errorThrown + ': ' + textStatus);
-                }
-            });
-            return false;
-        } else {
-            no_success('{{ "Session must start before ends"|trans|e("js") }}');
-        }
-    });
-</script>

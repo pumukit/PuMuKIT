@@ -296,7 +296,7 @@ running jobs every 15 seconds), `admin--pic-sync` (reloads the thumbnails when a
 reports a different number of pictures), `admin--modal-cleanup` (removes the player of the
 preview modal when it closes), `admin--external-player` (preview and save of the external player
 modals), `admin--track-list` (reloads the links after a track change and captures frames),
-`admin--job-priority` (priority of a pending job), `admin--unesco` (UNESCO catalogue), `admin--group-lists` (the available and selected group lists of the admin groups and the
+`admin--job-priority` (priority of a pending job), `admin--unesco` (UNESCO catalogue), `admin--live-event` (live events), `admin--group-lists` (the available and selected group lists of the admin groups and the
 broadcast groups: `name`, `showCodes`, `editable`, `message`; it dispatches `admin--group-lists:changed`
 after a move and rebuilds the lists on `admin--group-lists:load`), `admin--mm-groups` (save and reset
 of the admin groups, owner deletion and the warning shown when the user would lose access),
@@ -330,7 +330,15 @@ keyword indexes: `pumukit:check:assets` reports the overrides that still define 
 form uses `admin--meta-form` and `admin--modal-form` like the multimedia object one, with a `block`
 flag in its `dates` value so a publication date before the recording date stops the save. An
 override of `@PumukitNewAdmin/UNESCO/updatemeta.html.twig` no longer gets the "Press OK" notice
-from `pumukit.js.twig`: copy the attributes of the bundle template. `@PumukitNewAdmin/UNESCO/listtagsajax.html.twig` is removed: the UNESCO tag
+from `pumukit.js.twig`: copy the attributes of the bundle template.
+
+The live events zone (list, filters, batch delete, row menu, event form with the channel select2,
+sessions and the series modal) uses the `admin--live-event` controller, started through
+`@PumukitNewAdmin/LiveEvent/_controller.html.twig` on the index, on the list (which also loads the
+selected event) and on the series modal. Its event form uses `admin--meta-form` for the "Press OK"
+notice and the cancel button, and the index no longer defines the keyword indexes. The
+`event_option`, `sort_field`, `filterSearchEvents`, `resetSession`, `edit_session`, `clone_session` and
+`delete_session` classes are kept for styling only. `@PumukitNewAdmin/UNESCO/listtagsajax.html.twig` is removed: the UNESCO tag
 tab uses `@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig`, and the `admin--tag-picker`
 controller of the tab decides which blocks to refresh after adding or removing a tag. `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
 `@PumukitNewAdmin/Playlist/changepub.html.twig` are removed, and so is
@@ -383,6 +391,8 @@ functions, reported by `pumukit:check:assets` (also when called as `window.…`)
 | `getAllDnDChecked()`, `dragEndCheckbox()`, `dragItem()`, `dragEnd()`, `dropTagItem()`, `updateMultimediaObjectByTag()`, `dropItem()`, `updateMultimediaObject()` | `admin--unesco` |
 | `procesaOk()` | `admin--meta-form#hideRemember` |
 | `dblclick_fila_url()` | `admin--actions#navigate` |
+| `click_fila_edit_urls()` | `admin--actions#edit` |
+| `init_mmobj_materialtags()` | the `keywords` value of `admin--meta-form` |
 | `extract_pic()` | `admin--track-list#extractPic` |
 | `toggleHide()` | `admin--actions#load` |
 | `select_group()`, `add_group()`, `delete_group()`, `create_element_group_in_add_groups()`, `create_element_group_in_delete_groups()`, `delete_element_group_from_select()` | `admin--group-lists` |

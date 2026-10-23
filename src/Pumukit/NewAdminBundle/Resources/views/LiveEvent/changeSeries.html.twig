@@ -1,4 +1,4 @@
-<form method="POST" action="" id="form_change_event_serie">
+<form method="POST" action="" id="form_change_event_serie" {% include '@PumukitNewAdmin/LiveEvent/_controller.html.twig' %} data-action="submit->admin--live-event#changeSeries">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
@@ -18,7 +18,7 @@
                 <input id="mmo_series_change" name="multimediaObject_change" type="hidden" value="{{ multimediaObject.getId() }}" />
             {% endif %}
             <label for="seriesSuggest">{% trans %}Series{% endtrans %}</label>
-            <input type="text" id="seriesSuggest" name="seriesSuggestAutocomplete" class="form-control"/>
+            <input type="text" id="seriesSuggest" name="seriesSuggestAutocomplete" class="form-control" data-admin--live-event-target="series"/>
             <input type="hidden" id="seriesSuggestValidate" name="seriesSuggest" value="" class="form-control"/>
         </div>
     </div>
@@ -35,53 +35,3 @@
         </div>
     </div>
 </form>
-
-<script type="text/javascript">
-    $("#seriesSuggest").autocomplete({
-        source: "{{ path('pumukit_new_admin_live_event_series_suggest') }}",
-        delay: 250,
-        minLength: 2,
-        select: function (event, ui) {
-            $("#seriesSuggestValidate").val(ui.item.id);
-        }
-    }).autocomplete("instance")._renderItem = function (ul, item) {
-        return $("<li>")
-            .append("<a>" + item.id + " - " + item.title + "<br><span class='form-control'>" + "</span></a>")
-            .appendTo(ul)
-    };
-
-    $('#form_change_event_serie').on('submit', function(event) {
-        event.preventDefault();
-        if('' != $('#seriesSuggestValidate').val()) {
-            var path = "{{ path('pumukit_new_admin_live_event_create') }}";
-            if($('#mmo_series_change').length) {
-                path = "{{ path('pumukitnewadmin_live_event_edit_series', {'multimediaObject': '__ID__'}) }}";
-                path = path.replace('__ID__', $("#mmo_series_change").val());
-            }
-            $.ajax({
-                url: path,
-                method: 'POST',
-                data: $('#seriesSuggestValidate'),
-                success: function (response) {
-                    if (response.error){
-                        no_success(response.error);
-                    }else{
-                        $('#myModal').modal('hide');
-                        var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
-                        $('#list_events').load(mm);
-
-                        $('#seriesSuggestValidate').val("");
-                        var message = '{{ "Event successfully updated."|trans|e("js") }}';
-                        success(message);
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    no_success(errorThrown + ': ' + textStatus);
-                }
-            });
-            return false;
-        } else {
-            no_success('Check selected serie');
-        }
-    })
-</script>

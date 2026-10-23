@@ -1,0 +1,27 @@
+data-controller="admin--live-event"
+data-admin--live-event-urls-value="{{ {
+    list: path('pumukit_new_admin_live_event_list'),
+    listType: path('pumukit_new_admin_live_event_list', {'type': '__type__'}),
+    create: path('pumukit_new_admin_live_event_create'),
+    deleteSelected: path('pumukit_new_admin_live_event_delete_selected'),
+    sorting: path('pumukit_new_admin_live_event_set_sorting'),
+    resetSession: path('pumukit_newadmin_live_events_reset_session'),
+    edit: path('pumukit_new_admin_live_event_edit', {'id': '__ID__'}),
+    show: path('pumukit_new_admin_live_event_show', {'id': '__ID__'}),
+    autocompleteSeries: path('pumukit_new_admin_autocomplete_series_with_event_data', {'id': '__ID__'}),
+    editSeries: path('pumukitnewadmin_live_event_edit_series', {'multimediaObject': '__ID__'}),
+    seriesSuggest: path('pumukit_new_admin_live_event_series_suggest'),
+    channelSuggest: path('pumukit_new_admin_live_event_channel_suggest')
+}|json_encode }}"
+data-admin--live-event-messages-value="{{ {
+    deleteSelected: 'Do you want delete this events?'|trans,
+    deleted: 'Event'|trans ~ ' ' ~ 'successfully deleted.'|trans,
+    updated: 'Event successfully updated.'|trans,
+    seriesUpdated: 'Series successfully updated.'|trans,
+    sessionError: 'There was an error in updating the event session.'|trans,
+    sessionUpdated: 'Live session successfully updated.'|trans,
+    sessionDates: 'Session must start before ends'|trans,
+    checkSeries: 'Check selected serie'|trans,
+    channel: 'Search Channels'|trans
+}|json_encode }}"
+data-admin--live-event-locale-value="{{ app.request.getLocale() }}"

@@ -7,7 +7,10 @@ namespace Pumukit\NewAdminBundle\Tests\Controller;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
+use Pumukit\SchemaBundle\Document\EmbeddedEvent;
+use Pumukit\SchemaBundle\Document\EmbeddedEventSession;
 use Pumukit\SchemaBundle\Document\Material;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\User;
@@ -81,6 +84,8 @@ class InlineJavascriptTest extends PumukitTestCase
             'multimedia objects' => ['pumukitnewadmin_mms_index'],
             'multimedia object editor' => ['pumukitnewadmin_mms_edit'],
             'unesco editor' => ['pumukit_new_admin_unesco_edit'],
+            'live events' => ['pumukit_new_admin_live_event_index'],
+            'live event editor' => ['pumukit_new_admin_live_event_edit'],
             'unesco list' => ['pumukitnewadmin_unesco_list'],
             'unesco preview' => ['pumukitnewadmin_unesco_show'],
             'unesco search' => ['pumukitnewadmin_unesco_advance_search_form'],
@@ -103,6 +108,26 @@ class InlineJavascriptTest extends PumukitTestCase
             $factory->createMultimediaObject($series, true);
 
             return ['id' => $series->getId()];
+        }
+        if (in_array($route, ['pumukit_new_admin_live_event_index', 'pumukit_new_admin_live_event_edit'], true)) {
+            $this->tag('PUBCHANNELS', 'ROOT|PUBCHANNELS|');
+            $factory = static::getContainer()->get(FactoryService::class);
+            $multimediaObject = $factory->createMultimediaObject($factory->createSeries(), true);
+            $multimediaObject->setType(MultimediaObject::TYPE_LIVE);
+            $event = new EmbeddedEvent();
+            $event->setDate(new \DateTime());
+            $event->setName('Event', 'en');
+            $event->setDescription('', 'en');
+            $session = new EmbeddedEventSession();
+            $session->setStart(new \DateTime('+1 day'));
+            $session->setEnds(new \DateTime('+1 day +1 hour'));
+            $session->setDuration(3600);
+            $event->addEmbeddedEventSession($session);
+            $this->dm->persist($event);
+            $multimediaObject->setEmbeddedEvent($event);
+            $this->dm->flush();
+
+            return 'pumukit_new_admin_live_event_index' === $route ? [] : ['id' => $multimediaObject->getId()];
         }
         if ('pumukitnewadmin_series_updatebroadcast' === $route) {
             $factory = static::getContainer()->get(FactoryService::class);

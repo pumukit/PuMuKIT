@@ -1,11 +1,13 @@
-<div class="">
+<div {% include '@PumukitNewAdmin/LiveEvent/_controller.html.twig' %}
+     data-admin--live-event-autoload-value="true"
+     data-admin--live-event-current-value="{{ app.session.get('admin/live/event/id') }}">
     <table class="table  table-striped">
         <thead>
         <tr>
             <th id="th-checkbox" width="1%">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" onclick="window.click_checkbox_all('events', this.checked)">
+                        <input type="checkbox" data-action="click->admin--actions#checkAll" data-admin--actions-name-param="events">
                     </label>
                 </div>
             </th>
@@ -13,7 +15,7 @@
             <th id="th-videos-vod" width="8%">{% trans %}Videos VOD{% endtrans %}</th>
             <th id="th-image" width="5%"></th>
             <th id="th-title">
-                <a href="#" class="sort_field" data-type="embeddedEvent.name">
+                <a href="#" class="sort_field" data-type="embeddedEvent.name" data-action="click->admin--live-event#sort" data-admin--live-event-field-param="{{ 'embeddedEvent.name'|json_encode }}">
                     {% trans %}Event name{% endtrans %}
                     {% if app.session.get('admin/live/event/sort/field') is not null and app.session.get('admin/live/event/sort/field') is not empty %}
                         {% set type = app.session.get('admin/live/event/sort/field')|split('.') %}
@@ -26,7 +28,7 @@
 
             <th id="th-number-sessions" width="12%">{% trans %}Sessions number{% endtrans %}</th>
             <th id="th-create-date" width="12%">
-                <a href="#" class="sort_field" data-type="_id">
+                <a href="#" class="sort_field" data-type="_id" data-action="click->admin--live-event#sort" data-admin--live-event-field-param="{{ '_id'|json_encode }}">
                 {% if app.session.get('admin/live/event/sort/field') is not null and app.session.get('admin/live/event/sort/field') is not empty %}
                     {% if '_id' == app.session.get('admin/live/event/sort/field') %}
                         {{ app.session.get('admin/live/event/sort/type')=='desc'?'&#x25BE;':'&#x25B4;' }}
@@ -36,7 +38,7 @@
                 </a>
             </th>
             <th id="th-date" width="12%">
-                <a href="#" class="sort_field" data-type="embeddedEvent.embeddedEventSession.start">
+                <a href="#" class="sort_field" data-type="embeddedEvent.embeddedEventSession.start" data-action="click->admin--live-event#sort" data-admin--live-event-field-param="{{ 'embeddedEvent.embeddedEventSession.start'|json_encode }}">
                     {% trans %}Broadcasting date{% endtrans %}
                     {% if app.session.get('admin/live/event/sort/field') is not null and app.session.get('admin/live/event/sort/field') is not empty %}
                         {% if 'embeddedEvent.embeddedEventSession.start' == app.session.get('admin/live/event/sort/field') %}
@@ -69,10 +71,10 @@
                         {{ series|count_multimedia_objects }} {% trans %} videos{% endtrans %}
                     </a>
                 </td>
-                <td headers="th-image" style="cursor: pointer" width="3%" onclick="click_fila_edit_urls('events', this, '{{ showPath }}', '{{ loadPath }}')"  id="event_{{ multimediaObject.getId() }}">
+                <td headers="th-image" style="cursor: pointer" width="3%" data-action="click->admin--actions#edit" data-admin--actions-name-param="events" data-admin--actions-show-param="{{ showPath }}" data-admin--actions-update-param="{{ loadPath }}" id="event_{{ multimediaObject.getId() }}">
                     {% include "@PumukitNewAdmin/Misc/img_list.html.twig" with {'object' : multimediaObject, 'type' : 'event'} %}
                 </td>
-                <td headers="th-title" style="cursor: pointer" onclick="click_fila_edit_urls('events', this, '{{ showPath  }}', '{{ loadPath }}')">
+                <td headers="th-title" style="cursor: pointer" data-action="click->admin--actions#edit" data-admin--actions-name-param="events" data-admin--actions-show-param="{{ showPath }}" data-admin--actions-update-param="{{ loadPath }}">
                     {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}
                 </td>
                 <td headers="th-number-sessions" width="8%">
@@ -107,7 +109,7 @@
                         <div class="col-md-8">
                             {{ multimediaObjects|length }} {% trans %}Live events{% endtrans %}
                             {% if app.session.get('admin/live/event/criteria')|length > 1%}
-                                <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="#" onclick="$('.resetSession').click(); return false;">{% trans %}Cancel search{% endtrans %}</a>
+                                <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="#" data-action="click->admin--live-event#resetFilters">{% trans %}Cancel search{% endtrans %}</a>
                            {% endif %}
                        </div>
                        <div class="col-md-4 text-right">
@@ -118,7 +120,7 @@
                                 <input title="{% trans %}Go to page{% endtrans %}" type="number"
                                        style="width: 25px;text-align:center;cursor:pointer;"
                                        value="{{ multimediaObjects.getCurrentPage() }}"
-                                       onchange="window.location.search = '?page=' + this.value; return false;" />
+                                       data-action="change->admin--actions#go" data-admin--actions-url-param="?page=" />
                             </div>
                        </div>
                     </div>
@@ -127,69 +129,3 @@
         </tfoot>
     </table>
 </div>
-
-<script type="text/javascript">
-    $(function(){
-        var mmo = "{{ app.session.get('admin/live/event/id') }}";
-        var url = "{{ path('pumukit_new_admin_live_event_edit', {'id': '__id__'}) }}";
-        var showUrl = "{{ path('pumukit_new_admin_live_event_show', {'id': '__id__'}) }}";
-        if(mmo) {
-            url = url.replace('__id__', mmo);
-            showUrl = showUrl.replace('__id__', mmo);
-            if (mmo != $('#inputMMId').val()) {
-                $('#edit_events').load(url);
-            }
-            $('#preview_events').load(showUrl);
-        }
-    });
-
-    $('.event_option').on('click', function (event) {
-        event.preventDefault();
-        if($(this).data('action') === 'delete') {
-            if(confirm('{% trans %}Are you sure?{% endtrans %}')) {
-                $.ajax({
-                    url: $(this).data('href'),
-                    method: 'POST',
-                    success: function (response) {
-                        var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
-                        $('#list_events').load(mm);
-                        success(response.status);
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        no_success(jqXHR.responseJSON.status);
-                    }
-                });
-            }
-        } else {
-            $.ajax({
-                url: $(this).data('href'),
-                method: 'POST',
-                success: function (response) {
-                    var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
-                    $('#list_events').load(mm);
-                    success(response.status);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    no_success(jqXHR.responseJSON.status);
-                }
-            });
-        }
-        return false;
-    });
-
-    $('.sort_field').on('click', function(event) {
-        event.preventDefault();
-        $.ajax({
-            url: "{{ path('pumukit_new_admin_live_event_set_sorting') }}",
-            method: 'POST',
-            data: {
-                'field' : $(this).data('type')
-            },
-            success: function () {
-                var mm = "{{ path('pumukit_new_admin_live_event_list') }}";
-                $('#list_events').load(mm);
-            }
-        });
-        return false;
-    })
-</script>
