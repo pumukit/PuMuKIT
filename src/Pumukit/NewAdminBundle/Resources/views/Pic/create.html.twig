@@ -8,27 +8,45 @@
 
 <div class="modal-body">
 
-    <div id="tv_admin_container_file">
-        <form autocomplete="off" method="post" enctype="multipart/form-data" target="iframeUpload" action="{{ path('pumukitnewadmin_'~resource_name~'pic_upload', {'id': resource.id, 'is_event_poster': event_poster}) }}">
+    {% set upload_path = path('pumukitnewadmin_'~resource_name~'pic_upload', {'id': resource.id, 'is_event_poster': event_poster}) %}
+    {% if resource_name == 'event' %}
+        {% set refresh = [{target: '#list_events', url: path('pumukitnewadmin_event_list')}, {target: '#preview_event', url: path('pumukitnewadmin_event_show', {'id': resource.id})}] %}
+    {% elseif event_poster %}
+        {% set refresh = [{target: '#pic_events_' ~ resource.id, url: path('pumukitnewadmin_'~resource_name~'pic_list', {'id': resource.id, 'is_event_poster': event_poster})}] %}
+    {% else %}
+        {% set refresh = [{target: '#pic_' ~ resource_name ~ '_' ~ resource.id, url: path('pumukitnewadmin_'~resource_name~'pic_list', {'id': resource.id, 'is_event_poster': event_poster})}] %}
+    {% endif %}
+    <div id="tv_admin_container_file"
+         data-controller="admin--upload-form"
+         data-action="submit->admin--upload-form#submit core--uploader:success->admin--upload-form#uploaded core--uploader:failed->admin--upload-form#failed"
+         data-admin--upload-form-refresh-value="{{ refresh|json_encode }}"
+         data-admin--upload-form-success-message-value="{{ "New Thumbnail added."|trans }}"
+         data-admin--upload-form-empty-message-value="{{ "Select a file or add a image url. Thank you."|trans }}">
+        <form autocomplete="off" method="post" enctype="multipart/form-data" action="{{ upload_path }}"
+              {{ uploader_attributes({
+                  transport: 'xhr',
+                  endpoint: upload_path,
+                  formMeta: true,
+                  restrictions: {maxNumberOfFiles: 1, allowedFileTypes: ['image/*']},
+                  xhr: {fieldName: 'file'},
+                  dashboard: {height: 260, hideUploadButton: true}
+              }) }}>
             <input type="hidden" name="type" id="type" value="url">
             <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
             <fieldset>
                 <legend hidden>{% trans %}Add a file{% endtrans %}</legend>
                 <div class="form-group">
-                    <label for="file">{% trans %}Add a file{% endtrans %}:</label>
-                    <div class="">
-                        <input type="file" name="file" id="file" value="" size="66" class="file" accept="image/*">
-                    </div>
+                    <label>{% trans %}Add a file{% endtrans %}:</label>
+                    <div data-core--uploader-target="dashboard"></div>
                 </div>
-                <iframe id="iframeUpload" name="iframeUpload" style="display:none" src=""></iframe>
             </fieldset>
             <div id="pumukitnewadmin_pic_external_url" class="form-group">
                 <label for="url" class="control-label">{% trans %}URL{% endtrans %}</label>
-                <input type="text" name="url" id="url" value="" class="form-control">
-                <span id="error_url" style="display:none;color:red;" class="error">{% trans %}URL format not valid{% endtrans %}</span>
+                <input type="text" name="url" id="url" value="" class="form-control" data-admin--upload-form-target="url">
+                <span id="error_url" class="error text-danger" data-admin--upload-form-target="urlError" hidden>{% trans %}URL format not valid{% endtrans %}</span>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-pumukit btn-raised" onclick="if($('#file').val()==''&&$('#url').val()==''){window.alert('{% trans %}Select a file or add a image url. Thank you.{% endtrans %}');return false;}">{% trans %}Add{% endtrans %}</button>
+                <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}Add{% endtrans %}</button>
             </div>
         </form>
     </div>

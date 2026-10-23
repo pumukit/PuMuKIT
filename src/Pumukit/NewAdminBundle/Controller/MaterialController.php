@@ -19,6 +19,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class MaterialController extends AbstractController implements NewAdminControllerInterface
 {
+    use UploadResponseTrait;
+
     /** @var TranslatorInterface */
     private $translator;
 
@@ -92,18 +94,18 @@ class MaterialController extends AbstractController implements NewAdminControlle
                 $multimediaObject = $materialService->addMaterialUrl($multimediaObject, $request->request->get('url'), $formData);
             }
         } catch (\Exception $e) {
-            return [
+            return $this->uploadResponse($request, [
                 'mm' => $multimediaObject,
                 'uploaded' => 'failed',
                 'message' => $e->getMessage(),
-            ];
+            ]);
         }
 
-        return [
+        return $this->uploadResponse($request, [
             'mm' => $multimediaObject,
             'uploaded' => 'success',
             'message' => 'New Material added.',
-        ];
+        ]);
     }
 
     public function deleteAction(#[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, Request $request)

@@ -8,6 +8,7 @@ use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Services\InboxService;
 use Pumukit\CoreBundle\Twig\UploaderExtension;
 use Pumukit\CoreBundle\Utils\MediaMimeTypeUtils;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -75,6 +76,30 @@ class UploaderExtensionTest extends KernelTestCase
         preg_match('/data-core--uploader-options-value="([^"]*)"/', $attributes, $matches);
         $options = json_decode(html_entity_decode($matches[1], ENT_QUOTES), true, 512, JSON_THROW_ON_ERROR);
         $this->assertSame('"><script>alert(1)</script>', $options['meta']['series']);
+    }
+
+    public function testAllowedTypesFollowTheMultimediaObjectType(): void
+    {
+        $multimediaObject = new MultimediaObject();
+        $this->assertSame(MediaMimeTypeUtils::allowedMimeTypes(), $this->extension->allowedTypes($multimediaObject));
+
+        $multimediaObject->setType(MultimediaObject::TYPE_AUDIO);
+        $this->assertSame(MediaMimeTypeUtils::allowedAudioMimeTypes(), $this->extension->allowedTypes($multimediaObject));
+
+        $multimediaObject->setType(MultimediaObject::TYPE_VIDEO);
+        $this->assertSame(MediaMimeTypeUtils::allowedVideoMimeTypes(), $this->extension->allowedTypes($multimediaObject));
+    }
+
+    public function testXhrUploadsAreLimitedByPhp(): void
+    {
+        $options = $this->extension->options(['transport' => 'xhr', 'endpoint' => '/upload']);
+        $limits = array_filter([UploaderExtension::iniSizeToBytes((string) ini_get('upload_max_filesize')), UploaderExtension::iniSizeToBytes((string) ini_get('post_max_size'))]);
+
+        $this->assertSame(min([UploaderExtension::sizeToBytes($this->inboxService->maxFileSize()), ...$limits]), $options['restrictions']['maxFileSize']);
+        $this->assertSame(['Accept' => 'application/json'], $options['xhr']['headers']);
+        $this->assertSame(10 * 1024 * 1024 * 1024, UploaderExtension::iniSizeToBytes('10G'));
+        $this->assertSame(8 * 1024 * 1024, UploaderExtension::iniSizeToBytes('8M'));
+        $this->assertSame(0, UploaderExtension::iniSizeToBytes('0'));
     }
 
     public function testSizesKeepTheUnitsOfTheConfiguration(): void

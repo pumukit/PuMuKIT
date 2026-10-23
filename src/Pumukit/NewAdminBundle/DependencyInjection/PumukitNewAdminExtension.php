@@ -4,13 +4,20 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\DependencyInjection;
 
+use Pumukit\CoreBundle\DependencyInjection\FrontendAssets;
 use Pumukit\NewAdminBundle\EventListener\NakedBackofficeListener;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
-class PumukitNewAdminExtension extends Extension
+class PumukitNewAdminExtension extends Extension implements PrependExtensionInterface
 {
+    public function prepend(ContainerBuilder $container): void
+    {
+        FrontendAssets::register($container, dirname(__DIR__), '@pumukit/new-admin');
+    }
+
     public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();

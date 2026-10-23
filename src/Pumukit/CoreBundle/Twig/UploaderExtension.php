@@ -67,12 +67,21 @@ class UploaderExtension extends AbstractExtension
                 'fieldName' => 'files[]',
                 'limit' => 10,
                 'timeout' => 1800000,
+                'headers' => ['Accept' => 'application/json'],
             ],
             'dashboard' => null,
             'import' => null,
             'progressColor' => $this->inboxService->progressBarColor(),
             'styles' => array_map(fn (string $path): string => $this->packages->getUrl($path), self::STYLES),
         ];
+
+        if ('xhr' === $transport) {
+            $defaults['restrictions']['maxFileSize'] = min(array_filter([
+                $defaults['restrictions']['maxFileSize'],
+                self::iniSizeToBytes((string) ini_get('upload_max_filesize')),
+                self::iniSizeToBytes((string) ini_get('post_max_size')),
+            ]));
+        }
 
         $merged = array_replace($defaults, $options);
         foreach (self::NESTED_OPTIONS as $key) {
@@ -92,7 +101,24 @@ class UploaderExtension extends AbstractExtension
             $multimediaObject->isVideoType() => MediaMimeTypeUtils::allowedVideoMimeTypes(),
             $multimediaObject->isImageType() => MediaMimeTypeUtils::allowedImageMimeTypes(),
             $multimediaObject->isDocumentType() => MediaMimeTypeUtils::allowedDocumentMimeTypes(),
-            default => throw new \InvalidArgumentException('Invalid type of multimedia object'),
+            default => MediaMimeTypeUtils::allowedMimeTypes(),
+        };
+    }
+
+    public static function iniSizeToBytes(string $size): int
+    {
+        $size = trim($size);
+        if ('' === $size || !is_numeric(rtrim($size, 'kKmMgG'))) {
+            return 0;
+        }
+
+        $value = (int) rtrim($size, 'kKmMgG');
+
+        return match (strtolower(substr($size, -1))) {
+            'g' => $value * 1024 * 1024 * 1024,
+            'm' => $value * 1024 * 1024,
+            'k' => $value * 1024,
+            default => $value,
         };
     }
 

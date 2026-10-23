@@ -11,10 +11,12 @@ import { trans } from '@pumukit/translator';
 const LOCALES = { en: en_US, es: es_ES, gl: gl_ES };
 const DEFAULT_PROFILE_SELECTOR = 'input[name="profile_option"]:checked';
 const DASHBOARD_REPORTED = ['restriction-failed', 'error'];
+const COLOR = /^(#[0-9a-f]{3,8}|[a-z]+)$/i;
+const PROGRESS_COLORS = new Set();
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
-    static targets = ['dashboard', 'input', 'progress', 'progressBar', 'file', 'fileName', 'fileSize', 'submit'];
+    static targets = ['dashboard', 'submit'];
     static values = { options: Object };
 
     connect() {
@@ -44,6 +46,7 @@ export default class extends Controller {
                 fieldName: options.xhr.fieldName,
                 limit: options.xhr.limit,
                 timeout: options.xhr.timeout,
+                headers: { ...options.xhr.headers },
             });
         } else {
             this.uppy.use(Tus, {
@@ -56,21 +59,18 @@ export default class extends Controller {
         const dashboardTarget = options.dashboard?.target ?? (this.hasDashboardTarget ? this.dashboardTarget : null);
         this.usesDashboard = Boolean(dashboardTarget);
         if (this.usesDashboard) {
+            const { target, ...dashboardOptions } = options.dashboard ?? {};
             this.uppy.use(Dashboard, {
+                ...dashboardOptions,
                 inline: true,
                 target: dashboardTarget,
                 proudlyDisplayPoweredByUppy: false,
             });
-        }
-
-        if (this.hasProgressBarTarget && options.progressColor) {
-            this.progressBarTarget.style.backgroundColor = options.progressColor;
+            this.setProgressColor(options.progressColor);
         }
 
         this.uppy.on('file-added', (file) => this.fileAdded(file));
         this.uppy.on('file-removed', (file) => this.fileRemoved(file));
-        this.uppy.on('upload', () => this.uploadStarted());
-        this.uppy.on('progress', (progress) => this.showProgress(progress));
         this.uppy.on('restriction-failed', (file, error) => this.report('restriction-failed', { file, error, message: error.message }));
         this.uppy.on('upload-error', (file, error, response) => this.uploadFailed(file, error, response));
         this.uppy.on('upload-success', (file, response) => this.uploaded(file, response));
@@ -80,6 +80,16 @@ export default class extends Controller {
     disconnect() {
         this.uppy?.destroy();
         this.uppy = null;
+    }
+
+    setProgressColor(color) {
+        if (!COLOR.test(color ?? '') || !('adoptedStyleSheets' in document) || PROGRESS_COLORS.has(color)) {
+            return;
+        }
+        const sheet = new CSSStyleSheet();
+        sheet.replaceSync(`.uppy-StatusBar-progress { background-color: ${color}; }`);
+        document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+        PROGRESS_COLORS.add(color);
     }
 
     loadStyles(styles) {
@@ -94,25 +104,12 @@ export default class extends Controller {
         });
     }
 
-    select() {
-        const files = Array.from(this.inputTarget.files);
-        this.inputTarget.value = '';
-        if (1 === this.optionsValue.restrictions?.maxNumberOfFiles && files.length) {
-            this.uppy.cancelAll();
-        }
-        files.forEach((file) => {
-            try {
-                this.uppy.addFile({ source: 'input', name: file.name, type: file.type, data: file });
-            } catch {
-                return;
-            }
-        });
-    }
-
     upload(event) {
         event?.preventDefault();
         if (this.optionsValue.formMeta) {
-            this.uppy.setMeta(this.formMeta());
+            const meta = this.formMeta();
+            this.uppy.setMeta(meta);
+            this.uppy.getPlugin('XHRUpload')?.setOptions({ allowedMetaFields: Object.keys(meta) });
         }
         this.uppy.upload().catch(() => {});
     }
@@ -148,41 +145,13 @@ export default class extends Controller {
     }
 
     fileAdded(file) {
-        this.showFile(file);
         this.toggleSubmit();
         this.dispatch('added', { detail: { file } });
     }
 
     fileRemoved(file) {
-        this.showFile(this.uppy.getFiles()[0] ?? null);
         this.toggleSubmit();
         this.dispatch('removed', { detail: { file } });
-    }
-
-    uploadStarted() {
-        if (this.hasProgressTarget) {
-            this.progressTarget.hidden = false;
-        }
-        this.showProgress(0);
-    }
-
-    showProgress(progress) {
-        if (this.hasProgressBarTarget) {
-            this.progressBarTarget.style.width = `${progress}%`;
-            this.progressBarTarget.setAttribute('aria-valuenow', String(progress));
-        }
-    }
-
-    showFile(file) {
-        if (this.hasFileTarget) {
-            this.fileTarget.hidden = !file;
-        }
-        if (this.hasFileNameTarget) {
-            this.fileNameTarget.textContent = file?.name ?? '';
-        }
-        if (this.hasFileSizeTarget) {
-            this.fileSizeTarget.textContent = file ? `${(file.size / 1024 / 1024).toFixed(2)} MB` : '';
-        }
     }
 
     toggleSubmit() {

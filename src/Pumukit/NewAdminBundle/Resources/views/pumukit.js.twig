@@ -2481,18 +2481,7 @@ function test_material_form_file_nmb(file){
     return true;
 }
 
-$(document).on('core--uploader:success', '#pumukit_media_form', function(event){
-    var body = event.originalEvent.detail.body;
-    if (body.endPage) {
-        success(body.message);
-    }
-});
 
-$(document).on('core--uploader:failed', '#pumukit_media_form', function(event){
-    event.originalEvent.preventDefault();
-    $('#myModal').modal('hide');
-    no_success(event.originalEvent.detail.message);
-});
 
 window.change_pics_page = function(route)
 {

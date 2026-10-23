@@ -17,6 +17,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ACCESS_EDIT_PLAYLIST')]
 class PlaylistPicController extends AbstractController implements NewAdminControllerInterface
 {
+    use UploadResponseTrait;
+
     /** @var SeriesPicService */
     private $seriesPicService;
 
@@ -93,22 +95,22 @@ class PlaylistPicController extends AbstractController implements NewAdminContro
                 $this->seriesPicService->addPicFile($playlist, $request->files->get('file'), $isBanner, $bannerTargetUrl);
             }
         } catch (\Exception $e) {
-            return [
+            return $this->uploadResponse($request, [
                 'resource' => $playlist,
                 'resource_name' => 'playlist',
                 'uploaded' => 'failed',
                 'message' => $e->getMessage(),
                 'isBanner' => $isBanner,
-            ];
+            ]);
         }
 
-        return [
+        return $this->uploadResponse($request, [
             'resource' => $playlist,
             'resource_name' => 'playlist',
             'uploaded' => 'success',
             'message' => 'New Pic added.',
             'isBanner' => $isBanner,
-        ];
+        ]);
     }
 
     public function deleteAction(Request $request)

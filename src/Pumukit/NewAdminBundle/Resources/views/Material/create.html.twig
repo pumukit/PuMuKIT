@@ -5,8 +5,20 @@
 <div class="modal-body">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
   {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
-  <form enctype="multipart/form-data" target="iframeUpload"
-        action="{{ path('pumukitnewadmin_material_upload', {'id': mm.id}) }}" method="POST">
+  {% set upload_path = path('pumukitnewadmin_material_upload', {'id': mm.id}) %}
+  <div data-controller="admin--upload-form"
+       data-action="submit->admin--upload-form#submit core--uploader:success->admin--upload-form#uploaded core--uploader:failed->admin--upload-form#failed"
+       data-admin--upload-form-refresh-value="{{ [{target: '#materials_mms_' ~ mm.id, url: path('pumukitnewadmin_material_list', {'id': mm.id})}, {target: '#preview_mm', url: path('pumukitnewadmin_mms_show', {'id': mm.id})}]|json_encode }}"
+       data-admin--upload-form-success-message-value="{{ "New Material added."|trans }}">
+  <form enctype="multipart/form-data" action="{{ upload_path }}" method="POST"
+        {{ uploader_attributes({
+            transport: 'xhr',
+            endpoint: upload_path,
+            formMeta: true,
+            restrictions: {maxNumberOfFiles: 1, allowedFileTypes: null},
+            xhr: {fieldName: 'file'},
+            dashboard: {height: 260, hideUploadButton: true, note: "Under"|trans ~ ' ' ~ php_upload_max_filesize()}
+        }) }}>
     <input type="hidden" name="id" id="mm_id_material" value="{{ mm.id }}">
     <fieldset>
       {% for child in form %}
@@ -15,33 +27,31 @@
       <div class="form-group">
             <label for="file_type" class="control-label">{% trans %}Mode{% endtrans %}</label>
             <div class="radio">
-              <label><input type="radio" name="file_type" id="radio_file" value="file" checked="checked" onclick="$('#pumukitnewadmin_material_url').hide();$('#pumukitnewadmin_material_file').show();"/> {% trans %}File{% endtrans %}</label>
+              <label><input type="radio" name="file_type" id="radio_file" value="file" checked="checked" data-action="change->admin--upload-form#mode"/> {% trans %}File{% endtrans %}</label>
         </div>
         <div class="radio">
-              <label><input type="radio" name="file_type" id="radio_url" value="url" onclick="$('#pumukitnewadmin_material_file').hide();$('#pumukitnewadmin_material_url').show();"/> {% trans %}URL{% endtrans %}</label>
+              <label><input type="radio" name="file_type" id="radio_url" value="url" data-action="change->admin--upload-form#mode"/> {% trans %}URL{% endtrans %}</label>
             </div>
       </div>
 
-      <div id="pumukitnewadmin_material_url" class="form-group" style="display: none">
+      <div id="pumukitnewadmin_material_url" class="form-group" data-admin--upload-form-target="urlGroup" hidden>
             <label for="url" class="control-label">{% trans %}URL{% endtrans %}</label>
-            <input type="text" name="url" id="url" value="" class="form-control">
-            <span id="error_url" style="display:none;color:red;" class="error">{% trans %}URL format not valid{% endtrans %}</span>
+            <input type="text" name="url" id="url" value="" class="form-control" data-admin--upload-form-target="url">
+            <span id="error_url" class="error text-danger" data-admin--upload-form-target="urlError" hidden>{% trans %}URL format not valid{% endtrans %}</span>
       </div>
 
-      <div id="pumukitnewadmin_material_file" class="form-group">
-            <label for="file" class="control-label">{% trans %}File{% endtrans %}</label>
-            <input type="file" name="file" id="file" value="">
-            <span style="color: blue">({% trans %}Under{% endtrans %} {{ php_upload_max_filesize() }})</span>
-            <span id="error_file" style="display:none;color:red;" class="error">{% trans %}Empty file field{% endtrans %}</span>
+      <div id="pumukitnewadmin_material_file" class="form-group" data-admin--upload-form-target="fileGroup">
+            <label class="control-label">{% trans %}File{% endtrans %}</label>
+            <div data-core--uploader-target="dashboard"></div>
+            <span id="error_file" class="error text-danger" data-admin--upload-form-target="fileError" hidden>{% trans %}Empty file field{% endtrans %}</span>
       </div>
-
-      <iframe id="iframeUpload" name="iframeUpload" style="display:none" src=""></iframe>
         </fieldset>
     <div class="modal-footer">
       <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-      <button type="submit" class="btn btn-pumukit btn-raised" onclick="if($('#radio_url').prop('checked')){return test_material_form_url($('#url').val())}else{return test_material_form_file_nmb($('#file').val())}">{% trans %}OK{% endtrans %}</button>
+      <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
     </div>
   </form>
+  </div>
   {% else %}
     {% trans %}You don't have enough permissions to access this content.{% endtrans %}
   {% endif %}

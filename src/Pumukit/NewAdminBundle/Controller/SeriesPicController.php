@@ -17,6 +17,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class SeriesPicController extends AbstractController implements NewAdminControllerInterface
 {
+    use UploadResponseTrait;
+
     /** @var DocumentManager */
     private $documentManager;
 
@@ -94,22 +96,22 @@ class SeriesPicController extends AbstractController implements NewAdminControll
                 $this->seriesPicService->addPicFile($series, $request->files->get('file'), $isBanner, $bannerTargetUrl);
             }
         } catch (\Exception $e) {
-            return [
+            return $this->uploadResponse($request, [
                 'resource' => $series,
                 'resource_name' => 'series',
                 'uploaded' => 'failed',
                 'message' => $e->getMessage(),
                 'isBanner' => $isBanner,
-            ];
+            ]);
         }
 
-        return [
+        return $this->uploadResponse($request, [
             'resource' => $series,
             'resource_name' => 'series',
             'uploaded' => 'success',
             'message' => 'New Pic added.',
             'isBanner' => $isBanner,
-        ];
+        ]);
     }
 
     public function deleteAction(Request $request)

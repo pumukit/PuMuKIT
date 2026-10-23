@@ -19,6 +19,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class MultimediaObjectPicController extends AbstractController implements NewAdminControllerInterface
 {
+    use UploadResponseTrait;
+
     /** @var DocumentManager */
     private $documentManager;
 
@@ -99,24 +101,24 @@ class MultimediaObjectPicController extends AbstractController implements NewAdm
                 $this->multimediaObjectPicService->addPicUrl($multimediaObject, $request->request->get('url'), true, $isEventPoster);
             }
         } catch (\Exception $e) {
-            return [
+            return $this->uploadResponse($request, [
                 'resource' => $multimediaObject,
                 'resource_name' => 'mms',
                 'uploaded' => 'failed',
                 'message' => $e->getMessage(),
                 'isBanner' => false,
                 'is_event_poster' => $isEventPoster,
-            ];
+            ]);
         }
 
-        return [
+        return $this->uploadResponse($request, [
             'resource' => $multimediaObject,
             'resource_name' => 'mms',
             'uploaded' => 'success',
             'message' => 'New Pic added.',
             'isBanner' => false,
             'is_event_poster' => $isEventPoster,
-        ];
+        ]);
     }
 
     /**

@@ -5,14 +5,17 @@
 <div class="modal-body">
     {% set pathToUpload = path('pumukitnewadmin_track_upload', {'id': mm.id}) %}
 
-    <form id="pumukit_media_form" method="post" target="iframeUpload" action="{{ pathToUpload }}" enctype="multipart/form-data"
+    <div data-controller="admin--upload-form"
+         data-action="submit->admin--upload-form#submit core--uploader:success->admin--upload-form#uploaded core--uploader:failed->admin--upload-form#failed">
+    <form id="pumukit_media_form" method="post" action="{{ pathToUpload }}" enctype="multipart/form-data"
           {{ uploader_attributes({
               transport: 'xhr',
               endpoint: pathToUpload,
               debug: true,
               formMeta: true,
               restrictions: {maxNumberOfFiles: 1, allowedFileTypes: uploader_allowed_types(mm)},
-              xhr: {fieldName: 'resource[]'}
+              xhr: {fieldName: 'resource[]'},
+              dashboard: {height: 260, hideUploadButton: true, note: "Max."|trans ~ ' ' ~ php_upload_max_filesize()}
           }) }}>
         <fieldset>
             {% include '@PumukitWizard/Upload/_profiles.html.twig' %}
@@ -22,7 +25,8 @@
         </fieldset>
         <div class="modal-footer">
             <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-            <button type="submit" class="btn btn-pumukit btn-raised" id="pumukitnewadmin_media_ok_button" data-core--uploader-target="submit" data-action="core--uploader#upload" disabled>{% trans %}OK{% endtrans %}</button>
+            <button type="submit" class="btn btn-pumukit btn-raised" id="pumukitnewadmin_media_ok_button" data-core--uploader-target="submit" disabled>{% trans %}OK{% endtrans %}</button>
         </div>
     </form>
+    </div>
 </div>

@@ -14,6 +14,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ACCESS_LIVE_EVENTS')]
 class LegacyEventPicController extends AbstractController implements NewAdminControllerInterface
 {
+    use UploadResponseTrait;
+
     /** @var LegacyEventPicService */
     private $legacyEventPicService;
 
@@ -54,18 +56,18 @@ class LegacyEventPicController extends AbstractController implements NewAdminCon
                 $this->legacyEventPicService->addPicFile($event, $request->files->get('file'));
             }
         } catch (\Exception $e) {
-            return [
+            return $this->uploadResponse($request, [
                 'event' => $event,
                 'uploaded' => 'failed',
                 'message' => $e->getMessage(),
-            ];
+            ]);
         }
 
-        return [
+        return $this->uploadResponse($request, [
             'event' => $event,
             'uploaded' => 'success',
             'message' => 'New Pic added.',
-        ];
+        ]);
     }
 
     public function deleteAction(Request $request, Event $event)
