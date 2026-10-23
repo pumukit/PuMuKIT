@@ -347,7 +347,8 @@ update modals use `admin--modal-form`. The `load_children`, `data_children`, `de
 of a JSON error response instead of the raw body. The slider manager uses `admin--slider`
 (drag and drop of the `.slider-item` rows and the save button, still `#save-slider-order`). The
 activity chart of the dashboard uses `admin--dashboard` on `#activity-chart`, with the activity, the
-time window and the grouping as values; it still draws with the Chart.js build of the dashboard page.
+time window and the grouping as values; it still draws with the Chart.js build of the dashboard page. The unused
+`bundles/pumukitnewadmin/vendor/chartjs/chartjs-plugin-zoom.min.js` is removed.
 
 The multimedia objects of a playlist use `admin--playlist-mms` (row selection, preview, removal and
 batch removal; the list starts its own instance, so it keeps working inside a project override of

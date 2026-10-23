@@ -57,7 +57,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Move the multimedia objects of a playlist and the add to playlist modals to Stimulus controllers (`admin--playlist-mms`, `admin--playlist-modal`, `admin--playlist-add`); new playlist titles are rendered as text.
 - Move the places and precincts zone of the backoffice to the `admin--places` Stimulus controller; place names above the precinct list are rendered as text and the create and update modals show the server error of a conflict.
 - Move the slider manager of the backoffice to the `admin--slider` Stimulus controller.
-- Move the activity chart of the backoffice dashboard to the `admin--dashboard` Stimulus controller.
+- Move the activity chart of the backoffice dashboard to the `admin--dashboard` Stimulus controller and remove the unused Chart.js zoom plugin.
 - Answer the picture uploads with JSON only and remove the old iframe responses and the hidden banner URL form.
 - Configure the default protocol of the URL form fields (live channel, person, link and external player), deprecated since Symfony 7.1.
 - Upload thumbnails, banners, materials, live event images and tracks through the Uppy Dashboard; the upload actions answer JSON on request and adding a track to an object without type no longer fails.
