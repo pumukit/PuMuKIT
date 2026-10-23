@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
+import { KeywordsInput, keywordPool } from '../../keywords.js';
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
@@ -9,7 +10,7 @@ export default class extends Controller {
     }
 
     disconnect() {
-        $(this.element).find('input.materialtags').materialtags('destroy');
+        this.destroyKeywords();
     }
 
     changed(event) {
@@ -52,34 +53,17 @@ export default class extends Controller {
     cancel(event) {
         event.preventDefault();
         this.element.reset();
-        $(this.element).find('input.materialtags').materialtags('destroy');
+        this.destroyKeywords();
         this.initKeywords();
         this.hideRemember();
     }
 
     initKeywords() {
-        Object.entries(this.keywordsValue).forEach(([type, url]) => {
-            const inputs = $(this.element).find(`input.${type}.materialtags`);
-            if (0 === inputs.length) {
-                return;
-            }
-            const index = this.index(type, url);
-            inputs.materialtags({ typeaheadjs: { name: 'keywords', displayKey: '_id', valueKey: '_id', source: index.ttAdapter() } });
-            inputs.off('itemAdded.metaForm').on('itemAdded.metaForm', (event) => index.add({ _id: event.item }));
-        });
+        this.keywordInputs = Object.entries(this.keywordsValue).flatMap(([type, url]) => [...this.element.querySelectorAll(`input.${type}.materialtags`)].map((input) => new KeywordsInput(input, keywordPool(url))));
     }
 
-    index(type, url) {
-        const name = `${type}keywords`;
-        if (!window[name]) {
-            window[name] = new window.Bloodhound({
-                datumTokenizer: window.Bloodhound.tokenizers.obj.whitespace('_id'),
-                queryTokenizer: window.Bloodhound.tokenizers.whitespace,
-                prefetch: { url, ttl: 1800000 },
-            });
-            window[name].initialize();
-        }
-
-        return window[name];
+    destroyKeywords() {
+        (this.keywordInputs ?? []).forEach((keywords) => keywords.destroy());
+        this.keywordInputs = [];
     }
 }

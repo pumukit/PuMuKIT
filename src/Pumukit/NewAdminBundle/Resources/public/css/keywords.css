@@ -1,0 +1,103 @@
+.materialize-tags {
+    background: 0 0;
+    border-bottom: 1px solid #999;
+    display: inline-block;
+    padding: 0 6px;
+    margin-top: 3px;
+    min-height: 25px;
+    color: #444;
+    vertical-align: middle;
+    width: 100%;
+    max-width: 100%;
+    line-height: 22px;
+    cursor: text;
+    transition: all 0.3s;
+}
+
+@media screen and (max-width: 600px) {
+    .materialize-tags {
+        margin-top: 8px;
+    }
+}
+
+.materialize-tags.active {
+    border-bottom-color: #26a69a;
+    box-shadow: 0 1px 0 0 #26a69a;
+    outline: 0;
+}
+
+.materialize-tags input {
+    border: none;
+    box-shadow: none;
+    outline: 0;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    width: auto !important;
+    max-width: inherit;
+}
+
+.materialize-tags input::placeholder {
+    color: #777;
+    opacity: 1;
+}
+
+.materialize-tags input:focus {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.materialize-tags .keywords-input {
+    position: relative;
+    display: inline-block;
+}
+
+.materialize-tags .tt-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
+    min-width: 200px;
+    max-width: 100%;
+    padding: 10px 0;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+.materialize-tags .tt-dropdown-menu[hidden] {
+    display: none;
+}
+
+.materialize-tags .tt-dropdown-menu .tt-suggestion {
+    line-height: 1.1rem !important;
+    padding: 2px 10px !important;
+    cursor: pointer;
+}
+
+.materialize-tags .tt-dropdown-menu .tt-cursor,
+.materialize-tags .tt-dropdown-menu .tt-suggestion:hover {
+    background: #00bfff;
+    color: #fff;
+}
+
+.chip {
+    display: inline-block;
+    height: 21px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.6);
+    line-height: 21px;
+    padding: 0 12px;
+    border-radius: 16px;
+    background-color: #e4e4e4;
+}
+
+.chip i.material-icons {
+    cursor: pointer;
+    float: right;
+    font-size: 16px;
+    line-height: 21px;
+    padding-left: 8px;
+    font-style: normal;
+}

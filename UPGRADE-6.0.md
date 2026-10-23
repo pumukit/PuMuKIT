@@ -391,8 +391,12 @@ by the multimedia object and playlist indexes, the `procesaReset()` function, an
 and of the multimedia object template "Cancel" button, which no template rendered. The multimedia object social form, hidden
 since 5.x, is removed with its `pumukitnewadmin_mms_update_social` route,
 `MultimediaObjectController::updatesocialAction()` and `@PumukitNewAdmin/MultimediaObject/updatesocial.html.twig`. The series, playlist and multimedia object
-indexes no longer define the `serieskeywords` and `mmobjkeywords` globals: `admin--meta-form` creates them
-when a metadata form needs them. Removed global
+indexes no longer define the `serieskeywords` and `mmobjkeywords` globals. The keyword fields
+(`input.materialtags` of the metadata forms, listed in the `keywords` value of `admin--meta-form`)
+no longer use materialize-tags, typeahead.js and Bloodhound, which are removed: a small module of
+the bundle (`@pumukit/new-admin/keywords.js`) builds the same `.materialize-tags` box with `.chip`
+tags and suggests the keywords of the API. Its styles are in
+`bundles/pumukitnewadmin/css/keywords.css`. Removed global
 functions, reported by `pumukit:check:assets` (also when called as `window.…`):
 
 | Removed | Replacement |
@@ -433,6 +437,7 @@ functions, reported by `pumukit:check:assets` (also when called as `window.…`)
 | `click_checkbox_all()` | `admin--actions#checkAll` |
 | `playlist_mms_options()`, `mm_delete_selected()`, `delete_mm()` | `admin--playlist-mms` |
 | `init_mmobj_materialtags()` | the `keywords` value of `admin--meta-form` |
+| `Bloodhound` | the `keywords` value of `admin--meta-form` |
 | `extract_pic()` | `admin--track-list#extractPic` |
 | `toggleHide()` | `admin--actions#load` |
 | `select_group()`, `add_group()`, `delete_group()`, `create_element_group_in_add_groups()`, `create_element_group_in_delete_groups()`, `delete_element_group_from_select()` | `admin--group-lists` |
