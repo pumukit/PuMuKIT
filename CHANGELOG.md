@@ -40,6 +40,8 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Move the StatsUIBundle JavaScript to the `stats-ui--stats` Stimulus controller and replace D3 3 and NVD3 with Chart.js 4.5.1; titles are rendered as text, no longer as HTML.
 - Replace Uppy 1 with Uppy 6 behind a generic `core--uploader` Stimulus controller configured with the `uploader_attributes()` Twig function; `uppy_xhr.js.twig`, `common.js.twig`, `uppy_languages.html.twig` and the Uppy 1 bundle are removed.
 - Validate in TUS uploads the file name and type that tus-php stores, closing a bypass of the blocked extensions list.
+- Keep inbox imports inside the inbox directory: the file name and folder of `/dispatchImport` could point to any readable file of the server.
+- Upload thumbnails, banners, materials, live event images and tracks through the Uppy Dashboard; the upload actions answer JSON on request and adding a track to an object without type no longer fails.
 - Update composer dependencies (gedmo/doctrine-extensions, php-cs-fixer, pagerfanta, knp-menu-bundle, twig extensions, etc.).
 
 #### Fixed

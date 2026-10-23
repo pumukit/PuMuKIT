@@ -260,15 +260,16 @@ holds the uploader. The defaults come from the `pumukit` inbox configuration (`m
     import: {url: path('inbox_auto_import')}
 }) }}></div>
 
-{# One file posted with a form (XHR) #}
+{# One file posted with the fields of a form (XHR) #}
 <form {{ uploader_attributes({
     transport: 'xhr',
     endpoint: path('my_upload_route'),
     formMeta: true,
     restrictions: {maxNumberOfFiles: 1, allowedFileTypes: uploader_allowed_types(multimediaObject)},
-    xhr: {fieldName: 'resource[]'}
+    xhr: {fieldName: 'resource[]'},
+    dashboard: {height: 260, hideUploadButton: true, note: 'Max. 2GB'}
 }) }}>
-    {% include '@PumukitCore/Upload/uppy_input.html.twig' %}
+    <div data-core--uploader-target="dashboard"></div>
     <button type="submit" data-core--uploader-target="submit" data-action="core--uploader#upload" disabled>OK</button>
 </form>
 ```
@@ -282,15 +283,24 @@ holds the uploader. The defaults come from the `pumukit` inbox configuration (`m
 | `meta` | `{}` | metadata sent with every file |
 | `renameFiles` | `false` | prefix the name with a timestamp and replace non-word characters (inbox uploads) |
 | `formMeta` | `false` | send the fields of the enclosing form as metadata when uploading |
-| `dashboard` | `null` | `{target: selector}` for the Uppy Dashboard; a `dashboard` target also works |
+| `dashboard` | `null` | Uppy Dashboard options (`height`, `note`, `hideUploadButton`…); `target` is a selector, otherwise the `dashboard` target is used |
 | `import` | `null` | `{url, params, profileSelector, sendUuid}`: POST to `url` after each TUS upload with `fileName`, `series`, `profile` and `params` |
 | `tus` | inbox `overridePatchMethod` and `limit` | TUS options |
-| `xhr` | `fieldName: files[]`, `limit: 10`, `timeout: 1800000` | XHR options |
+| `xhr` | `fieldName: files[]`, `limit: 10`, `timeout: 1800000`, `Accept: application/json` header | XHR options; the default `maxFileSize` is also capped by PHP `upload_max_filesize` and `post_max_size` |
 
-Without a Dashboard the controller uses the targets of `@PumukitCore/Upload/uppy_input.html.twig`
-(`input`, `progress`, `progressBar`, `file`, `fileName`, `fileSize`) and enables its `submit`
-targets when a file is selected. Actions: `core--uploader#upload`, `#select` (on the file input)
-and `#remove`.
+Every upload shows the Uppy Dashboard (drag and drop, preview, progress). The controller enables
+its `submit` targets when a file is selected. Actions: `core--uploader#upload` and `#remove`.
+`uploader_allowed_types(multimediaObject)` returns the types of its media (audio, video, image,
+document), or every allowed type when the object has no type yet. The inbox progress bar colour
+(`inboxProgressBarColor`) applies to every Dashboard.
+
+The backoffice forms that upload a file (thumbnails of videos, series, playlists and events, the
+live event poster, the series banner, materials and tracks) use the Dashboard and the
+`admin--upload-form` controller of NewAdminBundle, which handles the submit button, the URL
+alternative, the validations, the refresh of the lists and the notices. Their upload actions
+answer `{uploaded, message}` as JSON when the request accepts `application/json`, and keep the
+HTML response of the hidden iframe otherwise, so overrides that still post to `iframeUpload` keep
+working until they are migrated.
 
 The controller dispatches DOM events instead of exposing globals: `core--uploader:added`,
 `:removed`, `:success`, `:complete`, `:imported`, and the cancelable `:error`,
@@ -307,9 +317,9 @@ Changes to take into account:
   `show_file_added` and `file_data_clear` globals, which `pumukit:check:assets` reports, and the
   `uppy` variable that `uppy_xhr.js.twig` created.
 - `bundles/pumukitcore/js/uppy.min.js`, `js/uppy-locales/*`, `css/uppy.min.css` and
-  `css/uppy_custom.css` are removed. Overrides of the Uppy 1 CSS classes (`.uppy-FileInput-*`,
-  `.uppy-StatusBar-*`) no longer apply: the file input is a native `<input type="file">` and the
-  progress bar a Bootstrap `.progress`.
+  `css/uppy_custom.css` are removed. Overrides of the Uppy 1 CSS classes (`.uppy-FileInput-*`)
+  no longer apply. `@PumukitCore/Upload/uppy_input.html.twig` now holds the Dashboard target of
+  the track form.
 - `@PumukitCore/Upload/uppy_tus.html.twig` keeps its name and variables (`folder` or `series`,
   `inboxUploadURL`, and `username`, `email`, `hash` in naked mode).
 - The TUS server validates the same `name`/`type` metadata that tus-php stores, and rejects
