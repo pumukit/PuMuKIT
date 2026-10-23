@@ -4087,6 +4087,10 @@ una acció...</target>
         <source>Selected Channel</source>
         <target state="translated">Canal seleccionat</target>
       </trans-unit>
+      <trans-unit id="_dIBlw8" resname="Your user has no associated person, so its stats cannot be shown.">
+        <source>Your user has no associated person, so its stats cannot be shown.</source>
+        <target state="translated">El teu usuari no té una persona associada, així que no es poden mostrar les seues estadístiques.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

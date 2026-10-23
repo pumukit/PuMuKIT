@@ -61,6 +61,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Move the series styles manager of the backoffice to the `admin--series-styles` Stimulus controller; saving a style shows the translated message and a failed save shows the error.
 - Render the text of a series style escaped in its editor, so a `</textarea>` in the CSS no longer breaks the page, and stop adding the template indentation to the text on every save; a failed series style deletion shows the error.
 - Remove the email check of the profile page of the backoffice (`pumukitnewadmin_profile_user_check_user` route and `UserProfileController::checkEmailToUseOnUser()`): the email field is read-only and the form was submitted whatever the check answered.
+- Show a warning instead of failing with an error 500 on the profile page of the backoffice when the user has no associated person.
 - Answer the picture uploads with JSON only and remove the old iframe responses and the hidden banner URL form.
 - Configure the default protocol of the URL form fields (live channel, person, link and external player), deprecated since Symfony 7.1.
 - Upload thumbnails, banners, materials, live event images and tracks through the Uppy Dashboard; the upload actions answer JSON on request and adding a track to an object without type no longer fails.

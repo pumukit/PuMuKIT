@@ -7,6 +7,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateProfileType;
 use Pumukit\NewAdminBundle\Services\UserStatsService;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\SeriesService;
 use Pumukit\SchemaBundle\Services\UpdateUserService;
@@ -73,6 +74,11 @@ class UserProfileController extends AbstractController
     #[Template('@PumukitNewAdmin/UserProfile/template_user_stats.html.twig')]
     public function userStatsAction(): array
     {
+        $user = $this->getUser();
+        if (!$user instanceof User || !$user->getPerson()) {
+            return ['error' => $this->translator->trans('Your user has no associated person, so its stats cannot be shown.')];
+        }
+
         $objectsByStatus = $this->userStatsService->getUserMultimediaObjectsGroupByStats($this->getUser());
         $objectsByRole = $this->userStatsService->getUserMultimediaObjectsGroupByRole($this->getUser());
         $userStorage = $this->userStatsService->getUserStorageMB($this->getUser());
