@@ -65,6 +65,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Do not fail with an error 500 when the video search of the add to playlist modal is empty.
 - Replace `@PumukitNewAdmin/pumukit.js.twig` and its routes with the `@pumukit/new-admin/backoffice` importmap entrypoint and the `admin--tabs` Stimulus controller; opening `#myModal` empties only its own content, and the unused `$.ajaxSetup({cache: true})` and `#iframeUpload` NGINX check are removed.
 - Remove jQuery Migrate from the backoffice and portal layouts: no core script uses the APIs removed in jQuery 3.
+- Remove noUiSlider and `jquery.dropdown.css` from the backoffice layout: no page used them.
 - Answer the picture uploads with JSON only and remove the old iframe responses and the hidden banner URL form.
 - Configure the default protocol of the URL form fields (live channel, person, link and external player), deprecated since Symfony 7.1.
 - Upload thumbnails, banners, materials, live event images and tracks through the Uppy Dashboard; the upload actions answer JSON on request and adding a track to an object without type no longer fails.

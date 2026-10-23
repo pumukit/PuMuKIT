@@ -61,6 +61,8 @@ class CheckAssetsCommand extends Command
         '@PumukitNewAdmin/MultimediaObject/acordeon.html.twig' => 'nothing: no page used it',
         '@PumukitNewAdmin/MultimediaObject/updatesocial.html.twig' => 'nothing: no page used it',
         'bundles/pumukitnewadmin/vendor/chartjs/chartjs-plugin-zoom.min.js' => 'nothing: no page used it',
+        'bundles/pumukitnewadmin/js/jquery.nouislider.min.js' => 'nothing: no page used it',
+        'bundles/pumukitnewadmin/css/jquery.dropdown.css' => 'nothing: no page used it',
         '@PumukitNewAdmin/Material/upload.html.twig' => 'nothing: the material uploads answer JSON to the admin--upload-form controller',
         '@PumukitNewAdmin/MultimediaObject/updatebroadcast.js.twig' => 'nothing: the admin--broadcast controller of @PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig handles the form',
         '@PumukitNewAdmin/pumukit.js.twig' => 'the @pumukit/new-admin/backoffice importmap entrypoint (see @PumukitNewAdmin/layout.html.twig)',
