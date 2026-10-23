@@ -17,17 +17,6 @@
     {% endif %}
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('bundles/pumukitcore/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/pumukitcore/vendor/moment/moment-with-locales.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('bundles/pumukitcore/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-{% endblock %}
-
 {% block body %}
     {% include '@PumukitWebTV/Search/template_title.html.twig'  %}
     {% include '@PumukitWebTV/Search/template_list.html.twig' %}

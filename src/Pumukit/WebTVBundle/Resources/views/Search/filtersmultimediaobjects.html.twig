@@ -1,4 +1,4 @@
-<form id="form_search" name="busqueda" method="get" data-controller="webtv--search" data-webtv--search-locale-value="{{ app.request.getLocale() }}">
+<form id="form_search" name="busqueda" method="get" data-controller="webtv--search">
     <input type="submit" style="display:none" value="submit-hidden" aria-hidden="true"/>
 
     <div class="form-group col-md-12 col-lg-12">
@@ -108,20 +108,14 @@
                         <label for="start-input">{% trans %}Start date{% endtrans %}:</label>
                         <a style="margin-right:-15px;cursor:pointer;" data-action="webtv--search#toggleDates">{% trans %} Select by year {% endtrans %}</a>
                     </span>
-                    <div class="input-group date" id="start" data-webtv--search-target="start">
-                        <input type='text' class="form-control" name="start" id="start-input" value="{{ app.request.query.get('start') }}" placeholder="{% trans %}From{% endtrans %}" data-action="blur->webtv--search#submit" {{ activated?'':'disabled' }}/>
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                        </span>
+                    <div class="date" id="start" data-webtv--search-target="start">
+                        <input type="date" class="form-control" name="start" id="start-input" value="{{ app.request.query.get('start') }}" placeholder="{% trans %}From{% endtrans %}" data-action="blur->webtv--search#submit" {{ activated?'':'disabled' }}/>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6">
                     <label for="end-input">{% trans %}Finish date{% endtrans %}:</label>
-                    <div class="input-group date" id="end" data-webtv--search-target="end">
-                        <input type="text" class="form-control" name="end" id="end-input" value="{{ app.request.query.get('end') }}" placeholder="{% trans %}Until{% endtrans %}" data-action="blur->webtv--search#submit" {{ activated?'':'disabled' }}/>
-                        <div class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                        </div>
+                    <div class="date" id="end" data-webtv--search-target="end">
+                        <input type="date" class="form-control" name="end" id="end-input" value="{{ app.request.query.get('end') }}" placeholder="{% trans %}Until{% endtrans %}" data-action="blur->webtv--search#submit" {{ activated?'':'disabled' }}/>
                     </div>
                 </div>
             </div>

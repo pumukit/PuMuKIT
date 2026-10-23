@@ -3,13 +3,6 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('bundles/pumukitstatsui/css/statsui.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/pumukitstatsui/vendor/daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/pumukitcore/vendor/moment/moment-with-locales.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/pumukitstatsui/vendor/daterangepicker/daterangepicker.min.js') }}"></script>
 {% endblock %}
 
 {% block body %}

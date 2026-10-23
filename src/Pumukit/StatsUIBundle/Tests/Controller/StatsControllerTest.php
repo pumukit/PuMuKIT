@@ -52,7 +52,11 @@ class StatsControllerTest extends PumukitTestCase
         $this->assertSame('/admin/stats/series/__ID__', $urls['seriesStats']);
         $this->assertSame('/api/media/views', $urls['views']);
 
-        $this->assertCount(1, $root->filter('[data-stats-ui--stats-target="dateRange"]'));
+        $this->assertCount(1, $root->filter('input[type="date"][data-stats-ui--stats-target="from"]'));
+        $this->assertCount(1, $root->filter('input[type="date"][data-stats-ui--stats-target="to"]'));
+        $this->assertCount(str_ends_with($mode, '-id') ? 1 : 0, $root->filter('select[data-stats-ui--stats-target="preset"] option[value="all"]'));
+        $this->assertStringNotContainsString('daterangepicker.min.js', (string) $this->client->getResponse()->getContent());
+        $this->assertStringNotContainsString('moment-with-locales', (string) $this->client->getResponse()->getContent());
         $this->assertCount(3, $root->filter('[data-stats-ui--stats-target="group"]'));
         $this->assertCount('mmobj-id' === $mode ? 1 : 0, $root->filter('template[data-stats-ui--stats-target="previewTemplate"]'));
         $this->assertCount('mmobj-id' === $mode ? 0 : 1, $root->filter('canvas[data-stats-ui--stats-target="mostViewedChart"]'));

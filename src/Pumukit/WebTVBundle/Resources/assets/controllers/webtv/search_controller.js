@@ -3,30 +3,12 @@ import { Controller } from '@hotwired/stimulus';
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
     static targets = ['simpleDate', 'advancedDate', 'year', 'start', 'end'];
-    static values = { locale: String };
 
     connect() {
-        const isMobile = $(window).width() <= 480 || 'ontouchstart' in window;
-        const datePickers = $([this.startTarget, this.endTarget]);
-        if (isMobile) {
-            datePickers.find('input').attr('type', 'date');
-            $(this.advancedDateTarget).find('.input-group-addon').remove();
-            datePickers.removeClass('input-group');
-            return;
-        }
-
-        datePickers
-            .datetimepicker({
-                useCurrent: false,
-                viewMode: 'years',
-                format: 'YYYY-MM-DD',
-                locale: this.localeValue,
-            })
-            .on('dp.change', () => $(this.element).trigger('submit'));
-    }
-
-    disconnect() {
-        $([this.startTarget, this.endTarget]).off('dp.change');
+        const dates = $([this.startTarget, this.endTarget]);
+        dates.find('input').attr('type', 'date');
+        dates.find('.input-group-addon').remove();
+        dates.removeClass('input-group');
     }
 
     submit(event) {

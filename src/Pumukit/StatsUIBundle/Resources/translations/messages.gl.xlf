@@ -94,6 +94,46 @@
                 <source>Next</source>
                 <target>Seguinte</target>
             </trans-unit>
+            <trans-unit id="8ed864ab1cb9667539bb0f0156fac02d" resname="Custom range">
+                <source>Custom range</source>
+                <target>Intervalo personalizado</target>
+            </trans-unit>
+            <trans-unit id="ebfe9ce86e6e9fb953aa7a25b59c1956" resname="Yesterday">
+                <source>Yesterday</source>
+                <target>Onte</target>
+            </trans-unit>
+            <trans-unit id="4b299435d7b213389dfcb754217ab570" resname="Last 7 Days">
+                <source>Last 7 Days</source>
+                <target>Últimos 7 días</target>
+            </trans-unit>
+            <trans-unit id="015a82ad52283ebee50f2819fc99d3eb" resname="Last 30 Days">
+                <source>Last 30 Days</source>
+                <target>Últimos 30 días</target>
+            </trans-unit>
+            <trans-unit id="93f558cb7b3fc8ef642cfe051b63ad7b" resname="This Month">
+                <source>This Month</source>
+                <target>Este mes</target>
+            </trans-unit>
+            <trans-unit id="8dce9a09517e227ca7bb21da16be36a2" resname="Last Month">
+                <source>Last Month</source>
+                <target>O mes pasado</target>
+            </trans-unit>
+            <trans-unit id="ee7dbd72229f2932b4c624e0294848be" resname="This Year">
+                <source>This Year</source>
+                <target>Este ano</target>
+            </trans-unit>
+            <trans-unit id="6e222261c8658154df838723c6c7a621" resname="All History">
+                <source>All History</source>
+                <target>Todo o histórico</target>
+            </trans-unit>
+            <trans-unit id="5da618e8e4b89c66fe86e32cdafde142" resname="From">
+                <source>From</source>
+                <target>Dende</target>
+            </trans-unit>
+            <trans-unit id="3728af837fe70019577ddb0ed7125ee5" resname="Until">
+                <source>Until</source>
+                <target>Ata</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

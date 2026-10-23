@@ -67,6 +67,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Remove jQuery Migrate from the backoffice and portal layouts: no core script uses the APIs removed in jQuery 3.
 - Remove noUiSlider and `jquery.dropdown.css` from the backoffice layout: no page used them.
 - Replace materialize-tags, typeahead.js and Bloodhound in the keyword fields of the backoffice with a module of the bundle that keeps the same look.
+- Replace moment, bootstrap-datetimepicker and daterangepicker with native date fields in the portal search and the statistics; the predefined ranges of the statistics are translated.
 - Answer the picture uploads with JSON only and remove the old iframe responses and the hidden banner URL form.
 - Configure the default protocol of the URL form fields (live channel, person, link and external player), deprecated since Symfony 7.1.
 - Upload thumbnails, banners, materials, live event images and tracks through the Uppy Dashboard; the upload actions answer JSON on request and adding a track to an object without type no longer fails.

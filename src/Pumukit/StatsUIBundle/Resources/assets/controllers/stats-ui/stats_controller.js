@@ -12,7 +12,9 @@ const VIEWS_COLOR = '#1f77b4';
 export default class extends Controller {
     static targets = [
         'title',
-        'dateRange',
+        'from',
+        'to',
+        'preset',
         'totalViews',
         'totalObjects',
         'mostViewedTitle',
@@ -39,59 +41,55 @@ export default class extends Controller {
         this.groupBy = 'month';
         this.charts = {};
         this.requests = {};
-        this.initDateRangePicker();
+        const { fromDate, toDate } = this.defaultRange();
+        this.fromTarget.value = fromDate;
+        this.toTarget.value = toDate;
         this.load();
     }
 
     disconnect() {
-        const input = $(this.dateRangeTarget);
-        input.off('.statsUi');
-        input.data('daterangepicker')?.remove();
         Object.values(this.charts).forEach((chart) => chart.destroy());
         this.charts = {};
     }
 
-    initDateRangePicker() {
-        const ranges = {
-            Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-            'This Year': [moment().startOf('year'), moment()],
-        };
-        if (this.isDetail()) {
-            ranges['All History'] = [moment({ year: 1970 }), moment()];
+    preset(event) {
+        const range = this.presetRange(event.currentTarget.value);
+        if (!range) {
+            return;
         }
-
-        const { fromDate, toDate } = this.defaultRange();
-        $(this.dateRangeTarget)
-            .daterangepicker({
-                minYear: 1970,
-                maxDate: toDate,
-                ranges,
-                locale: { format: 'YYYY-MM-DD' },
-                linkedCalendars: false,
-                alwaysShowCalendars: true,
-                showDropdowns: true,
-                startDate: fromDate,
-                endDate: toDate,
-            })
-            .on('apply.daterangepicker.statsUi', (event, picker) => {
-                this.dateRangeTarget.value = `${picker.startDate.format('YYYY-MM-DD')} - ${picker.endDate.format('YYYY-MM-DD')}`;
-            })
-            .on('cancel.daterangepicker.statsUi', () => {
-                this.dateRangeTarget.value = '';
-            })
-            .on('change.statsUi', () => {
-                this.setPage(0);
-                this.load();
-            });
+        this.fromTarget.value = range.fromDate;
+        this.toTarget.value = range.toDate;
+        this.setPage(0);
+        this.load();
     }
 
-    openCalendar(event) {
-        event.preventDefault();
-        $(this.dateRangeTarget).data('daterangepicker')?.show();
+    dates() {
+        this.presetTarget.value = '';
+        if ('' === this.fromTarget.value || '' === this.toTarget.value || this.fromTarget.value > this.toTarget.value) {
+            return;
+        }
+        this.setPage(0);
+        this.load();
+    }
+
+    presetRange(preset) {
+        const today = new Date();
+        const day = (offset) => new Date(today.getFullYear(), today.getMonth(), today.getDate() + offset);
+        const ranges = {
+            yesterday: [day(-1), day(-1)],
+            last7: [day(-6), today],
+            last30: [day(-29), today],
+            thisMonth: [new Date(today.getFullYear(), today.getMonth(), 1), new Date(today.getFullYear(), today.getMonth() + 1, 0)],
+            lastMonth: [new Date(today.getFullYear(), today.getMonth() - 1, 1), new Date(today.getFullYear(), today.getMonth(), 0)],
+            thisYear: [new Date(today.getFullYear(), 0, 1), today],
+            all: [new Date(1970, 0, 1), today],
+        };
+        if (!ranges[preset]) {
+            return null;
+        }
+        const [from, to] = ranges[preset];
+
+        return { fromDate: this.isoDate(from), toDate: this.isoDate(to) };
     }
 
     search(event) {
@@ -414,7 +412,8 @@ export default class extends Controller {
     }
 
     filters() {
-        const [fromDate, toDate] = this.dateRangeTarget.value.split(' - ').map((date) => date.trim().replace(/\//g, '-'));
+        const fromDate = this.fromTarget.value;
+        const toDate = this.toTarget.value;
         const range = fromDate && toDate ? { fromDate, toDate } : this.defaultRange();
 
         return { criteria: this.hasTitleTarget ? this.titleTarget.value.trim() : '', ...range };

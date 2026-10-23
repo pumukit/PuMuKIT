@@ -132,7 +132,7 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
 
 - Reference bundle assets **without** a leading slash: `asset('bundles/pumukitwebtv/...')`.
   A path starting with `/` is not mapped and is served as a plain static file.
-- jQuery, Bootstrap and moment are shared from `bundles/pumukitcore/vendor/` and the copies
+- jQuery, Bootstrap and jQuery UI are shared from `bundles/pumukitcore/vendor/` and the copies
   that each bundle had are removed. Overridden templates must load the shared files:
 
   | Removed | Replacement |
@@ -142,16 +142,19 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
   | `bundles/pumukitnewadmin/js/bootstrap.min.js` | `bundles/pumukitcore/vendor/bootstrap/js/bootstrap.min.js` |
   | `bundles/pumukitwebtv/js/bootstrap.min.js` | `bundles/pumukitcore/vendor/bootstrap/js/bootstrap.min.js` |
   | `bundles/pumukitnewadmin/css/bootstrap.min.css` | `bundles/pumukitcore/vendor/bootstrap/css/bootstrap.min.css` |
-  | `bundles/pumukitwebtv/js/moment-with-locales.min.js` | `bundles/pumukitcore/vendor/moment/moment-with-locales.min.js` |
-  | `bundles/pumukitstatsui/vendor/moment/moment.min.js` | `bundles/pumukitcore/vendor/moment/moment-with-locales.min.js` |
+  | `bundles/pumukitwebtv/js/moment-with-locales.min.js`, `bundles/pumukitstatsui/vendor/moment/moment.min.js` | nothing (moment is removed, see below) |
   | `bundles/pumukitnewadmin/js/jquery-ui-1.11.3.custom.min.js` | `bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.js` |
   | `bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom*.min.css` (3 files) | `bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.css` |
-  | `bundles/pumukitwebtv/js/bootstrap-datetimepicker.min.js` | `bundles/pumukitcore/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js` |
-  | `bundles/pumukitwebtv/css/bootstrap-datetimepicker(.min).css` | `bundles/pumukitcore/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css` |
+  | `bundles/pumukitwebtv/js/bootstrap-datetimepicker.min.js`, `bundles/pumukitwebtv/css/bootstrap-datetimepicker(.min).css` | nothing (bootstrap-datetimepicker is removed, see below) |
 
-  The shared versions are jQuery 3.7.1, Bootstrap 3.4.1, moment 2.30.1,
-  jQuery UI 1.14.2 (autocomplete and menu only, so it does not replace the Bootstrap tooltip)
-  and bootstrap-datetimepicker 4.17.49.
+  The shared versions are jQuery 3.7.1, Bootstrap 3.4.1 and jQuery UI 1.14.2 (autocomplete and
+  menu only, so it does not replace the Bootstrap tooltip).
+- **Dates without libraries.** moment, bootstrap-datetimepicker and daterangepicker are removed
+  (`bundles/pumukitcore/vendor/moment/`, `bundles/pumukitcore/vendor/bootstrap-datetimepicker/`,
+  `bundles/pumukitstatsui/vendor/daterangepicker/`). The date filters of the portal search are
+  native `<input type="date">` fields (the `webtv--search` controller still turns the text fields of
+  an overridden filter into date fields), and the statistics use a predefined range select and two
+  native date fields (`from`, `to` and `preset` targets of `stats-ui--stats` instead of `dateRange`).
 - **jQuery 3.** The backoffice and portal layouts no longer load jQuery Migrate, and
   `bundles/pumukitcore/vendor/jquery-migrate/jquery-migrate.min.js` is removed: the scripts of a
   project must not use the APIs removed in jQuery 3. A project can load its own copy of jQuery
