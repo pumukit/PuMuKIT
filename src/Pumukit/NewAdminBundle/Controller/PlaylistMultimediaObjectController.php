@@ -227,7 +227,9 @@ class PlaylistMultimediaObjectController extends AbstractController
         $queryBuilder = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
         $queryBuilder = $this->searchVideos($queryBuilder, $value, $request->getLocale());
         $queryBuilder->limit($limit);
-        $queryBuilder->sortMeta('score', 'textScore');
+        if (!empty($value)) {
+            $queryBuilder->sortMeta('score', 'textScore');
+        }
 
         $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($queryBuilder, 1, $limit);
 

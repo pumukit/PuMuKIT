@@ -62,4 +62,20 @@ class PlaylistVideoSearchTest extends PumukitTestCase
         $this->assertSelectorTextContains('b', 'Mm. Obj.');
         $this->assertSelectorNotExists('.alert-warning');
     }
+
+    public function testAnEmptySearchListsTheVideos(): void
+    {
+        $person = new Person();
+        $person->setName('Playlist search');
+        $person->setEmail('playlistsearch@pumukit.local');
+        $this->dm->persist($person);
+        $this->user->setPerson($person);
+        $this->dm->flush();
+
+        $this->client->loginUser($this->user, 'pumukit');
+        $this->client->xmlHttpRequest('GET', static::getContainer()->get('router')->generate('pumukitnewadmin_playlistmms_modal_search', ['search' => '']));
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('b', 'Mm. Obj.');
+    }
 }
