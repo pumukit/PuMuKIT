@@ -38,6 +38,9 @@ class CheckAssetsCommand extends Command
         '@PumukitBaseLivePlayer/Advance/Sessions/withoutSessions.js.twig' => '@PumukitBaseLivePlayer/Advance/sessions.html.twig (include it outside the <script> tag)',
         '@PumukitBaseLivePlayer/Advance/Sessions/futureSessions.js.twig' => '@PumukitBaseLivePlayer/Advance/sessions.html.twig (include it outside the <script> tag)',
         '@PumukitBaseLivePlayer/Advance/Sessions/nowSessions.js.twig' => '@PumukitBaseLivePlayer/Advance/sessions.html.twig (include it outside the <script> tag)',
+        'bundles/pumukitwebtv/js/template_video.js' => 'data-controller="webtv--dynamic-pic" on the image',
+        'bundles/pumukitwebtv/js/jquery.countdown.js' => 'the live-player--sessions controller',
+        'bundles/pumukitwebtv/js/modernizr-custom.js' => 'native feature detection',
     ];
 
     public const REMOVED_JAVASCRIPT_GLOBALS = [
@@ -50,6 +53,8 @@ class CheckAssetsCommand extends Command
         'toggleDateSelect' => 'the webtv--search controller',
         'postChatMessage' => 'the webtv--chat controller',
         'updateChat' => 'the webtv--chat controller',
+        'Modernizr' => 'native feature detection',
+        'dynamic_image' => 'data-controller="webtv--dynamic-pic" on the image',
     ];
 
     private const REFERENCE_PATTERN = '#(?<![\w./-])/?(bundles/([a-z0-9_]+)/[^\'"\s?\#{}()]*)#';

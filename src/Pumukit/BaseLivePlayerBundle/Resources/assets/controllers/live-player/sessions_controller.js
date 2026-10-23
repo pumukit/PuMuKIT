@@ -24,7 +24,7 @@ export default class extends Controller {
     }
 
     disconnect() {
-        $(this.countdown).countdown('remove');
+        clearInterval(this.timer);
     }
 
     future() {
@@ -60,14 +60,23 @@ export default class extends Controller {
     }
 
     startCountdown(selector, date, showTime) {
+        const element = document.querySelector(selector);
+        const end = new Date(date).getTime();
         const days = trans('days');
-        this.countdown = $(selector);
-        this.countdown
-            .countdown(date, function (event) {
-                if (showTime) {
-                    $(this).text(event.strftime('%D ' + days + ' %-H:%M:%S'));
-                }
-            })
-            .on('finish.countdown', () => window.location.reload());
+        const pad = (number) => String(number).padStart(2, '0');
+        const tick = () => {
+            const seconds = Math.max(0, Math.ceil((end - Date.now()) / 1000));
+            if (showTime && element) {
+                element.textContent = `${pad(Math.floor(seconds / 86400))} ${days} ${Math.floor(seconds / 3600) % 24}:${pad(Math.floor(seconds / 60) % 60)}:${pad(seconds % 60)}`;
+            }
+            if (seconds === 0) {
+                clearInterval(this.timer);
+                window.location.reload();
+            }
+        };
+
+        clearInterval(this.timer);
+        this.timer = setInterval(tick, 1000);
+        tick();
     }
 }

@@ -2,11 +2,6 @@
 
 {% set hide_slidebar = true %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/pumukitwebtv/js/jquery.countdown.js') }}" type="text/javascript"></script>
-{% endblock %}
-
 {% block title %}{{ parent() }} - {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}{% endblock %}
 
 {% block body_without_bar %}
