@@ -134,6 +134,23 @@ class CheckAssetsCommandTest extends PumukitTestCase
         $this->assertStringContainsString('Problems found: 1', $display);
     }
 
+    public function testReportsRemovedGlobalsCalledThroughWindow(): void
+    {
+        file_put_contents(
+            $this->tmpDir.'/list.html.twig',
+            "<a onclick=\"window.submit_delete_role('1', '0'); return false;\"></a>\n<a onclick=\"other.click_fila_url()\"></a>\n"
+        );
+
+        $tester = $this->commandTester();
+        $tester->execute(['--path' => $this->tmpDir]);
+
+        $display = $tester->getDisplay();
+        $this->assertStringContainsString('Removed JavaScript global: submit_delete_role in list.html.twig:1', $display);
+        $this->assertStringContainsString('admin--actions#remove', $display);
+        $this->assertStringNotContainsString('click_fila_url', $display);
+        $this->assertStringContainsString('Problems found: 1', $display);
+    }
+
     public function testFailsWhenPathDoesNotExist(): void
     {
         $tester = $this->commandTester();

@@ -63,6 +63,30 @@ class CheckAssetsCommand extends Command
         'sendInboxXHRImportRequest' => 'the import option of uploader_attributes()',
         'show_file_added' => 'the core--uploader:added event',
         'file_data_clear' => 'the core--uploader#remove action',
+        'submit_delete_role' => 'admin--actions#remove (see @PumukitNewAdmin/Role/list.html.twig)',
+        'submit_delete_user' => 'admin--actions#remove (see @PumukitNewAdmin/User/list.html.twig)',
+        'submit_delete_live' => 'admin--actions#remove (see @PumukitNewAdmin/Live/list.html.twig)',
+        'submit_delete_seriestype' => 'admin--actions#remove (see @PumukitNewAdmin/Seriestype/list.html.twig)',
+        'submit_delete_event' => 'admin--actions#remove (see @PumukitNewAdmin/LegacyEvent/array.html.twig)',
+        'delete_eventpic' => 'admin--actions#remove (see @PumukitNewAdmin/LegacyEvent/updatemenu.html.twig)',
+        'submit_delete_permissionprofile' => 'admin--actions#remove (see @PumukitNewAdmin/PermissionProfile/updatemenu.html.twig)',
+        'submit_delete_person' => 'admin--actions#remove (see @PumukitNewAdmin/Person/list.html.twig)',
+        'submit_delete_group' => 'the admin--group-info controller',
+        'submit_delete_link' => 'admin--actions#remove (see @PumukitNewAdmin/Link/list.html.twig)',
+        'filter_click_letter' => 'admin--filter-form#letter',
+        'processPermissionProfilesOk' => 'the admin--permission-profiles controller',
+        'checkScope' => 'the admin--permission-profiles controller',
+        'add_group_user' => 'the admin--group-picker controller',
+        'delete_group_user' => 'the admin--group-picker controller',
+        'delete_user_from_group' => 'the admin--group-info controller',
+        'delete_multimediaobject_from_group' => 'the admin--group-info controller',
+        'delete_embeddedbroadcast_from_group' => 'the admin--group-info controller',
+        'can_be_deleted' => 'the admin--group-info controller',
+        'toggle_section_tag' => 'the admin--tag-tree controller',
+        'tag_delete' => 'the admin--tag-tree controller',
+        'fileServerTree' => 'the admin--file-tree controller',
+        'fileServerSelect' => 'the admin--file-tree controller',
+        'click_fila_url' => 'admin--actions#preview',
         'encoder_reload_timeout' => 'the encoder--stats controller',
         'url_latestuploads_pager' => 'the webtv--announces controller',
         'insertCookieUser' => 'the webtv--cookies controller',
@@ -141,7 +165,7 @@ EOT
                 $location = $relativePathname.':'.($index + 1);
 
                 foreach ($removedGlobals as $global) {
-                    if (preg_match('/(?<![\w$.])'.$global.'\b/', $line)) {
+                    if (preg_match('/(?:(?<![\w$.])|(?<=window\.))'.$global.'\b/', $line)) {
                         ++$missing;
                         $output->writeln('Removed JavaScript global: <info>'.$global.'</info> in '.$location);
                         $output->writeln('    use <comment>'.self::REMOVED_JAVASCRIPT_GLOBALS[$global].'</comment>');
@@ -186,7 +210,7 @@ EOT
 
         return array_values(array_filter(
             array_keys(self::REMOVED_JAVASCRIPT_GLOBALS),
-            static fn (string $global): bool => !preg_match('/(function\s+'.$global.'\b|\b(var|let|const)\s+'.$global.'\b|(?<![\w$.])'.$global.'\s*=(?!=))/', $content)
+            static fn (string $global): bool => !preg_match('/(function\s+'.$global.'\b|\b(var|let|const)\s+'.$global.'\b|(?:(?<![\w$.])|(?<=window\.))'.$global.'\s*=(?!=))/', $content)
         ));
     }
 
