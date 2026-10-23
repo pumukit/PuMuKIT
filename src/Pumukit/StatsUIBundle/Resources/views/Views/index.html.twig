@@ -1,13 +1,3 @@
-{% if app.request.attributes.get('group_by') == 'day' %}
-    {% set day = 'active-button' %}
-{% elseif app.request.attributes.get('group_by') == 'month' %}
-    {% set month = 'active-button' %}
-{% elseif app.request.attributes.get('group_by') == 'year' %}
-    {% set year = 'active-button' %}
-{% else %}
-    {% set month = 'active-button' %}
-{% endif %}
-
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-12">
@@ -20,20 +10,20 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="btn-group pull-right" role="group">
-                        <button type="button" class="day btn-all-views-group btn btn-default {{ day|default('') }}" data-group="day">
+                        <button type="button" class="day btn-all-views-group btn btn-default" data-stats-ui--stats-target="group" data-action="stats-ui--stats#group" data-stats-ui--stats-group-param="day">
                             {% trans %}Day{% endtrans %}
                         </button>
-                        <button type="button" class="month btn-all-views-group btn btn-default {{ month|default('') }}" data-group="month">
+                        <button type="button" class="month btn-all-views-group btn btn-default active-button" data-stats-ui--stats-target="group" data-action="stats-ui--stats#group" data-stats-ui--stats-group-param="month">
                             {% trans %}Month{% endtrans %}
                         </button>
-                        <button type="button" class="year btn-all-views-group btn btn-default {{ year|default('') }}" data-group="year">
+                        <button type="button" class="year btn-all-views-group btn btn-default" data-stats-ui--stats-target="group" data-action="stats-ui--stats#group" data-stats-ui--stats-group-param="year">
                             {% trans %}Year{% endtrans %}
                         </button>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div id="chart-all-views">
-                        <svg style="height:400px"></svg>
+                    <div id="chart-all-views" class="stats-chart">
+                        <canvas data-stats-ui--stats-target="viewsChart"></canvas>
                     </div>
                 </div>
             </div>

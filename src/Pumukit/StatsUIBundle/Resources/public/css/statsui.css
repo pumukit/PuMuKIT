@@ -249,6 +249,10 @@
     float: left;
 }
 
+.table-views tbody td.stats-half {
+    width: 50%;
+}
+
 .btn-group .btn-default:hover {
     background-color:#EAEAEA;
 }
@@ -258,12 +262,17 @@
     color: #FFF !important;
 }
 
-.nv-context {
-    display: none !important;
+.stats-chart {
+    position: relative;
+    height: 400px;
 }
 
 .pagination {
     margin:25px;
+}
+
+.pagination > .current-page > a {
+    background-color: #EAEAEA;
 }
 
 .cab_body_div .breadcrumb {

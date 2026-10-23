@@ -6,12 +6,12 @@
                 {% trans %}Search by title{% endtrans %}:
             </label>
             <div class="input-group">
-                <input id="title" type="text" class="form-control form_daterangepicker" />
+                <input id="title" type="text" class="form-control form_daterangepicker" data-stats-ui--stats-target="title" data-action="keydown.enter->stats-ui--stats#search" />
                 <div class="input-group-addon no-padding">
-                    <button class="btn btn-default btn-raised btn-stats-search btn-stats-search-text" title="{% trans %}Set URL parameters{% endtrans %}">
+                    <button class="btn btn-default btn-raised btn-stats-search btn-stats-search-text" data-action="stats-ui--stats#search" title="{% trans %}Set URL parameters{% endtrans %}">
                         <i class="fa fa-search glyphicon glyphicon-search"></i>
                     </button>
-                    <button class="btn btn-default btn-raised btn-stats-search btn-stats-search-remove" title="{% trans %}Clear filter{% endtrans %}">
+                    <button class="btn btn-default btn-raised btn-stats-search btn-stats-search-remove" data-action="stats-ui--stats#reset" title="{% trans %}Clear filter{% endtrans %}">
                         <i class="fa fa-remove glyphicon glyphicon-remove"></i>
                     </button>
                 </div>
@@ -23,13 +23,13 @@
         </label>
         <div class="input-group">
             <span class="no-margin no-padding form_daterangepicker">
-                <input type="daterange" id="form_daterangepicker" class="form-control form_daterangepicker" name="datefilter" />
+                <input type="daterange" id="form_daterangepicker" class="form-control form_daterangepicker" name="datefilter" data-stats-ui--stats-target="dateRange" />
             </span>
             <div class="input-group-addon no-padding">
-                <button class="btn btn-default btn-raised btn-stats-search btn-stats-calendar" title="{% trans %}Toggle date range{% endtrans %}">
+                <button class="btn btn-default btn-raised btn-stats-search btn-stats-calendar" data-action="stats-ui--stats#openCalendar" title="{% trans %}Toggle date range{% endtrans %}">
                     <i class="fa fa-calendar glyphicon glyphicon-calendar"></i>
                 </button>
-                <button class="btn btn-default btn-raised btn-stats-search btn-stats-calendar-remove" title="{% trans %}Clear filter{% endtrans %}">
+                <button class="btn btn-default btn-raised btn-stats-search btn-stats-calendar-remove" data-action="stats-ui--stats#reset" title="{% trans %}Clear filter{% endtrans %}">
                     <i class="fa fa-remove glyphicon glyphicon-remove"></i>
                 </button>
             </div>

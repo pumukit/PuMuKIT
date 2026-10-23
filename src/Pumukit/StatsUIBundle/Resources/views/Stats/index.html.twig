@@ -2,22 +2,42 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/pumukitstatsui/vendor/nvd3/nv.d3.min.css') }}" />
     <link href="{{ asset('bundles/pumukitstatsui/css/statsui.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/pumukitstatsui/vendor/daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/pumukitstatsui/vendor/d3/d3.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/pumukitstatsui/vendor/nvd3/nv.d3.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/pumukitcore/vendor/moment/moment-with-locales.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/pumukitstatsui/vendor/daterangepicker/daterangepicker.min.js') }}"></script>
 {% endblock %}
 
 {% block body %}
+    {% set stats_modes = {
+        'pumukit_stats_series_index': 'series',
+        'pumukit_stats_mmobj_index': 'mmobj',
+        'pumukit_stats_series_index_id': 'series-id',
+        'pumukit_stats_mmobj_index_id': 'mmobj-id'
+    } %}
+    {% set stats_urls = {
+        seriesMostViewed: path('pumukit_stats_api_seriesmostviewed'),
+        mmobjMostViewed: path('pumukit_stats_api_mmobjmostviewed'),
+        multimediaObjects: path('pumukit_schema_api_multimediaobjects'),
+        views: path('pumukit_stats_api_views'),
+        viewsSeries: path('pumukit_stats_api_viewsseries'),
+        viewsMmobj: path('pumukit_stats_api_viewsmmobj'),
+        seriesStats: path('pumukit_stats_series_index_id', {'id': '__ID__'}),
+        mmobjStats: path('pumukit_stats_mmobj_index_id', {'id': '__ID__'}),
+        mmobjPortal: path('pumukit_webtv_multimediaobject_index', {'id': '__ID__'})
+    } %}
 
-    <div class="container-fluid">
+    <div class="container-fluid"
+         data-controller="stats-ui--stats"
+         data-stats-ui--stats-mode-value="{{ stats_modes[app.request.attributes.get('_route')]|default('series') }}"
+         data-stats-ui--stats-id-value="{{ app.request.attributes.get('id')|default('') }}"
+         data-stats-ui--stats-locale-value="{{ app.request.getLocale() }}"
+         data-stats-ui--stats-page-value="{{ app.request.query.getInt('page') }}"
+         data-stats-ui--stats-urls-value="{{ stats_urls|json_encode }}">
 
         <h3 class="cab_body_div">
             <ul class="breadcrumb">
@@ -38,9 +58,4 @@
         </div>
 
     </div>
-
-    {% include "@PumukitStatsUI/Stats/js.html.twig" %}
-
 {% endblock %}
-
-

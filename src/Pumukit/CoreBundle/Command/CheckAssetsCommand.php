@@ -41,6 +41,10 @@ class CheckAssetsCommand extends Command
         'bundles/pumukitwebtv/js/template_video.js' => 'data-controller="webtv--dynamic-pic" on the image',
         'bundles/pumukitwebtv/js/jquery.countdown.js' => 'the live-player--sessions controller',
         'bundles/pumukitwebtv/js/modernizr-custom.js' => 'native feature detection',
+        '@PumukitStatsUI/Stats/js.html.twig' => 'the stats-ui--stats controller (see @PumukitStatsUI/Stats/index.html.twig)',
+        'bundles/pumukitstatsui/vendor/d3/d3.min.js' => 'Chart.js in the stats-ui--stats controller',
+        'bundles/pumukitstatsui/vendor/nvd3/nv.d3.min.js' => 'Chart.js in the stats-ui--stats controller',
+        'bundles/pumukitstatsui/vendor/nvd3/nv.d3.min.css' => 'Chart.js in the stats-ui--stats controller',
     ];
 
     public const REMOVED_JAVASCRIPT_GLOBALS = [
