@@ -263,6 +263,8 @@ template, including the content of `#myModal` loaded by AJAX:
 | `invalid->admin--actions#validity` | `message` | `oninvalid="setCustomValidity(…)"` in form types |
 | `click->admin--actions#magicUrl` | `url`, `template` (`__secret__`), `confirm`, `success`, `input`, `link` | `submit_generate_magic_series()` |
 | `click->admin--actions#notifyParent` | `message` (JSON) | `parent.window.postMessage(…, '*')` |
+| `click->admin--actions#copy` | `input` (id) | the copy buttons of the i18n fields |
+| `click->admin--actions#translate` | `url`, `locale`, `field` (`input` or `textarea`), `question`, `error`; a double click skips the prompt | `pmk_translate()` |
 
 `remove` also takes `clear` (`{name, id, message}`): when the deleted row is the selected one,
 `#preview_<name>` shows `message` and `#edit_<name>` is emptied. Action params are parsed as JSON,
@@ -281,11 +283,13 @@ so the controllers carry no translations. Zone controllers: `admin--group-picker
 user), `admin--group-info` (group deletion), `admin--person-picker` (person search of a
 relation), `admin--permission-profiles`, `admin--tag-tree`, `admin--file-tree` (inbox
 explorer of the server tab), `admin--changepub` (status of the multimedia objects of a series) and
-`admin--event-tabs` (list and calendar tabs of the legacy events).
+`admin--event-tabs` (list and calendar tabs of the legacy events), `admin--pic-list` (updates the
+preview thumbnails after reloading a picture list) and `admin--pic-generator` (thumbnail generation
+from a frame of the video).
 
 Migrated zones: roles, series types, live channels, legacy events, users, groups, people and
-person relations, permission profiles, tags, links, the inbox explorer, series, playlists and the
-head and tail manager. `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
+person relations, permission profiles, tags, links, the inbox explorer, series, playlists, the
+head and tail manager, pictures and the i18n fields of the form theme. `@PumukitNewAdmin/Playlist/listthjs.html.twig` and the unused
 `@PumukitNewAdmin/Playlist/changepub.html.twig` are removed, and so is
 `@PumukitNewAdmin/LiveEvent/create.html.twig`, which pointed to a route that no longer exists. The series and playlist indexes no
 longer define the `serieskeywords` and `mmobjkeywords` globals: `admin--meta-form` creates them
@@ -307,6 +311,10 @@ functions, reported by `pumukit:check:assets` (also when called as `window.…`)
 | `submit_delete_series()`, `submit_delete_playlist()` | `admin--actions#remove` |
 | `click_checkbox_changepub_all()`, `check_checkbox_all()`, `check_checkbox_channel_all()`, `click_checkbox_channel_changepub_all()`, `submit_series_change_pub()` | `admin--changepub` |
 | `init_series_materialtags()` | `admin--meta-form` |
+| `up_seriespic()`, `down_seriespic()`, `up_playlistpic()`, `down_playlistpic()`, `up_mmspic()`, `down_mmspic()`, `change_pics_page()` | `admin--actions#load` |
+| `delete_seriespic()`, `delete_playlistpic()`, `delete_mmspic()`, `delete_eventspic()` | `admin--actions#remove` |
+| `update_mmspic()`, `update_seriespic()`, `update_playlistpic()` | `admin--pic-list` |
+| `pmk_translate()` | `admin--actions#translate` |
 
 Names, titles and file names are now rendered as text: the group picker, the group deletion
 button, the person suggestions and the inbox explorer used to build HTML and inline handlers by
