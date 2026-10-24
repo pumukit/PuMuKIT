@@ -349,7 +349,7 @@ flag in its `dates` value so a publication date before the recording date stops 
 override of `@PumukitNewAdmin/UNESCO/updatemeta.html.twig` no longer gets the "Press OK" notice
 from `pumukit.js.twig`: copy the attributes of the bundle template.
 
-The live events zone (list, filters, batch delete, row menu, event form with the channel select2,
+The live events zone (list, filters, batch delete, row menu, event form with the channel search,
 sessions and the series modal) uses the `admin--live-event` controller, started through
 `@PumukitNewAdmin/LiveEvent/_controller.html.twig` on the index, on the list (which also loads the
 selected event) and on the series modal. Its event form uses `admin--meta-form` for the "Press OK"
@@ -412,6 +412,14 @@ objects of a playlist) use the `admin--include` controller instead of `render_hi
 ```
 
 `pumukit:check:assets` reports the `render_hinclude()` calls left in the project templates.
+
+Select2 is removed. The channel search of the live event form (`#live_channel_select`) is a text
+field with the jQuery UI autocomplete of `admin--live-event`, like the series search next to it:
+it lists every channel on focus, filters as you type and still fills `#live_channel_input_id` and
+`#live_channel_input_name`; emptying it after choosing a channel clears the choice.
+`@PumukitNewAdmin/LiveEvent/select2js.html.twig`, `bundles/pumukitnewadmin/js/select2/` and
+`bundles/pumukitnewadmin/css/select2.min.css` are removed, and the `channel` message of
+`@PumukitNewAdmin/LiveEvent/_controller.html.twig` is now the placeholder of the field.
 
 Removed global
 functions, reported by `pumukit:check:assets` (also when called as `window.…`):

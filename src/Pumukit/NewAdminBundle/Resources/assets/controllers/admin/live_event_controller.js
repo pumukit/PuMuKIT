@@ -16,26 +16,35 @@ export default class extends Controller {
     }
 
     channelTargetConnected(element) {
-        $(element)
-            .select2({
-                ajax: { url: this.urlsValue.channelSuggest, delay: 250, processResults: (data) => ({ results: data }) },
-                language: this.localeValue,
-                placeholder: this.messagesValue.channel,
-                allowClear: true,
-            })
-            .on('select2:select', (event) => {
-                $('#live_channel_input_name').val(event.params.data.text);
-                $('#live_channel_input_id').val(event.params.data.id);
-            })
-            .on('select2:unselect', () => {
+        const input = $(element);
+        input.autocomplete({
+            source: (request, response) => {
+                $.getJSON(this.urlsValue.channelSuggest, { term: request.term })
+                    .done((data) => response(data.map((item) => ({ id: item.id, label: item.text, value: item.text }))))
+                    .fail(() => response([]));
+            },
+            delay: 250,
+            minLength: 0,
+            select: (event, ui) => {
+                $('#live_channel_input_name').val(ui.item.label);
+                $('#live_channel_input_id').val(ui.item.id);
+                this.channelChosen = true;
+            },
+        });
+        input.on('focus.adminLiveEvent', () => input.autocomplete('search', input.val()));
+        input.on('input.adminLiveEvent', () => {
+            if ('' === input.val() && this.channelChosen) {
                 $('#live_channel_input_name').val('');
                 $('#live_channel_input_id').val('');
-            });
+                this.channelChosen = false;
+            }
+        });
     }
 
     channelTargetDisconnected(element) {
-        if ($(element).data('select2')) {
-            $(element).select2('destroy');
+        $(element).off('.adminLiveEvent');
+        if ($(element).autocomplete('instance')) {
+            $(element).autocomplete('destroy');
         }
     }
 

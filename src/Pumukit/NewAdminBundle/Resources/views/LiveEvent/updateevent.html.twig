@@ -58,7 +58,7 @@
             <div class="form-group row">
                 <div class="col-sm-6">
                     <label for="live_channel_select">{% trans %}Search Channels{% endtrans %}</label>
-                    <select id="live_channel_select" class="form-control" data-admin--live-event-target="channel"></select>
+                    <input id="live_channel_select" type="text" class="form-control" placeholder="{% trans %}Search Channels{% endtrans %}" autocomplete="off" data-admin--live-event-target="channel"/>
                 </div>
                 <div class="col-sm-6">
                     <label for="live_channel_input_name">{% trans %}Selected Channel{% endtrans %}</label>
