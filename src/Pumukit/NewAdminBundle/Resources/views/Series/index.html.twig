@@ -70,7 +70,7 @@
             <div class="col-md-2 hidden-xs hidden-sm">
                 <div id="preview_series" class="well">
                     {% if(app.session.has('admin/series/id')) %}
-                        {{ render_hinclude(url('pumukitnewadmin_series_show', {'id': app.session.get('admin/series/id')})) }}
+                        <div data-controller="admin--include" data-admin--include-src-value="{{ url('pumukitnewadmin_series_show', {'id': app.session.get('admin/series/id')}) }}"></div>
                     {% else %}
                         {% trans %}Select any series.{% endtrans %}
                     {% endif %}

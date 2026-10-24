@@ -168,6 +168,23 @@ class CheckAssetsCommandTest extends PumukitTestCase
         $this->assertStringContainsString('Problems found: 1', $display);
     }
 
+    public function testReportsUnsupportedTwigFunctions(): void
+    {
+        file_put_contents(
+            $this->tmpDir.'/index.html.twig',
+            "<div id=\"preview_mm\">\n    {{ render_hinclude(url('pumukitnewadmin_mms_show', {'id': id})) }}\n</div>\n"
+        );
+
+        $tester = $this->commandTester();
+        $tester->execute(['--path' => $this->tmpDir]);
+
+        $display = $tester->getDisplay();
+        $this->assertSame(Command::FAILURE, $tester->getStatusCode());
+        $this->assertStringContainsString('Unsupported Twig function: render_hinclude in index.html.twig:2', $display);
+        $this->assertStringContainsString('data-controller="admin--include"', $display);
+        $this->assertStringContainsString('Problems found: 1', $display);
+    }
+
     public function testFailsWhenPathDoesNotExist(): void
     {
         $tester = $this->commandTester();

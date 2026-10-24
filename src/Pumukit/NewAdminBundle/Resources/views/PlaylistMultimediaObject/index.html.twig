@@ -72,7 +72,7 @@
             <div id="tv_admin_bar" class="col-md-2 hidden-xs hidden-sm">
                 <div id="preview_playlistmm" class="well">
                     {% if(app.session.get('admin/playlistmms/id', false)) %}
-                        {{ render_hinclude(url('pumukitnewadmin_playlistmms_show', {'id': app.session.get('admin/playlistmms/id'), 'pos': app.session.get('admin/playlistmms/pos')})) }}
+                        <div data-controller="admin--include" data-admin--include-src-value="{{ url('pumukitnewadmin_playlistmms_show', {'id': app.session.get('admin/playlistmms/id'), 'pos': app.session.get('admin/playlistmms/pos')}) }}"></div>
                     {% else %}
                         <legend>{% trans %}Preview{% endtrans %}</legend>
                         {% trans %}Select any multimedia object.{% endtrans %}

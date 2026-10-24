@@ -63,7 +63,7 @@
             <div class="col-md-2 hidden-xs hidden-sm">
                 <div id="preview_playlist" class="well">
                     {% if(app.session.has('admin/playlist/id')) %}
-                        {{ render_hinclude(url('pumukitnewadmin_playlist_show', {'id': app.session.get('admin/playlist/id')})) }}
+                        <div data-controller="admin--include" data-admin--include-src-value="{{ url('pumukitnewadmin_playlist_show', {'id': app.session.get('admin/playlist/id')}) }}"></div>
                     {% else %}
                         {% trans %}Select any playlist.{% endtrans %}
                     {% endif %}

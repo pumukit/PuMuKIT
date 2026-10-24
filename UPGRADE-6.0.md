@@ -401,7 +401,19 @@ indexes no longer define the `serieskeywords` and `mmobjkeywords` globals. The k
 no longer use materialize-tags, typeahead.js and Bloodhound, which are removed: a small module of
 the bundle (`@pumukit/new-admin/keywords.js`) builds the same `.materialize-tags` box with `.chip`
 tags and suggests the keywords of the API. Its styles are in
-`bundles/pumukitnewadmin/css/keywords.css`. Removed global
+`bundles/pumukitnewadmin/css/keywords.css`.
+
+hinclude.js is removed from the backoffice layout. The previews that the indexes load after the
+page (multimedia objects, series, legacy events, people, live events, playlists and the multimedia
+objects of a playlist) use the `admin--include` controller instead of `render_hinclude()`:
+
+```twig
+<div data-controller="admin--include" data-admin--include-src-value="{{ url('pumukitnewadmin_mms_show', {'id': id}) }}"></div>
+```
+
+`pumukit:check:assets` reports the `render_hinclude()` calls left in the project templates.
+
+Removed global
 functions, reported by `pumukit:check:assets` (also when called as `window.…`):
 
 | Removed | Replacement |

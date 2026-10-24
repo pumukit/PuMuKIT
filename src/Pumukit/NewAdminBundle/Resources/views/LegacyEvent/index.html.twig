@@ -35,7 +35,7 @@
             <div class="col-md-2 hidden-xs hidden-sm">
                 <div id="preview_event" class="well">
                     {% if(app.session.has('admin/event/id')) %}
-                        {{ render_hinclude(url('pumukitnewadmin_event_show', {'id': app.session.get('admin/event/id')})) }}
+                        <div data-controller="admin--include" data-admin--include-src-value="{{ url('pumukitnewadmin_event_show', {'id': app.session.get('admin/event/id')}) }}"></div>
                     {% else %}
                         {% trans %}Select any live event.{% endtrans %}
                     {% endif %}

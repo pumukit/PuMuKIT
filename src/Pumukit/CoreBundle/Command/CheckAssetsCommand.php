@@ -75,6 +75,7 @@ class CheckAssetsCommand extends Command
         '@PumukitNewAdmin/MultimediaObject/updatebroadcast.js.twig' => 'nothing: the admin--broadcast controller of @PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig handles the form',
         '@PumukitNewAdmin/pumukit.js.twig' => 'the @pumukit/new-admin/backoffice importmap entrypoint (see @PumukitNewAdmin/layout.html.twig)',
         '@PumukitNewAdmin/UNESCO/listtagsajax.html.twig' => '@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig (the admin--tag-picker controller of the tag tab handles the clicks)',
+        'bundles/pumukitnewadmin/js/hinclude.js' => 'the admin--include controller (see @PumukitNewAdmin/MultimediaObject/index.html.twig)',
         'bundles/pumukitwebtv/css/bootstrap.css' => 'bundles/pumukitwebtv/css/bootstrap.min.css',
         'bundles/pumukitwebtv/css/font-awesome.css' => 'bundles/pumukitwebtv/css/font-awesome.min.css',
         'bundles/pumukitnewadmin/lib/fontawesome/css/all.css' => 'bundles/pumukitnewadmin/lib/fontawesome/css/all.min.css',
@@ -84,6 +85,10 @@ class CheckAssetsCommand extends Command
         'update_list' => 'a data-refresh-url attribute on #list_mms (see @PumukitNewAdmin/UNESCO/index.html.twig)',
         'submit_delete_mms_unesco' => 'admin--unesco#remove (see @PumukitNewAdmin/UNESCO/updatemenu.html.twig)',
         'submit_clone_mms_unesco' => 'admin--unesco#clone (see @PumukitNewAdmin/UNESCO/updatemenu.html.twig)',
+    ];
+
+    public const UNSUPPORTED_TWIG_FUNCTIONS = [
+        'render_hinclude' => '<div data-controller="admin--include" data-admin--include-src-value="{{ url(...) }}"></div> (see @PumukitNewAdmin/MultimediaObject/index.html.twig)',
     ];
 
     public const REMOVED_JAVASCRIPT_GLOBALS = [
@@ -296,6 +301,14 @@ EOT
                     if (preg_match('/(?<![\w$.])(?:window\.)?'.$hook.'\s*=(?!=)/', $line)) {
                         ++$missing;
                         $output->writeln('Removed JavaScript hook: <info>'.$hook.'</info> in '.$location.', the backoffice no longer calls it');
+                        $output->writeln('    use <comment>'.$replacement.'</comment>');
+                    }
+                }
+
+                foreach (self::UNSUPPORTED_TWIG_FUNCTIONS as $function => $replacement) {
+                    if (preg_match('/(?<![\w.])'.$function.'\s*\(/', $line)) {
+                        ++$missing;
+                        $output->writeln('Unsupported Twig function: <info>'.$function.'</info> in '.$location.', the backoffice no longer loads its script');
                         $output->writeln('    use <comment>'.$replacement.'</comment>');
                     }
                 }
