@@ -79,6 +79,14 @@ Informational (no action required):
 - **ImageMagick** (Debian package): `6.9` → `7.1`. The `convert` command still works. A custom
   `policy.xml` moves from `/etc/ImageMagick-6/` to `/etc/ImageMagick-7/`.
 - **darktable** (Debian package, RAW pictures): `4.2` → `5.0`, with the same command line.
+- **NGINX**: `1.25` → `1.30`, the stable branch (`NGINX_VERSION`; 1.25 has had no fixes since
+  May 2024). Upgrade it to the next stable branch every April. The configuration of the image
+  (`docker/nginx/default.conf`) enables HTTP/2 with `http2 on;` instead of the deprecated
+  `listen … http2`. If you keep your own NGINX configuration, check these changes from 1.25:
+  TLS 1.0 and 1.1 are disabled by default (1.27.3), the `Host` header and the request line
+  are validated as in RFC 3986 (1.29.4), and `proxy_pass` keeps upstream connections alive,
+  uses HTTP/1.1 and no longer sends the `Connection` header by default (1.29.7). PuMuKIT talks
+  to PHP-FPM through `fastcgi_pass`, which these changes do not affect.
 
 Rebuild the image (`docker compose build --pull`); no data has to be migrated.
 
