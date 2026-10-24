@@ -110,6 +110,27 @@ Informational (no action required):
   The user is only created on the first start, with an empty volume; change it later with
   `rabbitmqctl`. The management interface (port 15672) is not published. Only the latest
   RabbitMQ minor version gets community fixes, so upgrade it when a new one is released.
+- **File delivery through NGINX**: `/trackfile/` still checks the token and the permissions in
+  PHP, and then hands the file to NGINX with `X-Accel-Redirect` instead of sending every byte
+  from PHP-FPM. NGINX serves it from the internal `/internal-storage/` location (ranges,
+  `forcedl=1` downloads and the same headers as before), so a video no longer keeps a PHP-FPM
+  worker busy while it plays. The `proxy` container must see the storage at the same path as
+  the `php` container: in production, mount `public/storage` in both services, as the
+  commented volumes of `docker-compose.yml` show. If `PUMUKIT_STORAGE_DIR` is not
+  `/srv/pumukit/public/storage`, change the `alias` of `/internal-storage/` and the
+  `HTTP_X_ACCEL_MAPPING` parameter of `docker/nginx/default.conf`; files outside the mapping
+  keep being sent by PHP. Projects with their own NGINX configuration keep the previous
+  behaviour until they add the internal location and these two parameters to the PHP-FPM
+  location:
+
+  ```nginx
+  fastcgi_param HTTP_X_SENDFILE_TYPE X-Accel-Redirect;
+  fastcgi_param HTTP_X_ACCEL_MAPPING /srv/pumukit/public/storage/=/internal-storage/;
+  ```
+
+  NGINX replaces any `X-Sendfile-Type` or `X-Accel-Mapping` header sent by the client with
+  these values. A separate download server (`VOD_HOSTNAME` and the `url_out` of the encoder
+  profiles) keeps working as before: those URLs do not go through `/trackfile/`.
 
 Rebuild the image (`docker compose build --pull`); no data has to be migrated.
 
