@@ -11,6 +11,7 @@ services:
         - teltek/nginx
     depends_on:
       - db
+      - rabbitmq
     volumes:
       # Uncomment the next lines in production
       # - ./public/storage:/srv/pumukit/public/storage:rw,cached
@@ -52,6 +53,16 @@ services:
     env_file:
       - .env
 
+  rabbitmq:
+    image: rabbitmq:4.4-management
+    hostname: rabbitmq
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq:rw
+
 volumes:
   db-data: {}
+  rabbitmq-data: {}
 

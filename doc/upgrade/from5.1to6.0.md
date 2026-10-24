@@ -95,6 +95,21 @@ Informational (no action required):
   nothing to migrate: change `image: redis` to `image: valkey/valkey:9.1` in your deployment
   compose file and recreate the container outside upload hours (uploads in progress are lost,
   as with any restart). Keeping Redis also works; in that case pin its version.
+- **RabbitMQ 4.4** (new, `rabbitmq:4.4-management`): the message broker of Symfony Messenger.
+  The core declares no queue yet; the bundles that use it declare their own. Add the service to
+  your deployment compose file with a fixed `hostname` and a volume for `/var/lib/rabbitmq`
+  (RabbitMQ keeps its data under the node name, which comes from the host name), as in
+  `docker-compose.yml`, and set in `.env.local`:
+
+  ```
+  RABBITMQ_DEFAULT_USER=<user>
+  RABBITMQ_DEFAULT_PASS=<password>
+  MESSENGER_TRANSPORT_DSN=amqp://<user>:<password>@rabbitmq:5672/%2f/messages
+  ```
+
+  The user is only created on the first start, with an empty volume; change it later with
+  `rabbitmqctl`. The management interface (port 15672) is not published. Only the latest
+  RabbitMQ minor version gets community fixes, so upgrade it when a new one is released.
 
 Rebuild the image (`docker compose build --pull`); no data has to be migrated.
 

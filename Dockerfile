@@ -12,6 +12,7 @@ ARG APCU_VERSION=5.1.28
 ARG PHP_MONGODB_VERSION=2.5.5
 ARG XDEBUG_VERSION=3.5.3
 ARG PHP_REDIS_VERSION=6.3.0
+ARG PHP_AMQP_VERSION=2.2.0
 ARG DEBIAN_FRONTEND=noninteractive
 
 ENV PHP_FPM_PM="dynamic" \
@@ -51,6 +52,7 @@ RUN apt-get update \
 		libxml2-dev \
 		libxslt1-dev \
 		libfreetype-dev \
+		librabbitmq-dev \
 		&& docker-php-ext-configure zip \
 		&& docker-php-ext-configure gd \
 	 	--with-freetype \
@@ -74,10 +76,12 @@ RUN apt-get update \
 		&& pecl install mongodb-${PHP_MONGODB_VERSION} \
 		&& pecl install xdebug-${XDEBUG_VERSION} \
 		&& pecl install redis-${PHP_REDIS_VERSION} \
+		&& pecl install amqp-${PHP_AMQP_VERSION} \
 		&& docker-php-ext-enable \
 		apcu \
 		mongodb \
 		redis \
+		amqp \
 		&& pecl clear-cache
 
 

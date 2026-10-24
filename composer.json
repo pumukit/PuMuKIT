@@ -5,6 +5,7 @@
     "description": "Media Portal",
     "require": {
         "php": "^8.5",
+        "ext-amqp": "*",
         "ext-curl": "*",
         "ext-fileinfo": "*",
         "ext-gd": "*",
@@ -26,6 +27,7 @@
         "pagerfanta/doctrine-mongodb-odm-adapter": "^4",
         "pagerfanta/twig": "^4",
         "phpdocumentor/reflection-docblock": "^6.0",
+        "symfony/amqp-messenger": "*",
         "symfony/asset": "*",
         "symfony/asset-mapper": "7.4.*",
         "symfony/dotenv": "*",
@@ -37,6 +39,7 @@
         "symfony/intl": "*",
         "symfony/lock": "*",
         "symfony/mailer": "*",
+        "symfony/messenger": "*",
         "symfony/monolog-bundle": "^4.1",
         "symfony/rate-limiter": "*",
         "symfony/security-bundle": "*",

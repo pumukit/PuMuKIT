@@ -11,6 +11,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 - Versioned read-only REST API based on API Platform 5 under `/api/v1`, with Swagger UI and ReDoc, protected by the API access permission and exposing MultimediaObject, Series, Tag and Person collections.
 - Mailpit as a mail catcher for local development (web inbox at http://localhost:8025).
+- RabbitMQ 4.4 service and Symfony Messenger with the AMQP transport (PHP extension `amqp` in the Docker image), ready for the bundles to declare their own transports and queues.
 - Functional tests for user creation, login and logout.
 - `make php-shell` and `make composer` targets to work inside the PHP container.
 - `pumukit:textindex:rebuild` command to regenerate the search text index for all Multimedia Objects and Series.

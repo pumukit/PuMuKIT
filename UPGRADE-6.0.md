@@ -476,7 +476,33 @@ Names, titles and file names are now rendered as text: the group picker, the gro
 button, the person suggestions and the inbox explorer used to build HTML and inline handlers by
 concatenating them.
 
-## File uploads (Uppy 6)
+## Messenger and RabbitMQ
+
+The core installs Symfony Messenger with the AMQP transport (`symfony/amqp-messenger`, PHP
+extension `amqp` in the Docker image) and ships a RabbitMQ service. It defines no transport,
+queue or failure transport of its own: each bundle declares the ones it needs, with the
+`MESSENGER_TRANSPORT_DSN` connection, from the `prepend()` method of its extension:
+
+```php
+$container->prependExtensionConfig('framework', [
+    'messenger' => [
+        'transports' => [
+            'youtube_upload' => [
+                'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
+                'options' => ['exchange' => ['name' => 'youtube'], 'queues' => ['youtube_upload' => []]],
+            ],
+        ],
+        'routing' => ['Pumukit\YoutubeBundle\Message\UploadVideoMessage' => 'youtube_upload'],
+    ],
+]);
+```
+
+Prefix the transport, exchange and queue names with the bundle so that they do not collide.
+The test environment sets `MESSENGER_TRANSPORT_DSN=in-memory://`, so the transports of a bundle
+need no RabbitMQ in its tests. A bundle that consumes its queues adds a worker service to the
+deployment compose file, with the PuMuKIT image and
+`bin/console messenger:consume <transports> --time-limit=3600`.
+
 
 Every file upload goes through Uppy. PuMuKIT 6.0 moves from the Uppy 1 global bundle
 (`bundles/pumukitcore/js/uppy.min.js`, `window.Uppy`) to Uppy 6 (`@uppy/core` 6.2.0,
