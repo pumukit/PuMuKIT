@@ -75,6 +75,9 @@ class CheckAssetsCommand extends Command
         '@PumukitNewAdmin/MultimediaObject/updatebroadcast.js.twig' => 'nothing: the admin--broadcast controller of @PumukitNewAdmin/MultimediaObject/updatebroadcast.html.twig handles the form',
         '@PumukitNewAdmin/pumukit.js.twig' => 'the @pumukit/new-admin/backoffice importmap entrypoint (see @PumukitNewAdmin/layout.html.twig)',
         '@PumukitNewAdmin/UNESCO/listtagsajax.html.twig' => '@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig (the admin--tag-picker controller of the tag tab handles the clicks)',
+        'bundles/pumukitwebtv/css/bootstrap.css' => 'bundles/pumukitwebtv/css/bootstrap.min.css',
+        'bundles/pumukitwebtv/css/font-awesome.css' => 'bundles/pumukitwebtv/css/font-awesome.min.css',
+        'bundles/pumukitnewadmin/lib/fontawesome/css/all.css' => 'bundles/pumukitnewadmin/lib/fontawesome/css/all.min.css',
     ];
 
     public const REMOVED_JAVASCRIPT_HOOKS = [

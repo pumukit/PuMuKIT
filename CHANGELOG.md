@@ -66,6 +66,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Replace `@PumukitNewAdmin/pumukit.js.twig` and its routes with the `@pumukit/new-admin/backoffice` importmap entrypoint and the `admin--tabs` Stimulus controller; opening `#myModal` empties only its own content, and the unused `$.ajaxSetup({cache: true})` and `#iframeUpload` NGINX check are removed.
 - Remove jQuery Migrate from the backoffice and portal layouts: no core script uses the APIs removed in jQuery 3.
 - Remove noUiSlider and `jquery.dropdown.css` from the backoffice layout: no page used them.
+- Remove the unminified copies of the portal Bootstrap and Font Awesome styles and of the backoffice Font Awesome styles: no template loaded them.
 - Replace materialize-tags, typeahead.js and Bloodhound in the keyword fields of the backoffice with a module of the bundle that keeps the same look.
 - Replace moment, bootstrap-datetimepicker and daterangepicker with native date fields in the portal search and the statistics; the predefined ranges of the statistics are translated.
 - Answer the picture uploads with JSON only and remove the old iframe responses and the hidden banner URL form.
