@@ -65,6 +65,25 @@ Informational (no action required):
 
 ---
 
+## Docker image and services
+
+- **Debian**: `12 (bookworm)` → `13 (trixie)` (`SO_VERSION` of the `Dockerfile`). Debian 12
+  only gets LTS updates since June 2026.
+- **FFmpeg**: `6.0` → `8.1` (`FFMPEG_VERSION`). The FFmpeg builds from 7.1 on need the C library
+  of Debian 13, so both are upgraded together; FFmpeg 9 does not run on Debian 13.
+  The encoder profiles and commands of the core give the same results. Review the
+  `encoder.yaml` of your project if it defines its own profiles: FFmpeg 7.0 removed the
+  `-map_channel` and `-psnr` options, and FFmpeg 7.1 changed the stream specifiers
+  (`:m:key:value` needs `\:` for colons in the key or value, and an optional `-map` needs
+  `:?` instead of `?`).
+- **ImageMagick** (Debian package): `6.9` → `7.1`. The `convert` command still works. A custom
+  `policy.xml` moves from `/etc/ImageMagick-6/` to `/etc/ImageMagick-7/`.
+- **darktable** (Debian package, RAW pictures): `4.2` → `5.0`, with the same command line.
+
+Rebuild the image (`docker compose build --pull`); no data has to be migrated.
+
+---
+
 ## MongoDB stack upgrade
 
 - **MongoDB server**: `5.0` → `8.0` (must be upgraded one major at a time).
