@@ -1,4 +1,8 @@
 import { Controller } from '@hotwired/stimulus';
+import { BubbleController, Chart, LinearScale, PointElement, TimeScale, Tooltip } from 'chart.js';
+import 'chartjs-adapter-date-fns';
+
+Chart.register(BubbleController, LinearScale, PointElement, TimeScale, Tooltip);
 
 const HOUR_BUCKETS = [
     { start: 0, label: '00–04' },
@@ -23,7 +27,7 @@ export default class extends Controller {
             bucketStart: row.hour,
             count: row.count,
         }));
-        this.chart = new window.Chart(this.element.getContext('2d'), {
+        this.chart = new Chart(this.element.getContext('2d'), {
             type: 'bubble',
             data: {
                 datasets: [{

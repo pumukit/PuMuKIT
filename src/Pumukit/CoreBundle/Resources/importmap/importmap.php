@@ -169,4 +169,10 @@ return [
     'querystringify' => [
         'version' => '2.2.0',
     ],
+    'chartjs-adapter-date-fns' => [
+        'version' => '3.0.0',
+    ],
+    'date-fns' => [
+        'version' => '4.1.0',
+    ],
 ];

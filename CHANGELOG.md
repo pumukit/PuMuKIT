@@ -71,6 +71,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Replace moment, bootstrap-datetimepicker and daterangepicker with native date fields in the portal search and the statistics; the predefined ranges of the statistics are translated.
 - Replace hinclude.js with the `admin--include` Stimulus controller for the previews of the backoffice indexes; `pumukit:check:assets` reports the `render_hinclude()` calls left in a project.
 - Replace Select2 in the channel search of the live event form with the jQuery UI autocomplete already used by the series search.
+- Load Chart.js and its date adapter from the importmap in the backoffice dashboard and remove its separate Chart.js 4.4.6 build.
 - Answer the picture uploads with JSON only and remove the old iframe responses and the hidden banner URL form.
 - Configure the default protocol of the URL form fields (live channel, person, link and external player), deprecated since Symfony 7.1.
 - Upload thumbnails, banners, materials, live event images and tracks through the Uppy Dashboard; the upload actions answer JSON on request and adding a track to an object without type no longer fails.

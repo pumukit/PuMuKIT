@@ -52,17 +52,6 @@
     array (
     ),
   ),
-  'chart.js' => 
-  array (
-    'version' => '4.5.1',
-    'dependencies' => 
-    array (
-      0 => '@kurkle/color',
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
   '@kurkle/color' => 
   array (
     'version' => '0.3.4',
@@ -504,6 +493,39 @@
   'querystringify' => 
   array (
     'version' => '2.2.0',
+    'dependencies' => 
+    array (
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  'chartjs-adapter-date-fns' => 
+  array (
+    'version' => '3.0.0',
+    'dependencies' => 
+    array (
+      0 => 'chart.js',
+      1 => 'date-fns',
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  'chart.js' => 
+  array (
+    'version' => '4.5.1',
+    'dependencies' => 
+    array (
+      0 => '@kurkle/color',
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  'date-fns' => 
+  array (
+    'version' => '4.1.0',
     'dependencies' => 
     array (
     ),
