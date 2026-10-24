@@ -23,6 +23,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Upgrade the core to Symfony 7.4 LTS and PHP 8.5.
 - Build the Docker image on Debian 13 (trixie) with FFmpeg 8.1 instead of Debian 12 (bookworm) and FFmpeg 6.0, which no longer receive regular security updates.
 - Update NGINX to the 1.30 stable branch (1.25 has had no fixes since May 2024) and enable HTTP/2 with the `http2` directive.
+- Use Valkey 9.1 instead of an unpinned Redis image in `docker-compose.yml`: Valkey keeps the BSD license of Redis 7.2 and PuMuKIT uses it as it used Redis.
 - Single source of truth for the Symfony version through `extra.symfony.require` (Symfony components pinned with `*`).
 - Remove the `version` field from `composer.json`: Composer takes the version from the git tag, and `Pumukit\PumukitVersion::VERSION` is the only version to update on a release.
 - Migrate the security layer from the legacy Guard system to the new authenticator system (existing sha512 passwords remain valid).

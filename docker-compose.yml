@@ -47,7 +47,7 @@ services:
       - db-data:/data/db:rw
 
   redis:
-    image: redis
+    image: valkey/valkey:9.1
     restart: unless-stopped
     env_file:
       - .env

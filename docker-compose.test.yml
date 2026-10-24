@@ -20,6 +20,6 @@ services:
     image: mongo:8.0
 
   redis:
-    image: redis
+    image: valkey/valkey:9.1
     env_file:
       - .env.test

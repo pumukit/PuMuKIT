@@ -87,6 +87,14 @@ Informational (no action required):
   are validated as in RFC 3986 (1.29.4), and `proxy_pass` keeps upstream connections alive,
   uses HTTP/1.1 and no longer sends the `Connection` header by default (1.29.7). PuMuKIT talks
   to PHP-FPM through `fastcgi_pass`, which these changes do not affect.
+- **Redis** → **Valkey 9.1** (`valkey/valkey:9.1` in `docker-compose.yml`). The `redis` image
+  had no version, so every pull could jump to a new major (Redis 8 changed its license to
+  AGPLv3/RSALv2/SSPLv1). Valkey is the BSD-licensed continuation of Redis 7.2: same protocol,
+  port and `REDIS_*` variables, and its image also ships `redis-server` and `redis-cli`.
+  PuMuKIT only keeps the state of resumable uploads in it, without a volume, so there is
+  nothing to migrate: change `image: redis` to `image: valkey/valkey:9.1` in your deployment
+  compose file and recreate the container outside upload hours (uploads in progress are lost,
+  as with any restart). Keeping Redis also works; in that case pin its version.
 
 Rebuild the image (`docker compose build --pull`); no data has to be migrated.
 
