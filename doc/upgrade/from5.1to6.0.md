@@ -81,7 +81,7 @@ Informational (no action required):
 - **darktable** (Debian package, RAW pictures): `4.2` → `5.0`, with the same command line.
 - **NGINX**: `1.25` → `1.30`, the stable branch (`NGINX_VERSION`; 1.25 has had no fixes since
   May 2024). Upgrade it to the next stable branch every April. The configuration of the image
-  (`docker/nginx/default.conf`) enables HTTP/2 with `http2 on;` instead of the deprecated
+  (`docker/nginx/default.conf.template`) enables HTTP/2 with `http2 on;` instead of the deprecated
   `listen … http2`. If you keep your own NGINX configuration, check these changes from 1.25:
   TLS 1.0 and 1.1 are disabled by default (1.27.3), the `Host` header and the request line
   are validated as in RFC 3986 (1.29.4), and `proxy_pass` keeps upstream connections alive,
@@ -114,16 +114,23 @@ Informational (no action required):
   PHP, and then hands the file to NGINX with `X-Accel-Redirect` instead of sending every byte
   from PHP-FPM. NGINX serves it from the internal `/internal-storage/` location (ranges,
   `forcedl=1` downloads and the same headers as before), so a video no longer keeps a PHP-FPM
-  worker busy while it plays. The `proxy` container must see the storage at the same path as
-  the `php` container: in production, mount `public/storage` in both services, as the
-  commented volumes of `docker-compose.yml` show. If `PUMUKIT_STORAGE_DIR` is not
-  `/srv/pumukit/public/storage`, change the `alias` of `/internal-storage/` and the
-  `HTTP_X_ACCEL_MAPPING` parameter of `docker/nginx/default.conf`; files outside the mapping
-  keep being sent by PHP. Projects with their own NGINX configuration keep the previous
-  behaviour until they add the internal location and these two parameters to the PHP-FPM
-  location:
+  worker busy while it plays. The NGINX configuration is now a template,
+  `docker/nginx/default.conf.template`, that the `proxy` container renders when it starts:
+  the storage path comes from `PUMUKIT_STORAGE_DIR`, the same variable PHP reads from `.env`,
+  so a project with its own storage directory needs no change in it. Write the path without a
+  trailing slash. The `proxy` container must see the storage at that same path: in production,
+  mount the storage in both the `php` and the `proxy` services, as the commented volumes of
+  `docker-compose.yml` show. Otherwise NGINX answers 404 for the files, instead of sending them
+  slowly from PHP. Files outside `PUMUKIT_STORAGE_DIR` keep being sent by PHP. Projects with
+  their own NGINX configuration keep the previous behaviour until they add the internal
+  location and these two parameters to the PHP-FPM location, with their storage path:
 
   ```nginx
+  location ^~ /internal-storage/ {
+      internal;
+      alias /srv/pumukit/public/storage/;
+  }
+
   fastcgi_param HTTP_X_SENDFILE_TYPE X-Accel-Redirect;
   fastcgi_param HTTP_X_ACCEL_MAPPING /srv/pumukit/public/storage/=/internal-storage/;
   ```

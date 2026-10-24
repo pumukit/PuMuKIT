@@ -66,7 +66,7 @@ server {
 
     location ^~ /internal-storage/ {
         internal;
-        alias /srv/pumukit/public/storage/;
+        alias ${PUMUKIT_STORAGE_DIR}/;
     }
 
     location / {
@@ -83,7 +83,7 @@ server {
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param HTTPS on;
         fastcgi_param HTTP_X_SENDFILE_TYPE X-Accel-Redirect;
-        fastcgi_param HTTP_X_ACCEL_MAPPING /srv/pumukit/public/storage/=/internal-storage/;
+        fastcgi_param HTTP_X_ACCEL_MAPPING ${PUMUKIT_STORAGE_DIR}/=/internal-storage/;
 
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Host $host;
