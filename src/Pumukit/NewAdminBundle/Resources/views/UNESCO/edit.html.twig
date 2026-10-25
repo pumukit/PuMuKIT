@@ -6,12 +6,12 @@
     <div role="tabpanel">
         <ul id="menuTab" class="nav nav-tabs" role="tablist" data-controller="admin--tabs" data-admin--tabs-key-value="lastMmTab">
             {% if not is_naked() and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}
-                <li class="nav-item"{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}{% endif %}>
-                    <a class="nav-link active" href="#pubMm" aria-controls="pubMm" role="tab" data-bs-toggle="tab">{% trans %}Publication{% endtrans %}</a>
+                <li class="nav-item">
+                    <a class="nav-link{% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} active{% endif %}" href="#pubMm" aria-controls="pubMm" role="tab" data-bs-toggle="tab">{% trans %}Publication{% endtrans %}</a>
                 </li>
             {% endif %}
-            <li class="nav-item"{% if is_naked() or not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %}{% endif %}>
-                <a class="nav-link active" href="#metaMm" aria-controls="metaMm" role="tab" data-bs-toggle="tab">{% trans %}Basic Metadata{% endtrans %}</a>
+            <li class="nav-item">
+                <a class="nav-link{% if is_naked() or not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PUBLICATION_TAB')) %} active{% endif %}" href="#metaMm" aria-controls="metaMm" role="tab" data-bs-toggle="tab">{% trans %}Basic Metadata{% endtrans %}</a>
             </li>
             {% if not is_naked() %}
                 <li class="nav-item">

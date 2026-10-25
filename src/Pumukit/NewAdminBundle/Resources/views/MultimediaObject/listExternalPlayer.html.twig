@@ -21,14 +21,13 @@
                     {{ form_row(form.url, {'attr' : {'placeholder': placeholder, 'data-admin--external-player-target': 'url'}}) }}
                 {% endif %}
             </div>
-            <div class="col-12 col-sm-3 col-md-3"><a href="#" id="previewIframe" class="btn w-100 btn-primary" data-action="click->admin--external-player#preview" title="{% trans %}Preview{% endtrans %}">{% trans %}Preview{% endtrans %}</a></div>
+            <div class="col-12 col-sm-3 col-md-3 align-self-end"><a href="#" id="previewIframe" class="btn w-100 btn-primary" data-action="click->admin--external-player#preview" title="{% trans %}Preview{% endtrans %}">{% trans %}Preview{% endtrans %}</a></div>
             <div class="col-12" style="margin-top:15px">
                 {{ form_row(form.title) }}
             </div>
         </div>
     {% endif %}
-    <div class="modal-footer" style="margin-top:50px">
-        <hr class="w-100"/>
+    <div class="modal-footer px-0 pb-0 mt-4">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
         {% if is_granted('ROLE_ADD_EXTERNAL_PLAYER') %}
         <button type="submit" class="btn btn-primary">{% trans %}Submit{% endtrans %}</button>
