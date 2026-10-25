@@ -26,14 +26,14 @@
         <p class="list-group-item-text">{{ cpu.description|default('No description') }} (type: {{ cpu.type }})</p>
         <small>{{ cpu.host }}</small>
         <div>
-          <div class="least-content togglebutton pmk-bottom-10 pmk-top-inherit">
+          <div class="least-content togglebutton form-check form-switch" style="bottom: 10px; top: inherit">
               {% if is_granted('ROLE_SCOPE_PERSONAL') %}
                   <label>
-                      <input type="checkbox" disabled {% if not deactivated %}checked="checked"{% endif %}>
+                      <input class="form-check-input" role="switch" type="checkbox" disabled {% if not deactivated %}checked="checked"{% endif %}>
                   </label>
               {% else %}
                     <label>
-                        <input id="maintenance-{{name}}-toggle" type="checkbox" {% if not deactivated %}checked="checked"{% endif %}
+                        <input class="form-check-input" role="switch" id="maintenance-{{name}}-toggle" type="checkbox" {% if not deactivated %}checked="checked"{% endif %}
                                data-controller="encoder--cpu-maintenance"
                                data-action="click->encoder--cpu-maintenance#toggle"
                                data-encoder--cpu-maintenance-activate-url-value="{{ path('pumukit_encoder_cpu_maintenance_switch', {'activateMaintenance': 'activate', 'cpuName': name}) }}"

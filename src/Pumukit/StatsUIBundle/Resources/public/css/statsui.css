@@ -264,7 +264,8 @@
     margin:25px;
 }
 
-.pagination > .current-page > a {
+.pagination > .current-page > a, .pagination > .current-page > .page-link {
+    color: #555;
     background-color: #EAEAEA;
 }
 

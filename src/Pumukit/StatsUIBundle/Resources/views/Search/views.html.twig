@@ -1,4 +1,4 @@
-<div class="row"><div class="col-md-7 block-results-views">
+<div class="col-md-7 block-results-views">
     <div class="row">
         <div class="col-md-4">
             <h2 class="total-views-objects" data-stats-ui--stats-target="totalViews"></h2>
@@ -10,11 +10,11 @@
             <i class="fas fa-eye"></i>
         </div>
     </div>
-</div></div>
+</div>
 <div class="clearfix"></div>
 
 {% if app.request.attributes.get('_route') != 'pumukit_stats_mmobj_index_id' %}
-    <div class="row"><div class="col-md-7 block-results-objects">
+    <div class="col-md-7 block-results-objects">
         <div class="row">
             <div class="col-md-4">
                 <h2 class="total-objects" data-stats-ui--stats-target="totalObjects"></h2>
@@ -26,6 +26,6 @@
                 <i class="ion ion-stats-bars mdi-av-equalizer"></i>
             </div>
         </div>
-    </div></div>
+    </div>
     <div class="clearfix"></div>
 {% endif %}

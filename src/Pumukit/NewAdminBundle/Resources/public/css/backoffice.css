@@ -119,6 +119,10 @@ label, .form-label, .col-form-label {
 
 .navbar-pumukit {
     --bs-navbar-padding-y: 0;
+    --bs-navbar-brand-color: #fff;
+    --bs-navbar-brand-hover-color: #fff;
+    --bs-navbar-toggler-border-color: rgba(255, 255, 255, .3);
+    --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.84%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
     min-height: 60px;
 }
 
@@ -211,4 +215,103 @@ label, .form-label, .col-form-label {
 
 .pumukitnewadmin-groups-list-title-row > * {
     width: auto;
+}
+
+.modal-header {
+    position: relative;
+    flex-wrap: wrap;
+    padding-right: 3rem;
+}
+
+.modal-header > .modal-title {
+    flex: 0 0 100%;
+}
+
+.modal-header > .btn-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    margin: 0;
+}
+
+.list-group-item .row-action-primary {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.list-group-item .row-action-primary i {
+    display: block;
+    width: 56px;
+    height: 56px;
+    font-size: 20px;
+    line-height: 56px;
+    color: #fff;
+    text-align: center;
+    background: rgba(0, 0, 0, .25);
+    border-radius: 100%;
+}
+
+.list-group-item .row-content {
+    position: relative;
+    display: inline-block;
+    width: calc(100% - 92px);
+    min-height: 66px;
+    padding-left: 16px;
+}
+
+.list-group-item .row-content .least-content {
+    position: absolute;
+    right: 0;
+    color: rgba(0, 0, 0, .54);
+}
+
+.list-group-item .list-group-item-heading {
+    margin: 10px 0 5px;
+    font-size: 16px;
+}
+
+.list-group-item .list-group-item-text {
+    margin-bottom: 0;
+    font-size: 12px;
+    color: rgba(0, 0, 0, .54);
+}
+
+.alert {
+    color: rgba(255, 255, 255, .84);
+    border: 0;
+    border-radius: 2px;
+}
+
+.alert a {
+    color: #fff;
+}
+
+.alert-info {
+    background-color: #03a9f4;
+}
+
+.alert-success {
+    background-color: #4caf50;
+}
+
+.alert-warning {
+    background-color: #ff5722;
+}
+
+.alert-danger {
+    background-color: #f44336;
+}
+
+.alert-material-orange-300 {
+    color: rgba(0, 0, 0, .84);
+    background-color: #ffb74d;
+}
+
+.alert-material-blue-A100 {
+    color: rgba(0, 0, 0, .84);
+    background-color: #82b1ff;
+}
+
+.alert-material-green {
+    background-color: #4caf50;
 }

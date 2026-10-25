@@ -20,15 +20,17 @@
         {% if objectsByStatus %}
             <div class="col-md-12 user_profile_video_info_block">
                 <h5><strong>{{ "Your video stats"|trans }}</strong></h5>
+                <div class="row">
                 {% for key, value in objectsByStatus %}
                     {% set text = status_string_text_by_value(key) %}
-                    <div class="row"><div class="col-4 col-sm-4 col-md-4">
+                    <div class="col-4 col-sm-4 col-md-4">
                         <div class="stats-circle stats-circle-{{ loop.index }} text-center d-block mx-auto">
                             <span>{{ value }}</span>
                             <div class="stats-label">{{ text|trans }}</div>
                         </div>
-                    </div></div>
+                    </div>
                 {% endfor %}
+                </div>
             </div>
         {% endif %}
 

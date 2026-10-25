@@ -338,6 +338,8 @@ export default class extends Controller {
     pageItem(text, page, disableWhenEmpty = true) {
         const item = document.createElement('li');
         const link = document.createElement('a');
+        item.className = 'page-item';
+        link.className = 'page-link';
         link.textContent = text;
         if (page === null && disableWhenEmpty) {
             item.classList.add('disabled');

@@ -1,14 +1,14 @@
 {% import "@PumukitEncoder/macros.html.twig" as macros %}
 
-<div class="row"><div class="offset-md-1 col-md-2 col-sm-6 col-12">
+<div class="offset-md-1 col-md-2 col-sm-6 col-12">
   <div class="list-group">
     <div class="list-group-item">
       <div class="row-action-primary">
         <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED')) }} {{ macros.job_status_class(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED'), 'background') }}"></i>
       </div>
       <div class="row-content">
-        <div class="least-content togglebutton pmk-bottom-10 pmk-top-inherit">
-          <label><input id="show_paused" type="checkbox" data-action="change->encoder--stats#filter" {% if app.request.query.get('show_paused', true) %}checked="checked"{% endif %}></label>
+        <div class="least-content togglebutton form-check form-switch" style="bottom: 10px; top: inherit">
+          <label><input class="form-check-input" role="switch" id="show_paused" type="checkbox" data-action="change->encoder--stats#filter" {% if app.request.query.get('show_paused', true) %}checked="checked"{% endif %}></label>
         </div>
         <h4 class="list-group-item-heading">{% trans %}Paused{% endtrans %}</h4>
         <p class="list-group-item-text">{{ stats['paused'] }} {% trans %}jobs{% endtrans %}</p>
@@ -23,8 +23,8 @@
         <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING')) }} {{ macros.job_status_class(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING'), 'background') }}"></i>
       </div>
       <div class="row-content">
-        <div class="least-content togglebutton pmk-bottom-10 pmk-top-inherit">
-          <label><input id="show_waiting" type="checkbox" data-action="change->encoder--stats#filter" {% if app.request.query.get('show_waiting', true) %}checked="checked"{% endif %}></label>
+        <div class="least-content togglebutton form-check form-switch" style="bottom: 10px; top: inherit">
+          <label><input class="form-check-input" role="switch" id="show_waiting" type="checkbox" data-action="change->encoder--stats#filter" {% if app.request.query.get('show_waiting', true) %}checked="checked"{% endif %}></label>
         </div>
         <h4 class="list-group-item-heading">{% trans %}Waiting{% endtrans %}</h4>
         <p class="list-group-item-text">{{ stats['waiting'] }} {% trans %}jobs{% endtrans %}</p>
@@ -39,7 +39,7 @@
         <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING')) }} {{ macros.job_status_class(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING'), 'background') }}"></i>
       </div>
       <div class="row-content">
-        <div class="least-content togglebutton pmk-bottom-10 pmk-top-inherit"></div>
+        <div class="least-content togglebutton form-check form-switch" style="bottom: 10px; top: inherit"></div>
         <h4 class="list-group-item-heading">{% trans %}Executing{% endtrans %}</h4>
         <p class="list-group-item-text">{{ stats['executing'] }} {% trans %}jobs{% endtrans %}</p>
       </div>
@@ -53,8 +53,8 @@
         <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED')) }} {{ macros.job_status_class(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED'), 'background') }}"></i>
       </div>
       <div class="row-content">
-        <div class="least-content togglebutton pmk-bottom-10 pmk-top-inherit">
-          <label><input id="show_finished" type="checkbox" data-action="change->encoder--stats#filter" {% if app.request.query.get('show_finished', false) %}checked="checked"{% endif %}></label>
+        <div class="least-content togglebutton form-check form-switch" style="bottom: 10px; top: inherit">
+          <label><input class="form-check-input" role="switch" id="show_finished" type="checkbox" data-action="change->encoder--stats#filter" {% if app.request.query.get('show_finished', false) %}checked="checked"{% endif %}></label>
         </div>
         <h4 class="list-group-item-heading">{% trans %}Finished{% endtrans %}</h4>
         <p class="list-group-item-text">{{ stats['finished'] }} {% trans %}jobs{% endtrans %}</p>
@@ -69,12 +69,12 @@
         <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')) }} {{ macros.job_status_class(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR'), 'background') }}"></i>
       </div>
       <div class="row-content">
-        <div class="least-content togglebutton pmk-bottom-10 pmk-top-inherit">
-          <label><input id="show_error" type="checkbox" data-action="change->encoder--stats#filter" {% if app.request.query.get('show_error', true) %}checked="checked"{% endif %}></label>
+        <div class="least-content togglebutton form-check form-switch" style="bottom: 10px; top: inherit">
+          <label><input class="form-check-input" role="switch" id="show_error" type="checkbox" data-action="change->encoder--stats#filter" {% if app.request.query.get('show_error', true) %}checked="checked"{% endif %}></label>
         </div>
         <h4 class="list-group-item-heading">{% trans %}Error{% endtrans %}</h4>
         <p class="list-group-item-text">{{ stats['error'] }} {% trans %}jobs{% endtrans %}</p>
       </div>
     </div>
   </div>
-</div></div>
+</div>
