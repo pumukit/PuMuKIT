@@ -10,7 +10,7 @@
         </ul>
     </h3>
 
-    <div class="card card-body bg-body-tertiary slider-manager" data-controller="admin--slider"
+    <div class="pmk-well slider-manager" data-controller="admin--slider"
          data-admin--slider-url-value="{{ path('pumukit_newadmin_slider_order') }}"
          data-admin--slider-token-value="{{ csrf_token('slider_order') }}"
          data-admin--slider-messages-value="{{ {saved: 'Order saved successfully'|trans, error: 'Error saving order'|trans}|json_encode }}">

@@ -5,8 +5,8 @@
     {% include "@PumukitNewAdmin/Misc/panel_title.html.twig" with { page_title: 'My profile'|trans } %}
 
 
-    <div class="col-md-4">
-        <div class="card card-body bg-body-tertiary">
+    <div class="row"><div class="col-md-4">
+        <div class="pmk-well">
             <div class="alert alert-material-orange-300">
                 <h3 class="text-center">{{ "My personal profile"|trans|upper }}</h3>
             </div>
@@ -16,7 +16,7 @@
     </div>
 
     <div class="col-md-4">
-        <div class="card card-body bg-body-tertiary">
+        <div class="pmk-well">
             <div class="alert alert-material-blue-A100">
                 <h3 class="text-center">{{ "My profile info"|trans|upper }}</h3>
             </div>
@@ -26,13 +26,13 @@
     </div>
 
     <div class="col-md-4">
-        <div class="card card-body bg-body-tertiary">
+        <div class="pmk-well">
             <div class="alert alert-material-green">
                 <h3 class="text-center">{{ "My stats"|trans|upper }}</h3>
             </div>
             <br />
             {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\UserProfileController::userStatsAction'))}}
         </div>
-    </div>
+    </div></div>
 
 {% endblock %}

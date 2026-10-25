@@ -1,21 +1,21 @@
-<div class="card card-body bg-body-tertiary">
+<div class="pmk-well">
   <fieldset>
     <legend hidden>{% trans %}Editor{% endtrans %}</legend>
     <dl>
-      <div class="form-row">
+      <div class="row form-row">
         {% if mm.isMultistream() %}
-        <form onsubmit="return false;">
+        <form class="row" onsubmit="return false;">
         <div class="col-lg-8 text-end">
-          <div class="col-6" style="padding-top: 11px; padding-left: 0px;">
-            <label class="col-4 col-form-label" style="word-break: break-all; overflow: hidden; white-space: nowrap;">Default layout:</label>
+          <div class="row"><div class="col-6" style="padding-top: 11px; padding-left: 0px;">
+            <div class="row"><label class="col-4 col-form-label" style="word-break: break-all; overflow: hidden; white-space: nowrap;">Default layout:</label>
             <div class="col-8 input-group">
             <select class="form-select" id="paella-layout">
               <option value="professor_slide" {% if mm.getProperty("paellalayout") == "professor_slide" %} selected="selected" {% endif %}>Professor - Slide</option>
               <option value="professor" {% if mm.getProperty("paellalayout") == "professor" %} selected="selected" {% endif %}>Professor</option>
               <option value="slide" {% if mm.getProperty("paellalayout") == "slide" %} selected="selected" {% endif %}>Slide</option>
             </select>
-          </div>
-        </div>
+          </div></div>
+        </div></div>
         </div>
         </form>
         <div class="col-lg-4 text-end">

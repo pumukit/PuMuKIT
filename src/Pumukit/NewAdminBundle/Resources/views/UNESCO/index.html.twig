@@ -7,8 +7,8 @@
         </ul>
     </h3>
 
-    <div class="col-md-2">
-        <div class="card card-body bg-body-tertiary" id="tag_list_unesco">
+    <div class="row"><div class="col-md-2">
+        <div class="pmk-well" id="tag_list_unesco">
             {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\UNESCOController::menuTagsAction')) }}
         </div>
     </div>
@@ -34,7 +34,7 @@
                 {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\UNESCOController::showAction')) }}
             {% endif %}
         </div>
-    </div>
+    </div></div>
 
     <div class="pmk-modal modal fade" id="myAuxModal" tabindex="-1" role="dialog" aria-labelledby="myAuxModalLabel" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-lg">

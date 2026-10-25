@@ -28,7 +28,7 @@
     </div>
   </fieldset>
   {% if total > 0 %}
-    <div class="col-md-12 text-end">
+    <div class="row"><div class="col-md-12 text-end">
       <div class="pagerfanta">
         <ul class="pagination pagination-sm">
           {% if (1 < page) %}
@@ -65,7 +65,7 @@
           {% endif %}
         </ul>
       </div>
-    </div>
+    </div></div>
   {% endif %}
 {% else %}
   {% trans %}You don't have enough permissions to access this content.{% endtrans %}

@@ -1,5 +1,5 @@
-<div class="card card-body bg-body-tertiary" style="overflow:hidden">
-    <div class="col-12">
+<div class="pmk-well" style="overflow:hidden">
+    <div class="row"><div class="col-12">
         <div id="list_live_events" class="row">
             {% include '@PumukitNewAdmin/LiveEvent/sessionlist.html.twig' with {'multimediaObject' : multimediaObject} %}
         </div>
@@ -10,7 +10,7 @@
         <a href="{{ path('pumukit_new_admin_live_event_session_modal', {'multimediaObject': multimediaObject.getId()}) }}"  data-bs-backdrop="static" data-bs-toggle="modal" data-bs-target="#updatesessionmodal">
         {% trans %}New event session{% endtrans %}
         </a>
-    </div>
+    </div></div>
 
     <br />
 </div>

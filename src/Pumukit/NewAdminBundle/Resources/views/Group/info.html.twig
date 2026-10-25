@@ -12,13 +12,13 @@
     {% else %}
         <h4 class="modal-title" id="myModalLabel">{% trans %}group info{% endtrans %}</h4>
     {% endif %}
-    <div class="col-md-12">
+    <div class="row"><div class="col-md-12">
         <h2 class="modal-title pumukitnewadmin-trim-row">&laquo;{{ group.getName() }}&raquo;</h2>
         <input type="hidden" name="pumukitnewadmin_group_id" id="pumukitnewadmin_group_id" value="{{ group.id }}">
-    </div>
+    </div></div>
 </div>
 <div class="modal-body">
-    <div class="col-md-4">
+    <div class="row"><div class="col-md-4">
         <div id="group_users" class="card" style="margin-top: 20px;">
             {% include '@PumukitNewAdmin/Group/inforesources.html.twig' with {'resources': users, 'title': 'USERS'|trans, 'resource_name': 'user', 'count': countResources['users']} %}
         </div>
@@ -32,7 +32,7 @@
         <div id="group_broadcasts" class="card" style="margin-top: 20px;">
             {% include '@PumukitNewAdmin/Group/inforesources.html.twig' with {'resources': viewer_multimedia_objects, 'title': 'PLAY MULTIMEDIA OBJECTS'|trans, 'resource_name': 'embeddedbroadcast', 'count': countResources['playMultimediaObjects']} %}
         </div>
-    </div>
+    </div></div>
     <div class="modal-footer">
         {% if action %}
             <button type="button" class="btn btn-secondary"

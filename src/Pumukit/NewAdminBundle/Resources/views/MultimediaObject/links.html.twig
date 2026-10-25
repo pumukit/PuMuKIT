@@ -6,20 +6,20 @@
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SHOW_MULTIMEDIA_OBJECT_INFO_URL')) %}
         <div class="background_id col-lg-12">
             <form>
-                <fieldset>
+                <fieldset class="row">
                     <legend>Info {% if mm.numericalID %}- <span title="{% trans %}Numerical ID{% endtrans %}">({{ mm.numericalID }})</span>{% endif %}</legend>
-                    <div class="row mb-3 col-lg-6">
-                        <label for="inputMMId" class="col-2 col-form-label">Id:</label>
+                    <div class="mb-3 col-lg-6">
+                        <div class="row"><label for="inputMMId" class="col-2 col-form-label">Id:</label>
                         <div class="col-10 input-group">
                             <input type="text" class="form-control" id="inputMMId" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ mm.id }}">
                         </div>
                         <label for="inputMMTitle" class="col-2 col-form-label">{% trans %}Title{% endtrans %}:</label>
                         <div class="col-10 input-group">
                             <input type="text" class="form-control" id="inputMMTitle" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ mm.title }}">
-                        </div>
+                        </div></div>
                     </div>
-                    <div class="row mb-3 col-lg-6">
-                        <label for="inputROUrl" class="col-2 col-form-label hidden-naked">Url:</label>
+                    <div class="mb-3 col-lg-6">
+                        <div class="row"><label for="inputROUrl" class="col-2 col-form-label hidden-naked">Url:</label>
                         <div class="col-10 input-group hidden-naked">
                             <input type="text" class="form-control" id="inputROUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ video_url }}">
                             {% if is_published and is_playable %}
@@ -78,7 +78,7 @@
                                     </a>
                                 </span>
                             </div>
-                        {% endif %}
+                        {% endif %}</div>
                     </div>
                 </fieldset>
                 <button title="{% trans %}Read only form{% endtrans %}" aria-label="{% trans %}Read only form{% endtrans %}" hidden="true"></button>

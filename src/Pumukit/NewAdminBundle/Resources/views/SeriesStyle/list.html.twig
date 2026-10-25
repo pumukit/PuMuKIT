@@ -18,7 +18,7 @@
     {% endfor %}
 </ul>
 
-<div class="col-12">
+<div class="row"><div class="col-12">
     <p>Crear un estilo:</p>
     <form id="styleform" method="GET" action="{{ path('pumukit_newadmin_series_styles_create') }}" class="form-inline" data-action="submit->admin--series-styles#create">
         <div class="mb-3">
@@ -26,4 +26,4 @@
         </div>
         <button type="submit" class="btn btn-pumukit">{% trans %}New{% endtrans %}</button>
     </form>
-</div>
+</div></div>

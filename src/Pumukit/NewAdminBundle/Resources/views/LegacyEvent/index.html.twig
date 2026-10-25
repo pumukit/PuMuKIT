@@ -11,7 +11,7 @@
     <div class="row">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_EVENTS')) %}
             <div class="col-md-10">
-                <div class="card card-body bg-body-tertiary">
+                <div class="pmk-well">
                     <div id="list_events">
                         {% include '@PumukitNewAdmin/LegacyEvent/list.html.twig' %}
                     </div>
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="col-md-2 d-none d-md-block">
-                <div id="preview_event" class="card card-body bg-body-tertiary">
+                <div id="preview_event" class="pmk-well">
                     {% if(app.session.has('admin/event/id')) %}
                         <div data-controller="admin--include" data-admin--include-src-value="{{ url('pumukitnewadmin_event_show', {'id': app.session.get('admin/event/id')}) }}"></div>
                     {% else %}
@@ -44,7 +44,7 @@
             </div>
         {% else %}
             <div class="col-md-12">
-                <div class="card card-body bg-body-tertiary">
+                <div class="pmk-well">
                     {% trans %}You don't have enough permissions to access this content.{% endtrans %}
                 </div>
             </div>

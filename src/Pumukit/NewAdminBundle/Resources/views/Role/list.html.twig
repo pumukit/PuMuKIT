@@ -82,7 +82,7 @@
       <tfoot>
         <tr>
           <td colspan="10" class="foot-td">
-            <div class="col-md-8">
+            <div class="row"><div class="col-md-8">
               {{ roles.getNbResults }}
                 {{ "{0} roles|{1} role|]1,Inf] roles"|trans({'%count%':  roles.getNbResults}) }}
                 {% if app.session.get('admin/role/criteria')|length != 0%}
@@ -96,7 +96,7 @@
                   {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : roles, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
 
               </div>
-            </div>
+            </div></div>
           </td>
         </tr>
       </tfoot>

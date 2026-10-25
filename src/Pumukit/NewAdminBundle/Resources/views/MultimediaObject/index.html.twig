@@ -25,7 +25,7 @@
     <div class="row">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
             <div id="tv_admin_content" class="col-md-10" data-controller="admin--job-status" data-admin--job-status-url-value="{{ path('pumukitnewadmin_mms_status', {'id': '__id__'}) }}">
-                <div class="card card-body bg-body-tertiary">
+                <div class="pmk-well">
                     <div id="list_mms">
                         {% include '@PumukitNewAdmin/MultimediaObject/list.html.twig' %}
                     </div>
@@ -114,7 +114,7 @@
             </div>
 
             <div id="tv_admin_bar" class="col-md-2 d-none d-md-block">
-                <div id="preview_mm" class="card card-body bg-body-tertiary">
+                <div id="preview_mm" class="pmk-well">
                     {% if(app.session.has('admin/mms/id')) %}
                         <div data-controller="admin--include" data-admin--include-src-value="{{ url('pumukitnewadmin_mms_show', {'id': app.session.get('admin/mms/id')}) }}"></div>
                     {% else %}
@@ -124,7 +124,7 @@
             </div>
         {% else %}
             <div class="col-md-12">
-                <div class="card card-body bg-body-tertiary">
+                <div class="pmk-well">
                     {% trans %}You don't have enough permissions to access this content.{% endtrans %}
                 </div>
             </div>

@@ -13,13 +13,13 @@
 }}) }}
     <div class="modal-body">
         {% if session_id is defined %}
-            <div class="col-12">
+            <div class="row"><div class="col-12">
                 <label for="session_id">{% trans %}Session ID{% endtrans %}</label>
                 <input class="form-control" value="{{ session_id }}" id="session_id" disabled />
-            </div>
+            </div></div>
             <input type="hidden" value="{{ session_id }}" name="pumukitnewadmin_event_session[id]" />
         {% endif %}
-        <div class="col-12" style="margin-top:20px">
+        <div class="row"><div class="col-12" style="margin-top:20px">
             {{ form_row(form.start) }}
         </div>
         <div class="col-12" style="margin-top:20px">
@@ -27,7 +27,7 @@
         </div>
         <div class="col-12" style="margin-top:20px">
             {{ form_row(form.notes, {'attr' : {'style': 'resize: vertical;'}}) }}
-        </div>
+        </div></div>
     </div>
     <div class="modal-footer">
         <div class="row">

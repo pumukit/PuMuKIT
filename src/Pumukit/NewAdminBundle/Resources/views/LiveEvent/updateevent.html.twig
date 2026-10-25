@@ -1,6 +1,6 @@
 {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
 
-<div class="card card-body bg-body-tertiary" style="overflow:hidden">
+<div class="pmk-well" style="overflow:hidden">
     {{ form_start(form, {'attr': {
         'id': 'form_event',
         'data-controller': 'admin--meta-form',
@@ -8,14 +8,14 @@
         'data-admin--live-event-url-param': path('pumukit_new_admin_live_event_eventtab', {'id': multimediaObject.getId()}),
         'data-admin--meta-form-remember-value': '#remember_save_event'
     }}) }}
-    <div class="col-12">
+    <div class="row"><div class="col-12">
         <div class="row">
             <div class="col-8">
-                <div class="col-6">
+                <div class="row"><div class="col-6">
                     <span id="remember_save_event" class="alert alert-dismissable alert-danger" style="display:none;vertical-align:middle;">
                         {% trans %}Press OK for the change to take effect{% endtrans %}
                     </span> &nbsp;
-                </div>
+                </div></div>
             </div>
             <div class="col-4 text-end">
                 <button id="pumukit_new_admin_event_cancel" type="button" class="btn btn-secondary" data-action="click->admin--meta-form#cancel">
@@ -206,6 +206,6 @@
             </div>
             {% endif %}
         </fieldset>
-    </div>
+    </div></div>
     {{ form_end(form) }}
 </div>

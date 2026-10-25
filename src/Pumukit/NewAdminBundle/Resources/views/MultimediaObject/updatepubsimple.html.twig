@@ -1,6 +1,6 @@
 {% form_theme form_pub '@PumukitNewAdmin/Themes/fields.html.twig' %}
 
-<div id="tv_admin_container_pub" class="card card-body bg-body-tertiary">
+<div id="tv_admin_container_pub" class="pmk-well">
     <form id="pumukitnewadmin_mms_updatepub_form"
           data-controller="admin--meta-form admin--modal-form"
           data-action="submit->admin--modal-form#submit change->admin--meta-form#changed"
@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        <fieldset>
+        <fieldset class="row">
             <legend hidden>{% trans %}Update publication{% endtrans %}</legend>
             <div class="col-md-7">
                 <div class="mb-3" id="pumukitnewadmin_mms_pub_channel" {{ (mm.getStatus() == 1)?'style="background-color: #f2f2f2"':'' }}>

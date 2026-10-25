@@ -28,7 +28,7 @@
     <div class="row">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
             <div id="tv_admin_content" class="col-md-10" {% include '@PumukitNewAdmin/PlaylistMultimediaObject/_controller.html.twig' %}>
-                <div class="card card-body bg-body-tertiary">
+                <div class="pmk-well">
                     <div id="list_playlistmms">
                         {% include '@PumukitNewAdmin/PlaylistMultimediaObject/list.html.twig' %}
                     </div>
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card card-body bg-body-tertiary">
+                <div class="pmk-well">
                     <div id="edit_playlistmm">
                         {% if(app.session.get('admin/playlist/id', false) and app.session.get('admin/playlistmms/id', false)) %}
                             <div id="links_mm_{{ app.session.get('admin/playlistmms/id') }}">
@@ -70,7 +70,7 @@
             </div>
 
             <div id="tv_admin_bar" class="col-md-2 d-none d-md-block">
-                <div id="preview_playlistmm" class="card card-body bg-body-tertiary">
+                <div id="preview_playlistmm" class="pmk-well">
                     {% if(app.session.get('admin/playlistmms/id', false)) %}
                         <div data-controller="admin--include" data-admin--include-src-value="{{ url('pumukitnewadmin_playlistmms_show', {'id': app.session.get('admin/playlistmms/id'), 'pos': app.session.get('admin/playlistmms/pos')}) }}"></div>
                     {% else %}
@@ -81,7 +81,7 @@
             </div>
         {% else %}
             <div class="col-md-12">
-                <div class="card card-body bg-body-tertiary">
+                <div class="pmk-well">
                     {% trans %}You don't have enough permissions to access this content.{% endtrans %}
                 </div>
             </div>

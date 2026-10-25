@@ -6,20 +6,19 @@
   <fieldset>
     <legend hidden>{% trans %}Multimedia object preview{% endtrans %}</legend>
     <div>
-    <div class="embed-responsive embed-responsive-16by9">
+    <div class="ratio ratio-16x9">
       {% if not is_playable %}
         <span class="alert alert-dismissable alert-warning">
           {% trans with {'%title%': multimediaObject.title} %}The multimedia object '%title%' is not playable{% endtrans %}.
         </span>
       {% elseif multimediaObject.isExternalType() %}
-          <iframe src="{{ multimediaObject.getDisplayTrack().storage().url().url() }}" width="100%" class="embed-responsive-item" allowfullscreen></iframe>
+          <iframe src="{{ multimediaObject.getDisplayTrack().storage().url().url() }}" width="100%" allowfullscreen></iframe>
       {% elseif multimediaObject.isVideoAudioType() %}
             <iframe src="{{ url('pumukit_videoplayer_index', {'id': multimediaObject.id }) }}"
                     id="video_iframe_{{ multimediaObject.id }}"
                     data-controller="admin--modal-cleanup"
                     border="0"
                     width="100%"
-                    class="embed-responsive-item"
                     allowfullscreen>
             </iframe>
       {% else %}
@@ -27,7 +26,6 @@
                     id="video_iframe_{{ multimediaObject.id }}"
                     border="0"
                     width="100%"
-                    class="embed-responsive-item"
                     allowfullscreen>
             </iframe>
       {% endif %}

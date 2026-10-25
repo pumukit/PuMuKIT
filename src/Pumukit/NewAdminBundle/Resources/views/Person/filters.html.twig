@@ -1,6 +1,6 @@
 {% set criteria = app.session.get('admin/person/criteria') %}
 
-<div class="card card-body bg-body-tertiary">
+<div class="pmk-well">
     <form class="form" id="filter_people" data-controller="admin--filter-form" data-action="submit->admin--filter-form#submit" data-admin--filter-form-url-value="{{ path('pumukitnewadmin_person_list') }}" data-admin--filter-form-target-value="#list_people" data-admin--filter-form-letters-value=".pmk-person-letter" action="{{ path('pumukitnewadmin_person_list') }}" method="post">
         <fieldset>
             <legend hidden>{% trans %}Filter People{% endtrans %}</legend>

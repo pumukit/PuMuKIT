@@ -10,7 +10,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card card-body bg-body-tertiary">
+            <div class="pmk-well">
                 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PERMISSION_PROFILES')) %}
                     <div id="list_permissionprofiles"
                          data-controller="admin--permission-profiles"

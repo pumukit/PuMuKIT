@@ -14,7 +14,7 @@
     </div>
 </div>
 {% if action %}
-    <div class="col-md-12 text-center">
+    <div class="row"><div class="col-md-12 text-center">
         <button id="pumukitnewadmin_group_delete_all_relation_{{ resource_name }}" type="button" class="btn btn-pumukit btn-sm" style="margin-top: 20px; margin-bottom:40px;"
                 data-action="click->admin--group-info#removeAll"
                 data-admin--group-info-url-param="{{ path(group_resource_messages.routeAll, {'id': group.id}) }}"
@@ -23,5 +23,5 @@
                 data-admin--group-info-success-param="{{ group_resource_messages.removedAll }}"{{ ((count == 0) or ((resource_name == 'user') and ( not group.isLocal()))) ? ' disabled="disabled"': '' }}>
             {% trans %}Delete All{% endtrans %}
         </button>
-    </div>
+    </div></div>
 {% endif %}

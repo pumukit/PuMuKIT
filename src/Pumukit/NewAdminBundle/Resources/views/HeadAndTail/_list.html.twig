@@ -1,5 +1,5 @@
-<div class="col-12 col-sm-12 col-md-6">
-    <div class="card card-body bg-body-tertiary">
+<div class="row"><div class="col-12 col-sm-12 col-md-6">
+    <div class="pmk-well">
         <h2 class="text-center">{{ titleList }}</h2>
         <table class="table">
             <thead>
@@ -20,8 +20,8 @@
             {% for element in elementList %}
                 <tr>
                     <td>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <div class="embed-responsive-item text-center">
+                        <div class="ratio ratio-16x9">
+                            <div class="text-center">
                                 <img class="img-fluid pic-{{ element.id }} preview" src="{{ element|first_url_pic(true, false) }}" style="max-height:100%" alt="{% trans %}Multimedia object picture{% endtrans %}"/>
                             </div>
                         </div>
@@ -46,4 +46,4 @@
             </tbody>
         </table>
     </div>
-</div>
+</div></div>

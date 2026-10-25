@@ -2,23 +2,23 @@
     <div class="col-lg-12">
         <form>
             <input type="submit" style="display:none" value="submit-hidden" aria-hidden="true"/>
-            <fieldset>
+            <fieldset class="row">
                 <legend>
                     {{ is_naked() ? 'Series Metadata'|trans : 'Metadata'|trans }}
                     {% if series.numericalID %}- <span title="{% trans %}Numerical ID{% endtrans %}">({{ series.numericalID }})</span>{% endif %}
                 </legend>
-                <div class="row mb-3 col-lg-6">
-                    <label for="inputROId" class="col-2 col-form-label">Id:</label>
+                <div class="mb-3 col-lg-6">
+                    <div class="row"><label for="inputROId" class="col-2 col-form-label">Id:</label>
                     <div class="col-10 input-group">
                         <input type="text" class="form-control" id="inputROId" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ series.id }}">
                     </div>
                     <label for="inputROTitle" class="col-2 col-form-label">{% trans %}Title{% endtrans %}:</label>
                     <div class="col-10 input-group">
                         <input type="text" class="form-control" id="inputROTitle" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ series.title }}">
-                    </div>
+                    </div></div>
                 </div>
-                <div class="row mb-3 col-lg-6">
-                    <label for="inputROUrl" class="col-2 col-form-label hidden-naked">Url:</label>
+                <div class="mb-3 col-lg-6">
+                    <div class="row"><label for="inputROUrl" class="col-2 col-form-label hidden-naked">Url:</label>
                     <div class="col-10 input-group hidden-naked">
                         <input type="text" class="form-control" id="inputROUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ url('pumukit_webtv_series_index', {id: series.id}) }}">
                         {% if series.isHide() %}
@@ -51,7 +51,7 @@
                             </a>
                         </span>
                     </div>
-                    {% endif %}
+                    {% endif %}</div>
                 </div>
             </fieldset>
         </form>

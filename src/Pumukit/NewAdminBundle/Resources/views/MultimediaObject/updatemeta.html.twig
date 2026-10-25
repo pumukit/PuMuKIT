@@ -1,6 +1,6 @@
 {% form_theme form_meta '@PumukitNewAdmin/Themes/fields.html.twig' %}
 
-<div id="tv_admin_container_meta" class="card card-body bg-body-tertiary">
+<div id="tv_admin_container_meta" class="pmk-well">
 
     <form id="pumukitnewadmin_mms_updatemeta_form"
           data-controller="admin--meta-form admin--modal-form"
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <fieldset>
+        <fieldset class="row">
             <legend hidden>{% trans %}Update metadata{% endtrans %}</legend>
             <div class="col-lg-7">
                 {% for child in form_meta %}

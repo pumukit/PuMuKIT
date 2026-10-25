@@ -2,7 +2,7 @@
 
     {% set is_prototype = mm.isPrototype() %}
 
-    <div class="card card-body bg-body-tertiary {% if is_prototype %}prototype_well{% endif %}">
+    <div class="pmk-well {% if is_prototype %}prototype_well{% endif %}">
         {% if not is_prototype %}
             <div id="links_mm_{{ mm.id }}">
                 {{ render(url('pumukitnewadmin_mms_links', {'id': mm.id})) }}

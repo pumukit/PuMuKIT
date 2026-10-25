@@ -2,12 +2,12 @@
 {% set allFields = all_custom_fields() %}
 
 <br />
-<div class="card card-body bg-body-tertiary" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
+<div class="pmk-well" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
     <div class="row">
         <h4 class="text-center"><strong>{% trans %}Configure your fields list{% endtrans %}</strong></h4>
         <hr />
         <div class="col-12">
-            <form id="choose_fields" method="POST">
+            <form class="row" id="choose_fields" method="POST">
                 {% for i in 1..10 %}
                     <div class="col-md-2" style="width:14.28% !important;">
                         <div class="mb-3">

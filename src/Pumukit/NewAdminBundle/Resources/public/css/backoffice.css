@@ -1,0 +1,214 @@
+html {
+    font-size: 14px;
+}
+
+body {
+    font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgba(0, 0, 0, .87);
+    background-color: #eeeeee;
+}
+
+h4, .h4 {
+    font-size: 18px;
+}
+
+h5, .h5 {
+    font-size: 14px;
+}
+
+h6, .h6 {
+    font-size: 12px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover, a:focus {
+    text-decoration: underline;
+}
+
+.btn:hover, .btn:focus, .nav-link:hover, .nav-link:focus, .dropdown-item:hover, .dropdown-item:focus, .page-link:hover, .page-link:focus, .navbar-brand:hover {
+    text-decoration: none;
+}
+
+label, .form-label, .col-form-label {
+    font-weight: 700;
+}
+
+.form-check-label, .form-check label {
+    font-weight: 400;
+}
+
+.pmk-well {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+}
+
+.pmk-well .pmk-well {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12);
+}
+
+.card {
+    --bs-card-border-width: 0;
+    --bs-card-border-radius: 2px;
+    --bs-card-inner-border-radius: 2px;
+    --bs-card-cap-bg: #f5f5f5;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+}
+
+.card-header .card-title {
+    font-size: 16px;
+}
+
+.card-header .card-title a {
+    color: inherit;
+}
+
+.btn {
+    --bs-btn-border-width: 0;
+    --bs-btn-border-radius: 2px;
+    text-transform: uppercase;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+}
+
+.btn-link, .btn-close, .input-group-text .btn {
+    text-transform: none;
+    box-shadow: none;
+}
+
+.btn-secondary {
+    --bs-btn-color: rgba(0, 0, 0, .87);
+    --bs-btn-bg: #fff;
+    --bs-btn-hover-color: rgba(0, 0, 0, .87);
+    --bs-btn-hover-bg: #f5f5f5;
+    --bs-btn-active-color: rgba(0, 0, 0, .87);
+    --bs-btn-active-bg: #e0e0e0;
+    --bs-btn-disabled-color: rgba(0, 0, 0, .38);
+    --bs-btn-disabled-bg: #fff;
+    --bs-btn-focus-shadow-rgb: 0, 0, 0;
+}
+
+.nav-tabs {
+    --bs-nav-tabs-border-width: 0;
+    --bs-nav-tabs-border-radius: 0;
+    background-color: #009587;
+}
+
+.nav-tabs .nav-link {
+    color: rgba(255, 255, 255, .84);
+    padding: 10px 15px;
+}
+
+.nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
+    color: #fff;
+    background-color: rgba(255, 255, 255, .1);
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+
+.navbar-pumukit {
+    --bs-navbar-padding-y: 0;
+    min-height: 60px;
+}
+
+.navbar-pumukit .navbar-nav .nav-link {
+    padding: 20px 15px;
+}
+
+.navbar-pumukit .dropdown-toggle::after {
+    display: none;
+}
+
+.pagerfanta .pagination {
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.table > tbody > tr.success > * {
+    --bs-table-bg-state: #dff0d8;
+}
+
+.table > tbody > tr.info > * {
+    --bs-table-bg-state: #d9edf7;
+}
+
+.table > tbody > tr.warning > * {
+    --bs-table-bg-state: #fcf8e3;
+}
+
+.table > tbody > tr.danger > * {
+    --bs-table-bg-state: #f2dede;
+}
+
+.table > tbody > tr.active > * {
+    --bs-table-bg-state: #f5f5f5;
+}
+
+.form-inline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+}
+
+.list-inline > li {
+    display: inline-block;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.breadcrumb {
+    margin-bottom: 5px;
+}
+
+.row > .input-group.col-5 {
+    width: 41.666667%;
+}
+
+.row > .input-group.col-8 {
+    width: 66.666667%;
+}
+
+.row > .input-group.col-10 {
+    width: 83.333333%;
+}
+
+.table {
+    --bs-table-striped-bg: #f9f9f9;
+}
+
+@media (min-width: 768px) {
+    .col-form-label {
+        text-align: right;
+    }
+}
+
+.card.border-primary > .card-header {
+    color: #fff;
+    background-color: #009587;
+}
+
+.list-group {
+    --bs-list-group-bg: transparent;
+    --bs-list-group-border-width: 0;
+    --bs-list-group-item-padding-y: 2px;
+}
+
+.list-group-item > .badge {
+    float: right;
+}
+
+.pumukitnewadmin-groups-list-title-row > * {
+    width: auto;
+}

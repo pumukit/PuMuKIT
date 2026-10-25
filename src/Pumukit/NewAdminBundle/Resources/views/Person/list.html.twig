@@ -74,7 +74,7 @@
                 <tr>
                     <td colspan="9" class="foot-td">
                         {% set column = ((people.getNbPages/5)|round(0, 'floor')) %}
-                        <div class="col-md-8">
+                        <div class="row"><div class="col-md-8">
                             {{ people.getNbResults }}
                             {{ "{0} people|{1} person|]1,Inf] people"|trans({'%count%':  people.getNbResults}) }}
                             {% if app.session.get('admin/person/criteria')|length != 0 %}
@@ -88,7 +88,7 @@
                                 {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : people, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
 
                             </div>
-                        </div>
+                        </div></div>
                     </td>
                 </tr>
             </tfoot>

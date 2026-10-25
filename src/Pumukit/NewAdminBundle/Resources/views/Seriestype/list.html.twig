@@ -64,7 +64,7 @@
       <tr>
         <td colspan="9" class="foot-td">
           {% set column = ((seriestypes.getNbPages/5)|round(0, 'floor')) %}
-          <div class="col-md-8">
+          <div class="row"><div class="col-md-8">
             {{ seriestypes.getNbResults }}
               {{ "{0} series types|{1} series type |]1,Inf] series types"|trans({'%count%':  seriestypes.getNbResults}) }}
             {% if app.session.get('admin/seriestype/criteria')|length != 0%}
@@ -80,7 +80,7 @@
                 {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : seriestypes, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
 
             </div>
-          </div>
+          </div></div>
         </td>
       </tr>
     </tfoot>

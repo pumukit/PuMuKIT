@@ -3,10 +3,10 @@
     {% set criteria = app.request.session.get('UNESCO/form') %}
 {% endif %}
 
-<div class="card card-body bg-body-tertiary" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
+<div class="pmk-well" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
     <div class="row">
 
-        <form id="myForm" class="unesco_form" name="advance_form" method="POST" data-action="submit->admin--unesco#search" action="{{ path('pumukitnewadmin_unesco_list') }}">
+        <form id="myForm" class="row unesco_form" name="advance_form" method="POST" data-action="submit->admin--unesco#search" action="{{ path('pumukitnewadmin_unesco_list') }}">
             <div class="col-12">
                 <div id="basic_form">
                     {% include '@PumukitNewAdmin/UNESCO/basic_form.html.twig' %}

@@ -9,7 +9,7 @@
 
     <div class="row" {% include '@PumukitNewAdmin/LiveEvent/_controller.html.twig' %}>
         <div class="col-md-10">
-            <div class="card card-body bg-body-tertiary">
+            <div class="pmk-well">
                 <div id="list_events">
                     {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\EventsController::listEventAction')) }}
                 </div>
@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="col-md-2 d-none d-md-block">
-            <div id="preview_events" class="card card-body bg-body-tertiary">
+            <div id="preview_events" class="pmk-well">
                 {% if(app.session.has('admin/live/event/id')) %}
                     <div data-controller="admin--include" data-admin--include-src-value="{{ url('pumukit_new_admin_live_event_show', {'id': app.session.get('admin/live/event/id')}) }}"></div>
                 {% else %}

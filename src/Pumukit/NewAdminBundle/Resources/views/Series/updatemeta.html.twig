@@ -1,4 +1,4 @@
-<div class="card card-body bg-body-tertiary">
+<div class="pmk-well">
     <form id="pumukitnewadmin_series_updatemeta_form"
           data-controller="admin--modal-form admin--meta-form"
           data-action="submit->admin--modal-form#submit change->admin--meta-form#changed"
@@ -26,7 +26,7 @@
         </div>
 
         <div>
-            <fieldset>
+            <fieldset class="row">
                 <legend hidden>{% trans %}Update Series Metadata{% endtrans %}</legend>
                 <div class="col-lg-7">
                     {% for child in form | filter(child => child.vars.id not in show_later_fields and child.vars.id not in exclude_fields) %}
