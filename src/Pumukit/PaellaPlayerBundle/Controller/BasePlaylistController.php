@@ -56,7 +56,7 @@ class BasePlaylistController extends BasePlaylistAbstractController
         $seriesId = $request->query->get('playlistId');
         $series = $this->documentManager->getRepository(Series::class)->find($seriesId);
         if (!$series) {
-            return $this->return404Response("No playlist found with id: {$seriesId}");
+            return $this->return404Response('No playlist found with id: %id%', ['%id%' => $seriesId]);
         }
 
         if (!$mmobjId) {
@@ -78,7 +78,7 @@ class BasePlaylistController extends BasePlaylistAbstractController
         }
 
         if (!$mmobj) {
-            return $this->return404Response("No playable multimedia object found with id: {$mmobjId} belonging to this playlist. ({$series->getTitle()})");
+            return $this->return404Response('No playable multimedia object found with id: %id% belonging to this playlist. (%title%)', ['%id%' => $mmobjId, '%title%' => $series->getTitle()]);
         }
 
         $opencastHost = $this->pumukitOpencastHost ?? '';
@@ -148,10 +148,11 @@ class BasePlaylistController extends BasePlaylistAbstractController
         return $this->redirect($redirectUrl);
     }
 
-    private function return404Response($message = ''): Response
+    private function return404Response(string $message = '', array $parameters = []): Response
     {
         $params = [
             'message' => $message,
+            'parameters' => $parameters,
         ];
         $template = $this->renderView(
             '@PumukitPaellaPlayer/PaellaPlayer/404exception.html.twig',
