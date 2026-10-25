@@ -159,6 +159,18 @@ label, .form-label, .col-form-label {
     --bs-table-bg-state: #f5f5f5;
 }
 
+.table td > .row,
+.table th > .row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+@media (min-width: 768px) {
+    .table-responsive {
+        overflow-x: visible;
+    }
+}
+
 .form-inline {
     display: flex;
     flex-wrap: wrap;
