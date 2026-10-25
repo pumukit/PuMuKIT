@@ -224,6 +224,7 @@ class MultimediaObjectMetaType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => MultimediaObject::class,
+                'translation_domain' => false,
             ]
         );
 

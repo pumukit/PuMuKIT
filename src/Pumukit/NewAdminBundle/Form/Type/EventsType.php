@@ -122,6 +122,7 @@ class EventsType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => EmbeddedEvent::class,
+                'translation_domain' => false,
             ]
         );
 

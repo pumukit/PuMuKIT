@@ -28,6 +28,7 @@ class RoleType extends AbstractType
                 'display',
                 CheckboxType::class,
                 [
+                    'translation_domain' => 'messages',
                     'required' => false,
                     'attr' => ['aria-label' => $this->translator->trans('Display', [], null, $this->locale)],
                 ]
@@ -36,6 +37,7 @@ class RoleType extends AbstractType
                 'read_only',
                 CheckboxType::class,
                 [
+                    'translation_domain' => 'messages',
                     'required' => false,
                     'attr' => ['aria-label' => $this->translator->trans('Read only', [], null, $this->locale)],
                 ]
@@ -85,6 +87,7 @@ class RoleType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Role::class,
+                'translation_domain' => false,
             ]
         );
 

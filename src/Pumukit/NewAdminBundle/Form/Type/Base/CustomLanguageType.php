@@ -34,6 +34,7 @@ class CustomLanguageType extends AbstractType
         $resolver->setDefaults(
             [
                 'choices' => array_flip(self::getLanguageNames($this->customLanguages, $this->translator)),
+                'choice_translation_domain' => false,
             ]
         );
     }

@@ -57,6 +57,7 @@ class PlaylistType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Series::class,
+                'translation_domain' => false,
             ]
         );
 

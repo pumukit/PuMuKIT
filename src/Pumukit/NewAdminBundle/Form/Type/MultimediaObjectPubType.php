@@ -25,6 +25,7 @@ class MultimediaObjectPubType extends AbstractType
                 'status',
                 ChoiceType::class,
                 [
+                    'choice_translation_domain' => 'messages',
                     'choices' => [
                         'Published' => MultimediaObject::STATUS_PUBLISHED,
                         'Blocked' => MultimediaObject::STATUS_BLOCKED,
@@ -43,6 +44,7 @@ class MultimediaObjectPubType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => MultimediaObject::class,
+                'translation_domain' => false,
                 'not_granted_change_status' => true,
             ]
         );

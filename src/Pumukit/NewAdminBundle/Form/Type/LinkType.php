@@ -53,6 +53,7 @@ class LinkType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Link::class,
+                'translation_domain' => false,
             ]
         );
 

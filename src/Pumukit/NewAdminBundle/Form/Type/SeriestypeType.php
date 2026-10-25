@@ -58,6 +58,7 @@ class SeriestypeType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => SeriesType::class,
+                'translation_domain' => false,
             ]
         );
 

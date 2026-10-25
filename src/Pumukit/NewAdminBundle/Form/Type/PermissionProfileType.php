@@ -37,6 +37,7 @@ class PermissionProfileType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => PermissionProfile::class,
+                'translation_domain' => false,
             ]
         );
 

@@ -56,6 +56,7 @@ class MaterialType extends AbstractType
                 ChoiceType::class,
                 [
                     'attr' => ['aria-label' => $this->translator->trans('Type', [], null, $this->locale)],
+                    'choice_translation_domain' => 'messages',
                     'choices' => array_flip(
                         [
                             'xxx' => 'xxx - ',
@@ -86,6 +87,7 @@ class MaterialType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Material::class,
+                'translation_domain' => false,
             ]
         );
 

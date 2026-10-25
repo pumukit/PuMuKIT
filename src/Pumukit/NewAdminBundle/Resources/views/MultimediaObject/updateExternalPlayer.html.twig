@@ -18,7 +18,7 @@
                 {% if urlexternal != '' %}
                     {{ form_row(form.url, {'value': urlexternal, 'attr': {'data-admin--external-player-target': 'url'}}) }}
                 {% else %}
-                    {{ form_row(form.url, {'attr' : {'placeholder': placeholder|trans, 'data-admin--external-player-target': 'url'}}) }}
+                    {{ form_row(form.url, {'attr' : {'placeholder': placeholder, 'data-admin--external-player-target': 'url'}}) }}
                 {% endif %}
             </div>
             <div class="col-xs-12 col-sm-3 col-md-3"><a href="#" id="previewIframe" class="btn btn-block btn-primary" data-action="click->admin--external-player#preview" title="{% trans %}Preview{% endtrans %}">{% trans %}Preview{% endtrans %}</a></div>

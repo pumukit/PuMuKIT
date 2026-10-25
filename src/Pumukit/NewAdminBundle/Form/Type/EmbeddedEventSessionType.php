@@ -66,6 +66,7 @@ class EmbeddedEventSessionType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => EmbeddedEventSession::class,
+            'translation_domain' => false,
         ]);
 
         $resolver->setRequired('translator');

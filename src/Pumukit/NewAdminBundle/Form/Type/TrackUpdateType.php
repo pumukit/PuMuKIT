@@ -127,6 +127,7 @@ class TrackUpdateType extends AbstractType
                 $formOptions = [
                     'mapped' => false,
                     'required' => false,
+                    'translation_domain' => 'messages',
                     'disabled' => !$this->isSuperAdmin,
                     'attr' => [
                         'aria-label' => $this->translator->trans(
@@ -162,6 +163,7 @@ class TrackUpdateType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Media::class,
+                'translation_domain' => false,
                 'is_super_admin' => false,
             ]
         );

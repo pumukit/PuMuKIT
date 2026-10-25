@@ -238,6 +238,7 @@ class SeriesType extends AbstractType
             'sorting',
             ChoiceType::class,
             [
+                'choice_translation_domain' => 'messages',
                 'choices' => array_flip(Series::$sortText),
                 'empty_data' => null,
                 'attr' => [
@@ -274,6 +275,7 @@ class SeriesType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Series::class,
+                'translation_domain' => false,
             ]
         );
 

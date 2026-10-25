@@ -54,6 +54,7 @@ class ContactType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        $resolver->setDefaults(['translation_domain' => false]);
         $resolver->setRequired('translator');
         $resolver->setRequired('locale');
     }

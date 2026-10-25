@@ -2,7 +2,7 @@
     <label for="language" class="control-label">{{ "Language"|trans }}</label>
     <select id="language" name="language" class="form-control">
         {% for  key, lang in predefined_languages() %}
-            <option value="{{ key }}" {% if key == track.language() %}selected{% endif %}>{{ lang|trans|capitalize }}</option>
+            <option value="{{ key }}" {% if key == track.language() %}selected{% endif %}>{{ (is_addon_language(key) ? lang|trans : lang)|capitalize }}</option>
         {% endfor %}
     </select>
 </div>

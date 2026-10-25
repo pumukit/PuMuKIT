@@ -30,6 +30,7 @@ class TagType extends AbstractType
                 'metatag',
                 CheckboxType::class,
                 [
+                    'translation_domain' => 'messages',
                     'required' => false,
                     'label_attr' => ['title' => $this->translator->trans('Not valid to tagged objets')],
                     'attr' => [
@@ -41,6 +42,7 @@ class TagType extends AbstractType
                 'display',
                 CheckboxType::class,
                 [
+                    'translation_domain' => 'messages',
                     'required' => false,
                     'label_attr' => ['title' => $this->translator->trans('Show tag on WebTV portal and edit categories on multimedia objects')],
                     'attr' => [
@@ -97,6 +99,7 @@ class TagType extends AbstractType
                         $formOptions = [
                             'mapped' => false,
                             'required' => false,
+                            'translation_domain' => 'messages',
                             'attr' => [
                                 'aria-label' => $this->translator->trans($auxField[0], [], null, $this->locale),
                             ],
@@ -136,6 +139,7 @@ class TagType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Tag::class,
+                'translation_domain' => false,
             ]
         );
 

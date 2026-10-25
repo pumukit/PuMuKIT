@@ -93,6 +93,7 @@ class UserUpdateProfileType extends AbstractType
                         ChoiceType::class,
                         [
                             'mapped' => false,
+                            'choice_translation_domain' => 'messages',
                             'choices' => ['System Super Administrator' => 'ROLE_SUPER_ADMIN'],
                             'attr' => ['aria-label' => $this->translator->trans('Permission Profile', [], null, $this->locale)],
                             'label' => $this->translator->trans('Permission Profile', [], null, $this->locale),
@@ -108,6 +109,7 @@ class UserUpdateProfileType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => User::class,
+                'translation_domain' => false,
             ]
         );
 

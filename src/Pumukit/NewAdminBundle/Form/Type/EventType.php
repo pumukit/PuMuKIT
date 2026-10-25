@@ -96,6 +96,7 @@ class EventType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Event::class,
+                'translation_domain' => false,
             ]
         );
 

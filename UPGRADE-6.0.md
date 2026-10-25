@@ -664,6 +664,22 @@ The `spaceless` filter is deprecated since Twig 3.12. Core templates use the new
 `pumukit_spaceless` filter, which produces exactly the same output. Overridden templates
 should replace `{% apply spaceless %}` with `{% apply pumukit_spaceless %}`.
 
+## Backoffice translations
+
+The backoffice form types translate their labels with the injected translator, so they set
+`translation_domain: false` and `@PumukitNewAdmin/Themes/fields.html.twig` no longer
+translates them a second time. Fields without a label of their own and choice lists whose
+labels are translation keys keep the `messages` domain.
+
+- Fields added to these forms from a form extension or a subclass must pass a translated
+  `label`, or set `translation_domain: 'messages'`.
+- `@PumukitNewAdmin/Misc/panel_title.html.twig` prints `page_title` as is: pass it
+  translated (`'My profile'|trans`). The same applies to `titleList` in
+  `@PumukitNewAdmin/HeadAndTail/_list.html.twig`.
+- The track language selector only translates the PuMuKIT addon languages
+  (`CustomLanguageType::$addonLanguages`). The names returned by `Languages::getNames()`
+  are already localised.
+
 ## Doctrine event listeners
 
 The Gedmo `TreeListener` and `SortableListener` are registered as ODM event listeners

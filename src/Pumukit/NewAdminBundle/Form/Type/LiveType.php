@@ -76,6 +76,7 @@ class LiveType extends AbstractType
                 'broadcasting',
                 ChoiceType::class,
                 [
+                    'choice_translation_domain' => 'messages',
                     'choices' => ['On hold' => '0', 'Live Broadcasting' => '1'],
                     'attr' => ['aria-label' => $this->translator->trans('Status', [], null, $this->locale)],
                     'label' => $this->translator->trans('Status', [], null, $this->locale),
@@ -86,6 +87,7 @@ class LiveType extends AbstractType
                 ChoiceType::class,
                 [
                     'attr' => ['aria-label' => $this->translator->trans('Technology', [], null, $this->locale)],
+                    'choice_translation_domain' => 'messages',
                     'choices' => [
                         'WOWZA' => Live::LIVE_TYPE_WOWZA,
                     ],
@@ -109,6 +111,7 @@ class LiveType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Live::class,
+                'translation_domain' => false,
             ]
         );
 
