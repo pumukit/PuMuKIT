@@ -1,4 +1,4 @@
-<div class="well">
+<div class="card card-body bg-body-tertiary">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
 
         <div id="links_series_{{ series.id }}">
@@ -10,12 +10,12 @@
         {% else %}
             <div role="tabpanel">
                 <ul id="seriesTab" class="nav nav-tabs" role="tablist" data-controller="admin--tabs" data-admin--tabs-key-value="lastSeriesTab">
-                    <li class="active">
-                        <a href="#editSeries" aria-controls="editSeries" role="tab" data-toggle="tab" class="main-pmk-tab task-series-updatemeta">{% trans %}Series Metadata{% endtrans %}</a>
+                    <li class="nav-item">
+                        <a href="#editSeries" aria-controls="editSeries" role="tab" data-bs-toggle="tab" class="main-pmk-tab task-series-updatemeta nav-link active">{% trans %}Series Metadata{% endtrans %}</a>
                     </li>
                     {% if mmtemplate and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_EDIT_TEMPLATE')) %}
-                        <li>
-                            <a href="#editTemplate" aria-controls="editTemplate" role="tab" data-toggle="tab" class="main-pmk-tab task-multimedia-object-template">{% trans %}Videos Metadata Template{% endtrans %}</a>
+                        <li class="nav-item">
+                            <a href="#editTemplate" aria-controls="editTemplate" role="tab" data-bs-toggle="tab" class="main-pmk-tab task-multimedia-object-template nav-link">{% trans %}Videos Metadata Template{% endtrans %}</a>
                         </li>
                     {% endif %}
                 </ul>

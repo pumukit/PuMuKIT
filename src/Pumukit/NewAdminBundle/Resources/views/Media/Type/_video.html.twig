@@ -27,7 +27,7 @@
         {{ track.description().textFromLocale(app.request.getLocale()) }}
         <span>(
             {{ track.storage().fileName()}}
-            <span class="label label-default">{{ track.language()|default('')|language_name }}</span>
+            <span class="badge text-bg-secondary">{{ track.language()|default('')|language_name }}</span>
         )</span>
 
         {% include '@PumukitNewAdmin/Media/Type/Resources/_metadata.html.twig' %}

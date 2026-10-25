@@ -3,7 +3,7 @@
         <thead>
         <tr>
             <th width="1%">
-                <div class="checkbox pumukit-mms-checkbox">
+                <div class="form-check pumukit-mms-checkbox">
                     <label>
                         <input type="checkbox" data-action="click->admin--actions#checkAll" data-admin--actions-name-param="playlistmm">
                     </label>
@@ -35,7 +35,7 @@
                 data-admin--playlist-mms-pos-param="{{ mm_pos }}"
                 data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_modal_preview', {'id': mm.id}) }}">
                 <td>
-                    <div class="checkbox pumukit-mms-checkbox">
+                    <div class="form-check pumukit-mms-checkbox">
                         <label>
                             <input id="{{ mm.id }}" data-pos="{{ mm_pos }}" class="playlistmm_checkbox" type="checkbox">
                         </label>
@@ -43,12 +43,12 @@
                 </td>
                 <td>
                     {% if not is_playable_on_playlist(mm) %}
-                        <i id="table_playable_mm_{{ mm.id }}" class="non-playable-warning mdi-action-report-problem pmk-color-orange pmk-font-size-16" data-toggle="tooltip" data-placement="right" title="{% trans %}This object cannot be played on the playlist{% endtrans %}"></i>
+                        <i id="table_playable_mm_{{ mm.id }}" style="color:orange;font-size:16px" class="non-playable-warning mdi-action-report-problem" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}This object cannot be played on the playlist{% endtrans %}"></i>
                     {% endif %}
                 </td>
                 {% if not is_naked() %}
                     <td>
-                        <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}" data-toggle="tooltip" data-placement="right" title="{{ mm|status_text }}"></i>
+                        <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm|status_text }}"></i>
                     </td>
                     <td>
                         {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
@@ -81,15 +81,15 @@
                 </td>
                 <td class="text-center">
                     {% if mm.isVideoType() %}
-                        <i class="fa fa-file-video pmk-font-size-20" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
+                        <i class="fa fa-file-video" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
                     {% elseif mm.isAudioType() %}
-                        <i class="fa fa-file-audio pmk-font-size-20" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
+                        <i class="fa fa-file-audio" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
                     {% elseif mm.isImageType() %}
-                        <i class="fa fa-file-image pmk-font-size-20" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
+                        <i class="fa fa-file-image" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
                     {% elseif mm.isDocumentType() %}
-                        <i class="fa fa-file-alt pmk-font-size-20" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
+                        <i class="fa fa-file-alt" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
                     {% elseif mm.isExternalType() %}
-                        <i class="fa fa-link pmk-font-size-20" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
+                        <i class="fa fa-link" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
                     {% endif %}
                 </td>
                 <td class="text-center">
@@ -98,7 +98,7 @@
                 <td class="text-center">
                     {{ mm.getRealDuration()| duration_string }}
                     {% if mm.getProperty('soft-editing-duration') %}
-                        <i class="mdi-content-content-cut" data-toggle="tooltip" data-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
+                        <i class="mdi-content-content-cut" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
                     {% endif %}
                 </td>
                 <td class="text-nowrap">
@@ -116,13 +116,13 @@
                 </td>
                 <td class="text-center">
                     {% if mm.getEmbeddedBroadcast().getType() == 'public' %}
-                        <i class="fa fa-globe" data-toggle="tooltip" data-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
+                        <i class="fa fa-globe" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
                     {% elseif mm.getEmbeddedBroadcast().getType() == 'password' %}
-                        <i class="fa fa-unlock" data-toggle="tooltip" data-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
+                        <i class="fa fa-unlock" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
                     {% elseif mm.getEmbeddedBroadcast().getType() == 'login' %}
-                        <i class="fa fa-user" data-toggle="tooltip" data-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
+                        <i class="fa fa-user" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
                     {% elseif mm.getEmbeddedBroadcast().getType() == 'groups' %}
-                        <i class="fa fa-users" data-toggle="tooltip" data-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
+                        <i class="fa fa-users" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
                     {% endif %}
                 </td>
                 <td class="text-center">
@@ -183,9 +183,9 @@
                             <a class="cancel-search-button pmk-color-blue pmk-font-weight-normal" title="{% trans %}Cancel current search{% endtrans %}" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
                         {% endif %}
                     </div>
-                    <div class="col-md-6 text-right">
+                    <div class="col-md-6 text-end">
                         <div class="pagerfanta">
-                            {% set pagerClass = 'twitter_bootstrap3' %}
+                            {% set pagerClass = 'twitter_bootstrap5' %}
                             {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeParams": {"id": playlist.id}, "routeName": "pumukitnewadmin_playlistmms_index"} %}
                             {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : mms, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
 

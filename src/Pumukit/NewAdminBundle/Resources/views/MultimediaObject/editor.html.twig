@@ -1,15 +1,15 @@
-<div class="well">
+<div class="card card-body bg-body-tertiary">
   <fieldset>
     <legend hidden>{% trans %}Editor{% endtrans %}</legend>
     <dl>
       <div class="form-row">
         {% if mm.isMultistream() %}
-        <form class="form-horizontal" onsubmit="return false;">
-        <div class="col-lg-8 text-right">
-          <div class="col-xs-6 pmk-padding-top-11 pmk-padding-left-0">
-            <label class="col-xs-4 control-label pmk-word-break-break-all pmk-overflow-hidden pmk-white-space-nowrap">Default layout:</label>
-            <div class="col-xs-8 input-group">
-            <select class="form-control" id="paella-layout">
+        <form onsubmit="return false;">
+        <div class="col-lg-8 text-end">
+          <div class="col-6" style="padding-top: 11px; padding-left: 0px;">
+            <label class="col-4 col-form-label" style="word-break: break-all; overflow: hidden; white-space: nowrap;">Default layout:</label>
+            <div class="col-8 input-group">
+            <select class="form-select" id="paella-layout">
               <option value="professor_slide" {% if mm.getProperty("paellalayout") == "professor_slide" %} selected="selected" {% endif %}>Professor - Slide</option>
               <option value="professor" {% if mm.getProperty("paellalayout") == "professor" %} selected="selected" {% endif %}>Professor</option>
               <option value="slide" {% if mm.getProperty("paellalayout") == "slide" %} selected="selected" {% endif %}>Slide</option>
@@ -18,17 +18,17 @@
         </div>
         </div>
         </form>
-        <div class="col-lg-4 text-right">
+        <div class="col-lg-4 text-end">
         {% else %}
-        <div class="text-right">
+        <div class="text-end">
         {% endif %}
-        <span class="pmk-display-none" id="edit-btn-group">
-          <a class="btn btn-default btn-raised" onclick="switchMode('discard-close')"> {%trans%} DISCARD {%endtrans%} </a>
-          <a class="btn btn-pumukit btn-raised" onclick="switchMode('save')"> {%trans%}  SAVE {%endtrans%} </a>
-          <a class="btn btn-pumukit btn-raised" onclick="switchMode('save-close')"> {%trans%}  SAVE AND CLOSE {%endtrans%} </a>
+        <span id="edit-btn-group" style="display: none">
+          <a class="btn btn-secondary" onclick="switchMode('discard-close')"> {%trans%} DISCARD {%endtrans%} </a>
+          <a class="btn btn-pumukit" onclick="switchMode('save')"> {%trans%}  SAVE {%endtrans%} </a>
+          <a class="btn btn-pumukit" onclick="switchMode('save-close')"> {%trans%}  SAVE AND CLOSE {%endtrans%} </a>
         </span>
         <span id="play-btn-group">
-          <a class="btn btn-primary btn-raised" onclick="switchMode('editor')"> {%trans%}  EDIT MODE {%endtrans%} </a>
+          <a class="btn btn-primary" onclick="switchMode('editor')"> {%trans%}  EDIT MODE {%endtrans%} </a>
         </span>
         </div>
         <div>
@@ -87,13 +87,11 @@
    .done(function() {
      paella.events.trigger(paella.events.setProfile, {profileName: layout});
      var message = '{{ "Multimedia Object saved OK"|trans|e("js") }}';
-     $("#div_messages_span_info").attr("data-content", message);
-     $("#div_messages_span_info").snackbar("show");
+     window.success(message);
    })
    .fail(function() {
      var message = '{{ "Multimedia Object saved ERROR"|trans|e("js") }}'
-     $("#div_messages_span_error").attr("data-content", message);
-     $("#div_messages_span_error").snackbar("show");
+     window.no_success(message);
    })
 });
 {% endif %}

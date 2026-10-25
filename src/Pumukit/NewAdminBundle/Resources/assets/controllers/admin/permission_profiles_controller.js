@@ -32,7 +32,7 @@ export default class extends Controller {
             .fail((xhr, textStatus, errorThrown) => window.no_success(`${errorThrown}: ${xhr.responseText}`))
             .done((response) => {
                 $('#list_permissionprofiles').html(response);
-                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-bs-toggle="tooltip"]').tooltip();
                 window.success(this.messagesValue.saved);
             });
     }

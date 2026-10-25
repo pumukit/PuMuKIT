@@ -1,6 +1,6 @@
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <h3 class="modal-title" id="myModalLabel">{% trans %}Add Multimedia Object to Playlist{% endtrans %}</h3>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body"
      data-controller="admin--playlist-modal"
@@ -14,42 +14,42 @@
      data-admin--playlist-modal-pages-value="{{ ((mmobjs_total|length) / mmobjs_limit)|round(0, 'ceil') }}">
   <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist">
-      <li role="search" class="active">
-        <a href="#search" aria-controls="search" role="tab" data-toggle="tab" data-action="click->admin--playlist-modal#tab">
+      <li class="nav-item" role="search">
+        <a class="nav-link active" href="#search" aria-controls="search" role="tab" data-bs-toggle="tab" data-action="click->admin--playlist-modal#tab">
           SEARCH
         </a>
       </li>
-      <li role="url">
-        <a href="#url" aria-controls="url" role="tab" data-toggle="tab" data-action="click->admin--playlist-modal#tab">
+      <li class="nav-item" role="url">
+        <a class="nav-link" href="#url" aria-controls="url" role="tab" data-bs-toggle="tab" data-action="click->admin--playlist-modal#tab">
           URL
         </a>
       </li>
-      <li role="my_videos">
-        <a href="#my_videos" aria-controls="my_videos" role="tab" data-toggle="tab" data-action="click->admin--playlist-modal#tab">
+      <li class="nav-item" role="my_videos">
+        <a class="nav-link" href="#my_videos" aria-controls="my_videos" role="tab" data-bs-toggle="tab" data-action="click->admin--playlist-modal#tab">
           MY VIDEOS
         </a>
       </li>
     </ul>
   </div>
-  <div class="tab-content pmk-height-580">
-    <div role="tabpanel" class="tab-pane active pmk-height-100pct" id="search">
-      <div class="well pmk-height-100pct pmk-overflow-auto">
+  <div class="tab-content" style="height:580px">
+    <div role="tabpanel" class="tab-pane active" id="search" style="height:100%">
+      <div class="card card-body bg-body-tertiary" style="height:100%;overflow:auto;">
         {% include '@PumukitNewAdmin/PlaylistMultimediaObject/modal_search.html.twig' %}
       </div>
     </div>
-    <div role="tabpanel" class="tab-pane pmk-height-100pct" id="url">
-      <div class="well pmk-height-100pct pmk-overflow-auto">
+    <div role="tabpanel" class="tab-pane" id="url" style="height:100%">
+      <div class="card card-body bg-body-tertiary"style="height:100%;overflow:auto;">
         {% include '@PumukitNewAdmin/PlaylistMultimediaObject/modal_url.html.twig' %}
       </div>
     </div>
-    <div role="tabpanel" class="tab-pane pmk-height-100pct" id="my_videos">
-      <div class="well pmk-height-100pct pmk-overflow-auto" id="my_videos_modal_list">
+    <div role="tabpanel" class="tab-pane" id="my_videos" style="height:100%">
+      <div class="card card-body bg-body-tertiary" style="height:100%;overflow:auto;" id="my_videos_modal_list">
         {% include '@PumukitNewAdmin/PlaylistMultimediaObject/modal_myvideos.html.twig' %}
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-pumukit btn-raised" data-dismiss="modal" id="add_videos_modal_button" disabled="disabled" data-admin--playlist-modal-target="add" data-action="click->admin--playlist-modal#add">{% trans %}Add videos{% endtrans %}</button>
-    <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+    <button type="button" class="btn btn-pumukit" data-bs-dismiss="modal" id="add_videos_modal_button" disabled="disabled" data-admin--playlist-modal-target="add" data-action="click->admin--playlist-modal#add">{% trans %}Add videos{% endtrans %}</button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
   </div>
 </div>

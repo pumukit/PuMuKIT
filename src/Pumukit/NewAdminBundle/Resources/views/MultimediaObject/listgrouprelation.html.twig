@@ -1,15 +1,15 @@
 <input type="hidden" id="mm_id_grouprelation" value="{{ mm.id }}"/>
-<div class="panel panel-default">
-  <div class="panel-heading">
+<div class="card">
+  <div class="card-header">
     {% trans %}ADMIN GROUPS{% endtrans %}&nbsp;
     {% if template %}
-    <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Groups that can admin this series{% endtrans %}"></i>
+    <i class="mdi-action-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Groups that can admin this series{% endtrans %}"></i>
     {% else %}
-    <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Groups that can admin this multimedia object{% endtrans %}"></i>
+    <i class="mdi-action-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Groups that can admin this multimedia object{% endtrans %}"></i>
     {% endif %}
   </div>
   {% set can_modify_groups = app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER')) %}
-  <div class="panel-body" id="group_mm{{ template }}"
+  <div class="card-body" id="group_mm{{ template }}"
        data-controller="admin--group-lists"
        data-admin--mm-groups-target="lists"
        data-action="admin--group-lists:load->admin--group-lists#load"

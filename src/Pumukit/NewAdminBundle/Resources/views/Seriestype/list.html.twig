@@ -4,7 +4,7 @@
     <thead>
       <tr>
         <th width="1%">
-          <div class="checkbox">
+          <div class="form-check">
             <label>
               <input type="checkbox" data-action="click->admin--actions#checkAll" data-admin--actions-name-param="seriestype">
             </label>
@@ -27,14 +27,14 @@
       {% for seriestype in seriestypes %}
       <tr class="pmk-cursor-pointer{% if (app.session.get('admin/seriestype/id') == seriestype.id) %} success{% endif %}">
         <td>
-          <div class="checkbox">
+          <div class="form-check">
             <label>
               <input id="{{ seriestype.id }}" class="seriestype_checkbox" type="checkbox">
             </label>
           </div>
         </td>
         <td>
-          <a title="{% trans %}Edit seriestype channel{% endtrans %} {{ seriestype.id }}" href="{{ path('pumukitnewadmin_seriestype_update', {'id': seriestype.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+          <a title="{% trans %}Edit seriestype channel{% endtrans %} {{ seriestype.id }}" href="{{ path('pumukitnewadmin_seriestype_update', {'id': seriestype.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
             <i class="mdi-editor-mode-edit"></i>
           </a>
         </td>
@@ -71,11 +71,11 @@
             <a class="cancel-search-button pmk-color-blue pmk-font-weight-normal" title="{% trans %}Cancel current search{% endtrans %}" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
             {% endif %}
           </div>
-          <div class="col-md-4 text-right">
+          <div class="col-md-4 text-end">
             <div class="pagerfanta">
               {% set sorting = {('sorting[' ~ (app.session.get('admin/seriestype/sort')) ~ ']') : (app.session.get('admin/seriestype/type')) } %}
 
-                {% set pagerClass = 'twitter_bootstrap3' %}
+                {% set pagerClass = 'twitter_bootstrap5' %}
                 {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_seriestype_index", "routeParams": sorting} %}
                 {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : seriestypes, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
 

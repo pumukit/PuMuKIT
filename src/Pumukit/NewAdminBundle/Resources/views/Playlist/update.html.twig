@@ -1,20 +1,20 @@
-<div class="well">
+<div class="card card-body bg-body-tertiary">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
     <div class="row">
       <div class="col-lg-6">
-        <form class="form-horizontal">
-          <input class="pmk-display-none" type="submit" value="submit-hidden" aria-hidden="true" />
+        <form>
+          <input type="submit" style="display:none" value="submit-hidden" aria-hidden="true" />
           <fieldset>
             <legend>{{ is_naked() ? 'Playlist Metadata'|trans : 'Metadata'|trans }}</legend>
-            <div class="form-group">
-              <label for="inputROId" class="col-xs-2 control-label">{% trans %}Id:{% endtrans %}</label>
-              <div class="col-xs-10 input-group">
+            <div class="row mb-3">
+              <label for="inputROId" class="col-2 col-form-label">{% trans %}Id:{% endtrans %}</label>
+              <div class="col-10 input-group">
                 <input type="text" class="form-control" id="inputROId" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ series.id }}">
               </div>
-              <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">{% trans %}Preview:{% endtrans %}</label>
-              <div class="col-xs-10 input-group hidden-naked">
+              <label for="inputROUrl" class="col-2 col-form-label hidden-naked">{% trans %}Preview:{% endtrans %}</label>
+              <div class="col-10 input-group hidden-naked">
                 <input type="text" class="form-control" id="inputROUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ url('pumukit_playlistplayer_index', {id: series.id}) }}">
-                <span class="input-group-addon"><a href="{{ url('pumukit_playlistplayer_index', {id: series.id}) }}" target="_blank" title="{% trans %}Preview{% endtrans %}"><i class="mdi-action-exit-to-app"></i></a></span>
+                <span class="input-group-text"><a href="{{ url('pumukit_playlistplayer_index', {id: series.id}) }}" target="_blank" title="{% trans %}Preview{% endtrans %}"><i class="mdi-action-exit-to-app"></i></a></span>
               </div>
             </div>
           </fieldset>
@@ -27,8 +27,8 @@
     {% else %}
       <div role="tabpanel">
         <ul id="seriesTab" class="nav nav-tabs" role="tablist" data-controller="admin--tabs" data-admin--tabs-key-value="lastSeriesTab">
-          <li class="active">
-            <a href="#editSeries" aria-controls="editSeries" role="tab" data-toggle="tab" class="main-pmk-tab">{% trans %}Playlist Metadata{% endtrans %}</a>
+          <li class="nav-item">
+            <a href="#editSeries" aria-controls="editSeries" role="tab" data-bs-toggle="tab" class="main-pmk-tab nav-link active">{% trans %}Playlist Metadata{% endtrans %}</a>
           </li>
         </ul>
 

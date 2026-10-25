@@ -3,8 +3,8 @@
 {% block body %}
 
     <h3 class="cab_body_div">
-        <ul class="breadcrumb pmk-margin-bottom-5">
-            <li class="active">{% trans %}Encoder{% endtrans %}</li>
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active breadcrumb-item">{% trans %}Encoder{% endtrans %}</li>
         </ul>
     </h3>
 
@@ -18,20 +18,20 @@
     <div class="row">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_JOBS')) %}
             <div class="col-md-9">
-                <div class="well" id="list_jobs">
+                <div class="card card-body bg-body-tertiary" id="list_jobs">
                     {% include '@PumukitEncoder/Info/jobs.html.twig' with {'pageParameter': '[page_pending]', 'title': 'Pending jobs (paused & waiting)'|trans, 'jobs': jobs.pending } %}
                     {% include '@PumukitEncoder/Info/jobs.html.twig' with {'pageParameter': '[page_executing]', 'title': 'Executing jobs'|trans, 'jobs': jobs.executing } %}
                     {% include '@PumukitEncoder/Info/jobs.html.twig' with {'pageParameter': '[page_executed]', 'title': 'Executed jobs'|trans, 'jobs': jobs.executed } %}
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="well" id="list_cpus">
+                <div class="card card-body bg-body-tertiary" id="list_cpus">
                     {% include '@PumukitEncoder/Info/cpus.html.twig' %}
                 </div>
             </div>
         {% else %}
             <div class="col-md-12">
-                <div class="well">
+                <div class="card card-body bg-body-tertiary">
                     {% trans %}You don't have enough permissions to access this content.{% endtrans %}
                 </div>
             </div>

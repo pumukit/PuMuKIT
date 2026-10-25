@@ -5,7 +5,7 @@
             <thead>
             <tr>
                 <th width="1%" id="th-checkbox">
-                    <div class="checkbox">
+                    <div class="form-check">
                         <label>
                             <input type="checkbox" data-action="click->admin--actions#checkAll" data-admin--actions-name-param="playlist">
                         </label>
@@ -21,7 +21,7 @@
             {% for oneseries in series %}
                 <tr class="pmk-cursor-pointer{% if (app.session.get('admin/playlist/id') == oneseries.id ) %} success{% endif %}">
                     <td headers="th-checkbox">
-                        <div class="checkbox">
+                        <div class="form-check">
                             <label>
                                 <input id="{{ oneseries.id }}" class="playlist_checkbox" type="checkbox">
                             </label>
@@ -87,10 +87,10 @@
                                 <a class="cancel-search-button pmk-color-blue pmk-font-weight-normal" title="{% trans %}Cancel current search{% endtrans %}" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
                             {% endif %}
                         </div>
-                        <div class="col-md-6 text-right">
+                        <div class="col-md-6 text-end">
                             <div class="pagerfanta">
                                 {% set sorting = {('sorting[' ~ (app.session.get('admin/playlist/sort')) ~ ']') : (app.session.get('admin/playlist/type')) } %}
-                                {% set pagerClass = 'twitter_bootstrap3' %}
+                                {% set pagerClass = 'twitter_bootstrap5' %}
                                 {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_playlist_index", "routeParams": sorting} %}
                                 {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : series, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
                                 {% if not is_naked() %}

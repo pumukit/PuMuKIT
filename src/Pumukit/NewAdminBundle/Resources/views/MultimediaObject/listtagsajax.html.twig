@@ -4,8 +4,7 @@
    <a href="#"
       {% if node.getMetatag() %}data-action="click->admin--tag-picker#select"{% else %}data-action="click->admin--tag-picker#select dblclick->admin--tag-picker#add"{% endif %}
       data-admin--tag-picker-id-param="{{ node.id|json_encode }}"
-      class="list-group-item notload
-             tag_li_parent_{{ parent }}
+      class="list-group-item notload tag_li_parent_{{ parent }}
              c_{{ node.path|replace({ ("|" ~ node.cod ~ "|"): '', '|': ' c_'}) }}
              {{ (children_length)?'collapsed':'element' }}
              {{ node.getMetatag()?'metatag' }}
@@ -13,7 +12,7 @@
              {{ (node.getNumberMultimediaObjects()==0)?'nomm' }}">
 
      {% if not node.getMetatag() %}
-     <span class="badge" id="info_num_mm_{{ node.id }}">{{ node.getNumberMultimediaObjects() }}</span>
+     <span class="badge text-bg-secondary" id="info_num_mm_{{ node.id }}">{{ node.getNumberMultimediaObjects() }}</span>
      {% endif %}
 
      <span class="pmk-padding-left-{{ 10 * (node.level - 3) }}"

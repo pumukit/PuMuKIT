@@ -1,24 +1,24 @@
 {% set criteria = app.session.get('admin/series/criteria') %}
-<div class="well">
+<div class="card card-body bg-body-tertiary">
     <form id="filter_series" class="form">
         <fieldset>
             <legend hidden>{% trans %}Filter Series{% endtrans %}</legend>
 
-            <div id="accordion" class="panel-group" role="tablist" aria-roledescription="tablist" aria-multiselectable="true">
+            <div id="accordion" role="tablist" aria-roledescription="tablist" aria-multiselectable="true">
 
-                <div class="panel panel-default pmk-margin-bottom-10">
-                    <div class="panel-heading" role="tab" id="headingSearch">
-                        <h2 class="panel-title">
-                            <a class="show" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch">
-                                <i class="mdi-navigation-menu pull-right"></i>
+                <div class="card" style="margin-bottom:10px">
+                    <div class="card-header" role="tab" id="headingSearch">
+                        <h2 class="card-title mb-0">
+                            <a class="d-block" data-bs-toggle="collapse" href="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch">
+                                <i class="mdi-navigation-menu float-end"></i>
                                 {% trans %}Search{% endtrans %}
                             </a>
                         </h2>
                     </div>
-                    <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSearch">
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label for="filters_search" class="control-label">
+                    <div id="collapseSearch" data-bs-parent="#accordion" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingSearch">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="filters_search" class="form-label">
                                     {% trans %}Search{% endtrans %}:
                                 </label>
                                 <div>
@@ -26,10 +26,10 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="filters_date" class="control-label">{% trans %}Date{% endtrans %}:</label>
+                            <div class="mb-3">
+                                <label for="filters_date" class="form-label">{% trans %}Date{% endtrans %}:</label>
                                 <div class="row">
-                                    <div class="col-md-11 col-md-offset-1">
+                                    <div class="col-md-11 offset-md-1">
                                         {% trans %}From{% endtrans %}:&nbsp;
                                         <input type="date" class="form-control" pattern="(\d\d\d\d)-(\d\d)-(\d\d)" title="Format YYYY-MM-DD" name="criteria[date][from]" data-action="change->admin--actions#validateRange" data-admin--actions-from-param="#filters_date_from" data-admin--actions-to-param="#filters_date_to" data-admin--actions-message-param="{{ 'From date must be less than to date'|trans }}" id="filters_date_from" value="{{ criteria['date']['from']|default("") }}">
                                         <br/>
@@ -44,21 +44,21 @@
 
                 {% set collapseIn = "" %}
                 {% if criteria['announce'] is defined or criteria['title'] is defined or criteria['subtitle'] is defined %}
-                    {% set collapseIn = "in" %}
+                    {% set collapseIn = "show" %}
                 {% endif %}
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingOthers">
-                        <h2 class="panel-title">
-                            <a class="show collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOthers" aria-expanded="false" aria-controls="collapseOthers">
-                                <i class="mdi-navigation-menu pull-right show"></i>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingOthers">
+                        <h2 class="card-title mb-0">
+                            <a class="d-block collapsed" data-bs-toggle="collapse" href="#collapseOthers" aria-expanded="false" aria-controls="collapseOthers">
+                                <i class="mdi-navigation-menu float-end d-block"></i>
                                 {% trans %}Others{% endtrans %}
                             </a>
                         </h2>
                     </div>
-                    <div id="collapseOthers" class="panel-collapse collapse {{ collapseIn }}" role="tabpanel" aria-labelledby="headingOthers">
-                        <div class="panel-body container-fluid">
-                            <div class="form-group">
-                                <label for="filters_search_title" class="control-label">
+                    <div id="collapseOthers" data-bs-parent="#accordion" class="panel-collapse collapse {{ collapseIn }}" role="tabpanel" aria-labelledby="headingOthers">
+                        <div class="card-body container-fluid">
+                            <div class="mb-3">
+                                <label for="filters_search_title" class="form-label">
                                     {% trans %}Title{% endtrans %}:
                                 </label>
                                 <div>
@@ -66,8 +66,8 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="filters_search_subtitle" class="control-label">
+                            <div class="mb-3">
+                                <label for="filters_search_subtitle" class="form-label">
                                     {% trans %}Subtitle{% endtrans %}:
                                 </label>
                                 <div>
@@ -76,12 +76,12 @@
                             </div>
 
                             {% if not disable_pudenew %}
-                                <div class="form-group">
-                                    <label for="filters_announce" class="control-label">
+                                <div class="mb-3">
+                                    <label for="filters_announce" class="form-label">
                                         {% trans %}Announced{% endtrans %}:
                                     </label>
                                     <div>
-                                        <select class="form-control" name="criteria[announce]" id="filters_announce">
+                                        <select class="form-select" name="criteria[announce]" id="filters_announce">
                                             <option value="diff">{% trans %}Indifferent{% endtrans %}</option>
                                             <option value="true" {% if criteria is not null and criteria['announce'] is defined and criteria['announce'] == "true" %}selected{% endif %}>
                                                 {% trans %}Yes{% endtrans %}
@@ -106,9 +106,9 @@
             </ul>
         </fieldset>
 
-        <div class="text-right">
-            <input class="btn btn-default btn-raised" data-action="click->admin--actions#navigate" data-admin--actions-url-param="?criteria[reset]=true" type="button" value="{% trans %}reset{% endtrans %}">
-            <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
+        <div class="text-end">
+            <input class="btn btn-secondary" data-action="click->admin--actions#navigate" data-admin--actions-url-param="?criteria[reset]=true" type="button" value="{% trans %}reset{% endtrans %}">
+            <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit">
         </div>
     </form>
 </div>

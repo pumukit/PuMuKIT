@@ -1,6 +1,6 @@
 {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
 
-<div class="well pmk-overflow-hidden">
+<div class="card card-body bg-body-tertiary" style="overflow:hidden">
     {{ form_start(form, {'attr': {
         'id': 'form_event',
         'data-controller': 'admin--meta-form',
@@ -8,54 +8,54 @@
         'data-admin--live-event-url-param': path('pumukit_new_admin_live_event_eventtab', {'id': multimediaObject.getId()}),
         'data-admin--meta-form-remember-value': '#remember_save_event'
     }}) }}
-    <div class="col-xs-12">
+    <div class="col-12">
         <div class="row">
-            <div class="col-xs-8">
-                <div class="col-xs-6">
-                    <span id="remember_save_event" class="alert alert-dismissable alert-danger pmk-display-none pmk-vertical-align-middle">
+            <div class="col-8">
+                <div class="col-6">
+                    <span id="remember_save_event" class="alert alert-dismissable alert-danger" style="display:none;vertical-align:middle;">
                         {% trans %}Press OK for the change to take effect{% endtrans %}
                     </span> &nbsp;
                 </div>
             </div>
-            <div class="col-xs-4 text-right">
-                <button id="pumukit_new_admin_event_cancel" type="button" class="btn btn-default btn-raised" data-action="click->admin--meta-form#cancel">
+            <div class="col-4 text-end">
+                <button id="pumukit_new_admin_event_cancel" type="button" class="btn btn-secondary" data-action="click->admin--meta-form#cancel">
                     {% trans %}Cancel{% endtrans %}
                     <div class="ripple-wrapper"></div>
                 </button>
                 {% if autocomplete_series is defined and autocomplete_series %}
-                    <button id="pumukit_new_admin_autocomplete_series" type="button" class="btn btn-primary btn-raised" data-id="{{ multimediaObject.id }}" data-action="click->admin--live-event#autocompleteSeries" data-admin--live-event-id-param="{{ multimediaObject.id|json_encode }}">
+                    <button id="pumukit_new_admin_autocomplete_series" type="button" class="btn btn-primary" data-id="{{ multimediaObject.id }}" data-action="click->admin--live-event#autocompleteSeries" data-admin--live-event-id-param="{{ multimediaObject.id|json_encode }}">
                         {% trans %}Autocomplete series{% endtrans %}
                     </button>
                 {% endif %}
-                <button class="btn btn-pumukit btn-raised" type="submit">{% trans %}OK{% endtrans %}</button>
+                <button class="btn btn-pumukit" type="submit">{% trans %}OK{% endtrans %}</button>
             </div>
         </div>
     </div>
-    <div class="col-xs-6">
+    <div class="col-6">
         <fieldset>
-            <div class="form-group">
+            <div class="mb-3">
                 {{ form_row(form.i18n_name) }}
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 {{ form_row(form.i18n_description) }}
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="owner">{% trans %}Author{% endtrans %}</label>
                 <input id="owner" type="text" name="pumukitnewadmin_live_event[author]" class="form-control" value="{{ people['author']|default('') }}" />
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="producer">{% trans %}Producer{% endtrans %}</label>
                 <input id="producer" type="text" name="pumukitnewadmin_live_event[producer]" class="form-control"  value="{{ people['producer']|default('') }}" />
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 {{ form_row(form.place) }}
             </div>
 
-            <div class="form-group row">
+            <div class="mb-3 row">
                 <div class="col-sm-6">
                     <label for="live_channel_select">{% trans %}Search Channels{% endtrans %}</label>
                     <input id="live_channel_select" type="text" class="form-control" placeholder="{% trans %}Search Channels{% endtrans %}" autocomplete="off" data-admin--live-event-target="channel"/>
@@ -67,12 +67,12 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 {% set externalURL = '' %}
                 {% if multimediaObject.getEmbeddedEvent() is not null and multimediaObject.getEmbeddedEvent().getUrl() is not empty %}
                     {% set externalURL = 'checked' %}
                 {% endif %}
-                <div class="checkbox">
+                <div class="form-check">
                     <strong>{% trans %}External URL{% endtrans %}</strong>
                     <label for="allowExternalURL">
                         <input type="checkbox" id="allowExternalURL" name="allowURLExternal" data-action="click->admin--live-event#toggleExternalUrl" {{ externalURL }}>
@@ -87,7 +87,7 @@
                         <input id="externalURL" type="url" name="pumukitnewadmin_live_event[externalURL]" class="form-control" {% if externalURL != '' %}value="{{ multimediaObject.getEmbeddedEvent().getUrl() }}" {% else %}disabled{% endif %}/>
                     </div>
                     <div class="col-md-3 iframeURL">
-                        <div class="checkbox">
+                        <div class="form-check">
                             <label for="iframeURL">
                                 <input type="checkbox" id="iframeURL" name="pumukitnewadmin_live_event[iframeURL]" {{ iframeURL }} {% if externalURL == '' %}disabled{% endif %}>
                             </label>
@@ -97,7 +97,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label>{% trans %}Images{% endtrans %}</label>
                 <div id="pic_mms_{{ multimediaObject.getId() }}">
                     {% include '@PumukitNewAdmin/Pic/list.html.twig' with {'resource': multimediaObject, 'resource_name': 'mms'} %}
@@ -105,12 +105,12 @@
             </div>
 
             {% if enableContactForm %}
-            <div class="form-group">
+            <div class="mb-3">
                 {% set contact = '' %}
                 {% if multimediaObject.getEmbeddedSocial() is not null and multimediaObject.getEmbeddedSocial().getEmail() is not empty %}
                     {% set contact = 'checked' %}
                 {% endif %}
-                <div class="checkbox">
+                <div class="form-check">
                     <strong>{% trans %}Contact{% endtrans %}</strong>
                     <label for="allowContact">
                         <input type="checkbox" id="allowContact" data-action="click->admin--live-event#toggleContact" {{ contact }}>
@@ -120,52 +120,52 @@
             </div>
             {% endif %}
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label>{% trans %}Attachments{% endtrans %}</label>
                 <div id="materials_mms_{{ multimediaObject.id }}">
                     {% include '@PumukitNewAdmin/Material/list.html.twig' with {'mmId': multimediaObject.id, 'materials': multimediaObject.getMaterials()} %}
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 {{ form_row(form.display) }}
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 {{ form_row(form.create_serial) }}
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 {{ form_row(form.duration) }}
             </div>
 
-            <div class="form-group">
-              <a class="pmk-color-666 pmk-text-decoration-underline" href="#"
+            <div class="mb-3">
+              <a style="color:#666; text-decoration:underline" href="#"
                  data-action="click->admin--actions#toggle"
                  data-admin--actions-selectors-param="{{ ['#pumukitnewadmin_live_event_i18n_already_held_message', '#pumukitnewadmin_live_event_i18n_not_yet_held_message', '#pumukitnewadmin_live_event_poster_image', '#pumukitnewadmin_live_event_poster_text_color']|json_encode }}">
                 <span id="html_text_arr_1">&#9654;</span> <span class="pmk-display-none" id="html_text_arr_2">&#9660;</span>
                 {% trans %}Show configuration for messages, poster image and color text.{% endtrans %}
-                <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Click to edit messages, poster image and color text{% endtrans %}"></i>
+                <i class="mdi-action-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Click to edit messages, poster image and color text{% endtrans %}"></i>
               </a>
             </div>
 
-            <div class="form-group pmk-display-none" id="pumukitnewadmin_live_event_i18n_already_held_message">
+            <div class="mb-3" style="display:none" id="pumukitnewadmin_live_event_i18n_already_held_message">
               {{ form_row(form.i18n_already_held_message) }}
             </div>
 
-            <div class="form-group pmk-display-none" id="pumukitnewadmin_live_event_i18n_not_yet_held_message">
+            <div class="mb-3" style="display:none" id="pumukitnewadmin_live_event_i18n_not_yet_held_message">
               {{ form_row(form.i18n_not_yet_held_message) }}
             </div>
 
-            <div class="form-group pmk-display-none" id="pumukitnewadmin_live_event_poster_image">
+            <div class="mb-3" style="display:none" id="pumukitnewadmin_live_event_poster_image">
                 <label>{% trans %}Event poster{% endtrans %}</label>
                 <div id="pic_events_{{ multimediaObject.getId() }}">
                     {% include '@PumukitNewAdmin/Pic/list.html.twig' with {'resource': multimediaObject, 'resource_name': 'mms', 'is_event_poster': true} %}
                 </div>
             </div>
 
-            <div class="form-group pmk-display-none" id="pumukitnewadmin_live_event_poster_text_color">
-              <label for="poster_text_color">{% trans %}Poster text color{% endtrans %} <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Click on the color bar to change color. A pop-up window will be shown.{% endtrans %}"></i>
+            <div class="mb-3" style="display:none" id="pumukitnewadmin_live_event_poster_text_color">
+              <label for="poster_text_color">{% trans %}Poster text color{% endtrans %} <i class="mdi-action-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Click on the color bar to change color. A pop-up window will be shown.{% endtrans %}"></i>
 </label>
               <div class="form-control-wrapper">
                 <input id="poster_text_color" type="color" name="pumukitnewadmin_live_event[poster_text_color]" class="form-control" value="{{ poster_pic_text_color(multimediaObject) }}">
@@ -173,35 +173,35 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label>{% trans %}Broadcast profile{% endtrans %}</label>
                 <div class="row">
                     {% include '@PumukitNewAdmin/MultimediaObject/listbroadcast.html.twig' with {'mm': multimediaObject, 'template' : '' } %}
                 </div>
             </div>
 
-            <div class="form-group{{ enableChat ? '' : ' pmk-display-none' }}">
+            <div class="mb-3"{{ enableChat ? '':' style="display:none;"' }}>
                 {{ form_row(form.enable_chat) }}
             </div>
 
             {% if enableTwitter %}
-            <div class="form-group">
-              <a class="pmk-color-666 pmk-text-decoration-underline" href="#"
+            <div class="mb-3">
+              <a style="color:#666; text-decoration:underline" href="#"
                  data-action="click->admin--actions#toggle"
                  data-admin--actions-selectors-param="{{ ['#pumukitnewadmin_live_event_twitter_hashtag', '#pumukitnewadmin_live_event_twitter_widget_id']|json_encode }}">
                 <span id="html_text_arr_1">&#9654;</span> <span class="pmk-display-none" id="html_text_arr_2">&#9660;</span>
                 {% trans %}Show configuration for Twitter.{% endtrans %}
-                <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Click to edit Twitter configuration{% endtrans %}"></i>
+                <i class="mdi-action-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Click to edit Twitter configuration{% endtrans %}"></i>
               </a>
             </div>
-            <div class="form-group pmk-display-none" id="pumukitnewadmin_live_event_twitter_hashtag">
+            <div class="mb-3" style="display:none" id="pumukitnewadmin_live_event_twitter_hashtag">
               <label for="twitter_hashtag">{% trans %}Twitter hashtag{% endtrans %}</label>
-              <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Twitter hashtag without #{% endtrans %}"></i>
+              <i class="mdi-action-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Twitter hashtag without #{% endtrans %}"></i>
               <input id="twitter_hashtag" type="text" name="pumukitnewadmin_live_event[twitter_hashtag]" class="form-control"  value="{{ multimediaObject.getEmbeddedSocial() ? multimediaObject.getEmbeddedSocial().getTwitterHashtag() : '' }}" />
             </div>
-            <div class="form-group pmk-display-none" id="pumukitnewadmin_live_event_twitter_widget_id">
+            <div class="mb-3" style="display:none" id="pumukitnewadmin_live_event_twitter_widget_id">
               <label for="twitter_widget_id">{% trans %}Twitter widget id{% endtrans %}</label>
-              <i id="twitter-widget-id-tooltip" data-admin--live-event-target="tooltip" class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans with {'%twitterAccountsLinkColor%': twitterAccountsLinkColor} %}Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.{% endtrans %}"></i>
+              <i id="twitter-widget-id-tooltip" data-admin--live-event-target="tooltip" class="mdi-action-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans with {'%twitterAccountsLinkColor%': twitterAccountsLinkColor} %}Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.{% endtrans %}"></i>
               <input id="twitter_widget_id" type="text" name="pumukitnewadmin_live_event[twitter_widget_id]" class="form-control"  value="{{ multimediaObject.getEmbeddedSocial() ? multimediaObject.getEmbeddedSocial().getTwitter() : '' }}" />
             </div>
             {% endif %}

@@ -1,18 +1,18 @@
 <td>
     <div class="dropdown dropup">
-        <i class="mdi-navigation-refresh" id="list_profiles_{{ track.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+        <i class="mdi-navigation-refresh" id="list_profiles_{{ track.id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
         <ul class="dropdown-menu" role="menu" aria-labelledby="list_profiles_{{ track.id }}">
             <li>&nbsp;&nbsp;<strong>{% trans %}Transcode to profile{% endtrans %}:</strong></li>
             {% for key in mm|filter_profiles()|keys %}
                 <li>
-                    <a href="#" data-action="click->admin--actions#load"
+                    <a class="dropdown-item" href="#" data-action="click->admin--actions#load"
                        data-admin--actions-url-param="{{ path('pumukitnewadmin_track_retranscode', {'id': track.id, 'mmId': mm.id, 'profile': key}) }}"
                        data-admin--actions-target-param="#tracks_mms_{{ mm.id }}">
                         <i class="mdi-image-camera-roll"></i> {{ key }}
                     </a>
                 </li>
             {% endfor %}
-            <li class="cancel"><a href="#" data-action="click->admin--actions#cancel"><strong>{% trans %}Cancel{% endtrans %}...</strong></a></li>
+            <li class="cancel"><a class="dropdown-item" href="#" data-action="click->admin--actions#cancel"><strong>{% trans %}Cancel{% endtrans %}...</strong></a></li>
         </ul>
     </div>
 </td>

@@ -51,7 +51,7 @@
                     <img src="{{ day_event.getPic() }}" height="16" width="18" />
                     {% endif %}
                   </span>
-                  <a title="{% trans %}Edit Event{% endtrans %} {{ day_event.name }}" href="{{ path('pumukitnewadmin_event_update', {'id': day_event.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                  <a title="{% trans %}Edit Event{% endtrans %} {{ day_event.name }}" href="{{ path('pumukitnewadmin_event_update', {'id': day_event.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
                     <i class="mdi-editor-mode-edit"></i> {{ day_event.date| format_datetime('none','medium',locale=app.request.getLocale()) }} {{ day_event.name }}
                   </a>
                 </li>
@@ -75,26 +75,26 @@
           <a class="cancel-search-button pmk-color-blue pmk-font-weight-normal" title="{% trans %}Cancel current search{% endtrans %}" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
           {% endif %}
         </div>
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-end">
           <div class="pagerfanta">
             <ul class="pagination pagination-sm">
-              <li class="prev">
-                <a id="previousMonth" class="azul" href="#" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukitnewadmin_event_list', {'month': 'previous'}) }}" data-admin--actions-target-param="#list_events" data-admin--actions-data-param="{{ {_method: 'POST'}|json_encode }}">
+              <li class="prev page-item">
+                <a id="previousMonth" class="azul page-link" href="#" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukitnewadmin_event_list', {'month': 'previous'}) }}" data-admin--actions-target-param="#list_events" data-admin--actions-data-param="{{ {_method: 'POST'}|json_encode }}">
                   &laquo;{% trans %}Previous{% endtrans %}
                 </a>
               </li>
-              <li class="prev active">
-                <span>
+              <li class="prev active page-item">
+                <span class="page-link">
                   &nbsp;{{ m ~'-'~y }}&nbsp;
                 </span>
               </li>
-              <li class="next">
-                <a id="todayMonth" class="azul" href="#" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukitnewadmin_event_list', {'month': 'today'}) }}" data-admin--actions-target-param="#list_events" data-admin--actions-data-param="{{ {_method: 'POST'}|json_encode }}">
+              <li class="next page-item">
+                <a id="todayMonth" class="azul page-link" href="#" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukitnewadmin_event_list', {'month': 'today'}) }}" data-admin--actions-target-param="#list_events" data-admin--actions-data-param="{{ {_method: 'POST'}|json_encode }}">
                   {% trans %}TODAY{% endtrans %}
                 </a>
               </li>
-              <li class="next">
-                <a id="nextMonth" class="azul" href="#" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukitnewadmin_event_list', {'month': 'next'}) }}" data-admin--actions-target-param="#list_events" data-admin--actions-data-param="{{ {_method: 'POST'}|json_encode }}">
+              <li class="next page-item">
+                <a id="nextMonth" class="azul page-link" href="#" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukitnewadmin_event_list', {'month': 'next'}) }}" data-admin--actions-target-param="#list_events" data-admin--actions-data-param="{{ {_method: 'POST'}|json_encode }}">
                   {% trans %}Next{% endtrans %}&raquo;
                 </a>
               </li>

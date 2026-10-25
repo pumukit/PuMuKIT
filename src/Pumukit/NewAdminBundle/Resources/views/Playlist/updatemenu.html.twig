@@ -1,13 +1,13 @@
 <div class="dropdown">
-  <i class="mdi-navigation-menu" id="list_pics_{{ oneseries.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+  <i class="mdi-navigation-menu" id="list_pics_{{ oneseries.id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
   <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_{{ oneseries.id }}">
     <li>
-      <a title="{% trans %}List multimedia objects of the playlist{% endtrans %}" href="{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}">
+      <a class="dropdown-item" title="{% trans %}List multimedia objects of the playlist{% endtrans %}" href="{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}">
         <i class="mdi-action-list"></i> {% trans %}List multimedia objects of the playlist{% endtrans %}
       </a>
     </li>
     <li>
-      <a href="#" data-action="click->admin--actions#remove"
+      <a class="dropdown-item" href="#" data-action="click->admin--actions#remove"
          data-admin--actions-url-param="{{ path('pumukitnewadmin_playlist_delete', {'id': oneseries.id}) }}"
          data-admin--actions-target-param="#list_playlists"
          data-admin--actions-clear-param="{{ {name: 'playlist', id: oneseries.id, message: 'Select any playlist.'|trans}|json_encode }}"
@@ -17,7 +17,7 @@
       </a>
     </li>
     <li>
-      <a href="#" data-action="click->admin--actions#cancel">
+      <a class="dropdown-item" href="#" data-action="click->admin--actions#cancel">
         <strong>{% trans %}Cancel{% endtrans %}...</strong>
       </a>
     </li>

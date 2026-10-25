@@ -23,14 +23,14 @@
                 {% set urlShowPerson = path('pumukitnewadmin_person_show', {'id': person.id}) %}
                 <tr>
                     <td headers="th-checkbox">
-                        <div class="checkbox">
+                        <div class="form-check">
                             <label>
                                 <input id="{{ person.id }}" class="person_checkbox" type="checkbox" size="1">
                             </label>
                         </div>
                     </td>
                     <td headers="th-icons">
-                        <a title="{% trans %}Edit Person{% endtrans %} {{ person.getHName() }}" href="{{ path('pumukitnewadmin_person_update', {'id': person.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                        <a title="{% trans %}Edit Person{% endtrans %} {{ person.getHName() }}" href="{{ path('pumukitnewadmin_person_update', {'id': person.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
                             <i class="mdi-editor-mode-edit"></i>
                         </a>
                     </td>
@@ -81,9 +81,9 @@
                                 <a class="cancel-search-button pmk-color-blue pmk-font-weight-normal" title="{% trans %}Cancel current search{% endtrans %}" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
                             {% endif %}
                         </div>
-                        <div class="col-md-4 text-right">
+                        <div class="col-md-4 text-end">
                             <div class="pagerfanta">
-                                {% set pagerClass = 'twitter_bootstrap3' %}
+                                {% set pagerClass = 'twitter_bootstrap5' %}
                                 {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_person_index", "routeParams": sorting} %}
                                 {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : people, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
 

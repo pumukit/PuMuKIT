@@ -3,6 +3,57 @@
 @import url("{{ app.request.attributes.get('nakedbackoffice_custom_css_url') }}");
 {% endif %}
 
+:root {
+    --bs-primary: #009587;
+    --bs-primary-rgb: 0, 149, 135;
+    --bs-link-color: #008579;
+    --bs-link-color-rgb: 0, 133, 121;
+    --bs-link-hover-color: #006b61;
+    --bs-link-hover-color-rgb: 0, 107, 97;
+}
+
+.btn-primary {
+    --bs-btn-bg: #009587;
+    --bs-btn-border-color: #009587;
+    --bs-btn-hover-bg: #007f73;
+    --bs-btn-hover-border-color: #007f73;
+    --bs-btn-active-bg: #00776c;
+    --bs-btn-active-border-color: #00776c;
+    --bs-btn-disabled-bg: #009587;
+    --bs-btn-disabled-border-color: #009587;
+    --bs-btn-focus-shadow-rgb: 0, 149, 135;
+}
+
+.btn-pumukit {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #c05800;
+    --bs-btn-border-color: #c05800;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #ac4f00;
+    --bs-btn-hover-border-color: #ac4f00;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #9a4600;
+    --bs-btn-active-border-color: #9a4600;
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #c05800;
+    --bs-btn-disabled-border-color: #c05800;
+    --bs-btn-focus-shadow-rgb: 192, 88, 0;
+}
+
+.form-check-input:checked {
+    background-color: #009587;
+    border-color: #009587;
+}
+
+.form-control:focus, .form-select:focus, .form-check-input:focus {
+    border-color: #80cac3;
+    box-shadow: 0 0 0 .25rem rgba(0, 149, 135, .25);
+}
+
+.dropdown-menu {
+    --bs-dropdown-link-active-bg: #008579;
+}
+
 /* objects list headers css*/
 th#th-img{
 width: 50px;
@@ -65,8 +116,9 @@ body {
 }
 
 {% if app.request.attributes.get('nakedbackoffice_main_color') %}
-.btn-pumukit:not(.btn-link):not(.btn-flat) {
+.btn-pumukit:not(.btn-link) {
     background-color: {{ app.request.attributes.get('nakedbackoffice_main_color') }} !important;
+    border-color: {{ app.request.attributes.get('nakedbackoffice_main_color') }} !important;
 }
 
 {% endif %}
@@ -75,69 +127,9 @@ body {
     padding:4px 0 0 0;
 }
 
-.checkbox {
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
-
-.checkbox label .check {
-    width: 15px;
-    height: 15px;
-    top: 0px;
-    left: 0px;
-    margin-right: 0px;
-}
-
-.checkbox label .check:after {
-    left: 0px;
-    top: 0px;
-    height: 15px;
-    width: 15px;
-}
-
-.checkbox label .ripple {
-    left: 0px;
-    top: -9px;
-    height: 30px;
-    width: 30px;
-}
-
-.checkbox label input[type=checkbox]:not(:checked) ~ .ripple,
-.checkbox.pumukit-mms-checkbox label input[type=checkbox]:not(:checked) ~ .ripple {
-    -webkit-animation: rippleOff 0ms;
-    animation: rippleOff 0ms
-}
-
-.checkbox.pmk_disabled_checkbox input[type=checkbox]:disabled ~ .check,
-.checkbox.pmk_disabled_checkbox input[type=checkbox]:disabled ~ .check:before,
-.checkbox.pmk_disabled_checkbox input[type=checkbox]:disabled ~ .check:after,
-.checkbox.pmk_disabled_checkbox label,
-label.pmk_disabled_checkbox input[type=checkbox]:disabled ~ .check,
-label.pmk_disabled_checkbox input[type=checkbox]:disabled ~ .check:before,
-label.pmk_disabled_checkbox input[type=checkbox]:disabled ~ .check:after,
-label.pmk_disabled_checkbox {
+.pmk_disabled_checkbox,
+.pmk_disabled_checkbox label {
     color: #767676;
-}
-
-.checkbox label .check:before,
-.checkbox.pumukit-mms-checkbox label .check:before {
-    position: absolute;
-    content: "";
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-    display: block;
-    margin-top: -6px;
-    margin-left: 4px;
-    width: 0;
-    height: 0;
-    box-shadow: 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0 inset;
-    -webkit-animation: 0s;
-    animation: 0s;
-}
-
-.label, .badge {
-    font-weight: 300;
 }
 
 .panel-title-preview {
@@ -208,12 +200,6 @@ label.pmk_disabled_checkbox {
     max-width: 172px;
 }
 
-.input-group .input-group-addon {
-    padding: 0px;
-    vertical-align: bottom;
-    color: #767676;
-}
-
 .pagerfanta select, .pagerfanta input {
     vertical-align: top;
     background-color: #ffffff;
@@ -229,35 +215,14 @@ label.pmk_disabled_checkbox {
 }
 
 .pagination {
-    margin: 0px 0px;
-}
-
-.pagination > .active > span,
-.pagination > .active > a,
-.pagination > .active > span:hover,
-.pagination > .active > a:hover {
-    background: #008579;
-    border-color: #008579;
-    color: #fff;
-}
-
-.pagination > li > a,
-.pagination > li > span,
-.pagination > li > a:hover,
-.pagination > li > span:hover {
-    color: #008579;
-}
-
-.pagination > .disabled > span,
-.pagination > .disabled > span:hover,
-.pagination > .disabled > span:focus,
-.pagination > .disabled > a,
-.pagination > .disabled > a:hover,
-.pagination > .disabled > a:focus {
-    color: #767676 !important;
-    background-color: #ffffff !important;
-    border-color: #dddddd;
-    cursor: not-allowed;
+    margin: 0;
+    --bs-pagination-color: #008579;
+    --bs-pagination-hover-color: #006b61;
+    --bs-pagination-focus-color: #006b61;
+    --bs-pagination-focus-box-shadow: 0 0 0 .25rem rgba(0, 149, 135, .25);
+    --bs-pagination-active-bg: #008579;
+    --bs-pagination-active-border-color: #008579;
+    --bs-pagination-disabled-color: #767676;
 }
 
 .tab-content-pumukit {
@@ -265,32 +230,15 @@ label.pmk_disabled_checkbox {
     border-top-color: transparent !important;
 }
 
-/*
-.nav-tabs > li > a {
-    border-radius: 0px 0px 0 0;
-}
-*/
-
 .nav-tabs-pumukit {
     background: #c05800;
 }
 
 .nav-tabs {
-    border-bottom: 2px solid #555;
-}
-
-.nav-tabs > li {
-    margin-bottom: -2px;
-}
-
-.nav-tabs > li.active > a,
-.nav-tabs > li.active > a:hover,
-.nav-tabs > li.active > a:focus {
-    color: #555 !important;
-    cursor: default !important;
-    background-color: #fff !important;
-    border: 2px solid #555 !important;
-    border-bottom-color: transparent !important;
+    --bs-nav-tabs-border-width: 2px;
+    --bs-nav-tabs-border-color: #555;
+    --bs-nav-tabs-link-active-color: #555;
+    --bs-nav-tabs-link-active-border-color: #555 #555 #fff;
 }
 
 .list-group-item.active,
@@ -325,98 +273,35 @@ label.pmk_disabled_checkbox {
     padding-left: 18px; /*Same space of content: "\e89e"; */
 }
 
-/**
- * Material Design for Bootstrap Pumukit color.
- */
-.btn-pumukit.btn-flat:not(.btn-link) {
-    color: #c05800;
-}
-
-.btn-pumukit:not(.btn-link):not(.btn-flat) {
+.dropdown-toggle.btn-pumukit.show {
     background-color: #c05800;
-    color: rgba(255, 255, 255, .84);
-}
-
-.btn.btn-fab-pumukit, .btn.btn-fab-pumukit:hover, .btn.btn-fab-pumukit:active {
-    background-color: #c05800;
-}
-
-.open > .dropdown-toggle.btn-pumukit {
-    background-color: #c05800;
-}
-
-.checkbox-pumukit input[type=checkbox]:checked ~ .check:after {
-    background-color: #c05800;
-}
-
-.checkbox-pumukit input[type=checkbox]:checked ~ .check:before {
-    color: #c05800;
-}
-
-.checkbox-pumukit input[type=checkbox]:checked ~ .check {
-    color: #c05800;
-}
-
-.radio-pumukit input[type=radio]:checked ~ .check {
-    background-color: #c05800;
-}
-
-.radio-pumukit input[type=radio]:checked ~ .circle {
-    border-color: #c05800;
-}
-
-.form-group.has-pumukit .material-input:before, .form-group.has-pumukit input.form-control:focus ~ .material-input:after, .form-group.has-pumukit input.form-control.focus ~ .material-input:after {
-    background: #c05800;
-}
-
-.form-group.has-pumukit .control-label, .form-group.has-pumukit input.form-control:not(.empty) ~ .floating-label {
-    color: #c05800;
-}
-
-.form-group-pumukit .material-input:before {
-    background-color: #c05800;
-}
-
-.form-group-pumukit input.form-control:focus ~ .material-input:after {
-    background-color: #c05800;
-}
-
-.form-group-pumukit input.form-control.focus ~ .material-input:after {
-    background-color: #c05800;
-}
-
-.form-group-pumukit .control-label {
-    color: #c05800;
-}
-
-.form-group-pumukit input.form-control:not(.empty) ~ .floating-label {
-    color: #c05800;
 }
 
 .navbar-pumukit.navbar {
+    --bs-navbar-color: rgba(255, 255, 255, .84);
+    --bs-navbar-hover-color: #fff;
+    --bs-navbar-active-color: #fff;
     background-color: #c05800;
-    color: rgba(255, 255, 255, .84);
     margin-bottom: 0px;
 }
 
-.navbar .navbar-nav > .current_ancestor > a, .navbar .navbar-nav > .current_ancestor > a:hover, .navbar .navbar-nav > .current_ancestor > a:focus {
-    color: inherit;
+.navbar-pumukit .navbar-nav .nav-link.active,
+.navbar-pumukit .navbar-nav .nav-link.show {
     background-color: #ac4f00;
 }
 
-.dropdown-menu-pumukit li a:hover {
+.navbar-pumukit .navbar-brand img {
+    max-height: 48px;
+}
+
+.dropdown-menu-pumukit .dropdown-item:hover {
     color: #c05800;
 }
 
-.dropdown-menu-pumukit > .active > a {
-    background-color: #c05800;
-}
-
-.dropdown-menu-pumukit > .active > a:hover {
-    background-color: #c05800;
-}
-
-.dropdown-menu-pumukit > .active > a:focus {
+.dropdown-menu-pumukit .dropdown-item.active,
+.dropdown-menu-pumukit .dropdown-item.active:hover,
+.dropdown-menu-pumukit .dropdown-item.active:focus {
+    color: #fff;
     background-color: #c05800;
 }
 
@@ -441,7 +326,7 @@ label.pmk_disabled_checkbox {
     background-color: #c05800;
 }
 
-.panel-pumukit > .panel-heading {
+.panel-pumukit > .card-header {
     background-color: #c05800;
 }
 
@@ -668,12 +553,24 @@ label.pmk_disabled_checkbox {
     margin-bottom: -5px;
 }
 
-.snackbar.toast.error {
+#pmk-toasts {
+    padding-bottom: 60px !important;
+}
+
+.pmk-toast-error {
+    color: #fff;
     background-color: #c05800;
 }
 
-.snackbar.toast.info {
+.pmk-toast-info {
+    color: #fff;
     background-color: #008579;
+}
+
+.pmk-admin-footer {
+    background-color: #f9f9f9;
+    border-top: 1px solid #e7e7e7;
+    padding: 10px 0;
 }
 
 .mdi-action-spellcheck.pumukit-series-announce {
@@ -798,11 +695,6 @@ hr.pumukit-green {
     font-weight: bold;
 }
 
-.navbar .navbar-nav > .active > a, .navbar .navbar-nav > .active > a:hover, .navbar .navbar-nav > .active > a:focus {
-    color: inherit;
-    background-color: #ac4f00;
-}
-
 .alert-danger {
     background-color: #e13023;
 }
@@ -838,13 +730,6 @@ hr.pumukit-green {
 #editTemplate .update_pub_status, #editTemplate .update_pub_status_label {
     display: none;
 }
-
-{% if is_naked() %}
-    body .main .well {
-        box-shadow: none;
-        border: solid #eee 1px;
-    }
-{% endif %}
 
 .extra_button {
     padding: 8px 17px;
@@ -911,8 +796,8 @@ hr.pumukit-green {
 .bg-yellow {
     background-color: #f39c12;
 }
-.bg-warning {
-    background-color: #00c0ef;
+.info-box-icon.bg-warning {
+    background-color: #00c0ef !important;
 }
 .bg-blue {
     background-color: #0073b7;
@@ -1053,7 +938,7 @@ hr.pumukit-green {
     flex-shrink: 0;
 }
 
-.slider-status .label {
+.slider-status .badge {
     display: inline-block;
     margin-left: 6px;
     padding: 7px 10px;
@@ -1061,7 +946,7 @@ hr.pumukit-green {
     font-weight: normal;
 }
 
-.slider-status .label i {
+.slider-status .badge i {
     margin-right: 4px;
 }
 
@@ -1134,33 +1019,13 @@ hr.pumukit-green {
         margin-top: 8px;
     }
 
-    .slider-status .label {
+    .slider-status .badge {
         margin-right: 5px;
         margin-left: 0;
     }
 }
 
-[data-controller~="admin--playlist-modal"] .mmobj_elem {
-    padding: 5px;
-}
-
-[data-controller~="admin--playlist-modal"] .mmobj_elem:hover {
-    background-color: #ededed;
-    cursor: pointer;
-}
-
-[data-controller~="admin--playlist-modal"] input[type="checkbox"]:checked + label {
-    border: 4px orange solid;
-    margin: -4px -4px 1px -4px;
-}
-
-[data-controller~="admin--playlist-modal"] .mmobj_elem.checked {
-    border: 4px orange solid;
-    margin: -4px;
-}
-
-{% include "@PumukitWebTV/Css/template_stats.css.twig" %}
-
-.user_profile_video_info_block {
-    margin-top: 10px;
+.row > [class*="col-"].input-group {
+    flex: 1 0 0%;
+    width: auto;
 }

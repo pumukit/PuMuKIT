@@ -5,7 +5,7 @@
             <thead>
             <tr>
                 <th width="1%" id="th-checkbox">
-                    <div class="checkbox">
+                    <div class="form-check">
                         <label>
                             <input type="checkbox" data-action="click->admin--actions#checkAll" data-admin--actions-name-param="series">
                         </label>
@@ -23,7 +23,7 @@
                 {% set numL = oneseries|count_events %}
                 <tr class="pmk-cursor-pointer{% if (app.session.get('admin/series/id') == oneseries.id ) %} success{% endif %}">
                     <td headers="th-checkbox">
-                        <div class="checkbox">
+                        <div class="form-check">
                             <label>
                                 <input id="{{ oneseries.id }}" class="series_checkbox" type="checkbox">
                             </label>
@@ -33,17 +33,17 @@
                     {% if not is_naked() %}
                         <td headers="th-icons">
                             {% apply pumukit_spaceless %}
-                                <i class="{{ oneseries|series_announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_announce_text }}"></i>
-                                <i class="{{ oneseries|mms_announce_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|mms_announce_text }}"></i>
+                                <i class="{{ oneseries|series_announce_icon }}" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ oneseries|series_announce_text }}"></i>
+                                <i class="{{ oneseries|mms_announce_icon }}" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ oneseries|mms_announce_text }}"></i>
                             {% endapply %}
                         </td>
                         <td headers="th-icons">
                             {% if app.user and is_granted('ROLE_ACCESS_PUBLICATION_TAB') %}
-                                <a href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal" title="{% trans %}Series publication status{% endtrans %}">
-                                    <i class="{{ oneseries|series_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_text }}"></i>
+                                <a href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal" title="{% trans %}Series publication status{% endtrans %}">
+                                    <i class="{{ oneseries|series_icon }}" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ oneseries|series_text }}"></i>
                                 </a>
                             {% else %}
-                                <i class="{{ oneseries|series_icon }}" data-toggle="tooltip" data-placement="right" title="{{ oneseries|series_text }}"></i>
+                                <i class="{{ oneseries|series_icon }}" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ oneseries|series_text }}"></i>
                             {% endif %}
                         </td>
                     {% endif %}
@@ -104,10 +104,10 @@
                                 <a class="cancel-search-button pmk-color-blue pmk-font-weight-normal" title="{% trans %}Cancel current search{% endtrans %}" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
                             {% endif %}
                         </div>
-                        <div class="col-md-6 text-right">
+                        <div class="col-md-6 text-end">
                             <div class="pagerfanta">
                                 {% set sorting = {('sorting[' ~ (app.session.get('admin/series/sort')) ~ ']') : (app.session.get('admin/series/type')) } %}
-                                {% set pagerClass = 'twitter_bootstrap3' %}
+                                {% set pagerClass = 'twitter_bootstrap5' %}
                                 {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_series_index", "routeParams": sorting} %}
                                 {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects': series, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles } %}
 

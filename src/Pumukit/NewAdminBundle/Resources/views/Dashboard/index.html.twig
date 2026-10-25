@@ -11,8 +11,8 @@
 
 {% block body %}
     <h3 class="cab_body_div">
-        <ul class="breadcrumb pmk-margin-bottom-5">
-            <li class="active">{% trans %}Dashboard{% endtrans %}</li>
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active breadcrumb-item">{% trans %}Dashboard{% endtrans %}</li>
         </ul>
     </h3>
 
@@ -63,10 +63,10 @@
             <div class="dashboard-card">
                 <div class="dashboard-card-header">
                     <span class="dashboard-card-title">{% trans %}Publication activity{% endtrans %}</span>
-                    <div class="btn-group pull-right" role="group">
-                        <a href="?group_by=day"   class="btn btn-sm btn-default {% if group_by == 'day' %}active{% endif %}">{% trans %}Day{% endtrans %}</a>
-                        <a href="?group_by=month" class="btn btn-sm btn-default {% if group_by == 'month' %}active{% endif %}">{% trans %}Month{% endtrans %}</a>
-                        <a href="?group_by=year"  class="btn btn-sm btn-default {% if group_by == 'year' %}active{% endif %}">{% trans %}Year{% endtrans %}</a>
+                    <div class="btn-group float-end" role="group">
+                        <a href="?group_by=day"   class="btn btn-sm btn-secondary {% if group_by == 'day' %}active{% endif %}">{% trans %}Day{% endtrans %}</a>
+                        <a href="?group_by=month" class="btn btn-sm btn-secondary {% if group_by == 'month' %}active{% endif %}">{% trans %}Month{% endtrans %}</a>
+                        <a href="?group_by=year"  class="btn btn-sm btn-secondary {% if group_by == 'year' %}active{% endif %}">{% trans %}Year{% endtrans %}</a>
                     </div>
                 </div>
                 <div class="dashboard-card-body">

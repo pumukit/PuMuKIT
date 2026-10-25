@@ -9,17 +9,13 @@
 {% block stylesheets %}
     <!-- Font Awesome -->
     <link href="{{ asset('bundles/pumukitnewadmin/lib/fontawesome/css/all.min.css') }}" rel="stylesheet">
-    <!-- Twitter Bootstrap -->
-    <link href="{{ asset('bundles/pumukitcore/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- Material Design for Bootstrap -->
-    <link href="{{ asset('bundles/pumukitnewadmin/css/material-wfont.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/pumukitnewadmin/css/ripples.min.css') }}" rel="stylesheet">
-    <!-- Dropdown.js -->
+    <!-- Bootstrap -->
+    <link href="{{ asset('bundles/pumukitcore/vendor/bootstrap5/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Material Design Icons -->
+    <link href="{{ asset('bundles/pumukitnewadmin/css/mdi-icons.css') }}" rel="stylesheet">
     <!-- jQuery UI custom (autocomplete) -->
     <link href="{{ asset('bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
     <link href="{{ path('pumukit_jquery_ui_autocomplete_css') }}" rel="stylesheet">
-    <!-- SnackbarJS CSS core -->
-    <link href="{{ asset('bundles/pumukitnewadmin/css/snackbar.min.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/pumukitnewadmin/css/material.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/pumukitnewadmin/css/keywords.css') }}" rel="stylesheet">
     <!-- Pumukit CSS modifications -->
@@ -29,10 +25,7 @@
 
 {% block javascripts %}
     <script src="{{ asset('bundles/pumukitcore/vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('bundles/pumukitcore/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('bundles/pumukitnewadmin/js/ripples.min.js') }}"></script>
-    <script src="{{ asset('bundles/pumukitnewadmin/js/material.min.js') }}"></script>
-    <script src="{{ asset('bundles/pumukitnewadmin/js/snackbar.min.js') }}"></script>
+    <script src="{{ asset('bundles/pumukitcore/vendor/bootstrap5/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.js') }}"></script>
 
     {{ importmap(['pumukit', '@pumukit/new-admin/backoffice']) }}
@@ -46,7 +39,7 @@
     <div class="container-fluid main">
         {% block body %}{% endblock %}
     </div>
-    <div class="pmk-modal modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="pmk-modal modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
             </div>

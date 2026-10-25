@@ -262,7 +262,7 @@ export default class extends Controller {
                 const date = this.cell('date', this.formatPeriod(view._id, 'long'));
                 const count = this.cell('views', view.numView);
                 date.classList.add('stats-half');
-                count.classList.add('stats-half', 'text-right');
+                count.classList.add('stats-half', 'text-end');
                 tr.append(date, count);
 
                 return tr;

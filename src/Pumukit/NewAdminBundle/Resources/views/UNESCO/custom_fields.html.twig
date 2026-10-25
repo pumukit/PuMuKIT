@@ -2,17 +2,17 @@
 {% set allFields = all_custom_fields() %}
 
 <br />
-<div class="well" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
+<div class="card card-body bg-body-tertiary" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
     <div class="row">
         <h4 class="text-center"><strong>{% trans %}Configure your fields list{% endtrans %}</strong></h4>
         <hr />
-        <div class="col-xs-12">
+        <div class="col-12">
             <form id="choose_fields" method="POST">
                 {% for i in 1..10 %}
-                    <div class="col-md-2 pmk-width-14_28pct-i">
-                        <div class="form-group">
+                    <div class="col-md-2" style="width:14.28% !important;">
+                        <div class="mb-3">
                             <label for="custom_field_{{ i }}">{{ "Custom field"|trans }} {{ i }}:</label>
-                            <select id="custom_field_{{ i }}" name="custom_field_{{ i }}" class="form-control">
+                            <select id="custom_field_{{ i }}" name="custom_field_{{ i }}" class="form-select">
                                 {% for key, field in allFields %}
                                     <option value="{{ key }}" {% if key == selectedFields['custom_field_'~i]%}selected{% endif %}>
                                         {{ field['label'] }}
@@ -23,7 +23,7 @@
                     </div>
                 {% endfor %}
                 <div class="col-md-12">
-                    <button class="btn btn-pumukit btn-raised choose_fields_send pull-right" data-action="click->admin--unesco#saveFields">
+                    <button class="btn btn-pumukit choose_fields_send float-end" data-action="click->admin--unesco#saveFields">
                         {% trans %}Change{% endtrans %}
                     </button>
                 </div>

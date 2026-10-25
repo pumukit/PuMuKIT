@@ -1,5 +1,5 @@
 <div class="col-md-6">
-    <div class="well">
+    <div class="card card-body bg-body-tertiary">
         <table class="table table-striped table-hover pmk-tag-tree">
             <thead>
                 {% include '@PumukitNewAdmin/Place/parent_listth.html.twig' %}
@@ -23,14 +23,14 @@
         </table>
         <div class="row">
             <div class="col-md-4">
-                <select id="options_place" class="form-control" data-action="change->admin--places#batch" data-admin--places-name-param="tag_parent" data-admin--places-success-param="{{ 'Places successfully deleted.'|trans }}" title="{% trans %}Actions on selected items{% endtrans %}">
+                <select id="options_place" class="form-select" data-action="change->admin--places#batch" data-admin--places-name-param="tag_parent" data-admin--places-success-param="{{ 'Places successfully deleted.'|trans }}" title="{% trans %}Actions on selected items{% endtrans %}">
                     <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
                     <option disabled="">---</option>
                     <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
                 </select>
             </div>
-            <div class="col-md-8 text-right">
-                <a href="{{ path('pumukitnewadmin_places_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+            <div class="col-md-8 text-end">
+                <a href="{{ path('pumukitnewadmin_places_create') }}" class="btn btn-pumukit" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">{% trans %}New{% endtrans %}</a>
             </div>
         </div>
     </div>

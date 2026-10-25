@@ -1,6 +1,6 @@
 {% form_theme form_meta '@PumukitNewAdmin/Themes/fields.html.twig' %}
 
-<div id="tv_admin_container_meta" class="well">
+<div id="tv_admin_container_meta" class="card card-body bg-body-tertiary">
 
     <form id="pumukitnewadmin_unesco_updatemeta_form"
           data-controller="admin--meta-form admin--modal-form"
@@ -20,15 +20,15 @@
         <input type="hidden" name="series_id" id="series_id_updatemeta" value="{{ mm.series.id }}">
 
         <div class="row">
-            <div class="col-xs-6">
-                <span id="remember_save_mm" class="alert alert-dismissable alert-danger pmk-display-none pmk-vertical-align-middle">{% trans %}
+            <div class="col-6">
+                <span id="remember_save_mm" class="alert alert-dismissable alert-danger" style="display:none;vertical-align:middle;">{% trans %}
                     Press OK for changes to take effect{% endtrans %}</span> &nbsp;
             </div>
 
-            <div class="col-xs-6 text-right">
-                <button id="pumukitnewadmin_mms_updatemeta_cancel_unesco" type="button" class="btn btn-default btn-raised" data-action="click->admin--meta-form#cancel">{% trans %}
+            <div class="col-6 text-end">
+                <button id="pumukitnewadmin_mms_updatemeta_cancel_unesco" type="button" class="btn btn-secondary" data-action="click->admin--meta-form#cancel">{% trans %}
                     Cancel{% endtrans %}</button>
-                <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
+                <button type="submit" class="btn btn-pumukit">{% trans %}OK{% endtrans %}</button>
             </div>
         </div>
 

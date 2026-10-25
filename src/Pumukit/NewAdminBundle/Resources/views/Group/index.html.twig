@@ -3,21 +3,21 @@
 {% block body %}
 
     <h3 class="cab_body_div">
-        <ul class="breadcrumb pmk-margin-bottom-5">
-            <li class="active">{% trans %}Groups{% endtrans %}</li>
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active breadcrumb-item">{% trans %}Groups{% endtrans %}</li>
         </ul>
     </h3>
 
     <div class="row">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_GROUPS')) %}
             <div class="col-md-10">
-                <div class="well">
+                <div class="card card-body bg-body-tertiary">
                     <div id="list_groups">
                         {% include '@PumukitNewAdmin/Group/list.html.twig' %}
                     </div>
                     <div class="row">
-                        <div class="col-xs-4">
-                            <select id="options_groups" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
+                        <div class="col-4">
+                            <select id="options_groups" class="form-select" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
                                     data-admin--batch-name-value="group" data-admin--batch-plural-value="groups"
                                     data-admin--batch-urls-value="{{ {delete: path('pumukitnewadmin_group_batch_delete', {'ids': '__ids__'}), list: path('pumukitnewadmin_group_list')}|json_encode }}"
                                     data-admin--batch-messages-value="{{ {confirm: 'Are you sure you want to delete selected groups?'|trans}|json_encode }}">
@@ -26,18 +26,18 @@
                                 <option value="delete_selected_groups">{% trans %}Delete selected{% endtrans %}</option>
                             </select>
                         </div>
-                        <div class="col-xs-8 text-right">
-                            <a href="{{ path('pumukitnewadmin_group_create') }}" class="btn btn-pumukit btn-raised button_new_group" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+                        <div class="col-8 text-end">
+                            <a href="{{ path('pumukitnewadmin_group_create') }}" class="btn btn-pumukit button_new_group" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">{% trans %}New{% endtrans %}</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 hidden-xs hidden-sm">
+            <div class="col-md-2 d-none d-md-block">
                 {% include '@PumukitNewAdmin/Group/filters.html.twig' %}
             </div>
         {% else %}
             <div class="col-md-12">
-                <div class="well">
+                <div class="card card-body bg-body-tertiary">
                     {% trans %}You don't have enough permissions to access this content.{% endtrans %}
                 </div>
             </div>

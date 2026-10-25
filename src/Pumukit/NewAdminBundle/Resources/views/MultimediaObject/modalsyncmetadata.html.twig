@@ -4,12 +4,10 @@
 {% endif %}
 
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
     <h3 class="modal-title text-center">
         {% trans %}Sync metadata for all multimedia objects{% endtrans %}
     </h3>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     <hr/>
 </div>
 
@@ -30,7 +28,7 @@
                     {% for title, field in fields %}
                         {% if (title != 'owners' and title != 'groups' and title != 'publishingdecisions') or ((title == 'owners' or title == 'groups') and modify_owners) or (title == 'publishingdecisions' and is_granted('ROLE_ACCESS_PUBLICATION_TAB') ) or is_granted('ROLE_SUPER_ADMIN') %}
                             <div class="col-md-12">
-                                <div class="checkbox pmk-display-table-row">
+                                <div class="form-check" style="display:table-row">
                                     <label for="metadata_{{ title }}_all">
                                         <input id="metadata_{{ title }}_all" type="checkbox" name="metadata_{{ title }}_all"/>
                                         {{ field|trans }}
@@ -49,7 +47,7 @@
                 <div class="row">
                     {% for tag in tags | filter(tag => tag.cod != 'ROOT') %}
                         <div class="col-md-12">
-                            <div class="checkbox pmk-display-table-row">
+                            <div class="form-check" style="display:table-row">
                                 <label for="metadata_tag_{{ tag.getId() }}">
                                     <input id="metadata_tag_{{ tag.getId() }}" type="checkbox" name="metadata_tag_{{ tag.getId() }}"/>
                                     {{ tag.getTitle() }}
@@ -67,7 +65,7 @@
                 <div class="row">
                     {% for role in roles |filter(role => role.cod != 'owner') %}
                         <div class="col-md-12">
-                            <div class="checkbox pmk-display-table-row">
+                            <div class="form-check" style="display:table-row">
                                 <label for="metadata_role_{{ role.getId() }}">
                                     <input id="metadata_role_{{ role.getId() }}" type="checkbox" name="metadata_role_{{ role.getId() }}"/>
                                     {{ role.getName() }}
@@ -83,10 +81,10 @@
     <hr/>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             {% trans %}Cancel{% endtrans %}
         </button>
-        <button type="submit" class="btn btn-pumukit btn-raised">
+        <button type="submit" class="btn btn-pumukit">
             {% trans %}Sync{% endtrans %}
         </button>
     </div>

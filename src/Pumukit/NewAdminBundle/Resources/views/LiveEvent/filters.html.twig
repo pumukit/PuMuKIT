@@ -1,4 +1,4 @@
-<div class="well">
+<div class="card card-body bg-body-tertiary">
     <div class="row">
         <div class="col-md-12">
             <p><strong>{% trans %}Filter by{% endtrans %}:</strong></p>
@@ -17,23 +17,23 @@
     </div>
     <form id="filter_events" class="form" data-action="submit->admin--live-event#filter" action="{{ path('pumukit_new_admin_live_event_list') }}" method="GET">
         <fieldset>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">
-                        <i class="mdi-navigation-menu pull-right"></i>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title mb-0">
+                        <i class="mdi-navigation-menu float-end"></i>
                         {% trans %}Search{% endtrans %}
                     </h2>
                 </div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">{% trans %}Name{% endtrans %}:</label>
                         <div>
                             {% set criteria = app.session.get('admin/live/event/dataForm')|default('') %}
                             <input type="text" class="reset form-control" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="date" class="control-label">{% trans %}Date{% endtrans %}:</label>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">{% trans %}Date{% endtrans %}:</label>
                         <div>
                             {% trans %}From{% endtrans %}:
                             <input type="date" class="form-control" name="criteria[date][from]" id="filters_date_from"
@@ -51,9 +51,9 @@
                 </div>
             </div>
         </fieldset>
-        <div class="text-right">
-            <input type="button" class="btn btn-default btn-raised resetSession" data-action="click->admin--live-event#resetFilters" value="{% trans %}reset{% endtrans %}">
-            <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
+        <div class="text-end">
+            <input type="button" class="btn btn-secondary resetSession" data-action="click->admin--live-event#resetFilters" value="{% trans %}reset{% endtrans %}">
+            <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit">
         </div>
     </form>
 </div>

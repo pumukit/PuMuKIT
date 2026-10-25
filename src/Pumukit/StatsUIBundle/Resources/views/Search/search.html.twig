@@ -1,18 +1,18 @@
-<div class="col-md-6 col-md-offset-3 text-left">
+<div class="col-md-6 offset-md-3 text-start">
     <h4>&nbsp;</h4>
-    <div class="form-group">
+    <div class="mb-3">
         {% if app.request.attributes.get('_route') != 'pumukit_stats_mmobj_index_id' %}
             <label for="title">
                 {% trans %}Search by title{% endtrans %}:
             </label>
             <div class="input-group">
                 <input id="title" type="text" class="form-control form_daterangepicker" data-stats-ui--stats-target="title" data-action="keydown.enter->stats-ui--stats#search" />
-                <div class="input-group-addon no-padding">
-                    <button class="btn btn-default btn-raised btn-stats-search btn-stats-search-text" data-action="stats-ui--stats#search" title="{% trans %}Set URL parameters{% endtrans %}">
-                        <i class="fa fa-search glyphicon glyphicon-search"></i>
+                <div class="input-group-text no-padding">
+                    <button class="btn btn-secondary btn-stats-search btn-stats-search-text" data-action="stats-ui--stats#search" title="{% trans %}Set URL parameters{% endtrans %}">
+                        <i class="fas fa-search"></i>
                     </button>
-                    <button class="btn btn-default btn-raised btn-stats-search btn-stats-search-remove" data-action="stats-ui--stats#reset" title="{% trans %}Clear filter{% endtrans %}">
-                        <i class="fa fa-remove glyphicon glyphicon-remove"></i>
+                    <button class="btn btn-secondary btn-stats-search btn-stats-search-remove" data-action="stats-ui--stats#reset" title="{% trans %}Clear filter{% endtrans %}">
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
             </div>
@@ -23,7 +23,7 @@
         </label>
         <div class="row stats-date-range">
             <div class="col-sm-4">
-                <select id="stats_date_preset" class="form-control form_daterangepicker" data-stats-ui--stats-target="preset" data-action="stats-ui--stats#preset" aria-label="{% trans %}Date range{% endtrans %}">
+                <select id="stats_date_preset" class="form-select form_daterangepicker" data-stats-ui--stats-target="preset" data-action="stats-ui--stats#preset" aria-label="{% trans %}Date range{% endtrans %}">
                     <option value="">{% trans %}Custom range{% endtrans %}</option>
                     <option value="yesterday">{% trans %}Yesterday{% endtrans %}</option>
                     <option value="last7">{% trans %}Last 7 Days{% endtrans %}</option>
@@ -36,15 +36,15 @@
                     {% endif %}
                 </select>
             </div>
-            <div class="col-xs-6 col-sm-4">
+            <div class="col-6 col-sm-4">
                 <input type="date" id="stats_from_date" class="form-control form_daterangepicker" min="1970-01-01" max="{{ 'now'|date('Y-m-d') }}" data-stats-ui--stats-target="from" data-action="change->stats-ui--stats#dates" aria-label="{% trans %}From{% endtrans %}" />
             </div>
-            <div class="col-xs-6 col-sm-4">
+            <div class="col-6 col-sm-4">
                 <div class="input-group">
                     <input type="date" id="stats_to_date" class="form-control form_daterangepicker" min="1970-01-01" max="{{ 'now'|date('Y-m-d') }}" data-stats-ui--stats-target="to" data-action="change->stats-ui--stats#dates" aria-label="{% trans %}Until{% endtrans %}" />
-                    <div class="input-group-addon no-padding">
-                        <button class="btn btn-default btn-raised btn-stats-search btn-stats-calendar-remove" data-action="stats-ui--stats#reset" title="{% trans %}Clear filter{% endtrans %}">
-                            <i class="fa fa-remove glyphicon glyphicon-remove"></i>
+                    <div class="input-group-text no-padding">
+                        <button class="btn btn-secondary btn-stats-search btn-stats-calendar-remove" data-action="stats-ui--stats#reset" title="{% trans %}Clear filter{% endtrans %}">
+                            <i class="fas fa-times"></i>
                         </button>
                     </div>
                 </div>

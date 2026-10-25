@@ -2,9 +2,9 @@
   {% set event_poster = (is_event_poster is defined ? is_event_poster : false) %}
   <fieldset>
     <legend hidden>{% trans %}Use Thumbnail{% endtrans %}</legend>
-    <div class="form-group">
+    <div class="mb-3">
       <label for="other">{% trans %}Use Thumbnail{% endtrans %}:</label>
-      <div class="">
+      <div>
         {% if 0 == pics|length %}
           {% trans %}There are no thumbnails in the database.{% endtrans %}
         {% endif %}
@@ -14,7 +14,7 @@
               <div class="wrap1">
                 <div class="wrap2">
                   <div class="wrap3">
-                    <a href="#" data-dismiss="modal" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url, 'is_event_poster': event_poster}) }}" data-admin--actions-target-param="#pic_{{ event_poster ? 'events' : resource_name }}_{{ resource.id }}" data-admin--actions-success-param="{{ 'New Thumbnail added.'|trans }}">
+                    <a href="#" data-bs-dismiss="modal" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukitnewadmin_'~resource_name~'pic_update', {'id': resource.id, 'picUrl': pic_url, 'is_event_poster': event_poster}) }}" data-admin--actions-target-param="#pic_{{ event_poster ? 'events' : resource_name }}_{{ resource.id }}" data-admin--actions-success-param="{{ 'New Thumbnail added.'|trans }}">
                       <img src="{{ pic_url }}" alt="{{ pic_url|split('/')|last }}" height="82" width="100"/>
                     </a>
                   </div>
@@ -28,16 +28,16 @@
     </div>
   </fieldset>
   {% if total > 0 %}
-    <div class="col-md-12 text-right">
+    <div class="col-md-12 text-end">
       <div class="pagerfanta">
         <ul class="pagination pagination-sm">
           {% if (1 < page) %}
-            <li class="prev">
-              <a href="#" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': (page - 1), 'is_event_poster': event_poster}) }}" data-admin--actions-target-param="#pics_to_add_list">&laquo;</a>
+            <li class="prev page-item">
+              <a class="page-link" href="#" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': (page - 1), 'is_event_poster': event_poster}) }}" data-admin--actions-target-param="#pics_to_add_list">&laquo;</a>
             </li>
           {% else %}
-            <li class="prev disabled">
-              <span>&laquo;</span>
+            <li class="prev disabled page-item">
+              <span class="page-link">&laquo;</span>
             </li>
           {% endif %}
 
@@ -45,22 +45,22 @@
           {% set final = (page + 2 > total) ? total : page + 2%}
           {% for i in ini..final %}
             {% if (i == page) %}
-              <li class="active">
-                <span>{{ i }} <span class="sr-only">(current)</span></span>
+              <li class="active page-item">
+                <span class="page-link">{{ i }} <span class="visually-hidden">(current)</span></span>
               </li>
             {% else %}
-              <li>
-                <a href="#" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': i, 'is_event_poster': event_poster}) }}" data-admin--actions-target-param="#pics_to_add_list">{{ i }}</a>
+              <li class="page-item">
+                <a class="page-link" href="#" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': i, 'is_event_poster': event_poster}) }}" data-admin--actions-target-param="#pics_to_add_list">{{ i }}</a>
               </li>
             {% endif %}
           {% endfor %}
           {% if (total > page) %}
-            <li class="next">
-              <a href="#" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': (page + 1), 'is_event_poster': event_poster}) }}" data-admin--actions-target-param="#pics_to_add_list">&raquo;</a>
+            <li class="next page-item">
+              <a class="page-link" href="#" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukitnewadmin_'~resource_name~'pic_picstoaddlist', {'id': resource.id, 'page': (page + 1), 'is_event_poster': event_poster}) }}" data-admin--actions-target-param="#pics_to_add_list">&raquo;</a>
             </li>
           {% else %}
-            <li class="next disabled">
-              <span>&raquo;</span>
+            <li class="next disabled page-item">
+              <span class="page-link">&raquo;</span>
             </li>
           {% endif %}
         </ul>

@@ -3,21 +3,21 @@
 {% block body %}
 
     <h3 class="cab_body_div">
-        <ul class="breadcrumb pmk-margin-bottom-5">
-            <li class="active">{% trans %}Series types{% endtrans %}</li>
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active breadcrumb-item">{% trans %}Series types{% endtrans %}</li>
         </ul>
     </h3>
 
     <div class="row">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_TYPES')) %}
             <div class="col-md-10">
-                <div class="well">
+                <div class="card card-body bg-body-tertiary">
                     <div id="list_seriestypes">
                         {% include '@PumukitNewAdmin/Seriestype/list.html.twig' %}
                     </div>
                     <div class="row">
-                        <div class="col-xs-4">
-                            <select id="options_seriestypes" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
+                        <div class="col-4">
+                            <select id="options_seriestypes" class="form-select" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
                                     data-admin--batch-name-value="seriestype" data-admin--batch-plural-value="seriestypes"
                                     data-admin--batch-urls-value="{{ {delete: path('pumukitnewadmin_seriestype_batch_delete', {'ids': '__ids__'})}|json_encode }}"
                                     data-admin--batch-messages-value="{{ {confirm: 'Are you sure?'|trans, success: 'Seriestypes ' ~ 'successfully deleted.'|trans}|json_encode }}">
@@ -26,14 +26,14 @@
                                 <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
                             </select>
                         </div>
-                        <div class="col-xs-8 text-right">
-                            <a title="{% trans %}Create new series type{% endtrans %}" class="btn btn-pumukit btn-raised" href="{{ path('pumukitnewadmin_seriestype_create') }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+                        <div class="col-8 text-end">
+                            <a title="{% trans %}Create new series type{% endtrans %}" class="btn btn-pumukit" href="{{ path('pumukitnewadmin_seriestype_create') }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">{% trans %}New{% endtrans %}</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 hidden-xs hidden-sm">
-                <div id="preview_seriestype" class="well">
+            <div class="col-md-2 d-none d-md-block">
+                <div id="preview_seriestype" class="card card-body bg-body-tertiary">
                     {% if(app.session.has('admin/seriestype/id')) %}
                         {{ render(url('pumukitnewadmin_seriestype_show', {'id': app.session.get('admin/seriestype/id')})) }}
                     {% else %}
@@ -43,7 +43,7 @@
             </div>
         {% else %}
             <div class="col-md-12">
-                <div class="well">
+                <div class="card card-body bg-body-tertiary">
                     {% trans %}You don't have enough permissions to access this content.{% endtrans %}
                 </div>
             </div>

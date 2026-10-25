@@ -1,9 +1,9 @@
-<div id="broadcast_groups" data-admin--broadcast-target="groupsPanel" class="panel panel-default pumukitnewadmin-broadcast-margin{{ mm.getEmbeddedBroadcast() ? ((mm.getEmbeddedBroadcast().getType() == broadcast_type) ? '':' pumukitnewadmin-broadcast-hidden') : ' pumukitnewadmin-broadcast-hidden' }}">
+<div id="broadcast_groups" data-admin--broadcast-target="groupsPanel" class="card pumukitnewadmin-broadcast-margin{{ mm.getEmbeddedBroadcast() ? ((mm.getEmbeddedBroadcast().getType() == broadcast_type) ? '':' pumukitnewadmin-broadcast-hidden') : ' pumukitnewadmin-broadcast-hidden' }}">
   <input type="hidden" id="mm_id" value="{{ mm.id }}"/>
-  <div class="panel-heading">
+  <div class="card-header">
     {% trans %}BROADCAST GROUPS{% endtrans %}
   </div>
-  <div class="panel-body" id="group_broadcast"
+  <div class="card-body" id="group_broadcast"
        data-controller="admin--group-lists"
        data-admin--broadcast-target="lists"
        data-action="admin--group-lists:load->admin--group-lists#load"

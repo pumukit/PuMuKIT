@@ -5,9 +5,9 @@
 <p>{% trans %}Choose style{% endtrans %}:</p>
 <ul class="list-group">
     {% for style in styles %}
-        <li class="list-group-item pmk-padding-10-15 pmk-background-color-fff pmk-border-1-solid-ddd">
-            <a class="show_style pmk-text-decoration-none pmk-cursor-pointer" data-action="click->admin--series-styles#show" data-admin--series-styles-id-param="{{ style.getId()|json_encode }}">{{ style.getName() }}</a>
-            <a href="#" data-action="click->admin--series-styles#remove" data-admin--series-styles-url-param="{{ path('pumukit_newadmin_series_styles_delete', {'id' : style.getId() })|json_encode }}" class="pull-right delete_style pmk-text-decoration-none pmk-cursor-pointer">
+        <li class="list-group-item" style="padding:10px 15px; background-color:#fff; border: 1px solid #ddd">
+            <a class="show_style" data-action="click->admin--series-styles#show" data-admin--series-styles-id-param="{{ style.getId()|json_encode }}" style="text-decoration:none;cursor:pointer;">{{ style.getName() }}</a>
+            <a href="#" data-action="click->admin--series-styles#remove" data-admin--series-styles-url-param="{{ path('pumukit_newadmin_series_styles_delete', {'id' : style.getId() })|json_encode }}" class="float-end delete_style" style="text-decoration:none;cursor:pointer;">
                 <i class="mdi-content-clear"></i>
             </a>
         </li>
@@ -18,12 +18,12 @@
     {% endfor %}
 </ul>
 
-<div class="col-xs-12">
+<div class="col-12">
     <p>Crear un estilo:</p>
     <form id="styleform" method="GET" action="{{ path('pumukit_newadmin_series_styles_create') }}" class="form-inline" data-action="submit->admin--series-styles#create">
-        <div class="form-group">
+        <div class="mb-3">
             <input type="text" name="name" class="form-control"/>
         </div>
-        <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}New{% endtrans %}</button>
+        <button type="submit" class="btn btn-pumukit">{% trans %}New{% endtrans %}</button>
     </form>
 </div>

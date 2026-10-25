@@ -1,4 +1,4 @@
-<div class="well">
+<div class="card card-body bg-body-tertiary">
   <form id="pumukitnewadmin_series_updatemeta_form"
         data-controller="admin--modal-form admin--meta-form"
         data-action="submit->admin--modal-form#submit change->admin--meta-form#changed"
@@ -14,13 +14,13 @@
     <input type="hidden" name="id" id="series_id_playlist" value="{{ series.id }}">
 
     <div class="row">
-      <div class="col-xs-6">
-        <span id="remember_save_series" class="alert alert-dismissable alert-danger pmk-display-none pmk-vertical-align-middle">{% trans %}Press OK for the change to take effect{% endtrans %}</span> &nbsp;
+      <div class="col-6">
+        <span id="remember_save_series" class="alert alert-dismissable alert-danger" style="display:none;vertical-align:middle;">{% trans %}Press OK for the change to take effect{% endtrans %}</span> &nbsp;
       </div>
 
-      <div class="col-xs-6 text-right">
-        <button id="pumukitnewadmin_series_updatemeta_cancel" type="button" class="btn btn-default btn-raised" data-action="click->admin--meta-form#cancel">{% trans %}Cancel{% endtrans %}</button>
-        <button type="submit" class="btn btn-pumukit btn-raised" data-action="click->admin--meta-form#hideRemember">{% trans %}OK{% endtrans %}</button>
+      <div class="col-6 text-end">
+        <button id="pumukitnewadmin_series_updatemeta_cancel" type="button" class="btn btn-secondary" data-action="click->admin--meta-form#cancel">{% trans %}Cancel{% endtrans %}</button>
+        <button type="submit" class="btn btn-pumukit" data-action="click->admin--meta-form#hideRemember">{% trans %}OK{% endtrans %}</button>
       </div>
     </div>
 
@@ -32,7 +32,7 @@
             {{ form_row(child) }}
           {% endfor %}
 
-          <div class="form-group">
+          <div class="mb-3">
             <dl>
               <dt>{% trans %}Thumbnails{% endtrans %}</dt>
               <dd>

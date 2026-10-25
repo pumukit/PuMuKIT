@@ -1,9 +1,7 @@
 {% set event_poster = (is_event_poster is defined ? is_event_poster : false) %}
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
     <h4 class="modal-title" id="myModalLabel">{% trans %}add new thumbnail{% endtrans %}</h4>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 
 <div class="modal-body">
@@ -35,18 +33,18 @@
             <input type="hidden" name="{{ resource_name }}" id="{{ resource_name }}" value="{{ resource.id }}">
             <fieldset>
                 <legend hidden>{% trans %}Add a file{% endtrans %}</legend>
-                <div class="form-group">
+                <div class="mb-3">
                     <label>{% trans %}Add a file{% endtrans %}:</label>
                     <div data-core--uploader-target="dashboard"></div>
                 </div>
             </fieldset>
-            <div id="pumukitnewadmin_pic_external_url" class="form-group">
-                <label for="url" class="control-label">{% trans %}URL{% endtrans %}</label>
+            <div id="pumukitnewadmin_pic_external_url" class="mb-3">
+                <label for="url" class="form-label">{% trans %}URL{% endtrans %}</label>
                 <input type="text" name="url" id="url" value="" class="form-control" data-admin--upload-form-target="url">
                 <span id="error_url" class="error text-danger" data-admin--upload-form-target="urlError" hidden>{% trans %}URL format not valid{% endtrans %}</span>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}Add{% endtrans %}</button>
+                <button type="submit" class="btn btn-pumukit">{% trans %}Add{% endtrans %}</button>
             </div>
         </form>
     </div>
@@ -63,6 +61,6 @@
         {% endif %}
     {% endif %}
     <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
     </div>
 </div>

@@ -1,6 +1,5 @@
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-    </button>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     {% if template %}
         <h3 class="modal-title" id="myModalLabel">{% trans %}Modify broadcast profile of videos
             template{% endtrans %}</h3>
@@ -27,18 +26,18 @@
         <fieldset>
             <legend hidden>{% trans %}Modify broadcast profile{% endtrans %}</legend>
             <input type="hidden" id="pumukitnewadmin_mms_broadcast_mm_id" name="" value="{{ mm.id }}"/>
-            <div class="form-group">
-                <label class="control-label required">{% trans %}Broadcast Profile{% endtrans %}</label>
+            <div class="mb-3">
+                <label class="form-label required">{% trans %}Broadcast Profile{% endtrans %}</label>
                 <div id="pumukitnewadmin_mms_broadcast_broadcast">
                     {% for broadcast_type, broadcast_name in broadcasts %}
-                        <div class="radio">
+                        <div class="form-check">
                             <label class="required">
                                 <input id="pumukitnewadmin_mms_broadcast_type_{{ broadcast_type }}" name="pumukitnewadmin_mms_broadcast" required="required" value="{{ broadcast_type }}"
                                        data-action="change->admin--broadcast#type"
                                        type="radio" {{ mm.getEmbeddedBroadcast() ? ((mm.getEmbeddedBroadcast().getType() == broadcast_type) ? 'checked="checked"':'') : '' }}><span class="circle"></span><span class="check"></span>
                                 {{ broadcast_name|trans }}
                             </label>
-                            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-toggle="tooltip" data-placement="right" title="{{ broadcast_description(broadcast_type, template, mm.isLive()) }}"></i>
+                            <i class="mdi-action-info pumukitnewadmin-broadcast-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ broadcast_description(broadcast_type, template, mm.isLive()) }}"></i>
                         </div>
                         {% if broadcast_type == constant('Pumukit\\SchemaBundle\\Document\\EmbeddedBroadcast::TYPE_PASSWORD') %}
                             {% include '@PumukitNewAdmin/MultimediaObject/broadcastpassword.html.twig' with {'embeddedBroadcast': mm.getEmbeddedBroadcast()} %}
@@ -50,13 +49,13 @@
             </div>
         </fieldset>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                 {% trans %}Close{% endtrans %}
             </button>
-            <button type="button" id="pumukitnewadmin_mm_broadcast_updategroup_reset" class="btn btn-primary btn-raised" data-action="click->admin--broadcast#reset">
+            <button type="button" id="pumukitnewadmin_mm_broadcast_updategroup_reset" class="btn btn-primary" data-action="click->admin--broadcast#reset">
                 {% trans %}Reset{% endtrans %}
             </button>
-            <button type="submit" id="pumukitnewadmin_mm_broadcast_updategroup_submit" class="btn btn-pumukit btn-raised" data-admin--broadcast-target="submit">
+            <button type="submit" id="pumukitnewadmin_mm_broadcast_updategroup_submit" class="btn btn-pumukit" data-admin--broadcast-target="submit">
                 {% trans %}Save changes{% endtrans %}
             </button>
         </div>

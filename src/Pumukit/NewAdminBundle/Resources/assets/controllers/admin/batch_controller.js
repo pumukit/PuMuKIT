@@ -169,7 +169,7 @@ export default class extends Controller {
         }
         $.ajax({ url: this.urlsValue.playlist.replace('__ids__', JSON.stringify(ids)), type: 'GET' }).done((response) => {
             const modal = $('#myModal');
-            modal.modal({ backdrop: 'static' });
+            modal.modal('show');
             modal.find('.modal-content').html(response);
         });
     }

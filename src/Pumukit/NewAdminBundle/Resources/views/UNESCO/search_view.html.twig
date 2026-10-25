@@ -3,17 +3,17 @@
     {% set criteria = app.request.session.get('UNESCO/form') %}
 {% endif %}
 
-<div class="well" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
+<div class="card card-body bg-body-tertiary" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
     <div class="row">
 
         <form id="myForm" class="unesco_form" name="advance_form" method="POST" data-action="submit->admin--unesco#search" action="{{ path('pumukitnewadmin_unesco_list') }}">
-            <div class="col-xs-12">
+            <div class="col-12">
                 <div id="basic_form">
                     {% include '@PumukitNewAdmin/UNESCO/basic_form.html.twig' %}
                 </div>
             </div>
-            <div class="col-xs-12">
-                <div class="advance_form collapse {% if app.request.session.get('UNESCO/formbasic') is same as(false) %}in{% endif %}" id="collapseAdvanceForm">
+            <div class="col-12">
+                <div class="advance_form collapse {% if app.request.session.get('UNESCO/formbasic') is same as(false) %}show{% endif %}" id="collapseAdvanceForm">
                     {% include '@PumukitNewAdmin/UNESCO/advance_form.html.twig' %}
                 </div>
             </div>

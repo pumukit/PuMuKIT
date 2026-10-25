@@ -7,22 +7,22 @@
             <span class="alert alert-dismissable alert-warning"><i>{% trans %}Warning: This multimedia object is not correctly published on WebTV{% endtrans %}</i></span>
             <br />
         {% endif %}
-        <div class="form-group">
-            <label for="embed" class="control-label">{% trans %}Embedded Iframe{% endtrans %}:</label>
+        <div class="mb-3">
+            <label for="embed" class="form-label">{% trans %}Embedded Iframe{% endtrans %}:</label>
             <input id="embed_code" name="embed_code" readonly="readonly" class="form-control" data-controller="core--select" data-action="click->core--select#select" value='<iframe src="{{ iframe_url }}" width="560" height="315" frameborder="0" allowfullscreen></iframe>' />
         </div>
-        <div class="form-group">
-            <label for="embed" class="control-label">{% trans %}Video track{% endtrans %}:</label>
+        <div class="mb-3">
+            <label for="embed" class="form-label">{% trans %}Video track{% endtrans %}:</label>
             <div class="input-group">
                 <input type="text" data-controller="core--select" data-action="click->core--select#select" class="form-control" value="{{ track_url }}" readonly />
                 {% if is_published %}
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <a id="alinkROMagicUrl" href="{{ track_url }}" target="_blank" title="{% trans %}Video track{% endtrans %}">
                             <i class="mdi-action-exit-to-app"></i>
                         </a>
                     </span>
                 {% else %}
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error until this multimedia object is correctly published.{% endtrans %}"></i>
                     </span>
                 {% endif %}
@@ -33,22 +33,22 @@
         <br />
     {% endif %}
     <br />
-    <label for="embed" class="control-label">{% trans %}Series{% endtrans %}:</label>
+    <label for="embed" class="form-label">{% trans %}Series{% endtrans %}:</label>
     <div class="input-group">
         <input type="text" data-controller="core--select" data-action="click->core--select#select" class="form-control" value="{{ series_url }}" readonly/>
-        <span class="input-group-addon">
+        <span class="input-group-text">
             <a id="alinkROMagicUrl" href="{{ series_url }}" target="_blank" title="{% trans %}Series URL{% endtrans %}">
                 <i class="mdi-action-exit-to-app"></i>
             </a>
         </span>
     </div>
     <br />
-    <div class="form-group">
-        <label for="originalName" class="control-label">{% trans %}Original name{% endtrans %}:</label>
+    <div class="mb-3">
+        <label for="originalName" class="form-label">{% trans %}Original name{% endtrans %}:</label>
         <input id="originalName" name="originalName" readonly="readonly" class="form-control" value="{{ track.originalName()|default('No name'|trans) }}" />
     </div>
-    <div class="form-group">
-        <label for="uploadData" class="control-label">{% trans %}Upload date{% endtrans %}:</label>
+    <div class="mb-3">
+        <label for="uploadData" class="form-label">{% trans %}Upload date{% endtrans %}:</label>
         {% set upload_date = (job is not null and job.getTimeIni() is not null) ? job.getTimeIni()| format_datetime('medium', 'medium',locale=app.request.getLocale()) : '' %}
         <input id="uploadData" name="uploadData" readonly="readonly" class="form-control" value="{{ upload_date }}" />
     </div>

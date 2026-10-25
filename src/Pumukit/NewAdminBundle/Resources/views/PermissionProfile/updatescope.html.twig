@@ -1,6 +1,6 @@
-<div class="form-group">
+<div class="mb-3">
   <div class="form-control-wrapper">
-    <select id="pumukitnewadmin_permissionprofile_scope_{{ permissionprofile.id }}" form="pumukitnewadmin_permissionprofile_table_form" name="pumukitnewadmin_permissionprofile[scope][{{ permissionprofile.id }}]" class="form-control permissionprofile_scope {{ permissionprofile.system ?'system':'not_system' }}"{{ (permissionprofile.system and not is_granted('ROLE_SUPER_ADMIN')) ?'disabled="disabled"':'' }} data-action="change->admin--permission-profiles#changeScope" data-admin--permission-profiles-id-param="{{ permissionprofile.id|json_encode }}" aria-label="Permission profile">
+    <select id="pumukitnewadmin_permissionprofile_scope_{{ permissionprofile.id }}" form="pumukitnewadmin_permissionprofile_table_form" name="pumukitnewadmin_permissionprofile[scope][{{ permissionprofile.id }}]" class="form-select permissionprofile_scope {{ permissionprofile.system ?'system':'not_system' }}"{{ (permissionprofile.system and not is_granted('ROLE_SUPER_ADMIN')) ?'disabled="disabled"':'' }} data-action="change->admin--permission-profiles#changeScope" data-admin--permission-profiles-id-param="{{ permissionprofile.id|json_encode }}" aria-label="Permission profile">
       {% for key,scope in scopes %}
       <option value="{{ key }}__{{ permissionprofile.id }}" {{ (permissionprofile.scope == key)?'selected="selected"':'' }}>{{ scope }}</option>
       {% endfor %}

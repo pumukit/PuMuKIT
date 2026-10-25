@@ -13,9 +13,9 @@
             {% include '@PumukitNewAdmin/Media/Form/_download.html.twig' %}
             {% include '@PumukitNewAdmin/Media/Form/_hide.html.twig' %}
 
-            <div class="form-group" id="pumukitnewadmin_media_update_profile">
-                <label for="profile" class="control-label">{% trans %}Profile{% endtrans %}</label>
-                <select name="profile" id="profile" class="form-control" disabled>
+            <div class="mb-3" id="pumukitnewadmin_media_update_profile">
+                <label for="profile" class="form-label">{% trans %}Profile{% endtrans %}</label>
+                <select name="profile" id="profile" class="form-select" disabled>
                     <option value="" selected>{{ track.profileName }}</option>
                 </select>
             </div>
@@ -25,8 +25,8 @@
 
         </fieldset>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-            <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+            <button type="submit" class="btn btn-pumukit">{% trans %}OK{% endtrans %}</button>
         </div>
     </form>
 </div>

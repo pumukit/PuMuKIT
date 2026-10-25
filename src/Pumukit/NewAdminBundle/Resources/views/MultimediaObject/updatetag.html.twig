@@ -1,4 +1,4 @@
-<div id="tv_admin_container_tag" class="well"
+<div id="tv_admin_container_tag" class="card card-body bg-body-tertiary"
      data-controller="admin--tag-picker"
      data-admin--tag-picker-mm-value="{{ mm.id }}"
      data-admin--tag-picker-add-url-value="{{ path('pumukitnewadmin_mms_addtag', {'id': mm.id, 'tagId': '__tag__'}) }}"
@@ -10,16 +10,16 @@
      data-admin--tag-picker-refresh-value="{{ [{target: '#preview_mm', url: path('pumukitnewadmin_mms_show', {'id': mm.id})}]|json_encode }}">
     <div class="pmk-max-height-800 pmk-overflow-y-auto pmk-padding-7">
         {% for parent in parent_tags | filter(parent => parent.getDisplay() and parent.getChildren()|length != 0 and not parent.getProperty('hide_in_tag_group')) %}
-            <div class="panel panel-default panel-tag-{{ parent.cod }}">
-                <div class="panel-heading">{{ parent.title }}</div>
-                <div class="panel-body" id="tag{{ parent.id }}_mms">
+            <div class="card panel-tag-{{ parent.cod }}">
+                <div class="card-header">{{ parent.title }}</div>
+                <div class="card-body" id="tag{{ parent.id }}_mms">
                     <div class="row">
-                        <div class="col-xs-12">
+                        <div class="col-12">
                             {% include '@PumukitNewAdmin/MultimediaObject/tagfilter.html.twig' with {'parentId': parent.id, 'mmId': mm.id} %}
                         </div>
                     </div>
 
-                    <div class="col-xs-12 pmk-overflow-hidden pmk-height-270">
+                    <div class="col-12" style="overflow:hidden;height: 270px">
                         {# Available tags #}
                         <div class="tag list-group pmk-tag-tree pmk-width-40pct pmk-max-width-400 pmk-float-left pmk-height-260 pmk-border-1-solid-bbb pmk-overflow-x-hidden pmk-overflow-y-scroll" id="all_tag_{{ parent.id }}">
                             {% if (0 != parent.getChildren()|length) %}

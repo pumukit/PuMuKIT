@@ -4,7 +4,7 @@
       <thead>
         <tr>
           <th width="1%" id="th-checkbox">
-            <div class="checkbox">
+            <div class="form-check">
               <label>
                 <input type="checkbox" data-action="click->admin--actions#checkAll" data-admin--actions-name-param="role">
               </label>
@@ -28,14 +28,14 @@
         {% for role in roles %}
         <tr>
           <td headers="th-checkbox">
-            <div class="checkbox">
+            <div class="form-check">
               <label>
                 <input id="{{ role.id }}" class="role_checkbox" type="checkbox" size="1">
               </label>
             </div>
           </td>
           <td headers="th-icons">
-            <a title="{% trans %}Edit Role{% endtrans %} {{ role.cod }}" href="{{ path('pumukitnewadmin_role_update', {'id': role.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+            <a title="{% trans %}Edit Role{% endtrans %} {{ role.cod }}" href="{{ path('pumukitnewadmin_role_update', {'id': role.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
               <i class="mdi-editor-mode-edit"></i>
             </a>
           <td headers="th-icons">
@@ -89,9 +89,9 @@
                 <a class="cancel-search-button pmk-color-blue pmk-font-weight-normal" title="{% trans %}Cancel current search{% endtrans %}" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
                 {% endif %}
             </div>
-            <div class="col-md-4 text-right">
+            <div class="col-md-4 text-end">
               <div class="pagerfanta">
-                  {% set pagerClass = 'twitter_bootstrap3' %}
+                  {% set pagerClass = 'twitter_bootstrap5' %}
                   {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_role_index"} %}
                   {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : roles, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
 

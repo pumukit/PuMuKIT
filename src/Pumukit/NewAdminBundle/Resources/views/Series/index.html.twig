@@ -3,8 +3,8 @@
 {% block body %}
 
     <h3 class="cab_body_div">
-        <ul class="breadcrumb pmk-margin-bottom-5">
-            <li class="active">
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active breadcrumb-item">
                 {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
                     {% trans %}My Series{% endtrans %}
                 {% else %}
@@ -17,14 +17,14 @@
     <div class="row">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
             <div class="col-md-10">
-                <div class="well">
+                <div class="card card-body bg-body-tertiary">
                     <div id="list_series">
                         {% include '@PumukitNewAdmin/Series/list.html.twig' %}
                     </div>
                     <div class="row">
-                        <div class="col-xs-4">
+                        <div class="col-4">
                             {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_META_GROUP_LIST_OPTIONS')) %}
-                            <select id="options_series" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
+                            <select id="options_series" class="form-select" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
                                     data-admin--batch-name-value="series" data-admin--batch-plural-value="series" data-admin--batch-preview-value="series"
                                     data-admin--batch-urls-value="{{ {delete: path('pumukitnewadmin_series_batch_delete', {'ids': '__ids__'}), info: path('pumukitnewadmin_info_series', {'ids': '__ids__'}), invert: path('pumukitnewadmin_series_invert_announce', {'ids': '__ids__'})}|json_encode }}"
                                     data-admin--batch-announce-value="{{ {edit: '#inputROId', checkbox: '#pumukitnewadmin_series_announce'}|json_encode }}"
@@ -40,9 +40,9 @@
                             </select>
                             {% endif %}
                         </div>
-                        <div class="col-xs-8 text-right">
+                        <div class="col-8 text-end">
                             {% if is_granted('ROLE_ACCESS_ADVANCED_UPLOAD') or is_granted('ROLE_ACCESS_WIZARD_UPLOAD') %}
-                                <a title="{% trans %}Create new series{% endtrans %}" id="pumukitnewadmin_series_new_button" class="btn btn-pumukit btn-raised" href="#" data-action="click->admin--actions#create"
+                                <a title="{% trans %}Create new series{% endtrans %}" id="pumukitnewadmin_series_new_button" class="btn btn-pumukit" href="#" data-action="click->admin--actions#create"
                                    data-admin--actions-url-param="{{ path('pumukitnewadmin_series_create') }}"
                                    data-admin--actions-method-param="GET"
                                    data-admin--actions-key-param="seriesId"
@@ -67,8 +67,8 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="col-md-2 hidden-xs hidden-sm">
-                <div id="preview_series" class="well">
+            <div class="col-md-2 d-none d-md-block">
+                <div id="preview_series" class="card card-body bg-body-tertiary">
                     {% if(app.session.has('admin/series/id')) %}
                         <div data-controller="admin--include" data-admin--include-src-value="{{ url('pumukitnewadmin_series_show', {'id': app.session.get('admin/series/id')}) }}"></div>
                     {% else %}
@@ -79,14 +79,14 @@
             </div>
         {% else %}
             <div class="col-md-12">
-                <div class="well">
+                <div class="card card-body bg-body-tertiary">
                     {% trans %}You don't have enough permissions to access this content.{% endtrans %}
                 </div>
             </div>
         {% endif %}
     </div>
 
-    <div class="pmk-modal modal fade" id="myAuxModal_template" tabindex="-1" role="dialog" aria-labelledby="myAuxModal_templateLabel" aria-hidden="true">
+    <div class="pmk-modal modal fade" id="myAuxModal_template" tabindex="-1" role="dialog" aria-labelledby="myAuxModal_templateLabel" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
             </div>

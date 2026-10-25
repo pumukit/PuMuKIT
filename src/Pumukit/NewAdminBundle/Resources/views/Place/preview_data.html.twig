@@ -1,14 +1,14 @@
 {% if tag is defined %}
-    <div class="panel panel-default pmk-font-size-12">
-        <div class="panel-heading">
-            <h4 class="panel-title">
+    <div class="card" style="font-size:12px">
+        <div class="card-header">
+            <h4 class="card-title mb-0">
                 {{ tag.getTitle()|default('No title'|trans) }}
                 {% if tag.parent.getProperty('address') is not empty %}
                     - {{ tag.parent.getProperty('address')[app.request.getLocale()] }}
                 {% endif %}
             </h4>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             <ul class="list-unstyled">
                 {% if series is defined %}
                     {% for key, title in series %}
@@ -24,9 +24,9 @@
         </div>
     </div>
 {% else %}
-    <div class="panel panel-default pmk-font-size-12">
-        <div class="panel-heading">
-            <div class="panel-body">
+    <div class="card" style="font-size:12px">
+        <div class="card-header">
+            <div class="card-body">
                 {% trans %}Select one precinct to load data{% endtrans %}
             </div>
         </div>

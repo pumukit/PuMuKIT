@@ -1,7 +1,6 @@
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-    </button>
     <h4 class="modal-title" id="myModalLabel">{% trans %}edit groups for user{% endtrans %}:</h4>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     <h2 class="modal-title">&laquo;{{ user.getUsername() }}&raquo;</h2>
 </div>
 
@@ -15,9 +14,9 @@
              data-admin--group-picker-show-codes-value="{{ is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) ? 'true' : 'false' }}"
              data-admin--group-picker-messages-value="{{ {success: 'Successfully updated groups in User.'|trans, external: 'External defined groups. Contact your directory service administrator to change membership.'|trans}|json_encode }}">
         <input type="hidden" id="user_id" value="{{ user.id }}"/>
-        <div class="panel panel-default">
-            <div class="panel-heading pmk-text-align-center">{% trans %}GROUPS{% endtrans %}</div>
-            <div class="panel-body" id="group_mode">
+        <div class="card">
+            <div class="card-header" style="text-align:center;">{% trans %}GROUPS{% endtrans %}</div>
+            <div class="card-body" id="group_mode">
                 <div class="row pumukitnewadmin-groups-list-title-row">
                     <div class="pumukitnewadmin-groups-list-title list-title-1">
                         {% trans %}Available Groups{% endtrans %}:
@@ -44,9 +43,9 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-            <button type="button" class="btn btn-primary btn-raised" id="pumukitnewadmin_user_groups_reset" data-action="click->admin--group-picker#reset">{% trans %}Reset{% endtrans %}</button>
-            <button type="submit" class="btn btn-pumukit btn-raised" id="pumukitnewadmin_user_groups_submit" data-action="click->admin--group-picker#save">{% trans %}Save changes{% endtrans %}</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+            <button type="button" class="btn btn-primary" id="pumukitnewadmin_user_groups_reset" data-action="click->admin--group-picker#reset">{% trans %}Reset{% endtrans %}</button>
+            <button type="submit" class="btn btn-pumukit" id="pumukitnewadmin_user_groups_submit" data-action="click->admin--group-picker#save">{% trans %}Save changes{% endtrans %}</button>
         </div>
         </div>
     {% else %}

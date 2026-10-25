@@ -1,13 +1,13 @@
 <div class="dropdown">
-  <i class="mdi-navigation-menu" id="list_pics_{{ permissionprofile.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+  <i class="mdi-navigation-menu" id="list_pics_{{ permissionprofile.id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
   <ul class="dropdown-menu" role="menu" aria-labelledby="list_permissionprofiles_{{ permissionprofile.id }}">
     <li>
-      <a href="{{ path('pumukitnewadmin_permissionprofile_update', {'id': permissionprofile.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+      <a class="dropdown-item" href="{{ path('pumukitnewadmin_permissionprofile_update', {'id': permissionprofile.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
         <i class="mdi-editor-mode-edit"></i> {% trans %}Edit the permission profile{% endtrans %}
       </a>
     </li>
     <li>
-      <a href="#" data-action="click->admin--actions#remove"
+      <a class="dropdown-item" href="#" data-action="click->admin--actions#remove"
          data-admin--actions-url-param="{{ path('pumukitnewadmin_permissionprofile_delete', {'id': permissionprofile.id}) }}"
          data-admin--actions-target-param="#list_permissionprofiles"
          data-admin--actions-confirm-param="{{ 'Are you sure you want to delete the Permission Profile'|trans }} &quot;{{ permissionprofile.name }}&quot;?."
@@ -16,7 +16,7 @@
       </a>
     </li>
     <li>
-      <a href="#" data-action="click->admin--actions#cancel">
+      <a class="dropdown-item" href="#" data-action="click->admin--actions#cancel">
         <strong>{% trans %}Cancel{% endtrans %}...</strong>
       </a>
     </li>

@@ -8,7 +8,7 @@
     </div>
     <div role="tabpanel" class="tab-pane" id="server">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
-            <div class="form-group" id="pumukitnewadmin_media_inbox">
+            <div class="mb-3" id="pumukitnewadmin_media_inbox">
                 {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\InboxController::FormAction', {'series' : series})) }}
             </div>
         {% else %}

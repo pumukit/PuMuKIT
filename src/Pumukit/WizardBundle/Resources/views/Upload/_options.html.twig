@@ -6,10 +6,10 @@
     </div>
     <div role="tabpanel" class="tab-pane" id="server">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
-            <div class="form-group" id="pumukitwizard_track_directory">
+            <div class="mb-3" id="pumukitwizard_track_directory">
                 {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\InboxController::FormAction', {'selection': 'both', 'series' : series})) }}
             </div>
-            <a id="submit_upload_files_from_server" href="#" class="btn btn-default btn-pumukit pull-right"
+            <a id="submit_upload_files_from_server" href="#" class="btn btn-secondary btn-pumukit float-end"
                data-controller="wizard--server-upload"
                data-action="wizard--server-upload#submit"
                data-wizard--server-upload-url-value="{{ path('wizard_upload_from_server', {'series': series.id}) }}"

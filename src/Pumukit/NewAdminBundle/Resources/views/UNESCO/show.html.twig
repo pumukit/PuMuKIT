@@ -1,4 +1,10 @@
-<div class="well" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
+<style type="text/css">
+    .list_unesco.over {
+        border: 2px dashed #000;
+    }
+</style>
+
+<div class="card card-body bg-body-tertiary" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
     {% if mm is defined and mm is not null %}
         <p>
             {% trans %}Is part of {% endtrans %}:
@@ -21,15 +27,15 @@
         </div>
 
         <div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title-preview panel-title">Tags {{ configuredTag.getTitle()|upper }}</h3>
+            <div class="card border-primary">
+                <div class="card-header">
+                    <h3 class="panel-title-preview card-title mb-0">Tags {{ configuredTag.getTitle()|upper }}</h3>
                 </div>
-                <div class="panel-body-preview panel-body">
+                <div class="panel-body-preview card-body">
                     <div id="list_unesco" draggable="false" data-action="drop->admin--unesco#dropTag dragenter->admin--unesco#allowDrop dragover->admin--unesco#allowDrop">
                         {% for mtag in mm.tags | filter(mtag => mtag.isDescendantOfByCod(configuredTag.getCod())) %}
                             <div id="taglist_{{ mtag.getCod() }}" class="unesco_tags" draggable="false">
-                                <span class="label label-default">{{ mtag.title }} |
+                                <span class="badge text-bg-secondary">{{ mtag.title }} |
                                     <a href="#" data-cod="{{ mtag.getCod() }}" data-href="{{ path('pumukitnewadmin_unesco_delete_tag', {'tagCod': mtag.getCod(), "multimediaObjectId": mm.getId() }) }}" class="delete_tag_unesco" data-action="click->admin--unesco#removeTag" data-admin--unesco-url-param="{{ path('pumukitnewadmin_unesco_delete_tag', {'tagCod': mtag.getCod(), "multimediaObjectId": mm.getId() }) }}" data-admin--unesco-cod-param="{{ mtag.getCod()|json_encode }}">
                                         <i class="mdi-content-clear"></i>
                                     </a>
@@ -47,11 +53,11 @@
         </div>
 
         <div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title-preview panel-title">{% trans %}People{% endtrans %}</h3>
+            <div class="card border-primary">
+                <div class="card-header">
+                    <h3 class="panel-title-preview card-title mb-0">{% trans %}People{% endtrans %}</h3>
                 </div>
-                <div class="panel-body-preview panel-body">
+                <div class="panel-body-preview card-body">
                     <ul class="list-unstyled">
                         {% for role in mm.getRoles() | filter(role => role.getDisplay()) %}
                             {% set actors = mm.getPeopleByRole(role, true) %}

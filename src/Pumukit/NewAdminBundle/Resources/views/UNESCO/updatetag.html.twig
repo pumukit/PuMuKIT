@@ -1,4 +1,4 @@
-<div id="tv_admin_container_tag" class="well"
+<div id="tv_admin_container_tag" class="card card-body bg-body-tertiary"
      data-controller="admin--tag-picker"
      data-admin--tag-picker-mm-value="{{ mm.id }}"
      data-admin--tag-picker-add-url-value="{{ path('pumukitnewadmin_mms_addtag', {'id': mm.id, 'tagId': '__tag__'}) }}"
@@ -10,13 +10,13 @@
      data-admin--tag-picker-refresh-value="{{ [{target: '#preview_mms', url: path('pumukitnewadmin_unesco_show', {'id': app.session.get('admin/unesco/id')})}, {target: '#tag_list_unesco', url: path('pumukitnewadmin_unesco_menu_tags')}]|json_encode }}">
     {% if not template %}
         <div class="row">
-            <div class="col-md-12 text-right">
-                <button type="button" class="btn btn-pumukit btn-raised" id="pumukitnewadmin_mms_sync-tags"
+            <div class="col-md-12 text-end">
+                <button type="button" class="btn btn-pumukit" id="pumukitnewadmin_mms_sync-tags"
                         data-action="click->admin--actions#request"
                         data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_sync_tags', {'id': mm.id}) }}"
                         data-admin--actions-confirm-param="{{ 'Are you sure you want to sync this tags? The tags in other objects from this series will be lost.'|trans }}"
                         data-admin--actions-reload-param="true"
-                        data-toggle="tooltip" data-placement="top" title="" data-original-title="{% trans %}Apply these tags to all multimedia objects of this series.{% endtrans %}">
+                        data-bs-toggle="tooltip" data-bs-placement="top" title="" data-original-title="{% trans %}Apply these tags to all multimedia objects of this series.{% endtrans %}">
                     {% trans %}Sync in this series{% endtrans %}
                 </button>
             </div>
@@ -24,14 +24,14 @@
     {% endif %}
     <div class="pmk-max-height-800 pmk-overflow-y-auto pmk-padding-7">
         {% for parent in parent_tags | filter(parent => parent.getDisplay() and parent.getChildren()|length != 0 and not parent.getProperty('hide_in_tag_group')) %}
-            <div class="panel panel-default panel-tag-{{ parent.cod }}">
-                <div class="panel-heading">{{ parent.title }}</div>
-                <div class="panel-body" id="tag{{ parent.id }}_mms">
-                    <div class="row"><div class="col-xs-12">
+            <div class="card panel-tag-{{ parent.cod }}">
+                <div class="card-header">{{ parent.title }}</div>
+                <div class="card-body" id="tag{{ parent.id }}_mms">
+                    <div class="row"><div class="col-12">
                             {% include '@PumukitNewAdmin/MultimediaObject/tagfilter.html.twig' with {'parentId': parent.id, 'mmId': mm.id} %}
                         </div></div>
 
-                    <div class="col-xs-12 pmk-overflow-hidden pmk-height-270">
+                    <div class="col-12" style="overflow:hidden;height: 270px">
                         {# Available tags #}
                         <div class="tag list-group pmk-tag-tree pmk-width-40pct pmk-max-width-400 pmk-float-left pmk-height-260 pmk-border-1-solid-bbb pmk-overflow-x-hidden pmk-overflow-y-scroll" id="all_tag_{{ parent.id }}">
                             {% if (0 != parent.getChildren()|length) %}

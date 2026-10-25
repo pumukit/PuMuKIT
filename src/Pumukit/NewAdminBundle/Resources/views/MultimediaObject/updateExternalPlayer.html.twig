@@ -1,10 +1,10 @@
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h3 class="modal-title pumukitnewadmin-modal-title-margin" id="myModalLabel">{% trans %}External media{% endtrans %}</h3>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body" data-controller="admin--external-player">
     <fieldset>
-        <div class="form-group">
+        <div class="mb-3">
             {% set urlexternal = mm.external().0.storage().url().url() %}
             <iframe id="externalplayer" height="100%" width="100%" data-admin--external-player-target="frame" data-action="load->admin--external-player#resize" src="{{ urlexternal }}"></iframe>
         </div>
@@ -13,7 +13,7 @@
     {% if is_granted('ROLE_ADD_EXTERNAL_PLAYER') %}
         <div class="row form-update-external">
 
-            <div class="col-xs-12 col-sm-9 col-md-9">
+            <div class="col-12 col-sm-9 col-md-9">
                 {% set placeholder = 'No external media set' %}
                 {% if urlexternal != '' %}
                     {{ form_row(form.url, {'value': urlexternal, 'attr': {'data-admin--external-player-target': 'url'}}) }}
@@ -21,8 +21,8 @@
                     {{ form_row(form.url, {'attr' : {'placeholder': placeholder, 'data-admin--external-player-target': 'url'}}) }}
                 {% endif %}
             </div>
-            <div class="col-xs-12 col-sm-3 col-md-3"><a href="#" id="previewIframe" class="btn btn-block btn-primary" data-action="click->admin--external-player#preview" title="{% trans %}Preview{% endtrans %}">{% trans %}Preview{% endtrans %}</a></div>
-            <div class="col-xs-12 pmk-margin-top-15">
+            <div class="col-12 col-sm-3 col-md-3"><a href="#" id="previewIframe" class="btn w-100 btn-primary" data-action="click->admin--external-player#preview" title="{% trans %}Preview{% endtrans %}">{% trans %}Preview{% endtrans %}</a></div>
+            <div class="col-12" style="margin-top:15px">
                 {{ form_row(form.title, {'value': mm.title()}) }}
             </div>
         </div>
@@ -30,12 +30,12 @@
     <div class="modal-footer pmk-margin-top-50">
         <hr/>
         {% if is_granted('ROLE_ADD_EXTERNAL_PLAYER') %}
-        <div class="col-md-2 pull-right">
-            <button type="submit" class="btn btn-primary btn-raised">{% trans %}Submit{% endtrans %}</button>
+        <div class="col-md-2 float-end">
+            <button type="submit" class="btn btn-primary">{% trans %}Submit{% endtrans %}</button>
         </div>
         {% endif %}
-        <div class="col-md-2 pull-right">
-            <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+        <div class="col-md-2 float-end">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
         </div>
 
     </div>

@@ -2,11 +2,11 @@
 
 {% block body %}
     <h3 class="cab_body_div">
-        <a title="{% trans %}Back to series list{% endtrans %}" href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-pumukit btn-raised pull-right pmk-margin-0">
+        <a title="{% trans %}Back to series list{% endtrans %}" href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-pumukit float-end" style="margin:0px">
             « {% trans %}Back to series list{% endtrans %}
         </a>
-        <ul class="breadcrumb pmk-margin-bottom-5">
-            <li>
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="breadcrumb-item">
                 <a href="{{ path('pumukitnewadmin_series_index') }}">
                     {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
                         {% trans %}My Series{% endtrans %}
@@ -15,7 +15,7 @@
                     {% endif %}
                 </a>
             </li>
-            <li class="active">{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %} {{ series.getTitle() }}{% endif %}</li>
+            <li class="active breadcrumb-item">{% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %} {{ series.getTitle() }}{% endif %}</li>
         </ul>
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
             <input type="hidden" name="series_id" id="mms_series_id" value="{{ series.id }}"/>
@@ -25,13 +25,13 @@
     <div class="row">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
             <div id="tv_admin_content" class="col-md-10" data-controller="admin--job-status" data-admin--job-status-url-value="{{ path('pumukitnewadmin_mms_status', {'id': '__id__'}) }}">
-                <div class="well">
+                <div class="card card-body bg-body-tertiary">
                     <div id="list_mms">
                         {% include '@PumukitNewAdmin/MultimediaObject/list.html.twig' %}
                     </div>
                     <div class="row">
-                        <div class="col-xs-4">
-                            <select id="options_mms" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
+                        <div class="col-4">
+                            <select id="options_mms" class="form-select" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
                                     data-admin--batch-name-value="mm" data-admin--batch-plural-value="mms" data-admin--batch-preview-value="mm"
                                     data-admin--batch-urls-value="{{ {delete: path('pumukitnewadmin_mms_batch_delete', {'ids': '__ids__'}), invert: path('pumukitnewadmin_mms_invert_announce', {'ids': '__ids__'}), cut: path('pumukitnewadmin_mms_cut', {'ids': '__ids__'}), paste: path('pumukitnewadmin_mms_paste', {'seriesId': series.id}), playlist: path('pumukitnewadmin_playlistmms_modal_add', {'ids': '__ids__'})}|json_encode }}"
                                     data-admin--batch-announce-value="{{ {edit: '#inputMMId', checkbox: '#list_pubdecisions___id__ #pub_decisions_PUDENEW'}|json_encode }}"
@@ -83,22 +83,22 @@
                                 {% endif %}
                             </select>
                         </div>
-                        <div class="col-xs-8 text-right">
+                        <div class="col-8 text-end">
                             {# RENDERS ANY BUTTONS DEFINED IN AN EXTRA PLUGIN #}
                             {% for item in get_extra_buttons() %}
                                 {% if app.user and is_granted(item.accessRole) %}
-                                    <a title="{{ item.name | trans }}" class="btn btn-pumukit btn-raised qa_series_button_{{ item.name }} extra_button" href="{{ path(item.uri, {'series': series.id }) }}">
+                                    <a title="{{ item.name | trans }}" class="btn btn-pumukit qa_series_button_{{ item.name }} extra_button" href="{{ path(item.uri, {'series': series.id }) }}">
                                         <i class="{{ item.iconClass | default('fas fa-plus') }}"></i>
                                         {{ item.name | trans }}
                                     </a>
                                 {% endif %}
                             {% endfor %}
-                                <a class="extra_button btn btn-primary btn-pumukit btn-raised wizard_button" href="{{ path('wizard_upload', {'series': series.id}) }}">
+                                <a class="extra_button btn btn-primary btn-pumukit wizard_button" href="{{ path('wizard_upload', {'series': series.id}) }}">
                                     <i class="fas fa-upload"></i>
                                     {% trans %}Upload{% endtrans %}
                                 </a>
                                 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ADD_EXTERNAL_PLAYER')) %}
-                                <a class="extra_button btn btn-primary btn-raised wizard_button" href="{{ path('pumukitnewadmin_mms_listexternalproperties', {'series': series.id}) }}" title="{% trans %}Edit{% endtrans %}" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal">
+                                <a class="extra_button btn btn-primary wizard_button" href="{{ path('pumukitnewadmin_mms_listexternalproperties', {'series': series.id}) }}" title="{% trans %}Edit{% endtrans %}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-dismiss="modal" data-bs-target="#myModal">
                                     <i class="fas fa-link"></i>
                                     {% trans %}Link{% endtrans %}
                                 </a>
@@ -113,8 +113,8 @@
                 </div>
             </div>
 
-            <div id="tv_admin_bar" class="col-md-2 hidden-xs hidden-sm">
-                <div id="preview_mm" class="well">
+            <div id="tv_admin_bar" class="col-md-2 d-none d-md-block">
+                <div id="preview_mm" class="card card-body bg-body-tertiary">
                     {% if(app.session.has('admin/mms/id')) %}
                         <div data-controller="admin--include" data-admin--include-src-value="{{ url('pumukitnewadmin_mms_show', {'id': app.session.get('admin/mms/id')}) }}"></div>
                     {% else %}
@@ -124,14 +124,14 @@
             </div>
         {% else %}
             <div class="col-md-12">
-                <div class="well">
+                <div class="card card-body bg-body-tertiary">
                     {% trans %}You don't have enough permissions to access this content.{% endtrans %}
                 </div>
             </div>
         {% endif %}
     </div>
 
-    <div class="pmk-modal modal fade" id="myAuxModal" tabindex="-1" role="dialog" aria-labelledby="myAuxModalLabel" aria-hidden="true">
+    <div class="pmk-modal modal fade" id="myAuxModal" tabindex="-1" role="dialog" aria-labelledby="myAuxModalLabel" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
             </div>

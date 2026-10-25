@@ -23,11 +23,11 @@
     <div class="input-group">
         {% set prepend = '{{' == money_pattern[0:2] %}
         {% if not prepend %}
-            <span class="input-group-addon">{{ money_pattern|replace({ '{{ widget }}':''}) }}</span>
+            <span class="input-group-text">{{ money_pattern|replace({ '{{ widget }}':''}) }}</span>
         {% endif %}
         {{- block('form_widget_simple') -}}
         {% if prepend %}
-            <span class="input-group-addon">{{ money_pattern|replace({ '{{ widget }}':''}) }}</span>
+            <span class="input-group-text">{{ money_pattern|replace({ '{{ widget }}':''}) }}</span>
         {% endif %}
     </div>
 {%- endblock money_widget %}
@@ -35,7 +35,7 @@
 {% block percent_widget -%}
     <div class="input-group">
         {{- block('form_widget_simple') -}}
-        <span class="input-group-addon">%</span>
+        <span class="input-group-text">%</span>
     </div>
 {%- endblock percent_widget %}
 
@@ -43,7 +43,7 @@
     {% if widget == 'single_text' %}
         {{- block('form_widget_simple') -}}
     {% else %}
-        {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-inline')|trim}) %}
+        {% set attr = attr|merge({class: (attr.class|default('') ~ ' d-flex flex-wrap align-items-center gap-1')|trim}) %}
         <div {{ block('widget_container_attributes') }}>
             {{ form_errors(form.date) }}
             {{ form_errors(form.time) }}
@@ -57,7 +57,7 @@
     {% if widget == 'single_text' %}
         {{- block('form_widget_simple') -}}
     {% else %}
-        {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-inline')|trim}) %}
+        {% set attr = attr|merge({class: (attr.class|default('') ~ ' d-flex flex-wrap align-items-center gap-1')|trim}) %}
         {% if datetime is not defined or not datetime %}
             <div {{ block('widget_container_attributes') -}}>
         {% endif %}
@@ -76,7 +76,7 @@
     {% if widget == 'single_text' %}
         {{- block('form_widget_simple') -}}
     {% else %}
-        {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-inline')|trim}) %}
+        {% set attr = attr|merge({class: (attr.class|default('') ~ ' d-flex flex-wrap align-items-center gap-1')|trim}) %}
         {% if datetime is not defined or false == datetime %}
             <div {{ block('widget_container_attributes') -}}>
         {% endif %}
@@ -88,7 +88,7 @@
 {%- endblock time_widget %}
 
 {% block choice_widget_collapsed -%}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) %}
+    {% set attr = attr|merge({class: (attr.class|default('')|replace({'form-control': ''}) ~ ' form-select')|trim}) %}
     {{- parent() -}}
 {%- endblock %}
 
@@ -114,10 +114,13 @@
 
 {% block checkbox_widget -%}
     {% set parent_label_class = parent_label_class|default('') %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-check-input')|trim}) %}
     {% if 'checkbox-inline' in parent_label_class %}
-        {{ form_label(form, null, { widget: parent() }) }}
+        <div class="form-check form-check-inline">
+            {{ form_label(form, null, { widget: parent() }) }}
+        </div>
     {% else %}
-        <div class="checkbox">
+        <div class="form-check">
             {{ form_label(form, null, { widget: parent() }) }}
         </div>
     {% endif %}
@@ -125,10 +128,13 @@
 
 {% block radio_widget -%}
     {% set parent_label_class = parent_label_class|default('') %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-check-input')|trim}) %}
     {% if 'radio-inline' in parent_label_class %}
-        {{ form_label(form, null, { widget: parent() }) }}
+        <div class="form-check form-check-inline">
+            {{ form_label(form, null, { widget: parent() }) }}
+        </div>
     {% else %}
-        <div class="radio">
+        <div class="form-check">
             {{ form_label(form, null, { widget: parent() }) }}
         </div>
     {% endif %}
@@ -137,7 +143,7 @@
 {# Labels #}
 
 {% block form_label %}
-    {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' control-label')|trim}) %}
+    {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' form-label')|trim}) %}
     {% set label = parent() %}
     {{ label|unescape|raw }}
 {%- endblock form_label %}
@@ -163,8 +169,9 @@
             {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' required')|trim}) %}
         {% endif %}
         {% if parent_label_class is defined %}
-            {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' ' ~ parent_label_class)|trim}) %}
+            {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' ' ~ parent_label_class|replace({'checkbox-inline': '', 'radio-inline': ''}))|trim}) %}
         {% endif %}
+        {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' form-check-label')|trim}) %}
         {% if label is empty %}
             {% set label = name|humanize %}
         {% endif %}
@@ -178,7 +185,7 @@
 {# Rows #}
 
 {% block form_row -%}
-    <div class="{{attr.groupclass|default('') }} form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+    <div class="{{attr.groupclass|default('') }} mb-3{% if (not compound or force_error|default(false)) and not valid %} is-invalid{% endif %}">
         {{ form_label(form) }}
         {{ form_widget(form) }}
         {{ form_errors(form) }}
@@ -186,7 +193,7 @@
 {%- endblock form_row %}
 
 {% block button_row -%}
-    <div class="form-group {{attr.groupclass|default('') }}">
+    <div class="mb-3 {{attr.groupclass|default('') }}">
         {{- form_widget(form) -}}
     </div>
 {%- endblock button_row %}
@@ -212,14 +219,14 @@
 {%- endblock datetime_row %}
 
 {% block checkbox_row -%}
-    <div class="{{attr.groupclass|default('') }} form-group{% if not valid %} has-error{% endif %}">
+    <div class="{{attr.groupclass|default('') }} mb-3{% if not valid %} is-invalid{% endif %}">
         {{ form_widget(form) }}
         {{ form_errors(form) }}
     </div>
 {%- endblock checkbox_row %}
 
 {% block radio_row -%}
-    <div class="{{attr.groupclass|default('') }} form-group{% if not valid %} has-error{% endif %}">
+    <div class="{{attr.groupclass|default('') }} mb-3{% if not valid %} is-invalid{% endif %}">
         {{ form_widget(form) }}
         {{ form_errors(form) }}
     </div>
@@ -229,10 +236,10 @@
 
 {% block form_errors -%}
     {% if errors|length > 0 -%}
-    {% if form.parent %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
+    {% if form.parent %}<span class="invalid-feedback d-block">{% else %}<div class="alert alert-danger">{% endif %}
     <ul class="list-unstyled">
         {%- for error in errors -%}
-            <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ error.message }}</li>
+            <li><i class="fas fa-exclamation-circle"></i> {{ error.message }}</li>
         {%- endfor -%}
     </ul>
     {% if form.parent %}</span>{% else %}</div>{% endif %}
@@ -246,7 +253,7 @@
         {% set locale = form.vars.locales[0] %}
         <div class="input-group">
             <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
-            <span class="input-group-addon copy-button pmk-color-767676 pmk-cursor-pointer" data-copy="{{ form.vars.id }}_{{ locale }}" data-action="click->admin--actions#copy" data-admin--actions-input-param="{{ (form.vars.id ~ '_' ~ locale)|json_encode }}">
+            <span class="input-group-text copy-button" style="color: #767676;cursor:pointer;" data-copy="{{ form.vars.id }}_{{ locale }}" data-action="click->admin--actions#copy" data-admin--actions-input-param="{{ (form.vars.id ~ '_' ~ locale)|json_encode }}">
                 <span class="mdi-content-content-copy" title="{% trans %}Copy{% endtrans %}"></span>
             </span>
         </div>
@@ -254,8 +261,8 @@
         {%- for locale in form.vars.locales %}
             <div class="input-group">
                 <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
-                <span class="input-group-addon pmk-color-767676">{{ locale }}</span>&nbsp;
-                <span class="input-group-addon copy-button pmk-color-767676 pmk-cursor-pointer" data-copy="{{ form.vars.id }}_{{ locale }}" data-action="click->admin--actions#copy" data-admin--actions-input-param="{{ (form.vars.id ~ '_' ~ locale)|json_encode }}">
+                <span class="input-group-text" style="color: #767676;">{{ locale }}</span>&nbsp;
+                <span class="input-group-text copy-button" style="color: #767676;cursor:pointer;" data-copy="{{ form.vars.id }}_{{ locale }}" data-action="click->admin--actions#copy" data-admin--actions-input-param="{{ (form.vars.id ~ '_' ~ locale)|json_encode }}">
                     <span class="mdi-content-content-copy" title="{% trans %}Copy{% endtrans %}"></span>
                 </span>
             </div>
@@ -271,7 +278,7 @@
         {%- for locale in form.vars.locales %}
             <div class="input-group">
                 <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
-                <span class="input-group-addon pmk-color-767676">{{ locale }}</span>
+                <span class="input-group-text" style="color: #767676;">{{ locale }}</span>
             </div>
         {% endfor -%}
     {% endif -%}
@@ -285,7 +292,7 @@
       {%- for locale in form.vars.locales %}
           <div class="input-group">
               <textarea {{ block('widgeti18n_attributes') }}>{{ value[locale]|default("") }}</textarea>
-              <span class="input-group-addon pmk-color-767676">{{ locale }}</span>
+              <span class="input-group-text" style="color: #767676;">{{ locale }}</span>
           </div>
       {%- endfor -%}
     {% endif -%}

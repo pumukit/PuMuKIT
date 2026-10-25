@@ -1,40 +1,40 @@
 {% set criteria = app.session.get('admin/person/criteria') %}
 
-<div class="well">
+<div class="card card-body bg-body-tertiary">
     <form class="form" id="filter_people" data-controller="admin--filter-form" data-action="submit->admin--filter-form#submit" data-admin--filter-form-url-value="{{ path('pumukitnewadmin_person_list') }}" data-admin--filter-form-target-value="#list_people" data-admin--filter-form-letters-value=".pmk-person-letter" action="{{ path('pumukitnewadmin_person_list') }}" method="post">
         <fieldset>
             <legend hidden>{% trans %}Filter People{% endtrans %}</legend>
 
-            <div id="accordion" class="panel-group" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab">
-                        <h2 class="panel-title">
-                            <a class="show" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch"
+            <div id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header" role="tab">
+                        <h2 class="card-title mb-0">
+                            <a class="d-block" data-bs-toggle="collapse" href="#collapseSearch"
                                aria-expanded="true" aria-controls="collapseSearch">
-                                <i class="mdi-navigation-menu pull-right"></i> {% trans %}Search{% endtrans %}
+                                <i class="mdi-navigation-menu float-end"></i> {% trans %}Search{% endtrans %}
                             </a>
                         </h2>
                     </div>
-                    <div id="collapseSearch" class="panel-collapse collapse in" role="tabpanel">
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label for="filters_name" class="control-label">
+                    <div id="collapseSearch" data-bs-parent="#accordion" class="panel-collapse collapse show" role="tabpanel">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="filters_name" class="form-label">
                                     {% trans %}Name{% endtrans %}:
                                 </label>
                                 <input type="text" class="reset form-control" name="criteria[name]" id="filters_name" value="{{ criteria['name']|default("") }}">
                             </div>
 
-                            <div class="form-group">
-                                <div class="form-group">
-                                    <label for="filters_post" class="control-label">
+                            <div class="mb-3">
+                                <div class="mb-3">
+                                    <label for="filters_post" class="form-label">
                                         {% trans %}Post{% endtrans %}:
                                     </label>
                                     <input type="text" class="reset form-control" name="criteria[post]" id="filters_post" value="{{ criteria['post']|default("") }}">
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="filters_letter" class="control-label">
+                            <div class="mb-3">
+                                <label for="filters_letter" class="form-label">
                                     {% trans %}Letter{% endtrans %}:
                                 </label>
                                 <input id="filters_letter" class="reset form-control" type="hidden" data-admin--filter-form-target="letter" value="{{ criteria['letter']|default("") }}" name="criteria[letter]">
@@ -55,9 +55,9 @@
             </div>
         </fieldset>
 
-        <div class="text-right">
-            <input class="btn btn-default btn-raised" data-action="click->admin--filter-form#reset" type="button" value="{% trans %}reset{% endtrans %}" />
-            <input class="btn btn-pumukit btn-raised" type="submit" name="filter" value="{% trans %}filter{% endtrans %}">
+        <div class="text-end">
+            <input class="btn btn-secondary" data-action="click->admin--filter-form#reset" type="button" value="{% trans %}reset{% endtrans %}" />
+            <input class="btn btn-pumukit" type="submit" name="filter" value="{% trans %}filter{% endtrans %}">
         </div>
     </form>
 </div>

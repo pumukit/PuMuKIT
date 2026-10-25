@@ -1,29 +1,28 @@
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-    </button>
     <h4 class="modal-title" id="myModalLabel">{% trans %}Job info{% endtrans %}</h4>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) %}
         <div class="box-body">
-            <dl class="dl-horizontal">
-                <dt>{% trans %}Id{% endtrans %}</dt>
-                <dd>{{ job.id }}</dd>
-                <dt>{% trans %}Status{% endtrans %}</dt>
-                <dd class="job-status-{{ job.status }}">{{ job.statusText }} <small>[{{ job.status }}]</small></dd>
-                <dt>{% trans %}Mm{% endtrans %}</dt>
-                <dd>{{ job.getMmId() }}</dd>
-                <dt>{% trans %}Profile{% endtrans %}</dt>
-                <dd>{{ job.getProfile() }}</dd>
-                <dt>{% trans %}Cpu{% endtrans %}</dt>
-                <dd>{{ job.getCpu() }}</dd>
-                <dt>{% trans %}Duration{% endtrans %}</dt>
-                <dd>
+            <dl class="row">
+                <dt class="col-sm-3">{% trans %}Id{% endtrans %}</dt>
+                <dd class="col-sm-9">{{ job.id }}</dd>
+                <dt class="col-sm-3">{% trans %}Status{% endtrans %}</dt>
+                <dd class="col-sm-9 job-status-{{ job.status }}">{{ job.statusText }} <small>[{{ job.status }}]</small></dd>
+                <dt class="col-sm-3">{% trans %}Mm{% endtrans %}</dt>
+                <dd class="col-sm-9">{{ job.getMmId() }}</dd>
+                <dt class="col-sm-3">{% trans %}Profile{% endtrans %}</dt>
+                <dd class="col-sm-9">{{ job.getProfile() }}</dd>
+                <dt class="col-sm-3">{% trans %}Cpu{% endtrans %}</dt>
+                <dd class="col-sm-9">{{ job.getCpu() }}</dd>
+                <dt class="col-sm-3">{% trans %}Duration{% endtrans %}</dt>
+                <dd class="col-sm-9">
                     {% trans %}Before{% endtrans %}: {{ job.duration|duration_string }}, {% trans %}after{% endtrans %}
                     : {{ job.getNewDuration()|duration_string }}
                 </dd>
-                <dt>{% trans %}Times{% endtrans %}</dt>
-                <dd>
+                <dt class="col-sm-3">{% trans %}Times{% endtrans %}</dt>
+                <dd class="col-sm-9">
                     {% trans %}Created{% endtrans %}
                     : {{ job.getTimeini('Y-m-d H:i:s')| format_datetime('medium','medium',locale=app.request.getLocale()) }}
                     , {% trans %}started{% endtrans %}
@@ -31,7 +30,7 @@
                     , {% trans %}finished{% endtrans %}
                     : {{ job.getTimeend()| format_datetime('medium','medium',app.request.getLocale()) }}
                 </dd>
-                <dt>{% trans %}Priority{% endtrans %}</dt>
+                <dt class="col-sm-3">{% trans %}Priority{% endtrans %}</dt>
                 <dd{% if job.isPending() %} data-controller="admin--job-priority"
                     data-admin--job-priority-url-value="{{ path('pumukitnewadmin_track_update_job', {'mmId': multimediaObject.Id}) }}"
                     data-admin--job-priority-job-value="{{ job.id }}"{% endif %}>
@@ -73,22 +72,22 @@
         </div>
         <form enctype="multipart/form-data" action="#" method="POST">
             <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-raised"
-                        data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+                <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
                 {% if constant('STATUS_ERROR', job) == job.getStatus() %}
-                    <button type="submit" class="btn btn-pumukit btn-raised"
+                    <button type="submit" class="btn btn-pumukit"
                             data-action="click->admin--actions#load"
                             data-admin--actions-url-param="{{ path('pumukitnewadmin_track_retry_job', {'mmId': multimediaObject.Id, 'jobId': job.id, 'preview': 1}) }}"
                             data-admin--actions-target-param="#tracks_mms_{{ multimediaObject.Id }}"
-                            data-dismiss="modal">{% trans %}RETRY{% endtrans %}</button>
+                            data-bs-dismiss="modal">{% trans %}RETRY{% endtrans %}</button>
                 {% endif %}
                 {% if constant('STATUS_ERROR', job) == job.getStatus() or constant('STATUS_WAITING', job) == job.getStatus() %}
-                    <button type="submit" class="btn btn-danger btn-raised"
+                    <button type="submit" class="btn btn-danger"
                             data-action="click->admin--actions#load"
                             data-admin--actions-url-param="{{ path('pumukitnewadmin_track_delete_job', {'mmId': multimediaObject.Id, 'jobId': job.id, 'preview': 1}) }}"
                             data-admin--actions-target-param="#tracks_mms_{{ multimediaObject.Id }}"
                             data-admin--actions-data-param="{{ {_method: 'DELETE'}|json_encode }}"
-                            data-dismiss="modal">{% trans %}DELETE{% endtrans %}</button>
+                            data-bs-dismiss="modal">{% trans %}DELETE{% endtrans %}</button>
                 {% endif %}
             </div>
         </form>

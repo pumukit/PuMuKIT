@@ -1,8 +1,6 @@
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
   <h4 class="modal-title" id="myModalLabel">{% trans %}Add to playlist{% endtrans %}</h4>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body"
      data-controller="admin--playlist-add"
@@ -22,7 +20,7 @@
       <legend hidden>{% trans %}Add to playlist{% endtrans %}</legend>
       <form id="add_playlist_form" data-admin--playlist-add-target="playlists" data-action="change->admin--playlist-add#selected">
         {% for oneseries in series %}
-          <div class="checkbox pmk-padding-top-10">
+          <div class="form-check" style="padding-top: 10px">
             <label>
               <input type="checkbox"
                      class="add_playlist_form_checkbox"
@@ -47,12 +45,12 @@
       <div id="" class="col-md-7">
         <form id="new_playlist_form" data-admin--playlist-add-target="newForm" data-action="submit->admin--playlist-add#createPlaylist">
           <fieldset>
-            <div class="form-group">
-              <label class="control-label" for="title">{% trans  %}Title{% endtrans %}</label>
+            <div class="mb-3">
+              <label class="form-label" for="title">{% trans  %}Title{% endtrans %}</label>
               {% for locale in locales %}
                 <div class="input-group">
                   <input type="text" name="playlist_title[{{ locale }}]" class="new_playlist_form_title form-control" data-admin--playlist-add-target="title" data-action="input->admin--playlist-add#titles" placeholder="title {{locale}}"/>
-                  <span class="input-group-addon">{{ locale }}</span>
+                  <span class="input-group-text">{{ locale }}</span>
                 </div>
               {% endfor %}
             </div>
@@ -62,8 +60,8 @@
     </div>
 
     <div class="modal-footer">
-      <button class="pmk-display-none" disabled="disabled" id="new_playlist_btn" type="button" data-admin--playlist-add-target="create" data-action="click->admin--playlist-add#createPlaylist" class="new_playlist pull-left btn btn-default btn-primary">{% trans %}Create playlist{% endtrans %}</button>
-      <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+      <button disabled="disabled" id="new_playlist_btn" style="display:none" type="button" data-admin--playlist-add-target="create" data-action="click->admin--playlist-add#createPlaylist" class="new_playlist float-start btn btn-secondary btn-primary">{% trans %}Create playlist{% endtrans %}</button>
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
       <button disabled="disabled" id="add_playlist_btn" type="submit" class="btn btn-pumukit" data-admin--playlist-add-target="ok" data-action="click->admin--playlist-add#save">{% trans %}OK{% endtrans %}</button>
     </div>
 

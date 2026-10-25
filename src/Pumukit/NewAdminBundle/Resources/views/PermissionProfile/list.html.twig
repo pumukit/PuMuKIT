@@ -20,7 +20,7 @@
       </div>
       <div class="col-md-4">
         <div class="pagerfanta">
-            {% set pagerClass = 'twitter_bootstrap3' %}
+            {% set pagerClass = 'twitter_bootstrap5' %}
             {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_permissionprofile_index"} %}
             {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : permissionprofiles, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
         </div>
@@ -30,10 +30,10 @@
           <span id="remember_save_permissionprofile" class="alert alert-dismissable alert-danger pmk-display-none">{% trans %}Press SAVE for changes to take effect{% endtrans %}</span> &nbsp;
         </div>
       </div>
-      <div class="col-md-3 text-right">
-        <button id="pumukitnewadmin_permissionprofile_update_cancel" type="button" class="btn btn-default btn-raised" data-action="click->admin--permission-profiles#cancel">{% trans %}Cancel{% endtrans %}</button>
-        <button id="pumukitnewadmin_permissionprofile_update_ok" type="submit" class="btn btn-primary btn-raised" data-action="click->admin--permission-profiles#save">{% trans %}Save{% endtrans %}</button>
-        <a href="{{ path('pumukitnewadmin_permissionprofile_create') }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+      <div class="col-md-3 text-end">
+        <button id="pumukitnewadmin_permissionprofile_update_cancel" type="button" class="btn btn-secondary" data-action="click->admin--permission-profiles#cancel">{% trans %}Cancel{% endtrans %}</button>
+        <button id="pumukitnewadmin_permissionprofile_update_ok" type="submit" class="btn btn-primary" data-action="click->admin--permission-profiles#save">{% trans %}Save{% endtrans %}</button>
+        <a href="{{ path('pumukitnewadmin_permissionprofile_create') }}" class="btn btn-pumukit" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">{% trans %}New{% endtrans %}</a>
           {% if is_granted('ROLE_SUPER_ADMIN') %}
             <a href="{{ path('pumukitnewadmin_permissionprofile_export') }}" class="btn btn-primary" download>{% trans %}Export{% endtrans %}</a>
           {% endif %}
@@ -85,12 +85,12 @@
         {% for key,permission in permissions %}
         <tr>
           <td id="{{ key }}">
-            {{ permission }}{% if ((dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL')]|length > 0) or (dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_PERSONAL')]|length > 0)) %} <i data-original-title="{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL')] %}{% if loop.first %}GLOBAL SCOPE DEPENDENCIES: {% endif %}{{ permissions[dependency] }}{% if loop.last %}. {% else %}, {% endif %}{% endfor %}{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_PERSONAL')] %}{% if loop.first %}PERSONAL SCOPE DEPENDENCIES: {% endif %}{{ permissions[dependency] }}{% if loop.last %}.{% else %}, {% endif %}{% endfor %}" class="mdi-action-info" data-toggle="tooltip" data-placement="right" title=""></i>{% endif %}
+            {{ permission }}{% if ((dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL')]|length > 0) or (dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_PERSONAL')]|length > 0)) %} <i data-original-title="{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL')] %}{% if loop.first %}GLOBAL SCOPE DEPENDENCIES: {% endif %}{{ permissions[dependency] }}{% if loop.last %}. {% else %}, {% endif %}{% endfor %}{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_PERSONAL')] %}{% if loop.first %}PERSONAL SCOPE DEPENDENCIES: {% endif %}{{ permissions[dependency] }}{% if loop.last %}.{% else %}, {% endif %}{% endfor %}" class="mdi-action-info" data-bs-toggle="tooltip" data-bs-placement="right" title=""></i>{% endif %}
           </td>
           {% for permissionprofile in permissionprofiles %}
           <td></td>
           <td>
-            <div class="checkbox {{ ((permissionprofile.system and not is_granted('ROLE_SUPER_ADMIN')) or (permissionprofile.scope == constant('SCOPE_NONE', permissionprofile))) ? ' pmk_disabled_checkbox'}}">
+            <div class="form-check {{ ((permissionprofile.system and not is_granted('ROLE_SUPER_ADMIN')) or (permissionprofile.scope == constant('SCOPE_NONE', permissionprofile))) ? ' pmk_disabled_checkbox'}}">
               <label>
                 <input id="{{ key }}__{{ permissionprofile.id }}__permission"
                        data-dependencies-global="{% for dependency in dependencies[key][constant('Pumukit\\SchemaBundle\\Document\\PermissionProfile::SCOPE_GLOBAL')] %}{{ dependency }}__{{ permissionprofile.id}}__permission{% if not loop.last %} {% endif %}{% endfor %}"

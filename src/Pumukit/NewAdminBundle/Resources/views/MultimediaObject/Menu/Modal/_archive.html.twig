@@ -1,19 +1,17 @@
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
     <h4 class="modal-title text-center" id="myModalLabel">
         {{ "Archive"|trans|upper}}
     </h4>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 
 <div class="modal-body">
     <div class="row">
         <div class="row">
-            <div class="col-md-6 text-right">
+            <div class="col-md-6 text-end">
                 <strong>{% trans %}Multimedia Object title{% endtrans %}</strong>
             </div>
-            <div class="col-md-6 text-left">
+            <div class="col-md-6 text-start">
                 {{ multimediaObject.title }}
             </div>
         </div>
@@ -32,10 +30,10 @@
             </div>
             <h3 class="text-center">{{ "Are you sure you want to archive the object ?" | trans }}</h3>
             <div class="col-md-6">
-                <button type="button" class="btn btn-block btn-default btn-raised" data-dismiss="modal">{{ "Cancel"|trans}}</button>
+                <button type="button" class="btn w-100 btn-secondary" data-bs-dismiss="modal">{{ "Cancel"|trans}}</button>
             </div>
             <div class="col-md-6">
-                <a href="#" class="btn btn-block btn-danger btn-archive" data-action="click->admin--actions#request"
+                <a href="#" class="btn w-100 btn-danger btn-archive" data-action="click->admin--actions#request"
                data-admin--actions-url-param="{{ path('pumukit_multimedia_object_save_and_archive', {'id': multimediaObject.id}) }}"
                data-admin--actions-reload-param="true"
                data-admin--actions-success-param="{{ 'Multimedia Object archive complete'|trans }}"

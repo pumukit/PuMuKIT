@@ -3,7 +3,7 @@
     {% for tag in children %}
         <tr class="pmk-font-size-12">
             <td headers="th-checkbox">
-                <div class="checkbox">
+                <div class="form-check">
                     <label>
                         <input id="{{ tag.id }}" class="tag_children_checkbox" type="checkbox">
                     </label>
@@ -17,7 +17,7 @@
             </td>
 
             <td headers="th-icons">
-                <a title="{% trans %}Edit tag {% endtrans %}" href="{{ path('pumukitnewadmin_places_update', {'id': tag.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                <a title="{% trans %}Edit tag {% endtrans %}" href="{{ path('pumukitnewadmin_places_update', {'id': tag.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
                     <i class="mdi-editor-mode-edit"></i>
                 </a>
             </td>
@@ -44,14 +44,14 @@
     <tr>
         <td colspan="6">
             <div class="col-md-8">
-            <select id="options_precinct" class="form-control" data-action="change->admin--places#batch" data-admin--places-name-param="tag_children" data-admin--places-parent-param="{{ parent.id|json_encode }}" data-admin--places-success-param="{{ 'Precinct successfully deleted.'|trans }}" title="{% trans %}Actions on selected items{% endtrans %}">
+            <select id="options_precinct" class="form-select" data-action="change->admin--places#batch" data-admin--places-name-param="tag_children" data-admin--places-parent-param="{{ parent.id|json_encode }}" data-admin--places-success-param="{{ 'Precinct successfully deleted.'|trans }}" title="{% trans %}Actions on selected items{% endtrans %}">
                 <option value="default" selected="selected">{% trans %}Select an action...{% endtrans %}</option>
                 <option disabled="">---</option>
                 <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
             </select>
             </div>
             <div class="col-md-4">
-                <a href="{{ path('pumukitnewadmin_places_create', {'id': parent.id }) }}" class="btn btn-pumukit btn-raised" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+                <a href="{{ path('pumukitnewadmin_places_create', {'id': parent.id }) }}" class="btn btn-pumukit" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
                     {% trans %}New{% endtrans %}
                 </a>
             </div>

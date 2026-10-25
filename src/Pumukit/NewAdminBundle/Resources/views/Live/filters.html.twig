@@ -1,17 +1,17 @@
-<div class="well">
+<div class="card card-body bg-body-tertiary">
     <form id="filter_lives" class="form" data-controller="admin--filter-form" data-action="submit->admin--filter-form#submit" data-admin--filter-form-url-value="{{ path('pumukitnewadmin_live_list') }}" data-admin--filter-form-target-value="#list_lives" action="{{ path('pumukitnewadmin_live_list') }}" method="POST">
         <fieldset>
             <legend hidden>{% trans %}Filter Live Channels{% endtrans %}</legend>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">
-                        <i class="mdi-navigation-menu pull-right"></i>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title mb-0">
+                        <i class="mdi-navigation-menu float-end"></i>
                         {% trans %}Search{% endtrans %}
                     </h2>
                 </div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label for="name" class="control-label">{% trans %}Name{% endtrans %}:</label>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">{% trans %}Name{% endtrans %}:</label>
                         <div>
                             {% set criteria = app.session.get('admin/live/criteria') %}
                             <input type="text" class="reset form-control" name="criteria[name.{{ app.request.getLocale() }}]" id="filters_name" value="{{ criteria['name.{{ app.request.getLocale() }}']|default("") }}" aria-label="Name">
@@ -20,9 +20,9 @@
                 </div>
             </div>
         </fieldset>
-        <div class="text-right">
-            <input type="button" class="btn btn-default btn-raised" data-action="click->admin--actions#navigate" data-admin--actions-url-param="?criteria[reset]=true" value="{% trans %}reset{% endtrans %}">
-            <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit btn-raised">
+        <div class="text-end">
+            <input type="button" class="btn btn-secondary" data-action="click->admin--actions#navigate" data-admin--actions-url-param="?criteria[reset]=true" value="{% trans %}reset{% endtrans %}">
+            <input type="submit" name="filter" value="{% trans %}filter{% endtrans %}" class="btn btn-pumukit">
         </div>
     </form>
 </div>

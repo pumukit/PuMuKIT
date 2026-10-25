@@ -1,8 +1,6 @@
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
     <h4 class="modal-title" id="myModalLabel">{% trans %}generate new thumbnail{% endtrans %}</h4>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 
 <div class="modal-body" data-controller="admin--pic-generator"
@@ -25,31 +23,30 @@
                 <!-- CONTROLS -->
                 <div class="buttons pmk-text-align-center" id="gen_pic_buttons" data-admin--pic-generator-target="buttons">
 
-                    <div class="btn-group btn-group-raised pmk-margin-top-0">
-                        <button id="prev-frame-button" data-action="click->admin--pic-generator#previousFrame" title="{% trans %}Prev Frame{% endtrans %}" class="btn btn-raised btn-xs pmk-padding-8-25">
+                    <div class="btn-group btn-group-raised" style="margin-top: 0px;">
+                        <button id="prev-frame-button" data-action="click->admin--pic-generator#previousFrame" title="{% trans %}Prev Frame{% endtrans %}" class="btn btn-sm" style="padding: 8px 25px">
                             «
                         </button>
-                        <button id="next-frame-button" data-action="click->admin--pic-generator#nextFrame" title="{% trans %}Next Frame{% endtrans %}" class="btn btn-raised btn-xs pmk-padding-8-25">
+                        <button id="next-frame-button" data-action="click->admin--pic-generator#nextFrame" title="{% trans %}Next Frame{% endtrans %}" class="btn btn-sm" style="padding: 8px 25px">
                             »
                         </button>
                     </div>
 
-                    <button id="take-img-button" data-action="click->admin--pic-generator#take" title="Take image." class="btn btn-raised btn-primary pmk-padding-8 pmk-white-space-normal">{% trans %}Take image{% endtrans %}</button>
+                    <button id="take-img-button" data-action="click->admin--pic-generator#take" title="Take image." style="padding: 8px; white-space: normal" class="btn btn-primary">{% trans %}Take image{% endtrans %}</button>
 
 
                     <div class="btn-group">
-                        <a href="#" data-target="#" class="btn btn-raised dropdown-toggle pmk-padding-8 pmk-white-space-normal" data-toggle="dropdown">
+                        <a href="#" data-bs-target="#" class="btn dropdown-toggle" data-bs-toggle="dropdown" style="padding: 8px; ; white-space: normal">
                             {% trans %}Take burst{% endtrans %}
-                            <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" class="take-burst-button" data-num="10" data-action="click->admin--pic-generator#burst" data-admin--pic-generator-num-param="10">10 pictures</a></li>
-                            <li><a href="#" class="take-burst-button" data-num="30" data-action="click->admin--pic-generator#burst" data-admin--pic-generator-num-param="30">30 pictures</a></li>
-                            <li><a href="#" class="take-burst-button" data-num="50" data-action="click->admin--pic-generator#burst" data-admin--pic-generator-num-param="50">50 pictures</a></li>
+                            <li><a href="#" class="take-burst-button dropdown-item" data-num="10" data-action="click->admin--pic-generator#burst" data-admin--pic-generator-num-param="10">10 pictures</a></li>
+                            <li><a href="#" class="take-burst-button dropdown-item" data-num="30" data-action="click->admin--pic-generator#burst" data-admin--pic-generator-num-param="30">30 pictures</a></li>
+                            <li><a href="#" class="take-burst-button dropdown-item" data-num="50" data-action="click->admin--pic-generator#burst" data-admin--pic-generator-num-param="50">50 pictures</a></li>
                         </ul>
                     </div>
 
-                    <button id="advanced-button" data-action="click->admin--pic-generator#toggleAdvanced" title="Show advanced" class="btn btn-raised btn-xs pmk-margin-top-0 pmk-padding-1-5 pmk-white-space-nowrap">
+                    <button id="advanced-button" data-action="click->admin--pic-generator#toggleAdvanced" title="Show advanced" style="margin-top: 0px; padding: 1px 5px; white-space: nowrap" class="btn btn-sm">
                         {% trans %}Show advanced{% endtrans %}
                     </button>
 
@@ -57,7 +54,7 @@
 
             </div>
             <div class="col-md-5 text-center">
-                <span id="pic-size" data-admin--pic-generator-target="size" class="label label-default pmk-position-absolute"></span>
+                <span id="pic-size" data-admin--pic-generator-target="size" class="badge text-bg-secondary" style="position: absolute;"></span>
                 <!-- PREVIEW -->
                 <img class="image pmk-width-100pct pmk-height-auto pmk-object-fit-contain" id="gen_pic_img" data-admin--pic-generator-target="image" src="{{ asset('bundles/pumukitnewadmin/images/admin/arrows/redarrow.png') }}">
             </div>
@@ -69,10 +66,10 @@
 
             {% trans %}Show{% endtrans %}:
             <div class="btn-group btn-group-raised">
-              <button title="{% trans %}Show presenter{% endtrans %}" id="show-presenter" class="btn btn-xs{{ 'presenter/delivery' in track.tags ? ' btn-primary' }}" data-admin--pic-generator-target="stream" data-action="click->admin--pic-generator#showStream" data-admin--pic-generator-url-param="{{ track_url(mm.getFilteredTrackWithTags(['presenter/delivery'])) }}">
+              <button title="{% trans %}Show presenter{% endtrans %}" id="show-presenter" class="btn btn-sm{{ 'presenter/delivery' in track.tags ? ' btn-primary' }}" data-admin--pic-generator-target="stream" data-action="click->admin--pic-generator#showStream" data-admin--pic-generator-url-param="{{ track_url(mm.getFilteredTrackWithTags(['presenter/delivery'])) }}">
                 {% trans %}presenter{% endtrans %}
               </button>
-              <button title="{% trans %}Show presentation{% endtrans %}" id="show-presentation" class="btn btn-xs{{ 'presenter/delivery' not in track.tags and 'presentation/delivery' in track.tags ? ' btn-primary' }}" data-admin--pic-generator-target="stream" data-action="click->admin--pic-generator#showStream" data-admin--pic-generator-url-param="{{ track_url(mm.getFilteredTrackWithTags(['presentation/delivery'])) }}">
+              <button title="{% trans %}Show presentation{% endtrans %}" id="show-presentation" class="btn btn-sm{{ 'presenter/delivery' not in track.tags and 'presentation/delivery' in track.tags ? ' btn-primary' }}" data-admin--pic-generator-target="stream" data-action="click->admin--pic-generator#showStream" data-admin--pic-generator-url-param="{{ track_url(mm.getFilteredTrackWithTags(['presentation/delivery'])) }}">
                 {% trans %}presentation{% endtrans %}
               </button>
             </div>
@@ -104,19 +101,19 @@
 
     </div>
 
-    <div class="col-xs-12">
+    <div class="col-12">
         <label for="url">{% trans %}URL{% endtrans %}</label>
         <input type="text" id="url-file-button" data-action="input->admin--pic-generator#addUrl" name="url" class="form-control"/>
     </div>
     <div class="pmk-clear-both"></div>
     <div class="modal-footer">
         <div class="row">
-            <div class="col-xs-4">
-                <input type="file" id="file-upload-button" data-action="change->admin--pic-generator#upload" name="file" title="{% trans %}Upload a local file.{% endtrans %}" accept="image/*"/>
+            <div class="col-4">
+                <input type="file" id="file-upload-button" data-action="change->admin--pic-generator#upload" name="file" style="btn btn-default btn-raised" title="{% trans %}Upload a local file.{% endtrans %}" accept="image/*"/>
             </div>
-            <div class="col-xs-8">
-                <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-                <button type="submit" id="gen_pic_submit" data-action="click->admin--pic-generator#submit" class="btn btn-pumukit btn-raised">{% trans %}OK{% endtrans %}</button>
+            <div class="col-8">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+                <button type="submit" id="gen_pic_submit" data-action="click->admin--pic-generator#submit" class="btn btn-pumukit">{% trans %}OK{% endtrans %}</button>
             </div>
         </div>
     </div>

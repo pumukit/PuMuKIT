@@ -14,24 +14,24 @@
 
         <div>
             {% for mtag in mm.tags | filter(mtag => mtag.level == 2) %}
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title-preview panel-title">Tags {{ mtag.title }} </h3>
+                <div class="card border-primary">
+                    <div class="card-header">
+                        <h3 class="panel-title-preview card-title mb-0">Tags {{ mtag.title }} </h3>
                     </div>
-                    <div class="panel-body-preview panel-body">
+                    <div class="panel-body-preview card-body">
                         {% for tag in mm.tags | filter(tag => tag.isDescendantOf(mtag)) %}
-                            <span class="label label-default">{{ tag.title }}</span>
+                            <span class="badge text-bg-secondary">{{ tag.title }}</span>
                         {% else %}
                             <em>{% trans %}None{% endtrans %}</em>
                         {% endfor %}
                     </div>
                 </div>
             {% else %}
-                <div class="panel panel-primary">
-                  <div class="panel-heading">
-                    <h3 class="panel-title-preview panel-title">{% trans %}Tags{% endtrans %}</h3>
+                <div class="card border-primary">
+                  <div class="card-header">
+                    <h3 class="panel-title-preview card-title mb-0">{% trans %}Tags{% endtrans %}</h3>
                   </div>
-                  <div class="panel-body-preview panel-body">
+                  <div class="panel-body-preview card-body">
                     <span>{% trans %}No tags{% endtrans %}.</span>
                   </div>
                 </div>
@@ -39,11 +39,11 @@
         </div>
 
         <div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title-preview panel-title">{% trans %}People{% endtrans %}</h3>
+            <div class="card border-primary">
+                <div class="card-header">
+                    <h3 class="panel-title-preview card-title mb-0">{% trans %}People{% endtrans %}</h3>
                 </div>
-                <div class="panel-body-preview panel-body">
+                <div class="panel-body-preview card-body">
                     <ul class="list-unstyled">
                         {% for role in mm.getRoles() | filter(role => role.getDisplay()) %}
                             {% set actors = mm.getPeopleByRole(role, true) %}

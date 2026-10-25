@@ -1,7 +1,7 @@
 {% for tag in places %}
     <tr class="pmk-font-size-12">
         <td headers="th-checkbox">
-            <div class="checkbox">
+            <div class="form-check">
                 <label>
                     <input id="{{ tag.id }}" class="tag_parent_checkbox" type="checkbox">
                 </label>
@@ -15,7 +15,7 @@
         </td>
 
         <td headers="th-icons">
-            <a title="{% trans %}Edit tag {% endtrans %}" href="{{ path('pumukitnewadmin_places_update', {'id': tag.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+            <a title="{% trans %}Edit tag {% endtrans %}" href="{{ path('pumukitnewadmin_places_update', {'id': tag.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
                 <i class="mdi-editor-mode-edit"></i>
             </a>
         </td>

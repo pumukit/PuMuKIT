@@ -3,31 +3,31 @@
     {% set video_iframe_url = url('pumukit_live_event_iframe_id', {id: multimediaObject.id}) %}
     <div class="row">
         <div class="background_id col-lg-6">
-            <form class="form-horizontal">
+            <form>
                 <fieldset>
                     <legend>Info</legend>
-                    <div class="form-group">
-                        <label for="inputMMId" class="col-xs-2 control-label">Id:</label>
-                        <div class="col-xs-10 input-group">
+                    <div class="row mb-3">
+                        <label for="inputMMId" class="col-2 col-form-label">Id:</label>
+                        <div class="col-10 input-group">
                             <input type="text" class="form-control" id="inputMMId" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ multimediaObject.id }}">
                         </div>
-                        <label for="inputMMTitle" class="col-xs-2 control-label">{% trans %}Title{% endtrans %}:</label>
-                        <div class="col-xs-10 input-group">
+                        <label for="inputMMTitle" class="col-2 col-form-label">{% trans %}Title{% endtrans %}:</label>
+                        <div class="col-10 input-group">
                             <input type="text" class="form-control" id="inputMMTitle" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}">
                         </div>
-                        <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">Url:</label>
-                        <div class="col-xs-10 input-group hidden-naked">
+                        <label for="inputROUrl" class="col-2 col-form-label hidden-naked">Url:</label>
+                        <div class="col-10 input-group hidden-naked">
                             <input type="text" class="form-control" id="inputMMUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ video_url }}">
-                            <span class="input-group-addon">
+                            <span class="input-group-text">
                                 <a href="{{ video_url }}" target="_blank" title="{% trans %}Video URL{% endtrans %}">
                                     <i class="mdi-action-exit-to-app"></i>
                                 </a>
                             </span>
                         </div>
-                        <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">Iframe:</label>
-                        <div class="col-xs-10 input-group hidden-naked">
+                        <label for="inputROUrl" class="col-2 col-form-label hidden-naked">Iframe:</label>
+                        <div class="col-10 input-group hidden-naked">
                             <input type="text" class="form-control" id="inputIframeUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ video_iframe_url }}">
-                            <span class="input-group-addon">
+                            <span class="input-group-text">
                                 <a href="{{ video_iframe_url }}" target="_blank" title="{% trans %}Iframe URL{% endtrans %}">
                                     <i class="mdi-action-exit-to-app"></i>
                                 </a>

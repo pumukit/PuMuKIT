@@ -131,7 +131,7 @@ export default class extends Controller {
         event.preventDefault();
         $.ajax({ url: event.params.url, type: 'GET' }).done((response) => {
             const modal = $('#myModal');
-            modal.modal({ backdrop: 'static' });
+            modal.modal('show');
             modal.find('.modal-content').html(response);
         });
     }

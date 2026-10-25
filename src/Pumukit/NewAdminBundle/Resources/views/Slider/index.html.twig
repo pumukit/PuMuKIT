@@ -3,14 +3,14 @@
 {% block body %}
 
     <h3 class="cab_body_div">
-        <ul class="breadcrumb pmk-margin-bottom-5">
-            <li class="active">
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active breadcrumb-item">
                 {% trans %}Slider manager{% endtrans %}
             </li>
         </ul>
     </h3>
 
-    <div class="well slider-manager" data-controller="admin--slider"
+    <div class="card card-body bg-body-tertiary slider-manager" data-controller="admin--slider"
          data-admin--slider-url-value="{{ path('pumukit_newadmin_slider_order') }}"
          data-admin--slider-token-value="{{ csrf_token('slider_order') }}"
          data-admin--slider-messages-value="{{ {saved: 'Order saved successfully'|trans, error: 'Error saving order'|trans}|json_encode }}">
@@ -34,7 +34,7 @@
 
                     <div class="slider-thumbnail">
                         <a href="{{ path('pumukitnewadmin_mms_shortener', {id: mm.id}) }}" title="{% trans %}Edit multimedia object{% endtrans %}">
-                            <img src="{{ src }}" class="img-responsive" alt="{{ mm.getTitle() }}">
+                            <img src="{{ src }}" class="img-fluid" alt="{{ mm.getTitle() }}">
                         </a>
                     </div>
 
@@ -82,24 +82,24 @@
 
                         <div class="slider-status">
                             {% if mm.containsTagWithCod('PUCHWEBTV') %}
-                                <span class="label label-info">
+                                <span class="badge text-bg-info">
                                     <i class="fa fa-globe"></i>
                                     WebTV
                                 </span>
                             {% else %}
-                                <span class="label label-default">
+                                <span class="badge text-bg-secondary">
                                     <i class="fa fa-times"></i>
                                     WebTV
                                 </span>
                             {% endif %}
 
                             {% if mm.status == constant('Pumukit\\SchemaBundle\\Document\\MultimediaObject::STATUS_PUBLISHED') %}
-                                <span class="label label-success">
+                                <span class="badge text-bg-success">
                                     <i class="fa fa-check"></i>
                                     {% trans %}Published{% endtrans %}
                                 </span>
                             {% else %}
-                                <span class="label label-default">
+                                <span class="badge text-bg-secondary">
                                     <i class="fa fa-times"></i>
                                     {% trans %}Not published{% endtrans %}
                                 </span>

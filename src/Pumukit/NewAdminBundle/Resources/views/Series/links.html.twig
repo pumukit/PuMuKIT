@@ -1,44 +1,44 @@
 <div class="row">
     <div class="col-lg-12">
-        <form class="form-horizontal">
-            <input class="pmk-display-none" type="submit" value="submit-hidden" aria-hidden="true"/>
+        <form>
+            <input type="submit" style="display:none" value="submit-hidden" aria-hidden="true"/>
             <fieldset>
                 <legend>
                     {{ is_naked() ? 'Series Metadata'|trans : 'Metadata'|trans }}
                     {% if series.numericalID %}- <span title="{% trans %}Numerical ID{% endtrans %}">({{ series.numericalID }})</span>{% endif %}
                 </legend>
-                <div class="form-group col-lg-6">
-                    <label for="inputROId" class="col-xs-2 control-label">Id:</label>
-                    <div class="col-xs-10 input-group">
+                <div class="row mb-3 col-lg-6">
+                    <label for="inputROId" class="col-2 col-form-label">Id:</label>
+                    <div class="col-10 input-group">
                         <input type="text" class="form-control" id="inputROId" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ series.id }}">
                     </div>
-                    <label for="inputROTitle" class="col-xs-2 control-label">{% trans %}Title{% endtrans %}:</label>
-                    <div class="col-xs-10 input-group">
+                    <label for="inputROTitle" class="col-2 col-form-label">{% trans %}Title{% endtrans %}:</label>
+                    <div class="col-10 input-group">
                         <input type="text" class="form-control" id="inputROTitle" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ series.title }}">
                     </div>
                 </div>
-                <div class="form-group col-lg-6">
-                    <label for="inputROUrl" class="col-xs-2 control-label hidden-naked">Url:</label>
-                    <div class="col-xs-10 input-group hidden-naked">
+                <div class="row mb-3 col-lg-6">
+                    <label for="inputROUrl" class="col-2 col-form-label hidden-naked">Url:</label>
+                    <div class="col-10 input-group hidden-naked">
                         <input type="text" class="form-control" id="inputROUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ url('pumukit_webtv_series_index', {id: series.id}) }}">
                         {% if series.isHide() %}
-                            <span class="input-group-addon"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error while this series is hidden.{% endtrans %}"></i></span>
+                            <span class="input-group-text"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error while this series is hidden.{% endtrans %}"></i></span>
                         {% else %}
-                            <span class="input-group-addon"><a href="{{ url('pumukit_webtv_series_index', {id: series.id}) }}" target="_blank" title="Url"><i class="mdi-action-exit-to-app"></i></a></span>
+                            <span class="input-group-text"><a href="{{ url('pumukit_webtv_series_index', {id: series.id}) }}" target="_blank" title="Url"><i class="mdi-action-exit-to-app"></i></a></span>
                         {% endif %}
                     </div>
                     {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_MAGIC_URL')) %}
-                    <label for="inputROMagicUrl" class="col-xs-2 control-label hidden-naked" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
+                    <label for="inputROMagicUrl" class="col-2 col-form-label hidden-naked" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
                         {% trans %}Magic Url{% endtrans %}:
                     </label>
-                    <div class="col-xs-10 input-group hidden-naked">
-                        <input type="text" class="form-control" id="inputROMagicUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ url('pumukit_webtv_series_magicindex', {secret: series.secret}) }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
+                    <div class="col-10 input-group hidden-naked">
+                        <input type="text" class="form-control" id="inputROMagicUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ url('pumukit_webtv_series_magicindex', {secret: series.secret}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
                         {% if series.isHide() %}
-                            <span class="input-group-addon"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error while this series is hidden.{% endtrans %}"></i></span>
+                            <span class="input-group-text"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error while this series is hidden.{% endtrans %}"></i></span>
                         {% else %}
-                            <span class="input-group-addon"><a id="alinkROMagicUrl" href="{{ url('pumukit_webtv_series_magicindex', {secret: series.secret}) }}" target="_blank" title="{% trans %}Magic URL{% endtrans %}"><i class="mdi-action-exit-to-app"></i></a></span>
+                            <span class="input-group-text"><a id="alinkROMagicUrl" href="{{ url('pumukit_webtv_series_magicindex', {secret: series.secret}) }}" target="_blank" title="{% trans %}Magic URL{% endtrans %}"><i class="mdi-action-exit-to-app"></i></a></span>
                         {% endif %}
-                        <span class="input-group-addon">
+                        <span class="input-group-text">
                             <a href="#" data-action="click->admin--actions#magicUrl"
                                data-admin--actions-url-param="{{ path('pumukitnewadmin_series_generate_magic_url', {'id': series.id}) }}"
                                data-admin--actions-template-param="{{ url('pumukit_webtv_series_magicindex', {secret: '__secret__'}) }}"

@@ -5,7 +5,7 @@
     <thead>
       <tr>
         <th width="1%" id="th-checkbox">
-          <div class="checkbox">
+          <div class="form-check">
             <label>
               <input type="checkbox" data-action="click->admin--actions#checkAll" data-admin--actions-name-param="group">
             </label>
@@ -28,7 +28,7 @@
       {% for group in groups %}
       <tr>
         <td headers="th-checkbox">
-          <div class="checkbox">
+          <div class="form-check">
             <label>
               <input id="{{ group.id }}" class="group_checkbox" type="checkbox" size="1">
             </label>
@@ -36,20 +36,20 @@
         </td>
         <td headers="th-icons">
           {% if group.isLocal() %}
-          <a title="{% trans %}Edit Group{% endtrans %} {{ group.getName() }}" href="{{ path('pumukitnewadmin_group_update', {'id': group.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+          <a title="{% trans %}Edit Group{% endtrans %} {{ group.getName() }}" href="{{ path('pumukitnewadmin_group_update', {'id': group.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
             <i class="mdi-editor-mode-edit"></i>
           </a>
           {% else %}
-          <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-editor-mode-edit pmk-color-grey-i"></i>
+          <i data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}External defined groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-editor-mode-edit" style="color:grey!important;"></i>
           {% endif %}
         </td>
         <td headers="th-icons">
-          <a title="{% trans %}Delete Group{% endtrans %}" href="{{ path('pumukitnewadmin_group_info', {'id': group.id, 'action': true}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
-            <i data-toggle="tooltip" data-placement="right" title="{% trans %}Delete Group or Group relations{% endtrans %}" class="mdi-content-clear"></i>
+          <a title="{% trans %}Delete Group{% endtrans %}" href="{{ path('pumukitnewadmin_group_info', {'id': group.id, 'action': true}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
+            <i data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Delete Group or Group relations{% endtrans %}" class="mdi-content-clear"></i>
           </a>
         </td>
         <td headers="th-icons">
-          <a title="{% trans %}Group Info{% endtrans %}" href="{{ path('pumukitnewadmin_group_info', {'id': group.id, 'action': false}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+          <a title="{% trans %}Group Info{% endtrans %}" href="{{ path('pumukitnewadmin_group_info', {'id': group.id, 'action': false}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
             <i class="mdi-action-info"></i>
           </a>
         </td>
@@ -79,11 +79,11 @@
               <a class="cancel-search-button pmk-color-blue pmk-font-weight-normal" title="{% trans %}Cancel current search{% endtrans %}" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
 	          {% endif %}
             </div>
-            <div class="col-md-4 text-right">
+            <div class="col-md-4 text-end">
               <div class="pagerfanta">
                 {% set sorting = {('sorting[' ~ (app.session.get('admin/group/sort')) ~ ']') : (app.session.get('admin/group/type')) } %}
 
-                  {% set pagerClass = 'twitter_bootstrap3' %}
+                  {% set pagerClass = 'twitter_bootstrap5' %}
                   {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_group_index", "routeParams": sorting} %}
                   {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : groups, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
               </div>

@@ -6,8 +6,8 @@
             {% trans %}Public{% endtrans %}
         {% endif %}
     </div>
-    <div class="col-md-3 text-right">
-        <a class="change_broadcast_profile" title="{% trans %}Change broadcast profile{% endtrans %}" href="{{ path('pumukitnewadmin_mms_updatebroadcast', {'id': mm.id}) }}" data-toggle="modal" data-backdrop="static" data-target="#myModal">
+    <div class="col-md-3 text-end">
+        <a class="change_broadcast_profile" title="{% trans %}Change broadcast profile{% endtrans %}" href="{{ path('pumukitnewadmin_mms_updatebroadcast', {'id': mm.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
             {% trans %}Change{% endtrans %}
         </a>
     </div>

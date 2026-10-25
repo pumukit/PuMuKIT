@@ -1,15 +1,15 @@
 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_PEOPLE')) %}
     <input type="hidden" id="mm_id_ownerrelation" value="{{ mm.id }}"/>
-    <div class="panel panel-default">
-        <div class="panel-heading">
+    <div class="card">
+        <div class="card-header">
             {% trans %}OWNERS{% endtrans %}&nbsp;
             {% if template %}
-                <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Users that can admin this series{% endtrans %}"></i>
+                <i class="mdi-action-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Users that can admin this series{% endtrans %}"></i>
             {% else %}
-                <i class="mdi-action-info" data-toggle="tooltip" data-placement="right" title="{% trans %}Users that can admin this multimedia object{% endtrans %}"></i>
+                <i class="mdi-action-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Users that can admin this multimedia object{% endtrans %}"></i>
             {% endif %}
         </div>
-        <div class="panel-body" id="owner_mm{{ template }}">
+        <div class="card-body" id="owner_mm{{ template }}">
             <table class="table">
                 <thead>
                 <tr>
@@ -26,7 +26,7 @@
                             <td>&nbsp;</td>
                         {% else %}
                             <td>
-                                <a title="{% trans %}Edit Person{% endtrans %} '{{ person.getHName() }}'" href="{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': 'owner'}) }}" data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myAuxModal{{ template }}">
+                                <a title="{% trans %}Edit Person{% endtrans %} '{{ person.getHName() }}'" href="{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': 'owner'}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-dismiss="modal" data-bs-target="#myAuxModal{{ template }}">
                                     <i class="mdi-editor-mode-edit"></i>
                                 </a>
                             </td>
@@ -77,7 +77,7 @@
                             <a title="{% trans %}Create{% endtrans %} {{ role.getName() }}"
                                class="add_owner_link"
                                href="{{ path('pumukitnewadmin_person_list_autocomplete', {'roleId': role.id, 'mmId': mm.id, 'owner': 'owner'}) }}"
-                               data-toggle="modal" data-backdrop="static" data-target="#myAuxModal{{ template }}">
+                               data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myAuxModal{{ template }}">
                                 {% trans %}new{% endtrans %}...
                             </a>
                         </td>

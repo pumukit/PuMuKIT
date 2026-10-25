@@ -1,7 +1,6 @@
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-    </button>
     <h4 class="modal-title" id="myModalLabel">{% trans %}Job info{% endtrans %}</h4>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body"
      data-controller="encoder--job"
@@ -12,29 +11,29 @@
      data-encoder--job-delete-url-value="{{ path('pumukit_encoder_delete_job') }}">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_JOBS')) %}
         <div class="box-body">
-            <dl class="dl-horizontal">
-                <dt>{% trans %}Id{% endtrans %}</dt>
-                <dd>{{ job.id }}</dd>
-                <dt>{% trans %}Status{% endtrans %}</dt>
-                <dd class="job-status-{{ job.status }}">{{ job.statusText }} <small>[{{ job.status }}]</small></dd>
-                <dt>{% trans %}Mm{% endtrans %}</dt>
-                <dd>{{ job.getMmId() }}</dd>
-                <dt>{% trans %}Profile{% endtrans %}</dt>
-                <dd>{{ job.getProfile() }}</dd>
-                <dt>{% trans %}Cpu{% endtrans %}</dt>
-                <dd>{{ job.getCpu() }}</dd>
-                <dt>{% trans %}Duration{% endtrans %}</dt>
-                <dd>{% trans %}Before{% endtrans %}: {{ job.duration|duration_string }}, {% trans %}after{% endtrans %}
+            <dl class="row">
+                <dt class="col-sm-3">{% trans %}Id{% endtrans %}</dt>
+                <dd class="col-sm-9">{{ job.id }}</dd>
+                <dt class="col-sm-3">{% trans %}Status{% endtrans %}</dt>
+                <dd class="col-sm-9 job-status-{{ job.status }}">{{ job.statusText }} <small>[{{ job.status }}]</small></dd>
+                <dt class="col-sm-3">{% trans %}Mm{% endtrans %}</dt>
+                <dd class="col-sm-9">{{ job.getMmId() }}</dd>
+                <dt class="col-sm-3">{% trans %}Profile{% endtrans %}</dt>
+                <dd class="col-sm-9">{{ job.getProfile() }}</dd>
+                <dt class="col-sm-3">{% trans %}Cpu{% endtrans %}</dt>
+                <dd class="col-sm-9">{{ job.getCpu() }}</dd>
+                <dt class="col-sm-3">{% trans %}Duration{% endtrans %}</dt>
+                <dd class="col-sm-9">{% trans %}Before{% endtrans %}: {{ job.duration|duration_string }}, {% trans %}after{% endtrans %}
                     : {{ job.getNewDuration()|duration_string }}</dd>
-                <dt>{% trans %}Times{% endtrans %}</dt>
-                <dd>{% trans %}Created{% endtrans %}
+                <dt class="col-sm-3">{% trans %}Times{% endtrans %}</dt>
+                <dd class="col-sm-9">{% trans %}Created{% endtrans %}
                     : {{ job.getTimeini()| format_datetime('medium','medium',locale=app.request.getLocale()) }}
                     , {% trans %}started{% endtrans %}
                     : {{ job.getTimestart()| format_datetime('medium','medium',app.request.getLocale()) }}
                     , {% trans %}finished{% endtrans %}
                     : {{ job.getTimeend()| format_datetime('medium','medium',app.request.getLocale()) }}</dd>
-                <dt>{% trans %}Priority{% endtrans %}</dt>
-                <dd>
+                <dt class="col-sm-3">{% trans %}Priority{% endtrans %}</dt>
+                <dd class="col-sm-9">
                     {% if job.isPending() %}
                         <span id="job_info_priority_show" class="job_info_priority" data-encoder--job-target="priority">
           <span id="job_info_priority_show_val" data-encoder--job-target="priorityValue">{{ job.getPriority() }}</span>
@@ -72,26 +71,26 @@
         </div>
         <form enctype="multipart/form-data" action="#" method="POST">
             <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-raised"
-                        data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+                <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
                 {% if job.isFailed() and not deletedMultimediaObject %}
-                    <button type="submit" class="btn btn-pumukit btn-raised"
+                    <button type="submit" class="btn btn-pumukit"
                             data-action="encoder--job#retry"
-                            data-dismiss="modal">
+                            data-bs-dismiss="modal">
                         {% trans %}RETRY{% endtrans %}
                     </button>
                 {% endif %}
                 {% if job.isWaiting() or job.isExecuting() %}
-                    <button type="submit" class="btn btn-warning btn-raised"
+                    <button type="submit" class="btn btn-warning"
                             data-action="encoder--job#stop"
-                            data-dismiss="modal">
+                            data-bs-dismiss="modal">
                         {% trans %}STOP{% endtrans %}
                     </button>
                 {% endif %}
                 {% if job.isFailed() or job.isWaiting() %}
-                    <button type="submit" class="btn btn-danger btn-raised"
+                    <button type="submit" class="btn btn-danger"
                             data-action="encoder--job#remove"
-                            data-dismiss="modal">
+                            data-bs-dismiss="modal">
                         {% trans %}DELETE{% endtrans %}
                     </button>
                 {% endif %}

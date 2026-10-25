@@ -3,14 +3,14 @@
 {% block body %}
 
     <h3 class="cab_body_div">
-        <ul class="breadcrumb pmk-margin-bottom-5">
-            <li class="active">{% trans %}Tags{% endtrans %}</li>
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active breadcrumb-item">{% trans %}Tags{% endtrans %}</li>
         </ul>
     </h3>
 
     <div class="row">
         <div class="col-md-12">
-            <div class="well">
+            <div class="card card-body bg-body-tertiary">
                 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_TAGS')) %}
                     <div id="list_tags"
                          data-controller="admin--tag-tree"
@@ -20,8 +20,8 @@
                         {% include '@PumukitNewAdmin/Tag/list.html.twig' %}
                     </div>
                     <div class="row">
-                        <div class="col-xs-4">
-                            <select id="options_tags" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
+                        <div class="col-4">
+                            <select id="options_tags" class="form-select" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
                                     data-admin--batch-name-value="tag" data-admin--batch-plural-value="tags"
                                     data-admin--batch-urls-value="{{ {delete: path('pumukitnewadmin_tag_batch_delete', {'ids': '__ids__'})}|json_encode }}"
                                     data-admin--batch-messages-value="{{ {confirm: 'Are you sure?'|trans, success: 'Tags ' ~ 'successfully deleted.'|trans, tagsWithChildren: 'Tags with children can not be deleted.'|trans}|json_encode }}">
@@ -30,9 +30,9 @@
                                 <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
                             </select>
                         </div>
-                        <div class="col-xs-8 text-right">
+                        <div class="col-8 text-end">
                             {% if root %}
-                                <a href="{{ path('pumukitnewadmin_tag_create', {'parent': root.id}) }}" class="btn btn-pumukit btn-raised btn-create-tag" data-toggle="modal" data-backdrop="static" data-target="#myModal">{% trans %}New{% endtrans %}</a>
+                                <a href="{{ path('pumukitnewadmin_tag_create', {'parent': root.id}) }}" class="btn btn-pumukit btn-create-tag" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">{% trans %}New{% endtrans %}</a>
                             {% endif %}
                         </div>
                     </div>

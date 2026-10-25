@@ -1,16 +1,16 @@
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h3 class="modal-title pumukitnewadmin-modal-title-margin" id="myModalLabel">{% trans %}Multimedia object properties{% endtrans %}</h3>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
     <fieldset>
         <legend hidden>{% trans %}Multimedia object properties{% endtrans %}</legend>
-        <div class="form-group">
-            <pre class="pmk-white-space-pre-wrap" id="multimediaobject_properties_code">{{ multimediaObject.getProperties()|json_encode(constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_UNESCAPED_UNICODE')) }}</pre>
+        <div class="mb-3">
+            <pre id="multimediaobject_properties_code" style="white-space: pre-wrap;">{{ multimediaObject.getProperties()|json_encode(constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_UNESCAPED_UNICODE')) }}</pre>
         </div>
         <br />
         <h3>{% trans %}Stats{% endtrans %}</h3>
-        <div class="form-group">
+        <div class="mb-3">
             <ul class="list-unstyled">
                 <li>
                     <strong>{% trans %}Viewed{% endtrans %}:</strong>
@@ -21,6 +21,6 @@
         </div>
     </fieldset>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Close{% endtrans %}</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Close{% endtrans %}</button>
     </div>
 </div>

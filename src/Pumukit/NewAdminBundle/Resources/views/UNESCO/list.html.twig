@@ -1,4 +1,4 @@
-<div class="table-responsive well pmk-overflow-visible" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
+<div class="table-responsive card card-body bg-body-tertiary" style="overflow:visible;" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
     <div class="collapse" id="collapseCustomFields">
         {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\UNESCOController::customFieldsAction')) }}
     </div>
@@ -42,9 +42,9 @@
                     <div class="col-md-6">
                         <span class="nbResults">{{ mms.getNbResults }}</span> {% trans %}Mm. Obj.{% endtrans %}
                     </div>
-                    <div class="col-md-6 text-right">
+                    <div class="col-md-6 text-end">
                         <div class="pagerfanta">
-                            {% set pagerClass = 'twitter_bootstrap3'  %}
+                            {% set pagerClass = 'twitter_bootstrap5'  %}
                             {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_unesco_index"} %}
                             {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : mms, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
                             {% if not is_naked() %}
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <select id="options_mms" class="form-control" data-action="change->admin--unesco#batch" title="{% trans %}Actions on selected items{% endtrans %}">
+                        <select id="options_mms" class="form-select" data-action="change->admin--unesco#batch" title="{% trans %}Actions on selected items{% endtrans %}">
                             <option value="default" selected="selected">{% trans %}Select an action{% endtrans %}...</option>
                             <option disabled="">---</option>
                             <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>

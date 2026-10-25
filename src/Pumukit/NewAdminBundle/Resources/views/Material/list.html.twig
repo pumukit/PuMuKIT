@@ -5,7 +5,7 @@
       <td><ul><li></li></ul></td>
       <td>
         <a title="{% trans %}Edit file of multimedia object{% endtrans %} {{ material.id }}"
-           data-toggle="modal" data-backdrop="static" data-dismiss="modal" data-target="#myModal"
+           data-bs-toggle="modal" data-bs-backdrop="static" data-bs-dismiss="modal" data-bs-target="#myModal"
            href="{{ path('pumukitnewadmin_material_update', {'id': material.id, 'mmId': mmId}) }}">
           <i class="mdi-editor-mode-edit"></i>
         </a>
@@ -46,16 +46,16 @@
       </td>
       <td>
         &nbsp; {% if not is_naked() %}{{ material.id }} - {% endif %}{{ material.getName() }} ({{ material.getPath()|basename }}/{{ is_addon_language(material.getLanguage()) ? material.getLanguage() | language_name_custom : material.getLanguage() | language_name | capitalize }})
-        {% if material.getHide() %}<span class="label label-default">{% trans %}hidden{% endtrans %}</span></i>{% endif %}
+        {% if material.getHide() %}<span class="badge text-bg-secondary">{% trans %}hidden{% endtrans %}</span></i>{% endif %}
         {% for tag in material.getTags() %}
-          <span class="label label-primary">{{ tag }}</span>
+          <span class="badge text-bg-primary">{{ tag }}</span>
         {% endfor %}
       </td>
     </tr>
   {% endfor %}
   <tr>
     <td><ul><li></li></ul></td>
-    <td colspan="6"><a title="{% trans %}Create Material{% endtrans %}" class="button_new_material" data-toggle="modal" data-backdrop="static" data-target="#myModal" href="{{ path('pumukitnewadmin_material_create', {'id': mmId}) }}">{% trans %}New{% endtrans %}...</a></td>
+    <td colspan="6"><a title="{% trans %}Create Material{% endtrans %}" class="button_new_material" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal" href="{{ path('pumukitnewadmin_material_create', {'id': mmId}) }}">{% trans %}New{% endtrans %}...</a></td>
   </tr>
   {% else %}
     {% trans %}You don't have enough permissions to access this content.{% endtrans %}

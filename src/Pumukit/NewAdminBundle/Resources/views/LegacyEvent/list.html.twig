@@ -1,14 +1,14 @@
-<div class="well">
+<div class="card card-body bg-body-tertiary">
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_LIVE_EVENTS')) %}
   <div role="tabpanel">
     <ul id="eventTab" class="nav nav-tabs" role="tablist" data-controller="admin--event-tabs"
         data-admin--event-tabs-list-url-value="{{ path('pumukitnewadmin_event_updatesession') }}"
         data-admin--event-tabs-calendar-url-value="{{ path('pumukitnewadmin_event_updatesession', {'activeTab': 'calEvent'}) }}">
-      <li class="{{ app.session.get('admin/event/tab')?'':'active' }}">
-        <a href="#listEvent" aria-controls="listEvent" role="tab" data-toggle="tab">{% trans %}List{% endtrans %}</a>
+      <li class="nav-item">
+        <a class="nav-link {{ app.session.get('admin/event/tab')?'':'active' }}" href="#listEvent" aria-controls="listEvent" role="tab" data-bs-toggle="tab">{% trans %}List{% endtrans %}</a>
       </li>
-      <li class="{{ app.session.get('admin/event/tab')?'active':'' }}">
-        <a href="#calEvent" aria-controls="calEvent" role="tab" data-toggle="tab">{% trans %}Calendar{% endtrans %}</a>
+      <li class="nav-item">
+        <a class="nav-link {{ app.session.get('admin/event/tab')?'active':'' }}" href="#calEvent" aria-controls="calEvent" role="tab" data-bs-toggle="tab">{% trans %}Calendar{% endtrans %}</a>
       </li>
     </ul>
     <div class="tab-content">

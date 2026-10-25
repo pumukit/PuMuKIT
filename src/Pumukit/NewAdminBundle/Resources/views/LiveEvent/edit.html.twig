@@ -1,18 +1,18 @@
-<div class="well">
+<div class="card card-body bg-body-tertiary">
 
     <div class="info_live_events pmk-margin-bottom-10">
         {% include '@PumukitNewAdmin/LiveEvent/links.html.twig' %}
     </div>
     <div role="tabpanel">
         <ul id="menuTab" class="nav nav-tabs" role="tablist" data-controller="admin--tabs" data-admin--tabs-key-value="lastMmTab">
-            <li class="active">
-                <a href="#event" aria-controls="event" role="tab" data-toggle="tab">{% trans %}Event{% endtrans %}</a>
+            <li class="nav-item">
+                <a class="nav-link active" href="#event" aria-controls="event" role="tab" data-bs-toggle="tab">{% trans %}Event{% endtrans %}</a>
             </li>
-            <li>
-                <a href="#session" aria-controls="session" role="tab" data-toggle="tab">{% trans %}Session{% endtrans %}</a>
+            <li class="nav-item">
+                <a class="nav-link" href="#session" aria-controls="session" role="tab" data-bs-toggle="tab">{% trans %}Session{% endtrans %}</a>
             </li>
-            <li>
-                <a href="#series" aria-controls="series" role="tab" data-toggle="tab">{% trans %}Series{% endtrans %}</a>
+            <li class="nav-item">
+                <a class="nav-link" href="#series" aria-controls="series" role="tab" data-bs-toggle="tab">{% trans %}Series{% endtrans %}</a>
             </li>
         </ul>
         <div class="tab-content">

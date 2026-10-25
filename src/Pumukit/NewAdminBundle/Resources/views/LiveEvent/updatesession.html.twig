@@ -1,13 +1,13 @@
-<div class="well pmk-overflow-hidden">
-    <div class="col-xs-12">
+<div class="card card-body bg-body-tertiary" style="overflow:hidden">
+    <div class="col-12">
         <div id="list_live_events" class="row">
             {% include '@PumukitNewAdmin/LiveEvent/sessionlist.html.twig' with {'multimediaObject' : multimediaObject} %}
         </div>
     </div>
 
-    <div class="col-xs-12">
+    <div class="col-12">
 
-        <a href="{{ path('pumukit_new_admin_live_event_session_modal', {'multimediaObject': multimediaObject.getId()}) }}"  data-backdrop="static" data-toggle="modal" data-target="#updatesessionmodal">
+        <a href="{{ path('pumukit_new_admin_live_event_session_modal', {'multimediaObject': multimediaObject.getId()}) }}"  data-bs-backdrop="static" data-bs-toggle="modal" data-bs-target="#updatesessionmodal">
         {% trans %}New event session{% endtrans %}
         </a>
     </div>
@@ -16,7 +16,7 @@
 </div>
 
 <!-- Modal -->
-<div class="pmk-modal modal fade" id="updatesessionmodal" tabindex="-1" role="dialog" aria-labelledby="updatesessionmodalLabel">
+<div class="pmk-modal modal fade" id="updatesessionmodal" tabindex="-1" role="dialog" aria-labelledby="updatesessionmodalLabel" data-bs-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content modal-session">
             {% include '@PumukitNewAdmin/LiveEvent/updatesessionmodal.html.twig' %}

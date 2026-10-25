@@ -5,11 +5,11 @@
             <p>{{ style.getName() }}</p>
             <form id="form_style_edit" name="form_style_edit" action="" method="POST" data-action="submit->admin--series-styles#save">
                 <input type="hidden" name="id" value="{{ style.getId() }}" />
-                <div class="form-group">
+                <div class="mb-3">
                     <textarea name="style_text" rows="14" cols="100">{{ style.getText() }}</textarea>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-pumukit btn-raised">{% trans %}Save changes{% endtrans %}</button>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-pumukit">{% trans %}Save changes{% endtrans %}</button>
                 </div>
             </form>
         {% endif %}

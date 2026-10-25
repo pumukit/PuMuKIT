@@ -29,10 +29,10 @@
             <tbody>
             {% for job in jobs.jobs %}
                 <tr class="{% if job.failed %} danger{% elseif job.executing %} warning{% endif %}">
-                    <td class="pmk-width-3pct">
-                        <a class="pmk-color-inherit" title="{% trans %}Encoder Job info{% endtrans %}" data-toggle="modal"
-                        data-backdrop="static"
-                        data-dismiss="modal" data-target="#myModal"
+                    <td style="width:3%">
+                        <a title="{% trans %}Encoder Job info{% endtrans %}" style="color:inherit" data-bs-toggle="modal"
+                        data-bs-backdrop="static"
+                        data-bs-dismiss="modal" data-bs-target="#myModal"
                         href="{{ path('pumukit_encoder_job', {id: job.id}) }}">
                             <i class="mdi-action-info"></i>
                         </a>
@@ -70,9 +70,9 @@
                             {{ jobs.total }}
                             {{ "{0} jobs|{1} job|]1,Inf] jobs"|trans({'%count%':  jobs.total}) }}
                         </div>
-                        <div class="col-md-4 text-right">
+                        <div class="col-md-4 text-end">
                             <div class="pagerfanta">
-                                {% set pagerClass = 'twitter_bootstrap3' %}
+                                {% set pagerClass = 'twitter_bootstrap5' %}
                                 {% set pagerStyles = {"css_container_class": "pagination pagination-sm",
                                     "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukit_encoder_info",
                                     "pageParameter": pageParameter, "routeParams": app.request.query.all} %}

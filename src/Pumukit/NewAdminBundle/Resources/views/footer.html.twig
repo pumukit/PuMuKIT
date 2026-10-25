@@ -1,16 +1,11 @@
-<! --- MESSAGES ALERT --- !>
-<span id="div_messages_span_error" data-toggle="snackbar" data-style="toast error" data-content="Error message" data-timeout="7000"></span>
-<span id="div_messages_span_info" data-toggle="snackbar" data-style="toast info" data-content="Information message" data-timeout="3000"></span>
-<div id="snackbar-container"></div>
+<div id="pmk-toasts" class="toast-container position-fixed bottom-0 start-0 p-3" data-close-label="{{ 'Close'|trans }}"></div>
 
 {% if not is_naked() %}
 <! --- FOOTER INFO --- !>
-<nav class="navbar navbar-default navbar-fixed-bottom pmk-background-color-f9f9f9" role="navigation">
-  <div id="footer" class="panel-footer pmk-background-color-f9f9f9">
-    <div class="pmk-float-right pmk-padding-5-10-0-0 pmk-color-009587">&copy; Copyright PuMuKIT {{constant('Pumukit\\PumukitVersion::VERSION')}}</div>
-    <p>
-      <a href="http://pumukit.org/">PuMuKIT WEB</a>
-    </p>
+<nav class="navbar fixed-bottom pmk-admin-footer" role="navigation">
+  <div id="footer" class="container-fluid">
+    <div class="order-last" style="color:#009587;">&copy; Copyright PuMuKIT {{constant('Pumukit\\PumukitVersion::VERSION')}}</div>
+    <a href="http://pumukit.org/">PuMuKIT WEB</a>
   </div>
 </nav>
 {% endif %}

@@ -1,5 +1,5 @@
-<div class="well">
-    <fieldset class="">
+<div class="card card-body bg-body-tertiary">
+    <fieldset>
         <legend hidden>{% trans %}Person with Role list{% endtrans %}</legend>
         <dl class="pmk-margin-0">
             {% for role in roles | filter(role => role.getCod() != personal_scope_role_code) %}

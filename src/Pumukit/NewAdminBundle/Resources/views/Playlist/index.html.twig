@@ -3,8 +3,8 @@
 {% block body %}
 
     <h3 class="cab_body_div">
-        <ul class="breadcrumb pmk-margin-bottom-5">
-            <li class="active">
+        <ul class="breadcrumb" style="margin-bottom: 5px;">
+            <li class="active breadcrumb-item">
                 {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
                     {% if is_naked() %}
                         {% trans %}My Playlists{% endtrans %}
@@ -21,13 +21,13 @@
     <div class="row">
         {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
             <div class="col-md-10">
-                <div class="well">
+                <div class="card card-body bg-body-tertiary">
                     <div id="list_playlists">
                         {% include '@PumukitNewAdmin/Playlist/list.html.twig' %}
                     </div>
                     <div class="row">
-                        <div class="col-xs-4">
-                            <select id="options_series" class="form-control" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
+                        <div class="col-4">
+                            <select id="options_series" class="form-select" title="{% trans %}Actions on selected items{% endtrans %}" data-controller="admin--batch" data-action="change->admin--batch#run"
                                     data-admin--batch-name-value="playlist" data-admin--batch-plural-value="playlists" data-admin--batch-preview-value="playlist"
                                     data-admin--batch-urls-value="{{ {delete: path('pumukitnewadmin_playlist_batch_delete', {'ids': '__ids__'})}|json_encode }}"
                                     data-admin--batch-messages-value="{{ {confirm: 'Are you sure?'|trans, success: 'Playlists ' ~ 'successfully deleted.'|trans, selectAny: 'Select any playlist.'|trans}|json_encode }}">
@@ -36,9 +36,9 @@
                                 <option value="delete_selected">{% trans %}Delete selected{% endtrans %}</option>
                             </select>
                         </div>
-                        <div class="col-xs-8 text-right">
+                        <div class="col-8 text-end">
                             {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
-                                <a title="{% trans %}Create new playlist{% endtrans %}" id="pumukitnewadmin_playlist_new_button" class="btn btn-pumukit btn-raised" href="#" data-action="click->admin--actions#create"
+                                <a title="{% trans %}Create new playlist{% endtrans %}" id="pumukitnewadmin_playlist_new_button" class="btn btn-pumukit" href="#" data-action="click->admin--actions#create"
                                    data-admin--actions-url-param="{{ path('pumukitnewadmin_playlist_create') }}"
                                    data-admin--actions-method-param="POST"
                                    data-admin--actions-key-param="playlistId"
@@ -60,8 +60,8 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="col-md-2 hidden-xs hidden-sm">
-                <div id="preview_playlist" class="well">
+            <div class="col-md-2 d-none d-md-block">
+                <div id="preview_playlist" class="card card-body bg-body-tertiary">
                     {% if(app.session.has('admin/playlist/id')) %}
                         <div data-controller="admin--include" data-admin--include-src-value="{{ url('pumukitnewadmin_playlist_show', {'id': app.session.get('admin/playlist/id')}) }}"></div>
                     {% else %}
@@ -72,7 +72,7 @@
             </div>
         {% else %}
             <div class="col-md-12">
-                <div class="well">
+                <div class="card card-body bg-body-tertiary">
                     {% trans %}You don't have enough permissions to access this content.{% endtrans %}
                 </div>
             </div>

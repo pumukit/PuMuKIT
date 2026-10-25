@@ -1,11 +1,11 @@
 <div {% include '@PumukitNewAdmin/LiveEvent/_controller.html.twig' %}
      data-admin--live-event-autoload-value="true"
      data-admin--live-event-current-value="{{ app.session.get('admin/live/event/id') }}">
-    <table class="table  table-striped">
+    <table class="table table-striped">
         <thead>
         <tr>
             <th id="th-checkbox" width="1%">
-                <div class="checkbox">
+                <div class="form-check">
                     <label>
                         <input type="checkbox" data-action="click->admin--actions#checkAll" data-admin--actions-name-param="events">
                     </label>
@@ -57,7 +57,7 @@
             {% set showPath = path('pumukit_new_admin_live_event_show', {'id': multimediaObject.id} ) %}
             <tr {% if app.request.session.has('admin/live/event/id') and app.request.session.get('admin/live/event/id') == multimediaObject.getId() %}class="success"{% endif %}>
                 <td headers="th-checkbox" width="1%">
-                    <div class="checkbox">
+                    <div class="form-check">
                         <label>
                             <input type="checkbox" class="events_checkbox" name="events_checkbox[]" value="{{ multimediaObject.getId() }}">
                         </label>
@@ -112,9 +112,9 @@
                                 <a class="cancel-search-button pmk-color-blue pmk-font-weight-normal" title="{% trans %}Cancel current search{% endtrans %}" href="#" data-action="click->admin--live-event#resetFilters">{% trans %}Cancel search{% endtrans %}</a>
                            {% endif %}
                        </div>
-                       <div class="col-md-4 text-right">
+                       <div class="col-md-4 text-end">
                             <div class="pagerfanta">
-                                {% set pagerClass = 'twitter_bootstrap3' %}
+                                {% set pagerClass = 'twitter_bootstrap5' %}
                                 {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukit_new_admin_live_event_index"} %}
                                 {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : multimediaObjects, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
                                 <input class="pmk-width-25 pmk-text-align-center pmk-cursor-pointer" title="{% trans %}Go to page{% endtrans %}" type="number"
