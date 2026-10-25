@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Document\ValueObject;
 
 use Doctrine\ODM\MongoDB\Mapping\Attribute as MongoDB;
-use MongoDB\BSON\ObjectId;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[MongoDB\EmbeddedDocument]
@@ -24,11 +23,8 @@ class Immutable
     {
         $this->value = $value;
         $this->date = new \DateTime();
-        if ($user) {
-            $this->user = new ObjectId($user->getId());
-        } else {
-            $this->user = null;
-        }
+        $userId = $user?->getId();
+        $this->user = $userId ? (string) $userId : null;
     }
 
     public static function create(bool $value, ?UserInterface $user): self
@@ -46,9 +42,9 @@ class Immutable
         return $this->date;
     }
 
-    public function user(): ?ObjectId
+    public function user(): ?string
     {
-        return $this->user ?? null;
+        return null === $this->user ? null : (string) $this->user;
     }
 
     public function isBlocked(): bool
