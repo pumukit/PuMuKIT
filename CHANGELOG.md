@@ -87,6 +87,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Several Symfony 6 runtime issues in the backoffice menu, the web profiler and the pagination adapters.
 - Security advisories in `guzzlehttp/guzzle`, `guzzlehttp/psr7` and `api-platform/core`.
 - Media API endpoint failing on multimedia objects whose metadata was stored as a JSON array.
+- Media API endpoint failing with a 500 on blocked (archived) multimedia objects: `Immutable::user()` now returns the user id as a string, as Doctrine ODM hydrates it.
 - Missing translations in the backoffice and the portal for English, Spanish, Galician, Catalan, Valencian and Basque, and labels translated twice by the backoffice form theme.
 - Video playback returning a 404 for local tracks: they are now served through `/trackfile` instead of redirecting to the blocked `/storage` path.
 - Image-type multimedia objects returning a 404 on the player: the image now goes through `track_url()` (i.e. `/trackfile`) like documents and video tracks, instead of the raw `/storage/downloads/...` URL.
