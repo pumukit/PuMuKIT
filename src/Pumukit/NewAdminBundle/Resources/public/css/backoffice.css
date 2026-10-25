@@ -225,6 +225,12 @@ label, .form-label, .col-form-label {
     float: right;
 }
 
+.col,
+[class^="col-"],
+[class*=" col-"] {
+    position: relative;
+}
+
 .pumukitnewadmin-groups-list-title-row > * {
     width: auto;
 }
@@ -244,6 +250,10 @@ label, .form-label, .col-form-label {
     top: 1rem;
     right: 1rem;
     margin: 0;
+}
+
+.modal-footer > .row {
+    flex: 1 0 100%;
 }
 
 .list-group-item .row-action-primary {

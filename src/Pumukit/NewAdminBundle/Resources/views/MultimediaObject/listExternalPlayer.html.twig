@@ -27,16 +27,12 @@
             </div>
         </div>
     {% endif %}
-    <div class="modal-footer pmk-margin-top-50">
-        <hr/>
-        <div class="row">{% if is_granted('ROLE_ADD_EXTERNAL_PLAYER') %}
-        <div class="col-md-2 float-end">
-            <button type="submit" class="btn btn-primary">{% trans %}Submit{% endtrans %}</button>
-        </div>
+    <div class="modal-footer" style="margin-top:50px">
+        <hr class="w-100"/>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+        {% if is_granted('ROLE_ADD_EXTERNAL_PLAYER') %}
+        <button type="submit" class="btn btn-primary">{% trans %}Submit{% endtrans %}</button>
         {% endif %}
-        <div class="col-md-2 float-end">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
-        </div></div>
 
     </div>
     {{ form_end(form) }}
