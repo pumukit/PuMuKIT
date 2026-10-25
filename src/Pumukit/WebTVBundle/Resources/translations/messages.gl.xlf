@@ -837,6 +837,26 @@
         <source>Edit multimedia object</source>
         <target>Editar obxecto multimedia</target>
       </trans-unit>
+      <trans-unit id=".GkUmi3" resname="Carousel">
+        <source>Carousel</source>
+        <target state="translated">Carrusel</target>
+      </trans-unit>
+      <trans-unit id="9SLHepm" resname="place_subserial">
+        <source>place_subserial</source>
+        <target state="translated">lugar_subserie</target>
+      </trans-unit>
+      <trans-unit id="jOwbyEF" resname="Private Content">
+        <source>Private Content</source>
+        <target state="translated">Contido privado</target>
+      </trans-unit>
+      <trans-unit id="dAxKUtI" resname="Private event">
+        <source>Private event</source>
+        <target state="translated">Evento privado</target>
+      </trans-unit>
+      <trans-unit id="brKRECN" resname="Remember">
+        <source>Remember</source>
+        <target state="translated">Lembrarme</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

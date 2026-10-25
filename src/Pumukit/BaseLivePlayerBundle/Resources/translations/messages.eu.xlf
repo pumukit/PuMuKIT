@@ -63,11 +63,11 @@
       </trans-unit>
       <trans-unit id="Xypi4__" resname="The event has not been held yet">
         <source>The event has not been held yet</source>
-        <target state="needs-translation">The event has not been held yet</target>
+        <target state="translated">Emanaldia ez da oraindik egin</target>
       </trans-unit>
       <trans-unit id="i7YNXXs" resname="The event has already been held">
         <source>The event has already been held</source>
-        <target state="needs-translation">The event has already been held</target>
+        <target state="translated">Emanaldia egin da dagoeneko</target>
       </trans-unit>
       <trans-unit id="tkrAXxf" resname="Live">
         <source>Live</source>
@@ -103,7 +103,7 @@
       </trans-unit>
       <trans-unit id="7tKy0KB" resname="New contact from live event">
         <source>New contact from live event</source>
-        <target state="needs-translation">New contact from live event</target>
+        <target state="translated">Kontaktu berria zuzeneko emanaldi batetik</target>
       </trans-unit>
       <trans-unit id="q1EATp1" resname="days">
         <source>days</source>
@@ -111,7 +111,7 @@
       </trans-unit>
       <trans-unit id="R70pB1_" resname="Content">
         <source>Content</source>
-        <target state="needs-translation">Content</target>
+        <target state="translated">Edukia</target>
       </trans-unit>
       <trans-unit id="ZYNLahi" resname="Obsolete browser">
         <source>Obsolete browser</source>
@@ -131,15 +131,15 @@
       </trans-unit>
       <trans-unit id="kxQCXu4" resname="email send">
         <source>email send</source>
-        <target state="needs-translation">email send</target>
+        <target state="translated">posta elektronikoa bidalita</target>
       </trans-unit>
       <trans-unit id="TPzY.dq" resname="please verify form data">
         <source>please verify form data</source>
-        <target state="needs-translation">please verify form data</target>
+        <target state="translated">egiaztatu inprimakiko datuak</target>
       </trans-unit>
       <trans-unit id="nCmGYqT" resname="Event chat">
         <source>Event chat</source>
-        <target state="needs-translation">Event chat</target>
+        <target state="translated">Emanaldiaren txata</target>
       </trans-unit>
       <trans-unit id="3NHVIj9" resname="Name">
         <source>Name</source>
@@ -147,11 +147,11 @@
       </trans-unit>
       <trans-unit id="lhXIE3s" resname="Name cannot be empty">
         <source>Name cannot be empty</source>
-        <target state="needs-translation">Name cannot be empty</target>
+        <target state="translated">Izenak ezin du hutsik egon</target>
       </trans-unit>
       <trans-unit id="L3dmip3" resname="Message">
         <source>Message</source>
-        <target state="needs-translation">Message</target>
+        <target state="translated">Mezua</target>
       </trans-unit>
       <trans-unit id="pCwHVEo" resname="Sorry but there was an error">
         <source>Sorry but there was an error</source>
@@ -159,11 +159,11 @@
       </trans-unit>
       <trans-unit id="NvvDhQX" resname="Chat icon">
         <source>Chat icon</source>
-        <target state="needs-translation">Chat icon</target>
+        <target state="translated">Txataren ikonoa</target>
       </trans-unit>
       <trans-unit id="HHzHKHy" resname="Live chat">
         <source>Live chat</source>
-        <target state="needs-translation">Live chat</target>
+        <target state="translated">Zuzeneko txata</target>
       </trans-unit>
       <trans-unit id="_O39e6Q" resname="VideoJS does not support your browser version">
         <source>VideoJS does not support your browser version</source>
@@ -172,6 +172,14 @@
       <trans-unit id="tsPwTGf" resname="Please use 11.0 or higher version or use another browser.">
         <source>Please use 11.0 or higher version or use another browser.</source>
         <target state="needs-translation">Please use 11.0 or higher version or use another browser.</target>
+      </trans-unit>
+      <trans-unit id="APweK7O" resname="Event Poster">
+        <source>Event Poster</source>
+        <target state="translated">Emanaldiaren kartela</target>
+      </trans-unit>
+      <trans-unit id="7gQ8u6e" resname="There aren&apos;t events at this moment">
+        <source>There aren't events at this moment</source>
+        <target state="translated">Une honetan ez dago emanaldirik</target>
       </trans-unit>
     </body>
   </file>

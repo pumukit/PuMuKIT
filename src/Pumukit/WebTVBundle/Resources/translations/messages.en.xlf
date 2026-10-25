@@ -837,6 +837,26 @@
         <source>Edit multimedia object</source>
         <target>Edit multimedia object</target>
       </trans-unit>
+      <trans-unit id=".GkUmi3" resname="Carousel">
+        <source>Carousel</source>
+        <target>Carousel</target>
+      </trans-unit>
+      <trans-unit id="9SLHepm" resname="place_subserial">
+        <source>place_subserial</source>
+        <target>place_subserial</target>
+      </trans-unit>
+      <trans-unit id="jOwbyEF" resname="Private Content">
+        <source>Private Content</source>
+        <target>Private Content</target>
+      </trans-unit>
+      <trans-unit id="dAxKUtI" resname="Private event">
+        <source>Private event</source>
+        <target>Private event</target>
+      </trans-unit>
+      <trans-unit id="brKRECN" resname="Remember">
+        <source>Remember</source>
+        <target>Remember</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

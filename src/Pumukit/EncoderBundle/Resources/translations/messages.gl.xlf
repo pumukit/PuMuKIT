@@ -177,6 +177,22 @@
         <source>This cpu only executes jobs from the following profiles:</source>
         <target state="translated">Esta cpu só executa traballos dos seguintes perfiles:</target>
       </trans-unit>
+      <trans-unit id="_62c3tU" resname="Job">
+        <source>Job</source>
+        <target state="translated">Tarefa</target>
+      </trans-unit>
+      <trans-unit id="qy0m8f3" resname="Multimedia object removed">
+        <source>Multimedia object removed</source>
+        <target state="translated">Obxecto multimedia eliminado</target>
+      </trans-unit>
+      <trans-unit id="Y6tR230" resname="Started">
+        <source>Started</source>
+        <target state="translated">Iniciado</target>
+      </trans-unit>
+      <trans-unit id="F6tPan4" resname="STOP">
+        <source>STOP</source>
+        <target state="translated">DETER</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

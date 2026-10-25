@@ -173,6 +173,10 @@
         <source>Please use 11.0 or higher version or use another browser.</source>
         <target>Please use 11.0 or higher version or use another browser.</target>
       </trans-unit>
+      <trans-unit id="APweK7O" resname="Event Poster">
+        <source>Event Poster</source>
+        <target>Event Poster</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

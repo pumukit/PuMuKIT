@@ -66,6 +66,54 @@ Commit</target>
         <source>Back</source>
         <target state="translated">Torna</target>
       </trans-unit>
+      <trans-unit id="1TOEHTD" resname="Access Forbidden: Check your role.">
+        <source>Access Forbidden: Check your role.</source>
+        <target state="translated">Accés prohibit: comprova el teu rol.</target>
+      </trans-unit>
+      <trans-unit id="v8H5qNL" resname="layout.logged_in_as">
+        <source>layout.logged_in_as</source>
+        <target state="translated">Sessió iniciada com a %username%</target>
+      </trans-unit>
+      <trans-unit id="2B20XFT" resname="multimedia object">
+        <source>multimedia object</source>
+        <target state="translated">objecte multimèdia</target>
+      </trans-unit>
+      <trans-unit id="Qslm1zv" resname="No playable multimedia object found with id: %id% belonging to this playlist. (%title%)">
+        <source>No playable multimedia object found with id: %id% belonging to this playlist. (%title%)</source>
+        <target state="translated">No s'ha trobat cap objecte multimèdia reproduïble amb l'id %id% en aquesta llista de reproducció. (%title%)</target>
+      </trans-unit>
+      <trans-unit id="Pvn99oq" resname="No playlist found with id: %id%">
+        <source>No playlist found with id: %id%</source>
+        <target state="translated">No s'ha trobat cap llista de reproducció amb l'id %id%</target>
+      </trans-unit>
+      <trans-unit id="ZJsXL1a" resname="Oops! An Error Occurred">
+        <source>Oops! An Error Occurred</source>
+        <target state="translated">Vaja! S'ha produït un error</target>
+      </trans-unit>
+      <trans-unit id="tIlrnot" resname="Series not found">
+        <source>Series not found</source>
+        <target state="translated">No s'ha trobat la sèrie</target>
+      </trans-unit>
+      <trans-unit id="qCFjmmk" resname="Something is broken. Please let us know what you were doing when this error occurred. We will fix it as soon as possible. Sorry for any inconvenience caused.">
+        <source>Something is broken. Please let us know what you were doing when this error occurred. We will fix it as soon as possible. Sorry for any inconvenience caused.</source>
+        <target state="translated">Alguna cosa no funciona. Explica'ns què feies quan s'ha produït aquest error. L'arreglarem tan aviat com puguem. Disculpa les molèsties.</target>
+      </trans-unit>
+      <trans-unit id="AyXbPHX" resname="The server returned a">
+        <source>The server returned a</source>
+        <target state="translated">El servidor ha retornat un</target>
+      </trans-unit>
+      <trans-unit id="dNYHRuk" resname="This playlist does not have any playable multimedia objects.">
+        <source>This playlist does not have any playable multimedia objects.</source>
+        <target state="translated">Aquesta llista de reproducció no té cap objecte multimèdia reproduïble.</target>
+      </trans-unit>
+      <trans-unit id="1kLm1Gs" resname="Url">
+        <source>Url</source>
+        <target state="translated">URL</target>
+      </trans-unit>
+      <trans-unit id="XjvvlPc" resname="Web">
+        <source>Web</source>
+        <target state="translated">Web</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

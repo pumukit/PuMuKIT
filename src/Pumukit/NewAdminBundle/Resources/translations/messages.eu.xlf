@@ -2644,43 +2644,43 @@
       </trans-unit>
       <trans-unit id="sLn_JP_" resname="Manual">
         <source>Manual</source>
-        <target state="needs-translation">Manual</target>
+        <target state="translated">Eskuliburua</target>
       </trans-unit>
       <trans-unit id="XqGUv5j" resname="Series picture">
         <source>Series picture</source>
-        <target state="needs-translation">Series picture</target>
+        <target state="translated">Seriearen irudia</target>
       </trans-unit>
       <trans-unit id="1wfcLxk" resname="Logo">
         <source>Logo</source>
-        <target state="needs-translation">Logo</target>
+        <target state="translated">Logotipoa</target>
       </trans-unit>
       <trans-unit id="3z1z_Hm" resname="Filter Series">
         <source>Filter Series</source>
-        <target state="needs-translation">Filter Series</target>
+        <target state="translated">Iragazi serieak</target>
       </trans-unit>
       <trans-unit id="rhVmzSH" resname="Series publication status">
         <source>Series publication status</source>
-        <target state="needs-translation">Series publication status</target>
+        <target state="translated">Seriearen argitaratze-egoera</target>
       </trans-unit>
       <trans-unit id="ma9mBv_" resname="Menu">
         <source>Menu</source>
-        <target state="needs-translation">Menu</target>
+        <target state="translated">Menua</target>
       </trans-unit>
       <trans-unit id="Jh7wNiu" resname="Select the number of series to display per page.">
         <source>Select the number of series to display per page.</source>
-        <target state="needs-translation">Select the number of series to display per page.</target>
+        <target state="translated">Hautatu orrialde bakoitzean erakutsi beharreko serieen kopurua.</target>
       </trans-unit>
       <trans-unit id="asYuSbc" resname="Select the number of playlists to display per page.">
         <source>Select the number of playlists to display per page.</source>
-        <target state="needs-translation">Select the number of playlists to display per page.</target>
+        <target state="translated">Hautatu orrialde bakoitzean erakutsi beharreko erreprodukzio-zerrenden kopurua.</target>
       </trans-unit>
       <trans-unit id="2S2DRLh" resname="Select the number of multimedia objects to display per page.">
         <source>Select the number of multimedia objects to display per page.</source>
-        <target state="needs-translation">Select the number of multimedia objects to display per page.</target>
+        <target state="translated">Hautatu orrialde bakoitzean erakutsi beharreko multimedia-objektuen kopurua.</target>
       </trans-unit>
       <trans-unit id="1c5E_XE" resname="External player">
         <source>External player</source>
-        <target state="needs-translation">External player</target>
+        <target state="translated">Kanpoko erreproduzigailua</target>
       </trans-unit>
       <trans-unit id="EUXU0w." resname="'No external player set'">
         <source>'No external player set'</source>
@@ -2716,79 +2716,79 @@
       </trans-unit>
       <trans-unit id="RkxP.QG" resname="Edit">
         <source>Edit</source>
-        <target state="needs-translation">Edit</target>
+        <target state="translated">Editatu</target>
       </trans-unit>
       <trans-unit id="L7AIWVS" resname="Filter Roles">
         <source>Filter Roles</source>
-        <target state="needs-translation">Filter Roles</target>
+        <target state="translated">Iragazi rolak</target>
       </trans-unit>
       <trans-unit id="BOhY0PO" resname="Filter Groups">
         <source>Filter Groups</source>
-        <target state="needs-translation">Filter Groups</target>
+        <target state="translated">Iragazi taldeak</target>
       </trans-unit>
       <trans-unit id="x2CEL.O" resname="Filter People">
         <source>Filter People</source>
-        <target state="needs-translation">Filter People</target>
+        <target state="translated">Iragazi pertsonak</target>
       </trans-unit>
       <trans-unit id="8.4sk7N" resname="Thumbnail">
         <source>Thumbnail</source>
-        <target state="needs-translation">Thumbnail</target>
+        <target state="translated">Miniatura</target>
       </trans-unit>
       <trans-unit id="k2oWHDk" resname="Editor">
         <source>Editor</source>
-        <target state="needs-translation">Editor</target>
+        <target state="translated">Editorea</target>
       </trans-unit>
       <trans-unit id="UUVDL8u" resname="Relations list">
         <source>Relations list</source>
-        <target state="needs-translation">Relations list</target>
+        <target state="translated">Erlazioen zerrenda</target>
       </trans-unit>
       <trans-unit id="cYbOzrI" resname="Modify broadcast profile">
         <source>Modify broadcast profile</source>
-        <target state="needs-translation">Modify broadcast profile</target>
+        <target state="translated">Aldatu hedapen-profila</target>
       </trans-unit>
       <trans-unit id="V_Ek1jl" resname="Person with Role list">
         <source>Person with Role list</source>
-        <target state="needs-translation">Person with Role list</target>
+        <target state="translated">Rolak dituzten pertsonak</target>
       </trans-unit>
       <trans-unit id=".RFyz_P" resname="Spinner">
         <source>Spinner</source>
-        <target state="needs-translation">Spinner</target>
+        <target state="translated">Kargatzen</target>
       </trans-unit>
       <trans-unit id="_9XC0Le" resname="Update publication">
         <source>Update publication</source>
-        <target state="needs-translation">Update publication</target>
+        <target state="translated">Eguneratu argitalpena</target>
       </trans-unit>
       <trans-unit id="4tClSWj" resname="Delete">
         <source>Delete</source>
-        <target state="needs-translation">Delete</target>
+        <target state="translated">Ezabatu</target>
       </trans-unit>
       <trans-unit id="qQ9wlqQ" resname="Submit generate magic URL">
         <source>Submit generate magic URL</source>
-        <target state="needs-translation">Submit generate magic URL</target>
+        <target state="translated">Sortu URL magiko berria</target>
       </trans-unit>
       <trans-unit id="aNPaCQq" resname="Read only form">
         <source>Read only form</source>
-        <target state="needs-translation">Read only form</target>
+        <target state="translated">Irakurtzeko soilik den inprimakia</target>
       </trans-unit>
       <trans-unit id="BOfRAxf" resname="Update metadata">
         <source>Update metadata</source>
-        <target state="needs-translation">Update metadata</target>
+        <target state="translated">Eguneratu metadatuak</target>
       </trans-unit>
       <trans-unit id="YzJHJvk" resname="Update media">
         <source>Update media</source>
-        <target state="needs-translation">Update media</target>
+        <target state="translated">Eguneratu multimedia</target>
       </trans-unit>
       <trans-unit id="0VgOpQk" resname="Filter Users">
         <source>Filter Users</source>
-        <target state="needs-translation">Filter Users</target>
+        <target state="translated">Iragazi erabiltzaileak</target>
       </trans-unit>
       <trans-unit id="fpFAdY1" resname="Filter Live Channels">
         <source>Filter Live Channels</source>
-        <target state="needs-translation">Filter Live Channels</target>
+        <target state="translated">Iragazi zuzeneko kanalak</target>
       </trans-unit>
       <trans-unit id="PG3gj8j" resname="Filter Live Events">
         <source>Filter Live Events</source>
-        <target state="needs-translation">Filter Live Events</target>
+        <target state="translated">Iragazi zuzeneko emanaldiak</target>
       </trans-unit>
       <trans-unit id="8bdQWvp" resname="Social">
         <source>Social</source>
@@ -2800,31 +2800,31 @@
       </trans-unit>
       <trans-unit id="eDKk3wj" resname="New event session">
         <source>New event session</source>
-        <target state="needs-translation">New event session</target>
+        <target state="translated">Emanaldiaren saio berria</target>
       </trans-unit>
       <trans-unit id="2VCCou5" resname="Author">
         <source>Author</source>
-        <target state="needs-translation">Author</target>
+        <target state="translated">Egilea</target>
       </trans-unit>
       <trans-unit id="mO5AIcb" resname="Producer">
         <source>Producer</source>
-        <target state="needs-translation">Producer</target>
+        <target state="translated">Ekoizlea</target>
       </trans-unit>
       <trans-unit id="ikoRF.w" resname="External URL">
         <source>External URL</source>
-        <target state="needs-translation">External URL</target>
+        <target state="translated">Kanpoko URLa</target>
       </trans-unit>
       <trans-unit id="vn4vIBK" resname="Images">
         <source>Images</source>
-        <target state="needs-translation">Images</target>
+        <target state="translated">Irudiak</target>
       </trans-unit>
       <trans-unit id="K1w9JnI" resname="Contact">
         <source>Contact</source>
-        <target state="needs-translation">Contact</target>
+        <target state="translated">Harremanetarako</target>
       </trans-unit>
       <trans-unit id="Oz0ME2t" resname="Event successfully updated.">
         <source>Event successfully updated.</source>
-        <target state="needs-translation">Event successfully updated.</target>
+        <target state="translated">Emanaldia behar bezala eguneratu da.</target>
       </trans-unit>
       <trans-unit id="FpAfuZM" resname="Select an&#10; action...">
         <source>Select an
@@ -2833,15 +2833,15 @@
       </trans-unit>
       <trans-unit id="Fv0AJbm" resname="Create new series of live events">
         <source>Create new series of live events</source>
-        <target state="needs-translation">Create new series of live events</target>
+        <target state="translated">Sortu zuzeneko emanaldien serie berria</target>
       </trans-unit>
       <trans-unit id="DbvDhEd" resname="New event and series">
         <source>New event and series</source>
-        <target state="needs-translation">New event and series</target>
+        <target state="translated">Emanaldi eta serie berria</target>
       </trans-unit>
       <trans-unit id="ZiSLl6W" resname="New event from series">
         <source>New event from series</source>
-        <target state="needs-translation">New event from series</target>
+        <target state="translated">Emanaldi berria serie batetik</target>
       </trans-unit>
       <trans-unit id="YanvfON" resname="New live event">
         <source>New live event</source>
@@ -2853,55 +2853,55 @@
       </trans-unit>
       <trans-unit id="9FKE9Io" resname="Create/Update session">
         <source>Create/Update session</source>
-        <target state="needs-translation">Create/Update session</target>
+        <target state="translated">Sortu/Eguneratu saioa</target>
       </trans-unit>
       <trans-unit id="y5rFxWH" resname="Session ID">
         <source>Session ID</source>
-        <target state="needs-translation">Session ID</target>
+        <target state="translated">Saioaren IDa</target>
       </trans-unit>
       <trans-unit id="Jng1igs" resname="There was an error in updating the event session.">
         <source>There was an error in updating the event session.</source>
-        <target state="needs-translation">There was an error in updating the event session.</target>
+        <target state="translated">Errore bat gertatu da emanaldiaren saioa eguneratzean.</target>
       </trans-unit>
       <trans-unit id="KyP9h0w" resname="Live session successfully updated.">
         <source>Live session successfully updated.</source>
-        <target state="needs-translation">Live session successfully updated.</target>
+        <target state="translated">Zuzeneko saioa behar bezala eguneratu da.</target>
       </trans-unit>
       <trans-unit id="5LufHs6" resname="Start">
         <source>Start</source>
-        <target state="needs-translation">Start</target>
+        <target state="translated">Hasiera</target>
       </trans-unit>
       <trans-unit id="inUlsUk" resname="Notes">
         <source>Notes</source>
-        <target state="needs-translation">Notes</target>
+        <target state="translated">Oharrak</target>
       </trans-unit>
       <trans-unit id="caC4SG4" resname="Edit session">
         <source>Edit session</source>
-        <target state="needs-translation">Edit session</target>
+        <target state="translated">Editatu saioa</target>
       </trans-unit>
       <trans-unit id="uitsv9e" resname="Delete session">
         <source>Delete session</source>
-        <target state="needs-translation">Delete session</target>
+        <target state="translated">Ezabatu saioa</target>
       </trans-unit>
       <trans-unit id="wXrbDIi" resname="Change series">
         <source>Change series</source>
-        <target state="needs-translation">Change series</target>
+        <target state="translated">Aldatu seriea</target>
       </trans-unit>
       <trans-unit id="CbMOcUu" resname="Clone event">
         <source>Clone event</source>
-        <target state="needs-translation">Clone event</target>
+        <target state="translated">Klonatu emanaldia</target>
       </trans-unit>
       <trans-unit id="uHKkLtT" resname="Delete event">
         <source>Delete event</source>
-        <target state="needs-translation">Delete event</target>
+        <target state="translated">Ezabatu emanaldia</target>
       </trans-unit>
       <trans-unit id="G2T.fcJ" resname="Delete event and series">
         <source>Delete event and series</source>
-        <target state="needs-translation">Delete event and series</target>
+        <target state="translated">Ezabatu emanaldia eta seriea</target>
       </trans-unit>
       <trans-unit id="aVm0FZV" resname="Session">
         <source>Session</source>
-        <target state="needs-translation">Session</target>
+        <target state="translated">Saioa</target>
       </trans-unit>
       <trans-unit id="kkp4PCb" resname="Add the name of the series you want to use.&#10;                            In case this series already exists in the database, a pull-down list will be shown,&#10;                            where you can select it and use it. If it doesn't exist in the database,&#10;                            create a new entrance with the written name.">
         <source>Add the name of the series you want to use.
@@ -2912,131 +2912,131 @@
       </trans-unit>
       <trans-unit id="8JSxSlF" resname="Video URL">
         <source>Video URL</source>
-        <target state="needs-translation">Video URL</target>
+        <target state="translated">Bideoaren URLa</target>
       </trans-unit>
       <trans-unit id="u_zanwX" resname="List multimedia objects in a manual order">
         <source>List multimedia objects in a manual order</source>
-        <target state="needs-translation">List multimedia objects in a manual order</target>
+        <target state="translated">Ordenatu multimedia-objektuak eskuz</target>
       </trans-unit>
       <trans-unit id=".27ti1B" resname="(active)">
         <source>(active)</source>
-        <target state="needs-translation">(active)</target>
+        <target state="translated">(aktiboa)</target>
       </trans-unit>
       <trans-unit id="GANpN0w" resname="List multimedia objects in ascending order of title">
         <source>List multimedia objects in ascending order of title</source>
-        <target state="needs-translation">List multimedia objects in ascending order of title</target>
+        <target state="translated">Ordenatu multimedia-objektuak alfabetikoki</target>
       </trans-unit>
       <trans-unit id="e3Prpu6" resname="Filter playlist">
         <source>Filter playlist</source>
-        <target state="needs-translation">Filter playlist</target>
+        <target state="translated">Iragazi erreprodukzio-zerrendak</target>
       </trans-unit>
       <trans-unit id=".UljpFW" resname="Multimedia Playlist metadata">
         <source>Multimedia Playlist metadata</source>
-        <target state="needs-translation">Multimedia Playlist metadata</target>
+        <target state="translated">Erreprodukzio-zerrendaren metadatuak</target>
       </trans-unit>
       <trans-unit id="vVZ4A_F" resname="Warning: This link will give a 404 error while this series is hidden.">
         <source>Warning: This link will give a 404 error while this series is hidden.</source>
-        <target state="needs-translation">Warning: This link will give a 404 error while this series is hidden.</target>
+        <target state="translated">Abisua: esteka honek 404 errorea emango du seriea ezkutatuta dagoen bitartean.</target>
       </trans-unit>
       <trans-unit id="D8MkJlB" resname="Magic URL">
         <source>Magic URL</source>
-        <target state="needs-translation">Magic URL</target>
+        <target state="translated">URL magikoa</target>
       </trans-unit>
       <trans-unit id="onnoCvE" resname="Generate a new magic series link">
         <source>Generate a new magic series link</source>
-        <target state="needs-translation">Generate a new magic series link</target>
+        <target state="translated">Sortu seriearen URL magiko berria</target>
       </trans-unit>
       <trans-unit id="ygGVPNS" resname="Update Series Metadata">
         <source>Update Series Metadata</source>
-        <target state="needs-translation">Update Series Metadata</target>
+        <target state="translated">Eguneratu seriearen metadatuak</target>
       </trans-unit>
       <trans-unit id="t4nJwr9" resname="Play track">
         <source>Play track</source>
-        <target state="needs-translation">Play track</target>
+        <target state="translated">Erreproduzitu pista</target>
       </trans-unit>
       <trans-unit id="kl54JLc" resname="Series URL">
         <source>Series URL</source>
-        <target state="needs-translation">Series URL</target>
+        <target state="translated">Seriearen URLa</target>
       </trans-unit>
       <trans-unit id="Ald.V0v" resname="Delete live channel">
         <source>Delete live channel</source>
-        <target state="needs-translation">Delete live channel</target>
+        <target state="translated">Ezabatu zuzeneko kanala</target>
       </trans-unit>
       <trans-unit id="LMT8tjy" resname="generate new thumbnail">
         <source>generate new thumbnail</source>
-        <target state="needs-translation">generate new thumbnail</target>
+        <target state="translated">sortu miniatura berria</target>
       </trans-unit>
       <trans-unit id="d.Q5Y8p" resname="Prev Frame">
         <source>Prev Frame</source>
-        <target state="needs-translation">Prev Frame</target>
+        <target state="translated">Aurreko fotograma</target>
       </trans-unit>
       <trans-unit id="wo_kSeL" resname="Next Frame">
         <source>Next Frame</source>
-        <target state="needs-translation">Next Frame</target>
+        <target state="translated">Hurrengo fotograma</target>
       </trans-unit>
       <trans-unit id="oMGVBn6" resname="Take image">
         <source>Take image</source>
-        <target state="needs-translation">Take image</target>
+        <target state="translated">Atera irudia</target>
       </trans-unit>
       <trans-unit id="d65Q53N" resname="Take burst">
         <source>Take burst</source>
-        <target state="needs-translation">Take burst</target>
+        <target state="translated">Atera segida</target>
       </trans-unit>
       <trans-unit id="bmF4ejF" resname="Upload a local file.">
         <source>Upload a local file.</source>
-        <target state="needs-translation">Upload a local file.</target>
+        <target state="translated">Igo fitxategi lokal bat.</target>
       </trans-unit>
       <trans-unit id="Y9QAQRw" resname="Thumbnail generated.">
         <source>Thumbnail generated.</source>
-        <target state="needs-translation">Thumbnail generated.</target>
+        <target state="translated">Miniatura sortu da.</target>
       </trans-unit>
       <trans-unit id="mNfVhoI" resname="Move up thumbnail">
         <source>Move up thumbnail</source>
-        <target state="needs-translation">Move up thumbnail</target>
+        <target state="translated">Igo miniatura</target>
       </trans-unit>
       <trans-unit id="OkMRVlK" resname="Move down thumbnail">
         <source>Move down thumbnail</source>
-        <target state="needs-translation">Move down thumbnail</target>
+        <target state="translated">Jaitsi miniatura</target>
       </trans-unit>
       <trans-unit id="8FhetqB" resname="Generate thumbnail">
         <source>Generate thumbnail</source>
-        <target state="needs-translation">Generate thumbnail</target>
+        <target state="translated">Sortu miniatura</target>
       </trans-unit>
       <trans-unit id="09oq1kk" resname="Search person">
         <source>Search person</source>
-        <target state="needs-translation">Search person</target>
+        <target state="translated">Bilatu pertsona</target>
       </trans-unit>
       <trans-unit id="TpIMycx" resname="Delete User">
         <source>Delete User</source>
-        <target state="needs-translation">Delete User</target>
+        <target state="translated">Ezabatu erabiltzailea</target>
       </trans-unit>
       <trans-unit id="rBjRGi8" resname="Delete role">
         <source>Delete role</source>
-        <target state="needs-translation">Delete role</target>
+        <target state="translated">Ezabatu rola</target>
       </trans-unit>
       <trans-unit id="reycesC" resname="Open URL">
         <source>Open URL</source>
-        <target state="needs-translation">Open URL</target>
+        <target state="translated">Ireki URLa</target>
       </trans-unit>
       <trans-unit id="yjLv71I" resname="Live channels">
         <source>Live channels</source>
-        <target state="needs-translation">Live channels</target>
+        <target state="translated">Zuzeneko kanalak</target>
       </trans-unit>
       <trans-unit id="kfwaV.C" resname="URL external">
         <source>URL external</source>
-        <target state="needs-translation">URL external</target>
+        <target state="translated">Kanpoko URLa</target>
       </trans-unit>
       <trans-unit id="ltvt7Kf" resname="Starts">
         <source>Starts</source>
-        <target state="needs-translation">Starts</target>
+        <target state="translated">Hasiera</target>
       </trans-unit>
       <trans-unit id="6awGg9J" resname="Show event on WebTV portal">
         <source>Show event on WebTV portal</source>
-        <target state="needs-translation">Show event on WebTV portal</target>
+        <target state="translated">Ikusi emanaldia web atarian</target>
       </trans-unit>
       <trans-unit id="H5oCcEu" resname="No sessions defined.">
         <source>No sessions defined.</source>
-        <target state="needs-translation">No sessions defined.</target>
+        <target state="translated">Ez dago saiorik definituta.</target>
       </trans-unit>
       <trans-unit id="lKPkOKY" resname="Publishing&#10;                        Decisions">
         <source>Publishing
@@ -3053,23 +3053,23 @@
       </trans-unit>
       <trans-unit id="vhe1K.B" resname="Series ID">
         <source>Series ID</source>
-        <target state="needs-translation">Series ID</target>
+        <target state="translated">Seriearen IDa</target>
       </trans-unit>
       <trans-unit id="cZiMTY4" resname="Text">
         <source>Text</source>
-        <target state="needs-translation">Text</target>
+        <target state="translated">Testua</target>
       </trans-unit>
       <trans-unit id="5GhbOgo" resname="Search by title, subtitle or description">
         <source>Search by title, subtitle or description</source>
-        <target state="needs-translation">Search by title, subtitle or description</target>
+        <target state="translated">Bilatu izenburuaren, azpitituluaren edo deskribapenaren arabera</target>
       </trans-unit>
       <trans-unit id="pmgCKu0" resname="Keyword">
         <source>Keyword</source>
-        <target state="needs-translation">Keyword</target>
+        <target state="translated">Gako-hitza</target>
       </trans-unit>
       <trans-unit id="r0tk0sE" resname="Up to 5 minutes">
         <source>Up to 5 minutes</source>
-        <target state="needs-translation">Up to 5 minutes</target>
+        <target state="translated">5 minutu arte</target>
       </trans-unit>
       <trans-unit id="9YdKi_N" resname="Up to 10 minutes">
         <source>Up to 10 minutes</source>
@@ -3097,23 +3097,23 @@
       </trans-unit>
       <trans-unit id="Z.qmImw" resname="Format YYYY-MM-DD">
         <source>Format YYYY-MM-DD</source>
-        <target state="needs-translation">Format YYYY-MM-DD</target>
+        <target state="translated">Formatua: UUUU-HH-EE</target>
       </trans-unit>
       <trans-unit id="F7yReDQ" resname="Broadcast">
         <source>Broadcast</source>
-        <target state="needs-translation">Broadcast</target>
+        <target state="translated">Hedapena</target>
       </trans-unit>
       <trans-unit id="9vRoj.I" resname="Send">
         <source>Send</source>
-        <target state="needs-translation">Send</target>
+        <target state="translated">Bidali</target>
       </trans-unit>
       <trans-unit id="1y_GdUG" resname="Advanced search form">
         <source>Advanced search form</source>
-        <target state="needs-translation">Advanced search form</target>
+        <target state="translated">Bilaketa aurreratuaren inprimakia</target>
       </trans-unit>
       <trans-unit id="KUc83Og" resname="Publication date">
         <source>Publication date</source>
-        <target state="needs-translation">Publication date</target>
+        <target state="translated">Argitaratze-data</target>
       </trans-unit>
       <trans-unit id="WwQid6I" resname="Recording date">
         <source>Recording date</source>
@@ -3121,35 +3121,35 @@
       </trans-unit>
       <trans-unit id="y9lpGXM" resname="Saving error">
         <source>Saving error</source>
-        <target state="needs-translation">Saving error</target>
+        <target state="translated">Errorea gordetzean</target>
       </trans-unit>
       <trans-unit id="tcEgsxb" resname="Saved">
         <source>Saved</source>
-        <target state="needs-translation">Saved</target>
+        <target state="translated">Gordeta</target>
       </trans-unit>
       <trans-unit id="baeVqGZ" resname="Genre">
         <source>Genre</source>
-        <target state="needs-translation">Genre</target>
+        <target state="translated">Generoa</target>
       </trans-unit>
       <trans-unit id="nwiNvr1" resname="Advanced">
         <source>Advanced</source>
-        <target state="needs-translation">Advanced</target>
+        <target state="translated">Aurreratua</target>
       </trans-unit>
       <trans-unit id="pPs.mWz" resname="UNESCO catalogue">
         <source>UNESCO catalogue</source>
-        <target state="needs-translation">UNESCO catalogue</target>
+        <target state="translated">UNESCO katalogatzailea</target>
       </trans-unit>
       <trans-unit id="zkaD5wE" resname="Channel">
         <source>Channel</source>
-        <target state="needs-translation">Channel</target>
+        <target state="translated">Kanala</target>
       </trans-unit>
       <trans-unit id="yyT31Aq" resname="Sorting">
         <source>Sorting</source>
-        <target state="needs-translation">Sorting</target>
+        <target state="translated">Ordena</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target state="needs-translation">date</target>
+        <target state="translated">data</target>
       </trans-unit>
       <trans-unit id="N3biNWj" resname="date_all">
         <source>date_all</source>
@@ -3157,43 +3157,43 @@
       </trans-unit>
       <trans-unit id="1GF1slj" resname="date_subserial">
         <source>date_subserial</source>
-        <target state="needs-translation">date_subserial</target>
+        <target state="translated">data_azpiseriea</target>
       </trans-unit>
       <trans-unit id="YSQOpvl" resname="subserial">
         <source>subserial</source>
-        <target state="needs-translation">subserial</target>
+        <target state="translated">azpiseriea</target>
       </trans-unit>
       <trans-unit id="LA.rmuv" resname="multisubserial">
         <source>multisubserial</source>
-        <target state="needs-translation">multisubserial</target>
+        <target state="translated">multiazpiseriea</target>
       </trans-unit>
       <trans-unit id="Nr3mbyi" resname="manual">
         <source>manual</source>
-        <target state="needs-translation">manual</target>
+        <target state="translated">eskuz</target>
       </trans-unit>
       <trans-unit id="n17fyKD" resname="publication date ascending">
         <source>publication date ascending</source>
-        <target state="needs-translation">publication date ascending</target>
+        <target state="translated">argitaratze-data gorantz</target>
       </trans-unit>
       <trans-unit id="fAXffnN" resname="publication date descending">
         <source>publication date descending</source>
-        <target state="needs-translation">publication date descending</target>
+        <target state="translated">argitaratze-data beherantz</target>
       </trans-unit>
       <trans-unit id="8a3nLp_" resname="recording date descending">
         <source>recording date descending</source>
-        <target state="needs-translation">recording date descending</target>
+        <target state="translated">grabazio-data beherantz</target>
       </trans-unit>
       <trans-unit id="6LtPTFc" resname="recording date ascending">
         <source>recording date ascending</source>
-        <target state="needs-translation">recording date ascending</target>
+        <target state="translated">grabazio-data gorantz</target>
       </trans-unit>
       <trans-unit id="qvIyBkY" resname="title">
         <source>title</source>
-        <target state="needs-translation">title</target>
+        <target state="translated">izenburua</target>
       </trans-unit>
       <trans-unit id="bG.WfVj" resname="WebTV">
         <source>WebTV</source>
-        <target state="needs-translation">WebTV</target>
+        <target state="translated">Web ataria</target>
       </trans-unit>
       <trans-unit id="e1wLqeS" resname="Health Sciences">
         <source>Health Sciences</source>
@@ -3201,11 +3201,11 @@
       </trans-unit>
       <trans-unit id="txAs3w2" resname="Sciences">
         <source>Sciences</source>
-        <target state="needs-translation">Sciences</target>
+        <target state="translated">Zientziak</target>
       </trans-unit>
       <trans-unit id="R4fq98k" resname="Legal">
         <source>Legal</source>
-        <target state="needs-translation">Legal</target>
+        <target state="translated">Lege-oharra</target>
       </trans-unit>
       <trans-unit id="p2zJo2w" resname="Humanities">
         <source>Humanities</source>
@@ -3213,67 +3213,67 @@
       </trans-unit>
       <trans-unit id="GFQHGWn" resname="Without category">
         <source>Without category</source>
-        <target state="needs-translation">Without category</target>
+        <target state="translated">Kategoriarik gabe</target>
       </trans-unit>
       <trans-unit id="nWMiwfT" resname="Login">
         <source>Login</source>
-        <target state="needs-translation">Login</target>
+        <target state="translated">Hasi saioa</target>
       </trans-unit>
       <trans-unit id="588_9PF" resname="Password">
         <source>Password</source>
-        <target state="needs-translation">Password</target>
+        <target state="translated">Pasahitza</target>
       </trans-unit>
       <trans-unit id="3oRX_Sy" resname="Live management">
         <source>Live management</source>
-        <target state="needs-translation">Live management</target>
+        <target state="translated">Zuzenekoen kudeatzailea</target>
       </trans-unit>
       <trans-unit id="x0S6SCF" resname="Channel configuration">
         <source>Channel configuration</source>
-        <target state="needs-translation">Channel configuration</target>
+        <target state="translated">Kanalen konfigurazioa</target>
       </trans-unit>
       <trans-unit id="nBHDWlo" resname="Videos VOD">
         <source>Videos VOD</source>
-        <target state="needs-translation">Videos VOD</target>
+        <target state="translated">VOD bideoak</target>
       </trans-unit>
       <trans-unit id="Jbye.t_" resname="Event name">
         <source>Event name</source>
-        <target state="needs-translation">Event name</target>
+        <target state="translated">Emanaldiaren izena</target>
       </trans-unit>
       <trans-unit id="WOU_q8H" resname="Sessions number">
         <source>Sessions number</source>
-        <target state="needs-translation">Sessions number</target>
+        <target state="translated">Saio kopurua</target>
       </trans-unit>
       <trans-unit id="SmNkdOW" resname="Broadcasting date">
         <source>Broadcasting date</source>
-        <target state="needs-translation">Broadcasting date</target>
+        <target state="translated">Emisio-data</target>
       </trans-unit>
       <trans-unit id="EiWubBr" resname="sessions">
         <source>sessions</source>
-        <target state="needs-translation">sessions</target>
+        <target state="translated">saioak</target>
       </trans-unit>
       <trans-unit id="Do2jr40" resname="No future sessions">
         <source>No future sessions</source>
-        <target state="needs-translation">No future sessions</target>
+        <target state="translated">Ez dago etorkizuneko saiorik</target>
       </trans-unit>
       <trans-unit id="0A9SRUQ" resname="Filter by">
         <source>Filter by</source>
-        <target state="needs-translation">Filter by</target>
+        <target state="translated">Iragazi honen arabera</target>
       </trans-unit>
       <trans-unit id="jLTwKVQ" resname="Show video on WebTV">
         <source>Show video on WebTV</source>
-        <target state="needs-translation">Show video on WebTV</target>
+        <target state="translated">Ikusi bideoa web atarian</target>
       </trans-unit>
       <trans-unit id="t6n1UY2" resname="Live events">
         <source>Live events</source>
-        <target state="needs-translation">Live events</target>
+        <target state="translated">Zuzeneko emanaldiak</target>
       </trans-unit>
       <trans-unit id="8wIYotR" resname="Future events">
         <source>Future events</source>
-        <target state="needs-translation">Future events</target>
+        <target state="translated">Etorkizuneko emanaldiak</target>
       </trans-unit>
       <trans-unit id="13YPWbA" resname="Session must start before ends">
         <source>Session must start before ends</source>
-        <target state="needs-translation">Session must start before ends</target>
+        <target state="translated">Saioak amaitu baino lehen hasi behar du</target>
       </trans-unit>
       <trans-unit id="3ezDLKK" resname="Modify broadcast profile of videos&#10;            template">
         <source>Modify broadcast profile of videos
@@ -3292,15 +3292,15 @@
       </trans-unit>
       <trans-unit id="pRKIi6a" resname="Delete error. Live channel channel is associated to live event.">
         <source>Delete error. Live channel channel is associated to live event.</source>
-        <target state="needs-translation">Delete error. Live channel channel is associated to live event.</target>
+        <target state="translated">Errorea ezabatzean. Kanalak emanaldiak ditu lotuta.</target>
       </trans-unit>
       <trans-unit id="OAkgrj1" resname="No downloadable">
         <source>No downloadable</source>
-        <target state="needs-translation">No downloadable</target>
+        <target state="translated">Ez da deskargagarria</target>
       </trans-unit>
       <trans-unit id="nlf3UXX" resname="Choose style">
         <source>Choose style</source>
-        <target state="needs-translation">Choose style</target>
+        <target state="translated">Aukeratu estiloa</target>
       </trans-unit>
       <trans-unit id="CZ35h9X" resname="There aren't defined styles">
         <source>There aren't defined styles</source>
@@ -3308,19 +3308,19 @@
       </trans-unit>
       <trans-unit id="OEIShCi" resname="Style created ERROR">
         <source>Style created ERROR</source>
-        <target state="needs-translation">Style created ERROR</target>
+        <target state="translated">Errorea estiloa sortzean</target>
       </trans-unit>
       <trans-unit id="DW7tat2" resname="Style created OK">
         <source>Style created OK</source>
-        <target state="needs-translation">Style created OK</target>
+        <target state="translated">Estiloa sortu da</target>
       </trans-unit>
       <trans-unit id="w_fEXUL" resname="Style edited ERROR">
         <source>Style edited ERROR</source>
-        <target state="needs-translation">Style edited ERROR</target>
+        <target state="translated">Errorea estiloa editatzean</target>
       </trans-unit>
       <trans-unit id="VEtupgs" resname="Live event">
         <source>Live event</source>
-        <target state="needs-translation">Live event</target>
+        <target state="translated">Zuzeneko emanaldia</target>
       </trans-unit>
       <trans-unit id="S3Wcefc" resname="Add the name of the series you want to use.&#10;            In case this series already exists in the database, a pull-down list will be shown,&#10;            where you can select it and use it. If it doesn't exist in the database,&#10;            create a new entrance with the written name.">
         <source>Add the name of the series you want to use.
@@ -3331,19 +3331,19 @@
       </trans-unit>
       <trans-unit id="aQYMdYn" resname="Create date">
         <source>Create date</source>
-        <target state="needs-translation">Create date</target>
+        <target state="translated">Sortze-data</target>
       </trans-unit>
       <trans-unit id="LQTakPE" resname="Series style">
         <source>Series style</source>
-        <target state="needs-translation">Series style</target>
+        <target state="translated">Serie-estiloa</target>
       </trans-unit>
       <trans-unit id="YClQDPb" resname="Series Style">
         <source>Series Style</source>
-        <target state="needs-translation">Series Style</target>
+        <target state="translated">Serie-estiloa</target>
       </trans-unit>
       <trans-unit id="r.xKBXc" resname="Create series">
         <source>Create series</source>
-        <target state="needs-translation">Create series</target>
+        <target state="translated">Sortu seriea</target>
       </trans-unit>
       <trans-unit id="7EYXAPJ" resname="Edit Templates">
         <source>Edit Templates</source>
@@ -3351,63 +3351,63 @@
       </trans-unit>
       <trans-unit id="CtFB2lw" resname="Allow download">
         <source>Allow download</source>
-        <target state="needs-translation">Allow download</target>
+        <target state="translated">Baimendu deskarga</target>
       </trans-unit>
       <trans-unit id="Ven4ga9" resname="Show empty series">
         <source>Show empty series</source>
-        <target state="needs-translation">Show empty series</target>
+        <target state="translated">Erakutsi serie hutsak</target>
       </trans-unit>
       <trans-unit id="5qRihdT" resname="Today events list">
         <source>Today events list</source>
-        <target state="needs-translation">Today events list</target>
+        <target state="translated">Gaurko emanaldien zerrenda</target>
       </trans-unit>
       <trans-unit id="zn8l2PA" resname="Select objects">
         <source>Select objects</source>
-        <target state="needs-translation">Select objects</target>
+        <target state="translated">Hautatu objektuak</target>
       </trans-unit>
       <trans-unit id="CdEyLPz" resname="Modify all multimedia objects status">
         <source>Modify all multimedia objects status</source>
-        <target state="needs-translation">Modify all multimedia objects status</target>
+        <target state="translated">Aldatu multimedia-objektu guztien egoera</target>
       </trans-unit>
       <trans-unit id="mu9cynW" resname="Already held event message">
         <source>Already held event message</source>
-        <target state="needs-translation">Already held event message</target>
+        <target state="translated">Egindako emanaldiaren mezua</target>
       </trans-unit>
       <trans-unit id="FSGhq88" resname="Not yet held event message">
         <source>Not yet held event message</source>
-        <target state="needs-translation">Not yet held event message</target>
+        <target state="translated">Oraindik egin gabeko emanaldiaren mezua</target>
       </trans-unit>
       <trans-unit id="p2OXRg4" resname="Default live screen image">
         <source>Default live screen image</source>
-        <target state="needs-translation">Default live screen image</target>
+        <target state="translated">Emanaldiaren kartel lehenetsia</target>
       </trans-unit>
       <trans-unit id="28ZRGqO" resname="New poster">
         <source>New poster</source>
-        <target state="needs-translation">New poster</target>
+        <target state="translated">Kartel berria</target>
       </trans-unit>
       <trans-unit id="fsvs6_1" resname="Go to page">
         <source>Go to page</source>
-        <target state="needs-translation">Go to page</target>
+        <target state="translated">Joan orrira</target>
       </trans-unit>
       <trans-unit id="X7wPySq" resname="Event poster">
         <source>Event poster</source>
-        <target state="needs-translation">Event poster</target>
+        <target state="translated">Emanaldiaren kartela</target>
       </trans-unit>
       <trans-unit id="WQydVj0" resname="Poster text color">
         <source>Poster text color</source>
-        <target state="needs-translation">Poster text color</target>
+        <target state="translated">Kartelaren testuaren kolorea</target>
       </trans-unit>
       <trans-unit id="c2P0Qyt" resname="Source Name">
         <source>Source Name</source>
-        <target state="needs-translation">Source Name</target>
+        <target state="translated">Iturriaren izena</target>
       </trans-unit>
       <trans-unit id="DWXTLFi" resname="Are you sure you want to delete this event poster?">
         <source>Are you sure you want to delete this event poster?</source>
-        <target state="needs-translation">Are you sure you want to delete this event poster?</target>
+        <target state="translated">Ziur zaude emanaldiaren kartel hau ezabatu nahi duzula?</target>
       </trans-unit>
       <trans-unit id="YVvIcSO" resname="Event poster removed.">
         <source>Event poster removed.</source>
-        <target state="needs-translation">Event poster removed.</target>
+        <target state="translated">Emanaldiaren kartela ezabatu da.</target>
       </trans-unit>
       <trans-unit id="PGFKnNX" resname="Publish to Moodle">
         <source>Publish to Moodle</source>
@@ -3415,39 +3415,39 @@
       </trans-unit>
       <trans-unit id="pjllafE" resname="Show configuration for messages, poster image and color text.">
         <source>Show configuration for messages, poster image and color text.</source>
-        <target state="needs-translation">Show configuration for messages, poster image and color text.</target>
+        <target state="translated">Erakutsi mezuen, kartelaren irudiaren eta testuaren kolorearen konfigurazioa.</target>
       </trans-unit>
       <trans-unit id="pwTeQK9" resname="Click to edit messages, poster image and color text">
         <source>Click to edit messages, poster image and color text</source>
-        <target state="needs-translation">Click to edit messages, poster image and color text</target>
+        <target state="translated">Egin klik mezuak, kartelaren irudia eta testuaren kolorea editatzeko</target>
       </trans-unit>
       <trans-unit id="NmSJVXn" resname="Export">
         <source>Export</source>
-        <target state="needs-translation">Export</target>
+        <target state="translated">Esportatu</target>
       </trans-unit>
       <trans-unit id="9NseSEd" resname="End">
         <source>End</source>
-        <target state="needs-translation">End</target>
+        <target state="translated">Amaiera</target>
       </trans-unit>
       <trans-unit id="k8lPtsu" resname="Show configuration for Twitter.">
         <source>Show configuration for Twitter.</source>
-        <target state="needs-translation">Show configuration for Twitter.</target>
+        <target state="translated">Erakutsi Twitterren konfigurazioa.</target>
       </trans-unit>
       <trans-unit id="xdpjUyN" resname="Click to edit Twitter configuration">
         <source>Click to edit Twitter configuration</source>
-        <target state="needs-translation">Click to edit Twitter configuration</target>
+        <target state="translated">Egin klik Twitterren konfigurazioa editatzeko</target>
       </trans-unit>
       <trans-unit id="vxAMoZK" resname="Twitter hashtag">
         <source>Twitter hashtag</source>
-        <target state="needs-translation">Twitter hashtag</target>
+        <target state="translated">Twitterreko hashtaga</target>
       </trans-unit>
       <trans-unit id="Fw.2IIO" resname="Twitter hashtag without #">
         <source>Twitter hashtag without #</source>
-        <target state="needs-translation">Twitter hashtag without #</target>
+        <target state="translated">Twitterreko hashtaga # gabe</target>
       </trans-unit>
       <trans-unit id="FQ6Rm8C" resname="Twitter widget id">
         <source>Twitter widget id</source>
-        <target state="needs-translation">Twitter widget id</target>
+        <target state="translated">Twitterreko widgetaren identifikatzailea</target>
       </trans-unit>
       <trans-unit id="Ckcd5Ax" resname="Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.">
         <source>Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.</source>
@@ -3455,51 +3455,51 @@
       </trans-unit>
       <trans-unit id="0IXPFt9" resname="Publish to LMS">
         <source>Publish to LMS</source>
-        <target state="needs-translation">Publish to LMS</target>
+        <target state="translated">Argitaratu LMSan</target>
       </trans-unit>
       <trans-unit id="Vk6hwWC" resname="Enable Chat">
         <source>Enable Chat</source>
-        <target state="needs-translation">Enable Chat</target>
+        <target state="translated">Gaitu txata</target>
       </trans-unit>
       <trans-unit id="4.X08dn" resname="Click on the color bar to change color. A pop-up window will be shown.">
         <source>Click on the color bar to change color. A pop-up window will be shown.</source>
-        <target state="needs-translation">Click on the color bar to change color. A pop-up window will be shown.</target>
+        <target state="translated">Egin klik kolore-barran kolorea aldatzeko. Leiho gainerakor bat agertuko da.</target>
       </trans-unit>
       <trans-unit id="hgHl3nd" resname="Show tag on WebTV portal and edit categories on multimedia objects">
         <source>Show tag on WebTV portal and edit categories on multimedia objects</source>
-        <target state="needs-translation">Show tag on WebTV portal and edit categories on multimedia objects</target>
+        <target state="translated">Kategoria ikusgai web atarian eta multimedia-objektuen kategoriak editatzeko</target>
       </trans-unit>
       <trans-unit id="9A6g70f" resname="Not valid to tagged objets">
         <source>Not valid to tagged objets</source>
-        <target state="needs-translation">Not valid to tagged objets</target>
+        <target state="translated">Kategoria hau ezin zaie multimedia-objektuei esleitu</target>
       </trans-unit>
       <trans-unit id="SMIii47" resname="Clone series">
         <source>Clone series</source>
-        <target state="needs-translation">Clone series</target>
+        <target state="translated">Klonatu seriea</target>
       </trans-unit>
       <trans-unit id="9yX0Jhr" resname="Are you sure you want to clone this series?">
         <source>Are you sure you want to clone this series?</source>
-        <target state="needs-translation">Are you sure you want to clone this series?</target>
+        <target state="translated">Ziur zaude serie hau klonatu nahi duzula?</target>
       </trans-unit>
       <trans-unit id="xCcnCNf" resname="Series successfully cloned.">
         <source>Series successfully cloned.</source>
-        <target state="needs-translation">Series successfully cloned.</target>
+        <target state="translated">Seriea behar bezala klonatu da.</target>
       </trans-unit>
       <trans-unit id="S1iJNW7" resname="No people.">
         <source>No people.</source>
-        <target state="needs-translation">No people.</target>
+        <target state="translated">Pertsonarik ez.</target>
       </trans-unit>
       <trans-unit id="ndCL6K3" resname="Multimedia object picture">
         <source>Multimedia object picture</source>
-        <target state="needs-translation">Multimedia object picture</target>
+        <target state="translated">Multimedia-objektuaren irudia</target>
       </trans-unit>
       <trans-unit id="t3844f0" resname="Playlist picture">
         <source>Playlist picture</source>
-        <target state="needs-translation">Playlist picture</target>
+        <target state="translated">Erreprodukzio-zerrendaren irudia</target>
       </trans-unit>
       <trans-unit id="ZyykMeP" resname="Event picture">
         <source>Event picture</source>
-        <target state="needs-translation">Event picture</target>
+        <target state="translated">Emanaldiaren irudia</target>
       </trans-unit>
       <trans-unit id="yObHKax" resname="Places and precinct">
         <source>Places and precinct</source>
@@ -3507,15 +3507,15 @@
       </trans-unit>
       <trans-unit id="VK0RyXt" resname="Place and precinct">
         <source>Place and precinct</source>
-        <target state="needs-translation">Place and precinct</target>
+        <target state="translated">Lekua eta barrutia</target>
       </trans-unit>
       <trans-unit id="Vu_PIJV" resname="Address">
         <source>Address</source>
-        <target state="needs-translation">Address</target>
+        <target state="translated">Helbidea</target>
       </trans-unit>
       <trans-unit id="FIdE_dD" resname="Precinct">
         <source>Precinct</source>
-        <target state="needs-translation">Precinct</target>
+        <target state="translated">Barrutia</target>
       </trans-unit>
       <trans-unit id="g64sGUF" resname="Error loading tag">
         <source>Error loading tag</source>
@@ -3523,27 +3523,27 @@
       </trans-unit>
       <trans-unit id="CwRzTyg" resname="Error deleting tag">
         <source>Error deleting tag</source>
-        <target state="needs-translation">Error deleting tag</target>
+        <target state="translated">Errorea kategoria ezabatzean</target>
       </trans-unit>
       <trans-unit id="Malnlhe" resname="Place successfully deleted.">
         <source>Place successfully deleted.</source>
-        <target state="needs-translation">Place successfully deleted.</target>
+        <target state="translated">Lekua behar bezala ezabatu da.</target>
       </trans-unit>
       <trans-unit id="X9SGs9L" resname="Places successfully deleted.">
         <source>Places successfully deleted.</source>
-        <target state="needs-translation">Places successfully deleted.</target>
+        <target state="translated">Lekuak behar bezala ezabatu dira.</target>
       </trans-unit>
       <trans-unit id="uN1ADLZ" resname="Select one place to load data">
         <source>Select one place to load data</source>
-        <target state="needs-translation">Select one place to load data</target>
+        <target state="translated">Hautatu leku bat informazioa kargatzeko</target>
       </trans-unit>
       <trans-unit id="8wTEA9N" resname="Precinct successfully deleted.">
         <source>Precinct successfully deleted.</source>
-        <target state="needs-translation">Precinct successfully deleted.</target>
+        <target state="translated">Barrutia behar bezala ezabatu da.</target>
       </trans-unit>
       <trans-unit id="Wjx11W8" resname="Select one precinct to load data">
         <source>Select one precinct to load data</source>
-        <target state="needs-translation">Select one precinct to load data</target>
+        <target state="translated">Hautatu barruti bat informazioa kargatzeko</target>
       </trans-unit>
       <trans-unit id="CFp4TPJ" resname="i18n.multiple.Published">
         <source>i18n.multiple.Published</source>
@@ -3559,15 +3559,15 @@
       </trans-unit>
       <trans-unit id="jWuw_Y7" resname="Show advanced">
         <source>Show advanced</source>
-        <target state="needs-translation">Show advanced</target>
+        <target state="translated">Erakutsi aurreratuak</target>
       </trans-unit>
       <trans-unit id="LzQ2Zqq" resname="Format">
         <source>Format</source>
-        <target state="needs-translation">Format</target>
+        <target state="translated">Formatua</target>
       </trans-unit>
       <trans-unit id="GywIqHM" resname="Quality">
         <source>Quality</source>
-        <target state="needs-translation">Quality</target>
+        <target state="translated">Kalitatea</target>
       </trans-unit>
       <trans-unit id="zifRnx3" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and&#10;        &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database,&#10;        &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
         <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and
@@ -3579,7 +3579,7 @@
       </trans-unit>
       <trans-unit id="O0G6nHy" resname="No data">
         <source>No data</source>
-        <target state="needs-translation">No data</target>
+        <target state="translated">Daturik ez</target>
       </trans-unit>
       <trans-unit id="MKOwLL7" resname="No title">
         <source>No title</source>
@@ -3587,7 +3587,7 @@
       </trans-unit>
       <trans-unit id="VcKaSv1" resname="Precinct without series">
         <source>Precinct without series</source>
-        <target state="needs-translation">Precinct without series</target>
+        <target state="translated">Seriarik gabeko barrutia</target>
       </trans-unit>
       <trans-unit id="yaljlGP" resname="Videos">
         <source>Videos</source>
@@ -3595,27 +3595,27 @@
       </trans-unit>
       <trans-unit id="HS.4cLQ" resname="Create new place">
         <source>Create new place</source>
-        <target state="needs-translation">Create new place</target>
+        <target state="translated">Sortu leku berria</target>
       </trans-unit>
       <trans-unit id="essa3WZ" resname="Place successfully created.">
         <source>Place successfully created.</source>
-        <target state="needs-translation">Place successfully created.</target>
+        <target state="translated">Lekua behar bezala sortu da.</target>
       </trans-unit>
       <trans-unit id="qXARYaB" resname="Autocomplete series">
         <source>Autocomplete series</source>
-        <target state="needs-translation">Autocomplete series</target>
+        <target state="translated">Osatu seriea automatikoki</target>
       </trans-unit>
       <trans-unit id="nU95LQY" resname="Series successfully updated.">
         <source>Series successfully updated.</source>
-        <target state="needs-translation">Series successfully updated.</target>
+        <target state="translated">Seriea behar bezala eguneratu da.</target>
       </trans-unit>
       <trans-unit id="qsxJV33" resname="Error: Series have another owners on others events">
         <source>Error: Series have another owners on others events</source>
-        <target state="needs-translation">Error: Series have another owners on others events</target>
+        <target state="translated">Errorea: serieak zu jabea ez zaren beste emanaldi batzuk ditu.</target>
       </trans-unit>
       <trans-unit id="c9nOksT" resname="Error: Series have some events">
         <source>Error: Series have some events</source>
-        <target state="needs-translation">Error: Series have some events</target>
+        <target state="translated">Errorea: ezin da seriea ezabatu, beste emanaldi batzuk baititu.</target>
       </trans-unit>
       <trans-unit id="otgkhCc" resname="Cloned event successfully">
         <source>Cloned event successfully</source>
@@ -3635,123 +3635,123 @@
       </trans-unit>
       <trans-unit id="5tk0wDe" resname="Sync metadata for all multimedia objects">
         <source>Sync metadata for all multimedia objects</source>
-        <target state="needs-translation">Sync metadata for all multimedia objects</target>
+        <target state="translated">Sinkronizatu metadatuak multimedia-objektu guztietan</target>
       </trans-unit>
       <trans-unit id="nJ4TWrx" resname="Select metadata to sync on all multimedia objects of this series">
         <source>Select metadata to sync on all multimedia objects of this series</source>
-        <target state="needs-translation">Select metadata to sync on all multimedia objects of this series</target>
+        <target state="translated">Hautatu serie honetako multimedia-objektu guztietan sinkronizatu beharreko metadatuak</target>
       </trans-unit>
       <trans-unit id="jSYaNy." resname="Sync">
         <source>Sync</source>
-        <target state="needs-translation">Sync</target>
+        <target state="translated">Sinkronizatu</target>
       </trans-unit>
       <trans-unit id="blSiCW2" resname="There was an error sync up metadata.">
         <source>There was an error sync up metadata.</source>
-        <target state="needs-translation">There was an error sync up metadata.</target>
+        <target state="translated">Errore bat gertatu da metadatuak sinkronizatzean.</target>
       </trans-unit>
       <trans-unit id="kYZr.e4" resname="Sync up metadata was successfully.">
         <source>Sync up metadata was successfully.</source>
-        <target state="needs-translation">Sync up metadata was successfully.</target>
+        <target state="translated">Metadatuak behar bezala sinkronizatu dira.</target>
       </trans-unit>
       <trans-unit id="DfbxytN" resname="Show">
         <source>Show</source>
-        <target state="needs-translation">Show</target>
+        <target state="translated">Erakutsi</target>
       </trans-unit>
       <trans-unit id="BXaTJaC" resname="Show presenter">
         <source>Show presenter</source>
-        <target state="needs-translation">Show presenter</target>
+        <target state="translated">Erakutsi hizlaria</target>
       </trans-unit>
       <trans-unit id="JaVio6g" resname="presenter">
         <source>presenter</source>
-        <target state="needs-translation">presenter</target>
+        <target state="translated">hizlaria</target>
       </trans-unit>
       <trans-unit id="9eMldhu" resname="Show presentation">
         <source>Show presentation</source>
-        <target state="needs-translation">Show presentation</target>
+        <target state="translated">Ikusi aurkezpena</target>
       </trans-unit>
       <trans-unit id="v6wxT_." resname="presentation">
         <source>presentation</source>
-        <target state="needs-translation">presentation</target>
+        <target state="translated">aurkezpena</target>
       </trans-unit>
       <trans-unit id="_2ahr06" resname="Original name">
         <source>Original name</source>
-        <target state="needs-translation">Original name</target>
+        <target state="translated">Jatorrizko izena</target>
       </trans-unit>
       <trans-unit id="9ShOV_x" resname="No name">
         <source>No name</source>
-        <target state="needs-translation">No name</target>
+        <target state="translated">Izenik ez</target>
       </trans-unit>
       <trans-unit id="rArhFm_" resname="Upload date">
         <source>Upload date</source>
-        <target state="needs-translation">Upload date</target>
+        <target state="translated">Igotze-data</target>
       </trans-unit>
       <trans-unit id="awFD0Dh" resname="Return">
         <source>Return</source>
-        <target state="needs-translation">Return</target>
+        <target state="translated">Itzuli</target>
       </trans-unit>
       <trans-unit id=".lxppRP" resname="Video ID">
         <source>Video ID</source>
-        <target state="needs-translation">Video ID</target>
+        <target state="translated">Bideoaren IDa</target>
       </trans-unit>
       <trans-unit id="cM.uhTI" resname="Without criteria">
         <source>Without criteria</source>
-        <target state="needs-translation">Without criteria</target>
+        <target state="translated">Irizpiderik gabe</target>
       </trans-unit>
       <trans-unit id=".bZIb_I" resname="Multiple criteria">
         <source>Multiple criteria</source>
-        <target state="needs-translation">Multiple criteria</target>
+        <target state="translated">Irizpide anitz</target>
       </trans-unit>
       <trans-unit id="SJTnZeA" resname="Track name">
         <source>Track name</source>
-        <target state="needs-translation">Track name</target>
+        <target state="translated">Fitxategia</target>
       </trans-unit>
       <trans-unit id="NiTFfNE" resname="Numerical video ID">
         <source>Numerical video ID</source>
-        <target state="needs-translation">Numerical video ID</target>
+        <target state="translated">Bideoaren ID numerikoa</target>
       </trans-unit>
       <trans-unit id="uyP.XFA" resname="Numerical series ID">
         <source>Numerical series ID</source>
-        <target state="needs-translation">Numerical series ID</target>
+        <target state="translated">Seriearen ID numerikoa</target>
       </trans-unit>
       <trans-unit id="cXCGmaz" resname="Criteria">
         <source>Criteria</source>
-        <target state="needs-translation">Criteria</target>
+        <target state="translated">Irizpidea</target>
       </trans-unit>
       <trans-unit id="p3BiCQV" resname="Without filter">
         <source>Without filter</source>
-        <target state="needs-translation">Without filter</target>
+        <target state="translated">Iragazkirik gabe</target>
       </trans-unit>
       <trans-unit id=".3bGq3U" resname="Configure your fields list">
         <source>Configure your fields list</source>
-        <target state="needs-translation">Configure your fields list</target>
+        <target state="translated">Konfiguratu zerrendako eremuak</target>
       </trans-unit>
       <trans-unit id="YWOkHA5" resname="Custom field">
         <source>Custom field</source>
-        <target state="needs-translation">Custom field</target>
+        <target state="translated">Zerrendako eremua</target>
       </trans-unit>
       <trans-unit id="acQEWR6" resname="Views">
         <source>Views</source>
-        <target state="needs-translation">Views</target>
+        <target state="translated">Ikustaldiak</target>
       </trans-unit>
       <trans-unit id="4h_TXxH" resname="Copy">
         <source>Copy</source>
-        <target state="needs-translation">Copy</target>
+        <target state="translated">Kopiatu</target>
       </trans-unit>
       <trans-unit id="j_FHaW_" resname="Translate">
         <source>Translate</source>
-        <target state="needs-translation">Translate</target>
+        <target state="translated">Itzuli</target>
       </trans-unit>
       <trans-unit id="algu._j" resname="Iframe URL">
         <source>Iframe URL</source>
-        <target state="needs-translation">Iframe URL</target>
+        <target state="translated">Iframearen URLa</target>
       </trans-unit>
       <trans-unit id="jyNk4Ru" resname="Day">
         <source>Day</source>
-        <target state="needs-translation">Day</target>
+        <target state="translated">Eguna</target>
       </trans-unit>
       <trans-unit id="MQylA_8" resname="Month">
         <source>Month</source>
-        <target state="needs-translation">Month</target>
+        <target state="translated">Hilabetea</target>
       </trans-unit>
       <trans-unit id="A3MtGeZ" resname="Num">
         <source>Num</source>
@@ -3767,7 +3767,7 @@
       </trans-unit>
       <trans-unit id="ybPDgkf" resname="Total">
         <source>Total</source>
-        <target state="needs-translation">Total</target>
+        <target state="translated">Guztira</target>
       </trans-unit>
       <trans-unit id="K2m_11l" resname="Num series">
         <source>Num series</source>
@@ -3787,23 +3787,23 @@
       </trans-unit>
       <trans-unit id="ppxN7OF" resname="Storage">
         <source>Storage</source>
-        <target state="needs-translation">Storage</target>
+        <target state="translated">Biltegiratzea</target>
       </trans-unit>
       <trans-unit id="XFT.IFz" resname="Numerical ID">
         <source>Numerical ID</source>
-        <target state="needs-translation">Numerical ID</target>
+        <target state="translated">ID numerikoa</target>
       </trans-unit>
       <trans-unit id="8.FNcj3" resname="Series Title">
         <source>Series Title</source>
-        <target state="needs-translation">Series Title</target>
+        <target state="translated">Seriearen izenburua</target>
       </trans-unit>
       <trans-unit id="0lBOUri" resname="catalogue">
         <source>catalogue</source>
-        <target state="needs-translation">catalogue</target>
+        <target state="translated">katalogoa</target>
       </trans-unit>
       <trans-unit id="8zto_mL" resname="Please enter your translation:">
         <source>Please enter your translation:</source>
-        <target state="needs-translation">Please enter your translation:</target>
+        <target state="translated">Idatzi zure itzulpena:</target>
       </trans-unit>
       <trans-unit id="VKDowX6" resname="Error">
         <source>Error</source>
@@ -3811,7 +3811,7 @@
       </trans-unit>
       <trans-unit id="gOjdGlo" resname="Recording">
         <source>Recording</source>
-        <target state="needs-translation">Recording</target>
+        <target state="translated">Grabatzen</target>
       </trans-unit>
       <trans-unit id="GyjReFW" resname="Viewed">
         <source>Viewed</source>
@@ -3823,19 +3823,19 @@
       </trans-unit>
       <trans-unit id="5KIt_PS" resname="Error: Multimedia Object with id %id% not found">
         <source>Error: Multimedia Object with id %id% not found</source>
-        <target state="needs-translation">Error: Multimedia Object with id %id% not found</target>
+        <target state="translated">Errorea: ez da aurkitu %id% IDa duen multimedia-objekturik</target>
       </trans-unit>
       <trans-unit id="eQLp7Fl" resname="Go back to">
         <source>Go back to</source>
-        <target state="needs-translation">Go back to</target>
+        <target state="translated">Itzuli hona:</target>
       </trans-unit>
       <trans-unit id="YMfjw07" resname="my series">
         <source>my series</source>
-        <target state="needs-translation">my series</target>
+        <target state="translated">nire serieak</target>
       </trans-unit>
       <trans-unit id="CZ_p4k1" resname="Show/Hide track">
         <source>Show/Hide track</source>
-        <target state="needs-translation">Show/Hide track</target>
+        <target state="translated">Erakutsi/Ezkutatu fitxategia</target>
       </trans-unit>
       <trans-unit id="z6IKnQ2" resname="Personal profile">
         <source>Personal profile</source>
@@ -3843,35 +3843,35 @@
       </trans-unit>
       <trans-unit id="j_dsskm" resname="My personal profile">
         <source>My personal profile</source>
-        <target state="needs-translation">My personal profile</target>
+        <target state="translated">Nire erabiltzaile-profila</target>
       </trans-unit>
       <trans-unit id="EPGZEYI" resname="My profile info">
         <source>My profile info</source>
-        <target state="needs-translation">My profile info</target>
+        <target state="translated">Nire profilaren informazioa</target>
       </trans-unit>
       <trans-unit id="5QtQix1" resname="Time uploaded">
         <source>Time uploaded</source>
-        <target state="needs-translation">Time uploaded</target>
+        <target state="translated">Igotako denbora</target>
       </trans-unit>
       <trans-unit id="LZRp8Ix" resname="Your video stats">
         <source>Your video stats</source>
-        <target state="needs-translation">Your video stats</target>
+        <target state="translated">Zure bideoen estatistikak</target>
       </trans-unit>
       <trans-unit id="BpOx4v1" resname="Assigned videos by role">
         <source>Assigned videos by role</source>
-        <target state="needs-translation">Assigned videos by role</target>
+        <target state="translated">Rolaren arabera esleitutako bideoak</target>
       </trans-unit>
       <trans-unit id="DTlgLcO" resname="Last login">
         <source>Last login</source>
-        <target state="needs-translation">Last login</target>
+        <target state="translated">Azken sarbidea</target>
       </trans-unit>
       <trans-unit id="RyWQrpd" resname="Provider">
         <source>Provider</source>
-        <target state="needs-translation">Provider</target>
+        <target state="translated">Hornitzailea</target>
       </trans-unit>
       <trans-unit id="Rj1ftLT" resname="No groups found">
         <source>No groups found</source>
-        <target state="needs-translation">No groups found</target>
+        <target state="translated">Ez da talderik aurkitu</target>
       </trans-unit>
       <trans-unit id="Rj1lgLT" resname="No series found">
         <source>No series found</source>
@@ -3887,11 +3887,11 @@
       </trans-unit>
       <trans-unit id="Jxxi_i3" resname="My profile">
         <source>My profile</source>
-        <target state="needs-translation">My profile</target>
+        <target state="translated">Nire profila</target>
       </trans-unit>
       <trans-unit id="dclYZH3" resname="My stats">
         <source>My stats</source>
-        <target state="needs-translation">My stats</target>
+        <target state="translated">Nire estatistikak</target>
       </trans-unit>
       <trans-unit id="OQIpXE4" resname="You're not allowed to access this link. You're not the holder user.">
         <source>You're not allowed to access this link. You're not the holder user.</source>
@@ -3939,15 +3939,15 @@
       </trans-unit>
       <trans-unit id="MLMItXS" resname="Video options">
         <source>Video options</source>
-        <target state="needs-translation">Video options</target>
+        <target state="translated">Bideoaren aukerak</target>
       </trans-unit>
       <trans-unit id="kMMeE3r" resname="Video head">
         <source>Video head</source>
-        <target state="needs-translation">Video head</target>
+        <target state="translated">Hasiera-bideoa</target>
       </trans-unit>
       <trans-unit id="ICtUyCV" resname="Video tail">
         <source>Video tail</source>
-        <target state="needs-translation">Video tail</target>
+        <target state="translated">Amaiera-bideoa</target>
       </trans-unit>
       <trans-unit id="0tHgmzW" resname="Multimedia Object Id">
         <source>Multimedia Object Id</source>
@@ -3963,83 +3963,83 @@
       </trans-unit>
       <trans-unit id="cS3R70y" resname="Head and tail video">
         <source>Head and tail video</source>
-        <target state="needs-translation">Head and tail video</target>
+        <target state="translated">Hasiera- eta amaiera-bideoa</target>
       </trans-unit>
       <trans-unit id="m7CqzG1" resname="Head">
         <source>Head</source>
-        <target state="needs-translation">Head</target>
+        <target state="translated">Hasiera</target>
       </trans-unit>
       <trans-unit id="rpw70R9" resname="Tail">
         <source>Tail</source>
-        <target state="needs-translation">Tail</target>
+        <target state="translated">Amaiera</target>
       </trans-unit>
       <trans-unit id="F_V94dr" resname="Iframe">
         <source>Iframe</source>
-        <target state="needs-translation">Iframe</target>
+        <target state="translated">Iframe</target>
       </trans-unit>
       <trans-unit id="GqTLC8y" resname="Image">
         <source>Image</source>
-        <target state="needs-translation">Image</target>
+        <target state="translated">Irudia</target>
       </trans-unit>
       <trans-unit id="q3dDpK2" resname="Serie">
         <source>Serie</source>
-        <target state="needs-translation">Serie</target>
+        <target state="translated">Seriea</target>
       </trans-unit>
       <trans-unit id="BR8B8JW" resname="Track">
         <source>Track</source>
-        <target state="needs-translation">Track</target>
+        <target state="translated">Pista</target>
       </trans-unit>
       <trans-unit id=".4BZ3Gd" resname="Actions">
         <source>Actions</source>
-        <target state="needs-translation">Actions</target>
+        <target state="translated">Ekintzak</target>
       </trans-unit>
       <trans-unit id="bY.FPa8" resname="No videos selected">
         <source>No videos selected</source>
-        <target state="needs-translation">No videos selected</target>
+        <target state="translated">Ez dago bideorik hautatuta</target>
       </trans-unit>
       <trans-unit id="fTYUYZE" resname="Default system header configuration">
         <source>Default system header configuration</source>
-        <target state="needs-translation">Default system header configuration</target>
+        <target state="translated">Sistemaren hasiera-bideo lehenetsia</target>
       </trans-unit>
       <trans-unit id="Ot22Fs0" resname="No video head configured">
         <source>No video head configured</source>
-        <target state="needs-translation">No video head configured</target>
+        <target state="translated">Ez dago hasiera-bideorik konfiguratuta</target>
       </trans-unit>
       <trans-unit id="izUTcEy" resname="Default system tail configuration">
         <source>Default system tail configuration</source>
-        <target state="needs-translation">Default system tail configuration</target>
+        <target state="translated">Sistemaren amaiera-bideo lehenetsia</target>
       </trans-unit>
       <trans-unit id="qAxfDBU" resname="No video tail configured">
         <source>No video tail configured</source>
-        <target state="needs-translation">No video tail configured</target>
+        <target state="translated">Ez dago amaiera-bideorik konfiguratuta</target>
       </trans-unit>
       <trans-unit id="lYYIDRi" resname="Head and tail manager">
         <source>Head and tail manager</source>
-        <target state="needs-translation">Head and tail manager</target>
+        <target state="translated">Hasiera- eta amaiera-bideoen kudeatzailea</target>
       </trans-unit>
       <trans-unit id="1ZPHvob" resname="Video head list">
         <source>Video head list</source>
-        <target state="needs-translation">Video head list</target>
+        <target state="translated">Hasiera-bideoen zerrenda</target>
       </trans-unit>
       <trans-unit id="o.hlqWT" resname="Video tail list">
         <source>Video tail list</source>
-        <target state="needs-translation">Video tail list</target>
+        <target state="translated">Amaiera-bideoen zerrenda</target>
       </trans-unit>
       <trans-unit id="ZvSATuI" resname="Archive">
         <source>Archive</source>
-        <target state="needs-translation">Archive</target>
+        <target state="translated">Artxibatu</target>
       </trans-unit>
       <trans-unit id="8ze7Pzt" resname="Multimedia Object title">
         <source>Multimedia Object title</source>
-        <target state="needs-translation">Multimedia Object title</target>
+        <target state="translated">Multimedia-objektuaren izenburua</target>
       </trans-unit>
       <trans-unit id="0HAPAiZ" resname="Archiving a multimedia object implies that the object in question is archived and an editable clone is generated by the user to whom it belongs.">
         <source>Archiving a multimedia object implies that the object in question is archived and an editable clone is generated by the user to whom it belongs.</source>
-        <target state="needs-translation">Archiving a multimedia object implies that the object in question is archived and an editable clone is generated by the user to whom it belongs.</target>
+        <target state="translated">Multimedia-objektu bat artxibatzeak esan nahi du objektu hori artxibatu egiten dela eta haren jabe den erabiltzailearentzat klon editagarri bat sortzen dela.</target>
       </trans-unit>
       <trans-unit id="joG1t9V" resname="The characteristics of the archive are:">
         <source>The characteristics of the archive are:</source>
-        <target state="needs-translation">The characteristics of the archive are:</target>
+        <target state="translated">Artxibatutako objektuaren ezaugarriak hauek dira:</target>
       </trans-unit>
       <trans-unit id="smqMThr" resname="The media object will contain 'ARCHIVED {YEAR}' in the title of the media object">
         <source>The media object will contain 'ARCHIVED {YEAR}' in the title of the media object</source>
@@ -4047,51 +4047,394 @@
       </trans-unit>
       <trans-unit id=".A1duX3" resname="Ownership of the object is given to the administrator or user selected by configuration">
         <source>Ownership of the object is given to the administrator or user selected by configuration</source>
-        <target state="needs-translation">Ownership of the object is given to the administrator or user selected by configuration</target>
+        <target state="translated">Objektuaren jabetza konfigurazioan hautatutako administratzaileari edo erabiltzaileari ematen zaio</target>
       </trans-unit>
       <trans-unit id="biemlah" resname="The multimedia object will store who and when has locked it">
         <source>The multimedia object will store who and when has locked it</source>
-        <target state="needs-translation">The multimedia object will store who and when has locked it</target>
+        <target state="translated">Multimedia-objektuak nork eta noiz blokeatu duen gordeko du</target>
       </trans-unit>
       <trans-unit id="oZ7DRAc" resname="A reference to where the new locked object came from will be saved">
         <source>A reference to where the new locked object came from will be saved</source>
-        <target state="needs-translation">A reference to where the new locked object came from will be saved</target>
+        <target state="translated">Blokeatutako objektu berria nondik datorren erreferentzia gordeko da</target>
       </trans-unit>
       <trans-unit id="4Y8bLUu" resname="Are you sure you want to archive the object ?">
         <source>Are you sure you want to archive the object ?</source>
-        <target state="needs-translation">Are you sure you want to archive the object ?</target>
+        <target state="translated">Ziur zaude objektua artxibatu nahi duzula?</target>
       </trans-unit>
       <trans-unit id="Nelyylv" resname="Multimedia Object archive ERROR">
         <source>Multimedia Object archive ERROR</source>
-        <target state="needs-translation">Multimedia Object archive ERROR</target>
+        <target state="translated">Errorea multimedia-objektua artxibatzean</target>
       </trans-unit>
       <trans-unit id="r9eg0Gp" resname="Multimedia Object archive complete">
         <source>Multimedia Object archive complete</source>
-        <target state="needs-translation">Multimedia Object archive complete</target>
+        <target state="translated">Multimedia-objektua artxibatu da.</target>
       </trans-unit>
       <trans-unit id="lU0EsYZ" resname="Archive multimedia object">
         <source>Archive multimedia object</source>
-        <target state="needs-translation">Archive multimedia object</target>
+        <target state="translated">Artxibatu multimedia-objektua</target>
       </trans-unit>
       <trans-unit id="1" resname="ARCHIVED">
         <source>ARCHIVED</source>
-        <target state="needs-translation">ARCHIVED</target>
+        <target state="translated">ARTXIBATUA</target>
       </trans-unit>
       <trans-unit id="NtsMHOJ" resname="Search Channels">
         <source>Search Channels</source>
-        <target state="needs-translation">Search Channels</target>
+        <target state="translated">Bilatu kanalak</target>
       </trans-unit>
       <trans-unit id="uIEWO1i" resname="Selected Channel">
         <source>Selected Channel</source>
-        <target state="needs-translation">Selected Channel</target>
+        <target state="translated">Hautatutako kanala</target>
       </trans-unit>
       <trans-unit id="_dIBlw8" resname="Your user has no associated person, so its stats cannot be shown.">
         <source>Your user has no associated person, so its stats cannot be shown.</source>
-        <target state="needs-translation">Your user has no associated person, so its stats cannot be shown.</target>
+        <target state="translated">Zure erabiltzaileak ez du pertsonarik lotuta, eta, beraz, ezin dira haren estatistikak erakutsi.</target>
       </trans-unit>
       <trans-unit id="hdYwpBP" resname="Your user has no associated person, so its videos cannot be searched.">
         <source>Your user has no associated person, so its videos cannot be searched.</source>
-        <target state="needs-translation">Your user has no associated person, so its videos cannot be searched.</target>
+        <target state="translated">Zure erabiltzaileak ez du pertsonarik lotuta, eta, beraz, ezin dira haren bideoak bilatu.</target>
+      </trans-unit>
+      <trans-unit id="6hj1INW" resname="&apos; with MultimediaObject &apos;">
+        <source>' with MultimediaObject '</source>
+        <target state="translated">' eta '</target>
+      </trans-unit>
+      <trans-unit id="Uz7TeWb" resname="&apos;. There are Multimedia objects with this Person.">
+        <source>'. There are Multimedia objects with this Person.</source>
+        <target state="translated">'. Pertsona hau duten multimedia-objektuak daude.</target>
+      </trans-unit>
+      <trans-unit id="yRa_9kI" resname="Add new track">
+        <source>Add new track</source>
+        <target state="translated">Gehitu pista berria</target>
+      </trans-unit>
+      <trans-unit id="JXpQfaY" resname="Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and&#10;        &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn&apos;t exist in the database,&#10;        &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name">
+        <source>Add the name of the person you want to add. In case this person already exists in the database, a pull-down list will be shown, where you can select him/her and
+        &lt;strong&gt;use him/her&lt;/strong&gt;. If he/she doesn't exist in the database,
+        &lt;strong&gt;create&lt;/strong&gt; a new entrance with the written name</source>
+        <target state="translated">Idatzi gehitu nahi duzun pertsonaren izena. Pertsona hori datu-basean badago, zerrenda zabalgarri bat agertuko da, eta bertan hautatu eta &lt;strong&gt;erabili&lt;/strong&gt; ahal izango duzu. Datu-basean ez badago, &lt;strong&gt;sortu&lt;/strong&gt; sarrera berri bat idatzitako izenarekin</target>
+      </trans-unit>
+      <trans-unit id="_cHrhLS" resname="Bio">
+        <source>Bio</source>
+        <target state="translated">Biografia</target>
+      </trans-unit>
+      <trans-unit id="RdGR424" resname="Can not delete Person &apos;">
+        <source>Can not delete Person '</source>
+        <target state="translated">Ezin da pertsona ezabatu: '</target>
+      </trans-unit>
+      <trans-unit id="CDLeyDv" resname="Can not delete relation of Person &apos;">
+        <source>Can not delete relation of Person '</source>
+        <target state="translated">Ezin da pertsonaren erlazioa ezabatu: '</target>
+      </trans-unit>
+      <trans-unit id="JcTpces" resname="Can&apos;t clone this multimediaObject">
+        <source>Can't clone this multimediaObject</source>
+        <target state="translated">Ezin da multimedia-objektu hau klonatu</target>
+      </trans-unit>
+      <trans-unit id="csUqMzZ" resname="Can&apos;t delete Person&apos;">
+        <source>Can't delete Person'</source>
+        <target state="translated">Ezin da pertsona ezabatu: '</target>
+      </trans-unit>
+      <trans-unit id="9jsPQ68" resname="Can&apos;t delete this multimediaObject">
+        <source>Can't delete this multimediaObject</source>
+        <target state="translated">Ezin da multimedia-objektu hau ezabatu</target>
+      </trans-unit>
+      <trans-unit id="LC3L8el" resname="Can&apos;t delete this tag, delete first children">
+        <source>Can't delete this tag, delete first children</source>
+        <target state="translated">Ezin da kategoria hau ezabatu, ezabatu lehenik haren azpikategoriak</target>
+      </trans-unit>
+      <trans-unit id="OZTMRl_" resname="Change fields successfully">
+        <source>Change fields successfully</source>
+        <target state="translated">Eremuak behar bezala aldatu dira</target>
+      </trans-unit>
+      <trans-unit id="CNUBiVq" resname="Check selected serie">
+        <source>Check selected serie</source>
+        <target state="translated">Egiaztatu hautatutako seriea</target>
+      </trans-unit>
+      <trans-unit id="P322m3K" resname="cloned">
+        <source>cloned</source>
+        <target state="translated">klonatua</target>
+      </trans-unit>
+      <trans-unit id="Nii1cd4" resname="Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the &apos;data-widget-id&apos; of the HTML generated code.">
+        <source>Create a search Widget in your Twitter account. Configure it with the defined hashtag and recommended color %twitterAccountsLinkColor% for link color. Place here the 'data-widget-id' of the HTML generated code.</source>
+        <target state="translated">Sortu bilaketa-widget bat zure Twitter kontuan. Konfiguratu definitutako hashtagarekin eta esteken kolorerako gomendatutako %twitterAccountsLinkColor% kolorearekin. Idatzi hemen sortutako HTML kodeko 'data-widget-id' balioa.</target>
+      </trans-unit>
+      <trans-unit id="UOwiOcI" resname="Do you want delete this events?">
+        <source>Do you want delete this events?</source>
+        <target state="translated">Emanaldi hauek ezabatu nahi dituzu?</target>
+      </trans-unit>
+      <trans-unit id="iMlLPDz" resname="Download">
+        <source>Download</source>
+        <target state="translated">Deskargatu</target>
+      </trans-unit>
+      <trans-unit id="E6JNNpz" resname="Enable chat on this channel&apos;s page">
+        <source>Enable chat on this channel's page</source>
+        <target state="translated">Gaitu txata kanal honen orrian</target>
+      </trans-unit>
+      <trans-unit id="8l_wrQb" resname="Error while cloning series ">
+        <source>Error while cloning series </source>
+        <target state="translated">Errorea seriea klonatzean: </target>
+      </trans-unit>
+      <trans-unit id="cq.wN9l" resname="External">
+        <source>External</source>
+        <target state="translated">Kanpokoa</target>
+      </trans-unit>
+      <trans-unit id="joQ3jYX" resname="External defined group and user. Contact your directory service administrator to change membership.">
+        <source>External defined group and user. Contact your directory service administrator to change membership.</source>
+        <target state="translated">Kanpoan definitutako taldea eta erabiltzailea. Kidetza aldatzeko, jarri harremanetan direktorio-zerbitzuaren administratzailearekin.</target>
+      </trans-unit>
+      <trans-unit id="9m9F04e" resname="External defined groups. Contact your directory service administrator to change membership.">
+        <source>External defined groups. Contact your directory service administrator to change membership.</source>
+        <target state="translated">Kanpoan definitutako taldeak. Kidetza aldatzeko, jarri harremanetan direktorio-zerbitzuaren administratzailearekin.</target>
+      </trans-unit>
+      <trans-unit id="QkJRtAp" resname="External media">
+        <source>External media</source>
+        <target state="translated">Kanpoko euskarria</target>
+      </trans-unit>
+      <trans-unit id="B0zaHuf" resname="Firm">
+        <source>Firm</source>
+        <target state="translated">Enpresa</target>
+      </trans-unit>
+      <trans-unit id="S6b5zVy" resname="Groups successfully deleted">
+        <source>Groups successfully deleted</source>
+        <target state="translated">Taldeak behar bezala ezabatu dira</target>
+      </trans-unit>
+      <trans-unit id="jr1I9kL" resname="Head &amp; tail manager">
+        <source>Head &amp; tail manager</source>
+        <target state="translated">Hasiera- eta amaiera-bideoen kudeatzailea</target>
+      </trans-unit>
+      <trans-unit id="12MOFYS" resname="Honorific">
+        <source>Honorific</source>
+        <target state="translated">Tratamendua</target>
+      </trans-unit>
+      <trans-unit id="IuO2F8I" resname="Hour of day">
+        <source>Hour of day</source>
+        <target state="translated">Eguneko ordua</target>
+      </trans-unit>
+      <trans-unit id="EmLzI9J" resname="Last 5 series">
+        <source>Last 5 series</source>
+        <target state="translated">Azken 5 serieak</target>
+      </trans-unit>
+      <trans-unit id="YbUxazW" resname="Link">
+        <source>Link</source>
+        <target state="translated">Esteka</target>
+      </trans-unit>
+      <trans-unit id="kYNTN_K" resname="Live Broadcasting">
+        <source>Live Broadcasting</source>
+        <target state="translated">Zuzenean emititzen</target>
+      </trans-unit>
+      <trans-unit id="RYyjnTw" resname="Max.">
+        <source>Max.</source>
+        <target state="translated">Geh.</target>
+      </trans-unit>
+      <trans-unit id="wbmyMpt" resname="Media">
+        <source>Media</source>
+        <target state="translated">Euskarriak</target>
+      </trans-unit>
+      <trans-unit id="k8SlN9W" resname="Media Files">
+        <source>Media Files</source>
+        <target state="translated">Multimedia-fitxategiak</target>
+      </trans-unit>
+      <trans-unit id="aiIz9l3" resname="Metatag">
+        <source>Metatag</source>
+        <target state="translated">Metakategoria</target>
+      </trans-unit>
+      <trans-unit id="gTk6k0e" resname="Multimedia Object">
+        <source>Multimedia Object</source>
+        <target state="translated">Multimedia-objektua</target>
+      </trans-unit>
+      <trans-unit id="BRlqKgR" resname="Multimedia Object not found">
+        <source>Multimedia Object not found</source>
+        <target state="translated">Ez da multimedia-objektua aurkitu</target>
+      </trans-unit>
+      <trans-unit id="8__420b" resname="Multimedia Object removed as head">
+        <source>Multimedia Object removed as head</source>
+        <target state="translated">Multimedia-objektua kendu da hasiera-bideo gisa</target>
+      </trans-unit>
+      <trans-unit id="f01neXX" resname="Multimedia Object removed as tail">
+        <source>Multimedia Object removed as tail</source>
+        <target state="translated">Multimedia-objektua kendu da amaiera-bideo gisa</target>
+      </trans-unit>
+      <trans-unit id="dLbjuaU" resname="Multimedia Object set as head">
+        <source>Multimedia Object set as head</source>
+        <target state="translated">Multimedia-objektua hasiera-bideo gisa ezarri da</target>
+      </trans-unit>
+      <trans-unit id="MwgmI0I" resname="Multimedia Object set as tail">
+        <source>Multimedia Object set as tail</source>
+        <target state="translated">Multimedia-objektua amaiera-bideo gisa ezarri da</target>
+      </trans-unit>
+      <trans-unit id="W2Ihhz." resname="Multimedia objects">
+        <source>Multimedia objects</source>
+        <target state="translated">Multimedia-objektuak</target>
+      </trans-unit>
+      <trans-unit id="b7HB23E" resname="multimedia objects">
+        <source>multimedia objects</source>
+        <target state="translated">multimedia-objektuak</target>
+      </trans-unit>
+      <trans-unit id="HWbUTWG" resname="Multimedia objects created">
+        <source>Multimedia objects created</source>
+        <target state="translated">Sortutako multimedia-objektuak</target>
+      </trans-unit>
+      <trans-unit id="Jh8QaH8" resname="New external media">
+        <source>New external media</source>
+        <target state="translated">Kanpoko euskarri berria</target>
+      </trans-unit>
+      <trans-unit id="N4zQ0RK" resname="No data to display yet.">
+        <source>No data to display yet.</source>
+        <target state="translated">Oraindik ez dago erakusteko daturik.</target>
+      </trans-unit>
+      <trans-unit id="psN_mWl" resname="No external media set">
+        <source>No external media set</source>
+        <target state="translated">Ez dago kanpoko euskarririk konfiguratuta</target>
+      </trans-unit>
+      <trans-unit id="x3PxtlT" resname="No fields selected to sync">
+        <source>No fields selected to sync</source>
+        <target state="translated">Ez dago sinkronizatzeko eremurik hautatuta</target>
+      </trans-unit>
+      <trans-unit id="oXKLQjp" resname="No roles defined">
+        <source>No roles defined</source>
+        <target state="translated">Ez dago rolik definituta</target>
+      </trans-unit>
+      <trans-unit id="bjUoeSE" resname="No series found with ID">
+        <source>No series found with ID</source>
+        <target state="translated">Ez da seriarik aurkitu ID honekin:</target>
+      </trans-unit>
+      <trans-unit id="e6o0dbf" resname="No series yet.">
+        <source>No series yet.</source>
+        <target state="translated">Oraindik ez dago seriarik.</target>
+      </trans-unit>
+      <trans-unit id="q3xoFK." resname="No storage configured.">
+        <source>No storage configured.</source>
+        <target state="translated">Ez dago biltegiratzerik konfiguratuta.</target>
+      </trans-unit>
+      <trans-unit id="SSuf4g9" resname="No tags defined with metatag">
+        <source>No tags defined with metatag</source>
+        <target state="translated">Ez dago metakategoria honekin definitutako kategoriarik</target>
+      </trans-unit>
+      <trans-unit id="mpF4yQO" resname="Not allowed to delete Groups:">
+        <source>Not allowed to delete Groups:</source>
+        <target state="translated">Ezin dira talde hauek ezabatu:</target>
+      </trans-unit>
+      <trans-unit id="nufxlfc" resname="Owners">
+        <source>Owners</source>
+        <target state="translated">Jabeak</target>
+      </trans-unit>
+      <trans-unit id="9GAN2.6" resname="Passwords do not match">
+        <source>Passwords do not match</source>
+        <target state="translated">Pasahitzak ez datoz bat</target>
+      </trans-unit>
+      <trans-unit id="zmxZwQO" resname="Playlists">
+        <source>Playlists</source>
+        <target state="translated">Erreprodukzio-zerrendak</target>
+      </trans-unit>
+      <trans-unit id="HVjKmcM" resname="Publication activity">
+        <source>Publication activity</source>
+        <target state="translated">Argitaratze-jarduera</target>
+      </trans-unit>
+      <trans-unit id="d658z2l" resname="Read only">
+        <source>Read only</source>
+        <target state="translated">Irakurtzeko soilik</target>
+      </trans-unit>
+      <trans-unit id="Z9CSKpk" resname="Repeat Password">
+        <source>Repeat Password</source>
+        <target state="translated">Errepikatu pasahitza</target>
+      </trans-unit>
+      <trans-unit id="95edABo" resname="Select a file or add a image url. Thank you.">
+        <source>Select a file or add a image url. Thank you.</source>
+        <target state="translated">Hautatu fitxategi bat edo gehitu irudi baten URLa. Eskerrik asko.</target>
+      </trans-unit>
+      <trans-unit id="CWSJJzO" resname="Series title">
+        <source>Series title</source>
+        <target state="translated">Seriearen izenburua</target>
+      </trans-unit>
+      <trans-unit id="XnARhGE" resname="Storage used">
+        <source>Storage used</source>
+        <target state="translated">Erabilitako biltegiratzea</target>
+      </trans-unit>
+      <trans-unit id="38KTgHu" resname="Successfully delete admin MultimediaObjects from Group.">
+        <source>Successfully delete admin MultimediaObjects from Group.</source>
+        <target state="translated">Administrazioko multimedia-objektuak behar bezala kendu dira taldetik.</target>
+      </trans-unit>
+      <trans-unit id="oIBjVD2" resname="Successfully delete MultimediaObject from Group.">
+        <source>Successfully delete MultimediaObject from Group.</source>
+        <target state="translated">Multimedia-objektua behar bezala kendu da taldetik.</target>
+      </trans-unit>
+      <trans-unit id="WopCFkW" resname="Successfully delete play MultimediaObjects from Group.">
+        <source>Successfully delete play MultimediaObjects from Group.</source>
+        <target state="translated">Erreprodukzioko multimedia-objektuak behar bezala kendu dira taldetik.</target>
+      </trans-unit>
+      <trans-unit id="PHfJMHy" resname="Successfully delete User from Group.">
+        <source>Successfully delete User from Group.</source>
+        <target state="translated">Erabiltzailea behar bezala kendu da taldetik.</target>
+      </trans-unit>
+      <trans-unit id="nPbSIy9" resname="Successfully deleted series style">
+        <source>Successfully deleted series style</source>
+        <target state="translated">Serie-estiloa behar bezala ezabatu da</target>
+      </trans-unit>
+      <trans-unit id="6gpJCPt" resname="Sync metadata was done successfully">
+        <source>Sync metadata was done successfully</source>
+        <target state="translated">Metadatuak behar bezala sinkronizatu dira</target>
+      </trans-unit>
+      <trans-unit id="Ie.BwSW" resname="Sync metadata was fail.">
+        <source>Sync metadata was fail.</source>
+        <target state="translated">Metadatuen sinkronizazioak huts egin du.</target>
+      </trans-unit>
+      <trans-unit id="1J6rCfr" resname="System Super Administrator">
+        <source>System Super Administrator</source>
+        <target state="translated">Sistemaren superadministratzailea</target>
+      </trans-unit>
+      <trans-unit id="WOf0nxJ" resname="The media object will contain &apos;ARCHIVED {YEAR}&apos; in the title of the media object">
+        <source>The media object will contain 'ARCHIVED {YEAR}' in the title of the media object</source>
+        <target state="translated">Multimedia-objektuaren izenburuak 'ARCHIVED {YEAR}' izango du</target>
+      </trans-unit>
+      <trans-unit id="_z4el3Z" resname="The password fields must match.">
+        <source>The password fields must match.</source>
+        <target state="translated">Pasahitz-eremuek bat etorri behar dute.</target>
+      </trans-unit>
+      <trans-unit id="Utr9o8B" resname="There are series with this series style">
+        <source>There are series with this series style</source>
+        <target state="translated">Badaude serie-estilo hau duten serieak</target>
+      </trans-unit>
+      <trans-unit id="KxFs9Rw" resname="There aren&apos;t defined styles">
+        <source>There aren't defined styles</source>
+        <target state="translated">Ez dago estilorik definituta</target>
+      </trans-unit>
+      <trans-unit id="zE4t3.M" resname="To use the inbox mode define the inbox path as&#10;                &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.">
+        <source>To use the inbox mode define the inbox path as
+                &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.</source>
+        <target state="translated">Inbox modua erabiltzeko, definitu inboxaren bidea zure konfigurazio-fitxategiko &lt;code&gt;pumukit.inbox&lt;/code&gt; parametroan.</target>
+      </trans-unit>
+      <trans-unit id="iX3Z4Sh" resname="Total time">
+        <source>Total time</source>
+        <target state="translated">Denbora guztira</target>
+      </trans-unit>
+      <trans-unit id="Q7LQpG_" resname="Track Update">
+        <source>Track Update</source>
+        <target state="translated">Eguneratu pista</target>
+      </trans-unit>
+      <trans-unit id="tDIFSk_" resname="UNESCO">
+        <source>UNESCO</source>
+        <target state="translated">UNESCO</target>
+      </trans-unit>
+      <trans-unit id="4yXfNQI" resname="Video/Audio language">
+        <source>Video/Audio language</source>
+        <target state="translated">Bideoaren edo audioaren hizkuntza</target>
+      </trans-unit>
+      <trans-unit id="tMm7sFZ" resname="Warning: This multimedia object is not correctly published on WebTV">
+        <source>Warning: This multimedia object is not correctly published on WebTV</source>
+        <target state="translated">Abisua: multimedia-objektu hau ez dago behar bezala argitaratuta WebTVn</target>
+      </trans-unit>
+      <trans-unit id="GVtq_kc" resname="WORKING PROGRESS">
+        <source>WORKING PROGRESS</source>
+        <target state="translated">GARATZEN</target>
+      </trans-unit>
+      <trans-unit id="owhNLfe" resname="WOWZA">
+        <source>WOWZA</source>
+        <target state="translated">WOWZA</target>
+      </trans-unit>
+      <trans-unit id="0nbhdvX" resname="XML">
+        <source>XML</source>
+        <target state="translated">XML</target>
+      </trans-unit>
+      <trans-unit id="8gS_Bnr" resname="xxx - ">
+        <source>xxx - </source>
+        <target state="translated">xxx - </target>
       </trans-unit>
     </body>
   </file>

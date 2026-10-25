@@ -177,6 +177,22 @@
         <source>This cpu only executes jobs from the following profiles:</source>
         <target state="translated">CPU honek profil hauetako lanak bakarrik exekutatzen ditu:</target>
       </trans-unit>
+      <trans-unit id="_62c3tU" resname="Job">
+        <source>Job</source>
+        <target state="translated">Lana</target>
+      </trans-unit>
+      <trans-unit id="qy0m8f3" resname="Multimedia object removed">
+        <source>Multimedia object removed</source>
+        <target state="translated">Multimedia-objektua ezabatuta</target>
+      </trans-unit>
+      <trans-unit id="Y6tR230" resname="Started">
+        <source>Started</source>
+        <target state="translated">Hasita</target>
+      </trans-unit>
+      <trans-unit id="F6tPan4" resname="STOP">
+        <source>STOP</source>
+        <target state="translated">GELDITU</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

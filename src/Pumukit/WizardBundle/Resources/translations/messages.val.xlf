@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="val" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="yH_J4or" resname="Encoded high quality copy">
+        <source>Encoded high quality copy</source>
+        <target state="translated">Còpia codificada d’alta qualitat</target>
+      </trans-unit>
+      <trans-unit id="guj6o_g" resname="Encoded low quality copy">
+        <source>Encoded low quality copy</source>
+        <target state="translated">Còpia codificada de baixa qualitat</target>
+      </trans-unit>
+      <trans-unit id="wHygS6s" resname="Identical copy">
+        <source>Identical copy</source>
+        <target state="translated">Còpia idèntica</target>
+      </trans-unit>
+      <trans-unit id="A1IQ595" resname="Local">
+        <source>Local</source>
+        <target state="translated">Local</target>
+      </trans-unit>
+      <trans-unit id="FmhrFZA" resname="Local resource">
+        <source>Local resource</source>
+        <target state="translated">Recurs local</target>
+      </trans-unit>
+      <trans-unit id="NeHXYoQ" resname="Server">
+        <source>Server</source>
+        <target state="translated">Servidor</target>
+      </trans-unit>
+      <trans-unit id="1E0R5A2" resname="Upload wizard">
+        <source>Upload wizard</source>
+        <target state="translated">Assistent de pujada</target>
+      </trans-unit>
+      <trans-unit id="qJh1tXy" resname="What do you want to do with the uploaded file?">
+        <source>What do you want to do with the uploaded file?</source>
+        <target state="translated">Què vols fer amb el fitxer pujat?</target>
+      </trans-unit>
+      <trans-unit id="ndYtQzm" resname="Where do you want to upload the files from?">
+        <source>Where do you want to upload the files from?</source>
+        <target state="translated">Des d’on vols pujar els fitxers?</target>
+      </trans-unit>
+      <trans-unit id="5bnpWCI" resname="You dont have enough permissions to upload files from the server">
+        <source>You dont have enough permissions to upload files from the server</source>
+        <target state="translated">No tens prou permisos per a pujar fitxers des del servidor</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

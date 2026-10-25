@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="eu" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id=".GJQzzX" resname="All History">
+        <source>All History</source>
+        <target state="translated">Historia osoa</target>
+      </trans-unit>
+      <trans-unit id="R080Li7" resname="Clear filter">
+        <source>Clear filter</source>
+        <target state="translated">Garbitu iragazkia</target>
+      </trans-unit>
+      <trans-unit id="pUMCuZL" resname="Custom range">
+        <source>Custom range</source>
+        <target state="translated">Tarte pertsonalizatua</target>
+      </trans-unit>
+      <trans-unit id="Y8P2gR1" resname="Date range">
+        <source>Date range</source>
+        <target state="translated">Data-tartea</target>
+      </trans-unit>
+      <trans-unit id="a2XYljR" resname="General Statistics for Objects (videos/audios)">
+        <source>General Statistics for Objects (videos/audios)</source>
+        <target state="translated">Objektuen estatistika orokorrak (bideoak/audioak)</target>
+      </trans-unit>
+      <trans-unit id="vrgy8Li" resname="General Statistics for Series">
+        <source>General Statistics for Series</source>
+        <target state="translated">Serieen estatistika orokorrak</target>
+      </trans-unit>
+      <trans-unit id="yZi_A3F" resname="Last 30 Days">
+        <source>Last 30 Days</source>
+        <target state="translated">Azken 30 egunak</target>
+      </trans-unit>
+      <trans-unit id="aN3AcX_" resname="Last 7 Days">
+        <source>Last 7 Days</source>
+        <target state="translated">Azken 7 egunak</target>
+      </trans-unit>
+      <trans-unit id="OuYwogV" resname="Last Month">
+        <source>Last Month</source>
+        <target state="translated">Joan den hilabetea</target>
+      </trans-unit>
+      <trans-unit id="kAlC6DR" resname="Most viewed objects (videos/audios)">
+        <source>Most viewed objects (videos/audios)</source>
+        <target state="translated">Objektu ikusienak (bideoak/audioak)</target>
+      </trans-unit>
+      <trans-unit id="LKFwu7Y" resname="Most viewed series">
+        <source>Most viewed series</source>
+        <target state="translated">Serie ikusienak</target>
+      </trans-unit>
+      <trans-unit id="Xx.1XXl" resname="Ranking">
+        <source>Ranking</source>
+        <target state="translated">Sailkapena</target>
+      </trans-unit>
+      <trans-unit id="zVBSIvK" resname="Record date">
+        <source>Record date</source>
+        <target state="translated">Grabazio-data</target>
+      </trans-unit>
+      <trans-unit id="wsKMxiJ" resname="Search by title">
+        <source>Search by title</source>
+        <target state="translated">Bilatu izenburuaren arabera</target>
+      </trans-unit>
+      <trans-unit id="Fd0gG5T" resname="Set URL parameters">
+        <source>Set URL parameters</source>
+        <target state="translated">Ezarri URLaren parametroak</target>
+      </trans-unit>
+      <trans-unit id="oDlzvE9" resname="Statistics of the object">
+        <source>Statistics of the object</source>
+        <target state="translated">Objektuaren estatistikak</target>
+      </trans-unit>
+      <trans-unit id="0a9mxR_" resname="Statistics of the series">
+        <source>Statistics of the series</source>
+        <target state="translated">Seriearen estatistikak</target>
+      </trans-unit>
+      <trans-unit id="VZeaizw" resname="This Month">
+        <source>This Month</source>
+        <target state="translated">Hilabete hau</target>
+      </trans-unit>
+      <trans-unit id="TG_rM3v" resname="This Year">
+        <source>This Year</source>
+        <target state="translated">Urte hau</target>
+      </trans-unit>
+      <trans-unit id="TWnDR16" resname="Total Objects">
+        <source>Total Objects</source>
+        <target state="translated">Objektuak guztira</target>
+      </trans-unit>
+      <trans-unit id="MpLugAd" resname="Total views in the date">
+        <source>Total views in the date</source>
+        <target state="translated">Ikustaldiak guztira data horretan</target>
+      </trans-unit>
+      <trans-unit id="NNdl4I_" resname="Views by time period">
+        <source>Views by time period</source>
+        <target state="translated">Ikustaldiak denbora-tartearen arabera</target>
+      </trans-unit>
+      <trans-unit id="FF17MBL" resname="Views of this series objects">
+        <source>Views of this series objects</source>
+        <target state="translated">Serie honetako objektuen ikustaldiak</target>
+      </trans-unit>
+      <trans-unit id="eR0TDJ." resname="Yesterday">
+        <source>Yesterday</source>
+        <target state="translated">Atzo</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

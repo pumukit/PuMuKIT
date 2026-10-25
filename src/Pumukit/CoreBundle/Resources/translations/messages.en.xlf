@@ -69,6 +69,62 @@
         <source>The file was uploaded but could not be imported</source>
         <target state="translated">The file was uploaded but could not be imported</target>
       </trans-unit>
+      <trans-unit id="1TOEHTD" resname="Access Forbidden: Check your role.">
+        <source>Access Forbidden: Check your role.</source>
+        <target>Access Forbidden: Check your role.</target>
+      </trans-unit>
+      <trans-unit id="KGJpfY3" resname="Audio/video file">
+        <source>Audio/video file</source>
+        <target>Audio/video file</target>
+      </trans-unit>
+      <trans-unit id="v8H5qNL" resname="layout.logged_in_as">
+        <source>layout.logged_in_as</source>
+        <target>Logged in as %username%</target>
+      </trans-unit>
+      <trans-unit id="2B20XFT" resname="multimedia object">
+        <source>multimedia object</source>
+        <target>multimedia object</target>
+      </trans-unit>
+      <trans-unit id="Qslm1zv" resname="No playable multimedia object found with id: %id% belonging to this playlist. (%title%)">
+        <source>No playable multimedia object found with id: %id% belonging to this playlist. (%title%)</source>
+        <target>No playable multimedia object found with id: %id% belonging to this playlist. (%title%)</target>
+      </trans-unit>
+      <trans-unit id="Pvn99oq" resname="No playlist found with id: %id%">
+        <source>No playlist found with id: %id%</source>
+        <target>No playlist found with id: %id%</target>
+      </trans-unit>
+      <trans-unit id="ZJsXL1a" resname="Oops! An Error Occurred">
+        <source>Oops! An Error Occurred</source>
+        <target>Oops! An Error Occurred</target>
+      </trans-unit>
+      <trans-unit id="tIlrnot" resname="Series not found">
+        <source>Series not found</source>
+        <target>Series not found</target>
+      </trans-unit>
+      <trans-unit id="qCFjmmk" resname="Something is broken. Please let us know what you were doing when this error occurred. We will fix it as soon as possible. Sorry for any inconvenience caused.">
+        <source>Something is broken. Please let us know what you were doing when this error occurred. We will fix it as soon as possible. Sorry for any inconvenience caused.</source>
+        <target>Something is broken. Please let us know what you were doing when this error occurred. We will fix it as soon as possible. Sorry for any inconvenience caused.</target>
+      </trans-unit>
+      <trans-unit id="AyXbPHX" resname="The server returned a">
+        <source>The server returned a</source>
+        <target>The server returned a</target>
+      </trans-unit>
+      <trans-unit id="dNYHRuk" resname="This playlist does not have any playable multimedia objects.">
+        <source>This playlist does not have any playable multimedia objects.</source>
+        <target>This playlist does not have any playable multimedia objects.</target>
+      </trans-unit>
+      <trans-unit id="4oyaNcE" resname="Upload">
+        <source>Upload</source>
+        <target>Upload</target>
+      </trans-unit>
+      <trans-unit id="1kLm1Gs" resname="Url">
+        <source>Url</source>
+        <target>Url</target>
+      </trans-unit>
+      <trans-unit id="XjvvlPc" resname="Web">
+        <source>Web</source>
+        <target>Web</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

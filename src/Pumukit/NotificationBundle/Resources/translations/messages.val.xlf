@@ -85,6 +85,10 @@
         <source>Series Title</source>
         <target state="translated">Títol de la sèrie</target>
       </trans-unit>
+      <trans-unit id="eDfcf9Q" resname="PuMuKIT notifications">
+        <source>PuMuKIT notifications</source>
+        <target state="translated">Notificacions de PuMuKIT</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

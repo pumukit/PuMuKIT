@@ -11,7 +11,7 @@
       </trans-unit>
       <trans-unit id="6KJWgkr" resname="The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _">
         <source>The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _</source>
-        <target state="needs-translation">The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _</target>
+        <target state="translated">O nome do cartafol non é válido. Os caracteres permitidos son: maiúsculas e minúsculas, números, espazo e _</target>
       </trans-unit>
       <trans-unit id="WGK6Qnl" resname="Upload video to: %folder%">
         <source>Upload video to: %folder%</source>
@@ -68,6 +68,62 @@
       <trans-unit id="UtKUPLn" resname="The file was uploaded but could not be imported">
         <source>The file was uploaded but could not be imported</source>
         <target state="translated">O ficheiro subiuse pero non se puido importar</target>
+      </trans-unit>
+      <trans-unit id="1TOEHTD" resname="Access Forbidden: Check your role.">
+        <source>Access Forbidden: Check your role.</source>
+        <target state="translated">Acceso prohibido: comproba o teu rol.</target>
+      </trans-unit>
+      <trans-unit id="KGJpfY3" resname="Audio/video file">
+        <source>Audio/video file</source>
+        <target state="translated">Ficheiro de son ou vídeo</target>
+      </trans-unit>
+      <trans-unit id="v8H5qNL" resname="layout.logged_in_as">
+        <source>layout.logged_in_as</source>
+        <target state="translated">Sesión iniciada como %username%</target>
+      </trans-unit>
+      <trans-unit id="2B20XFT" resname="multimedia object">
+        <source>multimedia object</source>
+        <target state="translated">obxecto multimedia</target>
+      </trans-unit>
+      <trans-unit id="Qslm1zv" resname="No playable multimedia object found with id: %id% belonging to this playlist. (%title%)">
+        <source>No playable multimedia object found with id: %id% belonging to this playlist. (%title%)</source>
+        <target state="translated">Non se atopou ningún obxecto multimedia reproducible co id %id% nesta lista de reprodución. (%title%)</target>
+      </trans-unit>
+      <trans-unit id="Pvn99oq" resname="No playlist found with id: %id%">
+        <source>No playlist found with id: %id%</source>
+        <target state="translated">Non se atopou ningunha lista de reprodución co id %id%</target>
+      </trans-unit>
+      <trans-unit id="ZJsXL1a" resname="Oops! An Error Occurred">
+        <source>Oops! An Error Occurred</source>
+        <target state="translated">Vaia! Produciuse un erro</target>
+      </trans-unit>
+      <trans-unit id="tIlrnot" resname="Series not found">
+        <source>Series not found</source>
+        <target state="translated">Non se atopou a serie</target>
+      </trans-unit>
+      <trans-unit id="qCFjmmk" resname="Something is broken. Please let us know what you were doing when this error occurred. We will fix it as soon as possible. Sorry for any inconvenience caused.">
+        <source>Something is broken. Please let us know what you were doing when this error occurred. We will fix it as soon as possible. Sorry for any inconvenience caused.</source>
+        <target state="translated">Algo non funciona. Cóntanos que estabas a facer cando se produciu este erro. Arranxarémolo canto antes. Desculpa as molestias.</target>
+      </trans-unit>
+      <trans-unit id="AyXbPHX" resname="The server returned a">
+        <source>The server returned a</source>
+        <target state="translated">O servidor devolveu un</target>
+      </trans-unit>
+      <trans-unit id="dNYHRuk" resname="This playlist does not have any playable multimedia objects.">
+        <source>This playlist does not have any playable multimedia objects.</source>
+        <target state="translated">Esta lista de reprodución non ten ningún obxecto multimedia reproducible.</target>
+      </trans-unit>
+      <trans-unit id="4oyaNcE" resname="Upload">
+        <source>Upload</source>
+        <target state="translated">Subir</target>
+      </trans-unit>
+      <trans-unit id="1kLm1Gs" resname="Url">
+        <source>Url</source>
+        <target state="translated">URL</target>
+      </trans-unit>
+      <trans-unit id="XjvvlPc" resname="Web">
+        <source>Web</source>
+        <target state="translated">Web</target>
       </trans-unit>
     </body>
   </file>

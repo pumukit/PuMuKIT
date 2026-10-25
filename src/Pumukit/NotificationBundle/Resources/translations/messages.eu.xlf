@@ -75,15 +75,19 @@
       </trans-unit>
       <trans-unit id="JAv3aP1" resname="Multimedia Object Title">
         <source>Multimedia Object Title</source>
-        <target state="needs-translation">Multimedia Object Title</target>
+        <target state="translated">Multimedia-objektuaren izenburua</target>
       </trans-unit>
       <trans-unit id="NfPDbcX" resname="Series Id">
         <source>Series Id</source>
-        <target state="needs-translation">Series Id</target>
+        <target state="translated">Seriearen IDa</target>
       </trans-unit>
       <trans-unit id="8.FNcj3" resname="Series Title">
         <source>Series Title</source>
         <target state="needs-translation">Series Title</target>
+      </trans-unit>
+      <trans-unit id="eDfcf9Q" resname="PuMuKIT notifications">
+        <source>PuMuKIT notifications</source>
+        <target state="translated">PuMuKIT jakinarazpenak</target>
       </trans-unit>
     </body>
   </file>

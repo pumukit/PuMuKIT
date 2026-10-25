@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="val" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="n2TeBHA" resname="Live type not valid">
+        <source>Live type not valid</source>
+        <target state="translated">El tipus de directe no és vàlid</target>
+      </trans-unit>
+      <trans-unit id="pj5Djcn" resname="Password required if not public">
+        <source>Password required if not public</source>
+        <target state="translated">La contrasenya és obligatòria si no és públic</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

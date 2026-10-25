@@ -177,6 +177,22 @@
         <source>This cpu only executes jobs from the following profiles:</source>
         <target>This cpu only executes jobs from the following profiles:</target>
       </trans-unit>
+      <trans-unit id="_62c3tU" resname="Job">
+        <source>Job</source>
+        <target>Job</target>
+      </trans-unit>
+      <trans-unit id="qy0m8f3" resname="Multimedia object removed">
+        <source>Multimedia object removed</source>
+        <target>Multimedia object removed</target>
+      </trans-unit>
+      <trans-unit id="Y6tR230" resname="Started">
+        <source>Started</source>
+        <target>Started</target>
+      </trans-unit>
+      <trans-unit id="F6tPan4" resname="STOP">
+        <source>STOP</source>
+        <target>STOP</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -7,19 +7,19 @@
     <body>
       <trans-unit id="Jg7KT1k" resname="Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files">
         <source>Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files</source>
-        <target state="needs-translation">Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files</target>
+        <target state="translated">Hautatu bideoak igo nahi dituzun karpeta edo sortu berri bat. Ondoren, sakatu jarraitu dagozkion fitxategiak igotzen hasteko</target>
       </trans-unit>
       <trans-unit id="6KJWgkr" resname="The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _">
         <source>The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _</source>
-        <target state="needs-translation">The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _</target>
+        <target state="translated">Karpetaren izena ez da baliozkoa. Onartutako karaktereak: maiuskulak eta minuskulak, zenbakiak, zuriunea eta _</target>
       </trans-unit>
       <trans-unit id="WGK6Qnl" resname="Upload video to: %folder%">
         <source>Upload video to: %folder%</source>
-        <target state="needs-translation">Upload video to: %folder%</target>
+        <target state="translated">Igo bideoa hona: %folder%</target>
       </trans-unit>
       <trans-unit id="7b1Qa7i" resname="Pumukit Bundle Versions">
         <source>Pumukit Bundle Versions</source>
-        <target state="needs-translation">Pumukit Bundle Versions</target>
+        <target state="translated">PuMuKIT bundleen bertsioak</target>
       </trans-unit>
       <trans-unit id="uq3fcPt" resname="Type">
         <source>Type</source>
@@ -31,11 +31,11 @@
       </trans-unit>
       <trans-unit id="3RZ5Bd4" resname="Version">
         <source>Version</source>
-        <target state="needs-translation">Version</target>
+        <target state="translated">Bertsioa</target>
       </trans-unit>
       <trans-unit id="gqnEb.p" resname="Commit">
         <source>Commit</source>
-        <target state="needs-translation">Commit</target>
+        <target state="translated">Commit</target>
       </trans-unit>
       <trans-unit id="EzEnW8U" resname="Tags">
         <source>Tags</source>
@@ -47,7 +47,7 @@
       </trans-unit>
       <trans-unit id="fQD8IDp" resname="Other packages">
         <source>Other packages</source>
-        <target state="needs-translation">Other packages</target>
+        <target state="translated">Beste pakete batzuk</target>
       </trans-unit>
       <trans-unit id="PWlKoNH" resname="Edit multimedia object">
         <source>Edit multimedia object</source>
@@ -55,7 +55,7 @@
       </trans-unit>
       <trans-unit id="a1b7xcD" resname="Upload local file">
         <source>Upload local file</source>
-        <target state="needs-translation">Upload local file</target>
+        <target state="translated">Igo fitxategi lokala</target>
       </trans-unit>
       <trans-unit id="H.V6Kdf" resname="Next">
         <source>Next</source>
@@ -64,6 +64,62 @@
       <trans-unit id="dpAPG.0" resname="Back">
         <source>Back</source>
         <target state="translated">Itzuli</target>
+      </trans-unit>
+      <trans-unit id="1TOEHTD" resname="Access Forbidden: Check your role.">
+        <source>Access Forbidden: Check your role.</source>
+        <target state="translated">Sarbidea debekatuta: egiaztatu zure rola.</target>
+      </trans-unit>
+      <trans-unit id="KGJpfY3" resname="Audio/video file">
+        <source>Audio/video file</source>
+        <target state="translated">Audio- edo bideo-fitxategia</target>
+      </trans-unit>
+      <trans-unit id="v8H5qNL" resname="layout.logged_in_as">
+        <source>layout.logged_in_as</source>
+        <target state="translated">%username% gisa hasi duzu saioa</target>
+      </trans-unit>
+      <trans-unit id="2B20XFT" resname="multimedia object">
+        <source>multimedia object</source>
+        <target state="translated">multimedia-objektua</target>
+      </trans-unit>
+      <trans-unit id="Qslm1zv" resname="No playable multimedia object found with id: %id% belonging to this playlist. (%title%)">
+        <source>No playable multimedia object found with id: %id% belonging to this playlist. (%title%)</source>
+        <target state="translated">Ez da aurkitu %id% IDa duen multimedia-objektu erreproduzigarririk erreprodukzio-zerrenda honetan. (%title%)</target>
+      </trans-unit>
+      <trans-unit id="Pvn99oq" resname="No playlist found with id: %id%">
+        <source>No playlist found with id: %id%</source>
+        <target state="translated">Ez da aurkitu %id% IDa duen erreprodukzio-zerrendarik</target>
+      </trans-unit>
+      <trans-unit id="ZJsXL1a" resname="Oops! An Error Occurred">
+        <source>Oops! An Error Occurred</source>
+        <target state="translated">Ai! Errore bat gertatu da</target>
+      </trans-unit>
+      <trans-unit id="tIlrnot" resname="Series not found">
+        <source>Series not found</source>
+        <target state="translated">Ez da seriea aurkitu</target>
+      </trans-unit>
+      <trans-unit id="qCFjmmk" resname="Something is broken. Please let us know what you were doing when this error occurred. We will fix it as soon as possible. Sorry for any inconvenience caused.">
+        <source>Something is broken. Please let us know what you were doing when this error occurred. We will fix it as soon as possible. Sorry for any inconvenience caused.</source>
+        <target state="translated">Zerbaitek ez du funtzionatzen. Esan iezaguzu zer egiten ari zinen errore hau gertatu denean. Ahal bezain laster konponduko dugu. Barkatu eragozpenak.</target>
+      </trans-unit>
+      <trans-unit id="AyXbPHX" resname="The server returned a">
+        <source>The server returned a</source>
+        <target state="translated">Zerbitzariak hau itzuli du:</target>
+      </trans-unit>
+      <trans-unit id="dNYHRuk" resname="This playlist does not have any playable multimedia objects.">
+        <source>This playlist does not have any playable multimedia objects.</source>
+        <target state="translated">Erreprodukzio-zerrenda honek ez du multimedia-objektu erreproduzigarririk.</target>
+      </trans-unit>
+      <trans-unit id="4oyaNcE" resname="Upload">
+        <source>Upload</source>
+        <target state="translated">Igo</target>
+      </trans-unit>
+      <trans-unit id="1kLm1Gs" resname="Url">
+        <source>Url</source>
+        <target state="translated">URLa</target>
+      </trans-unit>
+      <trans-unit id="XjvvlPc" resname="Web">
+        <source>Web</source>
+        <target state="translated">Weba</target>
       </trans-unit>
     </body>
   </file>

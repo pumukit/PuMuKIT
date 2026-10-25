@@ -9,6 +9,14 @@
         <source>Can not delete Multimedia Object with id %videoId%. It has %jobsCount% jobs executing.</source>
         <target state="translated">Ezin da bideoa id batera %videoId% ezabatzeko. %JobsCount% lanpostu exekutatzean ditu.</target>
       </trans-unit>
+      <trans-unit id="IEw_ICP" resname="Group cannot be deleted because there are %s user(s) and %s admin MultimediaObject(s) related. Please, delete these relations first.">
+        <source>Group cannot be deleted because there are %s user(s) and %s admin MultimediaObject(s) related. Please, delete these relations first.</source>
+        <target state="translated">Ezin da taldea ezabatu, %s erabiltzaile eta administrazioko %s multimedia-objektu baititu lotuta. Ezabatu lehenik erlazio horiek.</target>
+      </trans-unit>
+      <trans-unit id="4tutPMG" resname="Videos of ">
+        <source>Videos of </source>
+        <target state="translated">Bideoak: </target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

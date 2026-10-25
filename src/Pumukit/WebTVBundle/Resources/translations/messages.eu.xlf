@@ -47,7 +47,7 @@
       </trans-unit>
       <trans-unit id="6njl45RCj" resname="Content you may also be interested in">
         <source>Content you may also be interested in</source>
-        <target state="needs-translation">Content you may also be interested in</target>
+        <target state="translated">Interesatuko zaizkizun beste eduki batzuk</target>
       </trans-unit>
       <trans-unit id="maiyxjk" resname="Videos from same Series">
         <source>Videos from same Series</source>
@@ -55,7 +55,7 @@
       </trans-unit>
       <trans-unit id="maiydfgxjk" resname="Content from same Series">
         <source>Content from same Series</source>
-        <target state="needs-translation">Content from same Series</target>
+        <target state="translated">Serie bereko edukiak</target>
       </trans-unit>
       <trans-unit id="V6sZ0yf" resname="Record Date">
         <source>Record Date</source>
@@ -91,7 +91,7 @@
       </trans-unit>
       <trans-unit id="yaljltrGP" resname="Resources">
         <source>Resources</source>
-        <target state="needs-translation">Resources</target>
+        <target state="translated">Baliabideak</target>
       </trans-unit>
       <trans-unit id="IehJKTi" resname="Hours">
         <source>Hours</source>
@@ -103,7 +103,7 @@
       </trans-unit>
       <trans-unit id="wT565x3Y" resname="There are no content with these specifications">
         <source>There are no content with these specifications</source>
-        <target state="needs-translation">There are no content with these specifications</target>
+        <target state="translated">Ez dago ezaugarri hauek dituen edukirik</target>
       </trans-unit>
       <trans-unit id="eNInDAJ" resname="Date of holding">
         <source>Date of holding</source>
@@ -175,7 +175,7 @@
       </trans-unit>
       <trans-unit id="1aCgwU14Q" resname="Document">
         <source>Document</source>
-        <target state="needs-translation">Document</target>
+        <target state="translated">Dokumentua</target>
       </trans-unit>
       <trans-unit id="1aC554gwUQ" resname="External multimedia object">
         <source>External multimedia object</source>
@@ -287,15 +287,15 @@
       </trans-unit>
       <trans-unit id="fl18765mLs" resname="Share this">
         <source>Share this</source>
-        <target state="needs-translation">Share this</target>
+        <target state="translated">Partekatu</target>
       </trans-unit>
       <trans-unit id="c0.XezY" resname="URL:">
         <source>URL:</source>
-        <target state="needs-translation">URL:</target>
+        <target state="translated">URLa:</target>
       </trans-unit>
       <trans-unit id="Qw_p6ul" resname="IFRAME:">
         <source>IFRAME:</source>
-        <target state="needs-translation">IFRAME:</target>
+        <target state="translated">IFRAME:</target>
       </trans-unit>
       <trans-unit id="pP5lJk7" resname="Language">
         <source>Language</source>
@@ -331,7 +331,7 @@
       </trans-unit>
       <trans-unit id="BcdfdxKeUd" resname="This content is private with restricted access">
         <source>This content is private with restricted access</source>
-        <target state="needs-translation">This content is private with restricted access</target>
+        <target state="translated">Eduki hau pribatua da eta sarbide mugatua du</target>
       </trans-unit>
       <trans-unit id="Qr4xNv4" resname="Log in is required to watch it">
         <source>Log in is required to watch it</source>
@@ -479,7 +479,7 @@
       </trans-unit>
       <trans-unit id="NOqPcLO" resname="Valencian">
         <source>Valencian</source>
-        <target state="needs-translation">Valencian</target>
+        <target state="translated">Valentziera</target>
       </trans-unit>
       <trans-unit id="W7zF64l" resname="Latest Uploads">
         <source>Latest Uploads</source>
@@ -491,7 +491,7 @@
       </trans-unit>
       <trans-unit id="FV_BbAQ" resname="Submit">
         <source>Submit</source>
-        <target state="needs-translation">Submit</target>
+        <target state="translated">Bidali</target>
       </trans-unit>
       <trans-unit id="1wfcLxk" resname="Logo">
         <source>Logo</source>
@@ -499,7 +499,7 @@
       </trans-unit>
       <trans-unit id="1w45Lxk" resname="Logo. Go to homepage">
         <source>Logo. Go to homepage</source>
-        <target state="needs-translation">Logo. Go to homepage</target>
+        <target state="translated">Logotipoa. Joan hasierako orrira</target>
       </trans-unit>
       <trans-unit id="9vRoj.I" resname="Send">
         <source>Send</source>
@@ -507,7 +507,7 @@
       </trans-unit>
       <trans-unit id="jRT25y3" resname="Events">
         <source>Events</source>
-        <target state="needs-translation">Events</target>
+        <target state="translated">Emanaldiak</target>
       </trans-unit>
       <trans-unit id="ltvt7Kf" resname="Starts">
         <source>Starts</source>
@@ -515,7 +515,7 @@
       </trans-unit>
       <trans-unit id="tTs1Fj9" resname="Next session">
         <source>Next session</source>
-        <target state="needs-translation">Next session</target>
+        <target state="translated">Hurrengo saioa</target>
       </trans-unit>
       <trans-unit id="9LBu9tP" resname="To">
         <source>To</source>
@@ -523,15 +523,15 @@
       </trans-unit>
       <trans-unit id="mnIiGid" resname="Questions">
         <source>Questions</source>
-        <target state="needs-translation">Questions</target>
+        <target state="translated">Kontsultak</target>
       </trans-unit>
       <trans-unit id="ur3H7no" resname="Download this audio">
         <source>Download this audio</source>
-        <target state="needs-translation">Download this audio</target>
+        <target state="translated">Deskargatu audio hau</target>
       </trans-unit>
       <trans-unit id="8PrrE9j" resname="Download this video">
         <source>Download this video</source>
-        <target state="needs-translation">Download this video</target>
+        <target state="translated">Deskargatu bideo hau</target>
       </trans-unit>
       <trans-unit id="t6n1UY2" resname="Live events">
         <source>Live events</source>
@@ -543,7 +543,7 @@
       </trans-unit>
       <trans-unit id="swD5G4y" resname="There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.">
         <source>There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.</source>
-        <target state="needs-translation">There are no scheduled live events. You will find ended live events in the series catalogue or through the media portal search.</target>
+        <target state="translated">Ez dago zuzeneko emanaldirik programatuta. Amaitutako zuzeneko emanaldiak serieen katalogoan edo atariko bilatzailean aurki ditzakezu.</target>
       </trans-unit>
       <trans-unit id="JIfvQBZ" resname="This page isn't available. Sorry about that.">
         <source>This page isn't available. Sorry about that.</source>
@@ -551,15 +551,15 @@
       </trans-unit>
       <trans-unit id="kw0lAFO" resname="Try searching for something else:">
         <source>Try searching for something else:</source>
-        <target state="needs-translation">Try searching for something else:</target>
+        <target state="translated">Saiatu beste bilaketa-irizpide batzuekin:</target>
       </trans-unit>
       <trans-unit id="OnhpU4i" resname="Home">
         <source>Home</source>
-        <target state="needs-translation">Home</target>
+        <target state="translated">Hasiera</target>
       </trans-unit>
       <trans-unit id="pITMFRb" resname="By subject catalogue">
         <source>By subject catalogue</source>
-        <target state="needs-translation">By subject catalogue</target>
+        <target state="translated">Gaien araberako katalogoa</target>
       </trans-unit>
       <trans-unit id="nThEPiI" resname="University">
         <source>University</source>
@@ -591,11 +591,11 @@
       </trans-unit>
       <trans-unit id="jW3vDbZ" resname="Now events">
         <source>Now events</source>
-        <target state="needs-translation">Now events</target>
+        <target state="translated">Orain emititzen ari diren emanaldiak</target>
       </trans-unit>
       <trans-unit id="u_Iqlyf" resname="Today events">
         <source>Today events</source>
-        <target state="needs-translation">Today events</target>
+        <target state="translated">Gaurko emanaldiak</target>
       </trans-unit>
       <trans-unit id="8wIYotR" resname="Future events">
         <source>Future events</source>
@@ -615,7 +615,7 @@
       </trans-unit>
       <trans-unit id="GoAAU4B" resname="Twitter icon">
         <source>Twitter icon</source>
-        <target state="needs-translation">Twitter icon</target>
+        <target state="translated">Twitterren ikonoa</target>
       </trans-unit>
       <trans-unit id="tKBwotN" resname="loading">
         <source>loading</source>
@@ -623,19 +623,19 @@
       </trans-unit>
       <trans-unit id="iCgsLsi" resname="Most viewed on the last month">
         <source>Most viewed on the last month</source>
-        <target state="needs-translation">Most viewed on the last month</target>
+        <target state="translated">Azken hilabeteko ikusienak</target>
       </trans-unit>
       <trans-unit id="wodtiBE" resname="Hightlight">
         <source>Hightlight</source>
-        <target state="needs-translation">Hightlight</target>
+        <target state="translated">Nabarmenduak</target>
       </trans-unit>
       <trans-unit id="9cm9ExS" resname="Show more">
         <source>Show more</source>
-        <target state="needs-translation">Show more</target>
+        <target state="translated">Ikusi gehiago</target>
       </trans-unit>
       <trans-unit id="nJRvhul" resname="Event pic">
         <source>Event pic</source>
-        <target state="needs-translation">Event pic</target>
+        <target state="translated">Emanaldiaren irudia</target>
       </trans-unit>
       <trans-unit id="ma9mBv_" resname="Menu">
         <source>Menu</source>
@@ -643,19 +643,19 @@
       </trans-unit>
       <trans-unit id="MIUxXxN" resname="Sort by date">
         <source>Sort by date</source>
-        <target state="needs-translation">Sort by date</target>
+        <target state="translated">Ordenatu dataren arabera</target>
       </trans-unit>
       <trans-unit id="OqwCASq" resname="Sort alphabetically">
         <source>Sort alphabetically</source>
-        <target state="needs-translation">Sort alphabetically</target>
+        <target state="translated">Ordenatu alfabetikoki</target>
       </trans-unit>
       <trans-unit id=".cXS6UE" resname="Powered by">
         <source>Powered by</source>
-        <target state="needs-translation">Powered by</target>
+        <target state="translated">Garatzailea:</target>
       </trans-unit>
       <trans-unit id="OEjvXg." resname="Full catalogue">
         <source>Full catalogue</source>
-        <target state="needs-translation">Full catalogue</target>
+        <target state="translated">Katalogo osoa</target>
       </trans-unit>
       <trans-unit id="wBHWCXv" resname="License">
         <source>License</source>
@@ -663,11 +663,11 @@
       </trans-unit>
       <trans-unit id="J.EVWdm" resname="There are no multimedia objects">
         <source>There are no multimedia objects</source>
-        <target state="needs-translation">There are no multimedia objects</target>
+        <target state="translated">Ez dago multimedia-objekturik</target>
       </trans-unit>
       <trans-unit id="5mpwcGU" resname="Url track">
         <source>Url track</source>
-        <target state="needs-translation">Url track</target>
+        <target state="translated">Pistaren URLa</target>
       </trans-unit>
       <trans-unit id="PWlKoNH" resname="Edit multimedia object">
         <source>Edit multimedia object</source>
@@ -759,31 +759,31 @@
       </trans-unit>
       <trans-unit id="926pIe3" resname="Wall">
         <source>Wall</source>
-        <target state="needs-translation">Wall</target>
+        <target state="translated">Azalean</target>
       </trans-unit>
       <trans-unit id="xj62cgx" resname="Private">
         <source>Private</source>
-        <target state="needs-translation">Private</target>
+        <target state="translated">Pribatua</target>
       </trans-unit>
       <trans-unit id="iidISKI" resname="Advanced search">
         <source>Advanced search</source>
-        <target state="needs-translation">Advanced search</target>
+        <target state="translated">Bilaketa aurreratua</target>
       </trans-unit>
       <trans-unit id="FBOV6zV" resname="Cookies">
         <source>Cookies</source>
-        <target state="needs-translation">Cookies</target>
+        <target state="translated">Cookieak</target>
       </trans-unit>
       <trans-unit id="iXE7nJw" resname="Accept">
         <source>Accept</source>
-        <target state="needs-translation">Accept</target>
+        <target state="translated">Onartu</target>
       </trans-unit>
       <trans-unit id="GG_yIeU" resname="This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.">
         <source>This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.</source>
-        <target state="needs-translation">This website uses its own and third-party cookies to offer you a better experience and service. You can review our cookie policy at any time. If you agree, check the corresponding box.</target>
+        <target state="translated">Webgune honek cookie propioak eta hirugarrenenak erabiltzen ditu esperientzia eta zerbitzu hobea eskaintzeko. Gure cookie-politika edozein unetan berrikus dezakezu. Ados bazaude, markatu dagokion laukia.</target>
       </trans-unit>
       <trans-unit id="7dWy.Z9" resname="Cookie policy">
         <source>Cookie policy</source>
-        <target state="needs-translation">Cookie policy</target>
+        <target state="translated">Cookie-politika</target>
       </trans-unit>
       <trans-unit id="1c5E_XE" resname="External player">
         <source>External player</source>
@@ -791,15 +791,15 @@
       </trans-unit>
       <trans-unit id="1fsdgE" resname="Sitemap">
         <source>Sitemap</source>
-        <target state="needs-translation">Sitemap</target>
+        <target state="translated">Webgunearen mapa</target>
       </trans-unit>
       <trans-unit id="1fss45fE" resname="Sections">
         <source>Sections</source>
-        <target state="needs-translation">Sections</target>
+        <target state="translated">Atalak</target>
       </trans-unit>
       <trans-unit id="fgtr654" resname="News">
         <source>News</source>
-        <target state="needs-translation">News</target>
+        <target state="translated">Albisteak</target>
       </trans-unit>
       <trans-unit id="slider_manager">
         <source>Slider manager</source>
@@ -836,6 +836,30 @@
       <trans-unit id="slider_edit_multimedia_object">
         <source>Edit multimedia object</source>
         <target>Editatu multimedia-objektua</target>
+      </trans-unit>
+      <trans-unit id=".GkUmi3" resname="Carousel">
+        <source>Carousel</source>
+        <target state="translated">Karrusela</target>
+      </trans-unit>
+      <trans-unit id="9SLHepm" resname="place_subserial">
+        <source>place_subserial</source>
+        <target state="translated">lekua_azpiseriea</target>
+      </trans-unit>
+      <trans-unit id="jOwbyEF" resname="Private Content">
+        <source>Private Content</source>
+        <target state="translated">Eduki pribatua</target>
+      </trans-unit>
+      <trans-unit id="dAxKUtI" resname="Private event">
+        <source>Private event</source>
+        <target state="translated">Emanaldi pribatua</target>
+      </trans-unit>
+      <trans-unit id="brKRECN" resname="Remember">
+        <source>Remember</source>
+        <target state="translated">Gogora nazazu</target>
+      </trans-unit>
+      <trans-unit id="hO..6Vj" resname="This page isn&apos;t available. Sorry about that.">
+        <source>This page isn't available. Sorry about that.</source>
+        <target state="translated">Orri hau ez dago erabilgarri. Barkatu eragozpenak.</target>
       </trans-unit>
     </body>
   </file>
