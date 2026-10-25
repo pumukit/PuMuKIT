@@ -77,7 +77,7 @@ class LiveController extends AdminController
         $resourceName = $this->getResourceName();
 
         $resource = $this->findOr404($request);
-        $form = $this->getForm($resource);
+        $form = $this->getForm($resource, $request->getLocale());
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
