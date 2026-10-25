@@ -19,6 +19,16 @@
 {% set series_active = route_name in series_routes %}
 {% set playlist_active = route_name in playlist_routes %}
 
+<style>
+    .cab_body_div ul li, .cab_body_div ul li a {
+        color: #000000 !important;
+        font-weight: 300;
+    }
+    .cab_body_div .breadcrumb {
+        padding-inline-start: 0 !important;
+    }
+</style>
+
 <div>
     {% if not is_naked() %}
         <ul class="nav nav-tabs title-tabs naked-menu">
