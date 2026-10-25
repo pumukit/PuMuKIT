@@ -33,6 +33,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class PumukitTestCase extends WebTestCase
 {
     protected DocumentManager $dm;
+    private static bool $indexesEnsured = false;
 
     public function setUp(): void
     {
@@ -52,6 +53,11 @@ class PumukitTestCase extends WebTestCase
     public function clearBBDD(): void
     {
         self::ensureTestDatabase($this->dm);
+
+        if (!self::$indexesEnsured) {
+            $this->dm->getSchemaManager()->ensureIndexes();
+            self::$indexesEnsured = true;
+        }
 
         $this->dm->getDocumentCollection(Annotation::class)->deleteMany([]);
         $this->dm->getDocumentCollection(CpuStatus::class)->deleteMany([]);
