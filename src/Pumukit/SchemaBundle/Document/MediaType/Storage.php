@@ -36,12 +36,12 @@ final class Storage
         return empty($this->toArray()['path']) ? $this->toArray()['url'] : basename($this->toArray()['path']);
     }
 
-    public function url(): UrlInterface
+    public function url(): ?UrlInterface
     {
         return $this->url;
     }
 
-    public function path(): Path
+    public function path(): ?Path
     {
         return $this->path;
     }

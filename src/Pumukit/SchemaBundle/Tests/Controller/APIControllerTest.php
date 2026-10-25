@@ -10,6 +10,7 @@ use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\ValueObject\Immutable;
+use Pumukit\SchemaBundle\Services\MediaCreator;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 /**
@@ -69,5 +70,25 @@ class APIControllerTest extends PumukitTestCase
         $data = json_decode($this->client->getResponse()->getContent(), true);
         $this->assertSame(1, $data['total']);
         $this->assertSame($this->user->getId(), $data['mmobjs'][0]['immutable']['user']);
+    }
+
+    public function testMultimediaObjectsListsExternalMedia(): void
+    {
+        $series = $this->dm->getRepository(Series::class)->find($this->series->getId());
+        $multimediaObject = new MultimediaObject();
+        $multimediaObject->setNumericalID(2);
+        $multimediaObject->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $multimediaObject->setSeries($series);
+        $this->dm->persist($multimediaObject);
+        static::getContainer()->get(MediaCreator::class)->createMediaFromExternalURL($multimediaObject, 'https://example.org/player');
+        $this->dm->clear();
+        $user = $this->dm->getRepository(User::class)->findOneBy(['username' => 'apiadmin']);
+        $this->client->loginUser($user, 'pumukit');
+
+        $this->client->request('GET', '/api/media/mmobj.json', ['criteria' => ['series' => $this->series->getId()], 'sort' => -1]);
+
+        $this->assertResponseIsSuccessful();
+        $data = json_decode($this->client->getResponse()->getContent(), true);
+        $this->assertSame(2, $data['total']);
     }
 }
