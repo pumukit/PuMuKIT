@@ -44,7 +44,7 @@ class CheckAssetsCommandTest extends PumukitTestCase
     {
         file_put_contents(
             $this->tmpDir.'/layout.html.twig',
-            "<link href=\"{{ asset('bundles/pumukitcore/vendor/bootstrap/css/bootstrap.min.css') }}\">\n<script src=\"{{ asset('bundles/pumukitwebtv/js/jquery.min.js') }}\"></script>\n"
+            "<link href=\"{{ asset('bundles/pumukitcore/vendor/bootstrap5/css/bootstrap.min.css') }}\">\n<script src=\"{{ asset('bundles/pumukitwebtv/js/jquery.min.js') }}\"></script>\n"
         );
 
         $tester = $this->commandTester();

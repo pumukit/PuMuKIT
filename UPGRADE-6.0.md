@@ -139,15 +139,15 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
   |---|---|
   | `bundles/pumukitnewadmin/js/jquery-1.10.2.min.js` | `bundles/pumukitcore/vendor/jquery/jquery.min.js` |
   | `bundles/pumukitwebtv/js/jquery.min.js` | `bundles/pumukitcore/vendor/jquery/jquery.min.js` |
-  | `bundles/pumukitnewadmin/js/bootstrap.min.js` | `bundles/pumukitcore/vendor/bootstrap/js/bootstrap.min.js` |
-  | `bundles/pumukitwebtv/js/bootstrap.min.js` | `bundles/pumukitcore/vendor/bootstrap/js/bootstrap.min.js` |
-  | `bundles/pumukitnewadmin/css/bootstrap.min.css` | `bundles/pumukitcore/vendor/bootstrap/css/bootstrap.min.css` |
+  | `bundles/pumukitnewadmin/js/bootstrap.min.js`, `bundles/pumukitwebtv/js/bootstrap.min.js` | `bundles/pumukitcore/vendor/bootstrap5/js/bootstrap.bundle.min.js` |
+  | `bundles/pumukitnewadmin/css/bootstrap.min.css` | `bundles/pumukitcore/vendor/bootstrap5/css/bootstrap.min.css` |
+  | `bundles/pumukitwebtv/css/bootstrap.min.css` | `bundles/pumukitcore/vendor/bootstrap5/css/bootstrap.min.css` and `bundles/pumukitwebtv/css/webtv.css` |
   | `bundles/pumukitwebtv/js/moment-with-locales.min.js`, `bundles/pumukitstatsui/vendor/moment/moment.min.js` | nothing (moment is removed, see below) |
   | `bundles/pumukitnewadmin/js/jquery-ui-1.11.3.custom.min.js` | `bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.js` |
   | `bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom*.min.css` (3 files) | `bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.css` |
   | `bundles/pumukitwebtv/js/bootstrap-datetimepicker.min.js`, `bundles/pumukitwebtv/css/bootstrap-datetimepicker(.min).css` | nothing (bootstrap-datetimepicker is removed, see below) |
 
-  The shared versions are jQuery 3.7.1, Bootstrap 3.4.1 and jQuery UI 1.14.2 (autocomplete and
+  The shared versions are jQuery 3.7.1, Bootstrap 5.3.8 and jQuery UI 1.14.2 (autocomplete and
   menu only, so it does not replace the Bootstrap tooltip).
 - **Dates without libraries.** moment, bootstrap-datetimepicker and daterangepicker are removed
   (`bundles/pumukitcore/vendor/moment/`, `bundles/pumukitcore/vendor/bootstrap-datetimepicker/`,
@@ -191,12 +191,51 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
   `templates/` (or `--path`) that no installed bundle provides, with its replacement when it was
   moved, and an overridden portal layout without `importmap('pumukit')`. A missing JavaScript file
   does not break the page, it only shows a 404 in the browser console.
-- The portal keeps its own customized Bootstrap 3.4.1 stylesheet
-  (`bundles/pumukitwebtv/css/bootstrap.min.css`).
 - Bundles that ship files whose JavaScript loads other files by relative URL (like the Paella
   build) must exclude them from AssetMapper with `framework.asset_mapper.excluded_patterns`.
 - Production builds must run `bin/console asset-map:compile` after `assets:install` (the
   Docker image does it).
+
+### Bootstrap 5
+
+The backoffice, the portal, the inbox and the live pages use Bootstrap 5.3.8
+(`bundles/pumukitcore/vendor/bootstrap5/css/bootstrap.min.css` and `bundles/pumukitcore/vendor/bootstrap5/js/bootstrap.bundle.min.js`, which includes Popper). Bootstrap 3, Bootstrap Material Design,
+its ripples and SnackbarJS are removed (`bundles/pumukitcore/vendor/bootstrap/`,
+`bundles/pumukitwebtv/css/bootstrap.min.css` and its glyphicons, `bundles/pumukitnewadmin/js/material.min.js`,
+`ripples.min.js`, `snackbar.min.js`, `css/material-wfont.min.css`, `ripples.min.css`, `snackbar.min.css`).
+`bin/console pumukit:check:assets` reports overridden templates that still load them.
+
+- Two stylesheets keep the previous look on top of Bootstrap 5: `bundles/pumukitnewadmin/css/backoffice.css`
+  (backoffice, replaces Material) and `bundles/pumukitwebtv/css/webtv.css` (portal: 14 px base,
+  Bootstrap 3 container widths and gutters, buttons, panels, `.thumbnail`). An overridden layout must
+  load them after the Bootstrap stylesheet. The `mdi-*` icons are kept in `bundles/pumukitnewadmin/css/mdi-icons.css`.
+- The pages use the system font stack of Bootstrap 5 instead of Roboto (backoffice) and Helvetica (portal).
+- Overridden templates must be migrated to the Bootstrap 5 markup. The usual changes are:
+  - `data-toggle`, `data-target`, `data-dismiss`, `data-parent`… → `data-bs-*`.
+  - Columns need a `.row` parent (Bootstrap 5 rows are flex, columns no longer float); `col-xs-N` → `col-N`,
+    `col-*-offset-N` → `offset-*-N`; clearfix `div`s between columns → `<div class="w-100 d-none d-md-block"></div>`.
+  - `panel*` → `card*`, `well` → `card card-body` (or `pmk-well` in the backoffice), `label label-*` → `badge text-bg-*`,
+    `btn-default` → `btn-secondary`, `btn-xs` → `btn-sm`, `img-responsive` → `img-fluid`, `pull-left/right` → `float-start/end`,
+    `text-left/right` → `text-start/end`, `hidden-xs` → `d-none d-sm-block`, `sr-only` → `visually-hidden`,
+    `input-group-addon` → `input-group-text`, `input-group-btn` wrappers removed, `form-group` → `mb-3`,
+    `control-label` → `form-label`, `help-block` → `form-text`, selects use `form-select`.
+  - `embed-responsive embed-responsive-16by9` → `ratio ratio-16x9` (`embed-responsive-item` has no style any more and
+    is kept as a CSS hook in the core templates).
+  - Navbars: `navbar-expand-md`, `navbar-toggler` with `navbar-toggler-icon`, `nav-item`/`nav-link` on the menu items,
+    `active` on the link instead of the `li`; dropdown items need `dropdown-item`; `caret` spans are removed.
+  - Tabs: `nav-link` on the tab links, `active` on the link, `tab-pane fade show active` on the visible pane.
+  - Modals: the close button is `<button class="btn-close" data-bs-dismiss="modal">` after the title. Bootstrap 5 no
+    longer loads a remote URL into a modal: the backoffice entrypoint loads the `href` of a trigger with
+    `data-bs-toggle="modal"` into the target `.modal-content` and triggers `loaded.bs.modal`. With the jQuery
+    bridge, call `.modal('show')`.
+  - Carousel: `item` → `carousel-item`, indicators are `button`s with `data-bs-slide-to` starting at 0, the controls
+    are `carousel-control-prev/next`.
+  - Glyphicons → Font Awesome (`fa fa-*` in the portal).
+- `[hidden]` is `display: none !important` in Bootstrap 5: `$(element).show()` no longer reveals an element with the
+  `hidden` attribute; set `element.hidden = false`.
+- The backoffice messages `window.success()` and `window.no_success()` show Bootstrap 5 toasts instead of SnackbarJS;
+  `$.snackbar()` and `data-toggle="snackbar"` are removed.
+- The `col_calculator()` Twig function returns Bootstrap 5 classes (`col-12 col-sm-6 col-md-3`…).
 
 ### JavaScript in templates (Stimulus)
 

@@ -43,6 +43,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Upgrade MonologBundle to 4, API Platform to 5 and phpdocumentor/reflection-docblock to 6.
 - Replace the `style` attributes of the core templates with the classes of `bundles/pumukitcore/css/pumukit-utilities.css`, loaded by the portal layout; `pumukit:check:assets` reports an overridden portal layout that does not load it.
 - Serve bundle assets through Symfony AssetMapper; jQuery, Bootstrap 3.4.1, moment 2.30.1, jQuery UI and bootstrap-datetimepicker are shared from `bundles/pumukitcore/vendor/`.
+- Move the backoffice, the portal, the inbox and the live pages to Bootstrap 5.3.8 without Bootstrap Material Design: the previous look is kept by `backoffice.css` and `webtv.css`, the backoffice messages are Bootstrap 5 toasts and the pages use the system font stack (see UPGRADE-6.0.md).
 - Upgrade jQuery 1.10.2 → 3.7.1 (without jQuery Migrate), jQuery UI 1.11.3 → 1.14.2 and bootstrap-datetimepicker 4.14.30 → 4.17.49.
 - Move the inline JavaScript of CoreBundle, EncoderBundle, WizardBundle, WebTVBundle and BaseLivePlayerBundle templates to Stimulus controllers; `@PumukitCore/Upload/uppy_tus.js.twig` and `@PumukitBaseLivePlayer/Advance/Sessions/*.js.twig` are replaced by `uppy_tus.html.twig` and `sessions.html.twig`, `announces_ajax.js` by the `webtv--announces` controller and `template_video.js` by the `webtv--dynamic-pic` controller.
 - Remove jQuery Countdown and Modernizr from WebTVBundle; the live player countdown and the mobile detection of the search filters are native.
@@ -118,6 +119,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - `symfony/templating` (unused), Swiftmailer and `symfony/swiftmailer-bundle`.
 - The v4→v5 data migration commands (`pumukit:upgrade:*`); 6.0 is reached from 5.1.x, which already runs the v5 schema.
 - Vendored SIMILE Timeline 2.3.1 assets (~1 MB) under `NewAdminBundle/Resources/public/js/timeline_2.3.1/`.
+- Bootstrap 3.4.1 (`bundles/pumukitcore/vendor/bootstrap/` and the portal stylesheet with its glyphicons), Bootstrap Material Design 0.2 with its ripples and the RobotoDraft font loaded from Google Fonts, and SnackbarJS (see UPGRADE-6.0.md for the replacements).
 - Per-bundle copies of jQuery, Bootstrap, moment, jQuery UI and bootstrap-datetimepicker in `pumukitnewadmin`, `pumukitwebtv` and `pumukitstatsui` (see UPGRADE-6.0.md for the replacements).
 - Unused fields from the encoder profile configuration schema (`format`, `codec`, `mime_type`, `bitrate`, `framerate`, `channels`, `app`, `rel_duration_size`, `rel_duration_trans`, `file_cfg`, `prescript`, and `streamserver.{name,type,host,description}`); these were declared but never read by the application. `validateProfilesDir()` now identifies the failing profile by its array key in its error message instead of the redundant `streamserver.name`.
 - The metadata translation button of the backoffice i18n fields, which was never implemented: `TranslateController`, the `pumukitnewadmin_metadata_translate` route, the `pumukitnewadmin.translatecontroller` alias and the `pumukit_new_admin.metadata_translators` parameter.
