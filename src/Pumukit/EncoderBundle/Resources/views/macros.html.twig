@@ -1,18 +1,3 @@
-{% macro job_status_color(status) %}{% apply pumukit_spaceless %}
-
-{% set colors = {
-  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')): 'rgb(221, 75, 57)',
-  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED')): 'rgb(178, 178, 178)',
-  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING')): 'rgb(75, 148, 192)',
-  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING')): 'rgb(243, 156, 18)',
-  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED')): 'rgb(0, 166, 90)',
-}
-%}
-{{ colors[status] }}
-
-{% endapply %}{% endmacro %}
-
-
 {% macro job_status_icon(status) %}{% apply pumukit_spaceless %}
 
 {% set icons = {
