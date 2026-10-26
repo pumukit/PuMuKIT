@@ -8,13 +8,13 @@
 {% set videoTitle = object.title | default('No title'|trans) %}
 {% set seriesTitle = object.getSeriesTitle()|default('') %}
 
-<div class="{% if is_naked() %}col-xs-6{% else %}{{ col_calculator(objectByCol|default(1)) }}{% endif %} image_representation">
+<div class="{% if is_naked() %}col-6{% else %}{{ col_calculator(objectByCol|default(1)) }}{% endif %} image_representation">
     <div class="thumbnail">
         <a class="multimediaobject {{ object.getStringType(object.getType())|lower }}" href="{{ videoPath }}" title="{{ videoTitle }}">
             <div>
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="ratio ratio-16x9">
                     <div class="embed-responsive-item text-center">
-                        <img alt="{{ videoTitle }}" src="{{ object|first_url_pic() }}" class="img-responsive img_adapter_4_3"
+                        <img alt="{{ videoTitle }}" src="{{ object|first_url_pic() }}" class="img-fluid img_adapter_4_3"
                             data-controller="webtv--dynamic-pic"
                             data-action="mouseover->webtv--dynamic-pic#show mouseout->webtv--dynamic-pic#hide"
                             data-webtv--dynamic-pic-dynamic-value="{{ object|first_dynamic_pic(true) }}"
@@ -55,18 +55,18 @@
 
                 {% if show_info|default(false) %}
                     {% if with_publicdate is defined and with_publicdate %}
-                        <li class="list-group-item list-group-item-custom date_and_visits text-left">
+                        <li class="list-group-item list-group-item-custom date_and_visits text-start">
                             {{ object.publicDate| format_datetime('medium','none',locale=app.request.getLocale()) }}
                         </li>
                     {% else %}
                         {% if app.request.attributes.get('_route') != 'pumukit_webtv_announces_latestuploads_pager' and not object.isExternalType() %}
-                            <li class="list-group-item list-group-item-custom date_and_visits text-left language">
+                            <li class="list-group-item list-group-item-custom date_and_visits text-start language">
                                 {% trans %}Language{% endtrans %}:
                                 {% set lang = object.getDisplayTrack().getLanguage()|default(app.request.getLocale()) %}
                                 {{ is_addon_language(lang) ? lang | language_name_custom : lang | language_name | capitalize }}
                             </li>
                         {% endif %}
-                        <li class="list-group-item list-group-item-custom text-right date_and_visits">
+                        <li class="list-group-item list-group-item-custom text-end date_and_visits">
                             {% trans %}Viewed{% endtrans %}:
                             {{ object.getNumview() }}
                             {{ "{0}times|{1}time|]1,Inf]times"|trans({'%count%':  object.getNumview()}) }}

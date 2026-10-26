@@ -1,6 +1,6 @@
 {% if enable_twitter and multimediaObject.getEmbeddedSocial() and multimediaObject.getEmbeddedSocial().getTwitter() and multimediaObject.getEmbeddedSocial().getTwitterHashtag() %}
-    <div class="panel panel-default panel-pmk">
-        <div class="panel-heading twitter-panel-heading">
+    <div class="card panel-pmk">
+        <div class="card-header twitter-panel-heading">
             <div class="panel-heading-table">
                 <div class="panel-heading-table-row">
                     <div class="panel-heading-table-cell">
@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <div class="panel-body pmk-height-400">
+        <div class="card-body" style="height:400px;">
             <a class="twitter-timeline" href="https://twitter.com/hashtag/{{ multimediaObject.getEmbeddedSocial().getTwitterHashtag() }}" data-border-color="#337ab7" data-chrome="nofooter noscrollbar noborders noheader" data-width="100%" data-height="440" data-widget-id="{{ multimediaObject.getEmbeddedSocial().getTwitter() }}">
                 #{{ multimediaObject.getEmbeddedSocial().getTwitterHashtag() }} Tweets
             </a>

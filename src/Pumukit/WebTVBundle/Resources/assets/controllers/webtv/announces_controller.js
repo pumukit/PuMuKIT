@@ -47,7 +47,7 @@ export default class extends Controller {
                     this.load(false);
                 }
             } else if (showEmpty && this.hasEmptyTarget) {
-                $(this.emptyTarget).show();
+                this.emptyTarget.hidden = false;
             }
         });
     }

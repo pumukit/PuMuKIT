@@ -1,13 +1,13 @@
 <div class="container-fluid header-bottom-pmk">
     <div class="container">
-        <div class="header-logo">
-            <div class="col-xs-6 col-sm-4 col-md-4">
+        <div class="row header-logo">
+            <div class="col-6 col-sm-4 col-md-4">
                 {% block logo_url %}
                     {% include '@PumukitWebTV/Misc/logo.html.twig' %}
                 {% endblock %}
             </div>
 
-            <div class="hidden-xs col-sm-4 col-md-4 pull-right">
+            <div class="col-sm-4 col-md-4 float-end d-none d-sm-block">
                 {% include '@PumukitWebTV/Misc/search_box.html.twig' with {'id': 'desktop' } %}
             </div>
         </div>

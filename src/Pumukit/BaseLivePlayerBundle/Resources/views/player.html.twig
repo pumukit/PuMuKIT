@@ -1,17 +1,17 @@
 {% if (event is defined and event.isIframeURL()) %}
-    <div class="embed-responsive embed-responsive-16by9">
+    <div class="ratio ratio-16x9">
         <div id="live-{{ id }}" class="embed-responsive-item text-center">
             <iframe src="{{ event.getUrl() }}" width="100%" class="embed-responsive-item pmk-overflow-hidden pmk-height-100pct pmk-width-100pct" allowfullscreen></iframe>
         </div>
     </div>
 {% elseif multimediaObject is defined %}
-    <div class="embed-responsive embed-responsive-16by9">
+    <div class="ratio ratio-16x9">
         <div id="live-{{ id }}" class="embed-responsive-item text-center">
             {{ render(path('pumukit_livevideoplayer_index', {'id': multimediaObject.id })) }}
         </div>
     </div>
 {% else %}
-    <div class="embed-responsive embed-responsive-16by9">
+    <div class="ratio ratio-16x9">
         <div id="live-{{ live.id }}" class="embed-responsive-item text-center">
             {{ render(path('pumukit_live_channel_videoplayer', {'id': live.id })) }}
         </div>

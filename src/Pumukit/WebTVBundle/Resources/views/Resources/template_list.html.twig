@@ -1,4 +1,4 @@
-<div class="{{ template_list_class|default('custom-list-by') }}">
+<div class="row {{ template_list_class|default('custom-list-by') }}">
     {% set nameDate = '00/0000' %}
     {% set clearFixIndex = 1 %}
     {% if template_list_grouped is not defined %}
@@ -14,7 +14,7 @@
         {% if template_list_grouped and nameDate != newNameDate %}
             {% set clearFixIndex = 1 %}
             {% set nameDate = newNameDate %}
-            <div class="name col-xs-12">
+            <div class="name col-12">
                 <h2>{{ 'Date'|trans }}: {{ nameDate }}</h2>
             </div>
         {% endif %}

@@ -11,7 +11,7 @@
                 {% include '@PumukitWebTV/Misc/show_more.html.twig' %}
             {% endif %}
             {% if show_link|default(false) %}
-                <div class="col-xs-12 text-right">
+                <div class="col-12 text-end">
                     <a href="{{ path(show_link) }}" class="show_more_link" title="{{ textShowMore }}">
                         <p>{{ textShowMore }}...</p>
                     </a>

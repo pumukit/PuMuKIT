@@ -1,10 +1,10 @@
 <div class="row">
-    <div class="col-xs-8">
+    <div class="col-8">
         <div class="mmobj-title">
             {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale())|default("No title"|trans) }}
         </div>
     </div>
-    <div class="col-xs-4">
+    <div class="col-4">
         <div class="date">
             {% if live_event_session(multimediaObject) != '' %}
                 {% set session = live_event_session(multimediaObject) %}
@@ -22,7 +22,7 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-12">
         <p class="description">
             {{ multimediaObject.getEmbeddedEvent().getDescription(app.request.getLocale())|nl2br }}
         </p>
@@ -32,13 +32,13 @@
 {{ render(controller('Pumukit\\WebTVBundle\\Controller\\ChatController::showAction', {'id': multimediaObject.getId() })) }}
 <div class="row">
     <div class="col-sm-6">
-        <div class="panel panel-default panel-pmk">
-            <div class="panel-heading">
-                <h2 class="panel-title">
+        <div class="card panel-pmk">
+            <div class="card-header">
+                <h2 class="card-title mb-0">
                     {% trans %} Attachments {% endtrans %}
                 </h2>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 {% include "@PumukitWebTV/Misc/materials.html.twig" with {'object': multimediaObject } %}
                 {% include "@PumukitWebTV/Misc/links.html.twig" with {'object': multimediaObject } %}
             </div>

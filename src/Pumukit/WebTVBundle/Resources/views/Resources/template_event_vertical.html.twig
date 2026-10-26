@@ -21,13 +21,13 @@
 <div class="{{ col_calculator(objectByCol|default(1)) }} image_representation">
     <div class="row">
         <a href="{{ videoPath }}" title="{{ videoTitle }}">
-            <div class="col-sm-5 col-md-4">
-                <div class="embed-responsive embed-responsive-16by9">
+            <div class="row"><div class="col-sm-5 col-md-4">
+                <div class="ratio ratio-16x9">
                     <div class="embed-responsive-item text-center">
                         {% if event['pics'] is defined and (event['pics']|length > 0) %}
-                            <img alt="{% trans %}Event pic{% endtrans %}" class="img-responsive img_adapter_4_3" src="{{ event_first_thumbnail(event) }}" />
+                            <img alt="{% trans %}Event pic{% endtrans %}" class="img-fluid img_adapter_4_3" src="{{ event_first_thumbnail(event) }}" />
                         {% else %}
-                            <img alt="{% trans %}Event pic{% endtrans %}" class="img-responsive img_adapter_4_3" src="{{ defaultPic }}" />
+                            <img alt="{% trans %}Event pic{% endtrans %}" class="img-fluid img_adapter_4_3" src="{{ defaultPic }}" />
                         {% endif %}
                     </div>
                 </div>
@@ -40,13 +40,13 @@
                         </p>
 
                         {% if show_info|default(true) %}
-                            <div class="date_and_visits pull-right">
+                            <div class="date_and_visits float-end">
                                 {% trans %}Starts{% endtrans %}: {{ eventStarts }}
                             </div>
                         {% endif %}
                     </div>
                 {% endif %}
-            </div>
+            </div></div>
         </a>
     </div>
 </div>

@@ -20,15 +20,15 @@
 
 {% block body %}
 
-    <div class="video-page">
-        <div class="col-xs-12">
+    <div class="row video-page">
+        <div class="col-12">
             <h1 class="qa-player-title video-title">
                 {{ multimediaObject.title|default("No title"|trans) }}
-                <span class="pull-right edit-button" data-controller="webtv--edit-button" data-webtv--edit-button-url-value="{{ path('pumukit_webtv_can_edit_multimediaobject', {'id' : multimediaObject.getId()}) }}"></span>
+                <span class="float-end edit-button" data-controller="webtv--edit-button" data-webtv--edit-button-url-value="{{ path('pumukit_webtv_can_edit_multimediaobject', {'id' : multimediaObject.getId()}) }}"></span>
             </h1>
         </div>
 
-        <div class="col-xs-12 col-md-7 col-lg-8">
+        <div class="col-12 col-md-7 col-lg-8">
             {% include '@PumukitWebTV/Misc/magic_url_disclaimer.html.twig' %}
 
             {% include '@PumukitWebTV/MultimediaObject/template_player.html.twig' %}
@@ -40,7 +40,7 @@
             {% endif %}
         </div>
 
-        <div class="col-xs-12 col-md-5 col-lg-4">
+        <div class="col-12 col-md-5 col-lg-4">
             {% include "@PumukitWebTV/MultimediaObject/template_suggest.html.twig" %}
         </div>
     </div>

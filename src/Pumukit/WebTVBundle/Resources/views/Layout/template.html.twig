@@ -17,8 +17,9 @@
     <title>{% block title %}{{ pumukit_info.title|default('PuMuKIT') }}{% endblock %}</title>
 
     {% block stylesheets %}
-        <link href="{{ asset('bundles/pumukitwebtv/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+        <link href="{{ asset('bundles/pumukitcore/vendor/bootstrap5/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
         <link href="{{ asset('bundles/pumukitwebtv/css/font-awesome.min.css') }}" type="text/css" rel="stylesheet" media="screen"/>
+        <link href="{{ asset('bundles/pumukitwebtv/css/webtv.css') }}" type="text/css" rel="stylesheet" media="screen"/>
         <link href="{{ path('pumukit_webtv_default_css') }}" type="text/css" rel="stylesheet" media="screen"/>
         {% if app.request.attributes.has('microsite_custom_css') %}
             <link href="{{ asset(app.request.attributes.get('microsite_custom_css')) }}" type="text/css" rel="stylesheet" media="screen"/>
@@ -28,7 +29,7 @@
 
     {% block javascripts %}
         <script src="{{ asset('bundles/pumukitcore/vendor/jquery/jquery.min.js') }}"></script>
-        <script src="{{ asset('bundles/pumukitcore/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bundles/pumukitcore/vendor/bootstrap5/js/bootstrap.bundle.min.js') }}"></script>
         {{ importmap('pumukit') }}
     {% endblock %}
 
@@ -77,7 +78,7 @@
             <div class="container-fluid powered_by">
                 <div class="row">
                     {# Removing the original copyright line from footer breaks the AGPL license #}
-                    <div class="container text-right">
+                    <div class="container text-end">
                         <img alt="PuMuKIT icon" src="{{ asset('bundles/pumukitwebtv/images/favicon.ico') }}" />
                         <a href="https://pumukit.org">
                             {{ "Powered by"|trans }} <span class="version">PuMuKIT {{constant('Pumukit\\PumukitVersion::VERSION')}}</span>

@@ -23,12 +23,12 @@ class BootstrapExtension extends AbstractExtension
         $objectsByCol = (int) $objectsByCol;
 
         $mapping = [
-            1 => 'col-xs-12 col-sm-12 col-md-12',
-            2 => 'col-xs-12 col-sm-6 col-md-6',
-            3 => 'col-xs-12 col-sm-12 col-md-4',
-            4 => 'col-xs-12 col-sm-6 col-md-3',
-            6 => 'col-xs-12 col-sm-6 col-md-2',
-            12 => 'col-xs-12 col-sm-12 col-md-1',
+            1 => 'col-12 col-sm-12 col-md-12',
+            2 => 'col-12 col-sm-6 col-md-6',
+            3 => 'col-12 col-sm-12 col-md-4',
+            4 => 'col-12 col-sm-6 col-md-3',
+            6 => 'col-12 col-sm-6 col-md-2',
+            12 => 'col-12 col-sm-12 col-md-1',
         ];
 
         if (!array_key_exists($objectsByCol, $mapping)) {

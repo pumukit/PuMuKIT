@@ -12,12 +12,12 @@ body {
     background: transparent;
 }
 
-.pumukit-login-panel input {
+.pumukit-login-panel .form-control {
     border: none;
     color: #555;
 }
 
-.pumukit-login-panel .checkbox {
+.pumukit-login-panel .form-check {
     color: #555;
 }
 

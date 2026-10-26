@@ -8,10 +8,10 @@
 <div class="{{ col_calculator(objectByCol|default(1)) }} image_representation">
     <div class="row {% if current.getId()|default('') == multimediaObject.getId() %}current{% endif %}">
         <a href="{{ videoPath }}" title="{{ videoTitle }}">
-            <div class="col-sm-6 col-md-5">
-                <div class="embed-responsive embed-responsive-16by9">
+            <div class="row"><div class="col-sm-6 col-md-5">
+                <div class="ratio ratio-16x9">
                     <div class="embed-responsive-item text-center">
-                        <img alt="{{ videoTitle }}" src="{{ object|first_url_pic() }}" class="img-responsive img_adapter_4_3" />
+                        <img alt="{{ videoTitle }}" src="{{ object|first_url_pic() }}" class="img-fluid img_adapter_4_3" />
                     </div>
                 </div>
             </div>
@@ -35,12 +35,12 @@
                         {% endif %}
 
                         {% if show_info|default(false) %}
-                            <div class="date_and_visits pull-right">
+                            <div class="date_and_visits float-end">
                                 {% if with_publicdate is defined and with_publicdate %}
                                     {{ object.publicDate| format_datetime('medium','none',locale=app.request.getLocale()) }}
                                 {% else %}
                                     {% if app.request.attributes.get('_route') != 'pumukit_webtv_announces_latestuploads_pager' and show_language  and not object.isExternalType() %}
-                                        <div class="language pull-left">
+                                        <div class="language float-start">
                                             {% trans %}Language{% endtrans %}:
                                             {% set lang = object.getDisplayTrack().getLanguage()|default(app.request.getLocale()) %}
                                             {{ is_addon_language(lang) ? lang | language_name_custom : lang | language_name | capitalize }}
@@ -54,7 +54,7 @@
                         {% endif %}
                     </div>
                 {% endif %}
-            </div>
+            </div></div>
         </a>
     </div>
 </div>

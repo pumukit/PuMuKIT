@@ -27,14 +27,14 @@
     {% include '@PumukitWebTV/Misc/magic_url_disclaimer.html.twig' %}
     {% set precinct = precinct_of_series(multimediaObjects) %}
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
             {% include '@PumukitWebTV/Series/template_header.html.twig' with { 'series_precinct' : precinct} %}
         </div>
     </div>
 
     {% if template != 'place_subserial' %}
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-12">
                 <div id="serial_header">
                     {{ series.header|raw }}
                 </div>
@@ -43,10 +43,10 @@
     {% endif %}
 
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
             {% if template == 'place_subserial' %}
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-12">
                         <div id="serial_header">
                             {{ series.header|raw }}
                         </div>
@@ -88,7 +88,7 @@
     {% endif %}
 
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
             {{ series.footer|raw }}
         </div>
     </div>

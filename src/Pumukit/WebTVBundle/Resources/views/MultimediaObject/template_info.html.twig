@@ -3,13 +3,13 @@
 </div>
 
 <div class="row">
-    <div class="qa-player-recording-date col-xs-12 text-right">
+    <div class="qa-player-recording-date col-12 text-end">
         {% trans %}Recording date{% endtrans %}: {{ multimediaObject.getRecordDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}
     </div>
 </div>
 
 <div class="row">
-    <div class="qa-player-viewed col-xs-12 text-right">
+    <div class="qa-player-viewed col-12 text-end">
         {% trans %}Viewed{% endtrans %}: {{ multimediaObject.getNumview() }}
         {% if multimediaObject.getNumview() > 1 %}
             {% trans %} times {% endtrans %}
@@ -22,7 +22,7 @@
 {% include "@PumukitWebTV/Misc/chapter_marks.html.twig" %}
 
 <div class="row">
-    <div class="col-xs-12 video-subtitle">
+    <div class="col-12 video-subtitle">
         {% if multimediaObject.getSubtitle() %}
             <h2 class="qa-player-subtitle"> {{ multimediaObject.getSubtitle() }} </h2>
         {% endif %}
@@ -31,7 +31,7 @@
             {{ multimediaObject.getDescription()|nl2br }}
         </p>
 
-        <div class="qa-player-license text-left video-license">
+        <div class="qa-player-license text-start video-license">
             {% if multimediaObject.getLicense() is not empty %}
                 {% trans %}License{% endtrans %}: {{ multimediaObject.getLicense() }}
             {% endif %}
@@ -61,27 +61,27 @@
 <br>
 <div class="row">
     <div class="col-sm-6">
-        <div class="panel panel-default panel-pmk">
-            <div class="panel-heading">
-                <h2 class="panel-title">
+        <div class="card panel-pmk">
+            <div class="card-header">
+                <h2 class="card-title mb-0">
                     {% trans %} Attachments {% endtrans %}
                 </h2>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 {% set none_attach = true %}
 
                 <ul class="list-group">
                     {% for track in multimediaObject.getTracks() | filter(track => track.isDownloadable() and not track.isHide() and showDownloads) %}
                         {% set none_attach = false %}
                         <li class="qa-player-tracks tracks">
-                            <span class="glyphicon glyphicon-facetime-video"></span>
+                            <span class="fa fa-video-camera"></span>
                             <a class="video-tracks" download href="{{ download_track_url(track) }}">
                                 {% if track.metadata().isOnlyAudio() %}
                                     {% trans %}Download this audio{% endtrans %}
                                 {% else %}
                                     {% trans %}Download this video{% endtrans %}
                                 {% endif %}
-                                <span class="pull-right">{{ (track.metadata().size / 1048576)|number_format(2) }}MB</span>
+                                <span class="float-end">{{ (track.metadata().size / 1048576)|number_format(2) }}MB</span>
                             </a>
                         </li>
                     {% endfor %}
@@ -89,7 +89,7 @@
                     {% for material in multimediaObject.getMaterials() | filter(material => not material.getHide() and showDownloads)  %}
                         {% set none_attach = false %}
                         <li class="qa-player-material material">
-                            <span class="glyphicon glyphicon-paperclip"></span>
+                            <span class="fa fa-paperclip"></span>
                             <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
                         </li>
                     {% endfor %}
@@ -99,7 +99,7 @@
                         {% set none_attach = false %}
                         <li class="qa-player-link link">
                             <a target="_blank" href="{{ link.getUrl() }}">
-                                <span class="glyphicon glyphicon-globe"></span>
+                                <span class="fa fa-globe"></span>
                                 {{ link.getName() }}
                             </a>
                         </li>

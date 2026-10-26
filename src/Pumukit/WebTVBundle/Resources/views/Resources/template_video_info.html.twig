@@ -1,12 +1,12 @@
 <div class="row">
     {% if show_video_broadcast is defined and show_video_broadcast %}
-        <div class="col-xs-10">
+        <div class="col-10">
             <h3 class="video-title">{{ object.getTitle()| default('No title'|trans) }}</h3>
         </div>
 
         {% set broadcastType = object.getEmbeddedBroadcast().getType() %}
-        <div class="col-xs-2 text-right">
-            <span class="label label-default label-pmk label-pmk-{{ broadcastType }}">
+        <div class="col-2 text-end">
+            <span class="badge label-pmk label-pmk-{{ broadcastType }}">
                 {% if show_video_broadcast_unify is defined and show_video_broadcast_unify and broadcastType != 'public' %}
                     {{ "Private"|trans }}
                 {% else %}
@@ -15,19 +15,19 @@
             </span>
         </div>
     {% else %}
-        <div class="col-xs-12">
+        <div class="col-12">
             <h3 class="video-title">{{ object.getTitle()| default('No title'|trans) }}</h3>
         </div>
     {% endif %}
     {% if show_video_subtitle is defined and show_video_subtitle %}
-        <div class="col-xs-12">
+        <div class="col-12">
             <h4 class="video-subtitle">
                 <small>{{ object.getSubtitle()|default ('') }}</small>
             </h4>
         </div>
     {% endif %}
 
-    <ul class="col-xs-12 list-group video-info-elements">
+    <ul class="col-12 list-group video-info-elements">
         {% if show_video_date is defined and show_video_date %}
             <li class="list-group-item list-group-item-custom video-date">
                 {{ object.getRecordDate()| format_datetime('medium','none',locale=app.request.getLocale()) }}

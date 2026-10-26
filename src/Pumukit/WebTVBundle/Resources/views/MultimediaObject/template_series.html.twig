@@ -1,11 +1,11 @@
 {% if multimediaObjects|length > 0 %}
-    <div class="panel panel-default panel-pmk panel-series">
-        <div class="panel-heading">
-            <h2 class="panel-title">
+    <div class="card panel-pmk panel-series">
+        <div class="card-header">
+            <h2 class="card-title mb-0">
                 {% trans %}Content from same Series{% endtrans %}
             </h2>
         </div>
-        <div class="panel-body" data-controller="webtv--scroll-to-current">
+        <div class="card-body" data-controller="webtv--scroll-to-current">
             {% for multimediaObject in multimediaObjects %}
                 {% include '@PumukitWebTV/Resources/template_video_vertical.html.twig' with {'object': multimediaObject} %}
             {% endfor %}

@@ -8,26 +8,25 @@
             {{ app.session.flashBag.get('error')[0] |trans }}
         </div>
     {% endif %}
-    <div class="form-group">
-        <label for="inputUsername" class="hidden">{{ "Username"|trans }}</label>
+    <div class="mb-3">
+        <label for="inputUsername" class="d-none">{{ "Username"|trans }}</label>
         <input type="text" value="{{ last_username|default() }}" placeholder="{{ last_username|default("Username"|trans) }}" name="username" id="inputUsername" class="form-control" required>
     </div>
 
-    <div class="form-group">
-        <label for="inputPassword" class="hidden">{{ "Password"|trans }}</label>
+    <div class="mb-3">
+        <label for="inputPassword" class="d-none">{{ "Password"|trans }}</label>
         <input type="password" placeholder="{{ "Password"|trans }}" name="password" id="inputPassword" class="form-control" required >
     </div>
 
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
 
-    <div class="checkbox">
-        <label>
-            <input type="checkbox" name="_remember_me"> {{ "Remember"|trans }}
-        </label>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="remember_me" name="_remember_me">
+        <label class="form-check-label" for="remember_me">{{ "Remember"|trans }}</label>
     </div>
 
     <div class="pumukit-panel-login-footer">
-        <button type="submit" id="_submit" name="_submit" class="btn btn-block btn-login-pumukit">
+        <button type="submit" id="_submit" name="_submit" class="btn w-100 btn-login-pumukit">
             {{ 'Log in'|trans }}
         </button>
     </div>

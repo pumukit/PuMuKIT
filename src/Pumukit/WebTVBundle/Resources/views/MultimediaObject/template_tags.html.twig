@@ -1,8 +1,8 @@
-<div class="qa-player-tags col-xs-12 tags-info-pmk">
+<div class="row"><div class="qa-player-tags col-12 tags-info-pmk">
     <ul class="list-group list-inline">
         {% for tag in multimediaObject.tags | filter(tag => tag.display and not tag.metatag and not tag.isDescendantOfByCod('PUBCHANNELS')) %}
             <li>
-                <span class="label label-default label-pmk">
+                <span class="badge label-pmk">
                     <a href="{{ path_to_tag(tag.cod) }}" title="{{ tag.getTitle() }}">
                         {{ tag.title }}
                     </a>
@@ -10,4 +10,4 @@
             </li>
         {% endfor %}
     </ul>
-</div>
+</div></div>

@@ -15,7 +15,7 @@
             {% trans %}Enter a valid password to watch it{% endtrans %}.
         </h3>
         <div class="text-center">
-            <form name="passwdForm" method="post">
+            <form class="row" name="passwdForm" method="post">
                 <div class="col-md-12">
                     <input class="pmk-margin-top-2vh pmk-margin-left-5 pmk-margin-right-5 pmk-margin-bottom-4vh pmk-width-190" id="broadcast_password" name="broadcast_password" type="password" aria-label="password" placeholder="{% trans %}Introduce a password{% endtrans %}..." value="" size="17" maxlength="256"/>
                 </div>
@@ -25,7 +25,7 @@
                     </span>
                 </div>
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-default btn-pmk btn-flat pmk-margin-top-4vh" title="{%
+                    <button type="submit" class="btn btn-secondary btn-pmk" style="margin-top:4vh;" title="{%
                         trans %}Log In{% endtrans %}">
                         {% trans %}Enter pass{% endtrans %}
                     </button>

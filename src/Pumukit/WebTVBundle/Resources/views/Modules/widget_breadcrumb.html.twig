@@ -1,16 +1,16 @@
 <div class="container-fluid breadcrumb-pmk">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-12">
                 <ol class="breadcrumb breadcrumb-pmk-list" data-controller="webtv--breadcrumb">
-                    <li>
+                    <li class="breadcrumb-item">
                         <a href="{{ breadcrumbs[0]["link"] }}" {% if breadcrumbs|length == 1 %}class="active" aria-current="page"{% endif %} title="{{ breadcrumbs[0]["title"] }}">
                             {{ breadcrumbs[0]["title"] }}
                         </a>
                     </li>
 
                     {% if breadcrumbs|length > 1 %}
-                        <li>
+                        <li class="breadcrumb-item">
                             <a href="{{ breadcrumbs[1]["link"] }}" {% if breadcrumbs|length == 2 %}class="active" aria-current="page"{% endif %} title="{{ breadcrumbs[1]["title"] }}">
                                 {{ breadcrumbs[1]["title"] }}
                             </a>
@@ -18,7 +18,7 @@
                     {% endif %}
 
                     {% if breadcrumbs|length > 2 %}
-                        <li>
+                        <li class="breadcrumb-item">
                             <a id="breadcrumbs_series_a" data-webtv--breadcrumb-target="series" href="{{ breadcrumbs[2]["link"] }}" {% if breadcrumbs|length == 3 %}class="active" aria-current="page"{% endif %} title="{{ breadcrumbs[2]["title"] }}">
                                 {{ breadcrumbs[2]["title"] }}
                             </a>
@@ -26,7 +26,7 @@
                     {% endif %}
 
                     {% if breadcrumbs|length > 3 %}
-                        <li>
+                        <li class="breadcrumb-item">
                             <a id="breadcrumbs_mmobj_a" data-webtv--breadcrumb-target="multimediaObject" href="{{ breadcrumbs[3]["link"] }}" {% if breadcrumbs|length == 4 %}class="active" aria-current="page"{% endif %} title="{{ breadcrumbs[3]["title"] }}">
                                 {{ breadcrumbs[3]["title"] }}
                             </a>

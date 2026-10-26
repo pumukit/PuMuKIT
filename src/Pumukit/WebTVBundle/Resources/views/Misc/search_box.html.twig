@@ -3,19 +3,19 @@
 
 <div class="search-box">
     <form class="input-group stylish-input-group" role="search" method="get" action="{{ path('pumukit_webtv_search_multimediaobjects') }}">
-        <label for="{{ idInput }}" class="sr-only">
+        <label for="{{ idInput }}" class="visually-hidden">
             {% trans %}Search{% endtrans %}
         </label>
         <input type="text" class="form-control" placeholder="{% trans %}Search{% endtrans %}..." name="search" id="{{ idInput }}" />
-        <span class="input-group-addon">
-            <span class="sr-only">
+        <span class="input-group-text">
+            <span class="visually-hidden">
                 {% trans %}Submit{% endtrans %}
             </span>
-            <button class="pmk-border-0 pmk-background-transparent" type="submit" aria-label="{% trans %}Search{% endtrans %}">
-                <span class="sr-only">
+            <button type="submit" style="border:0;background:transparent;" aria-label="{% trans %}Search{% endtrans %}">
+                <span class="visually-hidden">
                     {% trans %}Search{% endtrans %}
                 </span>
-                <span class="glyphicon glyphicon-search"></span>
+                <span class="fa fa-search"></span>
             </button>
         </span>
     </form>

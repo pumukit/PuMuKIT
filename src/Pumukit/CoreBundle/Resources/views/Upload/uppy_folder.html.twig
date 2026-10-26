@@ -2,8 +2,8 @@
 
 {% block inbox_body %}
     <form id="inbox_folder_form" action="{{ path('file_upload') }}" method="POST" data-controller="core--inbox-folder" data-core--inbox-folder-check-url-value="{{ path('check_folder_before_creating') }}">
-        <div class="form-group">
-            <label for="file" class="control-label text-center">
+        <div class="mb-3">
+            <label for="file" class="form-label text-center">
                 {{ "Select the folder or create a new one where you want to upload the videos. Once this is done, press continue to start uploading the corresponding files"|trans }}:
             </label>
             <div class="input-group">
@@ -17,7 +17,7 @@
             <p class="error_folder text-danger" data-core--inbox-folder-target="error"> {{ "The folder name is not valid. The allowed characters are: upper and lower case, numbers, space and _"|trans }}.</p>
         </div>
         <div class="button-next">
-            <button type="submit" class="btn btn-primary btn-raised btn-next" data-core--inbox-folder-target="submit">{% trans %}Next{% endtrans %} &raquo;</button>
+            <button type="submit" class="btn btn-primary btn-next" data-core--inbox-folder-target="submit">{% trans %}Next{% endtrans %} &raquo;</button>
         </div>
     </form>
 {% endblock inbox_body %}

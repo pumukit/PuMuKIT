@@ -7,9 +7,9 @@
     <a href="{{ path('pumukit_webtv_series_index', {'id': object.id}) }}" title="{{ objectTitle }}">
         <div class="thumbnail">
             <div class="series_image_group">
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="ratio ratio-16x9">
                     <div class="embed-responsive-item text-center">
-                        <img src="{{ object|first_url_pic() }}" alt="{{ objectTitle }}" class="img-responsive img_adapter_4_3" />
+                        <img src="{{ object|first_url_pic() }}" alt="{{ objectTitle }}" class="img-fluid img_adapter_4_3" />
                     </div>
                     <div class="hover_series">
                         <div class="text-center">
@@ -39,7 +39,7 @@
                     {% endif %}
 
                     {% if show_info|default(true) %}
-                        <li class="list-group-item list-group-item-custom date_and_visits pull-right">
+                        <li class="list-group-item list-group-item-custom date_and_visits float-end">
                             {{ object.publicDate|  format_datetime("medium", "none",locale=app.request.getLocale()) }}
                         </li>
                     {% endif %}

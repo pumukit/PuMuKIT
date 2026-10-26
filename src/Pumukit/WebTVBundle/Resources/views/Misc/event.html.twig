@@ -1,16 +1,16 @@
-<div class="col-xs-12 col-sm-12 col-md-12 next_events_box_data">
+<div class="row"><div class="col-12 col-sm-12 col-md-12 next_events_box_data">
 
     {% set linkName = next['data']['event'] ? (next['data']['event']['name'][app.request.locale] is defined ? next['data']['event']['name'][app.request.locale] : next['data']['event']['name']) : '---' %}
 
-    <div class="media">
+    <div class="row media">
         <div class="col-sm-5 col-md-4">
             <a href="{{ path('pumukit_live_event_id', {'id': next['_id']}) }}" title="{{ linkName }}">
-                <div class="embed-responsive embed-responsive-16by9">
+                <div class="ratio ratio-16x9">
                     <div class="embed-responsive-item text-center">
                         {% if next['data']['pics'] is defined and (next['data']['pics']|length > 0) %}
-                            <img alt="{% trans %}Event pic{% endtrans %}" class="img-responsive img_adapter_4_3" src="{{ event_first_thumbnail(next['data']) }}" />
+                            <img alt="{% trans %}Event pic{% endtrans %}" class="img-fluid img_adapter_4_3" src="{{ event_first_thumbnail(next['data']) }}" />
                         {% else %}
-                            <img alt="{% trans %}Event pic{% endtrans %}" class="img-responsive img_adapter_4_3" src="{{ event_default_pic() }}" />
+                            <img alt="{% trans %}Event pic{% endtrans %}" class="img-fluid img_adapter_4_3" src="{{ event_default_pic() }}" />
                         {% endif %}
                     </div>
                 </div>
@@ -22,19 +22,19 @@
                         <a href="{{ path('pumukit_live_event_id', {'id': next['_id']}) }}" class="future-event-link" title="{{ linkName }}">
                             {{ linkName }}
                         </a>
-                        <div class="pull-right">
+                        <div class="float-end">
                         {% if start<= now and ends > now %}
                             <div class="loader" title="{{ "Live broadcasting"|trans }}"></div>
                         {% endif %}
                             {% if not public_broadcast(next['data']['event']['_id']) %}
-                                <div class="glyphicon glyphicon-lock pmk-color-000" title="{% trans %}Private event{% endtrans %}"></div>
+                                <div class="fa fa-lock" style="color:#000" title="{% trans %}Private event{% endtrans %}"></div>
                             {% endif %}
                         </div>
                     </span>
             </div>
             <div class="next_events_box_dates">
                 <div class="event_start_date">
-                    <table class="live-event-next-session-data-table hidden-xs">
+                    <table class="live-event-next-session-data-table d-none d-sm-table">
                         <tr>
                             <td>{{ "Starts"|trans }}</td>
                             <td>&nbsp;&nbsp;</td>
@@ -46,7 +46,7 @@
                             <td>{{ next['data']['session']['ends']|convertMongoDate |format_datetime('medium','medium',locale=app.request.getLocale()) }}</td>
                         </tr>
                     </table>
-                    <div class="visible-xs">
+                    <div class="d-md-none">
                         {{ "Starts"|trans }} - {{ next['data']['session']['start']|convertMongoDate|format_datetime('medium','medium',locale=app.request.getLocale()) }}
                         {{ "End"|trans }} - {{ next['data']['session']['ends']|convertMongoDate |format_datetime('medium','medium',locale=app.request.getLocale()) }}
                     </div>
@@ -54,4 +54,4 @@
             </div>
         </div>
     </div>
-</div>
+</div></div>
