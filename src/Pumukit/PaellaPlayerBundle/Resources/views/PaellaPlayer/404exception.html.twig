@@ -1,5 +1,6 @@
 <html>
     <head>
+        <link href="{{ asset('bundles/pumukitcore/css/pumukit-utilities.css') }}" type="text/css" rel="stylesheet"/>
         <style>
             body {
                 background: black;
@@ -10,7 +11,7 @@
         </style>
     </head>
 <body>
-    <div style="text-align: center;position: absolute;width:100%;top:50%;">
+    <div class="pmk-text-align-center pmk-position-absolute pmk-width-100pct pmk-top-50pct">
         {{ message|trans(parameters) }}
     </div>
 </body>

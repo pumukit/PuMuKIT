@@ -246,7 +246,7 @@
         {% set locale = form.vars.locales[0] %}
         <div class="input-group">
             <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
-            <span class="input-group-addon copy-button" style="color: #767676;cursor:pointer;" data-copy="{{ form.vars.id }}_{{ locale }}" data-action="click->admin--actions#copy" data-admin--actions-input-param="{{ (form.vars.id ~ '_' ~ locale)|json_encode }}">
+            <span class="input-group-addon copy-button pmk-color-767676 pmk-cursor-pointer" data-copy="{{ form.vars.id }}_{{ locale }}" data-action="click->admin--actions#copy" data-admin--actions-input-param="{{ (form.vars.id ~ '_' ~ locale)|json_encode }}">
                 <span class="mdi-content-content-copy" title="{% trans %}Copy{% endtrans %}"></span>
             </span>
         </div>
@@ -255,12 +255,12 @@
             <div class="input-group">
                 <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
                 {% if locale in form.vars.translators %}
-                    <span class="input-group-addon translate-button" style="color: #767676;cursor:pointer;" data-locale="{{ locale }}" data-action="click->admin--actions#translate dblclick->admin--actions#translate" data-admin--actions-url-param="{{ path('pumukitnewadmin_metadata_translate') }}" data-admin--actions-locale-param="{{ locale|json_encode }}" data-admin--actions-field-param="input" data-admin--actions-question-param="{{ 'Please enter your translation:'|trans }}" data-admin--actions-error-param="{{ 'Error'|trans }}">
+                    <span class="input-group-addon translate-button pmk-color-767676 pmk-cursor-pointer" data-locale="{{ locale }}" data-action="click->admin--actions#translate dblclick->admin--actions#translate" data-admin--actions-url-param="{{ path('pumukitnewadmin_metadata_translate') }}" data-admin--actions-locale-param="{{ locale|json_encode }}" data-admin--actions-field-param="input" data-admin--actions-question-param="{{ 'Please enter your translation:'|trans }}" data-admin--actions-error-param="{{ 'Error'|trans }}">
                         <span class="mdi-action-translate" title="{% trans %}Translate{% endtrans %}"></span>
                     </span>
                 {% endif %}
-                <span class="input-group-addon" style="color: #767676;">{{ locale }}</span>&nbsp;
-                <span class="input-group-addon copy-button" style="color: #767676;cursor:pointer;" data-copy="{{ form.vars.id }}_{{ locale }}" data-action="click->admin--actions#copy" data-admin--actions-input-param="{{ (form.vars.id ~ '_' ~ locale)|json_encode }}">
+                <span class="input-group-addon pmk-color-767676">{{ locale }}</span>&nbsp;
+                <span class="input-group-addon copy-button pmk-color-767676 pmk-cursor-pointer" data-copy="{{ form.vars.id }}_{{ locale }}" data-action="click->admin--actions#copy" data-admin--actions-input-param="{{ (form.vars.id ~ '_' ~ locale)|json_encode }}">
                     <span class="mdi-content-content-copy" title="{% trans %}Copy{% endtrans %}"></span>
                 </span>
             </div>
@@ -277,11 +277,11 @@
             <div class="input-group">
                 <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
                 {% if locale in form.vars.translators %}
-                    <span class="input-group-addon translate-button" style="color: #767676;cursor:pointer;" data-locale="{{ locale }}" data-action="click->admin--actions#translate dblclick->admin--actions#translate" data-admin--actions-url-param="{{ path('pumukitnewadmin_metadata_translate') }}" data-admin--actions-locale-param="{{ locale|json_encode }}" data-admin--actions-field-param="input" data-admin--actions-question-param="{{ 'Please enter your translation:'|trans }}" data-admin--actions-error-param="{{ 'Error'|trans }}">
+                    <span class="input-group-addon translate-button pmk-color-767676 pmk-cursor-pointer" data-locale="{{ locale }}" data-action="click->admin--actions#translate dblclick->admin--actions#translate" data-admin--actions-url-param="{{ path('pumukitnewadmin_metadata_translate') }}" data-admin--actions-locale-param="{{ locale|json_encode }}" data-admin--actions-field-param="input" data-admin--actions-question-param="{{ 'Please enter your translation:'|trans }}" data-admin--actions-error-param="{{ 'Error'|trans }}">
                         <span class="mdi-action-translate" title="{% trans %}Translate{% endtrans %}"></span>
                     </span>
                 {% endif %}
-                <span class="input-group-addon" style="color: #767676;">{{ locale }}</span>
+                <span class="input-group-addon pmk-color-767676">{{ locale }}</span>
             </div>
         {% endfor -%}
     {% endif -%}
@@ -296,11 +296,11 @@
           <div class="input-group">
               <textarea {{ block('widgeti18n_attributes') }}>{{ value[locale]|default("") }}</textarea>
               {% if locale in form.vars.translators %}
-                  <span class="input-group-addon translate-button" style="color: #767676;cursor:pointer;" data-locale="{{ locale }}" data-action="click->admin--actions#translate dblclick->admin--actions#translate" data-admin--actions-url-param="{{ path('pumukitnewadmin_metadata_translate') }}" data-admin--actions-locale-param="{{ locale|json_encode }}" data-admin--actions-field-param="textarea" data-admin--actions-question-param="{{ 'Please enter your translation:'|trans }}" data-admin--actions-error-param="{{ 'Error'|trans }}">
+                  <span class="input-group-addon translate-button pmk-color-767676 pmk-cursor-pointer" data-locale="{{ locale }}" data-action="click->admin--actions#translate dblclick->admin--actions#translate" data-admin--actions-url-param="{{ path('pumukitnewadmin_metadata_translate') }}" data-admin--actions-locale-param="{{ locale|json_encode }}" data-admin--actions-field-param="textarea" data-admin--actions-question-param="{{ 'Please enter your translation:'|trans }}" data-admin--actions-error-param="{{ 'Error'|trans }}">
                       <span class="mdi-action-translate" title="{% trans %}Translate{% endtrans %}"></span>
                   </span>
               {% endif %}
-              <span class="input-group-addon" style="color: #767676;">{{ locale }}</span>
+              <span class="input-group-addon pmk-color-767676">{{ locale }}</span>
           </div>
       {%- endfor -%}
     {% endif -%}
@@ -326,20 +326,20 @@
 
 {# Live Widgets #}
 {% block liveresolution_widget -%}
-  <input style="margin-top: 5px;" type="number" size="6" value="{{ value['width']|default("") }}" id="{{ id }}_width" name="{{ full_name }}[width]"> x
-  <input style="margin-top: 5px;" type="number" size="6" value="{{ value['height']|default("") }}" id="{{ id }}_height" name="{{ full_name }}[height]">
+  <input class="pmk-margin-top-5" type="number" size="6" value="{{ value['width']|default("") }}" id="{{ id }}_width" name="{{ full_name }}[width]"> x
+  <input class="pmk-margin-top-5" type="number" size="6" value="{{ value['height']|default("") }}" id="{{ id }}_height" name="{{ full_name }}[height]">
 {%- endblock liveresolution_widget %}
 
 {% block livequalities_widget -%}
 <div>
-  1. <input style="margin-top: 5px;" type="text" size="6" value="{{ value[0]['calidad']|default("") }}" id="{{ id }}_0_calidad" name="{{ full_name }}[0][calidad]"> kbps &nbsp;
-     <input style="margin-top: 5px;" type="text" size="6" value="{{ value[0]['res']|default("") }}" id="{{ id }}_0_res" name="{{ full_name }}[0][res]"> píxels &nbsp;&nbsp;
+  1. <input class="pmk-margin-top-5" type="text" size="6" value="{{ value[0]['calidad']|default("") }}" id="{{ id }}_0_calidad" name="{{ full_name }}[0][calidad]"> kbps &nbsp;
+     <input class="pmk-margin-top-5" type="text" size="6" value="{{ value[0]['res']|default("") }}" id="{{ id }}_0_res" name="{{ full_name }}[0][res]"> píxels &nbsp;&nbsp;
      <br>
-  2. <input style="margin-top: 5px;" type="text" size="6" value="{{ value[1]['calidad']|default("") }}" id="{{ id }}_1_calidad" name="{{ full_name }}[1][calidad]"> kbps &nbsp;
-     <input style="margin-top: 5px;" type="text" size="6" value="{{ value[1]['res']|default("") }}" id="{{ id }}_1_res" name="{{ full_name }}[1][res]"> píxels &nbsp;&nbsp;
+  2. <input class="pmk-margin-top-5" type="text" size="6" value="{{ value[1]['calidad']|default("") }}" id="{{ id }}_1_calidad" name="{{ full_name }}[1][calidad]"> kbps &nbsp;
+     <input class="pmk-margin-top-5" type="text" size="6" value="{{ value[1]['res']|default("") }}" id="{{ id }}_1_res" name="{{ full_name }}[1][res]"> píxels &nbsp;&nbsp;
      <br>
-  3. <input style="margin-top: 5px;" type="text" size="6" value="{{ value[2]['calidad']|default("") }}" id="{{ id }}_2_calidad" name="{{ full_name }}[2][calidad]"> kbps &nbsp;
-     <input style="margin-top: 5px;" type="text" size="6" value="{{ value[2]['res']|default("") }}" id="{{ id }}_2_res" name="{{ full_name }}[2][res]"> píxels &nbsp;&nbsp;
+  3. <input class="pmk-margin-top-5" type="text" size="6" value="{{ value[2]['calidad']|default("") }}" id="{{ id }}_2_calidad" name="{{ full_name }}[2][calidad]"> kbps &nbsp;
+     <input class="pmk-margin-top-5" type="text" size="6" value="{{ value[2]['res']|default("") }}" id="{{ id }}_2_res" name="{{ full_name }}[2][res]"> píxels &nbsp;&nbsp;
      <br>
 </div>
 {%- endblock livequalities_widget %}

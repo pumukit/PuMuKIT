@@ -7,20 +7,18 @@
     {% endif %}
     {% set deactivated = (name in deactivated_cpus) %}
     <div class="list-group-item">
-      <div class="row-action-primary" style="position:relative">
+      <div class="row-action-primary pmk-position-relative">
         <i class="mdi-action-dns"></i>
         {% if deactivated %}
-          <i id="maintenance-{{name}}-warning" title="{% trans %}This CPU is in maintenance mode.{% endtrans %}" class="mdi-av-new-releases" aria-hidden="true"
-             style="cursor:pointer;position: absolute;background:none;color:orange;border-radius:0;line-height:1;left:-35px;top:0;/*text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;*/"></i>
+          <i id="maintenance-{{name}}-warning" title="{% trans %}This CPU is in maintenance mode.{% endtrans %}" class="mdi-av-new-releases pmk-cursor-pointer pmk-position-absolute pmk-background-none pmk-color-orange pmk-border-radius-0 pmk-line-height-1 pmk-left-35 pmk-top-0" aria-hidden="true"></i>
         {% endif %}
       </div>
       <div class="row-content">
         {% if cpu.profiles is not empty %}
           <i
             title="{% trans %}This cpu only executes jobs from the following profiles:{% endtrans %} {{ cpu.profiles | join(', ')}}"
-            class="mdi-action-info"
+            class="mdi-action-info pmk-cursor-pointer pmk-border-radius-0 pmk-float-right"
             aria-hidden="true"
-            style="cursor:pointer;border-radius:0;float:right;"
           >
           </i>
         {% endif %}
@@ -28,7 +26,7 @@
         <p class="list-group-item-text">{{ cpu.description|default('No description') }} (type: {{ cpu.type }})</p>
         <small>{{ cpu.host }}</small>
         <div>
-          <div class="least-content togglebutton" style="bottom: 10px; top: inherit">
+          <div class="least-content togglebutton pmk-bottom-10 pmk-top-inherit">
               {% if is_granted('ROLE_SCOPE_PERSONAL') %}
                   <label>
                       <input type="checkbox" disabled {% if not deactivated %}checked="checked"{% endif %}>

@@ -11,7 +11,7 @@
             <fieldset>
                 {% for key, child in form %}
                     {% if key == 'chat' and (not enableChat or advanceLiveEvent) %}
-                        <div style="display:none">
+                        <div class="pmk-display-none">
                             {{ form_row(child) }}
                         </div>
                     {% else %}

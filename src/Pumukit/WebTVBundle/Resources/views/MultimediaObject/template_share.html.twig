@@ -50,7 +50,7 @@
         <li class="list-group-item list-group-item-pmk">
             <div class="qa-player-share-url share_url">
                 <span>{% trans %} URL: {% endtrans %}</span>
-                <input type="text" value="{{ url }}" aria-label="share-url" data-controller="core--select" data-action="click->core--select#select" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" readonly="readonly" />
+                <input class="pmk-width-70pct pmk-border-1-solid-ccc pmk-float-right pmk-padding-0 pmk-margin-0" type="text" value="{{ url }}" aria-label="share-url" data-controller="core--select" data-action="click->core--select#select" readonly="readonly" />
             </div>
         </li>
         <li class="list-group-item list-group-item-pmk">
@@ -68,7 +68,7 @@
                             {{- " loading='lazy'" -}}
                     ></iframe>
                 {% endapply %}{% endset %}
-                <input type="text" value="{{ iframe_value }}" aria-label="share-iframe" data-controller="core--select" data-action="click->core--select#select" style="width: 70%; border: 1px solid #ccc; float:right; padding: 0; margin: 0;" readonly="readonly" />
+                <input class="pmk-width-70pct pmk-border-1-solid-ccc pmk-float-right pmk-padding-0 pmk-margin-0" type="text" value="{{ iframe_value }}" aria-label="share-iframe" data-controller="core--select" data-action="click->core--select#select" readonly="readonly" />
             </div>
         </li>
     </ul>

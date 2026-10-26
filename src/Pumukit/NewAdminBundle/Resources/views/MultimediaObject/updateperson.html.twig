@@ -1,7 +1,7 @@
 <div class="well">
     <fieldset class="">
         <legend hidden>{% trans %}Person with Role list{% endtrans %}</legend>
-        <dl style="margin: 0px">
+        <dl class="pmk-margin-0">
             {% for role in roles | filter(role => role.getCod() != personal_scope_role_code) %}
                 <div id="multimedia_object_role_{{ role.getCod()|lower }}" class="form-row multimedia_object_roles">
                     <dt>{{ role.getName() }}{{ role.getDisplay()?'*':'' }}:</dt>

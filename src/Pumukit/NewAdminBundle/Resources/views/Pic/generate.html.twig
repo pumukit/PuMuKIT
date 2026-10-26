@@ -18,27 +18,27 @@
         <div class="row">
             <div class="col-md-5 text-center">
                 <!-- PLAYER -->
-                <video id="gen_pic_player" data-admin--pic-generator-target="video" src="{{ track_url(track)|raw }}" controls crossorigin="" style="background: black; width: 100%;"></video>
+                <video class="pmk-background-black pmk-width-100pct" id="gen_pic_player" data-admin--pic-generator-target="video" src="{{ track_url(track)|raw }}" controls crossorigin=""></video>
             </div>
             <div class="col-md-2">
 
                 <!-- CONTROLS -->
-                <div class="buttons" id="gen_pic_buttons" data-admin--pic-generator-target="buttons" style="text-align:center">
+                <div class="buttons pmk-text-align-center" id="gen_pic_buttons" data-admin--pic-generator-target="buttons">
 
-                    <div class="btn-group btn-group-raised" style="margin-top: 0px;">
-                        <button id="prev-frame-button" data-action="click->admin--pic-generator#previousFrame" title="{% trans %}Prev Frame{% endtrans %}" class="btn btn-raised btn-xs" style="padding: 8px 25px">
+                    <div class="btn-group btn-group-raised pmk-margin-top-0">
+                        <button id="prev-frame-button" data-action="click->admin--pic-generator#previousFrame" title="{% trans %}Prev Frame{% endtrans %}" class="btn btn-raised btn-xs pmk-padding-8-25">
                             «
                         </button>
-                        <button id="next-frame-button" data-action="click->admin--pic-generator#nextFrame" title="{% trans %}Next Frame{% endtrans %}" class="btn btn-raised btn-xs" style="padding: 8px 25px">
+                        <button id="next-frame-button" data-action="click->admin--pic-generator#nextFrame" title="{% trans %}Next Frame{% endtrans %}" class="btn btn-raised btn-xs pmk-padding-8-25">
                             »
                         </button>
                     </div>
 
-                    <button id="take-img-button" data-action="click->admin--pic-generator#take" title="Take image." style="padding: 8px; white-space: normal" class="btn btn-raised btn-primary">{% trans %}Take image{% endtrans %}</button>
+                    <button id="take-img-button" data-action="click->admin--pic-generator#take" title="Take image." class="btn btn-raised btn-primary pmk-padding-8 pmk-white-space-normal">{% trans %}Take image{% endtrans %}</button>
 
 
                     <div class="btn-group">
-                        <a href="#" data-target="#" class="btn btn-raised dropdown-toggle" data-toggle="dropdown" style="padding: 8px; ; white-space: normal">
+                        <a href="#" data-target="#" class="btn btn-raised dropdown-toggle pmk-padding-8 pmk-white-space-normal" data-toggle="dropdown">
                             {% trans %}Take burst{% endtrans %}
                             <span class="caret"></span>
                         </a>
@@ -49,7 +49,7 @@
                         </ul>
                     </div>
 
-                    <button id="advanced-button" data-action="click->admin--pic-generator#toggleAdvanced" title="Show advanced" style="margin-top: 0px; padding: 1px 5px; white-space: nowrap" class="btn btn-raised btn-xs">
+                    <button id="advanced-button" data-action="click->admin--pic-generator#toggleAdvanced" title="Show advanced" class="btn btn-raised btn-xs pmk-margin-top-0 pmk-padding-1-5 pmk-white-space-nowrap">
                         {% trans %}Show advanced{% endtrans %}
                     </button>
 
@@ -57,14 +57,14 @@
 
             </div>
             <div class="col-md-5 text-center">
-                <span id="pic-size" data-admin--pic-generator-target="size" class="label label-default" style="position: absolute;"></span>
+                <span id="pic-size" data-admin--pic-generator-target="size" class="label label-default pmk-position-absolute"></span>
                 <!-- PREVIEW -->
                 <img class="image" style="width: 100%; height: auto; aspect-ratio: {{ thumbnail_width }}/{{ thumbnail_height }}; object-fit: contain;" id="gen_pic_img" data-admin--pic-generator-target="image" src="{{ asset('bundles/pumukitnewadmin/images/admin/arrows/redarrow.png') }}">
             </div>
 
         </div>
 
-        <div class="row" id="advanced" data-admin--pic-generator-target="advanced" style="display: none;">
+        <div class="row pmk-display-none" id="advanced" data-admin--pic-generator-target="advanced">
             {% if mm.isMultistream() %}
 
             {% trans %}Show{% endtrans %}:
@@ -86,7 +86,7 @@
                 {#<option value="webp">webp (experimental)</option>#}
             </select>
 
-            <div id="quality_image" data-admin--pic-generator-target="qualityBox" style="display:inline-block">
+            <div class="pmk-display-inline-block" id="quality_image" data-admin--pic-generator-target="qualityBox">
                 {% trans %}Quality{% endtrans %}:
                 <select id="pic-quality" data-admin--pic-generator-target="quality">
                     <option>1.0</option>
@@ -99,7 +99,7 @@
         </div>
 
         <div class="row">
-            <div id="frames" data-admin--pic-generator-target="frames" style="overflow-y: scroll; height: 210px; margin-top: 15px;"></div>
+            <div class="pmk-overflow-y-scroll pmk-height-210 pmk-margin-top-15" id="frames" data-admin--pic-generator-target="frames"></div>
         </div>
 
     </div>
@@ -108,11 +108,11 @@
         <label for="url">{% trans %}URL{% endtrans %}</label>
         <input type="text" id="url-file-button" data-action="input->admin--pic-generator#addUrl" name="url" class="form-control"/>
     </div>
-    <div style="clear:both"></div>
+    <div class="pmk-clear-both"></div>
     <div class="modal-footer">
         <div class="row">
             <div class="col-xs-4">
-                <input type="file" id="file-upload-button" data-action="change->admin--pic-generator#upload" name="file" style="btn btn-default btn-raised" title="{% trans %}Upload a local file.{% endtrans %}" accept="image/*"/>
+                <input type="file" id="file-upload-button" data-action="change->admin--pic-generator#upload" name="file" title="{% trans %}Upload a local file.{% endtrans %}" accept="image/*"/>
             </div>
             <div class="col-xs-8">
                 <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
@@ -120,5 +120,5 @@
             </div>
         </div>
     </div>
-    <canvas id="canvas-draw-frames" data-admin--pic-generator-target="canvas" style="display:none;"></canvas>
+    <canvas class="pmk-display-none" id="canvas-draw-frames" data-admin--pic-generator-target="canvas"></canvas>
 </div>

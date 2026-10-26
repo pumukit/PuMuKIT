@@ -38,6 +38,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Map documents with PHP attributes instead of Doctrine annotations; `doctrine/annotations` and `doctrine/cache` are no longer installed.
 - Read request parameters from an explicit source (route attributes, query string or body) instead of `Request::get()`.
 - Upgrade MonologBundle to 4, API Platform to 5 and phpdocumentor/reflection-docblock to 6.
+- Replace the `style` attributes of the core templates with the classes of `bundles/pumukitcore/css/pumukit-utilities.css`, loaded by the portal layout; `pumukit:check:assets` reports an overridden portal layout that does not load it.
 - Serve bundle assets through Symfony AssetMapper; jQuery, Bootstrap 3.4.1, moment 2.30.1, jQuery UI and bootstrap-datetimepicker are shared from `bundles/pumukitcore/vendor/`.
 - Upgrade jQuery 1.10.2 → 3.7.1 (without jQuery Migrate), jQuery UI 1.11.3 → 1.14.2 and bootstrap-datetimepicker 4.14.30 → 4.17.49.
 - Move the inline JavaScript of CoreBundle, EncoderBundle, WizardBundle, WebTVBundle and BaseLivePlayerBundle templates to Stimulus controllers; `@PumukitCore/Upload/uppy_tus.js.twig` and `@PumukitBaseLivePlayer/Advance/Sessions/*.js.twig` are replaced by `uppy_tus.html.twig` and `sessions.html.twig`, `announces_ajax.js` by the `webtv--announces` controller and `template_video.js` by the `webtv--dynamic-pic` controller.

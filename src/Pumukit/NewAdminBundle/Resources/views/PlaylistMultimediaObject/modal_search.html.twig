@@ -1,11 +1,11 @@
 SEARCH:
 <input type="search" id="modal_search" data-admin--playlist-modal-target="search" data-action="keyup->admin--playlist-modal#searchKey"/>
 <button type="button" id="modal_search_button" data-action="click->admin--playlist-modal#search">SEARCH</button>
-<form class="modal_form" data-action="change->admin--playlist-modal#changed"
-      method="post" style="height:78%">
-  <div id="modal_search_loader" style="display:none" data-admin--playlist-modal-target="searchLoader">
+<form class="modal_form pmk-height-78pct" data-action="change->admin--playlist-modal#changed"
+      method="post">
+  <div class="pmk-display-none" id="modal_search_loader" data-admin--playlist-modal-target="searchLoader">
     {% include "@PumukitNewAdmin/Misc/loader_img.html.twig" %}
   </div>
-  <fieldset id="modal_search_list" style="height:100%" data-admin--playlist-modal-target="searchList">
+  <fieldset class="pmk-height-100pct" id="modal_search_list" data-admin--playlist-modal-target="searchList">
   </fieldset>
 </form>

@@ -112,7 +112,8 @@ class CheckAssetsCommandTest extends PumukitTestCase
         $display = $tester->getDisplay();
         $this->assertSame(Command::FAILURE, $tester->getStatusCode());
         $this->assertStringContainsString("Missing {{ importmap('pumukit') }} in the javascripts block of bundles/PumukitWebTVBundle/Layout/template.html.twig", $display);
-        $this->assertStringContainsString('Problems found: 1', $display);
+        $this->assertStringContainsString('Missing bundles/pumukitcore/css/pumukit-utilities.css stylesheet in bundles/PumukitWebTVBundle/Layout/template.html.twig', $display);
+        $this->assertStringContainsString('Problems found: 2', $display);
     }
 
     public function testReportsRemovedJavascriptGlobalsThatTheProjectDoesNotDefine(): void

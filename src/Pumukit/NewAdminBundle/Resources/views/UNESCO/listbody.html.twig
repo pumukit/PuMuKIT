@@ -41,15 +41,15 @@
                     <span class="shorten-title">{{ text|raw }}</span>
                 {% elseif field is same as('type') %}
                     {% if mm.isVideoType() %}
-                        <i class="fa fa-file-video" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                        <i class="fa fa-file-video pmk-font-size-20" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                     {% elseif mm.isAudioType() %}
-                        <i class="fa fa-file-audio" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                        <i class="fa fa-file-audio pmk-font-size-20" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                     {% elseif mm.isImageType() %}
-                        <i class="fa fa-file-image" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                        <i class="fa fa-file-image pmk-font-size-20" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                     {% elseif mm.isDocumentType() %}
-                        <i class="fa fa-file-alt" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                        <i class="fa fa-file-alt pmk-font-size-20" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                     {% elseif mm.isExternalType() %}
-                        <i class="fa fa-link" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                        <i class="fa fa-link pmk-font-size-20" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                     {% endif %}
                 {% elseif field is same as('embeddedBroadcast')%}
                     {% if mm.getEmbeddedBroadcast().getType() == 'public' %}
@@ -79,6 +79,6 @@
         {% endif %}
     {% endfor %}
     <td headers="th-play" class="text-nowrap" data-action="click->admin--actions#openModal" data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_modal_preview', {'id': mm.id}) }}">
-        <small><i class="fa fa-play" style="color: grey"></i></small>
+        <small><i class="fa fa-play pmk-color-grey"></i></small>
     </td>
 </tr>

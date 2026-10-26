@@ -2,7 +2,7 @@
 
 {% block inbox_body %}
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_INBOX')) %}
-        <p style="padding: 5px">
+        <p class="pmk-padding-5">
             <code>{{ dir }}</code> {% trans %}not exists{% endtrans %}.
         </p>
     {% else %}

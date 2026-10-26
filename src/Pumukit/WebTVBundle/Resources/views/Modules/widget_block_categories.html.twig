@@ -25,7 +25,7 @@
 
     <div class="col-md-4 col-sm-6">
         {% for key, channel in categories_col_2 %}
-            <div class="img_category" style="margin-bottom:8px;">
+            <div class="img_category pmk-margin-bottom-8">
                 <a href="{{path('pumukit_webtv_channel_series', {'channelNumber': channel } )}}">
                     <img alt="{{ key|trans }} icon" src="{{ asset('bundles/pumukitwebtv/images/categories/'~images[channel]~'.jpg') }}"/>
                     <div class="cover">
@@ -38,7 +38,7 @@
 
     <div class="col-md-4 col-sm-6">
         {% for key, channel in categories_col_3 %}
-            <div class="img_category" style="margin-bottom:8px;">
+            <div class="img_category pmk-margin-bottom-8">
                 <a href="{{path('pumukit_webtv_channel_series', {'channelNumber': channel } )}}">
                     <img alt="{{ key|trans }} icon" src="{{ asset('bundles/pumukitwebtv/images/categories/'~images[channel]~'.jpg') }}"/>
                     <div class="cover">

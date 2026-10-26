@@ -167,6 +167,14 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
 - **jQuery UI 1.14.** The highlighted autocomplete item uses `ui-state-active` instead of
   `ui-state-focus`; styles that targeted the focused item must include
   `.ui-menu .ui-menu-item-wrapper.ui-state-active`.
+- **Inline styles.** The core templates no longer use `style` attributes: each declaration is a
+  `pmk-<property>-<value>` class of `bundles/pumukitcore/css/pumukit-utilities.css` (for example
+  `style="margin-top: 10px"` → `class="pmk-margin-top-10"`), so that the pages can run under a Content
+  Security Policy without `unsafe-inline` for styles. The portal layout loads it after the `stylesheets`
+  block; an overridden `PumukitWebTVBundle/Layout/template.html.twig` must load it too. The classes
+  keep the precedence of the inline styles over the other stylesheets (`.pmk-…:not(#pmk)`), and the
+  styles that scripts set on `element.style` still win over them. `display: none` is the
+  `pmk-display-none` class, so `$(element).show()` keeps working.
 - Run `bin/console pumukit:check:assets` in the project before upgrading: it lists every
   `bundles/...` asset and every `@Pumukit.../....twig` template referenced by the templates in
   `templates/` (or `--path`) that no installed bundle provides, with its replacement when it was

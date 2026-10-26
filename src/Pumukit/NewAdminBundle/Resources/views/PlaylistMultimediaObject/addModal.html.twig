@@ -18,11 +18,11 @@
 
   <div class="form-control-wrapper">
 
-    <fieldset style="height: 150px; margin-bottom: 25px; overflow-y: scroll">
+    <fieldset class="pmk-height-150 pmk-margin-bottom-25 pmk-overflow-y-scroll">
       <legend hidden>{% trans %}Add to playlist{% endtrans %}</legend>
       <form id="add_playlist_form" data-admin--playlist-add-target="playlists" data-action="change->admin--playlist-add#selected">
         {% for oneseries in series %}
-          <div class="checkbox" style="padding-top: 10px">
+          <div class="checkbox pmk-padding-top-10">
             <label>
               <input type="checkbox"
                      class="add_playlist_form_checkbox"
@@ -32,7 +32,7 @@
             </label>
           </div>
           {% else %}
-          <p id="add_playlist_form_none" data-admin--playlist-add-target="none" class="text-muted" style="margin-left: 15px">{% trans %}There are no playlist, please create one.{% endtrans %}</p>
+          <p id="add_playlist_form_none" data-admin--playlist-add-target="none" class="text-muted pmk-margin-left-15">{% trans %}There are no playlist, please create one.{% endtrans %}</p>
         {% endfor %}
         <input type="hidden" id="add_playlist_form_ids" name="ids" value="{{ids}}" data-admin--playlist-add-target="ids"/>
         <input type="hidden" id="add_playlist_form_id" name="id" value="{{id}}" data-admin--playlist-add-target="id"/>
@@ -43,7 +43,7 @@
       <a href="#" data-action="click->admin--actions#toggle" data-admin--actions-selectors-param="{{ ['.new_playlist']|json_encode }}">{% trans %}Create new playlist{% endtrans %}</a>
     </div>
 
-    <div class="row new_playlist" style="display:none" id="new_playlist_panel">
+    <div class="row new_playlist pmk-display-none" id="new_playlist_panel">
       <div id="" class="col-md-7">
         <form id="new_playlist_form" data-admin--playlist-add-target="newForm" data-action="submit->admin--playlist-add#createPlaylist">
           <fieldset>
@@ -62,7 +62,7 @@
     </div>
 
     <div class="modal-footer">
-      <button disabled="disabled" id="new_playlist_btn" style="display:none" type="button" data-admin--playlist-add-target="create" data-action="click->admin--playlist-add#createPlaylist" class="new_playlist pull-left btn btn-default btn-primary">{% trans %}Create playlist{% endtrans %}</button>
+      <button class="pmk-display-none" disabled="disabled" id="new_playlist_btn" type="button" data-admin--playlist-add-target="create" data-action="click->admin--playlist-add#createPlaylist" class="new_playlist pull-left btn btn-default btn-primary">{% trans %}Create playlist{% endtrans %}</button>
       <button type="button" class="btn btn-default btn-raised" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
       <button disabled="disabled" id="add_playlist_btn" type="submit" class="btn btn-pumukit" data-admin--playlist-add-target="ok" data-action="click->admin--playlist-add#save">{% trans %}OK{% endtrans %}</button>
     </div>

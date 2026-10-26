@@ -96,12 +96,12 @@
             <tfoot>
             <tr>
                 <td colspan="12" class="foot-td">
-                    <div class="row" style="margin-left: 0; margin-right: 0">
+                    <div class="row pmk-margin-left-0 pmk-margin-right-0">
                         <div class="col-md-6">
                             {{ series.getNbResults }}
                             {{ "{0} series|{1} series|]1,Inf] series"|trans({'%count%':  series.getNbResults}) }}
                             {% if app.session.get('admin/series/criteria')|length != 0 or (app.session.has('admin/series/empty_series') or app.request.query.has('empty_series')) %}
-                                <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
+                                <a class="cancel-search-button pmk-color-blue pmk-font-weight-normal" title="{% trans %}Cancel current search{% endtrans %}" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
                             {% endif %}
                         </div>
                         <div class="col-md-6 text-right">
@@ -112,8 +112,7 @@
                                 {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects': series, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles } %}
 
                                 {% if not is_naked() %}
-                                    <input title="{% trans %}Go to page{% endtrans %}" type="number"
-                                           style="width: 25px;text-align:center;cursor:pointer;"
+                                    <input class="pmk-width-25 pmk-text-align-center pmk-cursor-pointer" title="{% trans %}Go to page{% endtrans %}" type="number"
                                            value="{{ series.getCurrentPage() }}"
                                            data-action="change->admin--actions#go" data-admin--actions-url-param="?page="/>
 

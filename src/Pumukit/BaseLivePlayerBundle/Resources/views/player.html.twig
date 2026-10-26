@@ -1,7 +1,7 @@
 {% if (event is defined and event.isIframeURL()) %}
     <div class="embed-responsive embed-responsive-16by9">
         <div id="live-{{ id }}" class="embed-responsive-item text-center">
-            <iframe src="{{ event.getUrl() }}" width="100%" class="embed-responsive-item" allowfullscreen style="overflow:hidden;height:100%;width:100%"></iframe>
+            <iframe src="{{ event.getUrl() }}" width="100%" class="embed-responsive-item pmk-overflow-hidden pmk-height-100pct pmk-width-100pct" allowfullscreen></iframe>
         </div>
     </div>
 {% elseif multimediaObject is defined %}

@@ -11,13 +11,13 @@
       <input type="text" class="form-control" id="show_player_url_iframe" readonly="" data-controller="core--select" data-action="click->core--select#select" value="{{ url('pumukit_live_iframe_id', {'id': live.id}) }}" aria-label="show_player_url_iframe" />
     </div>
     <div>
-      {% trans %}Source IP{% endtrans %}: <span style="font-style:italic"> {{ live.getIpSource() }}</span>
+      {% trans %}Source IP{% endtrans %}: <span class="pmk-font-style-italic"> {{ live.getIpSource() }}</span>
     </div>
     <div>
-      {% trans %}Show player at homepage{% endtrans %}: <span style="font-style:italic">{% if live.getIndexPlay() %}{% trans %}Activated{% endtrans %}{% else %}{% trans %}Deactivated{% endtrans %}{% endif %}</span>
+      {% trans %}Show player at homepage{% endtrans %}: <span class="pmk-font-style-italic">{% if live.getIndexPlay() %}{% trans %}Activated{% endtrans %}{% else %}{% trans %}Deactivated{% endtrans %}{% endif %}</span>
     </div>
     <div>
-      {% trans %}Status{% endtrans %}: <span style="font-style:italic">{% if not live.broadcasting %}{% trans %}On hold{% endtrans %}{% else %}{% trans %}Live broadcasting{% endtrans %}{% endif %}</span>
+      {% trans %}Status{% endtrans %}: <span class="pmk-font-style-italic">{% if not live.broadcasting %}{% trans %}On hold{% endtrans %}{% else %}{% trans %}Live broadcasting{% endtrans %}{% endif %}</span>
     </div>
   </div>
   <br />

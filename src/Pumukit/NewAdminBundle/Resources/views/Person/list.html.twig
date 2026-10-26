@@ -36,11 +36,11 @@
                     </td>
                     <td headers="th-icons">
                         {% if app.user and not is_granted('ROLE_SCOPE_GLOBAL') %}
-                            <i title="{% trans %}You don't have enough permissions to access this content.{% endtrans %}" class="mdi-content-block" style="color:#009587"></i>
+                            <i title="{% trans %}You don't have enough permissions to access this content.{% endtrans %}" class="mdi-content-block pmk-color-009587"></i>
                         {% elseif person.getUser() %}
-                            <i title="{% trans %}Can't delete Person{% endtrans %} '{{ person.name }}'. {% trans %}There is a referenced User{% endtrans %}." class="mdi-content-block" style="color:#009587"></i>
+                            <i title="{% trans %}Can't delete Person{% endtrans %} '{{ person.name }}'. {% trans %}There is a referenced User{% endtrans %}." class="mdi-content-block pmk-color-009587"></i>
                         {% elseif countMmPeople[person.id] != 0 %}
-                            <i title="{% trans %}Cannot delete the data of{% endtrans %} '{{ person.name }}'. '{{ countMmPeople[person.id] }}' {% trans %}multimedia object(s) contain(s) this person{% endtrans %}." class="mdi-content-block" style="color:#009587"></i>
+                            <i title="{% trans %}Cannot delete the data of{% endtrans %} '{{ person.name }}'. '{{ countMmPeople[person.id] }}' {% trans %}multimedia object(s) contain(s) this person{% endtrans %}." class="mdi-content-block pmk-color-009587"></i>
                         {% else %}
                             <a href="#" title="Delete Person '{{ person.name }}'" data-action="click->admin--actions#remove"
                                data-admin--actions-url-param="{{ path('pumukitnewadmin_person_delete', {'id': person.id}) }}"
@@ -53,7 +53,7 @@
                         {% endif %}
                     </td>
                     <td headers="th-name" data-action="click->admin--actions#preview" data-admin--actions-name-param="person" data-admin--actions-url-param="{{ urlShowPerson }}">
-                        <span style="color:gray">{{ person.getHonorific() }}</span> {{ person.getName() }}
+                        <span class="pmk-color-gray">{{ person.getHonorific() }}</span> {{ person.getName() }}
                     </td>
                     <td headers="th-post" data-action="click->admin--actions#preview" data-admin--actions-name-param="person" data-admin--actions-url-param="{{ urlShowPerson }}">
                         {{ person.getPost() }}
@@ -78,7 +78,7 @@
                             {{ people.getNbResults }}
                             {{ "{0} people|{1} person|]1,Inf] people"|trans({'%count%':  people.getNbResults}) }}
                             {% if app.session.get('admin/person/criteria')|length != 0 %}
-                                <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
+                                <a class="cancel-search-button pmk-color-blue pmk-font-weight-normal" title="{% trans %}Cancel current search{% endtrans %}" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
                             {% endif %}
                         </div>
                         <div class="col-md-4 text-right">

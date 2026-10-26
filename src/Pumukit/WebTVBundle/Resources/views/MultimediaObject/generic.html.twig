@@ -10,7 +10,7 @@
 
 {% set url_iframe = path(iframe_route, iframe_parameters)|raw %}
 
-<iframe src="{{ url_iframe }}"
+<iframe class="pmk-border-0" src="{{ url_iframe }}"
         id="paellaiframe"
         width="100%"
         data-controller="webtv--player-frame"
@@ -19,6 +19,5 @@
         height="500px"
         title="player"
         allowfullscreen
-        style="border:0"
 >
 </iframe>

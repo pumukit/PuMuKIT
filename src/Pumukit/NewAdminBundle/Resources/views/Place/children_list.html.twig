@@ -1,7 +1,7 @@
 {% if children is defined %}
 
     {% for tag in children %}
-        <tr style="font-size:12px">
+        <tr class="pmk-font-size-12">
             <td headers="th-checkbox">
                 <div class="checkbox">
                     <label>
@@ -37,7 +37,7 @@
             </td>
         </tr>
     {% else %}
-        <tr class="text-center" style="font-size:12px">
+        <tr class="text-center pmk-font-size-12">
             <td colspan="8">{% trans %}No data{% endtrans %}</td>
         </tr>
     {% endfor %}
@@ -59,7 +59,7 @@
     </tr>
 
 {% else %}
-    <tr class="text-center" style="font-size:12px">
+    <tr class="text-center pmk-font-size-12">
         <td colspan="8">{% trans %}Select one place to load data{% endtrans %}</td>
     </tr>
 {% endif %}

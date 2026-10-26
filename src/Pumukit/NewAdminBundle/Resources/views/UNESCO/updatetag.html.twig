@@ -22,7 +22,7 @@
             </div>
         </div>
     {% endif %}
-    <div style="max-height:800px;overflow-y:auto;padding: 7px;">
+    <div class="pmk-max-height-800 pmk-overflow-y-auto pmk-padding-7">
         {% for parent in parent_tags | filter(parent => parent.getDisplay() and parent.getChildren()|length != 0 and not parent.getProperty('hide_in_tag_group')) %}
             <div class="panel panel-default panel-tag-{{ parent.cod }}">
                 <div class="panel-heading">{{ parent.title }}</div>
@@ -31,26 +31,26 @@
                             {% include '@PumukitNewAdmin/MultimediaObject/tagfilter.html.twig' with {'parentId': parent.id, 'mmId': mm.id} %}
                         </div></div>
 
-                    <div class="col-xs-12" style="overflow:hidden;height: 270px">
+                    <div class="col-xs-12 pmk-overflow-hidden pmk-height-270">
                         {# Available tags #}
-                        <div style="width:40%; max-width:400px; float: left; height: 260px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree" id="all_tag_{{ parent.id }}">
+                        <div class="tag list-group pmk-tag-tree pmk-width-40pct pmk-max-width-400 pmk-float-left pmk-height-260 pmk-border-1-solid-bbb pmk-overflow-x-hidden pmk-overflow-y-scroll" id="all_tag_{{ parent.id }}">
                             {% if (0 != parent.getChildren()|length) %}
                                 {% include '@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig' with {'mmId': mm.id, 'parent': 'root', 'block_tag': parent.id, 'nodes': parent.getChildren()} %}
                             {% endif %}
                         </div>
 
-                        <div style="display:none; width:400px; float: left; height: 260px; border: 1px solid #bbb; overflow-x: hidden; overflow-y: scroll" class="tag list-group pmk-tag-tree filter" id="all_tag_{{ parent.id }}_filter">
+                        <div class="tag list-group pmk-tag-tree filter pmk-display-none pmk-width-400 pmk-float-left pmk-height-260 pmk-border-1-solid-bbb pmk-overflow-x-hidden pmk-overflow-y-scroll" id="all_tag_{{ parent.id }}_filter">
                             {# Here is where the filtered tags go when dynamically load using JS #}
                         </div>
 
 
-                        <div style="float: left; padding: 150px 5px 0px">
+                        <div class="pmk-float-left pmk-padding-150-5-0">
                             <a href="#" data-action="click->admin--tag-picker#removeActive" data-admin--tag-picker-cod-param="{{ parent.cod|json_encode }}">&#8592;</a>
                             <a href="#" data-action="click->admin--tag-picker#addActive" data-admin--tag-picker-block-param="{{ parent.id|json_encode }}">&#8594;</a>
                         </div>
 
                         {# Added tags#}
-                        <div style="width:40%; max-width:400px; height:260px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="select_tag_{{ parent.id }}">
+                        <div class="tag pmk-width-40pct pmk-max-width-400 pmk-height-260 pmk-border-1-solid-bbb pmk-float-left pmk-overflow-x-hidden pmk-overflow-y-scroll" id="select_tag_{{ parent.id }}">
                             <div class="tag_tree list-group" id="select_ul_tag_cod_{{ parent.cod }}" >
                                 {% for embedded_tag in mm.getTags() | filter(embedded_tag => embedded_tag.isDescendantOf(parent)) %}
                                     <a href="#" class="list-group-item tag-rm-{{ embedded_tag.cod }}"
@@ -70,6 +70,6 @@
             </div>
         {% endfor %}
     </div>
-    <div style="height:41px"></div>
+    <div class="pmk-height-41"></div>
 </div>
 

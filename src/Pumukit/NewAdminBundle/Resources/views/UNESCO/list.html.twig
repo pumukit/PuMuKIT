@@ -1,4 +1,4 @@
-<div class="table-responsive well" style="overflow:visible;" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
+<div class="table-responsive well pmk-overflow-visible" {% include '@PumukitNewAdmin/UNESCO/_controller.html.twig' %}>
     <div class="collapse" id="collapseCustomFields">
         {{ render(controller('Pumukit\\NewAdminBundle\\Controller\\UNESCOController::customFieldsAction')) }}
     </div>
@@ -48,8 +48,7 @@
                             {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukitnewadmin_unesco_index"} %}
                             {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : mms, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
                             {% if not is_naked() %}
-                            <input title="{% trans %}Go to page{% endtrans %}" type="number"
-                                   style="width: 25px;text-align:center;cursor:pointer;"
+                            <input class="pmk-width-25 pmk-text-align-center pmk-cursor-pointer" title="{% trans %}Go to page{% endtrans %}" type="number"
                                    value="{{ mms.getCurrentPage() }}"
                                    data-action="change->admin--actions#go" data-admin--actions-url-param="?page=" />
 

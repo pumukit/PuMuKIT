@@ -1,7 +1,7 @@
 {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
 
 {% if error is defined %}
-    <div class="alert alert-danger" style="line-height: 0.5em;">{{ error['message'] }}</div>
+    <div class="alert alert-danger pmk-line-height-0_5em">{{ error['message'] }}</div>
 {% endif %}
 
 <form id="pumukitnewadmin_user_form_update_profile" action="{{ path('pumukitnewadmin_profile_user_index') }}" method="POST">

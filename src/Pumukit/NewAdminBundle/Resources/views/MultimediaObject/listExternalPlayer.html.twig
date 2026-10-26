@@ -22,12 +22,12 @@
                 {% endif %}
             </div>
             <div class="col-xs-12 col-sm-3 col-md-3"><a href="#" id="previewIframe" class="btn btn-block btn-primary" data-action="click->admin--external-player#preview" title="{% trans %}Preview{% endtrans %}">{% trans %}Preview{% endtrans %}</a></div>
-            <div class="col-xs-12" style="margin-top:15px">
+            <div class="col-xs-12 pmk-margin-top-15">
                 {{ form_row(form.title) }}
             </div>
         </div>
     {% endif %}
-    <div class="modal-footer" style="margin-top:50px">
+    <div class="modal-footer pmk-margin-top-50">
         <hr/>
         {% if is_granted('ROLE_ADD_EXTERNAL_PLAYER') %}
         <div class="col-md-2 pull-right">

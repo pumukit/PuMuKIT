@@ -3,20 +3,20 @@
 <div class="row">
     <div class="col-xs-12 col-sm-8 col-md-8">
 
-        <a class="btn btn-default" role="button" data-toggle="collapse" href="#collapseEmail" aria-expanded="false" aria-controls="collapseEmail" style="margin-bottom:20px;">
+        <a class="btn btn-default pmk-margin-bottom-20" role="button" data-toggle="collapse" href="#collapseEmail" aria-expanded="false" aria-controls="collapseEmail">
             {% trans %}Questions{% endtrans %}
         </a>
 
-        <div class="collapse" id="collapseEmail" style="padding:20px;" data-controller="webtv--contact">
+        <div class="collapse pmk-padding-20" id="collapseEmail" data-controller="webtv--contact">
 
-            <div id="captcha_message" style="visible:none;padding:10px;" data-webtv--contact-target="message"></div>
+            <div class="pmk-visible-none pmk-padding-10" id="captcha_message" data-webtv--contact-target="message"></div>
 
             {{ form_start(contact, {'attr': {'id': 'contact_us', 'data-webtv--contact-target': 'form', 'data-action': 'webtv--contact#submit'},'action': path('pumukit_webtv_contact_event', {'id': multimediaObject.getId()}), 'method': 'POST'}) }}
                 {{ form_row(contact.name) }}
                 {{ form_row(contact.email) }}
                 {{ form_row(contact.content) }}
                 <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}"></div>
-                <button type="submit" class="btn btn-primary" style="margin-top:10px;">
+                <button type="submit" class="btn btn-primary pmk-margin-top-10">
                     {% trans %}Send{% endtrans %}
                 </button>
             {{ form_end(contact) }}

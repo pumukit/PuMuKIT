@@ -1,13 +1,13 @@
 INSERT URL:
 <div class="mmobj_elem">
-  <input type="text" id="modal_url" style="width:100%" data-admin--playlist-modal-target="url" data-action="input->admin--playlist-modal#findUrl"/>
+  <input class="pmk-width-100pct" type="text" id="modal_url" data-admin--playlist-modal-target="url" data-action="input->admin--playlist-modal#findUrl"/>
 </div>
 <form class="modal_form" data-action="change->admin--playlist-modal#changed">
 <hr>
-  <div id="modal_url_loader" style="display:none" data-admin--playlist-modal-target="urlLoader">
+  <div class="pmk-display-none" id="modal_url_loader" data-admin--playlist-modal-target="urlLoader">
     {% include "@PumukitNewAdmin/Misc/loader_img.html.twig" %}
   </div>
-  <div id="modal_url_wrong_url" style="display:none" data-admin--playlist-modal-target="wrongUrl">
+  <div class="pmk-display-none" id="modal_url_wrong_url" data-admin--playlist-modal-target="wrongUrl">
     <b>{% trans %} The url does not have a valid format. {% endtrans %}</b>
     <div>{% trans %} Please, enter an url with the following format: <b>https://example.domain.org/video/XXXXXXXX</b> {% endtrans %}</div>
     <p>{% trans %} or enter the ID of the Multimedia Object. {% endtrans %}</p>

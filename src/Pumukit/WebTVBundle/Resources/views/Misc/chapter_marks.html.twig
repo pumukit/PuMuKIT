@@ -1,9 +1,9 @@
 {% if editor_chapters is defined and editor_chapters %}
     <strong>{% trans %}Marks:{% endtrans %}</strong>
-    <ol style="list-style-type:decimal;padding-left:40px;" data-controller="webtv--chapters">
+    <ol class="pmk-list-style-type-decimal pmk-padding-left-40" data-controller="webtv--chapters">
         {% for chapter in editor_chapters %}
             <li>{{ chapter.title }} :
-                <a class="chapter-mark" style="cursor:pointer;color:blue"
+                <a class="chapter-mark pmk-cursor-pointer pmk-color-blue"
                    data-action="webtv--chapters#seek"
                    data-webtv--chapters-time-param="{{ chapter.real_time }}">
                     {{ date("00:00:00 + " ~ (chapter.time_to_show|round) ~ " seconds") | format_datetime('none', 'medium',locale=app.request.getLocale(), pattern="HH:mm:ss") }}

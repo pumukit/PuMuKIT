@@ -235,6 +235,7 @@ class CheckAssetsCommand extends Command
     private const REFERENCE_PATTERN = '#(?<![\w./-])/?(bundles/([a-z0-9_]+)/[^\'"\s?\#{}()]*)#';
     private const TEMPLATE_PATTERN = '#[\'"](@Pumukit[A-Za-z]+/[^\'"]+\.twig)[\'"]#';
     private const PORTAL_LAYOUT = 'PumukitWebTVBundle/Layout/template.html.twig';
+    private const UTILITIES_STYLESHEET = 'bundles/pumukitcore/css/pumukit-utilities.css';
     private const OPTIONAL_TEMPLATE_PATTERN = '#\{%-?\s*(extends|include|embed)\s*\[|ignore missing#';
 
     private KernelInterface $kernel;
@@ -262,7 +263,7 @@ The <info>pumukit:check:assets</info> command looks for references to bundle pub
 in the Twig templates of a directory and reports the ones that no installed bundle provides.
 When the asset or template was moved, it shows the one that replaces it. It also reports an
 overridden portal layout (<comment>PumukitWebTVBundle/Layout/template.html.twig</comment>) that does not
-load <comment>importmap('pumukit')</comment>.
+load <comment>importmap('pumukit')</comment> or <comment>bundles/pumukitcore/css/pumukit-utilities.css</comment>.
 
 Run it on the overridden templates of a project before upgrading PuMuKIT. It exits with an
 error code when a missing asset is found.
@@ -345,6 +346,11 @@ EOT
             if (str_ends_with($relativePathname, self::PORTAL_LAYOUT) && !str_contains(implode('', $lines), 'importmap(')) {
                 ++$missing;
                 $output->writeln('Missing <info>{{ importmap(\'pumukit\') }}</info> in the javascripts block of '.$relativePathname);
+            }
+
+            if (str_ends_with($relativePathname, self::PORTAL_LAYOUT) && !str_contains(implode('', $lines), self::UTILITIES_STYLESHEET)) {
+                ++$missing;
+                $output->writeln('Missing <info>'.self::UTILITIES_STYLESHEET.'</info> stylesheet in '.$relativePathname.', the core templates use its classes instead of inline styles');
             }
         }
 

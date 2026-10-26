@@ -71,10 +71,10 @@
                         {{ series|count_multimedia_objects }} {% trans %} videos{% endtrans %}
                     </a>
                 </td>
-                <td headers="th-image" style="cursor: pointer" width="3%" data-action="click->admin--actions#edit" data-admin--actions-name-param="events" data-admin--actions-show-param="{{ showPath }}" data-admin--actions-update-param="{{ loadPath }}" id="event_{{ multimediaObject.getId() }}">
+                <td class="pmk-cursor-pointer" headers="th-image" width="3%" data-action="click->admin--actions#edit" data-admin--actions-name-param="events" data-admin--actions-show-param="{{ showPath }}" data-admin--actions-update-param="{{ loadPath }}" id="event_{{ multimediaObject.getId() }}">
                     {% include "@PumukitNewAdmin/Misc/img_list.html.twig" with {'object' : multimediaObject, 'type' : 'event'} %}
                 </td>
-                <td headers="th-title" style="cursor: pointer" data-action="click->admin--actions#edit" data-admin--actions-name-param="events" data-admin--actions-show-param="{{ showPath }}" data-admin--actions-update-param="{{ loadPath }}">
+                <td class="pmk-cursor-pointer" headers="th-title" data-action="click->admin--actions#edit" data-admin--actions-name-param="events" data-admin--actions-show-param="{{ showPath }}" data-admin--actions-update-param="{{ loadPath }}">
                     {{ multimediaObject.getEmbeddedEvent().getName(app.request.getLocale()) }}
                 </td>
                 <td headers="th-number-sessions" width="8%">
@@ -109,7 +109,7 @@
                         <div class="col-md-8">
                             {{ multimediaObjects|length }} {% trans %}Live events{% endtrans %}
                             {% if app.session.get('admin/live/event/criteria')|length > 1%}
-                                <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="#" data-action="click->admin--live-event#resetFilters">{% trans %}Cancel search{% endtrans %}</a>
+                                <a class="cancel-search-button pmk-color-blue pmk-font-weight-normal" title="{% trans %}Cancel current search{% endtrans %}" href="#" data-action="click->admin--live-event#resetFilters">{% trans %}Cancel search{% endtrans %}</a>
                            {% endif %}
                        </div>
                        <div class="col-md-4 text-right">
@@ -117,8 +117,7 @@
                                 {% set pagerClass = 'twitter_bootstrap3' %}
                                 {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeName": "pumukit_new_admin_live_event_index"} %}
                                 {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : multimediaObjects, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
-                                <input title="{% trans %}Go to page{% endtrans %}" type="number"
-                                       style="width: 25px;text-align:center;cursor:pointer;"
+                                <input class="pmk-width-25 pmk-text-align-center pmk-cursor-pointer" title="{% trans %}Go to page{% endtrans %}" type="number"
                                        value="{{ multimediaObjects.getCurrentPage() }}"
                                        data-action="change->admin--actions#go" data-admin--actions-url-param="?page=" />
                             </div>

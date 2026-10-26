@@ -1,6 +1,7 @@
 {% if object.isImageType() %}
+    <link href="{{ asset('bundles/pumukitcore/css/pumukit-utilities.css') }}" type="text/css" rel="stylesheet"/>
     <a href="{{ track_url(media) }}" target="__blank">
-        <img src="{{ track_url(media) }}" alt="{{ object.getTitle() }}" style="width:100%; height:100%; object-fit:contain;"/>
+        <img class="pmk-width-100pct pmk-height-100pct pmk-object-fit-contain" src="{{ track_url(media) }}" alt="{{ object.getTitle() }}"/>
     </a>
 {% elseif object.isExternalType() %}
     <embed id="externalplayer" height="100%" width="100%" src="{{ media.storage().url().url() }}"></embed>

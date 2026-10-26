@@ -1,8 +1,7 @@
 <div class="input-group col-xs-5">
   <div class="form-control-wrapper">
     <input type="search"
-           style="font-size: 80%; height: 18px"
-           class="tag_filter form-control empty"
+           class="tag_filter form-control empty pmk-font-size-80pct pmk-height-18"
            placeholder="{% trans %}Insert filter...{% endtrans %}"
            id="filter_tags_{{ parentId }}"
            data-action="input->admin--tag-picker#filter"
@@ -10,8 +9,7 @@
     <span class="material-input"></span>
   </div>
   <span class="input-group-addon">
-    <input class="btn btn-default btn-raised btn-xs"
-           style="padding: 1px 5px; margin: 5px 1px"
+    <input class="btn btn-default btn-raised btn-xs pmk-padding-1-5 pmk-margin-5-1"
            type="button"
            value="reset search"
            size="20"
@@ -19,8 +17,7 @@
            data-action="click->admin--tag-picker#reset"
            data-admin--tag-picker-block-param="{{ parentId|json_encode }}" />
   </span>
-  <img id="tag_filter_{{parentId}}_loader"
+  <img class="pmk-width-30 pmk-opacity-0" id="tag_filter_{{parentId}}_loader"
        alt="{% trans %}Spinner{% endtrans %}"
-       src="{{ asset('bundles/pumukitnewadmin/images/admin/load/spinner.gif')}}"
-       style="width:30px; opacity:0"/>
+       src="{{ asset('bundles/pumukitnewadmin/images/admin/load/spinner.gif')}}"/>
 </div>

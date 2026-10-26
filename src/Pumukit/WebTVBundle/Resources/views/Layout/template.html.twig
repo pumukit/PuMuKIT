@@ -24,6 +24,7 @@
             <link href="{{ asset(app.request.attributes.get('microsite_custom_css')) }}" type="text/css" rel="stylesheet" media="screen"/>
         {% endif %}
     {% endblock %}
+    <link href="{{ asset('bundles/pumukitcore/css/pumukit-utilities.css') }}" type="text/css" rel="stylesheet"/>
 
     {% block javascripts %}
         <script src="{{ asset('bundles/pumukitcore/vendor/jquery/jquery.min.js') }}"></script>

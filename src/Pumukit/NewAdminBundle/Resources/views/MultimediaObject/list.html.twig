@@ -20,11 +20,11 @@
                             {% include '@PumukitNewAdmin/MultimediaObject/status.html.twig' with {'mm': mm} %}
                         </span>
                     </td>
-                    <td headers="th-icons" style="width: 1em;">
+                    <td class="pmk-width-1em" headers="th-icons">
                         {% include '@PumukitNewAdmin/MultimediaObject/updatemenu.html.twig' with {'mm': mm} %}
                     </td>
                     {% if not is_naked() %}
-                        <td headers="th-icons" style="width: 1em;">
+                        <td class="pmk-width-1em" headers="th-icons">
                             {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
                         </td>
                     {% endif %}
@@ -38,15 +38,15 @@
                     </td>
                     <td headers="th-type" class="text-center" data-action="click->admin--actions#edit" data-admin--actions-name-param="mm" data-admin--actions-show-param="{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}">
                         {% if mm.isVideoType() %}
-                            <i class="fa fa-file-video" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                            <i class="fa fa-file-video pmk-font-size-20" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                         {% elseif mm.isAudioType() %}
-                            <i class="fa fa-file-audio" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                            <i class="fa fa-file-audio pmk-font-size-20" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                         {% elseif mm.isImageType() %}
-                            <i class="fa fa-file-image" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                            <i class="fa fa-file-image pmk-font-size-20" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                         {% elseif mm.isDocumentType() %}
-                            <i class="fa fa-file-alt" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                            <i class="fa fa-file-alt pmk-font-size-20" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                         {% elseif mm.isExternalType() %}
-                            <i class="fa fa-link" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                            <i class="fa fa-link pmk-font-size-20" data-toggle="tooltip" data-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                         {% endif %}
                     </td>
                     <td headers="th-media" class="text-center" data-action="click->admin--actions#edit" data-admin--actions-name-param="mm" data-admin--actions-show-param="{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}">
@@ -86,7 +86,7 @@
                         <span>{{ mm.getNumview() }}</span>
                     </td>
                     <td headers="th-play" class="text-nowrap" data-action="click->admin--actions#openModal" data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_modal_preview', {'id': mm.id}) }}">
-                        <small><i class="fa fa-play" style="color: grey"></i></small>
+                        <small><i class="fa fa-play pmk-color-grey"></i></small>
                     </td>
                 </tr>
                 {% set last = mm %}
@@ -139,11 +139,11 @@
             <tfoot>
             <tr>
                 <td colspan="17" class="foot-td">
-                    <div class="row" style="margin-left: 0; margin-right: 0">
+                    <div class="row pmk-margin-left-0 pmk-margin-right-0">
                         <div class="col-md-6">
                             {{ mms.getNbResults }} {% trans %}Mm. Obj.{% endtrans %}
                             {% if app.session.get('admin/mms/criteria')|length != 0 %}
-                                <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
+                                <a class="cancel-search-button pmk-color-blue pmk-font-weight-normal" title="{% trans %}Cancel current search{% endtrans %}" href="?criteria[reset]=true">{% trans %}Cancel search{% endtrans %}</a>
                             {% endif %}
                         </div>
                         <div class="col-md-6 text-right">
@@ -152,8 +152,7 @@
                                 {% set pagerStyles = {"css_container_class": "pagination pagination-sm", "next_message": "&raquo;", "prev_message": "&laquo;", "routeParams": {"id": series.id}, "routeName": "pumukitnewadmin_mms_index"} %}
                                 {% include "@PumukitNewAdmin/Misc/pager.html.twig" with {'objects' : mms, 'pagerClass': pagerClass, 'pagerStyles': pagerStyles} %}
                                 {% if not is_naked() %}
-                                    <input title="{% trans %}Go to page{% endtrans %}" type="number"
-                                           style="width: 25px;text-align:center;cursor:pointer;"
+                                    <input class="pmk-width-25 pmk-text-align-center pmk-cursor-pointer" title="{% trans %}Go to page{% endtrans %}" type="number"
                                            value="{{ mms.getCurrentPage() }}"
                                            data-action="change->admin--actions#go" data-admin--actions-url-param="?id={{ series.id }}&page="/>
 

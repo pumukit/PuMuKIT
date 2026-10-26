@@ -41,7 +41,7 @@
                                 <div class="text-center">
                                 {% for letter in "A".."Z" %}
                                     <a href="#" id="pmk-person-letter-{{ letter }}" class="pmk-person-letter {% if criteria['letter']|default("") == letter %}text-pumukit{% endif %}" data-action="click->admin--filter-form#letter" data-admin--filter-form-letter-param="{{ letter }}">
-                                        <span style="padding:1px">{{ letter }}</span>
+                                        <span class="pmk-padding-1">{{ letter }}</span>
                                     </a>
                                     {% if loop.index % 13 == 0 %}
                                         <br />

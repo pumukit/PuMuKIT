@@ -5,12 +5,12 @@
 <b>{{ (mmobjs.getNbResults <= 50)? mmobjs.getNbResults : 50 }} {% trans %}Mm. Obj.{% endtrans %}:</b>
 <br>
 <br>
-<div class="row" style="height:100%;overflow:auto">
+<div class="row pmk-height-100pct pmk-overflow-auto">
   <br>
   {% for mmobj in mmobjs %}
     <div class="col-md-12 mmobj">
-      <input type="checkbox" name="{{mmobj.id}}" id="modal-{{mmobj.id}}" style="display:none" value="{{mmobj.id}}"/>
-      <label style="width:100%" for="modal-{{mmobj.id}}">
+      <input class="pmk-display-none" type="checkbox" name="{{mmobj.id}}" id="modal-{{mmobj.id}}" value="{{mmobj.id}}"/>
+      <label class="pmk-width-100pct" for="modal-{{mmobj.id}}">
         <div class="mmobj_elem">
           {% include "@PumukitNewAdmin/PlaylistMultimediaObject/modal_mmobj.html.twig" %}
         </div>

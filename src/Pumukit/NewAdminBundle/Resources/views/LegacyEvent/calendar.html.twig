@@ -1,4 +1,4 @@
-<div class="table-responsive" style="overflow:visible;">
+<div class="table-responsive pmk-overflow-visible">
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -23,16 +23,16 @@
         {% set d = '' %}
       {% endif %}
       <td headers="{{ dkey }}" style="cursor: auto; {{ ((d == 'now'|date('d')) and (m == 'now'|date('m')) and (y == 'now'|date('Y')))?"border:3px solid #000":"" }}" class="table-hover">
-        <div style="overflow-y: auto; position: relative; height: 70px;">
+        <div class="pmk-overflow-y-auto pmk-position-relative pmk-height-70">
           {% if d is not empty %}
-            <span style="position:absolute; top:0px; right:0px">{{ d }}</span>
+            <span class="pmk-position-absolute pmk-top-0 pmk-right-0">{{ d }}</span>
             {% set calendar_events = [] %}
             {% for event in calendar_all_events %}
               {% if ((y == event.date|date('Y')) and (m == event.date|date('m')) and (d == event.date|date('d'))) %}
                 {% set calendar_events = calendar_events|merge([event]) %}
               {% endif %}
             {% endfor %}
-            <ul style="padding-left: 6px; list-style-type: none; ">
+            <ul class="pmk-padding-left-6 pmk-list-style-type-none">
               {% for day_event in calendar_events %}
                 {% set total_event = total_event + 1 %}
                 <li>
@@ -72,7 +72,7 @@
           {{ events.getNbResults }}
             {{ "{0} live events|{1} live event|]1,Inf] live events"|trans({'%count%':  events.getNbResults}) }}
           {% if app.session.get('admin/event/criteria')|length != 0%}
-          <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+          <a class="cancel-search-button pmk-color-blue pmk-font-weight-normal" title="{% trans %}Cancel current search{% endtrans %}" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
           {% endif %}
         </div>
         <div class="col-md-4 text-right">

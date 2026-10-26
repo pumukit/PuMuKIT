@@ -2,10 +2,10 @@
 
 {% block body %}
     <h3 class="cab_body_div">
-        <a title="{% trans %}Back to series list{% endtrans %}" href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-pumukit btn-raised pull-right" style="margin:0px">
+        <a title="{% trans %}Back to series list{% endtrans %}" href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-pumukit btn-raised pull-right pmk-margin-0">
             « {% trans %}Back to series list{% endtrans %}
         </a>
-        <ul class="breadcrumb" style="margin-bottom: 5px;">
+        <ul class="breadcrumb pmk-margin-bottom-5">
             <li>
                 <a href="{{ path('pumukitnewadmin_series_index') }}">
                     {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}
@@ -76,7 +76,7 @@
                                         {% trans %}Paste multimedia objects{% endtrans %} ({% for id in app.session.get('admin/mms/cut') %}{{ id }}{% if not loop.last %},&nbsp;{% endif %}{% endfor %})
                                     </option>
                                 {% else %}
-                                    <option value="paste_mm" id="paste_mm" style="display:none"></option>
+                                    <option class="pmk-display-none" value="paste_mm" id="paste_mm"></option>
                                 {% endif %}
                                 {% if app.user and is_playlist_enabled() and is_granted('ROLE_ACCESS_EDIT_PLAYLIST') %}
                                     <option value="add_playlist">{% trans %}Add to playlist{% endtrans %}</option>

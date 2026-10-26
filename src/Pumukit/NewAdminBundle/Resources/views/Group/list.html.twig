@@ -40,7 +40,7 @@
             <i class="mdi-editor-mode-edit"></i>
           </a>
           {% else %}
-          <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-editor-mode-edit" style="color:grey!important;"></i>
+          <i data-toggle="tooltip" data-placement="right" title="{% trans %}External defined groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-editor-mode-edit pmk-color-grey-i"></i>
           {% endif %}
         </td>
         <td headers="th-icons">
@@ -76,7 +76,7 @@
               {{ groups.getNbResults }}
                 {{ "{0} groups|{1} group|]1,Inf] groups"|trans({'%count%': groups.getNbResults}) }}
 	          {% if app.session.get('admin/group/criteria')|length != 0%}
-              <a class="cancel-search-button" title="{% trans %}Cancel current search{% endtrans %}" style="color:blue; font-weight:normal;" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
+              <a class="cancel-search-button pmk-color-blue pmk-font-weight-normal" title="{% trans %}Cancel current search{% endtrans %}" href="?criteria[reset]=true" >{% trans %}Cancel search{% endtrans %}</a>
 	          {% endif %}
             </div>
             <div class="col-md-4 text-right">
