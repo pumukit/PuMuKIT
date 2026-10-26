@@ -1,3 +1,7 @@
+:root {
+    --fa-width: auto;
+}
+
 html {
     font-size: 14px;
 }

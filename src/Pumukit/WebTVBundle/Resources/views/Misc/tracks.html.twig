@@ -1,7 +1,7 @@
 {% if object.getProperty('opencast') is not empty or object.isMultistream() %}
     <li class="list-group-item">
         <a href="{{ videoUrl }}" title="{{ "Url track"|trans }}">
-            <i class="fas fa-video"></i>
+            <i class="fa-solid fa-video"></i>
             {% apply pumukit_spaceless %}
                 {{ object.isPublicEmbeddedBroadcast() ? 'Video'|trans : 'Private video'|trans }}
             {% endapply %}
@@ -27,9 +27,9 @@
         <li class="list-group-item list-group-item-custom">
             <a href="{{ url_track }}" title="{{ "Url track"|trans }}">
                 {% if object.isOnlyAudio() %}
-                    <i class="fa fa-headphones"></i>
+                    <i class="fa-solid fa-headphones"></i>
                 {% else %}
-                    <i class="fa fa-video-camera"></i>
+                    <i class="fa-solid fa-video"></i>
                 {% endif %}
 
                 {% apply pumukit_spaceless %}

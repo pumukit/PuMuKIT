@@ -244,12 +244,33 @@ its ripples and SnackbarJS are removed (`bundles/pumukitcore/vendor/bootstrap/`,
     bridge, call `.modal('show')`.
   - Carousel: `item` → `carousel-item`, indicators are `button`s with `data-bs-slide-to` starting at 0, the controls
     are `carousel-control-prev/next`.
-  - Glyphicons → Font Awesome (`fa fa-*` in the portal).
+  - Glyphicons → Font Awesome 7 (`fa-solid fa-*`, see below).
 - `[hidden]` is `display: none !important` in Bootstrap 5: `$(element).show()` no longer reveals an element with the
   `hidden` attribute; set `element.hidden = false`.
 - The backoffice messages `window.success()` and `window.no_success()` show Bootstrap 5 toasts instead of SnackbarJS;
   `$.snackbar()` and `data-toggle="snackbar"` are removed.
 - The `col_calculator()` Twig function returns Bootstrap 5 classes (`col-12 col-sm-6 col-md-3`…).
+
+### Font Awesome 7
+
+The backoffice (Font Awesome 5.11.2, `bundles/pumukitnewadmin/lib/fontawesome/`) and the portal
+(Font Awesome 4.7, `bundles/pumukitwebtv/css/font-awesome.min.css` and `bundles/pumukitwebtv/fonts/`)
+share Font Awesome Free 7.3.1 from `bundles/pumukitcore/vendor/fontawesome/css/all.min.css`; the old
+copies are removed and `bin/console pumukit:check:assets` reports the templates that still load them.
+
+- The core templates use the current class names: `fa-solid`, `fa-regular` or `fa-brands` plus the
+  Font Awesome 7 icon name (`fa fa-search` → `fa-solid fa-magnifying-glass`, `fa fa-times` →
+  `fa-solid fa-xmark`, `fa fa-sign-in` → `fa-solid fa-right-to-bracket`, `fa fa-twitter` →
+  `fa-brands fa-twitter`). The short prefixes (`fa`, `fas`) and the Font Awesome 5 and 6 names still
+  work as aliases, but the names that only existed in Font Awesome 4 (`fa-files-o`,
+  `fa-calendar-check-o`, `fa-circle-o-notch`, `fa-linkedin-square`, `fa-youtube-play`…) show nothing:
+  `pumukit:check:assets` lists them. The equivalences are in the `shims.yml` file of the
+  `@fortawesome/fontawesome-free` package.
+- Font Awesome 7 gives the icons a fixed width; `backoffice.css` and `webtv.css` keep the previous
+  automatic width with `--fa-width: auto`.
+- The icons are decorative for screen readers: give a meaning to an icon without text with
+  `aria-label` or a `visually-hidden` text.
+- Only the `woff2` fonts are shipped.
 
 ### JavaScript in templates (Stimulus)
 

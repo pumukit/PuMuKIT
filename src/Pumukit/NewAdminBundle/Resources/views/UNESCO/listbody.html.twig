@@ -41,31 +41,31 @@
                     <span class="shorten-title">{{ text|raw }}</span>
                 {% elseif field is same as('type') %}
                     {% if mm.isVideoType() %}
-                        <i class="fa fa-file-video pmk-font-size-20" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
+                        <i class="fa-solid fa-file-video pmk-font-size-20" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                     {% elseif mm.isAudioType() %}
-                        <i class="fa fa-file-audio pmk-font-size-20" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
+                        <i class="fa-solid fa-file-audio pmk-font-size-20" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                     {% elseif mm.isImageType() %}
-                        <i class="fa fa-file-image pmk-font-size-20" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
+                        <i class="fa-solid fa-file-image pmk-font-size-20" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                     {% elseif mm.isDocumentType() %}
-                        <i class="fa fa-file-alt pmk-font-size-20" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
+                        <i class="fa-solid fa-file-lines pmk-font-size-20" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                     {% elseif mm.isExternalType() %}
-                        <i class="fa fa-link pmk-font-size-20" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
+                        <i class="fa-solid fa-link pmk-font-size-20" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                     {% endif %}
                 {% elseif field is same as('embeddedBroadcast')%}
                     {% if mm.getEmbeddedBroadcast().getType() == 'public' %}
-                        <i class="fa fa-globe" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
+                        <i class="fa-solid fa-globe" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
                     {% elseif mm.getEmbeddedBroadcast().getType() == 'password' %}
-                        <i class="fa fa-unlock" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
+                        <i class="fa-solid fa-unlock" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
                     {% elseif mm.getEmbeddedBroadcast().getType() == 'login' %}
-                        <i class="fa fa-user" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
+                        <i class="fa-solid fa-user" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
                     {% elseif mm.getEmbeddedBroadcast().getType() == 'groups' %}
-                        <i class="fa fa-users" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
+                        <i class="fa-solid fa-users" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getEmbeddedBroadcast().getStringType() }}"></i>
                     {% endif %}
                 {% elseif field is same as('webtv')%}
                     {% if mm.containsTagWithCod('PUCHWEBTV') %}
-                        <i class="fa fa-check text-success"></i>
+                        <i class="fa-solid fa-check text-success"></i>
                     {% else %}
-                        <i class="fa fa-times text-danger"></i>
+                        <i class="fa-solid fa-xmark text-danger"></i>
                     {% endif %}
                 {% elseif field is same as('duration')%}
                     {% if mm.isVideoAudioType() %}{{ mm.getRealDuration()| duration_string }}{% else %}0{% endif %}
@@ -79,6 +79,6 @@
         {% endif %}
     {% endfor %}
     <td headers="th-play" class="text-nowrap" data-action="click->admin--actions#openModal" data-admin--actions-url-param="{{ path('pumukitnewadmin_mms_modal_preview', {'id': mm.id}) }}">
-        <small><i class="fa fa-play pmk-color-grey"></i></small>
+        <small><i class="fa-solid fa-play pmk-color-grey"></i></small>
     </td>
 </tr>

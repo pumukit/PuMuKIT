@@ -99,7 +99,7 @@ class MultimediaObjectMetaType extends AbstractType
 
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_COPYRIGHT)) {
             if ($this->copyrightInfoUrl) {
-                $label = $this->translator->trans('Copyright <a href="%urlCopyright%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>', ['%urlCopyright%' => $this->copyrightInfoUrl], null, $this->locale);
+                $label = $this->translator->trans('Copyright <a href="%urlCopyright%" target="__blank"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></a>', ['%urlCopyright%' => $this->copyrightInfoUrl], null, $this->locale);
             } else {
                 $label = $this->translator->trans('Copyright', [], null, $this->locale);
             }
@@ -116,7 +116,7 @@ class MultimediaObjectMetaType extends AbstractType
         }
         if ($this->authorizationChecker->isGranted(Permission::ACCESS_MULTIMEDIA_META_LICENSE)) {
             if ($this->licenseInfoUrl) {
-                $label = $this->translator->trans('License <a href="%urlLicense%" target="__blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>', ['%urlLicense%' => $this->licenseInfoUrl], null, $this->locale);
+                $label = $this->translator->trans('License <a href="%urlLicense%" target="__blank"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></a>', ['%urlLicense%' => $this->licenseInfoUrl], null, $this->locale);
             } else {
                 $label = $this->translator->trans('License', [], null, $this->locale);
             }

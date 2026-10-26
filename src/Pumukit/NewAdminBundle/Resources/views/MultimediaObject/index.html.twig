@@ -88,18 +88,18 @@
                             {% for item in get_extra_buttons() %}
                                 {% if app.user and is_granted(item.accessRole) %}
                                     <a title="{{ item.name | trans }}" class="btn btn-pumukit qa_series_button_{{ item.name }} extra_button" href="{{ path(item.uri, {'series': series.id }) }}">
-                                        <i class="{{ item.iconClass | default('fas fa-plus') }}"></i>
+                                        <i class="{{ item.iconClass | default('fa-solid fa-plus') }}"></i>
                                         {{ item.name | trans }}
                                     </a>
                                 {% endif %}
                             {% endfor %}
                                 <a class="extra_button btn btn-primary btn-pumukit wizard_button" href="{{ path('wizard_upload', {'series': series.id}) }}">
-                                    <i class="fas fa-upload"></i>
+                                    <i class="fa-solid fa-upload"></i>
                                     {% trans %}Upload{% endtrans %}
                                 </a>
                                 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ADD_EXTERNAL_PLAYER')) %}
                                 <a class="extra_button btn btn-primary wizard_button" href="{{ path('pumukitnewadmin_mms_listexternalproperties', {'series': series.id}) }}" title="{% trans %}Edit{% endtrans %}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-dismiss="modal" data-bs-target="#myModal">
-                                    <i class="fas fa-link"></i>
+                                    <i class="fa-solid fa-link"></i>
                                     {% trans %}Link{% endtrans %}
                                 </a>
                                 {% endif %}

@@ -16,7 +16,7 @@
                 <div class="row text-end">
                     <div class="col-md-12">
                         <a href="{{ url('pumukit_newadmin_index') }}" type="button" class="btn btn-secondary btn-go-backoffice" title="{% trans %}Go to back-office{% endtrans %}">
-                        <span class="fa fa-briefcase"></span>
+                        <span class="fa-solid fa-briefcase"></span>
                         {% if is_granted('ROLE_SCOPE_GLOBAL') %}
                             {% trans %}Go to back-office{% endtrans %}
                         {% elseif is_granted('ROLE_SCOPE_PERSONAL') %}

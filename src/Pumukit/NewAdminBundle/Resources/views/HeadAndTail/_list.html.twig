@@ -14,8 +14,8 @@
             </tr>
             </thead>
             <tbody>
-            {% set greenIcon = '<i class="fa fa-check pmk-color-green"></i>' %}
-            {% set redIcon = '<i class="fa fa-times pmk-color-red"></i>' %}
+            {% set greenIcon = '<i class="fa-solid fa-check pmk-color-green"></i>' %}
+            {% set redIcon = '<i class="fa-solid fa-xmark pmk-color-red"></i>' %}
 
             {% for element in elementList %}
                 <tr>
@@ -34,7 +34,7 @@
                     <td>{{ element.getDisplayTrack() ? greenIcon|raw : redIcon|raw }}</td>
                     <td>
                         <a class="{{ type }}_element_actions" href="#" title="{{ ("Remove " ~ type)|trans }}" data-action="click->admin--actions#send" data-admin--actions-url-param="{{ path('pumukit_newadmin_head_and_tail_manager_remove_item', {'type': type, 'element': element.id}) }}" data-admin--actions-reload-param="true">
-                            <i class="fa fa-trash" data-type="{{ type }}" data-element="{{ element.id }}"></i>
+                            <i class="fa-solid fa-trash" data-type="{{ type }}" data-element="{{ element.id }}"></i>
                         </a>
                     </td>
                 </tr>

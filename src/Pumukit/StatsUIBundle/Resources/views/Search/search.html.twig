@@ -9,10 +9,10 @@
                 <input id="title" type="text" class="form-control form_daterangepicker" data-stats-ui--stats-target="title" data-action="keydown.enter->stats-ui--stats#search" />
                 <div class="input-group-text no-padding">
                     <button class="btn btn-secondary btn-stats-search btn-stats-search-text" data-action="stats-ui--stats#search" title="{% trans %}Set URL parameters{% endtrans %}">
-                        <i class="fas fa-search"></i>
+                        <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                     <button class="btn btn-secondary btn-stats-search btn-stats-search-remove" data-action="stats-ui--stats#reset" title="{% trans %}Clear filter{% endtrans %}">
-                        <i class="fas fa-times"></i>
+                        <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                     <input type="date" id="stats_to_date" class="form-control form_daterangepicker" min="1970-01-01" max="{{ 'now'|date('Y-m-d') }}" data-stats-ui--stats-target="to" data-action="change->stats-ui--stats#dates" aria-label="{% trans %}Until{% endtrans %}" />
                     <div class="input-group-text no-padding">
                         <button class="btn btn-secondary btn-stats-search btn-stats-calendar-remove" data-action="stats-ui--stats#reset" title="{% trans %}Clear filter{% endtrans %}">
-                            <i class="fas fa-times"></i>
+                            <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
                 </div>

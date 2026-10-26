@@ -74,7 +74,7 @@
                     {% for track in multimediaObject.getTracks() | filter(track => track.isDownloadable() and not track.isHide() and showDownloads) %}
                         {% set none_attach = false %}
                         <li class="qa-player-tracks tracks">
-                            <span class="fa fa-video-camera"></span>
+                            <span class="fa-solid fa-video"></span>
                             <a class="video-tracks" download href="{{ download_track_url(track) }}">
                                 {% if track.metadata().isOnlyAudio() %}
                                     {% trans %}Download this audio{% endtrans %}
@@ -89,7 +89,7 @@
                     {% for material in multimediaObject.getMaterials() | filter(material => not material.getHide() and showDownloads)  %}
                         {% set none_attach = false %}
                         <li class="qa-player-material material">
-                            <span class="fa fa-paperclip"></span>
+                            <span class="fa-solid fa-paperclip"></span>
                             <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
                         </li>
                     {% endfor %}
@@ -99,7 +99,7 @@
                         {% set none_attach = false %}
                         <li class="qa-player-link link">
                             <a target="_blank" href="{{ link.getUrl() }}">
-                                <span class="fa fa-globe"></span>
+                                <span class="fa-solid fa-globe"></span>
                                 {{ link.getName() }}
                             </a>
                         </li>

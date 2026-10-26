@@ -4,7 +4,7 @@
     <div class="pmk-visibility-hidden">
         <input type="radio" name="profile_option" value="master_copy" checked>
     </div>
-    <h2><i class="fa fa-folder-open"></i> {{ "Upload video to: %folder%"|trans({"%folder%": folder|default("Inbox")}) }}</h2>
+    <h2><i class="fa-solid fa-folder-open"></i> {{ "Upload video to: %folder%"|trans({"%folder%": folder|default("Inbox")}) }}</h2>
     <div id="uploader_drag_and_drop"></div>
     <a href="{{ path('inbox') }}" class="btn btn-secondary btn-previous">&laquo; {% trans %}Back{% endtrans %}</a>
 {% endblock inbox_body %}

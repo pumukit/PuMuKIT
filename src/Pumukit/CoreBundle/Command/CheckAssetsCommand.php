@@ -94,8 +94,10 @@ class CheckAssetsCommand extends Command
         'bundles/pumukitnewadmin/vendor/chartjs/chart.umd.min.js' => 'nothing: the admin--dashboard controller loads Chart.js and its date adapter from the importmap',
         'bundles/pumukitnewadmin/vendor/chartjs/chartjs-adapter-date-fns.bundle.min.js' => 'nothing: the admin--dashboard controller loads Chart.js and its date adapter from the importmap',
         'bundles/pumukitwebtv/css/bootstrap.css' => 'bundles/pumukitcore/vendor/bootstrap5/css/bootstrap.min.css and bundles/pumukitwebtv/css/webtv.css',
-        'bundles/pumukitwebtv/css/font-awesome.css' => 'bundles/pumukitwebtv/css/font-awesome.min.css',
-        'bundles/pumukitnewadmin/lib/fontawesome/css/all.css' => 'bundles/pumukitnewadmin/lib/fontawesome/css/all.min.css',
+        'bundles/pumukitwebtv/css/font-awesome.css' => 'bundles/pumukitcore/vendor/fontawesome/css/all.min.css (Font Awesome 7: icon classes are fa-solid, fa-regular and fa-brands, see UPGRADE-6.0.md)',
+        'bundles/pumukitwebtv/css/font-awesome.min.css' => 'bundles/pumukitcore/vendor/fontawesome/css/all.min.css (Font Awesome 7: icon classes are fa-solid, fa-regular and fa-brands, see UPGRADE-6.0.md)',
+        'bundles/pumukitnewadmin/lib/fontawesome/css/all.css' => 'bundles/pumukitcore/vendor/fontawesome/css/all.min.css (Font Awesome 7: icon classes are fa-solid, fa-regular and fa-brands, see UPGRADE-6.0.md)',
+        'bundles/pumukitnewadmin/lib/fontawesome/css/all.min.css' => 'bundles/pumukitcore/vendor/fontawesome/css/all.min.css (Font Awesome 7: icon classes are fa-solid, fa-regular and fa-brands, see UPGRADE-6.0.md)',
     ];
 
     public const REMOVED_JAVASCRIPT_HOOKS = [
@@ -260,6 +262,8 @@ class CheckAssetsCommand extends Command
     private const TEMPLATE_PATTERN = '#[\'"](@Pumukit[A-Za-z]+/[^\'"]+\.twig)[\'"]#';
     private const PORTAL_LAYOUT = 'PumukitWebTVBundle/Layout/template.html.twig';
     private const UTILITIES_STYLESHEET = 'bundles/pumukitcore/css/pumukit-utilities.css';
+    private const FONT_AWESOME_STYLESHEET = 'vendor/fontawesome/css/all.min.css';
+    private const ICON_PATTERN = '/(?<![\w-])(?:fa|fas|far|fab|fa-solid|fa-regular|fa-brands)\s+fa-([a-z0-9-]+)/';
     private const OPTIONAL_TEMPLATE_PATTERN = '#\{%-?\s*(extends|include|embed)\s*\[|ignore missing#';
 
     private KernelInterface $kernel;
@@ -287,8 +291,8 @@ The <info>pumukit:check:assets</info> command looks for references to bundle pub
 in the Twig templates of a directory and reports the ones that no installed bundle provides.
 When the asset or template was moved, it shows the one that replaces it. It also reports an
 overridden portal layout (<comment>PumukitWebTVBundle/Layout/template.html.twig</comment>) that does not
-load <comment>importmap('pumukit')</comment>, and the jQuery utilities that jQuery 4 removed (<comment>$.trim</comment>,
-<comment>$.isArray</comment>...).
+load <comment>importmap('pumukit')</comment> or <comment>bundles/pumukitcore/css/pumukit-utilities.css</comment>, the jQuery utilities that jQuery 4 removed (<comment>$.trim</comment>,
+<comment>$.isArray</comment>...) and the Font Awesome icons that Font Awesome 7 does not provide.
 
 Run it on the overridden templates of a project before upgrading PuMuKIT. It exits with an
 error code when a missing asset is found.
@@ -318,6 +322,7 @@ EOT
             $files[$file->getRelativePathname()] = file($file->getPathname());
         }
         $removedGlobals = $this->removedGlobalsNotDefinedIn($files);
+        $icons = $this->fontAwesomeIcons($publicDirs);
 
         foreach ($files as $relativePathname => $lines) {
             foreach ($lines as $index => $line) {
@@ -328,6 +333,17 @@ EOT
                         ++$missing;
                         $output->writeln('Removed JavaScript global: <info>'.$global.'</info> in '.$location);
                         $output->writeln('    use <comment>'.self::removedGlobals()[$global].'</comment>');
+                    }
+                }
+
+                if ([] !== $icons) {
+                    preg_match_all(self::ICON_PATTERN, $line, $matches);
+                    foreach (array_unique($matches[1]) as $icon) {
+                        if (!isset($icons[$icon])) {
+                            ++$missing;
+                            $output->writeln('Unknown Font Awesome icon: <info>fa-'.$icon.'</info> in '.$location.', Font Awesome 7 does not provide it');
+                            $output->writeln('    use <comment>the Font Awesome 7 name of the icon (see UPGRADE-6.0.md)</comment>');
+                        }
                     }
                 }
 
@@ -424,6 +440,18 @@ EOT
         if (isset(self::REPLACEMENTS[$reference])) {
             $output->writeln('    use <comment>'.self::REPLACEMENTS[$reference].'</comment>');
         }
+    }
+
+    private function fontAwesomeIcons(array $publicDirs): array
+    {
+        $stylesheet = ($publicDirs['pumukitcore'] ?? '').'/'.self::FONT_AWESOME_STYLESHEET;
+        if (!is_file($stylesheet)) {
+            return [];
+        }
+
+        preg_match_all('/\.fa-([a-z0-9-]+)/', (string) file_get_contents($stylesheet), $matches);
+
+        return array_fill_keys($matches[1], true);
     }
 
     private function bundlePublicDirs(): array

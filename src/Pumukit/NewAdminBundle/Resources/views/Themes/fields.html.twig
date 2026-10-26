@@ -239,7 +239,7 @@
     {% if form.parent %}<span class="invalid-feedback d-block">{% else %}<div class="alert alert-danger">{% endif %}
     <ul class="list-unstyled">
         {%- for error in errors -%}
-            <li><i class="fas fa-exclamation-circle"></i> {{ error.message }}</li>
+            <li><i class="fa-solid fa-circle-exclamation"></i> {{ error.message }}</li>
         {%- endfor -%}
     </ul>
     {% if form.parent %}</span>{% else %}</div>{% endif %}

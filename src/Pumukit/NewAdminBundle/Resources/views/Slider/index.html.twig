@@ -23,7 +23,7 @@
             {% for mm in multimediaObjects %}
                 <div class="slider-item" data-id="{{ mm.id }}" draggable="true" data-admin--slider-target="item" data-action="dragstart->admin--slider#start dragend->admin--slider#end dragover->admin--slider#over">
                     <div class="slider-handle" title="{% trans %}Drag to reorder{% endtrans %}">
-                        <i class="fa fa-bars"></i>
+                        <i class="fa-solid fa-bars"></i>
                     </div>
 
                     <div class="slider-position" data-admin--slider-target="position">
@@ -49,22 +49,22 @@
                             <div class="slider-metadata">
                                 {% if mm.getSeries() %}
                                     <span class="slider-metadata-item" title="{% trans %}Series{% endtrans %}">
-                                        <i class="fa fa-folder-open"></i>
+                                        <i class="fa-solid fa-folder-open"></i>
                                         {{ mm.getSeries().getTitle() }}
                                     </span>
                                 {% endif %}
 
                                 <span class="slider-metadata-item" title="{% trans %}Type{% endtrans %}">
                                     {% if mm.isVideoType() %}
-                                        <i class="fa fa-file-video"></i>
+                                        <i class="fa-solid fa-file-video"></i>
                                     {% elseif mm.isAudioType() %}
-                                        <i class="fa fa-file-audio"></i>
+                                        <i class="fa-solid fa-file-audio"></i>
                                     {% elseif mm.isImageType() %}
-                                        <i class="fa fa-file-image"></i>
+                                        <i class="fa-solid fa-file-image"></i>
                                     {% elseif mm.isDocumentType() %}
-                                        <i class="fa fa-file-alt"></i>
+                                        <i class="fa-solid fa-file-lines"></i>
                                     {% elseif mm.isExternalType() %}
-                                        <i class="fa fa-link"></i>
+                                        <i class="fa-solid fa-link"></i>
                                     {% endif %}
 
                                     {{ mm.getStringType(mm.getType()) }}
@@ -72,7 +72,7 @@
 
                                 {% if mm.getPublicDate() %}
                                     <span class="slider-metadata-item" title="{% trans %}Publication date{% endtrans %}">
-                                        <i class="fa fa-calendar"></i>
+                                        <i class="fa-solid fa-calendar"></i>
                                         {{ mm.getPublicDate()|format_datetime('medium', 'none', locale=app.request.getLocale()) }}
                                     </span>
                                 {% endif %}
@@ -83,24 +83,24 @@
                         <div class="slider-status">
                             {% if mm.containsTagWithCod('PUCHWEBTV') %}
                                 <span class="badge text-bg-info">
-                                    <i class="fa fa-globe"></i>
+                                    <i class="fa-solid fa-globe"></i>
                                     WebTV
                                 </span>
                             {% else %}
                                 <span class="badge text-bg-secondary">
-                                    <i class="fa fa-times"></i>
+                                    <i class="fa-solid fa-xmark"></i>
                                     WebTV
                                 </span>
                             {% endif %}
 
                             {% if mm.status == constant('Pumukit\\SchemaBundle\\Document\\MultimediaObject::STATUS_PUBLISHED') %}
                                 <span class="badge text-bg-success">
-                                    <i class="fa fa-check"></i>
+                                    <i class="fa-solid fa-check"></i>
                                     {% trans %}Published{% endtrans %}
                                 </span>
                             {% else %}
                                 <span class="badge text-bg-secondary">
-                                    <i class="fa fa-times"></i>
+                                    <i class="fa-solid fa-xmark"></i>
                                     {% trans %}Not published{% endtrans %}
                                 </span>
                             {% endif %}

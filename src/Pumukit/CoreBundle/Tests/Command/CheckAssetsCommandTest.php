@@ -204,6 +204,22 @@ class CheckAssetsCommandTest extends PumukitTestCase
         $this->assertStringContainsString('Problems found: 2', $display);
     }
 
+    public function testReportsFontAwesomeIconsMissingInFontAwesome7(): void
+    {
+        file_put_contents(
+            $this->tmpDir.'/index.html.twig',
+            "<i class=\"fa fa-files-o\"></i>\n<i class=\"fa-solid fa-xmark fa-2x\"></i>\n<i class=\"fas fa-search\"></i>\n"
+        );
+
+        $tester = $this->commandTester();
+        $tester->execute(['--path' => $this->tmpDir]);
+
+        $display = $tester->getDisplay();
+        $this->assertSame(Command::FAILURE, $tester->getStatusCode());
+        $this->assertStringContainsString('Unknown Font Awesome icon: fa-files-o in index.html.twig:1', $display);
+        $this->assertStringContainsString('Problems found: 1', $display);
+    }
+
     public function testFailsWhenPathDoesNotExist(): void
     {
         $tester = $this->commandTester();
