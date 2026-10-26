@@ -142,7 +142,7 @@ COPY --chown=www-data:www-data . ./
 
 RUN set -eux \
     && mkdir -p var/cache var/log var/sessions \
-    && composer update --prefer-dist --no-scripts --no-progress --classmap-authoritative --no-interaction \
+    && composer install --prefer-dist --no-scripts --no-progress --classmap-authoritative --no-interaction \
     && bin/console a:i \
     && bin/console asset-map:compile
 

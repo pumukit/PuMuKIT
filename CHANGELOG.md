@@ -27,6 +27,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Deliver the files of `/trackfile/` and of the backoffice track download through NGINX with `X-Accel-Redirect` after PHP checks the token and the permissions, instead of sending them from PHP-FPM.
 - Use Valkey 9.1 instead of an unpinned Redis image in `docker-compose.yml`: Valkey keeps the BSD license of Redis 7.2 and PuMuKIT uses it as it used Redis.
 - Single source of truth for the Symfony version through `extra.symfony.require` (Symfony components pinned with `*`).
+- Build the Docker image with `composer install` from the committed `composer.lock` instead of `composer update`, so that an image has the dependencies that CI tested.
 - Remove the `version` field from `composer.json`: Composer takes the version from the git tag, and `Pumukit\PumukitVersion::VERSION` is the only version to update on a release.
 - Migrate the security layer from the legacy Guard system to the new authenticator system (existing sha512 passwords remain valid).
 - Replace Swiftmailer with `symfony/mailer`.
