@@ -108,6 +108,21 @@ class CheckAssetsCommand extends Command
         'render_hinclude' => '<div data-controller="admin--include" data-admin--include-src-value="{{ url(...) }}"></div> (see @PumukitNewAdmin/MultimediaObject/index.html.twig)',
     ];
 
+    public const REMOVED_JQUERY_APIS = [
+        'trim' => 'String.prototype.trim()',
+        'isArray' => 'Array.isArray()',
+        'isFunction' => 'typeof value === \'function\'',
+        'isNumeric' => 'Number.isFinite()',
+        'isWindow' => 'value != null && value === value.window',
+        'nodeName' => 'element.nodeName.toLowerCase()',
+        'now' => 'Date.now()',
+        'parseJSON' => 'JSON.parse()',
+        'type' => 'typeof, Array.isArray() or instanceof',
+        'unique' => '$.uniqueSort()',
+        'camelCase' => 'a local helper',
+        'cssProps' => 'nothing: vendor prefixes are no longer needed',
+    ];
+
     public const REMOVED_JAVASCRIPT_GLOBALS = [
         'uppyTUS' => 'the core--uploader controller (uploader_attributes() Twig function)',
         'Uppy' => 'the core--uploader controller (uploader_attributes() Twig function)',
@@ -272,7 +287,8 @@ The <info>pumukit:check:assets</info> command looks for references to bundle pub
 in the Twig templates of a directory and reports the ones that no installed bundle provides.
 When the asset or template was moved, it shows the one that replaces it. It also reports an
 overridden portal layout (<comment>PumukitWebTVBundle/Layout/template.html.twig</comment>) that does not
-load <comment>importmap('pumukit')</comment> or <comment>bundles/pumukitcore/css/pumukit-utilities.css</comment>.
+load <comment>importmap('pumukit')</comment>, and the jQuery utilities that jQuery 4 removed (<comment>$.trim</comment>,
+<comment>$.isArray</comment>...).
 
 Run it on the overridden templates of a project before upgrading PuMuKIT. It exits with an
 error code when a missing asset is found.
@@ -312,6 +328,14 @@ EOT
                         ++$missing;
                         $output->writeln('Removed JavaScript global: <info>'.$global.'</info> in '.$location);
                         $output->writeln('    use <comment>'.self::removedGlobals()[$global].'</comment>');
+                    }
+                }
+
+                foreach (self::REMOVED_JQUERY_APIS as $api => $replacement) {
+                    if (preg_match('/(?<![\w$.])(?:\$|jQuery)\.'.$api.'\b/', $line)) {
+                        ++$missing;
+                        $output->writeln('Removed jQuery API: <info>$.'.$api.'</info> in '.$location.', jQuery 4 no longer provides it');
+                        $output->writeln('    use <comment>'.$replacement.'</comment>');
                     }
                 }
 

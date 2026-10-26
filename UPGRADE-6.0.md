@@ -147,7 +147,7 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
   | `bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom*.min.css` (3 files) | `bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.css` |
   | `bundles/pumukitwebtv/js/bootstrap-datetimepicker.min.js`, `bundles/pumukitwebtv/css/bootstrap-datetimepicker(.min).css` | nothing (bootstrap-datetimepicker is removed, see below) |
 
-  The shared versions are jQuery 3.7.1, Bootstrap 5.3.8 and jQuery UI 1.14.2 (autocomplete and
+  The shared versions are jQuery 4.0.0, Bootstrap 5.3.8 and jQuery UI 1.14.2 (autocomplete and
   menu only, so it does not replace the Bootstrap tooltip).
 - **Dates without libraries.** moment, bootstrap-datetimepicker and daterangepicker are removed
   (`bundles/pumukitcore/vendor/moment/`, `bundles/pumukitcore/vendor/bootstrap-datetimepicker/`,
@@ -155,11 +155,25 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
   native `<input type="date">` fields (the `webtv--search` controller still turns the text fields of
   an overridden filter into date fields), and the statistics use a predefined range select and two
   native date fields (`from`, `to` and `preset` targets of `stats-ui--stats` instead of `dateRange`).
-- **jQuery 3.** The backoffice and portal layouts no longer load jQuery Migrate, and
+- **jQuery 4.** The backoffice and portal layouts load jQuery 4.0.0 without jQuery Migrate, and
   `bundles/pumukitcore/vendor/jquery-migrate/jquery-migrate.min.js` is removed: the scripts of a
-  project must not use the APIs removed in jQuery 3. A project can load its own copy of jQuery
-  Migrate 3 while its scripts are migrated, to restore them and log a `JQMIGRATE` warning for each
-  one. The removed APIs found in PuMuKIT code were:
+  project must not use the APIs removed in jQuery 3 and 4. A project can load its own copy of
+  jQuery Migrate 4 while its scripts are migrated, to restore them and log a `JQMIGRATE` warning
+  for each one. `bin/console pumukit:check:assets` reports the jQuery 4 utilities used in the
+  templates. Removed in jQuery 4 ([upgrade guide](https://jquery.com/upgrade-guide/4.0/)):
+  - `$.trim`, `$.isArray`, `$.isFunction`, `$.isNumeric`, `$.isWindow`, `$.nodeName`, `$.now`,
+    `$.parseJSON`, `$.type`, `$.unique`, `$.camelCase` and `$.cssProps`: use `String.prototype.trim()`,
+    `Array.isArray()`, `typeof`, `Number.isFinite()`, `Date.now()`, `JSON.parse()`, `$.uniqueSort()`…
+  - `.toggleClass(boolean)` without a class name.
+  - `$.ajax` with `dataType: 'json'` and a callback no longer becomes JSONP (use `dataType: 'jsonp'`),
+    and a script response is only run with `dataType: 'script'` or `$.getScript()`.
+  - `.css()` only appends `px` to the dimension, margin, padding, border width and position
+    properties; write the unit for the others.
+  - `focusin`/`focusout` follow the native order relative to `focus`/`blur`.
+
+  The event shorthands (`.click(fn)`, `.change(fn)`…), `.bind()`, `.delegate()`, `$.proxy()` and
+  `$.Deferred` are still available. jQuery UI 1.14.2 supports jQuery 4. The APIs removed in
+  jQuery 3 found in PuMuKIT code were:
   - `$.get(...).success()`/`.error()`/`.complete()`: use `.done()`/`.fail()`/`.always()`.
   - `.size()`: use `.length`.
   - `.load(function)`, `.unload()` and `.error(function)` as event shorthands: use

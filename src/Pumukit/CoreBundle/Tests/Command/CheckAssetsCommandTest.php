@@ -186,6 +186,24 @@ class CheckAssetsCommandTest extends PumukitTestCase
         $this->assertStringContainsString('Problems found: 1', $display);
     }
 
+    public function testReportsJqueryUtilitiesRemovedInJquery4(): void
+    {
+        file_put_contents(
+            $this->tmpDir.'/index.html.twig',
+            "<script>\nvar name = $.trim(value);\nif (jQuery.isArray(list)) {}\nvar text = value.trim();\n$('#a').css('top', 0);\n</script>\n"
+        );
+
+        $tester = $this->commandTester();
+        $tester->execute(['--path' => $this->tmpDir]);
+
+        $display = $tester->getDisplay();
+        $this->assertSame(Command::FAILURE, $tester->getStatusCode());
+        $this->assertStringContainsString('Removed jQuery API: $.trim in index.html.twig:2', $display);
+        $this->assertStringContainsString('use String.prototype.trim()', $display);
+        $this->assertStringContainsString('Removed jQuery API: $.isArray in index.html.twig:3', $display);
+        $this->assertStringContainsString('Problems found: 2', $display);
+    }
+
     public function testFailsWhenPathDoesNotExist(): void
     {
         $tester = $this->commandTester();
