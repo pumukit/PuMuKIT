@@ -214,6 +214,10 @@
     color: white;
 }
 
+.pmk-cursor-auto:not(#pmk) {
+    cursor: auto;
+}
+
 .pmk-cursor-pointer:not(#pmk) {
     cursor: pointer;
 }
