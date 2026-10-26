@@ -1,6 +1,6 @@
 {% if app.user and is_granted('ROLE_ACCESS_EDIT_PLAYLIST') %}
     <li>
-        <a href="{{ url('pumukitnewadmin_playlistmms_modal_add', {'id': mm.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
+        <a class="dropdown-item" href="{{ url('pumukitnewadmin_playlistmms_modal_add', {'id': mm.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
             <i class="fa-solid fa-list-ul"></i>{{ "Add to playlist"|trans }}
         </a>
     </li>

@@ -36,6 +36,17 @@ a:hover, a:focus {
     text-decoration: none;
 }
 
+.dropdown-item:has(> i:first-child) {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+}
+
+.dropdown-item > i:first-child {
+    --fa-display: inline-block;
+    --fa-width: 1.25em;
+}
+
 label, .form-label, .col-form-label {
     font-weight: 700;
 }
