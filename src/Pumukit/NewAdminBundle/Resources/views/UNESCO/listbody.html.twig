@@ -20,7 +20,7 @@
 
     {% if not is_naked() %}
         <td headers="th-icons">
-            {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
+            {{ mm.containsTagWithCod('PUDENEW')?'<i class="fa-solid fa-spell-check">':'&nbsp;' }}
         </td>
     {% endif %}
     <td headers="th-icons">
@@ -70,7 +70,7 @@
                 {% elseif field is same as('duration')%}
                     {% if mm.isVideoAudioType() %}{{ mm.getRealDuration()| duration_string }}{% else %}0{% endif %}
                     {% if mm.getProperty('soft-editing-duration') %}
-                        <i class="mdi-content-content-cut" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
+                        <i class="fa-solid fa-scissors" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
                     {% endif %}
                 {% else %}
                     {{ text|raw }}

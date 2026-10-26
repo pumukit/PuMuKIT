@@ -35,7 +35,7 @@
         </td>
         <td>
           <a title="{% trans %}Edit seriestype channel{% endtrans %} {{ seriestype.id }}" href="{{ path('pumukitnewadmin_seriestype_update', {'id': seriestype.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
-            <i class="mdi-editor-mode-edit"></i>
+            <i class="fa-solid fa-pencil"></i>
           </a>
         </td>
         <td>
@@ -44,7 +44,7 @@
                data-admin--actions-target-param="#list_seriestypes"
                data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this series type?'|trans }}"
                data-admin--actions-success-param="{{ 'Series type successfully deleted.'|trans }}">
-            <i class="mdi-content-clear"></i>
+            <i class="fa-solid fa-xmark"></i>
           </a>
         </td>
         <td data-action="click->admin--actions#preview" data-admin--actions-name-param="seriestype" data-admin--actions-url-param="{{ path('pumukitnewadmin_seriestype_show', {'id': seriestype.id}) }}">

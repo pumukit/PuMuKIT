@@ -271,6 +271,15 @@ copies are removed and `bin/console pumukit:check:assets` reports the templates 
 - The icons are decorative for screen readers: give a meaning to an icon without text with
   `aria-label` or a `visually-hidden` text.
 - Only the `woff2` fonts are shipped.
+- The Material Design icons of the backoffice (`mdi-*`, from Bootstrap Material Design) are
+  Font Awesome 7 icons now, and the Material Design Icons font is removed: `mdi-editor-mode-edit` →
+  `fa-solid fa-pencil`, `mdi-content-clear` → `fa-solid fa-xmark`, `mdi-action-info` →
+  `fa-solid fa-circle-info`, `mdi-social-group` → `fa-solid fa-users`… `pumukit:check:assets` reports
+  the `mdi-*` classes left in the templates of a project with the equivalent that the core uses
+  (`CheckAssetsCommand::MATERIAL_ICONS`). The publication status icons of
+  `PumukitAdminExtension` are `fa-solid fa-wifi` (published or hidden, told apart by their opacity),
+  `fa-solid fa-lock` (blocked) and `fa-solid fa-ban` (no channels); the tag tree icons take their glyph
+  from the `--fa` variable of `i.tag_icon`.
 
 ### JavaScript in templates (Stimulus)
 

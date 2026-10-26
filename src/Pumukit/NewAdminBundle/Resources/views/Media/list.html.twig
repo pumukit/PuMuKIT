@@ -8,7 +8,7 @@
        {% if can_access and need_reload_status %}
        data-admin--track-list-poll-value="{{ [{target: '#tracks_mms_' ~ mm.id, url: url('pumukitnewadmin_track_list', {'id': mm.id})}, {target: '#list_mms', url: path('pumukitnewadmin_mms_list', {'seriesId': mm.getSeries().getId()})}, {target: '#preview_mm', url: path('pumukitnewadmin_mms_show', {'id': mm.id})}]|json_encode }}"
        {% if 'XMLHttpRequest' == app.request.headers.get('X-Requested-With') %}
-       data-admin--track-list-status-value="{{ {target: '#table_mms_status_wrapper_' ~ mm.id, html: '<i class="mdi-navigation-refresh pmk-job-animate table_mms_job_animate" data-bs-toggle="tooltip" data-bs-placement="right" title="' ~ ('{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.'|trans({'%count%': mm.getProperty('pending_jobs')|length}) ~ ' ' ~ '{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.'|trans({'%count%': mm.getProperty('executing_jobs')|length}))|trim|e ~ '"></i>'}|json_encode }}"
+       data-admin--track-list-status-value="{{ {target: '#table_mms_status_wrapper_' ~ mm.id, html: '<i class="fa-solid fa-arrows-rotate pmk-job-animate table_mms_job_animate" data-bs-toggle="tooltip" data-bs-placement="right" title="' ~ ('{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs.'|trans({'%count%': mm.getProperty('pending_jobs')|length}) ~ ' ' ~ '{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs.'|trans({'%count%': mm.getProperty('executing_jobs')|length}))|trim|e ~ '"></i>'}|json_encode }}"
        {% endif %}
        {% endif %}>
     <tbody>

@@ -1,11 +1,11 @@
 {% macro job_status_icon(status) %}{% apply pumukit_spaceless %}
 
 {% set icons = {
-  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')): 'mdi-av-new-releases',
-  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED')): 'mdi-av-pause-circle-fill',
-  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING')): 'mdi-av-loop',
-  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING')): 'mdi-av-equalizer',
-  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED')): 'mdi-av-play-circle-fill',
+  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')): 'fa-solid fa-circle-exclamation',
+  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED')): 'fa-solid fa-circle-pause',
+  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING')): 'fa-solid fa-repeat',
+  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING')): 'fa-solid fa-chart-simple',
+  (constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED')): 'fa-solid fa-circle-play',
 }
 %}
 {{ icons[status] }}

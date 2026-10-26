@@ -6,7 +6,7 @@
                data-group-id="{{ group.id }}" data-editable="1"
                data-action="click->admin--group-picker#select dblclick->admin--group-picker#toggle"
                class="list-group-item notload pumukitnewadmin-trim-row group_{{ group.key }}">
-                <i class="mdi-social-group"></i>
+                <i class="fa-solid fa-users"></i>
                 {{ group.key }} - {{ group.name }} - ({{ group.origin }})
             </a>
         {% else %}
@@ -15,7 +15,7 @@
                data-group-id="{{ group.id }}" data-editable="0" data-message="{{ 'External defined groups. Contact your directory service administrator to change membership.'|trans }}"
                data-action="click->admin--group-picker#select dblclick->admin--group-picker#toggle"
                class="list-group-item notload pumukitnewadmin-trim-row disabled-group-item group_{{ group.key }}">
-                <i class="mdi-social-group"></i>
+                <i class="fa-solid fa-users"></i>
                 {{ group.key }} - {{ group.name }} - ({{ group.origin }})
             </a>
         {% endif %}

@@ -1,6 +1,6 @@
 <td>
     {% if (mm.getProperty('opencast') and track.tags().containsTag('opencast')) or (track.isMaster() and app.user and not is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_ADVANCED_UPLOAD'))) %}
-        <i class="mdi-content-block pmk-color-009587"></i>
+        <i class="fa-solid fa-ban pmk-color-009587"></i>
     {% else %}
         <a title="{% trans %}Delete track{% endtrans %} {{ track.id }}" href="#"
            data-action="click->admin--actions#remove"
@@ -8,7 +8,7 @@
            data-admin--actions-target-param="#tracks_mms_{{ mm.id }}"
            data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this track?'|trans }}"
            data-admin--actions-refresh-param="{{ [{target: '#list_mms', url: path('pumukitnewadmin_mms_list', {'seriesId': mm.getSeries().getId()})}, {target: '#preview_mm', url: path('pumukitnewadmin_mms_show', {'id': mm.id})}]|json_encode }}">
-            <i class="mdi-content-clear"></i>
+            <i class="fa-solid fa-xmark"></i>
         </a>
     {% endif %}
 </td>

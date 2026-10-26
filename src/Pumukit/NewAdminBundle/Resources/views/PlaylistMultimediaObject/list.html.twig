@@ -43,7 +43,7 @@
                 </td>
                 <td>
                     {% if not is_playable_on_playlist(mm) %}
-                        <i id="table_playable_mm_{{ mm.id }}" class="non-playable-warning mdi-action-report-problem pmk-color-orange pmk-font-size-16" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}This object cannot be played on the playlist{% endtrans %}"></i>
+                        <i id="table_playable_mm_{{ mm.id }}" class="non-playable-warning fa-solid fa-triangle-exclamation pmk-color-orange pmk-font-size-16" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}This object cannot be played on the playlist{% endtrans %}"></i>
                     {% endif %}
                 </td>
                 {% if not is_naked() %}
@@ -51,7 +51,7 @@
                         <i id="table_mms_status_{{ mm.id }}" class="{{ mm.status|status_icon }}" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm|status_text }}"></i>
                     </td>
                     <td>
-                        {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
+                        {{ mm.containsTagWithCod('PUDENEW')?'<i class="fa-solid fa-spell-check">':'&nbsp;' }}
                     </td>
                 {% endif %}
                 <td>
@@ -61,7 +61,7 @@
                     {% if mms.getCurrentPage() != 1 or not loop.first %}
                         {% apply pumukit_spaceless %}
                             <a href="{{ path('pumukitnewadmin_playlistmms_up', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
-                            <a href="{{ path('pumukitnewadmin_playlistmms_top', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
+                            <a href="{{ path('pumukitnewadmin_playlistmms_top', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="fa-solid fa-arrows-up-to-line"></i></a>
                         {% endapply %}
                     {% endif %}
                 </td>
@@ -69,7 +69,7 @@
                     {% if (mms.getCurrentPage() != mms.getNbPages()) or (loop.index + ((mms.getCurrentPage() - 1 ) * mms.getMaxPerPage()) != mms.getNbResults()) %}
                         {% apply pumukit_spaceless %}
                             <a href="{{ path('pumukitnewadmin_playlistmms_down', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
-                            <a href="{{ path('pumukitnewadmin_playlistmms_bottom', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
+                            <a href="{{ path('pumukitnewadmin_playlistmms_bottom', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="fa-solid fa-arrows-down-to-line"></i></a>
                         {% endapply %}
                     {% endif %}
                 </td>
@@ -98,7 +98,7 @@
                 <td class="text-center">
                     {{ mm.getRealDuration()| duration_string }}
                     {% if mm.getProperty('soft-editing-duration') %}
-                        <i class="mdi-content-content-cut" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
+                        <i class="fa-solid fa-scissors" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
                     {% endif %}
                 </td>
                 <td class="text-nowrap">

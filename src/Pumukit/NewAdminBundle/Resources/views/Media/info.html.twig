@@ -38,7 +38,7 @@
                         <span id="job_info_priority_show" class="job_info_priority" data-admin--job-priority-target="show">
                             <span id="job_info_priority_show_val" data-admin--job-priority-target="value">{{ job.getPriority() }}</span>
                             <a href="#" data-action="click->admin--job-priority#toggle" title="{% trans %}Edit priority{% endtrans %}">
-                                <i class="mdi-editor-mode-edit"></i>
+                                <i class="fa-solid fa-pencil"></i>
                             </a>
                         </span>
                         <span id="job_info_priority_edit" class="job_info_priority pmk-display-none" data-admin--job-priority-target="edit">
@@ -46,7 +46,7 @@
                             <a href="#"
                                 data-action="click->admin--job-priority#save"
                                 title="{% trans %}Edit priority{% endtrans %}">
-                                <i class="mdi-content-save"></i>
+                                <i class="fa-solid fa-floppy-disk"></i>
                             </a>
                         </span>
                     {% else %}

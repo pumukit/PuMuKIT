@@ -32,7 +32,7 @@
                     </td>
                     {% if is_naked() %}
                         <td headers="th-icons">
-                            <a class="moodlepr-add" href="#" title="{% trans %}Publish to LMS{% endtrans %}" data-action="click->admin--actions#notifyParent" data-admin--actions-message-param="{{ {playlist: oneseries.id}|json_encode }}"><i class="mdi-editor-insert-photo"></i></a>
+                            <a class="moodlepr-add" href="#" title="{% trans %}Publish to LMS{% endtrans %}" data-action="click->admin--actions#notifyParent" data-admin--actions-message-param="{{ {playlist: oneseries.id}|json_encode }}"><i class="fa-solid fa-image"></i></a>
                         </td>
                     {% endif %}
                     <td headers="th-img" data-action="click->admin--actions#edit dblclick->admin--actions#navigate" data-admin--actions-name-param="playlist" data-admin--actions-show-param="{{ path('pumukitnewadmin_playlist_show', {'id': oneseries.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_playlist_update', {'id': oneseries.id}) }}" data-admin--actions-url-param="{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}">

@@ -4,7 +4,7 @@
            id="add_group_{{ user_group.id }}"
            data-group-id="{{ user_group.id }}" data-editable="1"
            data-action="click->admin--group-picker#select dblclick->admin--group-picker#toggle">
-            <i class="mdi-social-group"></i>
+            <i class="fa-solid fa-users"></i>
             {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
         </a>
     {% else %}
@@ -13,7 +13,7 @@
            id="add_group_{{ user_group.id }}"
            data-group-id="{{ user_group.id }}" data-editable="0" data-message="{{ message }}"
            data-action="click->admin--group-picker#select dblclick->admin--group-picker#toggle">
-            <i class="mdi-social-group"></i>
+            <i class="fa-solid fa-users"></i>
             {{ user_group.key }} - {{ user_group.name }} - ({{ user_group.origin }})
         </a>
     {% endif %}

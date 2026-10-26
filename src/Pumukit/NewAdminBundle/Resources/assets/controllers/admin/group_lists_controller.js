@@ -66,7 +66,7 @@ export default class extends Controller {
         item.dataset.groupId = id;
         item.dataset.action = `click->${this.identifier}#select dblclick->${this.identifier}#toggle`;
         const icon = document.createElement('i');
-        icon.className = 'mdi-social-group';
+        icon.className = 'fa-solid fa-users';
         item.append(icon, ' ', this.showCodesValue ? `${group.key} - ${group.name} - (${group.origin})` : group.name);
 
         return item;

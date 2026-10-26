@@ -1,7 +1,7 @@
 {% if is_naked() %}
     <td class="pmk-width-1em" headers="th-icons">
         {% if mm.containsAnyTagWithCodes(['PUCHOPENEDX', 'PUCHMOODLE', 'PUCHLMS'])%}
-            <a class="moodlepr-add" href="#" title="{% trans %}Publish to LMS{% endtrans %}" data-action="click->admin--actions#notifyParent" data-admin--actions-message-param="{{ {mmId: mm.id}|json_encode }}"><i class="mdi-editor-insert-photo"></i></a>
+            <a class="moodlepr-add" href="#" title="{% trans %}Publish to LMS{% endtrans %}" data-action="click->admin--actions#notifyParent" data-admin--actions-message-param="{{ {mmId: mm.id}|json_encode }}"><i class="fa-solid fa-image"></i></a>
         {% endif %}
     </td>
 {% endif %}

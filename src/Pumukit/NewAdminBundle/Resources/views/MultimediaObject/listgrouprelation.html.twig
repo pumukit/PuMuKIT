@@ -3,9 +3,9 @@
   <div class="card-header">
     {% trans %}ADMIN GROUPS{% endtrans %}&nbsp;
     {% if template %}
-    <i class="mdi-action-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Groups that can admin this series{% endtrans %}"></i>
+    <i class="fa-solid fa-circle-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Groups that can admin this series{% endtrans %}"></i>
     {% else %}
-    <i class="mdi-action-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Groups that can admin this multimedia object{% endtrans %}"></i>
+    <i class="fa-solid fa-circle-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Groups that can admin this multimedia object{% endtrans %}"></i>
     {% endif %}
   </div>
   {% set can_modify_groups = app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::MODIFY_OWNER')) %}

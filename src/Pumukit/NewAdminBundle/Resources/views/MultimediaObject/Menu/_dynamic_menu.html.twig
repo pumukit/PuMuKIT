@@ -2,7 +2,7 @@
     {% if app.user and is_granted(item.accessRole) %}
         <li>
             <a href="{{ path(item.uri, {'id': mm.id}) }}" {% if not item.fullscreen|default(false) %} data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal" {% endif %}>
-                <i class="{{ item.icon|default('mdi-action-list') }}"></i> {{ item.name | trans }}
+                <i class="{{ item.icon|default('fa-solid fa-list') }}"></i> {{ item.name | trans }}
             </a>
         </li>
     {% endif %}

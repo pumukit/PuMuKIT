@@ -1,20 +1,20 @@
 <div class="dropdown">
-    <i class="mdi-navigation-menu" id="list_pics_{{ oneseries.id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+    <i class="fa-solid fa-bars" id="list_pics_{{ oneseries.id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
     <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_{{ oneseries.id }}">
         <li>
             <a class="dropdown-item" title="{% trans %}List multimedia objects of the series{% endtrans %}" href="{{ path('pumukitnewadmin_mms_index', {'id': oneseries.id}) }}">
-                <i class="mdi-action-list"></i> {% trans %}List multimedia objects of the series{% endtrans %}
+                <i class="fa-solid fa-list"></i> {% trans %}List multimedia objects of the series{% endtrans %}
             </a>
         </li>
         {% if not is_naked() %}
             <li>
                 <a class="dropdown-item" title="{% trans %}Modify all multimedia objects status{% endtrans %}" href="{{ path('pumukitnewadmin_series_changepub', {'id': oneseries.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
-                    <i class="mdi-action-visibility"></i> {% trans %}Modify all multimedia objects status{% endtrans %}
+                    <i class="fa-solid fa-eye"></i> {% trans %}Modify all multimedia objects status{% endtrans %}
                 </a>
             </li>
             <li>
                 <a class="dropdown-item" title="{% trans %}Change broadcast profile{% endtrans %}" href="{{ path('pumukitnewadmin_series_updatebroadcast', {'id': oneseries.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
-                    <i class="mdi-av-play-arrow"></i> {% trans %}Modify all broadcasts{% endtrans %}
+                    <i class="fa-solid fa-play"></i> {% trans %}Modify all broadcasts{% endtrans %}
                 </a>
             </li>
             <li>
@@ -24,7 +24,7 @@
                    data-admin--actions-data-param="{{ {_method: 'POST'}|json_encode }}"
                    data-admin--actions-confirm-param="{{ 'Are you sure you want to clone this series?'|trans }}"
                    data-admin--actions-success-param="{{ 'Series successfully cloned.'|trans }}">
-                    <i class="mdi-content-content-copy"></i> {% trans %}Clone series{% endtrans %}
+                    <i class="fa-solid fa-copy"></i> {% trans %}Clone series{% endtrans %}
                 </a>
             </li>
         {% endif %}
@@ -35,12 +35,12 @@
                data-admin--actions-clear-param="{{ {name: 'series', id: oneseries.id, message: 'Select any series.'|trans}|json_encode }}"
                data-admin--actions-confirm-param="{{ 'Are you sure you want to delete the series'|trans }} &quot;{{ oneseries.getTitle() }}&quot;? {{ 'This series has'|trans }} {{ numV }} {{ 'multimedia object(s)'|trans }} {{ 'and'|trans }} {{ numL }} {{ 'live event(s)'|trans }}."
                data-admin--actions-success-param="{{ 'Series'|trans }} &quot;{{ oneseries.getTitle() }}&quot; {{ 'successfully deleted'|trans }}.">
-                <i class="mdi-content-clear"></i> {% trans %}Delete the series{% endtrans %}
+                <i class="fa-solid fa-xmark"></i> {% trans %}Delete the series{% endtrans %}
             </a>
         </li>
         <li>
             <a class="dropdown-item" href="{{ path('pumukitnewadmin_series_listproperties', {'id': oneseries.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
-                <i class="mdi-action-list"></i> {% trans %}Show properties{% endtrans %}
+                <i class="fa-solid fa-list"></i> {% trans %}Show properties{% endtrans %}
             </a>
         </li>
 
@@ -50,7 +50,7 @@
             {% if app.user and is_granted(item.accessRole) %}
                 <li>
                     <a class="dropdown-item" href="{{ path(item.uri, {'id': oneseries.id}) }}" {% if not item.fullscreen|default(false) %} data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal" {% endif %}>
-                        <i class="{{ item.icon|default('mdi-action-list')}}"></i> {{ item.name | trans }}
+                        <i class="{{ item.icon|default('fa-solid fa-list')}}"></i> {{ item.name | trans }}
                     </a>
                 </li>
             {% endif %}

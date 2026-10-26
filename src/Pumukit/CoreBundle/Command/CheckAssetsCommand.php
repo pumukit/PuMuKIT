@@ -28,7 +28,7 @@ class CheckAssetsCommand extends Command
         'bundles/pumukitnewadmin/js/material.min.js' => 'nothing: Bootstrap Material Design is removed',
         'bundles/pumukitnewadmin/js/ripples.min.js' => 'nothing: Bootstrap Material Design is removed',
         'bundles/pumukitnewadmin/css/ripples.min.css' => 'nothing: Bootstrap Material Design is removed',
-        'bundles/pumukitnewadmin/css/material-wfont.min.css' => 'bundles/pumukitnewadmin/css/backoffice.css and bundles/pumukitnewadmin/css/mdi-icons.css',
+        'bundles/pumukitnewadmin/css/material-wfont.min.css' => 'bundles/pumukitnewadmin/css/backoffice.css (the mdi-* icons are Font Awesome 7 icons, see UPGRADE-6.0.md)',
         'bundles/pumukitnewadmin/js/snackbar.min.js' => 'window.success() and window.no_success() (Bootstrap 5 toasts of the backoffice entrypoint)',
         'bundles/pumukitnewadmin/css/snackbar.min.css' => 'nothing: the backoffice uses Bootstrap 5 toasts',
         'bundles/pumukitwebtv/js/moment-with-locales.min.js' => 'nothing: dates use the native input type="date" (see @PumukitWebTV/Search/filtersmultimediaobjects.html.twig)',
@@ -108,6 +108,55 @@ class CheckAssetsCommand extends Command
 
     public const UNSUPPORTED_TWIG_FUNCTIONS = [
         'render_hinclude' => '<div data-controller="admin--include" data-admin--include-src-value="{{ url(...) }}"></div> (see @PumukitNewAdmin/MultimediaObject/index.html.twig)',
+    ];
+
+    public const MATERIAL_ICONS = [
+        'action-dns' => 'fa-solid fa-server',
+        'action-done' => 'fa-solid fa-check',
+        'action-exit-to-app' => 'fa-solid fa-arrow-up-right-from-square',
+        'action-info' => 'fa-solid fa-circle-info',
+        'action-list' => 'fa-solid fa-list',
+        'action-lock' => 'fa-solid fa-lock',
+        'action-report-problem' => 'fa-solid fa-triangle-exclamation',
+        'action-spellcheck' => 'fa-solid fa-spell-check',
+        'action-translate' => 'fa-solid fa-language',
+        'action-visibility' => 'fa-solid fa-eye',
+        'alert-warning' => 'fa-solid fa-triangle-exclamation',
+        'av-equalizer' => 'fa-solid fa-chart-simple',
+        'av-loop' => 'fa-solid fa-repeat',
+        'av-new-releases' => 'fa-solid fa-circle-exclamation',
+        'av-pause-circle-fill' => 'fa-solid fa-circle-pause',
+        'av-play-arrow' => 'fa-solid fa-play',
+        'av-play-circle-fill' => 'fa-solid fa-circle-play',
+        'av-playlist-add' => 'fa-solid fa-list-ul',
+        'content-add' => 'fa-solid fa-plus',
+        'content-block' => 'fa-solid fa-ban',
+        'content-clear' => 'fa-solid fa-xmark',
+        'content-content-copy' => 'fa-solid fa-copy',
+        'content-content-cut' => 'fa-solid fa-scissors',
+        'content-forward' => 'fa-solid fa-share',
+        'content-save' => 'fa-solid fa-floppy-disk',
+        'device-signal-wifi-0-bar' => 'fa-solid fa-wifi',
+        'device-signal-wifi-4-bar' => 'fa-solid fa-wifi',
+        'device-signal-wifi-off' => 'fa-solid fa-ban',
+        'device-wifi-lock' => 'fa-solid fa-lock',
+        'editor-insert-photo' => 'fa-solid fa-image',
+        'editor-mode-edit' => 'fa-solid fa-pencil',
+        'editor-vertical-align-bottom' => 'fa-solid fa-arrows-down-to-line',
+        'editor-vertical-align-top' => 'fa-solid fa-arrows-up-to-line',
+        'file-file-download' => 'fa-solid fa-download',
+        'file-folder' => 'fa-solid fa-folder',
+        'hardware-keyboard-arrow-down' => 'fa-solid fa-angle-down',
+        'image-add-to-photos' => 'fa-solid fa-square-plus',
+        'image-camera' => 'fa-solid fa-camera',
+        'image-camera-alt' => 'fa-solid fa-camera',
+        'image-camera-roll' => 'fa-solid fa-film',
+        'image-timer-auto' => 'fa-solid fa-circle-user',
+        'navigation-chevron-right' => 'fa-solid fa-angle-right',
+        'navigation-expand-more' => 'fa-solid fa-angle-down',
+        'navigation-menu' => 'fa-solid fa-bars',
+        'navigation-refresh' => 'fa-solid fa-arrows-rotate',
+        'social-group' => 'fa-solid fa-users',
     ];
 
     public const REMOVED_JQUERY_APIS = [
@@ -263,6 +312,7 @@ class CheckAssetsCommand extends Command
     private const PORTAL_LAYOUT = 'PumukitWebTVBundle/Layout/template.html.twig';
     private const UTILITIES_STYLESHEET = 'bundles/pumukitcore/css/pumukit-utilities.css';
     private const FONT_AWESOME_STYLESHEET = 'vendor/fontawesome/css/all.min.css';
+    private const MATERIAL_ICON_PATTERN = '/(?<![\w.-])mdi-([a-z][a-z0-9-]*)/';
     private const ICON_PATTERN = '/(?<![\w-])(?:fa|fas|far|fab|fa-solid|fa-regular|fa-brands)\s+fa-([a-z0-9-]+)/';
     private const OPTIONAL_TEMPLATE_PATTERN = '#\{%-?\s*(extends|include|embed)\s*\[|ignore missing#';
 
@@ -292,7 +342,8 @@ in the Twig templates of a directory and reports the ones that no installed bund
 When the asset or template was moved, it shows the one that replaces it. It also reports an
 overridden portal layout (<comment>PumukitWebTVBundle/Layout/template.html.twig</comment>) that does not
 load <comment>importmap('pumukit')</comment> or <comment>bundles/pumukitcore/css/pumukit-utilities.css</comment>, the jQuery utilities that jQuery 4 removed (<comment>$.trim</comment>,
-<comment>$.isArray</comment>...) and the Font Awesome icons that Font Awesome 7 does not provide.
+<comment>$.isArray</comment>...), the Font Awesome icons that Font Awesome 7 does not provide and the removed Material Design
+icons (<comment>mdi-*</comment>).
 
 Run it on the overridden templates of a project before upgrading PuMuKIT. It exits with an
 error code when a missing asset is found.
@@ -334,6 +385,13 @@ EOT
                         $output->writeln('Removed JavaScript global: <info>'.$global.'</info> in '.$location);
                         $output->writeln('    use <comment>'.self::removedGlobals()[$global].'</comment>');
                     }
+                }
+
+                preg_match_all(self::MATERIAL_ICON_PATTERN, $line, $matches);
+                foreach (array_unique($matches[1]) as $materialIcon) {
+                    ++$missing;
+                    $output->writeln('Removed Material Design icon: <info>mdi-'.$materialIcon.'</info> in '.$location.', the backoffice no longer loads its font');
+                    $output->writeln('    use <comment>'.(self::MATERIAL_ICONS[$materialIcon] ?? 'a Font Awesome 7 icon (fa-solid fa-...)').'</comment>');
                 }
 
                 if ([] !== $icons) {

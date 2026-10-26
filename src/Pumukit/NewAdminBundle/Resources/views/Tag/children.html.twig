@@ -18,17 +18,17 @@
                        {% if tag.getNumberMultimediaObjects() > 0 %}data-admin--tag-tree-blocked-param="{{ 'Can not delete tag with code'|trans }} {{ tag.cod }}. {{ tag.getNumberMultimediaObjects() }} {{ 'Multimedia Object(s) has/have this tag'|trans }}."{% endif %}
                        data-admin--tag-tree-confirm-param="{{ 'Are you sure you want to delete the tag with code'|trans }} {{ tag.cod }}?"
                        data-admin--tag-tree-success-param="{{ 'Tag'|trans }} &quot;{{ tag.cod }}&quot; {{ 'successfully deleted'|trans }}." class="tag_delete_{{ tag.cod }}">
-                        <i class="mdi-content-clear"></i>
+                        <i class="fa-solid fa-xmark"></i>
                     </a>
                 </td>
                 <td headers="th-icons">
                     <a title="{% trans %}Edit tag {% endtrans %} {{ tag.cod }}" href="{{ path('pumukitnewadmin_tag_update', {'id': tag.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal" class="tag_edit_{{ tag.cod }}">
-                        <i class="mdi-editor-mode-edit"></i>
+                        <i class="fa-solid fa-pencil"></i>
                     </a>
                 </td>
                 <td headers="th-icons">
                     <a title="{% trans %}Create child tag for{% endtrans %} {{ tag.cod }}" href="{{ path('pumukitnewadmin_tag_create', {'parent': tag.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal" class="tag_create_children_{{ tag.cod }}">
-                        <i class="mdi-image-add-to-photos"></i>
+                        <i class="fa-solid fa-square-plus"></i>
                     </a>
                 </td>
                 <td headers="th-code" class="{{ has_children?'collapsed noload':'element' }}">
@@ -38,7 +38,7 @@
                 </td>
                 <td headers="th-name" class="{{ has_children?'collapsed noload':'element' }}">
                     <span class="pmk-padding-left-{{ 10 * tag.level }}" data-action="click->admin--tag-tree#toggle" data-admin--tag-tree-id-param="{{ tag.id|json_encode }}" data-admin--tag-tree-cod-param="{{ tag.cod }}">
-                      <i class="mdi- tag_icon tag_children_{{ tag.cod }}"></i>
+                      <i class="fa-solid tag_icon tag_children_{{ tag.cod }}"></i>
                         {{ tag.title }}
                     </span>
                 </td>

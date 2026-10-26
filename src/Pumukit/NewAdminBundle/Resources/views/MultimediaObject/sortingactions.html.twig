@@ -4,7 +4,7 @@
         {% apply pumukit_spaceless %}
             <a class="pmk-color-00786d" href="{{ path('pumukitnewadmin_mms_down', {'id': mm.id}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
             <a href="{{ path('pumukitnewadmin_mms_bottom', {'id': mm.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}">
-                <i class="mdi-editor-vertical-align-top"></i>
+                <i class="fa-solid fa-arrows-up-to-line"></i>
             </a>
         {% endapply %}
     {% endif %}
@@ -14,7 +14,7 @@
         {% apply pumukit_spaceless %}
             <a class="pmk-color-00786d" href="{{ path('pumukitnewadmin_mms_up', {'id': mm.id}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
             <a href="{{ path('pumukitnewadmin_mms_top', {'id': mm.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}">
-                <i class="mdi-editor-vertical-align-bottom"></i>
+                <i class="fa-solid fa-arrows-down-to-line"></i>
             </a>
         {% endapply %}
     {% endif %}

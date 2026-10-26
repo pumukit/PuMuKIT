@@ -31,16 +31,16 @@
                     </td>
                     <td headers="th-icons">
                         <a title="{% trans %}Edit Person{% endtrans %} {{ person.getHName() }}" href="{{ path('pumukitnewadmin_person_update', {'id': person.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
-                            <i class="mdi-editor-mode-edit"></i>
+                            <i class="fa-solid fa-pencil"></i>
                         </a>
                     </td>
                     <td headers="th-icons">
                         {% if app.user and not is_granted('ROLE_SCOPE_GLOBAL') %}
-                            <i title="{% trans %}You don't have enough permissions to access this content.{% endtrans %}" class="mdi-content-block pmk-color-009587"></i>
+                            <i title="{% trans %}You don't have enough permissions to access this content.{% endtrans %}" class="fa-solid fa-ban pmk-color-009587"></i>
                         {% elseif person.getUser() %}
-                            <i title="{% trans %}Can't delete Person{% endtrans %} '{{ person.name }}'. {% trans %}There is a referenced User{% endtrans %}." class="mdi-content-block pmk-color-009587"></i>
+                            <i title="{% trans %}Can't delete Person{% endtrans %} '{{ person.name }}'. {% trans %}There is a referenced User{% endtrans %}." class="fa-solid fa-ban pmk-color-009587"></i>
                         {% elseif countMmPeople[person.id] != 0 %}
-                            <i title="{% trans %}Cannot delete the data of{% endtrans %} '{{ person.name }}'. '{{ countMmPeople[person.id] }}' {% trans %}multimedia object(s) contain(s) this person{% endtrans %}." class="mdi-content-block pmk-color-009587"></i>
+                            <i title="{% trans %}Cannot delete the data of{% endtrans %} '{{ person.name }}'. '{{ countMmPeople[person.id] }}' {% trans %}multimedia object(s) contain(s) this person{% endtrans %}." class="fa-solid fa-ban pmk-color-009587"></i>
                         {% else %}
                             <a href="#" title="Delete Person '{{ person.name }}'" data-action="click->admin--actions#remove"
                                data-admin--actions-url-param="{{ path('pumukitnewadmin_person_delete', {'id': person.id}) }}"
@@ -48,7 +48,7 @@
                                data-admin--actions-confirm-param="{{ 'Are you sure you want to delete the data of'|trans }} {{ person.getHName() }}?"
                                data-admin--actions-success-param="{{ 'Person'|trans }} &quot;{{ person.getHName() }}&quot; {{ 'successfully deleted.'|trans }}"
                                data-admin--actions-error-param="{{ 'Error deleting Person'|trans }} &quot;{{ person.getHName() }}&quot;">
-                                <i class="mdi-content-clear"></i>
+                                <i class="fa-solid fa-xmark"></i>
                             </a>
                         {% endif %}
                     </td>

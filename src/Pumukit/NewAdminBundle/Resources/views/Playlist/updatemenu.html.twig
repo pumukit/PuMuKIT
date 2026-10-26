@@ -1,9 +1,9 @@
 <div class="dropdown">
-  <i class="mdi-navigation-menu" id="list_pics_{{ oneseries.id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+  <i class="fa-solid fa-bars" id="list_pics_{{ oneseries.id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
   <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_{{ oneseries.id }}">
     <li>
       <a class="dropdown-item" title="{% trans %}List multimedia objects of the playlist{% endtrans %}" href="{{ path('pumukitnewadmin_playlistmms_index', {'id': oneseries.id }) }}">
-        <i class="mdi-action-list"></i> {% trans %}List multimedia objects of the playlist{% endtrans %}
+        <i class="fa-solid fa-list"></i> {% trans %}List multimedia objects of the playlist{% endtrans %}
       </a>
     </li>
     <li>
@@ -13,7 +13,7 @@
          data-admin--actions-clear-param="{{ {name: 'playlist', id: oneseries.id, message: 'Select any playlist.'|trans}|json_encode }}"
          data-admin--actions-confirm-param="{{ 'Are you sure you want to delete the playlist'|trans }} &quot;{{ oneseries.getTitle() }}&quot;? {{ 'This playlist has'|trans }} {{ oneseries|count_multimedia_objects }} {{ 'multimedia object(s)'|trans }}."
          data-admin--actions-success-param="{{ 'Playlist'|trans }} &quot;{{ oneseries.getTitle() }}&quot; {{ 'successfully deleted'|trans }}.">
-        <i class="mdi-content-clear"></i> {% trans %}Delete the playlist{% endtrans %}
+        <i class="fa-solid fa-xmark"></i> {% trans %}Delete the playlist{% endtrans %}
       </a>
     </li>
     <li>

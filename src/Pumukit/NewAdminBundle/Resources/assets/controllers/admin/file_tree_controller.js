@@ -71,7 +71,7 @@ export default class extends Controller {
         const indent = document.createElement('span');
         indent.style.paddingLeft = `${10 * num}px`;
         const icon = document.createElement('i');
-        icon.className = 'mdi- tag_icon';
+        icon.className = 'fa-solid tag_icon';
         indent.append(icon);
         const label = document.createElement('span');
         if (null !== title) {

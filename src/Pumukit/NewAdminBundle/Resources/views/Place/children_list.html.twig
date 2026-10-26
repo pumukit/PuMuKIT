@@ -12,19 +12,19 @@
 
             <td headers="th-icons">
                 <a class="delete_children_tag" href="#" data-action="click->admin--places#remove" data-admin--places-id-param="{{ tag.id|json_encode }}" data-admin--places-parent-param="{{ tag.parent.id|json_encode }}" data-admin--places-success-param="{{ 'Precinct successfully deleted.'|trans }}" title="{% trans %}delete{% endtrans %}">
-                    <i class="mdi-content-clear"></i>
+                    <i class="fa-solid fa-xmark"></i>
                 </a>
             </td>
 
             <td headers="th-icons">
                 <a title="{% trans %}Edit tag {% endtrans %}" href="{{ path('pumukitnewadmin_places_update', {'id': tag.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
-                    <i class="mdi-editor-mode-edit"></i>
+                    <i class="fa-solid fa-pencil"></i>
                 </a>
             </td>
 
             {#<td headers="th-icons">
                 <a title="{% trans %}Clone precinct{% endtrans %}">
-                    <i class="mdi-content-content-copy"></i>
+                    <i class="fa-solid fa-copy"></i>
                 </a>
             </td>#}
 

@@ -93,7 +93,7 @@
     background-color: #e4e4e4;
 }
 
-.chip i.material-icons {
+.chip i.chip-remove {
     cursor: pointer;
     float: right;
     font-size: 16px;

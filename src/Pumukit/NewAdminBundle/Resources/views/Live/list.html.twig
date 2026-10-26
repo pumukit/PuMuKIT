@@ -36,7 +36,7 @@
             </td>
             <td headers="th-icons">
               <a title="{% trans %}Edit live channel{% endtrans %} {{ live.id }}" href="{{ path('pumukitnewadmin_live_update', {'id': live.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
-                <i class="mdi-editor-mode-edit"></i>
+                <i class="fa-solid fa-pencil"></i>
               </a>
             </td>
             <td headers="th-icons">
@@ -48,7 +48,7 @@
                data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this live channel?'|trans }}"
                data-admin--actions-success-param="{{ 'Live channel successfully deleted.'|trans }}"
                data-admin--actions-error-param="{{ 'Delete error. Live channel channel is associated to live event.'|trans }}" title="{% trans %}Delete live channel{% endtrans %}">
-                <i class="mdi-content-clear"></i>
+                <i class="fa-solid fa-xmark"></i>
               </a>
             </td>
             <td headers="th-name" data-action="click->admin--actions#preview" data-admin--actions-name-param="live" data-admin--actions-url-param="{{ path('pumukitnewadmin_live_show', {'id': live.id}) }}">

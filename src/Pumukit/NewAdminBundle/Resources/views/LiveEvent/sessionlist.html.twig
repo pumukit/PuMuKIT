@@ -14,13 +14,13 @@
                     <tr>
                         <td>
                             <a class="clone_session" href="#" data-action="click->admin--live-event#session" data-admin--live-event-url-param="{{ path('pumukit_new_admin_live_event_clone_session', {'multimediaObject': multimediaObject.getId(), 'session_id': session.id }) }}" data-admin--live-event-list-param="{{ path('pumukit_new_admin_live_event_session_list', {'id': multimediaObject.getId()}) }}">
-                                <i class="mdi-content-content-copy"></i>
+                                <i class="fa-solid fa-copy"></i>
                             </a>
                             <a class="edit_session" data-action="click->admin--actions#load" data-admin--actions-url-param="{{ path('pumukit_new_admin_live_event_session_modal', {'multimediaObject': multimediaObject.getId(), 'session_id': session.id }) }}" data-admin--actions-target-param=".modal-session" href="#" title="{% trans %}Edit session{% endtrans %}" data-session_id="" data-bs-toggle="modal" data-bs-target="#updatesessionmodal">
-                                <i class="mdi-editor-mode-edit"></i>
+                                <i class="fa-solid fa-pencil"></i>
                             </a>
                             <a class="delete_session" data-action="click->admin--live-event#session" data-admin--live-event-url-param="{{ path('pumukit_new_admin_live_event_session_delete', {'multimediaObject': multimediaObject.getId(), 'session_id': session.id }) }}" data-admin--live-event-list-param="{{ path('pumukit_new_admin_live_event_session_list', {'id': multimediaObject.getId()}) }}" data-admin--live-event-confirm-param="{{ 'Are you sure?'|trans }}" data-admin--live-event-form-param="#event_session_form" href="#" title="{% trans %}Delete session{% endtrans %}">
-                                <i class="mdi-content-clear"></i>
+                                <i class="fa-solid fa-xmark"></i>
                             </a>
                         </td>
                         <td header="th-id">{{ session.id  }}</td>

@@ -31,7 +31,7 @@
                             <div id="taglist_{{ mtag.getCod() }}" class="unesco_tags" draggable="false">
                                 <span class="badge text-bg-secondary">{{ mtag.title }} |
                                     <a href="#" data-cod="{{ mtag.getCod() }}" data-href="{{ path('pumukitnewadmin_unesco_delete_tag', {'tagCod': mtag.getCod(), "multimediaObjectId": mm.getId() }) }}" class="delete_tag_unesco" data-action="click->admin--unesco#removeTag" data-admin--unesco-url-param="{{ path('pumukitnewadmin_unesco_delete_tag', {'tagCod': mtag.getCod(), "multimediaObjectId": mm.getId() }) }}" data-admin--unesco-cod-param="{{ mtag.getCod()|json_encode }}">
-                                        <i class="mdi-content-clear"></i>
+                                        <i class="fa-solid fa-xmark"></i>
                                     </a>
                                 </span>
                             </div>

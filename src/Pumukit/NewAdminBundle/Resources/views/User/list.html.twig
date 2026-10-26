@@ -41,15 +41,15 @@
           <td headers="th-icons">
             {% if user.isLocal() %}
             <a title="{% trans %}Edit non local user{% endtrans %} {{ user.fullname }}" href="{{ path('pumukitnewadmin_user_update', {'id': user.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
-              <i class="mdi-editor-mode-edit"></i>
+              <i class="fa-solid fa-pencil"></i>
             </a>
             {% else %}
                 {% if is_granted('ROLE_ADMIN') %}
                 <a title="{% trans %}Edit User{% endtrans %} {{ user.fullname }}" href="{{ path('pumukitnewadmin_user_update', {'id': user.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
-                  <i class="mdi-editor-mode-edit"></i>
+                  <i class="fa-solid fa-pencil"></i>
                 </a>
                 {% else %}
-                <i data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}External defined users can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-editor-mode-edit pmk-color-grey-i"></i>
+                <i data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}External defined users can not be edited here, contact your directory service administrator.{% endtrans %}" class="fa-solid fa-pencil pmk-color-grey-i"></i>
                 {% endif %}
             {% endif %}
           </td>
@@ -61,15 +61,15 @@
                data-admin--actions-confirm-param="{{ 'Are you sure you want to delete the user'|trans }} {{ user.fullname }}?"
                data-admin--actions-success-param="{{ 'User'|trans }} &quot;{{ user.fullname }}&quot; {{ 'successfully deleted.'|trans }}"
                data-admin--actions-error-param="{{ 'Error deleting user'|trans }}" title="{% trans %}Delete User{% endtrans %}">
-              <i class="mdi-content-clear"></i>
+              <i class="fa-solid fa-xmark"></i>
             </a>
             {% else %}
-            <i data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}External defined users can not be deleted here, contact your directory service administrator.{% endtrans %}" class="mdi-content-clear pmk-color-grey-i"></i>
+            <i data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}External defined users can not be deleted here, contact your directory service administrator.{% endtrans %}" class="fa-solid fa-xmark pmk-color-grey-i"></i>
             {% endif %}
           </td headers="th-icons">
           <td>
             <a href="{{ path('pumukitnewadmin_user_editgroups', {'id': user.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal" title="{% trans %}User Groups{% endtrans %}">
-              <i class="mdi-social-group" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}User Groups{% endtrans %}"></i>
+              <i class="fa-solid fa-users" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}User Groups{% endtrans %}"></i>
             </a>
           </td>
           <td headers="th-name">

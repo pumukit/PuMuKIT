@@ -22,9 +22,9 @@
                     <div class="col-10 input-group hidden-naked">
                         <input type="text" class="form-control" id="inputROUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ url('pumukit_webtv_series_index', {id: series.id}) }}">
                         {% if series.isHide() %}
-                            <span class="input-group-text"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error while this series is hidden.{% endtrans %}"></i></span>
+                            <span class="input-group-text"><i class="fa-solid fa-triangle-exclamation" title="{% trans %}Warning: This link will give a 404 error while this series is hidden.{% endtrans %}"></i></span>
                         {% else %}
-                            <span class="input-group-text"><a href="{{ url('pumukit_webtv_series_index', {id: series.id}) }}" target="_blank" title="Url"><i class="mdi-action-exit-to-app"></i></a></span>
+                            <span class="input-group-text"><a href="{{ url('pumukit_webtv_series_index', {id: series.id}) }}" target="_blank" title="Url"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></span>
                         {% endif %}
                     </div>
                     {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_SERIES_MAGIC_URL')) %}
@@ -34,9 +34,9 @@
                     <div class="col-10 input-group hidden-naked">
                         <input type="text" class="form-control" id="inputROMagicUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ url('pumukit_webtv_series_magicindex', {secret: series.secret}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
                         {% if series.isHide() %}
-                            <span class="input-group-text"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error while this series is hidden.{% endtrans %}"></i></span>
+                            <span class="input-group-text"><i class="fa-solid fa-triangle-exclamation" title="{% trans %}Warning: This link will give a 404 error while this series is hidden.{% endtrans %}"></i></span>
                         {% else %}
-                            <span class="input-group-text"><a id="alinkROMagicUrl" href="{{ url('pumukit_webtv_series_magicindex', {secret: series.secret}) }}" target="_blank" title="{% trans %}Magic URL{% endtrans %}"><i class="mdi-action-exit-to-app"></i></a></span>
+                            <span class="input-group-text"><a id="alinkROMagicUrl" href="{{ url('pumukit_webtv_series_magicindex', {secret: series.secret}) }}" target="_blank" title="{% trans %}Magic URL{% endtrans %}"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></span>
                         {% endif %}
                         <span class="input-group-text">
                             <a href="#" data-action="click->admin--actions#magicUrl"
@@ -47,7 +47,7 @@
                                data-admin--actions-input-param="#inputROMagicUrl"
                                data-admin--actions-link-param="#alinkROMagicUrl"
                                title="{% trans %}Generate a new magic series link{% endtrans %}">
-                                <i class="mdi-av-loop"></i>
+                                <i class="fa-solid fa-repeat"></i>
                             </a>
                         </span>
                     </div>

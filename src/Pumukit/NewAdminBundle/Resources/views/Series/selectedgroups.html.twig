@@ -3,7 +3,7 @@
    id="add_{{ resource_name }}_group_{{ group.id }}"
    data-group-id="{{ group.id }}"
    data-action="click->admin--group-lists#select dblclick->admin--group-lists#toggle">
-  <i class="mdi-social-group"></i>
+  <i class="fa-solid fa-users"></i>
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
     {{ group.key }} - {{ group.name }} - ({{ group.origin }})
   {% else %}

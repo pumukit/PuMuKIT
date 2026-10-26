@@ -9,14 +9,14 @@
         <li id="children_{{ tagDefault['key'] }}" data-tag="{{ tagDefault['key'] }}" draggable="false" data-href="{{ path('pumukitnewadmin_unesco_list', {'tag' : tagDefault['key']}) }}" class="unescoTags unescoTagsNoSave{% if (app.session.get('admin/unesco/tag') == tagDefault['key']) or (not app.session.get('admin/unesco/tag') and tagDefault['key'] == 2) %} pmk-background-color-eaeaea{% endif %}"
             data-action="click->admin--unesco#filterTag" data-admin--unesco-tag-param="{{ tagDefault['key']|json_encode }}" data-admin--unesco-url-param="{{ path('pumukitnewadmin_unesco_list', {'tag' : tagDefault['key']}) }}">
             <a class="pmk-color-rgba-0-0-0-_84 pmk-text-decoration-none" href="#" title="{{ tagDefault['title'] }}">
-                <span class="mdi-file-folder"></span> <strong  draggable="false">{{ tagDefault['title'] }} [{{ tagDefault['count'] }}]</strong>
+                <span class="fa-solid fa-folder"></span> <strong  draggable="false">{{ tagDefault['title'] }} [{{ tagDefault['count'] }}]</strong>
             </a>
         </li>
     {% endfor %}
 
     {% for parent, tag in tags %}
         <li class="pmk-cursor-pointer" draggable="false" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#collapse_{{ loop.index }}" aria-expanded="true" aria-controls="collapse_{{ loop.index }}">
-            <span class="mdi-action-list"></span>
+            <span class="fa-solid fa-list"></span>
              <strong>{{ parent }}</strong>
         </li>
         <ul id="collapse_{{ loop.index }}" class="collapse show draggableTags pmk-padding-left-20">
@@ -25,7 +25,7 @@
                     <a class="unescoTags" href="#" draggable="false" data-tag="{{ children.getCod() }}" data-href="{{ path('pumukitnewadmin_unesco_list', {'tag' : children.getCod() }) }}" title="{{ children.getTitle(app.request.getLocale()) }}"
                        data-action="click->admin--unesco#filterTag drop->admin--unesco#dropRows dragenter->admin--unesco#allowDrop dragover->admin--unesco#allowDrop"
                        data-admin--unesco-tag-param="{{ children.getCod()|json_encode }}" data-admin--unesco-url-param="{{ path('pumukitnewadmin_unesco_list', {'tag' : children.getCod() }) }}" data-admin--unesco-cod-param="{{ children.getCod()|json_encode }}">
-                        <span class="mdi-file-folder" draggable="false"></span>
+                        <span class="fa-solid fa-folder" draggable="false"></span>
                         <span draggable="false">
                             {{ children.getTitle(app.request.getLocale()) }}
                             {% if is_granted('ROLE_SCOPE_GLOBAL') %}[{% endif %}<span id="count_tag_{{ children.getCod() }}"{% if not is_granted('ROLE_SCOPE_GLOBAL') %} class="pmk-display-none"{% endif %}>{{ children.getNumberMultimediaObjects() }}</span>{% if is_granted('ROLE_SCOPE_GLOBAL') %}]{% endif %}

@@ -7,7 +7,7 @@
         <a title="{% trans %}Edit file of multimedia object{% endtrans %} {{ link.id }}"
            data-bs-toggle="modal" data-bs-backdrop="static" data-bs-dismiss="modal" data-bs-target="#myModal"
            href="{{ path('pumukitnewadmin_link_update', {'id': link.id, 'mmId': mmId}) }}">
-          <i class="mdi-editor-mode-edit"></i>
+          <i class="fa-solid fa-pencil"></i>
         </a>
       </td>
       <td>
@@ -15,7 +15,7 @@
                data-admin--actions-url-param="{{ path('pumukitnewadmin_link_delete', {'id': link.id, 'mmId': mmId}) }}"
                data-admin--actions-target-param="#links_mms_{{ mmId }}"
                data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this link?'|trans }}">
-             <i class="mdi-content-clear"></i>
+             <i class="fa-solid fa-xmark"></i>
           </a>
       </td>
       <td>

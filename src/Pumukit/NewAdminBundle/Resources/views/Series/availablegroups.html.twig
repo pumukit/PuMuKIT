@@ -4,7 +4,7 @@
    data-group-id="{{ group.id }}"
    data-action="click->admin--group-lists#select dblclick->admin--group-lists#toggle"
    class="list-group-item notload delete-{{ resource_name }}-group-item pumukitnewadmin-trim-row group_{{ group.key }}">
-  <i class="mdi-social-group"></i>
+  <i class="fa-solid fa-users"></i>
   {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::SHOW_CODES')) %}
     {{ group.key }} - {{ group.name }} - ({{ group.origin }})
   {% else %}

@@ -25,7 +25,7 @@
                     </td>
                     {% if not is_naked() %}
                         <td class="pmk-width-1em" headers="th-icons">
-                            {{ mm.containsTagWithCod('PUDENEW')?'<i class="mdi-action-spellcheck">':'&nbsp;' }}
+                            {{ mm.containsTagWithCod('PUDENEW')?'<i class="fa-solid fa-spell-check">':'&nbsp;' }}
                         </td>
                     {% endif %}
                     {% include '@PumukitNewAdmin/MultimediaObject/lms_options.html.twig' %}
@@ -55,7 +55,7 @@
                     <td headers="th-duration" class="text-center" data-action="click->admin--actions#edit" data-admin--actions-name-param="mm" data-admin--actions-show-param="{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}">
                         {% if mm.isVideoAudioType() %}{{ mm.getRealDuration()| duration_string }}{% else %}0{% endif %}
                         {% if mm.getProperty('soft-editing-duration') %}
-                            <i class="mdi-content-content-cut" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
+                            <i class="fa-solid fa-scissors" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ mmobj_duration(mm) | duration_string }}"></i>
                         {% endif %}
                     </td>
                     <td headers="th-rec-date" class="text-nowrap" data-action="click->admin--actions#edit" data-admin--actions-name-param="mm" data-admin--actions-show-param="{{ path('pumukitnewadmin_mms_show', {'id': mm.id}) }}" data-admin--actions-update-param="{{ path('pumukitnewadmin_mms_edit', {'id': mm.id}) }}">

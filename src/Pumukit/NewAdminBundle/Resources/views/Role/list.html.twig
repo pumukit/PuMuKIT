@@ -36,7 +36,7 @@
           </td>
           <td headers="th-icons">
             <a title="{% trans %}Edit Role{% endtrans %} {{ role.cod }}" href="{{ path('pumukitnewadmin_role_update', {'id': role.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
-              <i class="mdi-editor-mode-edit"></i>
+              <i class="fa-solid fa-pencil"></i>
             </a>
           <td headers="th-icons">
             <a title="{% trans %}Delete role{% endtrans %}" href="#" data-action="click->admin--actions#remove"
@@ -45,14 +45,14 @@
                {% if role.getNumberPeopleInMultimediaObject() != 0 %}data-admin--actions-blocked-param="{{ 'Impossible to delete, role with'|trans }} {{ role.getNumberPeopleInMultimediaObject() }} {{ 'people'|trans }}"{% endif %}
                data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this role?'|trans }}"
                data-admin--actions-success-param="{{ 'Role successfully deleted.'|trans }}">
-              <i class="mdi-content-clear"></i>
+              <i class="fa-solid fa-xmark"></i>
             </a>
           </td>
           <td headers="th-icons">
               {% if roles.getCurrentPage() != 1 or not loop.first %}
               {% apply pumukit_spaceless %}
               <a href="{{ path('pumukitnewadmin_role_down', {'id': role.id}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
-              <a href="{{ path('pumukitnewadmin_role_bottom', {'id': role.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="mdi-editor-vertical-align-top"></i></a>
+              <a href="{{ path('pumukitnewadmin_role_bottom', {'id': role.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="fa-solid fa-arrows-up-to-line"></i></a>
               {% endapply %}
               {% endif %}
           </td>
@@ -60,7 +60,7 @@
               {% if (roles.getCurrentPage() != roles.getNbPages()) or (loop.index + ((roles.getCurrentPage() - 1 ) * roles.getMaxPerPage()) != roles.getNbResults())  %}
               {% apply pumukit_spaceless %}
               <a href="{{ path('pumukitnewadmin_role_up', {'id': role.id}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
-              <a href="{{ path('pumukitnewadmin_role_top', {'id': role.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="mdi-editor-vertical-align-bottom"></i></a>
+              <a href="{{ path('pumukitnewadmin_role_top', {'id': role.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="fa-solid fa-arrows-down-to-line"></i></a>
               {% endapply %}
               {% endif %}
           </td>

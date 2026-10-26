@@ -1,5 +1,5 @@
 <div class="dropdown">
-    <i class="mdi-navigation-menu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+    <i class="fa-solid fa-bars" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
 
     <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_mm_{{ mm.id }}">
 
@@ -11,7 +11,7 @@
                data-admin--actions-not-found-param="{{ path('pumukitnewadmin_series_index') }}"
                data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this multimedia object?'|trans }}"
                data-admin--actions-success-param="{{ 'Multimedia Object successfully deleted.'|trans }}">
-                <i class="mdi-content-clear"></i>{% trans %}Delete multimedia object{% endtrans %}
+                <i class="fa-solid fa-xmark"></i>{% trans %}Delete multimedia object{% endtrans %}
             </a>
         </li>
 
@@ -24,7 +24,7 @@
                data-admin--actions-data-param="{{ {_method: 'POST'}|json_encode }}"
                data-admin--actions-confirm-param="{{ 'Are you sure you want to clone this multimedia object?'|trans }}"
                data-admin--actions-success-param="{{ 'Multimedia Object successfully cloned.'|trans }}">
-                <i class="mdi-content-content-copy"></i>{% trans %}Clone multimedia object{% endtrans %}
+                <i class="fa-solid fa-copy"></i>{% trans %}Clone multimedia object{% endtrans %}
             </a>
         </li>
 

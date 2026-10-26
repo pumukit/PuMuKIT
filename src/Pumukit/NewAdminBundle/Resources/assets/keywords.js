@@ -216,7 +216,7 @@ export class KeywordsInput {
             chip.className = 'chip';
             chip.dataset.item = word;
             const remove = document.createElement('i');
-            remove.className = 'material-icons mdi-content-clear';
+            remove.className = 'chip-remove fa-solid fa-xmark';
             remove.dataset.role = 'remove';
             chip.append(word, remove);
             this.wrapper.before(chip, ' ');

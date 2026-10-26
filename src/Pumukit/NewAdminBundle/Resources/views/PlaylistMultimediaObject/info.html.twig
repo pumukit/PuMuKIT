@@ -17,9 +17,9 @@
             <div class="col-10 input-group hidden-naked">
               <input type="text" class="form-control" id="inputROUrl" readonly data-controller="core--select" data-action="click->core--select#select" value="{{ video_url }}">
               {% if is_published and is_playable %}
-                <span class="input-group-text"><a href="{{ video_url }}" target="_blank" title="{% trans %}Open URL{% endtrans %}"><i class="mdi-action-exit-to-app"></i></a></span>
+                <span class="input-group-text"><a href="{{ video_url }}" target="_blank" title="{% trans %}Open URL{% endtrans %}"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></span>
               {% else %}
-                <span class="input-group-text"><i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error until this multimedia object is correctly published.{% endtrans %}"></i></span>
+                <span class="input-group-text"><i class="fa-solid fa-triangle-exclamation" title="{% trans %}Warning: This link will give a 404 error until this multimedia object is correctly published.{% endtrans %}"></i></span>
               {% endif %}
             </div>
           </div>
@@ -33,7 +33,7 @@
     <div class="col-12 "></br>
       {% if warning_on_unpublished and (not is_published or not is_playable) %}
         <span class="alert alert-dismissable alert-warning">
-          <i class="mdi-action-report-problem"></i>
+          <i class="fa-solid fa-triangle-exclamation"></i>
           {% trans %}WARNING, this multimedia object is not yet published on WebTV, or does not have a playable resource.{% endtrans %}
           <!--<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">-->
         </span>&nbsp;</br></br>

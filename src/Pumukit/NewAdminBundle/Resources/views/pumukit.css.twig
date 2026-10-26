@@ -250,12 +250,17 @@ body {
     font-weight: bold;
 }
 
-.pmk-tag-tree .collapsed i.tag_icon:before {
-    content: "\e89b"; /*mdi-navigation-chevron-right*/
+.pmk-tag-tree i.tag_icon {
+    --fa-display: inline-block;
+    --fa-width: 1em;
 }
 
-.pmk-tag-tree .expanded i.tag_icon:before {
-    content: "\e89e"; /*mdi-navigation-expand-more*/
+.pmk-tag-tree .collapsed i.tag_icon {
+    --fa: "\f105";
+}
+
+.pmk-tag-tree .expanded i.tag_icon {
+    --fa: "\f107";
 }
 
 .pmk-tag-tree .searchresult i.tag_icon:before {
@@ -408,46 +413,46 @@ body {
     }
 }
 
-.mdi-device-signal-wifi-0-bar {
+.fa-wifi {
     opacity: 0.5;
 }
 
-.mdi-device-signal-wifi-4-bar.pumukit-published {
+.fa-wifi.pumukit-published {
     opacity: 1;
     color: black;
 }
 
-.mdi-device-wifi-lock.pumukit-blocked {
+.fa-lock.pumukit-blocked {
     opacity: 1;
     color: black;
 }
 
-.mdi-device-signal-wifi-0-bar.pumukit-hidden {
+.fa-wifi.pumukit-hidden {
     opacity: 0.5;
     color: black;
 }
 
-.mdi-device-signal-wifi-0-bar.pumukit-hidden-published {
-    opacity: 1;
-    color: #c05800;
-}
-
-.mdi-device-wifi-lock.pumukit-blocked-published {
+.fa-wifi.pumukit-hidden-published {
     opacity: 1;
     color: #c05800;
 }
 
-.mdi-device-wifi-lock.pumukit-blocked-hidden {
+.fa-lock.pumukit-blocked-published {
+    opacity: 1;
+    color: #c05800;
+}
+
+.fa-lock.pumukit-blocked-hidden {
     opacity: 0.5;
     color: black;
 }
 
-.mdi-device-wifi-lock.pumukit-blocked-hidden-published {
+.fa-lock.pumukit-blocked-hidden-published {
     opacity: 0.5;
     color: #c05800;
 }
 
-.mdi-device-signal-wifi-off.pumukit-none {
+.fa-ban.pumukit-none {
     opacity: 0.5;
     color: black;
 }
@@ -566,17 +571,17 @@ body {
     padding: 10px 0;
 }
 
-.mdi-action-spellcheck.pumukit-series-announce {
+.fa-spell-check.pumukit-series-announce {
     opacity: 1;
     color: blue;
 }
 
-.mdi-action-spellcheck.pumukit-mm-announce {
+.fa-spell-check.pumukit-mm-announce {
     opacity: 1;
     color: grey;
 }
 
-.mdi-action-done.pumukit-transparent {
+.fa-check.pumukit-transparent {
     opacity: 0;
 }
 

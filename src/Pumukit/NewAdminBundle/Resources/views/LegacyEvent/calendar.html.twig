@@ -41,7 +41,7 @@
                data-admin--actions-target-param="#list_events"
                data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this live event?'|trans }}"
                data-admin--actions-success-param="{{ 'Live event successfully deleted.'|trans }}" title="{% trans %}Delete event{% endtrans %}">
-                    <i class="mdi-content-clear"></i>
+                    <i class="fa-solid fa-xmark"></i>
                   </a>
                   <span class="dropdown">
                     {% include '@PumukitNewAdmin/LegacyEvent/updatemenu.html.twig' with {'event': day_event} %}
@@ -52,7 +52,7 @@
                     {% endif %}
                   </span>
                   <a title="{% trans %}Edit Event{% endtrans %} {{ day_event.name }}" href="{{ path('pumukitnewadmin_event_update', {'id': day_event.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
-                    <i class="mdi-editor-mode-edit"></i> {{ day_event.date| format_datetime('none','medium',locale=app.request.getLocale()) }} {{ day_event.name }}
+                    <i class="fa-solid fa-pencil"></i> {{ day_event.date| format_datetime('none','medium',locale=app.request.getLocale()) }} {{ day_event.name }}
                   </a>
                 </li>
               {% endfor %}

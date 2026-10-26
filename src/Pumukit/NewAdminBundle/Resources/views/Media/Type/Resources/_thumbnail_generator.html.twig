@@ -1,6 +1,6 @@
 <td>
     <div class="dropdown">
-        <i class="mdi-image-camera-alt pmk-cursor-pointer" id="list_capture_frame_{{ track.id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+        <i class="fa-solid fa-camera pmk-cursor-pointer" id="list_capture_frame_{{ track.id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
         <ul class="dropdown-menu" role="menu" aria-labelledby="list_capture_frame_{{ track.id }}">
             <li>&nbsp;&nbsp;<strong>{% trans %}Capture frame from{% endtrans %}:</strong></li>
             {% set percentages = ['Auto', '10%', '25%', '50%', '75%', '90%'] %}
@@ -9,7 +9,7 @@
                     <a class="dropdown-item" href="#" data-action="click->admin--track-list#extractPic"
                        data-admin--track-list-url-param="{{ path('pumukitnewadmin_track_pic', {'id': track.id, 'mmId': mm.id, 'preview': 1, 'numframe': (percentage == 'Auto') ? 0 : percentage}) }}"
                        data-admin--track-list-mm-param="{{ mm.id|json_encode }}">
-                        <i class="mdi-image-camera"></i> {{ percentage }}
+                        <i class="fa-solid fa-camera"></i> {{ percentage }}
                     </a>
                 </li>
             {% endfor %}

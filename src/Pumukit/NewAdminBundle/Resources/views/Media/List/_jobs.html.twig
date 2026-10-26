@@ -6,7 +6,7 @@
             <a class="pmk-color-inherit" title="{% trans %}Encoder Job info{% endtrans %}"
                data-bs-toggle="modal" data-bs-backdrop="static" data-bs-dismiss="modal" data-bs-target="#myModal"
                href="{{ path('pumukitnewadmin_track_info_job', {'mmId': mm.id, 'jobId': job.id, 'preview': 1}) }}">
-                <i class="{% if constant('STATUS_ERROR', job) == job.getStatus() %}mdi-action-info{% else %}mdi-navigation-refresh pmk-job-animate pmk-job-animate-hover{% endif %}"></i>
+                <i class="{% if constant('STATUS_ERROR', job) == job.getStatus() %}fa-solid fa-circle-info{% else %}fa-solid fa-arrows-rotate pmk-job-animate pmk-job-animate-hover{% endif %}"></i>
             </a>
 
             {% if constant('STATUS_EXECUTING', job) != job.getStatus() %}
@@ -16,7 +16,7 @@
                    data-admin--actions-url-param="{{ path('pumukitnewadmin_track_delete_job', {'mmId': mm.Id, 'jobId': job.id, 'preview': 1}) }}"
                    data-admin--actions-target-param="#tracks_mms_{{ mm.Id }}"
                    data-admin--actions-data-param="{{ {_method: 'DELETE'}|json_encode }}">
-                    <i class="mdi-content-clear"></i>
+                    <i class="fa-solid fa-xmark"></i>
                 </a>
             {% endif %}
 

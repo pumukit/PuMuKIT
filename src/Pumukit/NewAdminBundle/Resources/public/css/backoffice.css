@@ -1,5 +1,6 @@
 :root {
     --fa-width: auto;
+    --fa-display: inline;
 }
 
 html {

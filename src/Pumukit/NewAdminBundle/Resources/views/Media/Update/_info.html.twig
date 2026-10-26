@@ -18,12 +18,12 @@
                 {% if is_published %}
                     <span class="input-group-text">
                         <a id="alinkROMagicUrl" href="{{ track_url }}" target="_blank" title="{% trans %}Video track{% endtrans %}">
-                            <i class="mdi-action-exit-to-app"></i>
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
                         </a>
                     </span>
                 {% else %}
                     <span class="input-group-text">
-                        <i class="mdi-action-report-problem" title="{% trans %}Warning: This link will give a 404 error until this multimedia object is correctly published.{% endtrans %}"></i>
+                        <i class="fa-solid fa-triangle-exclamation" title="{% trans %}Warning: This link will give a 404 error until this multimedia object is correctly published.{% endtrans %}"></i>
                     </span>
                 {% endif %}
             </div>
@@ -38,7 +38,7 @@
         <input type="text" data-controller="core--select" data-action="click->core--select#select" class="form-control" value="{{ series_url }}" readonly/>
         <span class="input-group-text">
             <a id="alinkROMagicUrl" href="{{ series_url }}" target="_blank" title="{% trans %}Series URL{% endtrans %}">
-                <i class="mdi-action-exit-to-app"></i>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
             </a>
         </span>
     </div>

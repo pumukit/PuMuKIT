@@ -7,7 +7,7 @@
     {% if 'user' == resource_name and not group.isLocal() %}
         <p>
             <a href="#">
-                <i data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}External defined users and groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-action-info pmk-color-009587"></i>
+                <i data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}External defined users and groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="fa-solid fa-circle-info pmk-color-009587"></i>
             </a>&nbsp;{{ resource.username }}
         </p>
     {% else %}
@@ -21,7 +21,7 @@
                    data-admin--group-info-button-param="#pumukitnewadmin_group_delete_all_relation_{{ resource_name }}"
                    data-admin--group-info-confirm-param="{{ group_resource_messages.one }}"
                    data-admin--group-info-success-param="{{ group_resource_messages.removed }}">
-                    <i class="mdi-content-clear"/>
+                    <i class="fa-solid fa-xmark"/>
                 </a>
             {% else %}
                 &#8226;

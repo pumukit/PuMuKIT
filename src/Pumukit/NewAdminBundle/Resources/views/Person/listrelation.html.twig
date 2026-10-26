@@ -16,7 +16,7 @@
                 {% else %}
                     <td>
                         <a title="{% trans %}Edit Person{% endtrans %} '{{ person.getHName() }}'" href="{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-dismiss="modal" data-bs-target="#myAuxModal{{ template }}">
-                            <i class="mdi-editor-mode-edit"></i>
+                            <i class="fa-solid fa-pencil"></i>
                         </a>
                     </td>
                     <td>
@@ -27,7 +27,7 @@
                            data-admin--actions-confirm-param="{{ 'Are you sure you want to delete the relation of'|trans }} {{ person.getHName() }}?"
                            data-admin--actions-success-param="{{ 'Person successfully removed from Multimedia Object'|trans }}"
                            data-admin--actions-error-param="{{ 'Error deleting Person'|trans }} &quot;{{ person.getHName() }} from MultimediaObject&quot;">
-                            <i class="mdi-content-clear"></i>
+                            <i class="fa-solid fa-xmark"></i>
                         </a>
                     </td>
                     <td>

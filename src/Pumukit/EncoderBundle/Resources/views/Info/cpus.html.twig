@@ -8,16 +8,16 @@
     {% set deactivated = (name in deactivated_cpus) %}
     <div class="list-group-item">
       <div class="row-action-primary pmk-position-relative">
-        <i class="mdi-action-dns"></i>
+        <i class="fa-solid fa-server"></i>
         {% if deactivated %}
-          <i id="maintenance-{{name}}-warning" title="{% trans %}This CPU is in maintenance mode.{% endtrans %}" class="mdi-av-new-releases pmk-cursor-pointer pmk-position-absolute pmk-background-none pmk-color-orange pmk-border-radius-0 pmk-line-height-1 pmk-left-n35 pmk-top-0" aria-hidden="true"></i>
+          <i id="maintenance-{{name}}-warning" title="{% trans %}This CPU is in maintenance mode.{% endtrans %}" class="fa-solid fa-circle-exclamation pmk-cursor-pointer pmk-position-absolute pmk-background-none pmk-color-orange pmk-border-radius-0 pmk-line-height-1 pmk-left-n35 pmk-top-0" aria-hidden="true"></i>
         {% endif %}
       </div>
       <div class="row-content">
         {% if cpu.profiles is not empty %}
           <i
             title="{% trans %}This cpu only executes jobs from the following profiles:{% endtrans %} {{ cpu.profiles | join(', ')}}"
-            class="mdi-action-info pmk-cursor-pointer pmk-border-radius-0 pmk-float-right"
+            class="fa-solid fa-circle-info pmk-cursor-pointer pmk-border-radius-0 pmk-float-right"
             aria-hidden="true"
           >
           </i>

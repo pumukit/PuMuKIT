@@ -17,7 +17,7 @@
 
                     {% if pub.getProperty('modal_path') and path_exists(pub.getProperty('modal_path')) %}
                         <a title="{% trans %}Edit Pub Channel {% endtrans %} {{ pub.cod }}" href="{{ path( pub.getProperty('modal_path'), { 'id': mm.id }) }}" data-bs-toggle="modal" data-bs-target="#myModal">
-                            <i class="mdi-action-info"></i>
+                            <i class="fa-solid fa-circle-info"></i>
                         </a>
                     {% endif %}
 

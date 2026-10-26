@@ -1,16 +1,16 @@
 <div class="dropdown">
-  <i class="mdi-navigation-menu" id="list_pics_mm_{{ mm.id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+  <i class="fa-solid fa-bars" id="list_pics_mm_{{ mm.id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
   <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_mm_{{ mm.id }}">
     {% if is_mmobj_owner(app.user, mm) %}
     <li>
       <a class="dropdown-item" href="{{ path('pumukitnewadmin_mms_shortener', {'id': mm.id }) }}">
-        <i class="mdi-editor-mode-edit"></i>{% trans %}Edit multimedia object{% endtrans %}
+        <i class="fa-solid fa-pencil"></i>{% trans %}Edit multimedia object{% endtrans %}
       </a>
     </li>
     {% endif %}
     <li>
       <a class="dropdown-item" href="#" data-action="click->admin--playlist-mms#remove" data-admin--playlist-mms-id-param="{{ mm.id|json_encode }}" data-admin--playlist-mms-pos-param="{{ mm_pos }}">
-        <i class="mdi-content-clear"></i>{% trans %}Delete multimedia object from the playlist{% endtrans %}
+        <i class="fa-solid fa-xmark"></i>{% trans %}Delete multimedia object from the playlist{% endtrans %}
       </a>
     </li>
     <li>

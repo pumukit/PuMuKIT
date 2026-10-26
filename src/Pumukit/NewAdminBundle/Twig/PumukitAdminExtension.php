@@ -198,23 +198,23 @@ class PumukitAdminExtension extends AbstractExtension
 
     public function getStatusIcon(int $status): string
     {
-        $iconClass = 'mdi-alert-warning';
+        $iconClass = 'fa-solid fa-triangle-exclamation';
 
         switch ($status) {
             case MultimediaObject::STATUS_PUBLISHED:
                 $iconClass = 'fa-solid fa-circle-check';
-                //                $iconClass = 'mdi-device-signal-wifi-4-bar';
+                //                $iconClass = 'fa-solid fa-wifi';
 
                 break;
 
             case MultimediaObject::STATUS_HIDDEN:
                 $iconClass = 'fa-solid fa-eye-slash';
-                //                $iconClass = 'mdi-device-signal-wifi-0-bar';
+                //                $iconClass = 'fa-solid fa-wifi';
 
                 break;
 
             case MultimediaObject::STATUS_BLOCKED:
-                //                $iconClass = 'mdi-device-wifi-lock';
+                //                $iconClass = 'fa-solid fa-lock';
                 $iconClass = 'fa-solid fa-ban';
 
                 break;
@@ -272,24 +272,24 @@ class PumukitAdminExtension extends AbstractExtension
     {
         [$mmobjsPublished, $mmobjsHidden, $mmobjsBlocked] = $this->countMmobjsByStatus($series);
 
-        $iconClass = 'mdi-alert-warning';
+        $iconClass = 'fa-solid fa-triangle-exclamation';
 
         if ((0 === $mmobjsPublished) && (0 === $mmobjsHidden) && (0 === $mmobjsBlocked)) {
-            $iconClass = 'mdi-device-signal-wifi-off pumukit-none';
+            $iconClass = 'fa-solid fa-ban pumukit-none';
         } elseif (($mmobjsPublished > $mmobjsHidden) && ($mmobjsPublished > $mmobjsBlocked)) {
-            $iconClass = 'mdi-device-signal-wifi-4-bar pumukit-published';
+            $iconClass = 'fa-solid fa-wifi pumukit-published';
         } elseif (($mmobjsPublished === $mmobjsHidden) && ($mmobjsPublished > $mmobjsBlocked)) {
-            $iconClass = 'mdi-device-signal-wifi-0-bar pumukit-hidden-published';
+            $iconClass = 'fa-solid fa-wifi pumukit-hidden-published';
         } elseif (($mmobjsHidden > $mmobjsPublished) && ($mmobjsHidden > $mmobjsBlocked)) {
-            $iconClass = 'mdi-device-signal-wifi-0-bar pumukit-hidden';
+            $iconClass = 'fa-solid fa-wifi pumukit-hidden';
         } elseif (($mmobjsPublished === $mmobjsBlocked) && ($mmobjsPublished > $mmobjsHidden)) {
-            $iconClass = 'mdi-device-wifi-lock pumukit-blocked-published';
+            $iconClass = 'fa-solid fa-lock pumukit-blocked-published';
         } elseif (($mmobjsBlocked === $mmobjsHidden) && ($mmobjsBlocked > $mmobjsPublished)) {
-            $iconClass = 'mdi-device-wifi-lock pumukit-blocked-hidden';
+            $iconClass = 'fa-solid fa-lock pumukit-blocked-hidden';
         } elseif (($mmobjsPublished === $mmobjsBlocked) && ($mmobjsPublished === $mmobjsHidden)) {
-            $iconClass = 'mdi-device-wifi-lock pumukit-blocked-hidden-published';
+            $iconClass = 'fa-solid fa-lock pumukit-blocked-hidden-published';
         } elseif (($mmobjsBlocked > $mmobjsPublished) && ($mmobjsBlocked > $mmobjsHidden)) {
-            $iconClass = 'mdi-device-wifi-lock pumukit-blocked';
+            $iconClass = 'fa-solid fa-lock pumukit-blocked';
         }
 
         if ($series->isHide()) {
@@ -339,10 +339,10 @@ class PumukitAdminExtension extends AbstractExtension
 
     public function getSeriesAnnounceIcon(Series $series): string
     {
-        $icon = 'mdi-action-done pumukit-transparent';
+        $icon = 'fa-solid fa-check pumukit-transparent';
 
         if ($series->getAnnounce()) {
-            return 'mdi-action-spellcheck pumukit-series-announce';
+            return 'fa-solid fa-spell-check pumukit-series-announce';
         }
 
         return $icon;
@@ -361,12 +361,12 @@ class PumukitAdminExtension extends AbstractExtension
 
     public function getMmsAnnounceIcon(Series $series): string
     {
-        $icon = 'mdi-action-done pumukit-transparent';
+        $icon = 'fa-solid fa-check pumukit-transparent';
 
         $count = $this->countMmobjsWithTag($series, 'PUDENEW');
 
         if ($count > 0) {
-            return 'mdi-action-spellcheck pumukit-mm-announce';
+            return 'fa-solid fa-spell-check pumukit-mm-announce';
         }
 
         return $icon;

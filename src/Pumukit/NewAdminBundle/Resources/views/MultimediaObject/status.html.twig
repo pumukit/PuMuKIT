@@ -1,5 +1,5 @@
 {% if has_pending_jobs(mm) %}
-  <i class="mdi-navigation-refresh pmk-job-animate table_mms_job_animate" data-bs-toggle="tooltip" data-bs-placement="right" title="{% apply pumukit_spaceless %}
+  <i class="fa-solid fa-arrows-rotate pmk-job-animate table_mms_job_animate" data-bs-toggle="tooltip" data-bs-placement="right" title="{% apply pumukit_spaceless %}
     {{ "{0} |{1} 1 pending job.  |]1,Inf[ %count% pending jobs."|trans({'%count%':  mm.getProperty('pending_jobs')|length}) }}
     {{ "{0} |{1} 1 executing job. |]1,Inf[ %count% executing jobs."|trans({'%count%':  mm.getProperty('executing_jobs')|length}) }}
       {% endapply %}"></i>

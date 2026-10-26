@@ -14,11 +14,11 @@
       {% endif %}
       {% if event_poster %}
       <a href="#" data-action="click->admin--actions#remove" data-admin--actions-url-param="{{ path('pumukitnewadmin_mmspic_delete', {'id': pic.id, 'is_event_poster': true}) }}" data-admin--actions-target-param="#pic_events_{{ resource.id }}" data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this event poster?'|trans }}" data-admin--actions-success-param="{{ 'Event poster removed.'|trans }}" title="{% trans %}Delete thumbnail{% endtrans %}" class="thumbnail_pic {{ (event_poster and pic.containsTag('poster')) ? 'is_poster':'no_poster'}}">
-        <i class="mdi-content-clear"></i>
+        <i class="fa-solid fa-xmark"></i>
       </a>
       {% else %}
       <a href="#" {% if 'series' == resource_name %} data-action="click->admin--actions#remove" data-admin--actions-url-param="{{ path('pumukitnewadmin_seriespic_delete', {'id': pic.id}) }}" data-admin--actions-target-param="{{ pic_container|default('#edit_series') }}" data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this thumbnail?'|trans }} {{ 'If it corresponds to the one associated with the banner, the entire header will also be removed.'|trans }}" data-admin--actions-success-param="{{ 'Thumbnail removed.'|trans }}" {% elseif 'playlist' == resource_name %} data-action="click->admin--actions#remove" data-admin--actions-url-param="{{ path('pumukitnewadmin_seriespic_delete', {'id': pic.id}) }}" data-admin--actions-target-param="#edit_playlist" data-admin--actions-reload-param="{{ path('pumukitnewadmin_playlist_update', {'id': resource.id}) }}" data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this thumbnail?'|trans }}" data-admin--actions-success-param="{{ 'Thumbnail removed.'|trans }}" {% else %} data-action="click->admin--actions#remove" data-admin--actions-url-param="{{ path('pumukitnewadmin_' ~ resource_name ~ 'pic_delete', {'id': pic.id}) }}" data-admin--actions-target-param="#pic_{{ resource_name }}_{{ resource.id }}" data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this thumbnail?'|trans }}" data-admin--actions-success-param="{{ 'Thumbnail removed.'|trans }}" {% endif %} title="{% trans %}Delete thumbnail{% endtrans %}" class="thumbnail_pic {{ (event_poster and pic.containsTag('poster')) ? 'is_poster':'no_poster'}}">
-        <i class="mdi-content-clear"></i>
+        <i class="fa-solid fa-xmark"></i>
       </a>
       {% endif %}
       {% if ((resource.getPics()|length - 1) != index) and not event_poster %}

@@ -1,16 +1,16 @@
-<i class="mdi-navigation-menu" id="list_pics_{{ event.id }}_{{ random() }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+<i class="fa-solid fa-bars" id="list_pics_{{ event.id }}_{{ random() }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
 <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_{{ event.id }}">
   <li>
     {% if event.getPic() is empty %}
     <a class="dropdown-item" href="{{ path('pumukitnewadmin_eventpic_create', {'id': event.id}) }}" data-bs-toggle="modal" data-bs-target="#myModal">
-      <i class="mdi-image-camera-alt"></i> {% trans %}Add thumbnail{% endtrans %}
+      <i class="fa-solid fa-camera"></i> {% trans %}Add thumbnail{% endtrans %}
     </a>
     <a class="dropdown-item" href="#">
-      <i class="mdi-content-clear"></i> {% trans %}Delete thumbnail{% endtrans %}
+      <i class="fa-solid fa-xmark"></i> {% trans %}Delete thumbnail{% endtrans %}
     </a>
     {% else %}
     <a class="dropdown-item" href="#">
-      <i class="mdi-image-camera-alt"></i> {% trans %}Add thumbnail{% endtrans %}
+      <i class="fa-solid fa-camera"></i> {% trans %}Add thumbnail{% endtrans %}
     </a>
     <a class="dropdown-item" href="#" data-action="click->admin--actions#remove"
                data-admin--actions-url-param="{{ path('pumukitnewadmin_eventpic_delete', {'id': event.id}) }}"
@@ -18,7 +18,7 @@
                data-admin--actions-refresh-param="{{ [{target: '#preview_event', url: path('pumukitnewadmin_event_show', {'id': event.id})}]|json_encode }}"
                data-admin--actions-confirm-param="{{ 'Are you sure you want to delete this thumbnail?'|trans }}"
                data-admin--actions-success-param="{{ 'Thumbnail removed.'|trans }}" data-bs-toggle="modal" data-bs-target="#myModal">
-      <i class="mdi-content-clear"></i> {% trans %}Delete thumbnail{% endtrans %}
+      <i class="fa-solid fa-xmark"></i> {% trans %}Delete thumbnail{% endtrans %}
     </a>
     {% endif %}
   </li>

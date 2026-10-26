@@ -220,6 +220,24 @@ class CheckAssetsCommandTest extends PumukitTestCase
         $this->assertStringContainsString('Problems found: 1', $display);
     }
 
+    public function testReportsMaterialDesignIconsWithTheirReplacement(): void
+    {
+        file_put_contents(
+            $this->tmpDir.'/index.html.twig',
+            "<i class=\"mdi-editor-mode-edit\"></i>\n<i class=\"mdi-maps-place\"></i>\n<i class=\"fa-solid fa-pencil\"></i>\n"
+        );
+
+        $tester = $this->commandTester();
+        $tester->execute(['--path' => $this->tmpDir]);
+
+        $display = $tester->getDisplay();
+        $this->assertSame(Command::FAILURE, $tester->getStatusCode());
+        $this->assertStringContainsString('Removed Material Design icon: mdi-editor-mode-edit in index.html.twig:1', $display);
+        $this->assertStringContainsString('use fa-solid fa-pencil', $display);
+        $this->assertStringContainsString('Removed Material Design icon: mdi-maps-place in index.html.twig:2', $display);
+        $this->assertStringContainsString('Problems found: 2', $display);
+    }
+
     public function testFailsWhenPathDoesNotExist(): void
     {
         $tester = $this->commandTester();

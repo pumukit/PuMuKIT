@@ -4,9 +4,9 @@
         <div class="card-header">
             {% trans %}OWNERS{% endtrans %}&nbsp;
             {% if template %}
-                <i class="mdi-action-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Users that can admin this series{% endtrans %}"></i>
+                <i class="fa-solid fa-circle-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Users that can admin this series{% endtrans %}"></i>
             {% else %}
-                <i class="mdi-action-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Users that can admin this multimedia object{% endtrans %}"></i>
+                <i class="fa-solid fa-circle-info" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Users that can admin this multimedia object{% endtrans %}"></i>
             {% endif %}
         </div>
         <div class="card-body" id="owner_mm{{ template }}">
@@ -27,7 +27,7 @@
                         {% else %}
                             <td>
                                 <a title="{% trans %}Edit Person{% endtrans %} '{{ person.getHName() }}'" href="{{ path('pumukitnewadmin_person_update_relation', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': 'owner'}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-dismiss="modal" data-bs-target="#myAuxModal{{ template }}">
-                                    <i class="mdi-editor-mode-edit"></i>
+                                    <i class="fa-solid fa-pencil"></i>
                                 </a>
                             </td>
                             <td>
@@ -36,7 +36,7 @@
                                    data-admin--mm-groups-person-param="{{ person.id|json_encode }}"
                                    data-admin--mm-groups-role-param="{{ role.id|json_encode }}"
                                    data-admin--mm-groups-name-param="{{ person.getHName()|json_encode }}">
-                                    <i class="mdi-content-clear"></i>
+                                    <i class="fa-solid fa-xmark"></i>
                                 </a>
                             </td>
                         {% endif %}

@@ -1,5 +1,5 @@
 <div class="dropdown">
-    <i class="mdi-navigation-menu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+    <i class="fa-solid fa-bars" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
 
     <ul class="dropdown-menu" role="menu" aria-labelledby="list_pics_mm_{{ mm.id }}">
 
@@ -7,7 +7,7 @@
             <a href="#" class="qa-button-delete-mms dropdown-item" data-action="click->admin--unesco#remove"
                data-admin--unesco-url-param="{{ path('pumukitnewadmin_unesco_delete', {'multimediaObjectId': mm.id}) }}"
                data-admin--unesco-confirm-param="{{ 'Are you sure you want to delete this multimedia object?'|trans }}">
-                <i class="mdi-content-clear"></i>{% trans %}Delete multimedia object{% endtrans %}
+                <i class="fa-solid fa-xmark"></i>{% trans %}Delete multimedia object{% endtrans %}
             </a>
         </li>
 
@@ -17,7 +17,7 @@
             <a href="#" class="qa-button-clone-mms dropdown-item" data-action="click->admin--unesco#clone"
                data-admin--unesco-url-param="{{ path('pumukitnewadmin_unesco_clone', {'multimediaObjectId': mm.id}) }}"
                data-admin--unesco-confirm-param="{{ 'Are you sure you want to clone this multimedia object?'|trans }}">
-                <i class="mdi-content-content-copy"></i>{% trans %}Clone multimedia object{% endtrans %}
+                <i class="fa-solid fa-copy"></i>{% trans %}Clone multimedia object{% endtrans %}
             </a>
         </li>
 

@@ -37,20 +37,20 @@
         <td headers="th-icons">
           {% if group.isLocal() %}
           <a title="{% trans %}Edit Group{% endtrans %} {{ group.getName() }}" href="{{ path('pumukitnewadmin_group_update', {'id': group.id}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
-            <i class="mdi-editor-mode-edit"></i>
+            <i class="fa-solid fa-pencil"></i>
           </a>
           {% else %}
-          <i data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}External defined groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-editor-mode-edit pmk-color-grey-i"></i>
+          <i data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}External defined groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="fa-solid fa-pencil pmk-color-grey-i"></i>
           {% endif %}
         </td>
         <td headers="th-icons">
           <a title="{% trans %}Delete Group{% endtrans %}" href="{{ path('pumukitnewadmin_group_info', {'id': group.id, 'action': true}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
-            <i data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Delete Group or Group relations{% endtrans %}" class="mdi-content-clear"></i>
+            <i data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}Delete Group or Group relations{% endtrans %}" class="fa-solid fa-xmark"></i>
           </a>
         </td>
         <td headers="th-icons">
           <a title="{% trans %}Group Info{% endtrans %}" href="{{ path('pumukitnewadmin_group_info', {'id': group.id, 'action': false}) }}" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
-            <i class="mdi-action-info"></i>
+            <i class="fa-solid fa-circle-info"></i>
           </a>
         </td>
         <td headers="th-key">
