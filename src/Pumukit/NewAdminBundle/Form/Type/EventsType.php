@@ -42,8 +42,7 @@ class EventsType extends AbstractType
                     'required' => false,
                     'label' => $this->translator->trans('Description', [], null, $this->locale),
                     'attr' => [
-                        'class' => 'form-control',
-                        'style' => 'resize:vertical;',
+                        'class' => 'form-control pmk-resize-vertical',
                     ],
                 ]
             )
@@ -88,8 +87,7 @@ class EventsType extends AbstractType
                     'required' => false,
                     'label' => $this->translator->trans('Already held event message', [], null, $this->locale),
                     'attr' => [
-                        'class' => 'form-control',
-                        'style' => 'resize:vertical;',
+                        'class' => 'form-control pmk-resize-vertical',
                     ],
                 ]
             )
@@ -100,8 +98,7 @@ class EventsType extends AbstractType
                     'required' => false,
                     'label' => $this->translator->trans('Not yet held event message', [], null, $this->locale),
                     'attr' => [
-                        'class' => 'form-control',
-                        'style' => 'resize:vertical;',
+                        'class' => 'form-control pmk-resize-vertical',
                     ],
                 ]
             )

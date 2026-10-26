@@ -8,6 +8,7 @@ export default class extends Controller {
 
     connect() {
         this.initialSrc = this.imageTarget.src;
+        this.imageTarget.style.aspectRatio = `${this.widthValue} / ${this.heightValue}`;
         this.drawing = this.canvasTarget.getContext('2d');
         this.ready = () => this.prepare();
         if (4 === this.videoTarget.readyState) {

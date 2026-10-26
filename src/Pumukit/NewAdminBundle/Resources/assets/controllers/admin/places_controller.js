@@ -53,7 +53,7 @@ export default class extends Controller {
     }
 
     loadInto(selector, url) {
-        $(selector).html($('<tr class="text-center" style="font-size:12px"><td colspan="8"><img class="center"></td></tr>').find('img').attr('src', this.spinnerValue).end());
+        $(selector).html($('<tr class="text-center pmk-font-size-12"><td colspan="8"><img class="center"></td></tr>').find('img').attr('src', this.spinnerValue).end());
         $('html,body').scrollTop(0);
         $.ajax({ url, type: 'GET' })
             .done((response) => $(selector).html(response))

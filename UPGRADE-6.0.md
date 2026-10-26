@@ -175,6 +175,17 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
   keep the precedence of the inline styles over the other stylesheets (`.pmk-…:not(#pmk)`), and the
   styles that scripts set on `element.style` still win over them. `display: none` is the
   `pmk-display-none` class, so `$(element).show()` keeps working.
+  The `<style>` blocks are gone too: the custom CSS of a series style is served by the
+  `pumukit_webtv_series_style` route (`/series/style/{id}.css`) and linked from the `stylesheets`
+  block of `@PumukitWebTV/Series/template.html.twig`; the live iframes load
+  `bundles/pumukitwebtv/css/live/iframe.css` and use the `live-iframe` body classes; the rules of the
+  playlist modal, the UNESCO drop zone, the user statistics and the naked backoffice menu are in
+  `@PumukitNewAdmin/pumukit.css.twig`. The values that are only known at runtime are set by the
+  controllers: the storage bars of the dashboard (`admin--storage-bar`), the aspect ratio of the
+  thumbnail generator and the text colour of the live poster (`text-color` value of
+  `live-player--sessions`). The Encoder colours of a job status come from the
+  `job_status_class(status, property)` macro, and the form types use `pmk-resize-vertical` instead
+  of `style: resize:vertical`.
 - Run `bin/console pumukit:check:assets` in the project before upgrading: it lists every
   `bundles/...` asset and every `@Pumukit.../....twig` template referenced by the templates in
   `templates/` (or `--path`) that no installed bundle provides, with its replacement when it was

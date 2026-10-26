@@ -23,7 +23,7 @@
                 <th>{% trans %}Title{% endtrans %}</th>
                 <th>{% trans %}Status{% endtrans %}</th>
                 {% for channel in pub_channels %}
-                <th style="{{ (channel.display and not is_granted('ROLE_TAG_DISABLE_' ~ channel.cod|upper)) ? '' : 'color:grey' }}">{{ channel.getTitle() }}</th>
+                <th{{ (channel.display and not is_granted('ROLE_TAG_DISABLE_' ~ channel.cod|upper)) ? '' : ' class="pmk-color-grey"' }}>{{ channel.getTitle() }}</th>
                 {% endfor %}
               </tr>
             </thead>
@@ -67,7 +67,7 @@
               </tr>
 
               {% for mm in multimediaObjects | filter(mm => not mm.isLive()) %}
-              <tr {{ (mm.status == mm_status.published) ? '' : ' style="background-color: rgb(242, 242, 242)" ' }}>
+              <tr{{ (mm.status == mm_status.published) ? '' : ' class="pmk-background-color-rgb-242-242-242"' }}>
                 <td>
                   <div class="checkbox">
                     <label>

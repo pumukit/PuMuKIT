@@ -25,7 +25,7 @@
       </tr>
       {% endif %}
       {% for event in events %}
-      <tr style="cursor:pointer;" {% if (app.session.get('admin/event/id') == event.id) %} class="success" {% endif %}>
+      <tr class="pmk-cursor-pointer{% if (app.session.get('admin/event/id') == event.id) %} success{% endif %}">
       <td headers="th-checkbox" >
         <div class="checkbox">
           <label>

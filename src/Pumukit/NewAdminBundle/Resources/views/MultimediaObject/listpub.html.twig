@@ -5,7 +5,7 @@
 
         {% if not pub.getProperty('hide_in_tag_group') %}
             <div class="checkbox {{ disabled ? 'pmk_disabled_checkbox' : '' }} pmk-display-table-row">
-                <label{{ disabled ? ' style="color: #767676;"' : '' }}>
+                <label{{ disabled ? ' class="pmk-color-767676"' : '' }}>
                     <input type="checkbox"
                            name="pub_{{ pub_type }}[{{ pub.cod }}]"
                            id="pub_{{ pub_type }}_{{ pub.cod }}"

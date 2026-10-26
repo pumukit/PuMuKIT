@@ -19,31 +19,20 @@
 {% set series_active = route_name in series_routes %}
 {% set playlist_active = route_name in playlist_routes %}
 
-<style>
-    .cab_body_div ul li, .cab_body_div ul li a {
-        color: #000000 !important;
-        font-family: RobotoDraft,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
-        font-weight: 300;
-    }
-    .cab_body_div .breadcrumb {
-        padding-inline-start: 0 !important;
-    }
-</style>
-
 <div>
     {% if not is_naked() %}
-        <ul class="nav nav-tabs title-tabs naked-menu" style="background: {{ app.request.attributes.get('nakedbackoffice_main_color', '#ED6D00') }};">
+        <ul class="nav nav-tabs title-tabs naked-menu">
             {% if app.user and
                 is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SERIES')) and
                 is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
                 <li {{ series_active ? "class=\"active\"":"" }}>
-                    <a title="{% trans %}Go to series{% endtrans %}" href="{{ url('pumukitnewadmin_series_index') }}" style="color: {{ app.request.attributes.get('nakedbackoffice_color', 'white') }};">
+                    <a title="{% trans %}Go to series{% endtrans %}" href="{{ url('pumukitnewadmin_series_index') }}">
                         {{ series_title }}
                         <div class="ripple-wrapper"></div>
                     </a>
                 </li>
                 <li {{ playlist_active ?"class=\"active\"":"" }}>
-                    <a title="{% trans %}Go to playlists{% endtrans %}" href="{{ url('pumukitnewadmin_playlist_index') }}" style="color: {{ app.request.attributes.get('nakedbackoffice_color', 'white') }};">
+                    <a title="{% trans %}Go to playlists{% endtrans %}" href="{{ url('pumukitnewadmin_playlist_index') }}">
                         {{ playlist_title }}
                         <div class="ripple-wrapper"></div>
                     </a>

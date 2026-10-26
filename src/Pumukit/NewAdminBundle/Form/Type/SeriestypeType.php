@@ -37,7 +37,7 @@ class SeriestypeType extends AbstractType
                 TextI18nType::class,
                 [
                     'required' => true,
-                    'attr' => ['style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Name', [], null, $this->locale)],
+                    'attr' => ['class' => 'pmk-resize-vertical', 'aria-label' => $this->translator->trans('Name', [], null, $this->locale)],
                     'label' => $this->translator->trans('Name', [], null, $this->locale),
                 ]
             )

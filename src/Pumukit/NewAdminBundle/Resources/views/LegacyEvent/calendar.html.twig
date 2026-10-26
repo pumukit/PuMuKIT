@@ -22,7 +22,7 @@
       {% else %}
         {% set d = '' %}
       {% endif %}
-      <td headers="{{ dkey }}" style="cursor: auto; {{ ((d == 'now'|date('d')) and (m == 'now'|date('m')) and (y == 'now'|date('Y')))?"border:3px solid #000":"" }}" class="table-hover">
+      <td headers="{{ dkey }}" class="table-hover pmk-cursor-auto{{ ((d == 'now'|date('d')) and (m == 'now'|date('m')) and (y == 'now'|date('Y'))) ? ' pmk-border-3-solid-000' : '' }}">
         <div class="pmk-overflow-y-auto pmk-position-relative pmk-height-70">
           {% if d is not empty %}
             <span class="pmk-position-absolute pmk-top-0 pmk-right-0">{{ d }}</span>

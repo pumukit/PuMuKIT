@@ -25,7 +25,7 @@
       </tr>
       {% else %}
       {% for seriestype in seriestypes %}
-      <tr style="cursor:pointer;" {% if (app.session.get('admin/seriestype/id') == seriestype.id) %} class="success" {% endif %}>
+      <tr class="pmk-cursor-pointer{% if (app.session.get('admin/seriestype/id') == seriestype.id) %} success{% endif %}">
         <td>
           <div class="checkbox">
             <label>

@@ -10,9 +10,11 @@ use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\SchemaBundle\Document\SeriesStyle;
 use Pumukit\WebTVBundle\Services\BreadcrumbsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class SeriesController extends AbstractController implements WebTVControllerInterface
@@ -49,6 +51,17 @@ class SeriesController extends AbstractController implements WebTVControllerInte
             'series' => $series,
             'multimediaObjects' => $pager,
         ]);
+    }
+
+    #[Route('/series/style/{id}.css', name: 'pumukit_webtv_series_style')]
+    public function styleAction(Request $request, SeriesStyle $seriesStyle): Response
+    {
+        $response = new Response((string) $seriesStyle->getText(), Response::HTTP_OK, ['Content-Type' => 'text/css; charset=UTF-8']);
+        $response->setEtag(md5($response->getContent()));
+        $response->setPublic();
+        $response->isNotModified($request);
+
+        return $response;
     }
 
     #[Route('/series/magic/{secret}', name: 'pumukit_webtv_series_magicindex', defaults: ['show_hide' => true, 'broadcast' => false])]

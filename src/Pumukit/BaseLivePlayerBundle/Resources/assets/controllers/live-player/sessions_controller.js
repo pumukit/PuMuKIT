@@ -7,6 +7,7 @@ export default class extends Controller {
     static values = {
         state: String,
         player: String,
+        textColor: String,
         nextSessionStarts: String,
         secondsToEvent: Number,
         nowSessionEnds: String,
@@ -57,6 +58,7 @@ export default class extends Controller {
 
     showPoster() {
         $(this.playerValue).html(this.posterTarget.innerHTML);
+        $(this.playerValue).find('.warning').css('color', this.textColorValue);
     }
 
     startCountdown(selector, date, showTime) {

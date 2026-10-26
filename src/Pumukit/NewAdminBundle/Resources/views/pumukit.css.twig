@@ -20,6 +20,26 @@ width: 50px;
     -webkit-line-clamp: 2;
 }
 
+{% if app.request.attributes.get('nakedbackoffice') %}
+.cab_body_div ul li, .cab_body_div ul li a {
+    color: #000000 !important;
+    font-family: RobotoDraft,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-weight: 300;
+}
+
+.cab_body_div .breadcrumb {
+    padding-inline-start: 0 !important;
+}
+
+.naked-menu:not(#pmk) {
+    background: {{ app.request.attributes.get('nakedbackoffice_main_color', '#ED6D00') }};
+}
+
+.naked-menu > li > a:not(#pmk) {
+    color: {{ app.request.attributes.get('nakedbackoffice_color', 'white') }};
+}
+{% endif %}
+
 {% if app.request.attributes.get('nakedbackoffice_color') %}
 /*Naked css rules*/
 .hidden-naked {
@@ -1118,4 +1138,33 @@ hr.pumukit-green {
         margin-right: 5px;
         margin-left: 0;
     }
+}
+
+[data-controller~="admin--playlist-modal"] .mmobj_elem {
+    padding: 5px;
+}
+
+[data-controller~="admin--playlist-modal"] .mmobj_elem:hover {
+    background-color: #ededed;
+    cursor: pointer;
+}
+
+[data-controller~="admin--playlist-modal"] input[type="checkbox"]:checked + label {
+    border: 4px orange solid;
+    margin: -4px -4px 1px -4px;
+}
+
+[data-controller~="admin--playlist-modal"] .mmobj_elem.checked {
+    border: 4px orange solid;
+    margin: -4px;
+}
+
+.list_unesco.over {
+    border: 2px dashed #000;
+}
+
+{% include "@PumukitWebTV/Css/template_stats.css.twig" %}
+
+.user_profile_video_info_block {
+    margin-top: 10px;
 }

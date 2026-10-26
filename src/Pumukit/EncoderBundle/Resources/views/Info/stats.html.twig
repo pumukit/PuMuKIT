@@ -4,8 +4,7 @@
   <div class="list-group">
     <div class="list-group-item">
       <div class="row-action-primary">
-        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED')) }}"
-           style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED')) }}"></i>
+        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED')) }} {{ macros.job_status_class(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_PAUSED'), 'background') }}"></i>
       </div>
       <div class="row-content">
         <div class="least-content togglebutton pmk-bottom-10 pmk-top-inherit">
@@ -21,8 +20,7 @@
   <div class="list-group">
     <div class="list-group-item">
       <div class="row-action-primary">
-        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING')) }}"
-           style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING')) }}"></i>
+        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING')) }} {{ macros.job_status_class(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_WAITING'), 'background') }}"></i>
       </div>
       <div class="row-content">
         <div class="least-content togglebutton pmk-bottom-10 pmk-top-inherit">
@@ -38,8 +36,7 @@
   <div class="list-group">
     <div class="list-group-item">
       <div class="row-action-primary">
-        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING')) }}"
-           style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING')) }};"></i>
+        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING')) }} {{ macros.job_status_class(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_EXECUTING'), 'background') }}"></i>
       </div>
       <div class="row-content">
         <div class="least-content togglebutton pmk-bottom-10 pmk-top-inherit"></div>
@@ -53,8 +50,7 @@
   <div class="list-group">
     <div class="list-group-item">
       <div class="row-action-primary">
-        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED')) }}"
-           style="background: {{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED')) }}"></i>
+        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED')) }} {{ macros.job_status_class(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_FINISHED'), 'background') }}"></i>
       </div>
       <div class="row-content">
         <div class="least-content togglebutton pmk-bottom-10 pmk-top-inherit">
@@ -70,8 +66,7 @@
   <div class="list-group">
     <div class="list-group-item">
       <div class="row-action-primary">
-        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')) }}"
-           style="background:{{ macros.job_status_color(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')) }}"></i>
+        <i class="{{ macros.job_status_icon(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR')) }} {{ macros.job_status_class(constant('Pumukit\\EncoderBundle\\Document\\Job::STATUS_ERROR'), 'background') }}"></i>
       </div>
       <div class="row-content">
         <div class="least-content togglebutton pmk-bottom-10 pmk-top-inherit">

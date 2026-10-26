@@ -32,18 +32,18 @@
                     </a>
                 </td>
                 <td headers="th-code" class="{{ has_children?'collapsed noload':'element' }}">
-                    <span style="padding-left:{{ 10 * tag.level }}px" data-action="click->admin--tag-tree#toggle" data-admin--tag-tree-id-param="{{ tag.id|json_encode }}" data-admin--tag-tree-cod-param="{{ tag.cod }}">
+                    <span class="pmk-padding-left-{{ 10 * tag.level }}" data-action="click->admin--tag-tree#toggle" data-admin--tag-tree-id-param="{{ tag.id|json_encode }}" data-admin--tag-tree-cod-param="{{ tag.cod }}">
                     {{ tag.cod }}
                     </span>
                 </td>
                 <td headers="th-name" class="{{ has_children?'collapsed noload':'element' }}">
-                    <span style="padding-left:{{ 10 * tag.level }}px" data-action="click->admin--tag-tree#toggle" data-admin--tag-tree-id-param="{{ tag.id|json_encode }}" data-admin--tag-tree-cod-param="{{ tag.cod }}">
+                    <span class="pmk-padding-left-{{ 10 * tag.level }}" data-action="click->admin--tag-tree#toggle" data-admin--tag-tree-id-param="{{ tag.id|json_encode }}" data-admin--tag-tree-cod-param="{{ tag.cod }}">
                       <i class="mdi- tag_icon tag_children_{{ tag.cod }}"></i>
                         {{ tag.title }}
                     </span>
                 </td>
                 <td headers="th-num">
-                    <span style="padding-left:{{ 10 * tag.level }}px" data-action="click->admin--tag-tree#toggle" data-admin--tag-tree-id-param="{{ tag.id|json_encode }}" data-admin--tag-tree-cod-param="{{ tag.cod }}">
+                    <span class="pmk-padding-left-{{ 10 * tag.level }}" data-action="click->admin--tag-tree#toggle" data-admin--tag-tree-id-param="{{ tag.id|json_encode }}" data-admin--tag-tree-cod-param="{{ tag.cod }}">
                     {{ tag.getNumberMultimediaObjects() }}
                     </span>
                 </td>

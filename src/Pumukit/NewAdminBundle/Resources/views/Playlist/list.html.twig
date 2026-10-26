@@ -19,7 +19,7 @@
 
             <tbody>
             {% for oneseries in series %}
-                <tr style="cursor: pointer" {% if(app.session.get('admin/playlist/id') == oneseries.id ) %} class="success" {% endif %}>
+                <tr class="pmk-cursor-pointer{% if (app.session.get('admin/playlist/id') == oneseries.id ) %} success{% endif %}">
                     <td headers="th-checkbox">
                         <div class="checkbox">
                             <label>

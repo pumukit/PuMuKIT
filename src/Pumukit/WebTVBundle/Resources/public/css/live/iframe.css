@@ -1,0 +1,15 @@
+.live-iframe {
+    margin: 0;
+    padding: 0;
+}
+
+.live-iframe-advance {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.live-iframe-full,
+.live-iframe-full body,
+.live-iframe-full .embed-responsive-16by9,
+.live-iframe-full .embed-responsive-item {
+    height: 100%;
+}

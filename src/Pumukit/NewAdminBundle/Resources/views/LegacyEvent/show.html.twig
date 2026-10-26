@@ -13,7 +13,7 @@
       </div>
     </div>
     {% endif %}
-    <p style="overflow:hidden; padding:5px; border:solid 1px #DDD; background: {{ event.display ? '#FFEAD6' : '#DDD' }}" >
+    <p class="pmk-overflow-hidden pmk-padding-5 pmk-border-solid-1-ddd {{ event.display ? 'pmk-background-ffead6' : 'pmk-background-ddd' }}">
       {{ event.date| format_datetime('medium','medium',locale=app.request.getLocale()) }} {{ event.duration }} {% trans %}min.{% endtrans %}
     </p>
   </div>

@@ -47,7 +47,7 @@ class GroupType extends AbstractType
                 'comments',
                 TextareaType::class,
                 [
-                    'attr' => ['style' => 'resize:vertical;', 'aria-label' => $this->translator->trans('Comments', [], null, $this->locale)],
+                    'attr' => ['class' => 'pmk-resize-vertical', 'aria-label' => $this->translator->trans('Comments', [], null, $this->locale)],
                     'label' => $this->translator->trans('Comments', [], null, $this->locale),
                     'required' => false,
                 ]

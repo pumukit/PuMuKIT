@@ -180,7 +180,7 @@
                 </div>
             </div>
 
-            <div class="form-group"{{ enableChat ? '':' style="display:none;"' }}>
+            <div class="form-group{{ enableChat ? '' : ' pmk-display-none' }}">
                 {{ form_row(form.enable_chat) }}
             </div>
 

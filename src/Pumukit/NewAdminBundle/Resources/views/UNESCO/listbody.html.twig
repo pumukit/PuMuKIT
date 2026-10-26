@@ -2,7 +2,7 @@
 {% set all_custom_fields = all_custom_fields() %}
 {% set click_edit %}data-action="click->admin--actions#edit" data-admin--actions-name-param="&quot;mms&quot;" data-admin--actions-show-param="{{ path('pumukitnewadmin_unesco_show', {'id': mm.id}) }}" data-admin--actions-update-param="{{ path('pumukit_new_admin_unesco_edit', {'id': mm.id}) }}"{% endset %}
 
-<tr id="tr_{{ mm.id }}" style="cursor: pointer;" {% if(app.session.get('admin/unesco/id') == mm.id ) %} class="success" {% endif %}>
+<tr id="tr_{{ mm.id }}" class="pmk-cursor-pointer{% if (app.session.get('admin/unesco/id') == mm.id ) %} success{% endif %}">
 
     <td headers="th-checkbox">
         <div class="checkbox pumukit-mms-checkbox">
@@ -29,12 +29,12 @@
 
     {% for key, field in custom_fields %}
         {% if 'pics' in field %}
-            <td {% if all_custom_fields[field]['render_params']['break-word'] == true %}style="word-break: break-word;"{% endif %} headers="th-{{ loop.index }}" {{ click_edit }}>
+            <td{% if all_custom_fields[field]['render_params']['break-word'] == true %} class="pmk-word-break-break-word"{% endif %} headers="th-{{ loop.index }}" {{ click_edit }}>
                 {% include "@PumukitNewAdmin/Misc/img_list.html.twig" with {'object' : mm, 'type' : 'mm'} %}
             </td>
         {% else %}
             {% set text = render_object_field(mm,app.request.getSession(),field) %}
-            <td {% if all_custom_fields[field]['render_params']['break-word'] == true %}style="word-break: break-word;"{% endif %} headers="th-{{ loop.index }}" title="{{ text|striptags }}" {{ click_edit }}>
+            <td{% if all_custom_fields[field]['render_params']['break-word'] == true %} class="pmk-word-break-break-word"{% endif %} headers="th-{{ loop.index }}" title="{{ text|striptags }}" {{ click_edit }}>
                 {% if field in ['record_date','public_date'] %}
                     {{ text| format_datetime('medium','none',locale=app.request.getLocale()) }}
                 {% elseif field is same as('title') %}

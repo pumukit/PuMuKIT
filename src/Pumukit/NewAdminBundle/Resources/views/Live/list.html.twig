@@ -26,7 +26,7 @@
       </tr>
       {% else %}
         {% for live in lives %}
-          <tr style="cursor:pointer;" {% if (app.session.get('admin/live/id') == live.id) %} class="success" {% endif %}>
+          <tr class="pmk-cursor-pointer{% if (app.session.get('admin/live/id') == live.id) %} success{% endif %}">
             <td headers="th-checkbox">
               <div class="checkbox">
                 <label>

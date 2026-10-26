@@ -40,7 +40,7 @@ class EventType extends AbstractType
                 [
                     'required' => false,
                     'attr' => [
-                        'style' => 'resize:vertical;',
+                        'class' => 'pmk-resize-vertical',
                         'aria-label' => $this->translator->trans('Event', [], null, $this->locale),
                     ],
                     'label' => $this->translator->trans('Description', [], null, $this->locale),

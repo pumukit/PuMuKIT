@@ -1,13 +1,10 @@
 {% extends '@PumukitWebTV/layout.html.twig' %}
 
 {% block stylesheets %}
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-    </style>
+    <link href="{{ asset('bundles/pumukitwebtv/css/live/iframe.css') }}" type="text/css" rel="stylesheet"/>
 {% endblock %}
+
+{% block body_class %}live-iframe{% endblock %}
 
 {% block title %}{{ parent() }} - {{ live.name }}{% endblock %}
 

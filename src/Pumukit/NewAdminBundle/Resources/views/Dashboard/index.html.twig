@@ -105,7 +105,7 @@
                                     <span class="storage-bar-value">{{ (used / (1024**4))|number_format(2) }} / {{ (s.total / (1024**4))|number_format(2) }} TB · {{ pct|number_format(0) }}%</span>
                                 </div>
                                 <div class="storage-bar-track">
-                                    <div class="storage-bar-fill {{ fill_class }}" style="width: {{ pct }}%;"></div>
+                                    <div class="storage-bar-fill {{ fill_class }}" data-controller="admin--storage-bar" data-admin--storage-bar-percent-value="{{ pct }}"></div>
                                 </div>
                             </div>
                         {% endfor %}

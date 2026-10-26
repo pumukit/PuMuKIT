@@ -17,7 +17,7 @@
     <div class="form-group col-md-6 col-sm-10 col-xs-12">
         <div class="row">
             {% set activated = app.request.query.get('start') or app.request.query.get('end') %}
-            <div id="advanced-date-search" data-webtv--search-target="advancedDate" {{ activated?'':'style="display:none"' }}>
+            <div id="advanced-date-search" data-webtv--search-target="advancedDate"{{ activated ? '' : ' class="pmk-display-none"' }}>
                 <div class="col-xs-6">
                     <span class="pmk-white-space-nowrap pmk-overflow-hidden">
                         <label id="start-date" for="start">{% trans %}Start date{% endtrans %}:</label>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </div>
-            <div id="simple-date-search" data-webtv--search-target="simpleDate" {{ activated?'style="display:none"':'' }}>
+            <div id="simple-date-search" data-webtv--search-target="simpleDate"{{ activated ? ' class="pmk-display-none"' : '' }}>
                 <div class="col-md-12 col-xs-12">
                     <label for="year">{% trans %}Year{% endtrans %}</label>
                     <a class="pmk-padding-left-20 pmk-cursor-pointer" data-action="webtv--search#toggleDates">{% trans %}Select by date range {% endtrans %}</a>

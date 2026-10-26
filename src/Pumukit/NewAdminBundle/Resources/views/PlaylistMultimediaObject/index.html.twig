@@ -14,7 +14,7 @@
                     {% endif %}
                 </a>
             </li>
-            <span {% if not is_naked() %}style="color:#008175"{% endif %}>
+            <span{% if not is_naked() %} class="pmk-color-008175"{% endif %}>
                 /
                 {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %} {{ playlist.getTitle() }}{% endif %}
             </span>

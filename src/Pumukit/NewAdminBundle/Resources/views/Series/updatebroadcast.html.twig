@@ -31,7 +31,7 @@
                         </thead>
                         <tbody>
                             {% for mm in multimediaObjects | filter(mm => not mm.isLive() and not mm.isPrototype()) %}
-                            <tr {{ (mm.ispublished) ? '' : ' style="background-color: rgb(242, 242, 242)" ' }}>
+                            <tr{{ (mm.ispublished) ? '' : ' class="pmk-background-color-rgb-242-242-242"' }}>
                                 <td>
                                     <div class="checkbox">
                                         <label>

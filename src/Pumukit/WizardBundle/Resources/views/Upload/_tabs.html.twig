@@ -7,7 +7,7 @@
                 {{ "Local"|trans }}
             </a>
         </li>
-        <li class="nav-item" style="display: {{ show_profiles ? 'block' : 'none' }}">
+        <li class="nav-item{{ show_profiles ? '' : ' pmk-display-none' }}">
             <a class="btn pmk-color-black-i" href="#server" aria-controls="home" role="tab" data-toggle="tab">
                 {{ "Server"|trans }}
             </a>

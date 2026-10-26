@@ -65,7 +65,7 @@ class MultimediaObjectMetaType extends AbstractType
                 TextareaI18nType::class,
                 [
                     'required' => false,
-                    'attr' => ['style' => 'resize:vertical;',
+                    'attr' => ['class' => 'pmk-resize-vertical',
                         'aria-label' => $this->translator->trans('Description', [], null, $this->locale),
                     ],
                     'label' => $this->translator->trans('Description', [], null, $this->locale),
@@ -76,7 +76,7 @@ class MultimediaObjectMetaType extends AbstractType
                 TextareaType::class,
                 [
                     'required' => false,
-                    'attr' => ['style' => 'resize:vertical;'],
+                    'attr' => ['class' => 'pmk-resize-vertical'],
                     'label' => $this->translator->trans('Comments', [], null, $this->locale),
                 ]
             )
@@ -158,7 +158,7 @@ class MultimediaObjectMetaType extends AbstractType
                     'required' => false,
                     'attr' => [
                         'groupclass' => 'hidden-naked',
-                        'style' => 'resize:vertical;',
+                        'class' => 'pmk-resize-vertical',
                         'aria-label' => $this->translator->trans('Headline', [], null, $this->locale),
                     ],
                     'label' => $this->translator->trans('Headline', [], null, $this->locale),

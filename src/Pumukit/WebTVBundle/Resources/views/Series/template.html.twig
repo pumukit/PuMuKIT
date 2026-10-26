@@ -12,13 +12,14 @@
     <meta property="og:image" content="{{ series|first_url_pic(true) }}" />
 {% endblock %}
 
-{% block body %}
+{% block stylesheets %}
+    {{ parent() }}
     {% if series.getSeriesStyle is defined and series.getSeriesStyle is not null and series.getSeriesStyle is not empty %}
-        <style>
-            {{ series.getSeriesStyle().getText() }}
-        </style>
+        <link href="{{ path('pumukit_webtv_series_style', {'id': series.getSeriesStyle().getId()}) }}" type="text/css" rel="stylesheet"/>
     {% endif %}
+{% endblock %}
 
+{% block body %}
     {% set last_date = '' %}
     {% set last_subseriestitle = '' %}
     {% set template = series.getProperty('template')|default('date') %}
