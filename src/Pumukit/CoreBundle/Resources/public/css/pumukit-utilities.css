@@ -394,7 +394,7 @@
     height: auto;
 }
 
-.pmk-left-35:not(#pmk) {
+.pmk-left-n35:not(#pmk) {
     left: -35px;
 }
 
@@ -518,12 +518,12 @@
     margin-right: 0;
 }
 
-.pmk-margin-right-15:not(#pmk) {
-    margin-right: -15px;
-}
-
 .pmk-margin-right-5:not(#pmk) {
     margin-right: 5px;
+}
+
+.pmk-margin-right-n15:not(#pmk) {
+    margin-right: -15px;
 }
 
 .pmk-margin-top-0:not(#pmk) {
@@ -814,7 +814,7 @@
     right: 0;
 }
 
-.pmk-right-30:not(#pmk) {
+.pmk-right-n30:not(#pmk) {
     right: -30px;
 }
 
