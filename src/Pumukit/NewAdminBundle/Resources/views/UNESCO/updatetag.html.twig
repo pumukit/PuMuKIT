@@ -31,7 +31,7 @@
                             {% include '@PumukitNewAdmin/MultimediaObject/tagfilter.html.twig' with {'parentId': parent.id, 'mmId': mm.id} %}
                         </div></div>
 
-                    <div class="row"><div class="col-12" style="overflow:hidden;height: 270px">
+                    <div class="row"><div class="col-12 pmk-overflow-hidden pmk-height-270">
                         {# Available tags #}
                         <div class="tag list-group pmk-tag-tree pmk-width-40pct pmk-max-width-400 pmk-float-left pmk-height-260 pmk-border-1-solid-bbb pmk-overflow-x-hidden pmk-overflow-y-scroll" id="all_tag_{{ parent.id }}">
                             {% if (0 != parent.getChildren()|length) %}

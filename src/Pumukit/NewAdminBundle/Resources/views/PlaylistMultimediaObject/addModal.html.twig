@@ -20,7 +20,7 @@
       <legend hidden>{% trans %}Add to playlist{% endtrans %}</legend>
       <form id="add_playlist_form" data-admin--playlist-add-target="playlists" data-action="change->admin--playlist-add#selected">
         {% for oneseries in series %}
-          <div class="form-check" style="padding-top: 10px">
+          <div class="form-check pmk-padding-top-10">
             <label>
               <input type="checkbox"
                      class="add_playlist_form_checkbox"
@@ -60,7 +60,7 @@
     </div>
 
     <div class="modal-footer">
-      <button disabled="disabled" id="new_playlist_btn" style="display:none" type="button" data-admin--playlist-add-target="create" data-action="click->admin--playlist-add#createPlaylist" class="new_playlist me-auto btn btn-secondary btn-primary">{% trans %}Create playlist{% endtrans %}</button>
+      <button disabled="disabled" id="new_playlist_btn" type="button" data-admin--playlist-add-target="create" data-action="click->admin--playlist-add#createPlaylist" class="new_playlist me-auto btn btn-secondary btn-primary pmk-display-none">{% trans %}Create playlist{% endtrans %}</button>
       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
       <button disabled="disabled" id="add_playlist_btn" type="submit" class="btn btn-pumukit" data-admin--playlist-add-target="ok" data-action="click->admin--playlist-add#save">{% trans %}OK{% endtrans %}</button>
     </div>

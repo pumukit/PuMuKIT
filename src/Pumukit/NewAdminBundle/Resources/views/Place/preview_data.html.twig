@@ -1,5 +1,5 @@
 {% if tag is defined %}
-    <div class="card" style="font-size:12px">
+    <div class="card pmk-font-size-12">
         <div class="card-header">
             <h4 class="card-title mb-0">
                 {{ tag.getTitle()|default('No title'|trans) }}
@@ -24,7 +24,7 @@
         </div>
     </div>
 {% else %}
-    <div class="card" style="font-size:12px">
+    <div class="card pmk-font-size-12">
         <div class="card-header">
             <div class="card-body">
                 {% trans %}Select one precinct to load data{% endtrans %}

@@ -1017,3 +1017,28 @@ hr.pumukit-green {
         margin-left: 0;
     }
 }
+
+[data-controller~="admin--playlist-modal"] .mmobj_elem {
+    padding: 5px;
+}
+
+[data-controller~="admin--playlist-modal"] .mmobj_elem:hover {
+    background-color: #ededed;
+    cursor: pointer;
+}
+
+[data-controller~="admin--playlist-modal"] input[type="checkbox"]:checked + label {
+    border: 4px orange solid;
+    margin: -4px -4px 1px -4px;
+}
+
+[data-controller~="admin--playlist-modal"] .mmobj_elem.checked {
+    border: 4px orange solid;
+    margin: -4px;
+}
+
+{% include "@PumukitWebTV/Css/template_stats.css.twig" %}
+
+.user_profile_video_info_block {
+    margin-top: 10px;
+}

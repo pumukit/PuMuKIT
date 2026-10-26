@@ -9,8 +9,7 @@
     <span class="material-input"></span>
   </div>
   <span class="input-group-text">
-    <input class="btn btn-secondary btn-sm"
-           style="padding: 1px 5px; margin: 5px 1px"
+    <input class="btn btn-secondary btn-sm pmk-padding-1-5 pmk-margin-5-1"
            type="button"
            value="reset search"
            size="20"
@@ -18,8 +17,7 @@
            data-action="click->admin--tag-picker#reset"
            data-admin--tag-picker-block-param="{{ parentId|json_encode }}" />
   </span>
-  <img class="pmk-width-30 pmk-opacity-0" id="tag_filter_{{parentId}}_loader"
+  <img class="pmk-width-30 pmk-opacity-0 pmk-width-30 pmk-opacity-0" id="tag_filter_{{parentId}}_loader"
        alt="{% trans %}Spinner{% endtrans %}"
-       src="{{ asset('bundles/pumukitnewadmin/images/admin/load/spinner.gif')}}"
-       style="width:30px; opacity:0"/>
+       src="{{ asset('bundles/pumukitnewadmin/images/admin/load/spinner.gif')}}"/>
 </div></div>

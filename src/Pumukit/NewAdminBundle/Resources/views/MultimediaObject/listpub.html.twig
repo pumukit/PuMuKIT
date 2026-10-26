@@ -4,8 +4,8 @@
         {% set disabled = ((not pub.getDisplay()) or (pub_type == 'channels' and not_change_pub_channel) or (is_granted('ROLE_TAG_DISABLE_' ~ pub.cod|upper))) %}
 
         {% if not pub.getProperty('hide_in_tag_group') %}
-            <div class="form-check {{ disabled ? 'pmk_disabled_checkbox' : '' }}" style="display:table-row">
-                <label{{ disabled ? ' style="color: #767676;"' : '' }}>
+            <div class="form-check {{ disabled ? 'pmk_disabled_checkbox' : '' }} pmk-display-table-row">
+                <label{{ disabled ? ' class="pmk-color-767676"' : '' }}>
                     <input type="checkbox"
                            name="pub_{{ pub_type }}[{{ pub.cod }}]"
                            id="pub_{{ pub_type }}_{{ pub.cod }}"

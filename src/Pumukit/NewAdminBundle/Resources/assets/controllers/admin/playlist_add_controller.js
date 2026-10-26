@@ -20,7 +20,7 @@ export default class extends Controller {
                 const input = $('<input checked="checked" type="checkbox" class="add_playlist_form_checkbox">')
                     .attr({ name: `pub_${data.playlistId}`, id: data.playlistId });
                 const label = $('<label>').text(` ${data.title}`).prepend(input);
-                $(this.playlistsTarget).prepend($('<div class="form-check" style="padding-top: 10px">').append(label));
+                $(this.playlistsTarget).prepend($('<div class="form-check pmk-padding-top-10">').append(label));
                 this.okTarget.disabled = false;
                 this.newFormTarget.reset();
                 $(this.element).find('.new_playlist').toggle();

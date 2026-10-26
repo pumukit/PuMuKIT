@@ -7,7 +7,7 @@
     {% if 'user' == resource_name and not group.isLocal() %}
         <p>
             <a href="#">
-                <i data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}External defined users and groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-action-info" style="color:#009587"></i>
+                <i data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}External defined users and groups can not be edited here, contact your directory service administrator.{% endtrans %}" class="mdi-action-info pmk-color-009587"></i>
             </a>&nbsp;{{ resource.username }}
         </p>
     {% else %}

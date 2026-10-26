@@ -2,9 +2,8 @@
     <tr>
         <td><ul><li></li></ul></td>
         <td {% if mm.isVideoType() %}colspan="6"{% else %}colspan="5"{% endif %}>&nbsp;</td>
-        <td {% if constant('STATUS_ERROR', job) == job.getStatus() %} style="color:red" {% endif %}>
-            <a title="{% trans %}Encoder Job info{% endtrans %}"
-               style="color:inherit"
+        <td{% if constant('STATUS_ERROR', job) == job.getStatus() %} class="pmk-color-red"{% endif %}>
+            <a class="pmk-color-inherit" title="{% trans %}Encoder Job info{% endtrans %}"
                data-bs-toggle="modal" data-bs-backdrop="static" data-bs-dismiss="modal" data-bs-target="#myModal"
                href="{{ path('pumukitnewadmin_track_info_job', {'mmId': mm.id, 'jobId': job.id, 'preview': 1}) }}">
                 <i class="{% if constant('STATUS_ERROR', job) == job.getStatus() %}mdi-action-info{% else %}mdi-navigation-refresh pmk-job-animate pmk-job-animate-hover{% endif %}"></i>

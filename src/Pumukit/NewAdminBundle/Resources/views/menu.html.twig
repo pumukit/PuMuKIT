@@ -9,7 +9,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i style="font-size: 18px; vertical-align: middle" class="mdi-image-timer-auto"></i> {{ app.user.username }}
+                        <i class="mdi-image-timer-auto pmk-font-size-18 pmk-vertical-align-middle"></i> {{ app.user.username }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><h6 class="dropdown-header">{% trans %}Login since{% endtrans %}: {{ app.user.lastLogin|format_datetime('medium', 'medium', locale=app.request.getLocale()) }}</h6></li>

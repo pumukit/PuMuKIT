@@ -253,7 +253,7 @@
         {% set locale = form.vars.locales[0] %}
         <div class="input-group">
             <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
-            <span class="input-group-text copy-button" style="color: #767676;cursor:pointer;" data-copy="{{ form.vars.id }}_{{ locale }}" data-action="click->admin--actions#copy" data-admin--actions-input-param="{{ (form.vars.id ~ '_' ~ locale)|json_encode }}">
+            <span class="input-group-text copy-button pmk-color-767676 pmk-cursor-pointer" data-copy="{{ form.vars.id }}_{{ locale }}" data-action="click->admin--actions#copy" data-admin--actions-input-param="{{ (form.vars.id ~ '_' ~ locale)|json_encode }}">
                 <span class="mdi-content-content-copy" title="{% trans %}Copy{% endtrans %}"></span>
             </span>
         </div>
@@ -261,8 +261,8 @@
         {%- for locale in form.vars.locales %}
             <div class="input-group">
                 <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
-                <span class="input-group-text" style="color: #767676;">{{ locale }}</span>&nbsp;
-                <span class="input-group-text copy-button" style="color: #767676;cursor:pointer;" data-copy="{{ form.vars.id }}_{{ locale }}" data-action="click->admin--actions#copy" data-admin--actions-input-param="{{ (form.vars.id ~ '_' ~ locale)|json_encode }}">
+                <span class="input-group-text pmk-color-767676">{{ locale }}</span>&nbsp;
+                <span class="input-group-text copy-button pmk-color-767676 pmk-cursor-pointer" data-copy="{{ form.vars.id }}_{{ locale }}" data-action="click->admin--actions#copy" data-admin--actions-input-param="{{ (form.vars.id ~ '_' ~ locale)|json_encode }}">
                     <span class="mdi-content-content-copy" title="{% trans %}Copy{% endtrans %}"></span>
                 </span>
             </div>
@@ -278,7 +278,7 @@
         {%- for locale in form.vars.locales %}
             <div class="input-group">
                 <input type="text" {{ block('widgeti18n_attributes') }} value="{{ value[locale]|default("") }}" />
-                <span class="input-group-text" style="color: #767676;">{{ locale }}</span>
+                <span class="input-group-text pmk-color-767676">{{ locale }}</span>
             </div>
         {% endfor -%}
     {% endif -%}
@@ -292,7 +292,7 @@
       {%- for locale in form.vars.locales %}
           <div class="input-group">
               <textarea {{ block('widgeti18n_attributes') }}>{{ value[locale]|default("") }}</textarea>
-              <span class="input-group-text" style="color: #767676;">{{ locale }}</span>
+              <span class="input-group-text pmk-color-767676">{{ locale }}</span>
           </div>
       {%- endfor -%}
     {% endif -%}

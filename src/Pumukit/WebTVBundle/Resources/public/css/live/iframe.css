@@ -9,7 +9,7 @@
 
 .live-iframe-full,
 .live-iframe-full body,
-.live-iframe-full .embed-responsive-16by9,
+.live-iframe-full .ratio-16x9,
 .live-iframe-full .embed-responsive-item {
     height: 100%;
 }

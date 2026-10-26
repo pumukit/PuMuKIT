@@ -29,8 +29,7 @@
                             {% endif %}
                         </div>
                         {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_MAGIC_URL')) %}
-                        <label for="inputROMagicUrl" class="col-2 col-form-label hidden-naked"
-                               style=" word-break: break-all; overflow: hidden; white-space: nowrap;"
+                        <label for="inputROMagicUrl" class="col-2 col-form-label hidden-naked pmk-word-break-break-all pmk-overflow-hidden pmk-white-space-nowrap"
                                data-bs-toggle="tooltip" data-bs-placement="bottom"
                                title="{% trans %}This URL will give you access to the series without login.{% endtrans %}">
                             {% trans %}Magic Url{% endtrans %}:

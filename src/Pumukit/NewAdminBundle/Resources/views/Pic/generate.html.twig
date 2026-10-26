@@ -23,20 +23,20 @@
                 <!-- CONTROLS -->
                 <div class="buttons pmk-text-align-center" id="gen_pic_buttons" data-admin--pic-generator-target="buttons">
 
-                    <div class="btn-group btn-group-raised" style="margin-top: 0px;">
-                        <button id="prev-frame-button" data-action="click->admin--pic-generator#previousFrame" title="{% trans %}Prev Frame{% endtrans %}" class="btn btn-sm" style="padding: 8px 25px">
+                    <div class="btn-group btn-group-raised pmk-margin-top-0">
+                        <button id="prev-frame-button" data-action="click->admin--pic-generator#previousFrame" title="{% trans %}Prev Frame{% endtrans %}" class="btn btn-sm pmk-padding-8-25">
                             «
                         </button>
-                        <button id="next-frame-button" data-action="click->admin--pic-generator#nextFrame" title="{% trans %}Next Frame{% endtrans %}" class="btn btn-sm" style="padding: 8px 25px">
+                        <button id="next-frame-button" data-action="click->admin--pic-generator#nextFrame" title="{% trans %}Next Frame{% endtrans %}" class="btn btn-sm pmk-padding-8-25">
                             »
                         </button>
                     </div>
 
-                    <button id="take-img-button" data-action="click->admin--pic-generator#take" title="Take image." style="padding: 8px; white-space: normal" class="btn btn-primary">{% trans %}Take image{% endtrans %}</button>
+                    <button id="take-img-button" data-action="click->admin--pic-generator#take" title="Take image." class="btn btn-primary pmk-padding-8 pmk-white-space-normal">{% trans %}Take image{% endtrans %}</button>
 
 
                     <div class="btn-group">
-                        <a href="#" data-bs-target="#" class="btn dropdown-toggle" data-bs-toggle="dropdown" style="padding: 8px; ; white-space: normal">
+                        <a href="#" data-bs-target="#" class="btn dropdown-toggle pmk-padding-8 pmk-white-space-normal" data-bs-toggle="dropdown">
                             {% trans %}Take burst{% endtrans %}
                         </a>
                         <ul class="dropdown-menu">
@@ -46,7 +46,7 @@
                         </ul>
                     </div>
 
-                    <button id="advanced-button" data-action="click->admin--pic-generator#toggleAdvanced" title="Show advanced" style="margin-top: 0px; padding: 1px 5px; white-space: nowrap" class="btn btn-sm">
+                    <button id="advanced-button" data-action="click->admin--pic-generator#toggleAdvanced" title="Show advanced" class="btn btn-sm pmk-margin-top-0 pmk-padding-1-5 pmk-white-space-nowrap">
                         {% trans %}Show advanced{% endtrans %}
                     </button>
 
@@ -54,7 +54,7 @@
 
             </div>
             <div class="col-md-5 text-center">
-                <span id="pic-size" data-admin--pic-generator-target="size" class="badge text-bg-secondary" style="position: absolute;"></span>
+                <span id="pic-size" data-admin--pic-generator-target="size" class="badge text-bg-secondary pmk-position-absolute"></span>
                 <!-- PREVIEW -->
                 <img class="image pmk-width-100pct pmk-height-auto pmk-object-fit-contain" id="gen_pic_img" data-admin--pic-generator-target="image" src="{{ asset('bundles/pumukitnewadmin/images/admin/arrows/redarrow.png') }}">
             </div>
@@ -105,11 +105,11 @@
         <label for="url">{% trans %}URL{% endtrans %}</label>
         <input type="text" id="url-file-button" data-action="input->admin--pic-generator#addUrl" name="url" class="form-control"/>
     </div></div>
-    <div style="clear:both"></div>
+    <div class="pmk-clear-both"></div>
     <div class="modal-footer">
         <div class="row">
             <div class="col-4">
-                <input type="file" id="file-upload-button" data-action="change->admin--pic-generator#upload" name="file" style="btn btn-default btn-raised" title="{% trans %}Upload a local file.{% endtrans %}" accept="image/*"/>
+                <input type="file" id="file-upload-button" data-action="change->admin--pic-generator#upload" name="file" title="{% trans %}Upload a local file.{% endtrans %}" accept="image/*"/>
             </div>
             <div class="col-8 text-end">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>

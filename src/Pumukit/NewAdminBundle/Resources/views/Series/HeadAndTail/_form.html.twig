@@ -2,7 +2,7 @@
     <div class="form-row block-series-playlist pmk-margin-bottom-5rem">
         <dt>{% trans %}Head and tail video{% endtrans %}:</dt>
         <dd>
-            <div class="row" id="head_and_tail_series_{{ series.id }}" style="margin-top:1rem;">
+            <div class="row pmk-margin-top-1rem" id="head_and_tail_series_{{ series.id }}">
                 <div class="col-md-6">
                     <label for="head_video_select" hidden>{{ "Head"|trans }}</label>
                     <select id="head_video_select" name="head_video_select" class="form form-select head_video_select" data-action="change->admin--actions#send" data-admin--actions-url-param="{{ path('pumukit_newadmin_head_and_tail_series_update', {'type': 'head', 'series': series.id, 'element': '__value__'}) }}">

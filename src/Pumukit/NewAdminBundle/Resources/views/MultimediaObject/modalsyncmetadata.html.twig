@@ -28,7 +28,7 @@
                     {% for title, field in fields %}
                         {% if (title != 'owners' and title != 'groups' and title != 'publishingdecisions') or ((title == 'owners' or title == 'groups') and modify_owners) or (title == 'publishingdecisions' and is_granted('ROLE_ACCESS_PUBLICATION_TAB') ) or is_granted('ROLE_SUPER_ADMIN') %}
                             <div class="col-md-12">
-                                <div class="form-check" style="display:table-row">
+                                <div class="form-check pmk-display-table-row">
                                     <label for="metadata_{{ title }}_all">
                                         <input id="metadata_{{ title }}_all" type="checkbox" name="metadata_{{ title }}_all"/>
                                         {{ field|trans }}
@@ -47,7 +47,7 @@
                 <div class="row">
                     {% for tag in tags | filter(tag => tag.cod != 'ROOT') %}
                         <div class="col-md-12">
-                            <div class="form-check" style="display:table-row">
+                            <div class="form-check pmk-display-table-row">
                                 <label for="metadata_tag_{{ tag.getId() }}">
                                     <input id="metadata_tag_{{ tag.getId() }}" type="checkbox" name="metadata_tag_{{ tag.getId() }}"/>
                                     {{ tag.getTitle() }}
@@ -65,7 +65,7 @@
                 <div class="row">
                     {% for role in roles |filter(role => role.cod != 'owner') %}
                         <div class="col-md-12">
-                            <div class="form-check" style="display:table-row">
+                            <div class="form-check pmk-display-table-row">
                                 <label for="metadata_role_{{ role.getId() }}">
                                     <input id="metadata_role_{{ role.getId() }}" type="checkbox" name="metadata_role_{{ role.getId() }}"/>
                                     {{ role.getName() }}

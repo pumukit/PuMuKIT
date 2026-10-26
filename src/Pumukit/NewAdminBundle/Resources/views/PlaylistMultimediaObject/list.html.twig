@@ -43,7 +43,7 @@
                 </td>
                 <td>
                     {% if not is_playable_on_playlist(mm) %}
-                        <i id="table_playable_mm_{{ mm.id }}" style="color:orange;font-size:16px" class="non-playable-warning mdi-action-report-problem" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}This object cannot be played on the playlist{% endtrans %}"></i>
+                        <i id="table_playable_mm_{{ mm.id }}" class="non-playable-warning mdi-action-report-problem pmk-color-orange pmk-font-size-16" data-bs-toggle="tooltip" data-bs-placement="right" title="{% trans %}This object cannot be played on the playlist{% endtrans %}"></i>
                     {% endif %}
                 </td>
                 {% if not is_naked() %}
@@ -81,15 +81,15 @@
                 </td>
                 <td class="text-center">
                     {% if mm.isVideoType() %}
-                        <i class="fa fa-file-video" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                        <i class="fa fa-file-video pmk-font-size-20" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                     {% elseif mm.isAudioType() %}
-                        <i class="fa fa-file-audio" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                        <i class="fa fa-file-audio pmk-font-size-20" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                     {% elseif mm.isImageType() %}
-                        <i class="fa fa-file-image" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                        <i class="fa fa-file-image pmk-font-size-20" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                     {% elseif mm.isDocumentType() %}
-                        <i class="fa fa-file-alt" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                        <i class="fa fa-file-alt pmk-font-size-20" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                     {% elseif mm.isExternalType() %}
-                        <i class="fa fa-link" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}" style="font-size: 20px"></i>
+                        <i class="fa fa-link pmk-font-size-20" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ mm.getStringType(mm.getType()) }}"></i>
                     {% endif %}
                 </td>
                 <td class="text-center">

@@ -15,8 +15,8 @@
                 </div>
             </div>
         </div>
-        <div id="chat-panel-body" data-webtv--chat-target="body" class="card-body" style="height:200px;overflow: auto;">
-            <div id="chatList" data-webtv--chat-target="list" style="overflow: hidden;">
+        <div id="chat-panel-body" data-webtv--chat-target="body" class="card-body pmk-height-200 pmk-overflow-auto">
+            <div class="pmk-overflow-hidden" id="chatList" data-webtv--chat-target="list">
                 {{ render(controller('Pumukit\\WebTVBundle\\Controller\\ChatController::listBasicAction', {'id': live.id})) }}
             </div>
         </div>

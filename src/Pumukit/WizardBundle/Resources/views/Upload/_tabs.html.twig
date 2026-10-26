@@ -1,14 +1,14 @@
 <h4>{{ "Where do you want to upload the files from?"|trans }}</h4>
 
 <div role="tabpanel">
-    <ul class="nav nav-tabs" role="tablist" style="background:transparent; border: 0;">
+    <ul class="nav nav-tabs pmk-background-transparent pmk-border-0" role="tablist">
         <li class="nav-item">
-            <a class="btn nav-link active" href="#local" aria-controls="home" role="tab" data-bs-toggle="tab" style="color: black !important;">
+            <a class="btn nav-link active pmk-color-black-i" href="#local" aria-controls="home" role="tab" data-bs-toggle="tab">
                 {{ "Local"|trans }}
             </a>
         </li>
-        <li class="nav-item" style="display: {{ show_profiles ? 'block' : 'none' }}">
-            <a class="btn nav-link" href="#server" aria-controls="home" role="tab" data-bs-toggle="tab" style="color: black !important;">
+        <li class="nav-item{{ show_profiles ? '' : ' pmk-display-none' }}">
+            <a class="btn nav-link pmk-color-black-i" href="#server" aria-controls="home" role="tab" data-bs-toggle="tab">
                 {{ "Server"|trans }}
             </a>
         </li>

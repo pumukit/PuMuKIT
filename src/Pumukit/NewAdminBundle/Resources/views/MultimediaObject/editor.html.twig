@@ -6,8 +6,8 @@
         {% if mm.isMultistream() %}
         <form class="row" onsubmit="return false;">
         <div class="col-lg-8 text-end">
-          <div class="row"><div class="col-6" style="padding-top: 11px; padding-left: 0px;">
-            <div class="row"><label class="col-4 col-form-label" style="word-break: break-all; overflow: hidden; white-space: nowrap;">Default layout:</label>
+          <div class="row"><div class="col-6 pmk-padding-top-11 pmk-padding-left-0">
+            <div class="row"><label class="col-4 col-form-label pmk-word-break-break-all pmk-overflow-hidden pmk-white-space-nowrap">Default layout:</label>
             <div class="col-8 input-group">
             <select class="form-select" id="paella-layout">
               <option value="professor_slide" {% if mm.getProperty("paellalayout") == "professor_slide" %} selected="selected" {% endif %}>Professor - Slide</option>
@@ -22,7 +22,7 @@
         {% else %}
         <div class="text-end">
         {% endif %}
-        <span id="edit-btn-group" style="display: none">
+        <span class="pmk-display-none" id="edit-btn-group">
           <a class="btn btn-secondary" onclick="switchMode('discard-close')"> {%trans%} DISCARD {%endtrans%} </a>
           <a class="btn btn-pumukit" onclick="switchMode('save')"> {%trans%}  SAVE {%endtrans%} </a>
           <a class="btn btn-pumukit" onclick="switchMode('save-close')"> {%trans%}  SAVE AND CLOSE {%endtrans%} </a>

@@ -15,11 +15,11 @@
     {% endfor %}
 
     {% for parent, tag in tags %}
-        <li draggable="false" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#collapse_{{ loop.index }}" aria-expanded="true" aria-controls="collapse_{{ loop.index }}" style="cursor:pointer">
+        <li class="pmk-cursor-pointer" draggable="false" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#collapse_{{ loop.index }}" aria-expanded="true" aria-controls="collapse_{{ loop.index }}">
             <span class="mdi-action-list"></span>
              <strong>{{ parent }}</strong>
         </li>
-        <ul id="collapse_{{ loop.index }}" class="collapse show draggableTags" style="padding-left:20px;">
+        <ul id="collapse_{{ loop.index }}" class="collapse show draggableTags pmk-padding-left-20">
             {% for children in tag %}
                 <li id="children_{{ children.getCod() }}" draggable="true" data-action="dragstart->admin--unesco#dragTag dragend->admin--unesco#dragTagEnd" data-admin--unesco-cod-param="{{ children.getCod()|json_encode }}" data-admin--unesco-title-param="{{ children.getTitle(app.request.getLocale())|json_encode }}" class="draggableTag pmk-list-style-type-none{% if children.getCod() == app.session.get('admin/unesco/tag') %} pmk-background-color-eaeaea{% endif %}">
                     <a class="unescoTags" href="#" draggable="false" data-tag="{{ children.getCod() }}" data-href="{{ path('pumukitnewadmin_unesco_list', {'tag' : children.getCod() }) }}" title="{{ children.getTitle(app.request.getLocale()) }}"

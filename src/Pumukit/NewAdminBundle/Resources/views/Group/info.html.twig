@@ -19,17 +19,17 @@
 </div>
 <div class="modal-body">
     <div class="row"><div class="col-md-4">
-        <div id="group_users" class="card" style="margin-top: 20px;">
+        <div id="group_users" class="card pmk-margin-top-20">
             {% include '@PumukitNewAdmin/Group/inforesources.html.twig' with {'resources': users, 'title': 'USERS'|trans, 'resource_name': 'user', 'count': countResources['users']} %}
         </div>
     </div>
     <div class="col-md-4">
-        <div id="group_mms" class="card" style="margin-top: 20px;">
+        <div id="group_mms" class="card pmk-margin-top-20">
             {% include '@PumukitNewAdmin/Group/inforesources.html.twig' with {'resources': admin_multimedia_objects, 'title': 'ADMIN MULTIMEDIA OBJECTS'|trans, 'resource_name': 'multimediaobject', 'count': countResources['adminMultimediaObjects']} %}
         </div>
     </div>
     <div class="col-md-4">
-        <div id="group_broadcasts" class="card" style="margin-top: 20px;">
+        <div id="group_broadcasts" class="card pmk-margin-top-20">
             {% include '@PumukitNewAdmin/Group/inforesources.html.twig' with {'resources': viewer_multimedia_objects, 'title': 'PLAY MULTIMEDIA OBJECTS'|trans, 'resource_name': 'embeddedbroadcast', 'count': countResources['playMultimediaObjects']} %}
         </div>
     </div></div>

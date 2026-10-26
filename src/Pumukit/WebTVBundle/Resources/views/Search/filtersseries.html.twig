@@ -1,5 +1,5 @@
 <form class="row" id="form_search" name="busqueda" method="get" data-controller="webtv--search" action="{{ path('pumukit_webtv_search_series') }}">
-    <input type="submit" style="display:none" value="submit-hidden" aria-hidden="true"/>
+    <input class="pmk-display-none" type="submit" value="submit-hidden" aria-hidden="true"/>
     <div class="mb-3 col-md-4">
         <label for="search">{% trans %}Search{% endtrans %}:</label>
         <div class="input-group">
@@ -15,9 +15,9 @@
     <div class="mb-3 col-md-6 col-sm-10 col-12">
         <div class="row">
             {% set activated = app.request.query.get('start') or app.request.query.get('end') %}
-            <div class="row" id="advanced-date-search" data-webtv--search-target="advancedDate" {{ activated?'':'style="display:none"' }}>
+            <div class="row{{ activated ? '' : ' pmk-display-none' }}" id="advanced-date-search" data-webtv--search-target="advancedDate">
                 <div class="col-6">
-                    <span style="white-space: nowrap; overflow: hidden;">
+                    <span class="pmk-white-space-nowrap pmk-overflow-hidden">
                         <label id="start-date" for="start">{% trans %}Start date{% endtrans %}:</label>
                         <a class="pmk-margin-right-n15 pmk-cursor-pointer" data-action="webtv--search#toggleDates">{% trans %} Select by year {% endtrans %}</a>
                     </span>
@@ -32,10 +32,10 @@
                     </div>
                 </div>
             </div>
-            <div class="row" id="simple-date-search" data-webtv--search-target="simpleDate" {{ activated?'style="display:none"':'' }}>
+            <div class="row{{ activated ? ' pmk-display-none' : '' }}" id="simple-date-search" data-webtv--search-target="simpleDate">
                 <div class="col-md-12 col-12">
                     <label for="year">{% trans %}Year{% endtrans %}</label>
-                    <a style="padding-left:20px;cursor:pointer;" data-action="webtv--search#toggleDates">{% trans %}Select by date range {% endtrans %}</a>
+                    <a class="pmk-padding-left-20 pmk-cursor-pointer" data-action="webtv--search#toggleDates">{% trans %}Select by date range {% endtrans %}</a>
                     <select id='year' data-webtv--search-target="year" name='year' class='form-select' data-action="webtv--search#submit" {{ activated?'disabled':'' }}>
                         <option value="" {% if app.request.query.get('year') == "" %} selected="selected" {% endif %}>
                             {% trans %}Any{% endtrans %}

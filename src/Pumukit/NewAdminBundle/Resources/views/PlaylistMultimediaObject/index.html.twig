@@ -4,7 +4,7 @@
         <a title="{% trans %}Back to playlist list{% endtrans %}" href="{{ path('pumukitnewadmin_playlist_index') }}" class="btn btn-pumukit float-end">
             « {% trans %}Return{% endtrans %}
         </a>
-        <ul class="breadcrumb" style="margin-bottom: 5px;">
+        <ul class="breadcrumb pmk-margin-bottom-5">
             <li class="breadcrumb-item">
                 <a href="{{ path('pumukitnewadmin_playlist_index') }}">
                     {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') and is_naked() %}

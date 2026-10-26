@@ -3,10 +3,10 @@
     multimediaobject: {one: 'ATTENTION: Are you sure you want to delete this Admin Multimedia Object from this Group?'|trans, all: 'ATTENTION: Are you sure you want to delete all Admin Multimedia Objects from this Group?'|trans, removed: 'Successfully delete MultimediaObject from Group.'|trans, removedAll: 'Successfully delete admin MultimediaObjects from Group.'|trans, route: 'pumukitnewadmin_group_delete_multimediaobject', routeAll: 'pumukitnewadmin_group_delete_all_multimediaobjects', param: 'mmId'},
     embeddedbroadcast: {one: 'ATTENTION: Are you sure you want to delete this Play Multimedia Object from this Group?'|trans, all: 'ATTENTION: Are you sure you want to delete all Play Multimedia Objects from this Group?'|trans, removed: 'Successfully delete MultimediaObject from Group.'|trans, removedAll: 'Successfully delete play MultimediaObjects from Group.'|trans, route: 'pumukitnewadmin_group_delete_embeddedbroadcast', routeAll: 'pumukitnewadmin_group_delete_all_embeddedbroadcasts', param: 'mmId'}
 }[resource_name] %}
-<div class="card-header" style="text-align:center;">{{ title }}</div>
+<div class="card-header pmk-text-align-center">{{ title }}</div>
 <div class="card-body" id="group_list_users">
-    <div class="row" style="margin-right: 0px; margin-left: 0px;">
-        <div style="width:100%; height:220px; border: 1px solid #bbb; float: left; overflow-x: hidden; overflow-y: scroll" class="tag" id="list_of_{{ resource_name }}s">
+    <div class="row pmk-margin-right-0 pmk-margin-left-0">
+        <div class="tag pmk-width-100pct pmk-height-220 pmk-border-1-solid-bbb pmk-float-left pmk-overflow-x-hidden pmk-overflow-y-scroll" id="list_of_{{ resource_name }}s">
             <div class="tag_tree list-group" id="pumukitnewadmin_group_added_{{ resource_name }}s">
                 {% include '@PumukitNewAdmin/Group/dataresources.html.twig' %}
             </div>
@@ -15,7 +15,7 @@
 </div>
 {% if action %}
     <div class="row"><div class="col-md-12 text-center">
-        <button id="pumukitnewadmin_group_delete_all_relation_{{ resource_name }}" type="button" class="btn btn-pumukit btn-sm" style="margin-top: 20px; margin-bottom:40px;"
+        <button id="pumukitnewadmin_group_delete_all_relation_{{ resource_name }}" type="button" class="btn btn-pumukit btn-sm pmk-margin-top-20 pmk-margin-bottom-40"
                 data-action="click->admin--group-info#removeAll"
                 data-admin--group-info-url-param="{{ path(group_resource_messages.routeAll, {'id': group.id}) }}"
                 data-admin--group-info-target-param="#pumukitnewadmin_group_added_{{ resource_name }}s"

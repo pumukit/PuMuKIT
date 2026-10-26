@@ -1,6 +1,6 @@
 <div class="d-flex">
   <div class="flex-shrink-0 me-3">
-    <div class="img-thumbnail" style="width:100px;text-align:center;float:left;">
+    <div class="img-thumbnail pmk-width-100 pmk-text-align-center pmk-float-left">
       {#<span class="video-duration">{{ mmobj_duration(mmobj) | duration_string }}</span>#}
       <img alt="serial_pic" class="serial thumbnailimg" src="{{ mmobj|first_url_pic(true) }}"/>
       {#div class="thumbnailholder"></div>#}
@@ -8,7 +8,7 @@
   </div>
   <div class="flex-grow-1">
     <div class="fw-bold">
-      <div style="overflow:hidden;height:1.5em">
+      <div class="pmk-overflow-hidden pmk-height-1_5em">
         {{ mmobj.title }}
       </div>
     </div>

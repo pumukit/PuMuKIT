@@ -2,10 +2,10 @@
 
 {% block body %}
     <h3 class="cab_body_div">
-        <a title="{% trans %}Back to series list{% endtrans %}" href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-pumukit float-end" style="margin:0px">
+        <a title="{% trans %}Back to series list{% endtrans %}" href="{{ path('pumukitnewadmin_series_index') }}" class="btn btn-pumukit float-end pmk-margin-0">
             « {% trans %}Back to series list{% endtrans %}
         </a>
-        <ul class="breadcrumb" style="margin-bottom: 5px;">
+        <ul class="breadcrumb pmk-margin-bottom-5">
             <li class="breadcrumb-item">
                 <a href="{{ path('pumukitnewadmin_series_index') }}">
                     {% if app.user and is_granted('ROLE_SCOPE_PERSONAL') %}

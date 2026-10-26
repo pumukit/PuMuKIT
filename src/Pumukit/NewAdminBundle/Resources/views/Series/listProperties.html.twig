@@ -6,7 +6,7 @@
     <fieldset>
       <legend hidden>{% trans %}Series properties{% endtrans %}</legend>
       <div class="mb-3">
-        <pre id="series_properties_code" style="white-space: pre-wrap;">{{ series.getProperties()|json_encode(constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_UNESCAPED_UNICODE')) }}</pre>
+        <pre class="pmk-white-space-pre-wrap" id="series_properties_code">{{ series.getProperties()|json_encode(constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_UNESCAPED_UNICODE')) }}</pre>
       </div>
     </fieldset>
     <div class="modal-footer">

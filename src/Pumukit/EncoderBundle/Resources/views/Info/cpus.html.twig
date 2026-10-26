@@ -26,7 +26,7 @@
         <p class="list-group-item-text">{{ cpu.description|default('No description') }} (type: {{ cpu.type }})</p>
         <small>{{ cpu.host }}</small>
         <div>
-          <div class="least-content togglebutton form-check form-switch" style="bottom: 10px; top: inherit">
+          <div class="least-content togglebutton form-check form-switch pmk-bottom-10 pmk-top-inherit">
               {% if is_granted('ROLE_SCOPE_PERSONAL') %}
                   <label>
                       <input class="form-check-input" role="switch" type="checkbox" disabled {% if not deactivated %}checked="checked"{% endif %}>

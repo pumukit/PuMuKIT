@@ -20,7 +20,7 @@
             <div class="mb-3">
                 <label for="name" class="form-label">{% trans %}Name{% endtrans %}:</label>
                 <input type="text" name="name" id="name" placeholder="{% trans %}name to search for{% endtrans %}" class="form-control" data-admin--person-picker-target="name" data-action="input->admin--person-picker#clear"/>
-                <span id="indicator1" style="display: none" class="input-group-text"><img alt="{% trans %}working{% endtrans %}..." src="{{ asset('bundles/pumukitnewadmin/images/admin/load/spinner.gif') }}" height="18" width="18"></span>
+                <span id="indicator1" class="input-group-text pmk-display-none"><img alt="{% trans %}working{% endtrans %}..." src="{{ asset('bundles/pumukitnewadmin/images/admin/load/spinner.gif') }}" height="18" width="18"></span>
                 <input type="hidden" name="person_id" value="" id="person_id" data-admin--person-picker-target="person"/>
             </div>
         </fieldset>

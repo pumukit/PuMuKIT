@@ -55,7 +55,7 @@
 
                     {% if is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_SYNC_TAB')) %}
                         <li class="float-end nav-item">
-                            <a title="{% trans %}Select metadata to sync on all multimedia objects of this series{% endtrans %}" href="{{ path('pumukitnewadmin_mms_sync_metadata', {'id': mm.id}) }}" class="button_sync_metadata nav-link" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal" style="color:white;text-decoration: none;">
+                            <a title="{% trans %}Select metadata to sync on all multimedia objects of this series{% endtrans %}" href="{{ path('pumukitnewadmin_mms_sync_metadata', {'id': mm.id}) }}" class="button_sync_metadata nav-link pmk-color-white pmk-text-decoration-none" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-target="#myModal">
                                 {% trans %}Sync{% endtrans %}
                             </a>
                         </li>

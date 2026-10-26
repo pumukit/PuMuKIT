@@ -6,7 +6,7 @@
     <fieldset>
         <legend hidden>{% trans %}Multimedia object properties{% endtrans %}</legend>
         <div class="mb-3">
-            <pre id="multimediaobject_properties_code" style="white-space: pre-wrap;">{{ multimediaObject.getProperties()|json_encode(constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_UNESCAPED_UNICODE')) }}</pre>
+            <pre class="pmk-white-space-pre-wrap" id="multimediaobject_properties_code">{{ multimediaObject.getProperties()|json_encode(constant('JSON_PRETTY_PRINT') b-or constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_UNESCAPED_UNICODE')) }}</pre>
         </div>
         <br />
         <h3>{% trans %}Stats{% endtrans %}</h3>
