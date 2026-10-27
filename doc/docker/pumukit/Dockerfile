@@ -21,6 +21,80 @@ ENV PHP_FPM_PM="dynamic" \
 	PHP_DEFAULT_LOCALE=es \
 	PHP_DEFAULT_CHARSET=UTF-8
 
+# PHP 7.2 is EOL: rebuild PHP 7.2.34 with the security backports from
+# deb.sury.org (php7.2 7.2.34-66). The patched source is repacked into
+# /usr/src/php.tar.xz so docker-php-ext-install builds the extensions from it.
+# See patches/php-7.2/series for the selected patches.
+ENV PHP_VERSION=7.2.34 \
+	PHP_URL="https://www.php.net/distributions/php-7.2.34.tar.xz" \
+	PHP_ASC_URL="https://www.php.net/distributions/php-7.2.34.tar.xz.asc" \
+	PHP_SHA256="409e11bc6a2c18707dfc44bc61c820ddfd81e17481470f3405ee7822d8379903"
+
+COPY patches/php-7.2/ /usr/src/php-patches/
+
+RUN set -eux; \
+	apk add --no-cache --virtual .php-rebuild-deps \
+		$PHPIZE_DEPS \
+		argon2-dev \
+		coreutils \
+		curl-dev \
+		libedit-dev \
+		libsodium-dev \
+		libxml2-dev \
+		openssl-dev \
+		sqlite-dev \
+		git \
+	; \
+	\
+	cd /usr/src; \
+	rm -f php.tar.xz php.tar.xz.asc; \
+	curl -fsSL -o php-src.tar.xz "$PHP_URL"; \
+	echo "$PHP_SHA256 *php-src.tar.xz" | sha256sum -c -; \
+	mkdir php; \
+	tar -Jxf php-src.tar.xz -C php --strip-components=1; \
+	rm php-src.tar.xz; \
+	cd php; \
+	while read -r p; do \
+		git apply --verbose --exclude='*/tests/*' "/usr/src/php-patches/$p"; \
+	done < /usr/src/php-patches/series; \
+	cd /usr/src; \
+	tar -cJf php.tar.xz php; \
+	rm -rf php /usr/src/php-patches; \
+	\
+	export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS"; \
+	docker-php-source extract; \
+	cd /usr/src/php; \
+	gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"; \
+	./configure \
+		--build="$gnuArch" \
+		--with-config-file-path="$PHP_INI_DIR" \
+		--with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
+		--enable-option-checking=fatal \
+		--with-mhash \
+		--enable-ftp \
+		--enable-mbstring \
+		--enable-mysqlnd \
+		--with-password-argon2 \
+		--with-sodium=shared \
+		--with-pdo-sqlite=/usr \
+		--with-sqlite3=/usr \
+		--with-curl \
+		--with-libedit \
+		--with-openssl \
+		--with-zlib \
+		${PHP_EXTRA_CONFIGURE_ARGS:-} \
+	; \
+	make -j "$(nproc)"; \
+	find -type f -name '*.a' -delete; \
+	make install; \
+	find /usr/local/bin /usr/local/sbin -type f -perm +0111 -exec strip --strip-all '{}' + || true; \
+	make clean; \
+	cp -v php.ini-* "$PHP_INI_DIR/"; \
+	cd /; \
+	docker-php-source delete; \
+	apk del --no-network .php-rebuild-deps; \
+	php -v | grep -F 'PHP 7.2.34'
+
 RUN apk  add --no-cache \
     	    --update \
 	     	libgcc \
@@ -39,7 +113,7 @@ RUN apk  add --no-cache \
 
 RUN pip install google-api-python-client==1.2
 
-COPY --from=teltek/ffmpeg /usr/local /usr/local
+COPY --from=teltek/ffmpeg@sha256:37972c24e41d5a9a2b01fcba28b4ee9dd4dfd45856eef1f46a29e387c1e892ad /usr/local /usr/local
 
 
 RUN apk add --no-cache \
@@ -113,7 +187,7 @@ RUN set -eux; \
 	apk del .build-deps
 
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.6.5 /usr/bin/composer /usr/bin/composer
 COPY php.ini /usr/local/etc/php/php.ini
 
 
