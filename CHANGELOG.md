@@ -17,6 +17,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - `pumukit:textindex:rebuild` command to regenerate the search text index for all Multimedia Objects and Series.
 - `pumukit:check:assets` command to list bundle assets and PuMuKIT templates referenced by templates that no installed bundle provides, removed JavaScript globals still in use, and overridden portal layouts without the importmap.
 - Stimulus (`symfony/stimulus-bundle`) and `symfony/ux-translator`, with the importmap and the `pumukit` entrypoint declared by the CoreBundle; bundles register their controllers with `FrontendAssets::register()`.
+- Route smoke test (`make test-smoke`, also run by CI): requests every GET route with a full set of fixtures and fails on server errors, on GET requests that modify data and on route parameters it cannot resolve.
 
 #### Changed
 

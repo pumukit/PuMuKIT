@@ -14,6 +14,11 @@
       <directory>src/*/Bundle/*Bundle/Tests</directory>
     </testsuite>
   </testsuites>
+  <groups>
+    <exclude>
+      <group>smoke</group>
+    </exclude>
+  </groups>
   <source baseline="phpunit-baseline.xml" ignoreSuppressionOfDeprecations="true">
     <include>
       <directory>src</directory>

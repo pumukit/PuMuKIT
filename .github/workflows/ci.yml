@@ -51,5 +51,8 @@ jobs:
       - name: Test
         run:  make test
 
+      - name: Route smoke test
+        run:  make test-smoke
+
       - name: Fixtures
         run:  make fixtures

@@ -83,10 +83,13 @@ composer-validate:
 fixtures:
 	$(call run_php,bin/console pumukit:init:repo all --force)
 
-test-all: test test-lint-yaml test-lint-twig test-lint-xliff test-lint-generic test-php-cs-fixer test-php-stan test-rector ## Run all the PuMuKIT code tests
+test-all: test test-smoke test-lint-yaml test-lint-twig test-lint-xliff test-lint-generic test-php-cs-fixer test-php-stan test-rector ## Run all the PuMuKIT code tests
 
 test:
 	$(call run_php_test,composer tests)
+
+test-smoke: ## Request every GET route with fixtures: fails on server errors, GET requests that modify data and unresolved route parameters
+	$(call run_php_test,composer tests-smoke)
 
 test-lint-yaml:
 	$(call run_php_test,composer lint-yaml)

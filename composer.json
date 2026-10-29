@@ -109,6 +109,7 @@
         ],
         "php-rector": "vendor/bin/rector process src --dry-run",
         "tests": "APP_ENV=test vendor/bin/phpunit",
+        "tests-smoke": "APP_ENV=test vendor/bin/phpunit --group smoke",
         "ci": [
             "@lint-yaml",
             "@lint-twig",
