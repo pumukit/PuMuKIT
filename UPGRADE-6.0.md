@@ -578,6 +578,19 @@ Names, titles and file names are now rendered as text: the group picker, the gro
 button, the person suggestions and the inbox explorer used to build HTML and inline handlers by
 concatenating them.
 
+## Encoder profile commands
+
+The variables of the `bat` command of the encoder profiles (`{{input}}`, `{{output}}`,
+`{{tracks.*}}`, `{{properties.*}}`, `{{tmpfileN}}`…) are escaped for a double-quoted shell string:
+`\`, `"`, `$` and `` ` `` get a backslash. Before, they were escaped as HTML, so a file whose name
+contained `&` or `"` failed to transcode (`&amp;`, `&quot;` reached ffmpeg), and a name with
+`$(…)` or backticks ran that command on the encoder. Every variable of a project profile must be
+inside double quotes, as in the core profiles:
+
+```yaml
+bat: ffmpeg -y -i "{{input}}" -c:v libx264 "{{output}}"
+```
+
 ## Messenger and RabbitMQ
 
 The core installs Symfony Messenger with the AMQP transport (`symfony/amqp-messenger`, PHP
