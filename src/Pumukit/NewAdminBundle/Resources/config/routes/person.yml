@@ -44,7 +44,7 @@ pumukitnewadmin_person_show:
 
 pumukitnewadmin_person_up:
     path: /{id}/{roleId}/{mmId}/up
-    methods: [GET, PUT, POST]
+    methods: [PUT, POST]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\PersonController::upAction
         _sylius:
@@ -52,7 +52,7 @@ pumukitnewadmin_person_up:
 
 pumukitnewadmin_person_down:
     path: /{id}/{roleId}/{mmId}/down
-    methods: [GET, PUT, POST]
+    methods: [PUT, POST]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\PersonController::downAction
         _sylius:

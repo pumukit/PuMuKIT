@@ -42,7 +42,7 @@ pumukitnewadmin_role_delete:
 
 pumukitnewadmin_role_up:
     path: /{id}/up
-    methods: [GET, PUT, POST]
+    methods: [PUT, POST]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\RoleController::upAction
         _sylius:
@@ -50,7 +50,7 @@ pumukitnewadmin_role_up:
 
 pumukitnewadmin_role_down:
     path: /{id}/down
-    methods: [GET, PUT, POST]
+    methods: [PUT, POST]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\RoleController::downAction
         _sylius:
@@ -58,7 +58,7 @@ pumukitnewadmin_role_down:
 
 pumukitnewadmin_role_top:
     path: /{id}/top
-    methods: [GET, PUT, POST]
+    methods: [PUT, POST]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\RoleController::topAction
         _sylius:
@@ -66,7 +66,7 @@ pumukitnewadmin_role_top:
 
 pumukitnewadmin_role_bottom:
     path: /{id}/bottom
-    methods: [GET, PUT, POST]
+    methods: [PUT, POST]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\RoleController::bottomAction
         _sylius:

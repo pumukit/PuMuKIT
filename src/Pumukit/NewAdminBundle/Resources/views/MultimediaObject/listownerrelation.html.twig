@@ -50,6 +50,7 @@
                                 {% else %}
                                     <a href="#" data-action="click->admin--actions#load"
                                        data-admin--actions-url-param="{{ path('pumukitnewadmin_person_up', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': 'owner'}) }}"
+                                       data-admin--actions-data-param="{{ {'_method': 'POST'}|json_encode }}"
                                        data-admin--actions-target-param="#{{ role.id }}_person_mms{{ template }}">&#8593;</a>
                                 {% endif %}
                             </td>
@@ -59,6 +60,7 @@
                                 {% else %}
                                     <a href="#" data-action="click->admin--actions#load"
                                        data-admin--actions-url-param="{{ path('pumukitnewadmin_person_down', {'id': person.id, 'roleId': role.id, 'mmId': mm.id, 'owner': 'owner'}) }}"
+                                       data-admin--actions-data-param="{{ {'_method': 'POST'}|json_encode }}"
                                        data-admin--actions-target-param="#{{ role.id }}_person_mms{{ template }}">&#8595;</a>
                                 {% endif %}
                             </td>

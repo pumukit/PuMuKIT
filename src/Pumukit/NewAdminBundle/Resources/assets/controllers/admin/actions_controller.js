@@ -228,6 +228,19 @@ export default class extends Controller {
         window.parent.postMessage(event.params.message, '*');
     }
 
+    post(event) {
+        event.preventDefault();
+        const { url, confirm } = event.params;
+        if (confirm && !window.confirm(confirm)) {
+            return;
+        }
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = url ?? event.currentTarget.href;
+        document.body.append(form);
+        form.submit();
+    }
+
     navigate(event) {
         event.preventDefault();
         window.location.href = event.params.url;

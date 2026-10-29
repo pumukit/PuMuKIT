@@ -51,16 +51,16 @@
           <td headers="th-icons">
               {% if roles.getCurrentPage() != 1 or not loop.first %}
               {% apply pumukit_spaceless %}
-              <a href="{{ path('pumukitnewadmin_role_down', {'id': role.id}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
-              <a href="{{ path('pumukitnewadmin_role_bottom', {'id': role.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="fa-solid fa-arrows-up-to-line"></i></a>
+              <a data-action="click->admin--actions#post" href="{{ path('pumukitnewadmin_role_down', {'id': role.id}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
+              <a data-action="click->admin--actions#post" href="{{ path('pumukitnewadmin_role_bottom', {'id': role.id}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="fa-solid fa-arrows-up-to-line"></i></a>
               {% endapply %}
               {% endif %}
           </td>
           <td headers="th-icons">
               {% if (roles.getCurrentPage() != roles.getNbPages()) or (loop.index + ((roles.getCurrentPage() - 1 ) * roles.getMaxPerPage()) != roles.getNbResults())  %}
               {% apply pumukit_spaceless %}
-              <a href="{{ path('pumukitnewadmin_role_up', {'id': role.id}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
-              <a href="{{ path('pumukitnewadmin_role_top', {'id': role.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="fa-solid fa-arrows-down-to-line"></i></a>
+              <a data-action="click->admin--actions#post" href="{{ path('pumukitnewadmin_role_up', {'id': role.id}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
+              <a data-action="click->admin--actions#post" href="{{ path('pumukitnewadmin_role_top', {'id': role.id}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="fa-solid fa-arrows-down-to-line"></i></a>
               {% endapply %}
               {% endif %}
           </td>

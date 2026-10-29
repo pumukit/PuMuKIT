@@ -23,7 +23,7 @@ pumukitnewadmin_playlistmms_info:
 
 pumukitnewadmin_playlistmms_up:
     path: /{id}/up
-    methods: [GET, PUT, POST]
+    methods: [PUT, POST]
     defaults:
         filter: false
         _controller: Pumukit\NewAdminBundle\Controller\PlaylistMultimediaObjectController::upAction
@@ -32,7 +32,7 @@ pumukitnewadmin_playlistmms_up:
 
 pumukitnewadmin_playlistmms_down:
     path: /{id}/down
-    methods: [GET, PUT, POST]
+    methods: [PUT, POST]
     defaults:
         filter: false
         _controller: Pumukit\NewAdminBundle\Controller\PlaylistMultimediaObjectController::downAction
@@ -41,7 +41,7 @@ pumukitnewadmin_playlistmms_down:
 
 pumukitnewadmin_playlistmms_top:
     path: /{id}/top
-    methods: [GET, PUT, POST]
+    methods: [PUT, POST]
     defaults:
         filter: false
         _controller: Pumukit\NewAdminBundle\Controller\PlaylistMultimediaObjectController::topAction
@@ -50,7 +50,7 @@ pumukitnewadmin_playlistmms_top:
 
 pumukitnewadmin_playlistmms_bottom:
     path: /{id}/bottom
-    methods: [GET, PUT, POST]
+    methods: [PUT, POST]
     defaults:
         filter: false
         _controller: Pumukit\NewAdminBundle\Controller\PlaylistMultimediaObjectController::bottomAction

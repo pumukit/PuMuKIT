@@ -60,16 +60,16 @@
                 <td>
                     {% if mms.getCurrentPage() != 1 or not loop.first %}
                         {% apply pumukit_spaceless %}
-                            <a href="{{ path('pumukitnewadmin_playlistmms_up', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
-                            <a href="{{ path('pumukitnewadmin_playlistmms_top', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="fa-solid fa-arrows-up-to-line"></i></a>
+                            <a data-action="click->admin--actions#post" href="{{ path('pumukitnewadmin_playlistmms_up', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position up{% endtrans %}">&#8593;</a>
+                            <a data-action="click->admin--actions#post" href="{{ path('pumukitnewadmin_playlistmms_top', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the beginning of the list{% endtrans %}"><i class="fa-solid fa-arrows-up-to-line"></i></a>
                         {% endapply %}
                     {% endif %}
                 </td>
                 <td>
                     {% if (mms.getCurrentPage() != mms.getNbPages()) or (loop.index + ((mms.getCurrentPage() - 1 ) * mms.getMaxPerPage()) != mms.getNbResults()) %}
                         {% apply pumukit_spaceless %}
-                            <a href="{{ path('pumukitnewadmin_playlistmms_down', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
-                            <a href="{{ path('pumukitnewadmin_playlistmms_bottom', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="fa-solid fa-arrows-down-to-line"></i></a>
+                            <a data-action="click->admin--actions#post" href="{{ path('pumukitnewadmin_playlistmms_down', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move one position down{% endtrans %}">&#8595;</a>
+                            <a data-action="click->admin--actions#post" href="{{ path('pumukitnewadmin_playlistmms_bottom', {'id': playlist.id, 'mm_pos':mm_pos}) }}" title="{% trans %}Move to the end of the list{% endtrans %}"><i class="fa-solid fa-arrows-down-to-line"></i></a>
                         {% endapply %}
                     {% endif %}
                 </td>
