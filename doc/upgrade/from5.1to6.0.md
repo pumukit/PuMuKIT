@@ -335,7 +335,16 @@ Multimedia Objects and Series:
 docker compose exec php php bin/console pumukit:textindex:rebuild
 ```
 
-### B.6 Clear the cache
+### B.6 Create the new base tags
+
+PuMuKIT 6.0 adds the `PLACES` root tag used by the places and precincts menu. The command
+only creates the tags that do not exist yet; it does not change the existing ones:
+
+```bash
+docker compose exec php php bin/console pumukit:init:repo tag
+```
+
+### B.7 Clear the cache
 
 ```bash
 docker compose exec php php bin/console cache:clear

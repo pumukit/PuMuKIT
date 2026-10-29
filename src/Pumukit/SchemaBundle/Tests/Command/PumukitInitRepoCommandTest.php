@@ -59,6 +59,20 @@ class PumukitInitRepoCommandTest extends PumukitTestCase
         $this->assertNotNull($root, '--force must recreate the ROOT tag');
     }
 
+    public function testCreatesThePlacesRootTag(): void
+    {
+        $tester = $this->commandTester();
+        $tester->execute(['repo' => 'tag']);
+
+        $this->assertSame(Command::SUCCESS, $tester->getStatusCode());
+
+        $this->dm->clear();
+        $places = $this->dm->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
+        $this->assertNotNull($places);
+        $this->assertSame('ROOT', $places->getParent()->getCod());
+        $this->assertTrue($places->getMetatag());
+    }
+
     private function seedSurvivorTag(): string
     {
         $tag = new Tag();
