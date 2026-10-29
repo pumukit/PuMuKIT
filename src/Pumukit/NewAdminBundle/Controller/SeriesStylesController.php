@@ -50,7 +50,7 @@ class SeriesStylesController extends AbstractController
         $styles = $this->documentManager->getRepository(SeriesStyle::class)->findAll();
 
         usort($styles, static function (SeriesStyle $a, SeriesStyle $b) {
-            return strtolower($a->getName()) > strtolower($b->getName());
+            return strcasecmp((string) $a->getName(), (string) $b->getName());
         });
 
         return ['styles' => $styles];
@@ -59,8 +59,13 @@ class SeriesStylesController extends AbstractController
     #[Route('/create', name: 'pumukit_newadmin_series_styles_create')]
     public function createAction(Request $request): JsonResponse
     {
+        $name = trim($request->query->getString('name'));
+        if ('' === $name) {
+            return new JsonResponse(['error'], JsonResponse::HTTP_BAD_REQUEST);
+        }
+
         $style = new SeriesStyle();
-        $style->setName($request->query->get('name'));
+        $style->setName($name);
         $style->setText('');
         $this->documentManager->persist($style);
         $this->documentManager->flush();

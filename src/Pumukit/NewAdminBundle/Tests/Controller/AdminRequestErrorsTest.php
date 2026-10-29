@@ -7,6 +7,7 @@ namespace Pumukit\NewAdminBundle\Tests\Controller;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
+use Pumukit\SchemaBundle\Document\SeriesStyle;
 use Pumukit\SchemaBundle\Document\User;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
@@ -52,5 +53,39 @@ class AdminRequestErrorsTest extends PumukitTestCase
         yield 'series' => ['/admin/series/search', '/admin/series/list'];
 
         yield 'playlists' => ['/admin/playlist/search', '/admin/playlist/list'];
+    }
+
+    public function testCreatingASeriesStyleWithoutNameIsRejected(): void
+    {
+        $this->client->request('GET', '/admin/series/styles/create', ['name' => '  ']);
+
+        $this->assertResponseStatusCodeSame(400);
+        $this->assertCount(0, $this->dm->getRepository(SeriesStyle::class)->findAll());
+    }
+
+    #[DataProvider('pagesListingSeriesStyles')]
+    public function testASeriesStyleWithoutNameDoesNotBreakThePages(string $path): void
+    {
+        $named = new SeriesStyle();
+        $named->setName('Dark');
+        $this->dm->persist($named);
+        $this->dm->persist(new SeriesStyle());
+        $this->dm->flush();
+
+        $this->client->xmlHttpRequest('GET', $path);
+
+        $this->assertResponseIsSuccessful();
+    }
+
+    public static function pagesListingSeriesStyles(): iterable
+    {
+        yield 'styles' => ['/admin/series/styles/'];
+
+        yield 'styles list' => ['/admin/series/styles/list'];
+    }
+
+    public function testASeriesStyleWithoutNameIsAnEmptyString(): void
+    {
+        $this->assertSame('', (string) new SeriesStyle());
     }
 }
