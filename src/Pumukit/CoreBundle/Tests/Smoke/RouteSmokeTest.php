@@ -31,11 +31,6 @@ final class RouteSmokeTest extends PumukitTestCase
     private const MODIFY_DATA_ON_GET = [
         'pumukit_live_chat_post' => 'H36',
         'pumukit_live_chat_basic_post' => 'H36',
-        'pumukit_new_admin_live_event_create' => 'H41',
-        'pumukit_new_admin_live_event_options' => 'H41',
-        'pumukit_new_admin_live_event_session_delete' => 'H41',
-        'pumukit_new_admin_live_event_clone_session' => 'H41',
-        'pumukit_new_admin_autocomplete_series_with_event_data' => 'H41',
         'pumukit_multimedia_object_reject_co_owner' => 'H41',
     ];
 

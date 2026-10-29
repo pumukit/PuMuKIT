@@ -106,7 +106,7 @@ class InboxController extends AbstractController
         return new JsonResponse($folderName);
     }
 
-    #[Route('/dispatchImport', name: 'inbox_auto_import')]
+    #[Route('/dispatchImport', name: 'inbox_auto_import', methods: ['POST'])]
     #[IsGranted('ROLE_UPLOAD_INBOX')]
     public function dispatchImport(Request $request): JsonResponse
     {

@@ -58,7 +58,7 @@ final class WizardController extends AbstractController
         ]);
     }
 
-    #[Route('/{series}/server/upload', name: 'wizard_upload_from_server')]
+    #[Route('/{series}/server/upload', name: 'wizard_upload_from_server', methods: ['POST'])]
     public function uploadFromServer(Request $request, string $series): JsonResponse
     {
         $relativeFilePath = $request->request->get('filePath');

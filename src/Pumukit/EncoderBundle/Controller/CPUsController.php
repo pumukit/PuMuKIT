@@ -52,7 +52,7 @@ class CPUsController extends AbstractController
         ]);
     }
 
-    #[Route('/cpu/maintenance/{activateMaintenance}/{cpuName}', name: 'pumukit_encoder_cpu_maintenance_switch', requirements: ['activateMaintenance' => 'activate|deactivate'])]
+    #[Route('/cpu/maintenance/{activateMaintenance}/{cpuName}', name: 'pumukit_encoder_cpu_maintenance_switch', requirements: ['activateMaintenance' => 'activate|deactivate'], methods: ['POST'])]
     public function switchMaintenanceAction(string $activateMaintenance, string $cpuName): Response
     {
         $cpu = $this->cpuService->getCpuByName($cpuName);

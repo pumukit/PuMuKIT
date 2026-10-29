@@ -148,7 +148,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         ];
     }
 
-    #[Route('create/', name: 'pumukit_new_admin_live_event_create')]
+    #[Route('create/', name: 'pumukit_new_admin_live_event_create', methods: ['POST'])]
     public function createEventAction(Request $request): RedirectResponse
     {
         $series = $request->request->get('seriesSuggest') ?: false;
@@ -345,7 +345,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     /**
      * @param mixed $type
      */
-    #[Route('list/options/{type}/{id}', name: 'pumukit_new_admin_live_event_options')]
+    #[Route('list/options/{type}/{id}', name: 'pumukit_new_admin_live_event_options', methods: ['POST'])]
     #[Template('@PumukitNewAdmin/LiveEvent/updatemenu.html.twig')]
     public function menuOptionsAction($type, #[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject)
     {
@@ -382,7 +382,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         return new JsonResponse(['status' => $this->translator->trans($message)]);
     }
 
-    #[Route('delete/selected/', name: 'pumukit_new_admin_live_event_delete_selected')]
+    #[Route('delete/selected/', name: 'pumukit_new_admin_live_event_delete_selected', methods: ['POST'])]
     public function deleteSelectedEventsAction(Request $request): JsonResponse
     {
         $data = $request->request->all('events_checkbox');
@@ -664,7 +664,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
      * @param mixed $multimediaObject
      * @param mixed $session_id
      */
-    #[Route('delete/session/{multimediaObject}/{session_id}', name: 'pumukit_new_admin_live_event_session_delete')]
+    #[Route('delete/session/{multimediaObject}/{session_id}', name: 'pumukit_new_admin_live_event_session_delete', methods: ['POST'])]
     #[Template('@PumukitNewAdmin/LiveEvent/sessionlist.html.twig')]
     public function sessionDeleteAction($multimediaObject, $session_id)
     {
@@ -684,7 +684,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
      * @param mixed $multimediaObject
      * @param mixed $session_id
      */
-    #[Route('clone/session/{multimediaObject}/{session_id}', name: 'pumukit_new_admin_live_event_clone_session')]
+    #[Route('clone/session/{multimediaObject}/{session_id}', name: 'pumukit_new_admin_live_event_clone_session', methods: ['POST'])]
     #[Template('@PumukitNewAdmin/LiveEvent/sessionlist.html.twig')]
     public function sessionCloneAction($multimediaObject, $session_id)
     {
@@ -767,7 +767,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         return [];
     }
 
-    #[Route('edit/series/{multimediaObject}', name: 'pumukitnewadmin_live_event_edit_series')]
+    #[Route('edit/series/{multimediaObject}', name: 'pumukitnewadmin_live_event_edit_series', methods: ['POST'])]
     public function seriesChangeAction(Request $request, MultimediaObject $multimediaObject)
     {
         $series = $request->request->get('seriesSuggest');
@@ -793,7 +793,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
         return ['multimediaObject' => $multimediaObject];
     }
 
-    #[Route('autocomplete/series/with/event/data/{id}', name: 'pumukit_new_admin_autocomplete_series_with_event_data')]
+    #[Route('autocomplete/series/with/event/data/{id}', name: 'pumukit_new_admin_autocomplete_series_with_event_data', methods: ['POST'])]
     public function autocompleteSeriesWithEventDataAction(Request $request, #[MapDocument(mapping: ['id' => 'id'])] MultimediaObject $multimediaObject)
     {
         $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => $multimediaObject->getSeries()->getId()]);

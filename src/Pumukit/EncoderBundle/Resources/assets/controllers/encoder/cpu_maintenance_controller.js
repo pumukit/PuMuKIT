@@ -6,6 +6,6 @@ export default class extends Controller {
 
     toggle() {
         const url = this.element.checked ? this.deactivateUrlValue : this.activateUrlValue;
-        $.get(url).done(() => window.location.reload());
+        $.post(url).done(() => window.location.reload());
     }
 }
