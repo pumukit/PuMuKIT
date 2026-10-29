@@ -132,7 +132,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
 
             return $this->redirectToRoute('pumukitnewadmin_places_index');
         } catch (\Exception $exception) {
-            throw new \Exception($exception->getMessage());
+            return new JsonResponse(['status' => $exception->getMessage()], JsonResponse::HTTP_CONFLICT);
         }
     }
 
