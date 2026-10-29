@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Url;
 
 class LinkType extends AbstractType
 {
@@ -36,6 +37,7 @@ class LinkType extends AbstractType
                 UrlType::class,
                 [
                     'default_protocol' => 'http',
+                    'constraints' => [new Url(protocols: ['http', 'https'], requireTld: false)],
                     'required' => true,
                     'attr' => [
                         'aria-label' => $this->translator->trans('URL', [], null, $this->locale),

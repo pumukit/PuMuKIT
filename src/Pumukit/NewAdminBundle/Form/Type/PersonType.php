@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Url;
 
 class PersonType extends AbstractType
 {
@@ -83,6 +84,7 @@ class PersonType extends AbstractType
                 UrlType::class,
                 [
                     'default_protocol' => 'http',
+                    'constraints' => [new Url(protocols: ['http', 'https'], requireTld: false)],
                     'required' => false,
                     'attr' => ['aria-label' => $this->translator->trans('Web', [], null, $this->locale)],
                     'label' => $this->translator->trans('Web', [], null, $this->locale),
