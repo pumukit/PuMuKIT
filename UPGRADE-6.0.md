@@ -903,6 +903,19 @@ other than `same-origin` or `none`, or an `Origin` header for another host). Req
 those headers, such as `curl` or server-to-server calls, are not affected. Integrations that post
 to the backoffice from a page on another domain must call an API instead.
 
+## Live chat
+
+- `pumukit_live_chat_post` and `pumukit_live_chat_basic_post` only accept `POST`, and answer
+  `404` when `pumukit_live.chat.enable` is `false` (the default): before, anyone could store
+  messages even with the chat disabled.
+- Each IP address can post 10 messages per minute (`429` above that). The limit is the
+  `chat_message` rate limiter declared by the WebTVBundle; a project can change it under
+  `framework.rate_limiter.chat_message`. Until the proxy is configured as in
+  `doc/upgrade/from5.1to6.0.md`, the address can be spoofed with `X-Forwarded-For`.
+- Messages keep a SHA-256 hash of the author's session instead of reading a `PHPSESSID` cookie that
+  PuMuKIT never sets (its session is called `pumukit`). Anonymous authors are remembered from the
+  first message they post with 6.0.
+
 ## Backoffice menu builder
 
 `Pumukit\NewAdminBundle\Menu\Builder` is now a service with constructor injection instead of a
