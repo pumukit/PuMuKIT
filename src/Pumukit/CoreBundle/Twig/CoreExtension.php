@@ -10,6 +10,8 @@ use Twig\TwigFunction;
 
 class CoreExtension extends AbstractExtension
 {
+    private const SAFE_URL_SCHEMES = ['http', 'https', 'mailto'];
+
     protected $kernelBundles;
 
     public function __construct(array $kernelBundles)
@@ -21,6 +23,7 @@ class CoreExtension extends AbstractExtension
     {
         return [
             new TwigFilter('pumukit_spaceless', [$this, 'spaceless'], ['pre_escape' => 'html', 'is_safe' => ['html']]),
+            new TwigFilter('safe_url', [$this, 'safeUrl']),
         ];
     }
 
@@ -34,6 +37,20 @@ class CoreExtension extends AbstractExtension
     public function spaceless(?string $content): string
     {
         return trim(preg_replace('/>\s+</', '><', $content ?? ''));
+    }
+
+    public function safeUrl(?string $url): string
+    {
+        if (null === $url) {
+            return '';
+        }
+
+        $normalized = preg_replace('/[\x00-\x20\x7F]/', '', $url);
+        if (preg_match('/^([a-z][a-z0-9+.\-]*):/i', $normalized, $matches) && !in_array(strtolower($matches[1]), self::SAFE_URL_SCHEMES, true)) {
+            return '#';
+        }
+
+        return $url;
     }
 
     public function isBundleEnabled($bundle): bool

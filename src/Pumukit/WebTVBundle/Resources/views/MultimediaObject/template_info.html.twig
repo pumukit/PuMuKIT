@@ -90,7 +90,7 @@
                         {% set none_attach = false %}
                         <li class="qa-player-material material">
                             <span class="fa-solid fa-paperclip"></span>
-                            <a href="{{ material.getUrl() }}">{{ material.getName() }}</a>
+                            <a href="{{ material.getUrl()|safe_url }}">{{ material.getName() }}</a>
                         </li>
                     {% endfor %}
 
@@ -98,7 +98,7 @@
                         {% if showDownloads %}
                         {% set none_attach = false %}
                         <li class="qa-player-link link">
-                            <a target="_blank" href="{{ link.getUrl() }}">
+                            <a target="_blank" href="{{ link.getUrl()|safe_url }}">
                                 <span class="fa-solid fa-globe"></span>
                                 {{ link.getName() }}
                             </a>

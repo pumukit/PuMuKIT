@@ -1,6 +1,6 @@
 {% for link in object.getLinks() %}
     <li class="list-group-item list-group-item-custom link">
-        <a target="_blank" href="{{ link.getUrl() }}" title="{{ link.getName() }}">
+        <a target="_blank" href="{{ link.getUrl()|safe_url }}" title="{{ link.getName() }}">
             <span class="fa-solid fa-globe"></span>
             {{ link.getName() }}
         </a>

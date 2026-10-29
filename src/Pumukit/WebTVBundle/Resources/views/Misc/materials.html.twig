@@ -1,7 +1,7 @@
 {% for material in object.getMaterials() | filter(material => not material.getHide() and showDownloads|default(false)) %}
     <li class="list-group-item list-group-item-custom material">
         <span class="fa-solid fa-paperclip"></span>
-        <a target="_blank" href="{{ material.getUrl() }}" title="{{ material.getName() }}">
+        <a target="_blank" href="{{ material.getUrl()|safe_url }}" title="{{ material.getName() }}">
             {{ material.getName() }}
         </a>
     </li>

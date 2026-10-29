@@ -14,7 +14,7 @@
                                 <b>{{ role.getName() }}:</b>
                             {% endif %}
                             {% if person.getWeb() is not empty %}
-                                <a href="{{ person.getWeb() }}">{{ person.getHName() }}</a>
+                                <a href="{{ person.getWeb()|safe_url }}">{{ person.getHName() }}</a>
                             {% else %}
                                 {{ person.getHName() }}
                             {% endif %}
