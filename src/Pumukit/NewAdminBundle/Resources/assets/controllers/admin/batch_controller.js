@@ -111,7 +111,7 @@ export default class extends Controller {
         if (0 === ids.length || !window.confirm(this.message('confirm'))) {
             return;
         }
-        $(`#list_${this.pluralValue}`).load(this.urlsValue.invert.replace('__ids__', JSON.stringify(ids)));
+        $(`#list_${this.pluralValue}`).load(this.urlsValue.invert.replace('__ids__', JSON.stringify(ids)), { _method: 'POST' });
         const { edit, checkbox } = this.announceValue;
         const editing = $(edit).val();
         if (!ids.includes(editing)) {

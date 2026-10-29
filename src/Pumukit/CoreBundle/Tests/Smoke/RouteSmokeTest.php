@@ -43,8 +43,6 @@ final class RouteSmokeTest extends PumukitTestCase
         'pumukitnewadmin_unesco_delete_tag' => 'H41',
         'pumukitnewadmin_unesco_delete' => 'H41',
         'pumukitnewadmin_unesco_clone' => 'H41',
-        'pumukitnewadmin_person_link' => 'H41',
-        'pumukitnewadmin_series_create' => 'H41',
         'pumukitnewadmin_track_retranscode' => 'H41',
     ];
 

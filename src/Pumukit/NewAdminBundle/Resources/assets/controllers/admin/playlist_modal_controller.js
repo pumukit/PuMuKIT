@@ -24,7 +24,7 @@ export default class extends Controller {
 
     add() {
         const ids = [...this.element.querySelectorAll('.tab-pane.active fieldset input[type="checkbox"]')].filter((input) => input.checked).map((input) => input.value);
-        $('#list_playlistmms').load(this.urlsValue.add.replace('__ids__', encodeURIComponent(JSON.stringify(ids))));
+        $('#list_playlistmms').load(this.urlsValue.add.replace('__ids__', encodeURIComponent(JSON.stringify(ids))), { _method: 'POST' });
     }
 
     search() {

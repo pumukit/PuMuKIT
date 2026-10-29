@@ -8,7 +8,7 @@ pumukitnewadmin_mms_index:
 
 pumukitnewadmin_mms_create:
     path: /{id}/create
-    methods: [GET, POST]
+    methods: [POST]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::createAction
         _sylius:
@@ -143,7 +143,7 @@ pumukitnewadmin_mms_status:
 
 pumukitnewadmin_mms_invert_announce:
     path: /invertannounce
-    methods: [GET, POST]
+    methods: [POST]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::invertAnnounceAction
 

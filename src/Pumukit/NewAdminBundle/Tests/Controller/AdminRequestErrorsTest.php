@@ -90,24 +90,24 @@ class AdminRequestErrorsTest extends PumukitTestCase
     }
 
     #[DataProvider('requestsWithoutRequiredParameters')]
-    public function testAMissingParameterIsABadRequest(string $path): void
+    public function testAMissingParameterIsABadRequest(string $method, string $path): void
     {
-        $this->client->request('GET', $path);
+        $this->client->request($method, $path);
 
         $this->assertResponseStatusCodeSame(400);
     }
 
     public static function requestsWithoutRequiredParameters(): iterable
     {
-        yield 'series info' => ['/admin/info_series'];
+        yield 'series info' => ['GET', '/admin/info_series'];
 
-        yield 'series announce' => ['/admin/series/invertannounce'];
+        yield 'series announce' => ['POST', '/admin/series/invertannounce'];
 
-        yield 'multimedia object announce' => ['/admin/mms/invertannounce'];
+        yield 'multimedia object announce' => ['POST', '/admin/mms/invertannounce'];
 
-        yield 'tag search' => ['/admin/mms/search'];
+        yield 'tag search' => ['GET', '/admin/mms/search'];
 
-        yield 'tag reload' => ['/admin/mms/reloadtags'];
+        yield 'tag reload' => ['GET', '/admin/mms/reloadtags'];
     }
 
     public function testTheUserFiltersWorkWithPartialCriteria(): void

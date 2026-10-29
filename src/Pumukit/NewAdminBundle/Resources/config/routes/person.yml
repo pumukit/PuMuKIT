@@ -92,7 +92,7 @@ pumukitnewadmin_person_delete_relation:
 
 pumukitnewadmin_person_link:
     path: /{mmId}/{roleId}/{id}/link
-    methods: [GET, POST]
+    methods: [POST]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\PersonController::linkAction
 

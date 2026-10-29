@@ -90,13 +90,13 @@ pumukitnewadmin_playlistmms_modal_url:
 
 pumukitnewadmin_playlistmms_batch_add:
     path: /{id}/add
-    methods: [GET, POST]
+    methods: [POST]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\PlaylistMultimediaObjectController::addBatchAction
 
 pumukitnewadmin_playlistmms_batch_delete:
     path: /{id}/delete
-    methods: [GET, POST, DELETE]
+    methods: [POST, DELETE]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\PlaylistMultimediaObjectController::deleteBatchAction
 

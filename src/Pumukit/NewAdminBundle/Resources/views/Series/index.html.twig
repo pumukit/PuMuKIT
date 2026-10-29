@@ -44,7 +44,7 @@
                             {% if is_granted('ROLE_ACCESS_ADVANCED_UPLOAD') or is_granted('ROLE_ACCESS_WIZARD_UPLOAD') %}
                                 <a title="{% trans %}Create new series{% endtrans %}" id="pumukitnewadmin_series_new_button" class="btn btn-pumukit" href="#" data-action="click->admin--actions#create"
                                    data-admin--actions-url-param="{{ path('pumukitnewadmin_series_create') }}"
-                                   data-admin--actions-method-param="GET"
+                                   data-admin--actions-method-param="POST"
                                    data-admin--actions-key-param="seriesId"
                                    data-admin--actions-name-param="series"
                                    data-admin--actions-list-param="#list_series"

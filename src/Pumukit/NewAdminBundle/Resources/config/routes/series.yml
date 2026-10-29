@@ -14,7 +14,7 @@ pumukitnewadmin_series_search:
 
 pumukitnewadmin_series_create:
     path: /create
-    methods: [GET, POST]
+    methods: [POST]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\SeriesController::createAction
         _sylius:
@@ -74,7 +74,7 @@ pumukitnewadmin_series_list:
 
 pumukitnewadmin_series_invert_announce:
     path: /invertannounce
-    methods: [GET, POST]
+    methods: [POST]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\SeriesController::invertAnnounceAction
 
