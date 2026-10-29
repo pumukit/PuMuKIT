@@ -54,7 +54,6 @@ services:
     class: Pumukit\NewAdminBundle\Form\Type\Base\TextI18nType
     arguments:
       $locales:     '%pumukit.locales%'
-      $translators: '%pumukit_new_admin.metadata_translators%'
     tags:
       - { name: "form.type", alias: "texti18n" }
 
@@ -62,7 +61,6 @@ services:
     class: Pumukit\NewAdminBundle\Form\Type\Base\TextI18nAdvanceType
     arguments:
       $locales:     '%pumukit.locales%'
-      $translators: '%pumukit_new_admin.metadata_translators%'
     tags:
       - { name: "form.type", alias: "texti18nadvance" }
 
@@ -70,7 +68,6 @@ services:
     class: Pumukit\NewAdminBundle\Form\Type\Base\TextareaI18nType
     arguments:
       $locales:     '%pumukit.locales%'
-      $translators: '%pumukit_new_admin.metadata_translators%'
     tags:
       - { name: "form.type", alias: "textareai18n" }
 

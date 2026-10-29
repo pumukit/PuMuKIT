@@ -680,6 +680,21 @@ parameter reference that behaved as `true`. It now works and keeps its default o
 so access through a magic URL no longer lists the hidden multimedia objects of the series
 unless a project sets it to `true`.
 
+## Removed metadata translation
+
+The metadata translation button of the i18n fields was never implemented and is removed:
+
+- `Pumukit\NewAdminBundle\Controller\TranslateController`, the
+  `pumukitnewadmin_metadata_translate` route and the `pumukit_new_admin.metadata_translators`
+  parameter no longer exist.
+- Projects with their own `config/packages/legacy_aliases.yaml` must remove the
+  `pumukitnewadmin.translatecontroller` alias, otherwise the container fails to compile.
+- `AbstractI18nType` (and `TextI18nType`, `TextI18nAdvanceType`, `TextareaI18nType`) take only
+  `$locales` in the constructor, and their views no longer get the `translators` variable.
+
+The `pumukitnewadmin_seriespic_index` and `pumukitnewadmin_mmspic_index` routes are removed too:
+they pointed to actions that never existed.
+
 ## Backoffice menu builder
 
 `Pumukit\NewAdminBundle\Menu\Builder` is now a service with constructor injection instead of a

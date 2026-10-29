@@ -1,11 +1,3 @@
-pumukitnewadmin_seriespic_index:
-    path: /
-    methods: [GET]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\SeriesPicController::indexAction
-        _sylius:
-            filterable: true
-
 pumukitnewadmin_seriespic_create:
     path: /create/{id}
     methods: [GET, POST]

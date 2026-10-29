@@ -113,6 +113,8 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Vendored SIMILE Timeline 2.3.1 assets (~1 MB) under `NewAdminBundle/Resources/public/js/timeline_2.3.1/`.
 - Per-bundle copies of jQuery, Bootstrap, moment, jQuery UI and bootstrap-datetimepicker in `pumukitnewadmin`, `pumukitwebtv` and `pumukitstatsui` (see UPGRADE-6.0.md for the replacements).
 - Unused fields from the encoder profile configuration schema (`format`, `codec`, `mime_type`, `bitrate`, `framerate`, `channels`, `app`, `rel_duration_size`, `rel_duration_trans`, `file_cfg`, `prescript`, and `streamserver.{name,type,host,description}`); these were declared but never read by the application. `validateProfilesDir()` now identifies the failing profile by its array key in its error message instead of the redundant `streamserver.name`.
+- The metadata translation button of the backoffice i18n fields, which was never implemented: `TranslateController`, the `pumukitnewadmin_metadata_translate` route, the `pumukitnewadmin.translatecontroller` alias and the `pumukit_new_admin.metadata_translators` parameter.
+- The `pumukitnewadmin_seriespic_index` and `pumukitnewadmin_mmspic_index` routes, which pointed to controller actions that do not exist.
 
 
 ## [5.1.0](https://github.com/pumukit/PuMuKIT/compare/4.0.0...5.0.0) - (2026-03-06)

@@ -46,7 +46,6 @@ services:
   pumukitnewadmin.authorization_checker: '@security.authorization_checker'
   pumukitnewadmin.twig_mmobjbuttons_extension: '@Pumukit\NewAdminBundle\Twig\MultimediaObjectButtonsExtension'
   pumukitnewadmin.catalogue_extension: '@Pumukit\NewAdminBundle\Twig\CatalogueExtension'
-  pumukitnewadmin.translatecontroller: '@Pumukit\NewAdminBundle\Controller\TranslateController'
   pumukit_notification.sender: '@Pumukit\NotificationBundle\Services\SenderService'
   pumukit_notification.listener: '@Pumukit\NotificationBundle\Services\JobNotificationService'
   pumukitlive.legacyeventpic: '@Pumukit\SchemaBundle\Services\LegacyEventPicService'

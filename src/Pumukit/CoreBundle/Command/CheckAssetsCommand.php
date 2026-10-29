@@ -164,7 +164,7 @@ class CheckAssetsCommand extends Command
         'update_seriespic' => 'the admin--pic-list controller',
         'update_playlistpic' => 'the admin--pic-list controller',
         'change_pics_page' => 'admin--actions#load (see @PumukitNewAdmin/Pic/picstoaddlist.html.twig)',
-        'pmk_translate' => 'admin--actions#translate (see @PumukitNewAdmin/Themes/fields.html.twig)',
+        'pmk_translate' => 'nothing: the metadata translation button was never implemented and is removed',
         'submit_delete_mms' => 'admin--actions#remove (see @PumukitNewAdmin/MultimediaObject/updatemenu.html.twig)',
         'submit_clone_mms' => 'admin--actions#load (see @PumukitNewAdmin/MultimediaObject/updatemenu.html.twig)',
         'update_mms_status_wrapper' => 'the admin--job-status controller (see @PumukitNewAdmin/MultimediaObject/index.html.twig)',

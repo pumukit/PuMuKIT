@@ -116,4 +116,21 @@ class AdminRequestErrorsTest extends PumukitTestCase
 
         $this->assertResponseIsSuccessful();
     }
+
+    #[DataProvider('removedRoutes')]
+    public function testRemovedRoutesAreNotFound(string $path): void
+    {
+        $this->client->request('GET', $path);
+
+        $this->assertResponseStatusCodeSame(404);
+    }
+
+    public static function removedRoutes(): iterable
+    {
+        yield 'series pictures index' => ['/admin/seriespic/'];
+
+        yield 'multimedia object pictures index' => ['/admin/mmspic/'];
+
+        yield 'metadata translation' => ['/admin/metadata/translate'];
+    }
 }

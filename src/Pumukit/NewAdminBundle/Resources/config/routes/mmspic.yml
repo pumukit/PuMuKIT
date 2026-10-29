@@ -1,11 +1,3 @@
-pumukitnewadmin_mmspic_index:
-    path: /
-    methods: [GET]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectPicController::indexAction
-        _sylius:
-            filterable: true
-
 pumukitnewadmin_mmspic_create:
     path: /create/{id}
     methods: [GET, POST]

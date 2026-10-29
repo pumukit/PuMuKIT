@@ -3737,10 +3737,6 @@
         <source>Copy</source>
         <target state="needs-translation">Copy</target>
       </trans-unit>
-      <trans-unit id="j_FHaW_" resname="Translate">
-        <source>Translate</source>
-        <target state="needs-translation">Translate</target>
-      </trans-unit>
       <trans-unit id="algu._j" resname="Iframe URL">
         <source>Iframe URL</source>
         <target state="needs-translation">Iframe URL</target>
@@ -3800,10 +3796,6 @@
       <trans-unit id="0lBOUri" resname="catalogue">
         <source>catalogue</source>
         <target state="needs-translation">catalogue</target>
-      </trans-unit>
-      <trans-unit id="8zto_mL" resname="Please enter your translation:">
-        <source>Please enter your translation:</source>
-        <target state="needs-translation">Please enter your translation:</target>
       </trans-unit>
       <trans-unit id="VKDowX6" resname="Error">
         <source>Error</source>
