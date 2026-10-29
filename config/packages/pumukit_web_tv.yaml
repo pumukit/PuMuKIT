@@ -48,7 +48,7 @@ services:
       $limitObjsRecentlyAdded: '%limit_objs_recentlyadded%'
       $recentlyAddedObjectsByCol: '%recentlyadded.objects_by_col%'
       $limitObjsPlayerSeries: '%limit_objs_player_series%'
-      $pumukitFullMagicUrl: '%pumukit_core.full_magic_url'
+      $pumukitFullMagicUrl: '%pumukit.full_magic_url%'
       $cinemaMode: '%pumukit_web_tv.cinema_mode%'
       $columnsObjsSearch: '%columns_objs_search%'
       $pumukitNewAdminLicenses: '%pumukit_new_admin.licenses%'
