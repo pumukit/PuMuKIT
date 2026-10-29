@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/chat')]
@@ -21,25 +22,20 @@ class ChatController extends AbstractController
     protected $documentManager;
     protected $pumukitLiveChatEnable;
     protected $pumukitLiveChatUpdateInterval;
+    private RateLimiterFactoryInterface $chatMessageLimiter;
 
-    public function __construct(DocumentManager $documentManager, bool $pumukitLiveChatEnable, int $pumukitLiveChatUpdateInterval)
+    public function __construct(DocumentManager $documentManager, bool $pumukitLiveChatEnable, int $pumukitLiveChatUpdateInterval, RateLimiterFactoryInterface $chatMessageLimiter)
     {
         $this->documentManager = $documentManager;
         $this->pumukitLiveChatEnable = $pumukitLiveChatEnable;
         $this->pumukitLiveChatUpdateInterval = $pumukitLiveChatUpdateInterval;
+        $this->chatMessageLimiter = $chatMessageLimiter;
     }
 
     #[Route('/show/{id}', name: 'pumukit_live_chat_show')]
     public function showAction(Request $request, #[MapDocument(id: 'id')] MultimediaObject $multimediaObject): Response
     {
-        $username = $this->getUser();
-        if (!$username) {
-            $sessionCookie = $request->cookies->get('PHPSESSID');
-            $message = $this->documentManager->getRepository(Message::class)->findOneBy(['cookie' => $sessionCookie]);
-            if ($message && ($author = $message->getAuthor())) {
-                $username = $author;
-            }
-        }
+        $username = $this->getUser() ?? $this->previousAuthor($request);
 
         return $this->render('@PumukitWebTV/Live/Chat/show.html.twig', [
             'enable_chat' => $this->pumukitLiveChatEnable,
@@ -52,14 +48,7 @@ class ChatController extends AbstractController
     #[Route('/basic/show/{id}', name: 'pumukit_live_chat_basic_show')]
     public function showBasicAction(Request $request, #[MapDocument(id: 'id')] Live $live): Response
     {
-        $username = $this->getUser();
-        if (!$username) {
-            $sessionCookie = $request->cookies->get('PHPSESSID');
-            $message = $this->documentManager->getRepository(Message::class)->findOneBy(['cookie' => $sessionCookie]);
-            if ($message && ($author = $message->getAuthor())) {
-                $username = $author;
-            }
-        }
+        $username = $this->getUser() ?? $this->previousAuthor($request);
 
         return $this->render('@PumukitWebTV/Live/Chat/basicLiveShow.html.twig', [
             'enable_chat' => $this->pumukitLiveChatEnable,
@@ -69,46 +58,22 @@ class ChatController extends AbstractController
         ]);
     }
 
-    #[Route('/post/{id}', name: 'pumukit_live_chat_post')]
+    #[Route('/post/{id}', name: 'pumukit_live_chat_post', methods: ['POST'])]
     public function postAction(#[MapDocument(id: 'id')] MultimediaObject $multimediaObject, Request $request): JsonResponse
     {
         $message = new Message();
-        $message->setAuthor($request->request->get('name'));
         $message->setMultimediaObject($multimediaObject);
-        $message->setMessage($request->request->get('message'));
-        $message->setInsertDate(new \DateTime());
-        $sessionCookie = $request->cookies->get('PHPSESSID');
-        $message->setCookie($sessionCookie);
 
-        try {
-            $this->documentManager->persist($message);
-            $this->documentManager->flush();
-        } catch (\Exception $e) {
-            return new JsonResponse(['message' => 'Error'], 500);
-        }
-
-        return new JsonResponse(['message' => 'Successful']);
+        return $this->saveMessage($request, $message);
     }
 
-    #[Route('/basic/post/{id}', name: 'pumukit_live_chat_basic_post')]
+    #[Route('/basic/post/{id}', name: 'pumukit_live_chat_basic_post', methods: ['POST'])]
     public function postBasicAction(#[MapDocument(id: 'id')] Live $live, Request $request): JsonResponse
     {
         $message = new Message();
-        $message->setAuthor($request->request->get('name'));
         $message->setChannel($live->getId());
-        $message->setMessage($request->request->get('message'));
-        $message->setInsertDate(new \DateTime());
-        $sessionCookie = $request->cookies->get('PHPSESSID');
-        $message->setCookie($sessionCookie);
 
-        try {
-            $this->documentManager->persist($message);
-            $this->documentManager->flush();
-        } catch (\Exception $e) {
-            return new JsonResponse(['message' => 'Error'], 500);
-        }
-
-        return new JsonResponse(['message' => 'Successful']);
+        return $this->saveMessage($request, $message);
     }
 
     #[Route('/list/{id}', name: 'pumukit_live_chat_list')]
@@ -135,5 +100,44 @@ class ChatController extends AbstractController
         return $this->render('@PumukitWebTV/Live/Chat/list.html.twig', [
             'messages' => $messages,
         ]);
+    }
+
+    private function saveMessage(Request $request, Message $message): JsonResponse
+    {
+        if (!$this->pumukitLiveChatEnable) {
+            throw $this->createNotFoundException();
+        }
+
+        if (!$this->chatMessageLimiter->create($request->getClientIp())->consume()->isAccepted()) {
+            return new JsonResponse(['message' => 'Too many messages'], Response::HTTP_TOO_MANY_REQUESTS);
+        }
+
+        $session = $request->getSession();
+        $session->start();
+
+        $message->setAuthor($request->request->get('name'));
+        $message->setMessage($request->request->get('message'));
+        $message->setInsertDate(new \DateTime());
+        $message->setCookie(hash('sha256', $session->getId()));
+
+        try {
+            $this->documentManager->persist($message);
+            $this->documentManager->flush();
+        } catch (\Exception $e) {
+            return new JsonResponse(['message' => 'Error'], 500);
+        }
+
+        return new JsonResponse(['message' => 'Successful']);
+    }
+
+    private function previousAuthor(Request $request): ?string
+    {
+        if (!$request->hasPreviousSession()) {
+            return null;
+        }
+
+        $message = $this->documentManager->getRepository(Message::class)->findOneBy(['cookie' => hash('sha256', $request->getSession()->getId())]);
+
+        return $message?->getAuthor() ?: null;
     }
 }

@@ -18,6 +18,9 @@ class PumukitWebTVExtension extends Extension implements PrependExtensionInterfa
         FrontendAssets::register($container, dirname(__DIR__), '@pumukit/webtv');
 
         $container->prependExtensionConfig('framework', [
+            'rate_limiter' => [
+                'chat_message' => ['policy' => 'sliding_window', 'limit' => 10, 'interval' => '1 minute'],
+            ],
             'html_sanitizer' => [
                 'sanitizers' => [
                     'pumukit.series_html' => [

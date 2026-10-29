@@ -28,10 +28,7 @@ final class RouteSmokeTest extends PumukitTestCase
 {
     private const SKIPPED_PATHS = '#^/(_|admin/logout$|logout$|login$)#';
 
-    private const MODIFY_DATA_ON_GET = [
-        'pumukit_live_chat_post' => 'H36',
-        'pumukit_live_chat_basic_post' => 'H36',
-    ];
+    private const MODIFY_DATA_ON_GET = [];
 
     private const NOT_REQUESTED = [
         'tus_post_token' => 'TUS upload server',
