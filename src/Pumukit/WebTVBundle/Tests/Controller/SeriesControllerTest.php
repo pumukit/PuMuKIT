@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Pumukit\WebTVBundle\Tests\Controller;
 
 use PHPUnit\Framework\Attributes\CoversNothing;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesStyle;
+use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -74,6 +77,48 @@ class SeriesControllerTest extends WebTestCase
         } finally {
             $documentManager = static::getContainer()->get('doctrine_mongodb.odm.document_manager');
             $documentManager->remove($documentManager->find(Series::class, $id));
+            $documentManager->flush();
+        }
+    }
+
+    public function testTheSubseriesTitleKeepsItsLineBreaksWithoutScripts(): void
+    {
+        self::ensureKernelShutdown();
+        $client = static::createClient();
+        $documentManager = static::getContainer()->get('doctrine_mongodb.odm.document_manager');
+
+        $tag = new Tag();
+        $tag->setCod(PumukitWebTVBundle::WEB_TV_TAG);
+        $documentManager->persist($tag);
+
+        $series = new Series();
+        $series->setNumericalID(987655);
+        $series->setProperty('template', 'subserial');
+        $documentManager->persist($series);
+
+        $multimediaObject = new MultimediaObject();
+        $multimediaObject->setNumericalID(987655);
+        $multimediaObject->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        $multimediaObject->addTag($tag);
+        $multimediaObject->setSeries($series);
+        $multimediaObject->setProperty('opencast', 'subseries');
+        $multimediaObject->setProperty('subseriestitle', ['en' => '<b>Unit 1</b><img src="x" onerror="alert(4)">']);
+        $documentManager->persist($multimediaObject);
+        $documentManager->flush();
+        $ids = [$tag->getId(), $series->getId(), $multimediaObject->getId()];
+
+        try {
+            $client->request('GET', '/series/'.$series->getId());
+            $content = $client->getResponse()->getContent();
+
+            static::assertSame(200, $client->getResponse()->getStatusCode());
+            static::assertStringContainsString('<b>Unit 1</b>', $content);
+            static::assertStringNotContainsString('alert(4)', $content);
+        } finally {
+            $documentManager = static::getContainer()->get('doctrine_mongodb.odm.document_manager');
+            $documentManager->remove($documentManager->find(MultimediaObject::class, $ids[2]));
+            $documentManager->remove($documentManager->find(Series::class, $ids[1]));
+            $documentManager->remove($documentManager->find(Tag::class, $ids[0]));
             $documentManager->flush();
         }
     }

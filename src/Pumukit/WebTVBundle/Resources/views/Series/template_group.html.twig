@@ -10,9 +10,9 @@
     {% if subserie_title != last_subseriestitle %}
         <div class="row subseries_title_wrapper text-center subseries_title">
             {% if ('<br>' in subserie_title) %}
-                {{ ( subserie_title | split("<br>"))[0] | raw }}
+                {{ ( subserie_title | split("<br>"))[0] | sanitize_html('pumukit.series_html') }}
             {% else %}
-                {{ subserie_title | raw }}
+                {{ subserie_title | sanitize_html('pumukit.series_html') }}
             {% endif %}
         </div>
     {% endif %}
@@ -23,7 +23,7 @@
     {% for key, subserie_title in subseries_now %}
         {% if subserie_title is not same as ( subseries_before[key] | default('') ) %}
             <div class="row text-center">
-                {{ subserie_title | raw }} 
+                {{ subserie_title | sanitize_html('pumukit.series_html') }} 
             </div>
         {% endif %}
     {% endfor %}
@@ -37,7 +37,7 @@
         {% endif %}
         {% if subserie_title is not empty and current_date != last_date %}
             <div class="row subseries_title_wrapper text-center subseries_title">
-                {{ subserie_title | raw }}
+                {{ subserie_title | sanitize_html('pumukit.series_html') }}
             </div>
         {% endif %}
         {% set last_precinct = series_precinct.getTitle() %}
