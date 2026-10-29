@@ -234,6 +234,10 @@ class MultimediaObjectController extends SortableAdminController
 
         $sessionId = $session->get('admin/series/id', null);
         $series = $this->factoryService->findSeriesById($request->attributes->get('id'), $sessionId);
+        if (!$series) {
+            throw $this->createNotFoundException();
+        }
+
         $session->set('admin/series/id', $series->getId());
 
         $mmobj = $this->factoryService->createMultimediaObject($series, true, $this->getUser());
@@ -1109,6 +1113,10 @@ class MultimediaObjectController extends SortableAdminController
     #[Template('@PumukitNewAdmin/MultimediaObject/updateExternalPlayer.html.twig')]
     public function updateExternalAction(Request $request, MultimediaObject $multimediaObject)
     {
+        if ($multimediaObject->external()->isEmpty()) {
+            throw $this->createNotFoundException();
+        }
+
         $form = $this->createFormBuilder()
             ->setAction($this->generateUrl('pumukitnewadmin_external_player_update', ['id' => $multimediaObject->getId()]))
             ->add('title', TextType::class, ['required' => true, 'attr' => ['class' => 'form-control']])

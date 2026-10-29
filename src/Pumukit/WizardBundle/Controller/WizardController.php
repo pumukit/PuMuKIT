@@ -62,7 +62,10 @@ final class WizardController extends AbstractController
     public function uploadFromServer(Request $request, string $series): JsonResponse
     {
         $relativeFilePath = $request->request->get('filePath');
-        $profile = $request->request->get('profile');
+        $profile = $request->request->getString('profile');
+        if ('' === $profile) {
+            return new JsonResponse('Missing profile', 400);
+        }
 
         try {
             $inboxBasePath = realpath($this->inboxService->inboxPath());

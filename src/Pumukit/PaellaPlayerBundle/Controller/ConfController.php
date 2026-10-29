@@ -16,10 +16,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ConfController extends AbstractController
 {
-    public const PAELLA_ADVANCE_CONFIG_FOLDER = 'config/profiles/advanced';
-    public const PAELLA_PR_CONFIG_FOLDER = 'config/profiles/pr';
-    public const PAELLA_DEFAULT_CONFIG_FOLDER = 'config/profiles';
-
     private $documentManager;
     private $paellaXAPIEndpoint;
     private $paellaXAPIAuth;
@@ -46,8 +42,12 @@ class ConfController extends AbstractController
     #[Route('/paella/config.json', name: 'paella_player_config')]
     public function confAction(Request $request): Response
     {
-        $multimediaObject = $this->getMultimediaObject($request->query->get('configID'));
-        $jsonData = '';
+        $configId = $request->query->getString('configID');
+        if ('' === $configId) {
+            throw $this->createNotFoundException();
+        }
+
+        $multimediaObject = $this->getMultimediaObject($configId);
 
         if ($multimediaObject instanceof MultimediaObject) {
             $jsonData = $this->renderView(
@@ -68,9 +68,9 @@ class ConfController extends AbstractController
             return new Response($jsonData, 200, ['Content-Type' => 'application/json']);
         }
 
-        $live = $this->documentManager->getRepository(Live::class)->findOneBy([
-            '_id' => new ObjectId($request->query->get('configID')),
-        ]);
+        $live = preg_match('/^[0-9a-f]{24}$/', $configId)
+            ? $this->documentManager->getRepository(Live::class)->findOneBy(['_id' => new ObjectId($configId)])
+            : null;
 
         if ($live instanceof Live) {
             $jsonData = $this->renderView(
@@ -87,24 +87,11 @@ class ConfController extends AbstractController
                     'hasCaptions' => false,
                 ]
             );
+
+            return new Response($jsonData, 200, ['Content-Type' => 'application/json']);
         }
 
-        return new Response($jsonData, 200, ['Content-Type' => 'application/json']);
-    }
-
-    private function getPaellaProfileFolder(Request $request): string
-    {
-        $multimediaObject = $this->getMultimediaObject($request->query->get('id'));
-
-        if (strpos($request->headers->get('referer'), 'advanced')) {
-            return self::PAELLA_ADVANCE_CONFIG_FOLDER;
-        }
-
-        if ($multimediaObject->getProperty('personalrecorder')) {
-            return self::PAELLA_PR_CONFIG_FOLDER;
-        }
-
-        return self::PAELLA_DEFAULT_CONFIG_FOLDER;
+        throw $this->createNotFoundException();
     }
 
     private function getMultimediaObject(string $objectId)

@@ -377,7 +377,10 @@ class PersonController extends AdminController
 
     public function autoCompleteAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject, #[MapDocument(id: 'roleId')] Role $role): JsonResponse
     {
-        $name = $request->query->get('term');
+        $name = $request->query->getString('term');
+        if ('' === trim($name)) {
+            return new JsonResponse([]);
+        }
 
         $excludedPeople = $multimediaObject->getPeopleByRole($role, true);
         $excludedPeopleIds = [];

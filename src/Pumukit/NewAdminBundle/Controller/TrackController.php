@@ -34,6 +34,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -318,7 +319,14 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     public function picAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
         $track = $multimediaObject->getTrackById($request->attributes->get('id'));
-        $numFrame = $request->query->get('numframe');
+        if (!$track) {
+            throw $this->createNotFoundException();
+        }
+
+        $numFrame = $request->query->getString('numframe');
+        if ('' === $numFrame) {
+            throw new BadRequestHttpException('Missing numframe.');
+        }
 
         $flagTrue = $this->picExtractorService->extractPic($multimediaObject, $track, $numFrame);
         if ($flagTrue) {

@@ -52,8 +52,11 @@ class InboxController extends AbstractController
         $maxNumberOfFiles = $this->inboxService->maxNumberOfFiles();
         $inboxPath = $this->inboxService->inboxPath();
 
-        $folder = trim($formData['folder']);
-        $folder = $this->inboxService->folderName($folder);
+        try {
+            $folder = $this->inboxService->folderName(trim((string) ($formData['folder'] ?? '')));
+        } catch (\InvalidArgumentException) {
+            $folder = '';
+        }
         $urlUpload = $inboxPath.'/'.$folder;
 
         if (!$formData || empty($folder) || !$this->checkFolderAndCreateIfNotExist($folder)) {
@@ -91,7 +94,7 @@ class InboxController extends AbstractController
     #[IsGranted('ROLE_UPLOAD_INBOX')]
     public function checkFolderBeforeCreating(Request $request): JsonResponse
     {
-        $folderName = $request->request->get('folder');
+        $folderName = $request->request->getString('folder');
 
         if ((0 === preg_match('/^[[:alnum:]\s_]+$/', $folderName)) || empty(trim($folderName))) {
             return new JsonResponse(false);

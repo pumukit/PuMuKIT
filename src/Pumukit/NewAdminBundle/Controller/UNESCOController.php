@@ -323,7 +323,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     {
         $session = $this->requestStack->getSession();
 
-        $this->tagCatalogueService->resetSessionCriteria($session, $all);
+        $this->tagCatalogueService->resetSessionCriteria($session, filter_var($all, FILTER_VALIDATE_BOOLEAN));
 
         return new JsonResponse(
             ['success']

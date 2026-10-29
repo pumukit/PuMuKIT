@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -270,7 +271,7 @@ class GroupController extends AdminController
         $action = $request->query->get('action', '0');
         $resourceName = $request->query->get('resourceName', null);
         if (!$resourceName) {
-            throw new \Exception('Missing resource name');
+            throw new BadRequestHttpException('Missing resource name.');
         }
         if ('user' === $resourceName) {
             $resources = $this->groupService->findUsersInGroup($group);
@@ -281,7 +282,7 @@ class GroupController extends AdminController
             $mmobjRepo = $this->documentManager->getRepository(MultimediaObject::class);
             $resources = $mmobjRepo->findWithGroupInEmbeddedBroadcast($group);
         } else {
-            throw new \Exception('Invalid resource name');
+            throw new BadRequestHttpException('Invalid resource name.');
         }
 
         return [
