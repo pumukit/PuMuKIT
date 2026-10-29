@@ -5,3 +5,7 @@ framework:
     profiler:
       collect: false
       collect_serializer_data: true
+    cache:
+        pools:
+            pumukit.dashboard_cache:
+                adapter: cache.adapter.array

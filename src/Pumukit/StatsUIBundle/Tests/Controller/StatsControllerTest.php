@@ -49,7 +49,7 @@ class StatsControllerTest extends PumukitTestCase
         $this->assertSame($this->id($multimediaObject), $panel->attr('data-stats-multimedia-object'));
         $this->assertSame('/api/v1/stats/summary', json_decode($panel->attr('data-stats-reports'), true)['summary']);
         $this->assertCount($topLists, $panel->filter('[data-controller="stats-ui--top"]'));
-        $this->assertCount($kpis, $panel->filter('.stats-kpi'));
+        $this->assertCount($kpis, $panel->filter('.panel-kpi'));
         $this->assertCount(1, $panel->filter('[data-controller="stats-ui--timeline"] canvas'));
         $this->assertCount(2, $panel->filter('[data-controller="stats-ui--bars"]'));
         $this->assertCount(1, $panel->filter('[data-controller="stats-ui--heatmap"]'));

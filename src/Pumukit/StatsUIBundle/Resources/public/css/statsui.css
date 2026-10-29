@@ -2,44 +2,10 @@
     margin-bottom: 5px;
 }
 
-.stats-panel {
-    --stats-ink: #2f3640;
-    --stats-ink-secondary: #52514e;
-    --stats-muted: #6a737d;
-    --stats-border: #e3e7ea;
-    --stats-accent: #2a78d6;
-    --stats-track: #edf0f2;
-    padding-bottom: 24px;
-}
-
-.stats-toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 12px 24px;
-    margin: 8px 0 16px;
-}
-
-.stats-toolbar-title h2 {
-    margin: 0;
-    color: var(--stats-ink);
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-
-.stats-eyebrow {
-    display: block;
-    color: var(--stats-muted);
-    font-size: 12px;
-    letter-spacing: .05em;
-    text-transform: uppercase;
-}
-
 .stats-external {
     margin-left: 6px;
     font-size: 1rem;
-    color: var(--stats-muted);
+    color: var(--panel-muted);
 }
 
 .stats-range {
@@ -59,150 +25,7 @@
 }
 
 .stats-range-separator {
-    color: var(--stats-muted);
-}
-
-.stats-kpis {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
-.stats-kpi {
-    padding: 16px 18px;
-    background: #fff;
-    border: 1px solid var(--stats-border);
-    border-left: 4px solid var(--stats-accent);
-    border-radius: 4px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
-}
-
-.stats-kpi-label {
-    margin-bottom: 4px;
-    color: var(--stats-muted);
-    font-size: 12px;
-    letter-spacing: .05em;
-    text-transform: uppercase;
-}
-
-.stats-kpi-value {
-    color: var(--stats-ink);
-    font-size: 28px;
-    font-weight: 600;
-    line-height: 1.1;
-    font-variant-numeric: tabular-nums;
-}
-
-.stats-kpi-aux {
-    min-height: 1.25rem;
-    margin-top: 6px;
-    color: var(--stats-muted);
-    font-size: 12px;
-}
-
-.stats-panel .row > [class*="col-"] {
-    display: flex;
-    flex-direction: column;
-}
-
-.stats-card {
-    display: flex;
-    flex: 1 1 auto;
-    flex-direction: column;
-    margin-bottom: 16px;
-    background: #fff;
-    border: 1px solid var(--stats-border);
-    border-radius: 4px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
-}
-
-.stats-card-header {
-    padding: 12px 18px;
-    border-bottom: 1px solid var(--stats-border);
-}
-
-.stats-card-title {
-    margin: 0;
-    color: var(--stats-ink);
-    font-size: 15px;
-    font-weight: 600;
-}
-
-.stats-card-body {
-    flex: 1 1 auto;
-    position: relative;
-    padding: 16px 18px;
-}
-
-.stats-chart {
-    height: 320px;
-}
-
-.stats-loading {
-    opacity: .5;
-    transition: opacity .2s;
-}
-
-.stats-state {
-    margin: 0;
-    padding: 24px 0;
-    color: var(--stats-muted);
-    text-align: center;
-}
-
-.stats-chart .stats-state {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.stats-bars {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.stats-scroll {
-    max-height: 288px;
-    overflow-y: auto;
-}
-
-.stats-bar {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 2px 12px;
-    padding: 4px 0;
-}
-
-.stats-bar-label {
-    color: var(--stats-ink-secondary);
-}
-
-.stats-bar-value {
-    color: var(--stats-ink);
-    font-variant-numeric: tabular-nums;
-}
-
-.stats-bar .stats-bar-track {
-    grid-column: 1 / -1;
-}
-
-.stats-bar-track {
-    display: block;
-    height: 6px;
-    overflow: hidden;
-    background: var(--stats-track);
-    border-radius: 4px;
-}
-
-.stats-bar-fill {
-    display: block;
-    height: 100%;
-    background: var(--stats-accent);
-    border-radius: 4px;
+    color: var(--panel-muted);
 }
 
 .stats-top {
@@ -211,7 +34,7 @@
 }
 
 .stats-top th {
-    color: var(--stats-muted);
+    color: var(--panel-muted);
     font-size: 12px;
     font-weight: 600;
     letter-spacing: .05em;
@@ -229,14 +52,14 @@
 .stats-top .stats-top-title a {
     display: block;
     overflow: hidden;
-    color: var(--stats-ink);
+    color: var(--panel-ink);
     text-decoration: none !important;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
 .stats-top .stats-top-title a:hover {
-    color: var(--stats-accent);
+    color: var(--panel-accent);
 }
 
 .stats-top-views {
@@ -255,7 +78,7 @@
 
 .stats-heatmap-table th {
     padding: 0 4px;
-    color: var(--stats-muted);
+    color: var(--panel-muted);
     font-size: 11px;
     font-weight: 400;
     text-align: left;
@@ -275,7 +98,7 @@
     justify-content: flex-end;
     gap: 4px;
     margin-top: 10px;
-    color: var(--stats-muted);
+    color: var(--panel-muted);
     font-size: 11px;
 }
 

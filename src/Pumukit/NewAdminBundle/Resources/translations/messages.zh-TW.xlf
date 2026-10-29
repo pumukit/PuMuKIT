@@ -3741,14 +3741,6 @@
         <source>Iframe URL</source>
         <target state="needs-translation">Iframe URL</target>
       </trans-unit>
-      <trans-unit id="jyNk4Ru" resname="Day">
-        <source>Day</source>
-        <target state="needs-translation">Day</target>
-      </trans-unit>
-      <trans-unit id="MQylA_8" resname="Month">
-        <source>Month</source>
-        <target state="needs-translation">Month</target>
-      </trans-unit>
       <trans-unit id="A3MtGeZ" resname="Num">
         <source>Num</source>
         <target state="needs-translation">Num</target>

@@ -3739,14 +3739,6 @@
         <source>Iframe URL</source>
         <target state="translated">URL de Iframe</target>
       </trans-unit>
-      <trans-unit id="jyNk4Ru" resname="Day">
-        <source>Day</source>
-        <target state="translated">Día</target>
-      </trans-unit>
-      <trans-unit id="MQylA_8" resname="Month">
-        <source>Month</source>
-        <target state="translated">Mes</target>
-      </trans-unit>
       <trans-unit id="A3MtGeZ" resname="Num">
         <source>Num</source>
         <target state="translated">Num</target>
@@ -4183,14 +4175,6 @@
         <source>Honorific</source>
         <target state="translated">Tratamiento</target>
       </trans-unit>
-      <trans-unit id="IuO2F8I" resname="Hour of day">
-        <source>Hour of day</source>
-        <target state="translated">Hora del día</target>
-      </trans-unit>
-      <trans-unit id="EmLzI9J" resname="Last 5 series">
-        <source>Last 5 series</source>
-        <target state="translated">Últimas 5 series</target>
-      </trans-unit>
       <trans-unit id="YbUxazW" resname="Link">
         <source>Link</source>
         <target state="translated">Enlace</target>
@@ -4243,14 +4227,6 @@
         <source>Multimedia objects</source>
         <target state="translated">Objetos multimedia</target>
       </trans-unit>
-      <trans-unit id="b7HB23E" resname="multimedia objects">
-        <source>multimedia objects</source>
-        <target state="translated">objetos multimedia</target>
-      </trans-unit>
-      <trans-unit id="HWbUTWG" resname="Multimedia objects created">
-        <source>Multimedia objects created</source>
-        <target state="translated">Objetos multimedia creados</target>
-      </trans-unit>
       <trans-unit id="Jh8QaH8" resname="New external media">
         <source>New external media</source>
         <target state="translated">Nuevo medio externo</target>
@@ -4275,14 +4251,6 @@
         <source>No series found with ID</source>
         <target state="translated">No se ha encontrado ninguna serie con el ID</target>
       </trans-unit>
-      <trans-unit id="e6o0dbf" resname="No series yet.">
-        <source>No series yet.</source>
-        <target state="translated">Todavía no hay series.</target>
-      </trans-unit>
-      <trans-unit id="q3xoFK." resname="No storage configured.">
-        <source>No storage configured.</source>
-        <target state="translated">No hay almacenamiento configurado.</target>
-      </trans-unit>
       <trans-unit id="SSuf4g9" resname="No tags defined with metatag">
         <source>No tags defined with metatag</source>
         <target state="translated">No hay categorías definidas con la metacategoría</target>
@@ -4303,10 +4271,6 @@
         <source>Playlists</source>
         <target state="translated">Listas de reproducción</target>
       </trans-unit>
-      <trans-unit id="HVjKmcM" resname="Publication activity">
-        <source>Publication activity</source>
-        <target state="translated">Actividad de publicación</target>
-      </trans-unit>
       <trans-unit id="d658z2l" resname="Read only">
         <source>Read only</source>
         <target state="translated">Solo lectura</target>
@@ -4322,10 +4286,6 @@
       <trans-unit id="CWSJJzO" resname="Series title">
         <source>Series title</source>
         <target state="translated">Título de la serie</target>
-      </trans-unit>
-      <trans-unit id="XnARhGE" resname="Storage used">
-        <source>Storage used</source>
-        <target state="translated">Almacenamiento usado</target>
       </trans-unit>
       <trans-unit id="38KTgHu" resname="Successfully delete admin MultimediaObjects from Group.">
         <source>Successfully delete admin MultimediaObjects from Group.</source>
@@ -4372,10 +4332,6 @@
                 &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.</source>
         <target state="translated">Para usar el modo inbox define la ruta del inbox en el parámetro &lt;code&gt;pumukit.inbox&lt;/code&gt; de tu fichero de configuración.</target>
       </trans-unit>
-      <trans-unit id="iX3Z4Sh" resname="Total time">
-        <source>Total time</source>
-        <target state="translated">Tiempo total</target>
-      </trans-unit>
       <trans-unit id="Q7LQpG_" resname="Track Update">
         <source>Track Update</source>
         <target state="translated">Actualizar pista</target>
@@ -4411,6 +4367,58 @@
       <trans-unit id="IewK36G" resname="Places and precincts need the root tag with code PLACES, which does not exist in this installation. Create it from the Tags menu.">
         <source>Places and precincts need the root tag with code PLACES, which does not exist in this installation. Create it from the Tags menu.</source>
         <target state="translated">Lugares y recintos necesita la etiqueta raíz con código PLACES, que no existe en esta instalación. Créala desde el menú Categorías.</target>
+      </trans-unit>
+      <trans-unit id="K9SuiV1" resname="%count% multimedia objects">
+        <source>%count% multimedia objects</source>
+        <target state="translated">%count% objetos multimedia</target>
+      </trans-unit>
+      <trans-unit id="WO4Dv.Z" resname="%hours% h %minutes% min">
+        <source>%hours% h %minutes% min</source>
+        <target state="translated">%hours% h %minutes% min</target>
+      </trans-unit>
+      <trans-unit id="6Omg7I6" resname="%used% of %total%">
+        <source>%used% of %total%</source>
+        <target state="translated">%used% de %total%</target>
+      </trans-unit>
+      <trans-unit id="dmqyVJY" resname="Catalogue status">
+        <source>Catalogue status</source>
+        <target state="translated">Estado del catálogo</target>
+      </trans-unit>
+      <trans-unit id="0Ae75ZZ" resname="Encoder queue">
+        <source>Encoder queue</source>
+        <target state="translated">Cola de codificación</target>
+      </trans-unit>
+      <trans-unit id="XVxK26o" resname="Failed in the last 24 hours">
+        <source>Failed in the last 24 hours</source>
+        <target state="translated">Con error en las últimas 24 horas</target>
+      </trans-unit>
+      <trans-unit id="mf7PoOx" resname="Finished in the last 24 hours">
+        <source>Finished in the last 24 hours</source>
+        <target state="translated">Terminados en las últimas 24 horas</target>
+      </trans-unit>
+      <trans-unit id="kvBf0DN" resname="Hours of content">
+        <source>Hours of content</source>
+        <target state="translated">Horas de contenido</target>
+      </trans-unit>
+      <trans-unit id="fUwCX0I" resname="Multimedia objects added per month">
+        <source>Multimedia objects added per month</source>
+        <target state="translated">Objetos multimedia añadidos por mes</target>
+      </trans-unit>
+      <trans-unit id="fR2ImD2" resname="See the statistics">
+        <source>See the statistics</source>
+        <target state="translated">Ver las estadísticas</target>
+      </trans-unit>
+      <trans-unit id="4FWIFba" resname="The data could not be loaded.">
+        <source>The data could not be loaded.</source>
+        <target state="translated">No se han podido cargar los datos.</target>
+      </trans-unit>
+      <trans-unit id="9JQlP9D" resname="Views today">
+        <source>Views today</source>
+        <target state="translated">Visitas de hoy</target>
+      </trans-unit>
+      <trans-unit id="ATxIWsc" resname="Without playable media">
+        <source>Without playable media</source>
+        <target state="translated">Sin medios reproducibles</target>
       </trans-unit>
     </body>
   </file>

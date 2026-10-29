@@ -1,0 +1,244 @@
+.panel-page {
+    --panel-ink: #2f3640;
+    --panel-ink-secondary: #52514e;
+    --panel-muted: #6a737d;
+    --panel-border: #e3e7ea;
+    --panel-accent: #2a78d6;
+    --panel-track: #edf0f2;
+    padding-bottom: 24px;
+}
+
+.panel-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px 24px;
+    margin: 8px 0 16px;
+}
+
+.panel-toolbar-title h2 {
+    margin: 0;
+    color: var(--panel-ink);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.panel-eyebrow {
+    display: block;
+    color: var(--panel-muted);
+    font-size: 12px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.panel-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.panel-kpi {
+    padding: 16px 18px;
+    background: #fff;
+    border: 1px solid var(--panel-border);
+    border-left: 4px solid var(--panel-accent);
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+}
+
+.panel-kpi-label {
+    margin-bottom: 4px;
+    color: var(--panel-muted);
+    font-size: 12px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.panel-kpi-value {
+    color: var(--panel-ink);
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+}
+
+.panel-kpi-aux {
+    min-height: 1.25rem;
+    margin-top: 6px;
+    color: var(--panel-muted);
+    font-size: 12px;
+}
+
+.panel-page .row > [class*="col-"] {
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-card {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    margin-bottom: 16px;
+    background: #fff;
+    border: 1px solid var(--panel-border);
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+}
+
+.panel-card-header {
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--panel-border);
+}
+
+.panel-card-title {
+    margin: 0;
+    color: var(--panel-ink);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.panel-card-body {
+    flex: 1 1 auto;
+    position: relative;
+    padding: 16px 18px;
+}
+
+.panel-chart {
+    height: 320px;
+}
+
+.panel-loading {
+    opacity: .5;
+    transition: opacity .2s;
+}
+
+.panel-state {
+    margin: 0;
+    padding: 24px 0;
+    color: var(--panel-muted);
+    text-align: center;
+}
+
+.panel-chart .panel-state {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.panel-bars {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.panel-scroll {
+    max-height: 288px;
+    overflow-y: auto;
+}
+
+.panel-bar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px 12px;
+    padding: 4px 0;
+}
+
+.panel-bar-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--panel-ink-secondary);
+}
+
+.panel-bar-value {
+    color: var(--panel-ink);
+    font-variant-numeric: tabular-nums;
+}
+
+.panel-bar .panel-bar-track {
+    grid-column: 1 / -1;
+}
+
+.panel-bar-track {
+    display: block;
+    height: 6px;
+    overflow: hidden;
+    background: var(--panel-track);
+    border-radius: 4px;
+}
+
+.panel-bar-fill {
+    display: block;
+    height: 100%;
+    background: var(--panel-accent);
+    border-radius: 4px;
+}
+
+a.panel-kpi-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    transition: box-shadow .15s, border-color .15s;
+}
+
+a.panel-kpi-link:hover, a.panel-kpi-link:focus {
+    border-color: var(--panel-accent);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+}
+
+a.panel-kpi-link .panel-kpi-aux {
+    color: var(--panel-accent);
+}
+
+.panel-card-header-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.panel-card-header-link a {
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.panel-counts {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.panel-count {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--panel-border);
+}
+
+.panel-count:last-child {
+    border-bottom: 0;
+}
+
+.panel-count-label {
+    color: var(--panel-ink-secondary);
+}
+
+.panel-count-value {
+    color: var(--panel-ink);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.panel-count-error .fa-triangle-exclamation {
+    color: #d03b3b;
+}
+
+.panel-bar-fill-warning {
+    background: #fab219;
+}

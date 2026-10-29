@@ -2,6 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    <link href="{{ asset('bundles/pumukitnewadmin/css/admin/panel.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/pumukitstatsui/css/statsui.css') }}" rel="stylesheet">
 {% endblock %}
 
@@ -26,7 +27,7 @@
         previousPeriod: 'Previous period'|trans
     } %}
 
-    <div class="container-fluid stats-panel"
+    <div class="container-fluid panel-page"
          data-controller="stats-ui--panel"
          data-stats-reports="{{ reports|json_encode }}"
          data-stats-links="{{ links|json_encode }}"
@@ -47,19 +48,19 @@
             </ul>
         </h3>
 
-        <div class="stats-toolbar">
-            <div class="stats-toolbar-title">
+        <div class="panel-toolbar">
+            <div class="panel-toolbar-title">
                 {% if mode == 'series' %}
-                    <span class="stats-eyebrow">{% trans %}Series{% endtrans %}</span>
+                    <span class="panel-eyebrow">{% trans %}Series{% endtrans %}</span>
                     <h2>{{ subject.title|default('No title'|trans) }}</h2>
                 {% elseif mode == 'multimediaObject' %}
-                    <span class="stats-eyebrow">{% trans %}Multimedia object{% endtrans %}</span>
+                    <span class="panel-eyebrow">{% trans %}Multimedia object{% endtrans %}</span>
                     <h2>
                         {{ subject.title|default('No title'|trans) }}
                         <a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': subject.id}) }}" target="_blank" rel="noopener" class="stats-external" title="{% trans %}View in the portal{% endtrans %}"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
                     </h2>
                 {% else %}
-                    <span class="stats-eyebrow">{% trans %}Audience{% endtrans %}</span>
+                    <span class="panel-eyebrow">{% trans %}Audience{% endtrans %}</span>
                     <h2>{% trans %}Views of the catalogue{% endtrans %}</h2>
                 {% endif %}
             </div>
@@ -82,55 +83,55 @@
             </div>
         </div>
 
-        <div class="stats-kpis" data-controller="stats-ui--kpis" data-action="stats-ui:change@window->stats-ui--kpis#load"
+        <div class="panel-kpis" data-controller="stats-ui--kpis" data-action="stats-ui:change@window->stats-ui--kpis#load"
              data-stats-ui--kpis-messages-value="{{ (common_messages|merge({coverage: 'of %published% published'|trans}))|json_encode }}">
-            <div class="stats-kpi">
-                <div class="stats-kpi-label">{% trans %}Views{% endtrans %}</div>
-                <div class="stats-kpi-value" data-stats-ui--kpis-target="views">–</div>
+            <div class="panel-kpi">
+                <div class="panel-kpi-label">{% trans %}Views{% endtrans %}</div>
+                <div class="panel-kpi-value" data-stats-ui--kpis-target="views">–</div>
             </div>
-            <div class="stats-kpi">
-                <div class="stats-kpi-label" title="{% trans %}The same visitor watching the same video on the same day counts once{% endtrans %}">{% trans %}Unique views{% endtrans %}</div>
-                <div class="stats-kpi-value" data-stats-ui--kpis-target="uniqueViews">–</div>
+            <div class="panel-kpi">
+                <div class="panel-kpi-label" title="{% trans %}The same visitor watching the same video on the same day counts once{% endtrans %}">{% trans %}Unique views{% endtrans %}</div>
+                <div class="panel-kpi-value" data-stats-ui--kpis-target="uniqueViews">–</div>
             </div>
             {% if mode != 'multimediaObject' %}
-                <div class="stats-kpi">
-                    <div class="stats-kpi-label">{% trans %}Videos with views{% endtrans %}</div>
-                    <div class="stats-kpi-value" data-stats-ui--kpis-target="coverage">–</div>
-                    <div class="stats-kpi-aux" data-stats-ui--kpis-target="coverageDetail"></div>
+                <div class="panel-kpi">
+                    <div class="panel-kpi-label">{% trans %}Videos with views{% endtrans %}</div>
+                    <div class="panel-kpi-value" data-stats-ui--kpis-target="coverage">–</div>
+                    <div class="panel-kpi-aux" data-stats-ui--kpis-target="coverageDetail"></div>
                 </div>
-                <div class="stats-kpi">
-                    <div class="stats-kpi-label">{% trans %}Videos without views{% endtrans %}</div>
-                    <div class="stats-kpi-value" data-stats-ui--kpis-target="unviewed">–</div>
-                    <div class="stats-kpi-aux">{% trans %}published, in this period{% endtrans %}</div>
+                <div class="panel-kpi">
+                    <div class="panel-kpi-label">{% trans %}Videos without views{% endtrans %}</div>
+                    <div class="panel-kpi-value" data-stats-ui--kpis-target="unviewed">–</div>
+                    <div class="panel-kpi-aux">{% trans %}published, in this period{% endtrans %}</div>
                 </div>
             {% endif %}
             {% if mode == 'overview' %}
-                <div class="stats-kpi">
-                    <div class="stats-kpi-label">{% trans %}Series with views{% endtrans %}</div>
-                    <div class="stats-kpi-value" data-stats-ui--kpis-target="series">–</div>
+                <div class="panel-kpi">
+                    <div class="panel-kpi-label">{% trans %}Series with views{% endtrans %}</div>
+                    <div class="panel-kpi-value" data-stats-ui--kpis-target="series">–</div>
                 </div>
             {% endif %}
         </div>
 
         <div class="row">
             <div class="col-lg-8">
-                <section class="stats-card">
-                    <header class="stats-card-header">
-                        <h3 class="stats-card-title">{% trans %}Views over time{% endtrans %}</h3>
+                <section class="panel-card">
+                    <header class="panel-card-header">
+                        <h3 class="panel-card-title">{% trans %}Views over time{% endtrans %}</h3>
                     </header>
-                    <div class="stats-card-body stats-chart" data-controller="stats-ui--timeline" data-action="stats-ui:change@window->stats-ui--timeline#load"
+                    <div class="panel-card-body panel-chart" data-controller="stats-ui--timeline" data-action="stats-ui:change@window->stats-ui--timeline#load"
                          data-stats-ui--timeline-messages-value="{{ (common_messages|merge({current: 'This period'|trans}))|json_encode }}">
                         <canvas data-stats-ui--timeline-target="canvas" role="img" aria-label="{% trans %}Views over time{% endtrans %}"></canvas>
-                        <p class="stats-state" data-stats-ui--timeline-target="state" hidden></p>
+                        <p class="panel-state" data-stats-ui--timeline-target="state" hidden></p>
                     </div>
                 </section>
             </div>
             <div class="col-lg-4">
-                <section class="stats-card">
-                    <header class="stats-card-header">
-                        <h3 class="stats-card-title">{% trans %}Where they watch from{% endtrans %}</h3>
+                <section class="panel-card">
+                    <header class="panel-card-header">
+                        <h3 class="panel-card-title">{% trans %}Where they watch from{% endtrans %}</h3>
                     </header>
-                    <div class="stats-card-body" data-controller="stats-ui--bars" data-action="stats-ui:change@window->stats-ui--bars#load"
+                    <div class="panel-card-body" data-controller="stats-ui--bars" data-action="stats-ui:change@window->stats-ui--bars#load"
                          data-stats-ui--bars-report-value="sources"
                          data-stats-ui--bars-messages-value="{{ (common_messages|merge({labels: {
                              portal: 'Portal'|trans,
@@ -140,8 +141,8 @@
                              external: 'Other websites'|trans,
                              direct: 'Direct or app'|trans
                          }}))|json_encode }}">
-                        <ul class="stats-bars stats-scroll" data-stats-ui--bars-target="list"></ul>
-                        <p class="stats-state" data-stats-ui--bars-target="state" hidden></p>
+                        <ul class="panel-bars panel-scroll" data-stats-ui--bars-target="list"></ul>
+                        <p class="panel-state" data-stats-ui--bars-target="state" hidden></p>
                     </div>
                 </section>
             </div>
@@ -150,11 +151,11 @@
         {% if mode != 'multimediaObject' %}
             <div class="row">
                 <div class="{{ mode == 'overview' ? 'col-lg-6' : 'col-lg-12' }}">
-                    <section class="stats-card">
-                        <header class="stats-card-header">
-                            <h3 class="stats-card-title">{% trans %}Most viewed videos in the period{% endtrans %}</h3>
+                    <section class="panel-card">
+                        <header class="panel-card-header">
+                            <h3 class="panel-card-title">{% trans %}Most viewed videos in the period{% endtrans %}</h3>
                         </header>
-                        <div class="stats-card-body" data-controller="stats-ui--top" data-action="stats-ui:change@window->stats-ui--top#load"
+                        <div class="panel-card-body" data-controller="stats-ui--top" data-action="stats-ui:change@window->stats-ui--top#load"
                              data-stats-ui--top-report-value="topVideos" data-stats-ui--top-link-value="multimediaObject"
                              data-stats-ui--top-messages-value="{{ (common_messages|merge({untitled: 'No title'|trans}))|json_encode }}">
                             <table class="table stats-top">
@@ -166,17 +167,17 @@
                                 </thead>
                                 <tbody data-stats-ui--top-target="body"></tbody>
                             </table>
-                            <p class="stats-state" data-stats-ui--top-target="state" hidden></p>
+                            <p class="panel-state" data-stats-ui--top-target="state" hidden></p>
                         </div>
                     </section>
                 </div>
                 {% if mode == 'overview' %}
                     <div class="col-lg-6">
-                        <section class="stats-card">
-                            <header class="stats-card-header">
-                                <h3 class="stats-card-title">{% trans %}Most viewed series in the period{% endtrans %}</h3>
+                        <section class="panel-card">
+                            <header class="panel-card-header">
+                                <h3 class="panel-card-title">{% trans %}Most viewed series in the period{% endtrans %}</h3>
                             </header>
-                            <div class="stats-card-body" data-controller="stats-ui--top" data-action="stats-ui:change@window->stats-ui--top#load"
+                            <div class="panel-card-body" data-controller="stats-ui--top" data-action="stats-ui:change@window->stats-ui--top#load"
                                  data-stats-ui--top-report-value="topSeries" data-stats-ui--top-link-value="series"
                                  data-stats-ui--top-messages-value="{{ (common_messages|merge({untitled: 'No title'|trans}))|json_encode }}">
                                 <table class="table stats-top">
@@ -188,7 +189,7 @@
                                     </thead>
                                     <tbody data-stats-ui--top-target="body"></tbody>
                                 </table>
-                                <p class="stats-state" data-stats-ui--top-target="state" hidden></p>
+                                <p class="panel-state" data-stats-ui--top-target="state" hidden></p>
                             </div>
                         </section>
                     </div>
@@ -198,23 +199,23 @@
 
         <div class="row">
             <div class="col-lg-8">
-                <section class="stats-card">
-                    <header class="stats-card-header">
-                        <h3 class="stats-card-title">{% trans %}When they watch{% endtrans %}</h3>
+                <section class="panel-card">
+                    <header class="panel-card-header">
+                        <h3 class="panel-card-title">{% trans %}When they watch{% endtrans %}</h3>
                     </header>
-                    <div class="stats-card-body" data-controller="stats-ui--heatmap" data-action="stats-ui:change@window->stats-ui--heatmap#load"
+                    <div class="panel-card-body" data-controller="stats-ui--heatmap" data-action="stats-ui:change@window->stats-ui--heatmap#load"
                          data-stats-ui--heatmap-messages-value="{{ (common_messages|merge({less: 'Less'|trans, more: 'More'|trans}))|json_encode }}">
                         <div class="stats-heatmap" data-stats-ui--heatmap-target="grid"></div>
-                        <p class="stats-state" data-stats-ui--heatmap-target="state" hidden></p>
+                        <p class="panel-state" data-stats-ui--heatmap-target="state" hidden></p>
                     </div>
                 </section>
             </div>
             <div class="col-lg-4">
-                <section class="stats-card">
-                    <header class="stats-card-header">
-                        <h3 class="stats-card-title">{% trans %}Devices{% endtrans %}</h3>
+                <section class="panel-card">
+                    <header class="panel-card-header">
+                        <h3 class="panel-card-title">{% trans %}Devices{% endtrans %}</h3>
                     </header>
-                    <div class="stats-card-body" data-controller="stats-ui--bars" data-action="stats-ui:change@window->stats-ui--bars#load"
+                    <div class="panel-card-body" data-controller="stats-ui--bars" data-action="stats-ui:change@window->stats-ui--bars#load"
                          data-stats-ui--bars-report-value="devices"
                          data-stats-ui--bars-messages-value="{{ (common_messages|merge({labels: {
                              desktop: 'Computer'|trans,
@@ -222,8 +223,8 @@
                              tablet: 'Tablet'|trans,
                              unknown: 'Unknown'|trans
                          }}))|json_encode }}">
-                        <ul class="stats-bars stats-scroll" data-stats-ui--bars-target="list"></ul>
-                        <p class="stats-state" data-stats-ui--bars-target="state" hidden></p>
+                        <ul class="panel-bars panel-scroll" data-stats-ui--bars-target="list"></ul>
+                        <p class="panel-state" data-stats-ui--bars-target="state" hidden></p>
                     </div>
                 </section>
             </div>

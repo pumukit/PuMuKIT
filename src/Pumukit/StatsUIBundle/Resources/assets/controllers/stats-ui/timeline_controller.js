@@ -22,7 +22,7 @@ export default class extends Controller {
     async load() {
         const request = (this.request ?? 0) + 1;
         this.request = request;
-        this.element.classList.add('stats-loading');
+        this.element.classList.add('panel-loading');
         try {
             const timeline = await fetchReport(this.element, 'timeline');
             if (request !== this.request) {
@@ -33,7 +33,7 @@ export default class extends Controller {
         } catch {
             showState(this.stateTarget, this.messagesValue.loadError);
         } finally {
-            this.element.classList.remove('stats-loading');
+            this.element.classList.remove('panel-loading');
         }
     }
 

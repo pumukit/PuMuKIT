@@ -3743,14 +3743,6 @@ una acció...</target>
         <source>Iframe URL</source>
         <target state="translated">URL de l'iframe</target>
       </trans-unit>
-      <trans-unit id="jyNk4Ru" resname="Day">
-        <source>Day</source>
-        <target state="translated">Dia</target>
-      </trans-unit>
-      <trans-unit id="MQylA_8" resname="Month">
-        <source>Month</source>
-        <target state="translated">Mes</target>
-      </trans-unit>
       <trans-unit id="A3MtGeZ" resname="Num">
         <source>Num</source>
         <target state="translated">Núm.</target>
@@ -4187,14 +4179,6 @@ una acció...</target>
         <source>Honorific</source>
         <target state="translated">Tractament</target>
       </trans-unit>
-      <trans-unit id="IuO2F8I" resname="Hour of day">
-        <source>Hour of day</source>
-        <target state="translated">Hora del dia</target>
-      </trans-unit>
-      <trans-unit id="EmLzI9J" resname="Last 5 series">
-        <source>Last 5 series</source>
-        <target state="translated">Últimes 5 sèries</target>
-      </trans-unit>
       <trans-unit id="YbUxazW" resname="Link">
         <source>Link</source>
         <target state="translated">Enllaç</target>
@@ -4243,14 +4227,6 @@ una acció...</target>
         <source>Multimedia objects</source>
         <target state="translated">Objectes multimèdia</target>
       </trans-unit>
-      <trans-unit id="b7HB23E" resname="multimedia objects">
-        <source>multimedia objects</source>
-        <target state="translated">objectes multimèdia</target>
-      </trans-unit>
-      <trans-unit id="HWbUTWG" resname="Multimedia objects created">
-        <source>Multimedia objects created</source>
-        <target state="translated">Objectes multimèdia creats</target>
-      </trans-unit>
       <trans-unit id="Jh8QaH8" resname="New external media">
         <source>New external media</source>
         <target state="translated">Mitjà extern nou</target>
@@ -4275,14 +4251,6 @@ una acció...</target>
         <source>No series found with ID</source>
         <target state="translated">No s'ha trobat cap sèrie amb l'ID</target>
       </trans-unit>
-      <trans-unit id="e6o0dbf" resname="No series yet.">
-        <source>No series yet.</source>
-        <target state="translated">Encara no hi ha sèries.</target>
-      </trans-unit>
-      <trans-unit id="q3xoFK." resname="No storage configured.">
-        <source>No storage configured.</source>
-        <target state="translated">No hi ha emmagatzematge configurat.</target>
-      </trans-unit>
       <trans-unit id="SSuf4g9" resname="No tags defined with metatag">
         <source>No tags defined with metatag</source>
         <target state="translated">No hi ha etiquetes definides amb la metaetiqueta</target>
@@ -4303,10 +4271,6 @@ una acció...</target>
         <source>Playlists</source>
         <target state="translated">Llistes de reproducció</target>
       </trans-unit>
-      <trans-unit id="HVjKmcM" resname="Publication activity">
-        <source>Publication activity</source>
-        <target state="translated">Activitat de publicació</target>
-      </trans-unit>
       <trans-unit id="d658z2l" resname="Read only">
         <source>Read only</source>
         <target state="translated">Només lectura</target>
@@ -4318,10 +4282,6 @@ una acció...</target>
       <trans-unit id="95edABo" resname="Select a file or add a image url. Thank you.">
         <source>Select a file or add a image url. Thank you.</source>
         <target state="translated">Selecciona un fitxer o afegeix l'URL d'una imatge. Gràcies.</target>
-      </trans-unit>
-      <trans-unit id="XnARhGE" resname="Storage used">
-        <source>Storage used</source>
-        <target state="translated">Emmagatzematge utilitzat</target>
       </trans-unit>
       <trans-unit id="38KTgHu" resname="Successfully delete admin MultimediaObjects from Group.">
         <source>Successfully delete admin MultimediaObjects from Group.</source>
@@ -4368,10 +4328,6 @@ una acció...</target>
                 &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.</source>
         <target state="translated">Per utilitzar el mode inbox, defineix el camí de l'inbox al paràmetre &lt;code&gt;pumukit.inbox&lt;/code&gt; del teu fitxer de configuració.</target>
       </trans-unit>
-      <trans-unit id="iX3Z4Sh" resname="Total time">
-        <source>Total time</source>
-        <target state="translated">Temps total</target>
-      </trans-unit>
       <trans-unit id="Q7LQpG_" resname="Track Update">
         <source>Track Update</source>
         <target state="translated">Actualitza la pista</target>
@@ -4403,6 +4359,58 @@ una acció...</target>
       <trans-unit id="IewK36G" resname="Places and precincts need the root tag with code PLACES, which does not exist in this installation. Create it from the Tags menu.">
         <source>Places and precincts need the root tag with code PLACES, which does not exist in this installation. Create it from the Tags menu.</source>
         <target state="translated">Llocs i àmbit necessita l&apos;etiqueta arrel amb codi PLACES, que no existeix en aquesta instal·lació. Creeu-la des del menú Etiquetes.</target>
+      </trans-unit>
+      <trans-unit id="K9SuiV1" resname="%count% multimedia objects">
+        <source>%count% multimedia objects</source>
+        <target state="translated">%count% objectes multimèdia</target>
+      </trans-unit>
+      <trans-unit id="WO4Dv.Z" resname="%hours% h %minutes% min">
+        <source>%hours% h %minutes% min</source>
+        <target state="translated">%hours% h %minutes% min</target>
+      </trans-unit>
+      <trans-unit id="6Omg7I6" resname="%used% of %total%">
+        <source>%used% of %total%</source>
+        <target state="translated">%used% de %total%</target>
+      </trans-unit>
+      <trans-unit id="dmqyVJY" resname="Catalogue status">
+        <source>Catalogue status</source>
+        <target state="translated">Estat del catàleg</target>
+      </trans-unit>
+      <trans-unit id="0Ae75ZZ" resname="Encoder queue">
+        <source>Encoder queue</source>
+        <target state="translated">Cua de codificació</target>
+      </trans-unit>
+      <trans-unit id="XVxK26o" resname="Failed in the last 24 hours">
+        <source>Failed in the last 24 hours</source>
+        <target state="translated">Amb error en les últimes 24 hores</target>
+      </trans-unit>
+      <trans-unit id="mf7PoOx" resname="Finished in the last 24 hours">
+        <source>Finished in the last 24 hours</source>
+        <target state="translated">Acabats en les últimes 24 hores</target>
+      </trans-unit>
+      <trans-unit id="kvBf0DN" resname="Hours of content">
+        <source>Hours of content</source>
+        <target state="translated">Hores de contingut</target>
+      </trans-unit>
+      <trans-unit id="fUwCX0I" resname="Multimedia objects added per month">
+        <source>Multimedia objects added per month</source>
+        <target state="translated">Objectes multimèdia afegits per mes</target>
+      </trans-unit>
+      <trans-unit id="fR2ImD2" resname="See the statistics">
+        <source>See the statistics</source>
+        <target state="translated">Veure les estadístiques</target>
+      </trans-unit>
+      <trans-unit id="4FWIFba" resname="The data could not be loaded.">
+        <source>The data could not be loaded.</source>
+        <target state="translated">No s'han pogut carregar les dades.</target>
+      </trans-unit>
+      <trans-unit id="9JQlP9D" resname="Views today">
+        <source>Views today</source>
+        <target state="translated">Visites d'avui</target>
+      </trans-unit>
+      <trans-unit id="ATxIWsc" resname="Without playable media">
+        <source>Without playable media</source>
+        <target state="translated">Sense mitjans reproduïbles</target>
       </trans-unit>
     </body>
   </file>

@@ -3741,14 +3741,6 @@
         <source>Iframe URL</source>
         <target>Iframe URL</target>
       </trans-unit>
-      <trans-unit id="jyNk4Ru" resname="Day">
-        <source>Day</source>
-        <target>Day</target>
-      </trans-unit>
-      <trans-unit id="MQylA_8" resname="Month">
-        <source>Month</source>
-        <target>Month</target>
-      </trans-unit>
       <trans-unit id="A3MtGeZ" resname="Num">
         <source>Num</source>
         <target>Num</target>
@@ -4185,14 +4177,6 @@
         <source>Honorific</source>
         <target>Honorific</target>
       </trans-unit>
-      <trans-unit id="IuO2F8I" resname="Hour of day">
-        <source>Hour of day</source>
-        <target>Hour of day</target>
-      </trans-unit>
-      <trans-unit id="EmLzI9J" resname="Last 5 series">
-        <source>Last 5 series</source>
-        <target>Last 5 series</target>
-      </trans-unit>
       <trans-unit id="YbUxazW" resname="Link">
         <source>Link</source>
         <target>Link</target>
@@ -4245,14 +4229,6 @@
         <source>Multimedia objects</source>
         <target>Multimedia objects</target>
       </trans-unit>
-      <trans-unit id="b7HB23E" resname="multimedia objects">
-        <source>multimedia objects</source>
-        <target>multimedia objects</target>
-      </trans-unit>
-      <trans-unit id="HWbUTWG" resname="Multimedia objects created">
-        <source>Multimedia objects created</source>
-        <target>Multimedia objects created</target>
-      </trans-unit>
       <trans-unit id="Jh8QaH8" resname="New external media">
         <source>New external media</source>
         <target>New external media</target>
@@ -4277,14 +4253,6 @@
         <source>No series found with ID</source>
         <target>No series found with ID</target>
       </trans-unit>
-      <trans-unit id="e6o0dbf" resname="No series yet.">
-        <source>No series yet.</source>
-        <target>No series yet.</target>
-      </trans-unit>
-      <trans-unit id="q3xoFK." resname="No storage configured.">
-        <source>No storage configured.</source>
-        <target>No storage configured.</target>
-      </trans-unit>
       <trans-unit id="SSuf4g9" resname="No tags defined with metatag">
         <source>No tags defined with metatag</source>
         <target>No tags defined with metatag</target>
@@ -4305,10 +4273,6 @@
         <source>Playlists</source>
         <target>Playlists</target>
       </trans-unit>
-      <trans-unit id="HVjKmcM" resname="Publication activity">
-        <source>Publication activity</source>
-        <target>Publication activity</target>
-      </trans-unit>
       <trans-unit id="d658z2l" resname="Read only">
         <source>Read only</source>
         <target>Read only</target>
@@ -4324,10 +4288,6 @@
       <trans-unit id="CWSJJzO" resname="Series title">
         <source>Series title</source>
         <target>Series title</target>
-      </trans-unit>
-      <trans-unit id="XnARhGE" resname="Storage used">
-        <source>Storage used</source>
-        <target>Storage used</target>
       </trans-unit>
       <trans-unit id="38KTgHu" resname="Successfully delete admin MultimediaObjects from Group.">
         <source>Successfully delete admin MultimediaObjects from Group.</source>
@@ -4375,10 +4335,6 @@
         <target>To use the inbox mode define the inbox path as
                 &lt;code&gt;pumukit.inbox&lt;/code&gt; parameter in your config file.</target>
       </trans-unit>
-      <trans-unit id="iX3Z4Sh" resname="Total time">
-        <source>Total time</source>
-        <target>Total time</target>
-      </trans-unit>
       <trans-unit id="Q7LQpG_" resname="Track Update">
         <source>Track Update</source>
         <target>Track Update</target>
@@ -4414,6 +4370,58 @@
       <trans-unit id="IewK36G" resname="Places and precincts need the root tag with code PLACES, which does not exist in this installation. Create it from the Tags menu.">
         <source>Places and precincts need the root tag with code PLACES, which does not exist in this installation. Create it from the Tags menu.</source>
         <target state="translated">Places and precincts need the root tag with code PLACES, which does not exist in this installation. Create it from the Tags menu.</target>
+      </trans-unit>
+      <trans-unit id="K9SuiV1" resname="%count% multimedia objects">
+        <source>%count% multimedia objects</source>
+        <target>%count% multimedia objects</target>
+      </trans-unit>
+      <trans-unit id="WO4Dv.Z" resname="%hours% h %minutes% min">
+        <source>%hours% h %minutes% min</source>
+        <target>%hours% h %minutes% min</target>
+      </trans-unit>
+      <trans-unit id="6Omg7I6" resname="%used% of %total%">
+        <source>%used% of %total%</source>
+        <target>%used% of %total%</target>
+      </trans-unit>
+      <trans-unit id="dmqyVJY" resname="Catalogue status">
+        <source>Catalogue status</source>
+        <target>Catalogue status</target>
+      </trans-unit>
+      <trans-unit id="0Ae75ZZ" resname="Encoder queue">
+        <source>Encoder queue</source>
+        <target>Encoder queue</target>
+      </trans-unit>
+      <trans-unit id="XVxK26o" resname="Failed in the last 24 hours">
+        <source>Failed in the last 24 hours</source>
+        <target>Failed in the last 24 hours</target>
+      </trans-unit>
+      <trans-unit id="mf7PoOx" resname="Finished in the last 24 hours">
+        <source>Finished in the last 24 hours</source>
+        <target>Finished in the last 24 hours</target>
+      </trans-unit>
+      <trans-unit id="kvBf0DN" resname="Hours of content">
+        <source>Hours of content</source>
+        <target>Hours of content</target>
+      </trans-unit>
+      <trans-unit id="fUwCX0I" resname="Multimedia objects added per month">
+        <source>Multimedia objects added per month</source>
+        <target>Multimedia objects added per month</target>
+      </trans-unit>
+      <trans-unit id="fR2ImD2" resname="See the statistics">
+        <source>See the statistics</source>
+        <target>See the statistics</target>
+      </trans-unit>
+      <trans-unit id="4FWIFba" resname="The data could not be loaded.">
+        <source>The data could not be loaded.</source>
+        <target>The data could not be loaded.</target>
+      </trans-unit>
+      <trans-unit id="9JQlP9D" resname="Views today">
+        <source>Views today</source>
+        <target>Views today</target>
+      </trans-unit>
+      <trans-unit id="ATxIWsc" resname="Without playable media">
+        <source>Without playable media</source>
+        <target>Without playable media</target>
       </trans-unit>
     </body>
   </file>

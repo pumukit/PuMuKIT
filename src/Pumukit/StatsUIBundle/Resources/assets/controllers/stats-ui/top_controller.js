@@ -17,7 +17,7 @@ export default class extends Controller {
     async load() {
         const request = (this.request ?? 0) + 1;
         this.request = request;
-        this.element.classList.add('stats-loading');
+        this.element.classList.add('panel-loading');
         try {
             const top = await fetchReport(this.element, this.reportValue, { limit: LIMIT });
             if (request !== this.request) {
@@ -28,7 +28,7 @@ export default class extends Controller {
             this.bodyTarget.replaceChildren();
             showState(this.stateTarget, this.messagesValue.loadError);
         } finally {
-            this.element.classList.remove('stats-loading');
+            this.element.classList.remove('panel-loading');
         }
     }
 

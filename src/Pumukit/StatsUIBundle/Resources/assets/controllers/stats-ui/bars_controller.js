@@ -15,7 +15,7 @@ export default class extends Controller {
     async load() {
         const request = (this.request ?? 0) + 1;
         this.request = request;
-        this.element.classList.add('stats-loading');
+        this.element.classList.add('panel-loading');
         try {
             const distribution = await fetchReport(this.element, this.reportValue);
             if (request !== this.request) {
@@ -26,7 +26,7 @@ export default class extends Controller {
             this.listTarget.replaceChildren();
             showState(this.stateTarget, this.messagesValue.loadError);
         } finally {
-            this.element.classList.remove('stats-loading');
+            this.element.classList.remove('panel-loading');
         }
     }
 
@@ -36,21 +36,21 @@ export default class extends Controller {
 
         this.listTarget.replaceChildren(...items.map((item) => {
             const row = document.createElement('li');
-            row.className = 'stats-bar';
+            row.className = 'panel-bar';
             row.title = `${this.messagesValue.labels[item.key] ?? item.key}: ${viewsLabel(this.messagesValue, item.views)}`;
 
             const label = document.createElement('span');
-            label.className = 'stats-bar-label';
+            label.className = 'panel-bar-label';
             label.textContent = this.messagesValue.labels[item.key] ?? item.key;
 
             const value = document.createElement('span');
-            value.className = 'stats-bar-value';
+            value.className = 'panel-bar-value';
             value.textContent = `${numberFormat.format(item.views)} · ${percentFormat.format(item.share)}`;
 
             const track = document.createElement('span');
-            track.className = 'stats-bar-track';
+            track.className = 'panel-bar-track';
             const fill = document.createElement('span');
-            fill.className = 'stats-bar-fill';
+            fill.className = 'panel-bar-fill';
             fill.style.width = `${(item.views / max) * 100}%`;
             track.append(fill);
 

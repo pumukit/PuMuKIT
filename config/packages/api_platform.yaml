@@ -6,6 +6,7 @@ api_platform:
         paths:
             - '%kernel.project_dir%/src/Pumukit/SchemaBundle/Document'
             - '%kernel.project_dir%/src/Pumukit/StatsBundle/ApiResource'
+            - '%kernel.project_dir%/src/Pumukit/NewAdminBundle/ApiResource'
     doctrine: false
     doctrine_mongodb_odm:
         enabled: true
