@@ -32,6 +32,12 @@ services:
   Pumukit\CoreBundle\EventListener\LegacyApiListener:
     tags:
       - { name: "kernel.event_listener", event: "kernel.response", method: "onKernelResponse" }
+
+  Pumukit\CoreBundle\EventListener\SameOriginRequestListener:
+    class: Pumukit\CoreBundle\EventListener\SameOriginRequestListener
+    tags:
+      - { name: "kernel.event_listener", event: "kernel.request", priority: 256 }
+
   Pumukit\CoreBundle\EventListener\FilterListener:
     class: Pumukit\CoreBundle\EventListener\FilterListener
     tags:
