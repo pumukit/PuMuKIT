@@ -877,6 +877,32 @@ The admin keyword autocomplete reads `/api/v1/keywords/*`, which answers
 `{"items": [{"keyword": "...", "count": 3}]}`. Overridden templates that still point to
 `pumukit_schema_apikeywords_*` keep working through the deprecated endpoints.
 
+## Backoffice requests that change data
+
+Backoffice routes that create, delete, clone, reorder or otherwise change data no longer accept
+`GET`; they answer `405 Method Not Allowed` to it. Overridden templates and bundle JavaScript must
+send `POST` (or `DELETE` where the route already accepted it):
+
+| Routes | Now |
+|---|---|
+| `pumukitnewadmin_{mms,role,playlistmms}_{up,down,top,bottom}`, `pumukitnewadmin_person_{up,down}` | `PUT`, `POST`. Links that navigate use `data-action="click->admin--actions#post"`, which submits a `POST` form to the link URL |
+| `pumukitnewadmin_track_pic`, `pumukitnewadmin_track_retranscode` | `PUT`, `POST` |
+| `pumukitnewadmin_playlistmms_batch_delete` | `POST`, `DELETE` |
+| `pumukitnewadmin_{mms,series}_invert_announce`, `pumukitnewadmin_series_create`, `pumukitnewadmin_mms_create`, `pumukitnewadmin_person_link`, `pumukitnewadmin_playlistmms_batch_add` | `POST` |
+| `pumukit_newadmin_series_styles_{create,edit,delete}` (`create` now reads `name` from the request body), `pumukitnewadmin_places_delete`, `pumukit_newadmin_head_and_tail_manager_remove_item` | `POST` |
+| `pumukitnewadmin_unesco_{add_tag,clone,delete,delete_tag,options_list}` | `POST` |
+| `pumukit_new_admin_live_event_{create,clone_session,delete_selected,session_delete,options}`, `pumukitnewadmin_live_event_edit_series`, `pumukit_new_admin_autocomplete_series_with_event_data` | `POST` |
+| `pumukit_encoder_cpu_maintenance_switch`, `wizard_upload_from_server`, `inbox_auto_import` | `POST` |
+
+The co-owner rejection link of the owner email (`pumukit_multimedia_object_reject_co_owner`)
+keeps working with `GET`, but it now shows a confirmation page and rejects on `POST`.
+
+Requests to `/admin` and `/chat` with a method other than `GET`, `HEAD`, `OPTIONS` or `TRACE` are
+rejected with `403` when the browser marks them as coming from another site (`Sec-Fetch-Site`
+other than `same-origin` or `none`, or an `Origin` header for another host). Requests without
+those headers, such as `curl` or server-to-server calls, are not affected. Integrations that post
+to the backoffice from a page on another domain must call an API instead.
+
 ## Backoffice menu builder
 
 `Pumukit\NewAdminBundle\Menu\Builder` is now a service with constructor injection instead of a

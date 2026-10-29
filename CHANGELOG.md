@@ -99,6 +99,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Fixed
 
+- Backoffice routes that created, deleted, cloned or reordered data on a `GET` request (reachable from a link on any website): they now require `POST` or `DELETE`, and cross-site requests that change data in `/admin` and `/chat` are rejected.
 - Stored XSS through user data printed as HTML: titles, people and track names in the UNESCO catalogue list, encoder output in the job information pages, live event messages and session notes, broadcast descriptions with group names, series headers, footers and subseries titles, and `javascript:` URLs in links, materials and person webs.
 - The places and precincts page returning a 500 when the `PLACES` root tag does not exist: it now explains the reason, and `pumukit:init:repo tag` creates the tag.
 - Statistics API endpoints (`/api/media/views*`, `/api/media/*/most_viewed`) failing with a 500 when called without `from_date` or `to_date`.
