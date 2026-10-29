@@ -26,6 +26,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Changed
 
+- Escape the backoffice form labels; labels with HTML need `label_html`. Sanitize the series header, footer and subseries titles with `symfony/html-sanitizer` (`pumukit.series_html`), print user URLs with the new `safe_url` Twig filter, accept only `http` and `https` in links and person webs, reject more uploads the browser can run and serve `/uploads` with `nosniff`.
 - Redesign the admin dashboard: drop the SIMILE Timeline 2.3.1 widget (and its `/dashboard/series/timeline.xml` feed) in favour of a Chart.js layout. The default view renders KPI cards (series, multimedia objects, total time, storage usage), a publication-activity bubble chart (date × 4-hour buckets, fed by a new `StatsService::getMmobjActivityByDayHour` aggregation over `properties.created`) with a day/month/year toggle that windows to the last 30 days / 12 months / 10 years, storage occupancy as HTML progress bars per `dir_out`, and a Last-5-series panel with owner username. The `?show_stats=1` gate is removed: everything renders on the default route. Scope-aware: users without `ROLE_SCOPE_GLOBAL` get storage hidden and their stats / recent series filtered by `properties.owners`. Chart.js (+ `chartjs-adapter-date-fns` + `chartjs-plugin-zoom`) is introduced as the planned successor for the D3 v3 + NVD3 stack still used in `StatsUIBundle`.
 - Upgrade the core to Symfony 7.4 LTS and PHP 8.5.
 - Build the Docker image on Debian 13 (trixie) with FFmpeg 8.1 instead of Debian 12 (bookworm) and FFmpeg 6.0, which no longer receive regular security updates.
@@ -98,6 +99,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Fixed
 
+- Stored XSS through user data printed as HTML: titles, people and track names in the UNESCO catalogue list, encoder output in the job information pages, live event messages and session notes, broadcast descriptions with group names, series headers, footers and subseries titles, and `javascript:` URLs in links, materials and person webs.
 - The places and precincts page returning a 500 when the `PLACES` root tag does not exist: it now explains the reason, and `pumukit:init:repo tag` creates the tag.
 - Statistics API endpoints (`/api/media/views*`, `/api/media/*/most_viewed`) failing with a 500 when called without `from_date` or `to_date`.
 - Cloning a live event without URL or without live channel failing with a 500.

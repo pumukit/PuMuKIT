@@ -769,6 +769,39 @@ magic URL of the series. It no longer trusts a `Referer` header that merely cont
 so going from a magic URL page to a published video of the series shows only the published
 ones.
 
+## Output escaping
+
+The core no longer prints user data as HTML. Projects that override these templates or reuse
+these pieces must follow the same rules:
+
+- **Series header, footer and subseries titles** are HTML written in the backoffice. They are now
+  printed through `symfony/html-sanitizer` with the `pumukit.series_html` sanitizer, declared by
+  the WebTVBundle: formatting, lists, tables, images and `http`, `https`, `mailto` and relative
+  links are kept, with their `class`, `style` and `target` attributes; scripts, event handlers,
+  iframes, forms and `javascript:` URLs are removed. Overridden templates must print them with
+  `|sanitize_html('pumukit.series_html')` instead of `|raw`.
+- **URLs written by users** (links, materials, person webs) are printed with the new `safe_url`
+  Twig filter, which turns any scheme other than `http`, `https` and `mailto` into `#`. Use it in
+  every `href` of an overridden template. The link and person web fields of the backoffice only
+  accept `http` and `https` URLs: editing an existing link with another scheme (for example
+  `ftp://`) asks to change it.
+- **Backoffice form labels** are escaped. The `form_label` block of
+  `@PumukitNewAdmin/Themes/fields.html.twig` no longer decodes HTML entities; a form type whose
+  label contains HTML must set `'label_html' => true` (the copyright and license labels with their
+  information link already do).
+- **UNESCO catalogue**: `render_object_field()` returns escaped HTML. Templates print it with
+  `|raw` as before, and with `|striptags|unescape` inside attributes.
+- **Plain text fields** are escaped: the live event messages ("already held", "not yet held") and
+  the session notes, which now keep their line breaks with `nl2br`. Projects that relied on
+  writing HTML in them must move that HTML to the template.
+- **Uploads**: materials and pictures with the extensions `xht`, `shtml`, `svgz`, `xml`, `xsl`,
+  `xslt`, `mht`, `mhtml` and `hta` are rejected, as `html`, `htm`, `xhtml`, `svg` and `swf`
+  already were, and `/uploads` is served with `X-Content-Type-Options: nosniff`. Projects with
+  their own NGINX configuration should add that header to their uploads location.
+- The core test `UnescapedOutputTest` fails when a template adds `|raw`, `|unescape` or
+  `autoescape false`, a Twig extension adds `is_safe`, or a Stimulus controller inserts HTML with
+  `.html(...)`, `innerHTML` or `insertAdjacentHTML`, outside its reviewed list.
+
 ## Removed metadata translation
 
 The metadata translation button of the i18n fields was never implemented and is removed:
