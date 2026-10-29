@@ -812,6 +812,32 @@ The statistics pages of StatsUIBundle are replaced by a single audience panel:
 - `Pumukit\StatsBundle\EventListener\Log` takes three new constructor arguments:
   `VisitorAnonymizer`, `ViewsDailyStatsService` and a `LoggerInterface`.
 
+## Deprecated API
+
+The REST API under `/api/v1/` (API Platform) replaces the previous endpoints under `/api/`, which
+keep working in 6.x and will be removed in 7.0. The core only uses `/api/v1/`.
+
+- Every call to a previous endpoint answers with a `Deprecation` header and, when there is one, a
+  `Link: <...>; rel="successor-version"` header with the new endpoint.
+- Every call is logged in `var/log/legacy_api.log` (monolog channel `legacy_api`, 30 days) with
+  the route, the user, the IP truncated to its network, the user agent and the referer, so that
+  the installations can find out which integrations still use them before upgrading to 7.0.
+
+| Previous endpoint | Replacement |
+|---|---|
+| `/api/media/mmobj`, `/api/media/series` | `/api/v1/multimedia_objects`, `/api/v1/series` |
+| `/api/media/stats` | `/api/v1/dashboard/summary` |
+| `/api/media/mmobj/stats`, `*/recorded`, `*/num_recorded`, `/api/media/hours/*` | `/api/v1/dashboard/activity` |
+| `/api/media/views`, `/api/media/views/mmobj`, `/api/media/views/series` | `/api/v1/stats/timeline` (with `multimediaObject` or `series`) |
+| `/api/media/mmobj/most_viewed`, `/api/media/series/most_viewed` | `/api/v1/stats/top-videos`, `/api/v1/stats/top-series` |
+| `/api/keywords/mmobj`, `/api/keywords/series` | `/api/v1/keywords/multimedia_objects`, `/api/v1/keywords/series` |
+| `/api/encoder/jobs` | `/api/v1/dashboard/jobs` (counts only) |
+| `/api/media/series/recorded`, `*/num_recorded`, `*/published`, `/api/media/series/user`, `/api/media/live`, `/api/media/locales`, `/api/live/*`, `/api/encoder/cpus`, `/api/encoder/profiles`, `/api/user/users` | None yet |
+
+The admin keyword autocomplete reads `/api/v1/keywords/*`, which answers
+`{"items": [{"keyword": "...", "count": 3}]}`. Overridden templates that still point to
+`pumukit_schema_apikeywords_*` keep working through the deprecated endpoints.
+
 ## Backoffice menu builder
 
 `Pumukit\NewAdminBundle\Menu\Builder` is now a service with constructor injection instead of a

@@ -21,6 +21,8 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Statistics panel at `/admin/stats` for administrators and teachers: views and unique views, views over time compared with the previous period, origin (portal, embedded player, LMS, other websites), devices, day and hour heatmap and the most viewed videos and series, with the same panel for one series or one video. Teachers only see their own videos.
 - Read-only statistics REST API under `/api/v1/stats/` (API Platform), protected by the statistics permission and filtered by the user's scope.
 - Daily view statistics updated on every view, and the `pumukit:stats:rollup` command to build them from the existing `ViewsLog`, so that the statistics do not read the raw view log.
+- Dashboard rebuilt on the read-only `/api/v1/dashboard/` API: series, multimedia objects and hours of content, views today, multimedia objects added per month, catalogue status and, for administrators, the encoder queue and the storage by disk. Each user only sees their scope.
+- `/api/v1/keywords/` API for the keyword autocomplete of the backoffice.
 
 #### Changed
 
@@ -118,6 +120,10 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Image-type multimedia objects returning a 404 on the player: the image now goes through `track_url()` (i.e. `/trackfile`) like documents and video tracks, instead of the raw `/storage/downloads/...` URL.
 - Already-developed images (JPG/PNG/…) being run through the `image_raw_broadcastable` profile and rendered with darktable's default development modules (washed-out / blown-out output). The default image profile for a target now picks `image_raw` only when the master is actually a camera RAW file (extensions in `ImageRawUtils`); otherwise it uses the generic `image` profile. Set `target_default_profiles.<TARGET>.image_raw` next to `image` in `encoder.yaml` to opt in.
 
+#### Deprecated
+
+- The previous REST endpoints under `/api/` (not `/api/v1/`): they answer with `Deprecation` and `Link` headers, every call is logged in `var/log/legacy_api.log`, and they will be removed in 7.0. See UPGRADE-6.0.md for their replacements.
+
 #### Removed
 
 - API Platform 2.7 (replaced by 4.x), removing the two GraphQL security advisories and their audit ignores.
@@ -132,6 +138,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - The `pumukitnewadmin_seriespic_index` and `pumukitnewadmin_mmspic_index` routes, which pointed to controller actions that do not exist.
 - The unused `copy` routes of series, multimedia objects, series types, roles, people and live channels, with `AdminController::copyAction()` and the `cloneResource()` methods of `Person`, `Role` and `Live`.
 - The previous statistics pages (`pumukit_stats_series_index`, `pumukit_stats_mmobj_index`, the `Search`, `MostViewed` and `Views` templates and the `stats-ui--stats` controller), replaced by the statistics panel.
+- The publication activity bubble chart and the server-rendered widgets of the dashboard, with `StatsService::getMmobjActivityByDayHour()`, `getActivityWindowStart()` and the owner argument of `getGlobalStats()`.
 - The `pumukitnewadmin_seriespic_show`, `pumukitnewadmin_mmspic_show`, `pumukitnewadmin_track_info` and `pumukitnewadmin_track_autocomplete` routes, which pointed to controller actions that do not exist.
 
 
