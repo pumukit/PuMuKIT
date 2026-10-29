@@ -152,6 +152,22 @@ class CheckAssetsCommandTest extends PumukitTestCase
         $this->assertStringContainsString('Problems found: 1', $display);
     }
 
+    public function testIgnoresRemovedGlobalNamesInsideIdsAndClasses(): void
+    {
+        file_put_contents(
+            $this->tmpDir.'/groups.html.twig',
+            "<div id=\"delete_mm{{ template }}_groups\" class=\"delete_mm-box\"></div>\n<a onclick=\"delete_mm('1')\"></a>\n"
+        );
+
+        $tester = $this->commandTester();
+        $tester->execute(['--path' => $this->tmpDir]);
+
+        $display = $tester->getDisplay();
+        $this->assertStringNotContainsString('groups.html.twig:1', $display);
+        $this->assertStringContainsString('Removed JavaScript global: delete_mm in groups.html.twig:2', $display);
+        $this->assertStringContainsString('Problems found: 1', $display);
+    }
+
     public function testReportsRemovedJavascriptHooksThatTheProjectStillDefines(): void
     {
         file_put_contents(

@@ -387,7 +387,7 @@ EOT
                 $location = $relativePathname.':'.($index + 1);
 
                 foreach ($removedGlobals as $global) {
-                    if (preg_match('/(?:(?<![\w$.])|(?<=window\.))'.$global.'\b/', $line)) {
+                    if (preg_match('/(?:(?<![\w$.])|(?<=window\.))'.$global.'\b(?![-{])/', $line)) {
                         ++$missing;
                         $output->writeln('Removed JavaScript global: <info>'.$global.'</info> in '.$location);
                         $output->writeln('    use <comment>'.self::removedGlobals()[$global].'</comment>');
