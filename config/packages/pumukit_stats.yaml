@@ -17,6 +17,12 @@ services:
     tags:
       - { name: "kernel.event_listener", event: "multimediaobject.view", method: "onMultimediaObjectViewed" }
 
+  Pumukit\StatsBundle\State\:
+    resource: '../../src/Pumukit/StatsBundle/State/'
+  Pumukit\StatsBundle\Services\StatsScope:
+    arguments:
+      $personalScopeRoleCode: '%pumukitschema.personal_scope_role_code%'
+  Pumukit\StatsBundle\Services\AudienceStatsService: ~
   Pumukit\StatsBundle\Services\ViewsDailyStatsService: ~
   Pumukit\StatsBundle\Services\ViewClassifier:
     arguments:
