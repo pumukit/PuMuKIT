@@ -36,7 +36,7 @@
         <div class="row">
             <div class="col-12">
                 <div id="serial_header">
-                    {{ series.header|raw }}
+                    {{ series.header|sanitize_html('pumukit.series_html') }}
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div id="serial_header">
-                            {{ series.header|raw }}
+                            {{ series.header|sanitize_html('pumukit.series_html') }}
                         </div>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
 
     <div class="row">
         <div class="col-12">
-            {{ series.footer|raw }}
+            {{ series.footer|sanitize_html('pumukit.series_html') }}
         </div>
     </div>
 {% endblock %}

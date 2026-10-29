@@ -16,6 +16,21 @@ class PumukitWebTVExtension extends Extension implements PrependExtensionInterfa
     public function prepend(ContainerBuilder $container): void
     {
         FrontendAssets::register($container, dirname(__DIR__), '@pumukit/webtv');
+
+        $container->prependExtensionConfig('framework', [
+            'html_sanitizer' => [
+                'sanitizers' => [
+                    'pumukit.series_html' => [
+                        'allow_safe_elements' => true,
+                        'allow_attributes' => ['class' => '*', 'style' => '*', 'target' => 'a'],
+                        'allowed_link_schemes' => ['http', 'https', 'mailto'],
+                        'allowed_media_schemes' => ['http', 'https'],
+                        'allow_relative_links' => true,
+                        'allow_relative_medias' => true,
+                    ],
+                ],
+            ],
+        ]);
     }
 
     /**

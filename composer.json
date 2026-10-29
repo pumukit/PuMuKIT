@@ -35,6 +35,7 @@
         "symfony/expression-language": "*",
         "symfony/flex": "^2",
         "symfony/form": "*",
+        "symfony/html-sanitizer": "*",
         "symfony/http-kernel": "*",
         "symfony/intl": "*",
         "symfony/lock": "*",
