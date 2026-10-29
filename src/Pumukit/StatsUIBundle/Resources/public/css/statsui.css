@@ -15,10 +15,6 @@
 .pagination > li > a{
     cursor: pointer;
 }
-.form_daterangepicker{
-    height: 45px !important;
-    font-size: 15px !important;
-}
 .clear-filters{
     margin-top: 50px;
 }
@@ -169,27 +165,41 @@
     background-color: #008846; /* Fix A11y */
 }
 
-.block-results-views {
-    background-color:#008846;
-    margin-top:20px;
-    height:80px;
-    color:white;
-    box-shadow:0 3px 10px rgba(0,0,0,.23), 0 3px 10px rgba(0,0,0,.16);
+.stats-total {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-height: 80px;
+    margin-top: 20px;
+    padding: .5rem 1.25rem;
+    color: #fff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .23), 0 3px 10px rgba(0, 0, 0, .16);
 }
 
-.block-results-objects {
-    background-color:#de3601;
-    margin-top:20px;
-    height:80px;
-    color:white;
-    box-shadow:0 3px 10px rgba(0,0,0,.23), 0 3px 10px rgba(0,0,0,.16);
+.stats-total-views {
+    background-color: #008846;
 }
 
-.block-results-views i, .block-results-objects i {
-    padding-top:10px;
-    opacity: 0.2;
-    filter: alpha(opacity=20);
-    font-size:60px;
+.stats-total-objects {
+    background-color: #de3601;
+}
+
+.stats-total-value {
+    min-width: 3ch;
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.stats-total-label {
+    flex: 1;
+    font-size: 1.25rem;
+    line-height: 1.2;
+}
+
+.stats-total-icon {
+    font-size: 48px;
+    opacity: .2;
 }
 
 .block-search-and-views {
@@ -214,14 +224,6 @@
 
 .block-preview table th, .block-preview table tr {
     word-break: break-all;
-}
-
-.btn-stats-search {
-    padding: 8px 10px;
-}
-
-.form_daterangepicker {
-    border:none;
 }
 
 .table-views {

@@ -97,6 +97,12 @@ label, .form-label, .col-form-label {
     box-shadow: none;
 }
 
+.input-group > .btn {
+    --bs-btn-border-width: var(--bs-border-width);
+    text-transform: none;
+    box-shadow: none;
+}
+
 .btn-secondary {
     --bs-btn-color: rgba(0, 0, 0, .87);
     --bs-btn-bg: #fff;

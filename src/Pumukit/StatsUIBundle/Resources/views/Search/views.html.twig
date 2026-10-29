@@ -1,31 +1,15 @@
-<div class="col-md-7 block-results-views">
-    <div class="row">
-        <div class="col-md-4">
-            <h2 class="total-views-objects" data-stats-ui--stats-target="totalViews"></h2>
-        </div>
-        <div class="col-md-6">
-            <h4>{% trans %}Total views in the date{% endtrans %}</h4>
-        </div>
-        <div class="col-md-2 float-end">
-            <i class="fa-solid fa-eye"></i>
-        </div>
+<div class="col-md-9 col-lg-7">
+    <div class="stats-total stats-total-views">
+        <span class="stats-total-value" data-stats-ui--stats-target="totalViews"></span>
+        <span class="stats-total-label">{% trans %}Total views in the date{% endtrans %}</span>
+        <i class="fa-solid fa-eye stats-total-icon" aria-hidden="true"></i>
     </div>
-</div>
-<div class="clearfix"></div>
 
-{% if app.request.attributes.get('_route') != 'pumukit_stats_mmobj_index_id' %}
-    <div class="col-md-7 block-results-objects">
-        <div class="row">
-            <div class="col-md-4">
-                <h2 class="total-objects" data-stats-ui--stats-target="totalObjects"></h2>
-            </div>
-            <div class="col-md-6">
-                <h4>{% trans %}Total Objects{% endtrans %} </h4>
-            </div>
-            <div class="col-md-2 float-end">
-                <i class="ion ion-stats-bars fa-solid fa-chart-simple"></i>
-            </div>
+    {% if app.request.attributes.get('_route') != 'pumukit_stats_mmobj_index_id' %}
+        <div class="stats-total stats-total-objects">
+            <span class="stats-total-value" data-stats-ui--stats-target="totalObjects"></span>
+            <span class="stats-total-label">{% trans %}Total Objects{% endtrans %}</span>
+            <i class="fa-solid fa-chart-simple stats-total-icon" aria-hidden="true"></i>
         </div>
-    </div>
-    <div class="clearfix"></div>
-{% endif %}
+    {% endif %}
+</div>
