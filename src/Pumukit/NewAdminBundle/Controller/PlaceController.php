@@ -46,20 +46,16 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
     #[Template('@PumukitNewAdmin/Place/index.html.twig')]
     public function indexAction(Request $request)
     {
-        $placeTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
-        $places = $this->documentManager->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($placeTag->getId())], ['title.'.$request->getLocale() => 1]);
+        $placeTag = $this->findPlacesTag();
 
-        return ['places' => $places];
+        return ['configured' => null !== $placeTag, 'places' => $this->findPlaces($placeTag, $request->getLocale())];
     }
 
     #[Route('/parent/', name: 'pumukitnewadmin_places_parent')]
     #[Template('@PumukitNewAdmin/Place/parent_list.html.twig')]
     public function parentAction(Request $request)
     {
-        $placeTag = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
-        $places = $this->documentManager->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($placeTag->getId())], ['title.'.$request->getLocale() => 1]);
-
-        return ['places' => $places];
+        return ['places' => $this->findPlaces($this->findPlacesTag(), $request->getLocale())];
     }
 
     #[Route('/children/{id}', name: 'pumukitnewadmin_places_children')]
@@ -96,8 +92,12 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
             $parent = $this->documentManager->getRepository(Tag::class)->findOneBy(['_id' => new ObjectId($id)]);
             $isPrecinct = true;
         } else {
-            $parent = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
+            $parent = $this->findPlacesTag();
             $isPrecinct = false;
+        }
+
+        if (!$parent instanceof Tag) {
+            throw $this->createNotFoundException();
         }
 
         $suggested_code = $this->autogenerateCode($parent, $isPrecinct);
@@ -155,6 +155,20 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         }
 
         return ['tag' => $tag, 'form' => $form->createView()];
+    }
+
+    private function findPlacesTag(): ?Tag
+    {
+        return $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PLACES']);
+    }
+
+    private function findPlaces(?Tag $placeTag, string $locale): array
+    {
+        if (!$placeTag instanceof Tag) {
+            return [];
+        }
+
+        return $this->documentManager->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($placeTag->getId())], ['title.'.$locale => 1]);
     }
 
     private function autogenerateCode(Tag $parent, bool $isPrecinct)

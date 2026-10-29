@@ -4425,6 +4425,10 @@ una acció...</target>
         <source>xxx - </source>
         <target state="translated">xxx - </target>
       </trans-unit>
+      <trans-unit id="IewK36G" resname="Places and precincts need the root tag with code PLACES, which does not exist in this installation. Create it from the Tags menu.">
+        <source>Places and precincts need the root tag with code PLACES, which does not exist in this installation. Create it from the Tags menu.</source>
+        <target state="translated">Llocs i àmbit necessita l&apos;etiqueta arrel amb codi PLACES, que no existix en esta instal·lació. Creeu-la des del menú Etiquetes.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

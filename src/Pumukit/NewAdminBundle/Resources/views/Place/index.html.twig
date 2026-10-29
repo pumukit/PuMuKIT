@@ -8,6 +8,11 @@
         </ul>
     </h3>
 
+    {% if not configured %}
+        {% include '@PumukitNewAdmin/Misc/not_configured.html.twig' with {
+            message: 'Places and precincts need the root tag with code PLACES, which does not exist in this installation. Create it from the Tags menu.'|trans
+        } %}
+    {% else %}
     <div data-controller="admin--places"
          data-admin--places-urls-value="{{ {
              parent: path('pumukitnewadmin_places_parent'),
@@ -27,5 +32,6 @@
         {% include "@PumukitNewAdmin/Place/children.html.twig" %}
         {% include "@PumukitNewAdmin/Place/preview.html.twig" %}
     </div>
+    {% endif %}
 
 {% endblock %}

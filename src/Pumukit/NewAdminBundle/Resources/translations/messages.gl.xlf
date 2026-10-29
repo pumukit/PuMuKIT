@@ -4418,6 +4418,10 @@
         <source>xxx - </source>
         <target state="translated">xxx - </target>
       </trans-unit>
+      <trans-unit id="IewK36G" resname="Places and precincts need the root tag with code PLACES, which does not exist in this installation. Create it from the Tags menu.">
+        <source>Places and precincts need the root tag with code PLACES, which does not exist in this installation. Create it from the Tags menu.</source>
+        <target state="translated">Lugares e recintos precisa a etiqueta raíz co código PLACES, que non existe nesta instalación. Créaa desde o menú Categorías.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
