@@ -8,6 +8,7 @@ use Psr\Log\LoggerInterface;
 use Pumukit\EncoderBundle\Document\Job;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
+use Twig\Runtime\EscaperRuntime;
 
 final class JobRender
 {
@@ -58,7 +59,8 @@ final class JobRender
         }
 
         $loader = new ArrayLoader(['bat' => $profile['bat']]);
-        $twig = new Environment($loader);
+        $twig = new Environment($loader, ['autoescape' => 'shell']);
+        $twig->getRuntime(EscaperRuntime::class)->setEscaper('shell', static fn (string $string): string => addcslashes($string, '\\"$`'));
 
         $commandLine = $twig->render('bat', $vars);
         $this->logger->info('[renderBat] CommandLine: '.$commandLine);

@@ -58,7 +58,7 @@
             <div class="shell-wrap">
                 <p class="shell-top-bar">{% trans %}Output Command{% endtrans %}</p>
                 <ul class="shell-body">
-                    <li class="command">{{ command|replace({' ':'&nbsp;', '\n': '</li><li class="command">'})|raw }}</li>
+                    <li class="command">{{ command|e|replace({' ':'&nbsp;', '\n': '</li><li class="command">'})|raw }}</li>
                     <li>&nbsp;</li>
                     <li>{{ job.getOutput()|e|replace({' ':'&nbsp;', '\n': '</li><li>'})|raw }}</li>
                     {% if constant('STATUS_EXECUTING', job) == job.getStatus() %}

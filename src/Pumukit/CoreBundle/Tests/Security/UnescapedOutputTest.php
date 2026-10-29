@@ -31,7 +31,7 @@ class UnescapedOutputTest extends TestCase
             "new TwigFunction('uploader_attributes'",
         ],
         'EncoderBundle/Resources/views/Info/infoJob.html.twig' => [
-            '{{ command|replace({\' \':\'&nbsp;\', \'\n\': \'</li><li class="command">\'})|raw }}',
+            '{{ command|e|replace({\' \':\'&nbsp;\', \'\n\': \'</li><li class="command">\'})|raw }}',
             "{{ job.getOutput()|e|replace({' ':'&nbsp;', '\\n': '</li><li>'})|raw }}",
         ],
         'NewAdminBundle/Resources/assets/controllers/admin/actions_controller.js' => [
@@ -74,7 +74,7 @@ class UnescapedOutputTest extends TestCase
             '{{ element.getDisplayTrack() ? greenIcon|raw : redIcon|raw }}',
         ],
         'NewAdminBundle/Resources/views/Media/info.html.twig' => [
-            '{{ command|replace({\' \':\'&nbsp;\', \'\n\': \'</li><li class="command">\'})|raw }}',
+            '{{ command|e|replace({\' \':\'&nbsp;\', \'\n\': \'</li><li class="command">\'})|raw }}',
             "{{ job.getOutput()|e|replace({' ':'&nbsp;', '\\n': '</li><li>'})|raw }}",
         ],
         'NewAdminBundle/Resources/views/Person/listth.html.twig' => [
