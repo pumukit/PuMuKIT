@@ -94,6 +94,7 @@ services:
     class: Pumukit\CoreBundle\EventListener\InboxUploadListener
     arguments:
       $kernelProjectDir: '%kernel.project_dir%'
+      $kernelLogsDir: '%kernel.logs_dir%'
     tags:
       - { name: "kernel.event_listener", event: "upload.inbox", method: "autoImport" }
 
@@ -101,6 +102,7 @@ services:
     class: Pumukit\CoreBundle\EventListener\ServerUploadListener
     arguments:
       $kernelProjectDir: '%kernel.project_dir%'
+      $kernelLogsDir: '%kernel.logs_dir%'
     tags:
       - { name: "kernel.event_listener", event: "upload.server", method: "autoImport" }
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\CoreBundle\Controller;
 
+use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Services\InboxService;
 use Pumukit\CoreBundle\Services\UploadDispatcherService;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
@@ -19,11 +20,13 @@ class InboxController extends AbstractController
 {
     private $inboxService;
     private $uploadDispatcherService;
+    private $logger;
 
-    public function __construct(InboxService $inboxService, UploadDispatcherService $uploadDispatcherService)
+    public function __construct(InboxService $inboxService, UploadDispatcherService $uploadDispatcherService, LoggerInterface $logger)
     {
         $this->inboxService = $inboxService;
         $this->uploadDispatcherService = $uploadDispatcherService;
+        $this->logger = $logger;
     }
 
     #[Route('/inbox', name: 'inbox')]
@@ -115,6 +118,13 @@ class InboxController extends AbstractController
                 (string) $request->request->get('profile', 'master_copy')
             );
         } catch (\Exception $exception) {
+            $this->logger->error('The uploaded file could not be imported: {message}', [
+                'message' => $exception->getMessage(),
+                'exception' => $exception,
+                'fileName' => (string) $request->request->get('fileName'),
+                'series' => (string) $request->request->get('series'),
+            ]);
+
             return new JsonResponse(['success' => false]);
         }
 

@@ -11,11 +11,13 @@ use Symfony\Component\Process\Process;
 class ServerUploadListener
 {
     private string $kernelProjectDir;
+    private string $kernelLogsDir;
     private LoggerInterface $logger;
 
-    public function __construct(LoggerInterface $logger, string $kernelProjectDir)
+    public function __construct(LoggerInterface $logger, string $kernelProjectDir, string $kernelLogsDir)
     {
         $this->kernelProjectDir = $kernelProjectDir;
+        $this->kernelLogsDir = $kernelLogsDir;
         $this->logger = $logger;
     }
 
@@ -36,6 +38,7 @@ class ServerUploadListener
 
         $this->logger->info($process->getCommandLine());
 
-        shell_exec("nohup {$command} 1> /dev/null 2> /dev/null & echo $!");
+        $errorLog = escapeshellarg($this->kernelLogsDir.'/inbox_import.log');
+        shell_exec("nohup {$command} 1> /dev/null 2>> {$errorLog} & echo $!");
     }
 }

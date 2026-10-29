@@ -15,6 +15,7 @@ class InboxUploadListener
         private readonly LoggerInterface $logger,
         private readonly InboxService $inboxService,
         private readonly string $kernelProjectDir,
+        private readonly string $kernelLogsDir,
     ) {}
 
     public function autoImport(UploadFileEvent $event): void
@@ -37,6 +38,7 @@ class InboxUploadListener
 
         $this->logger->warning($process->getCommandLine());
 
-        shell_exec("nohup {$command} 1> /dev/null 2> /dev/null & echo $!");
+        $errorLog = escapeshellarg($this->kernelLogsDir.'/inbox_import.log');
+        shell_exec("nohup {$command} 1> /dev/null 2>> {$errorLog} & echo $!");
     }
 }
