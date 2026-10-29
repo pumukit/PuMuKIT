@@ -113,7 +113,7 @@ class Configuration implements ConfigurationInterface
             ->info('Maximum file size in bytes for each individual file')
             ->end()
             ->booleanNode('showBackofficeButtonInInbox')
-            ->defaultFalse()
+            ->defaultTrue()
             ->end()
             ->end()
         ;

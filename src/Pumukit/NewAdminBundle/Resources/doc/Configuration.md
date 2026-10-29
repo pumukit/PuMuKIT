@@ -6,7 +6,8 @@ Configuration:
 ```
 pumukit_new_admin:
     disable_broadcast_creation: true
-    show_menu_place_and_precinct: false
+    show_menu_place_and_precinct: true
+    enable_playlist: true
     multimedia_object_label: Multimedia Objects
     show_naked_pub_tab: false
     licenses:
@@ -24,6 +25,7 @@ pumukit_new_admin:
 
 * `disable_broadcast_creation` @Deprecated - Disable the creation of new Broadcasts
 * `show_menu_place_and_precinct` Show separated menu places and precinct
+* `enable_playlist` Enable playlist menu
 * `multimedia_object_label` Name of the label of the list of Multimedia Objects in Menu Builder and in the title of the page
 * `show_naked_pub_tab` if true, it shows a simplified publication tab on the naked view
 * `licenses` List of licenses used for series and multimedia objects. Text input used if empty

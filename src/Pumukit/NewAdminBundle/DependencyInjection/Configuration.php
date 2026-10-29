@@ -17,11 +17,11 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
             ->booleanNode('show_menu_place_and_precinct')
-            ->defaultFalse()
+            ->defaultTrue()
             ->info('Show separated menu places and precinct')
             ->end()
             ->booleanNode('enable_playlist')
-            ->defaultFalse()
+            ->defaultTrue()
             ->info('Enable playlist menu')
             ->end()
             ->scalarNode('multimedia_object_label')

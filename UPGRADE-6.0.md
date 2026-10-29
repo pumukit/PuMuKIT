@@ -660,6 +660,26 @@ trait Pic
 }
 ```
 
+## Configuration defaults
+
+PuMuKIT 6.0 enables its optional features by default; projects disable explicitly the ones
+they do not use. These options change their default value from `false` to `true`:
+
+| Option | Feature |
+|---|---|
+| `pumukit_new_admin.enable_playlist` | Playlists menu in the backoffice |
+| `pumukit_new_admin.show_menu_place_and_precinct` | Places and precincts menu in the backoffice |
+| `pumukit_base_live_player.advance_live_event_autocomplete_series` | Button to fill the series with the live event data |
+| `pumukit_core.showBackofficeButtonInInbox` | Button to the backoffice in the simplified inbox |
+| `menu.show_stats` (parameter) | Statistics block in the portal menu |
+| `pumukit.warning_on_unpublished` (parameter) | Warning in the backoffice on unpublished or unplayable multimedia objects |
+| `pumukit.inbox_depth` (parameter) | Inbox folder file counts include subfolders |
+
+`pumukit_core.full_magic_url` was never read: the WebTV controllers received a broken
+parameter reference that behaved as `true`. It now works and keeps its default of `false`,
+so access through a magic URL no longer lists the hidden multimedia objects of the series
+unless a project sets it to `true`.
+
 ## Backoffice menu builder
 
 `Pumukit\NewAdminBundle\Menu\Builder` is now a service with constructor injection instead of a

@@ -13,7 +13,7 @@ pumukit_base_live_player:
     event_default_poster: /bundles/pumukitwebtv/images/live_screen.jpg
     advance_live_event_create_default_pic: /bundles/pumukitwebtv/images/live/live_event_default_pic.jpg
     advance_live_event_create_serie_pic: /bundles/pumukitwebtv/images/live/live_event_series_pic.png
-    advance_live_event_autocomplete_series: false
+    advance_live_event_autocomplete_series: true
     liveevent_contact_and_share: false
     chat:
         enable: false

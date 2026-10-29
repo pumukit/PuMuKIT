@@ -84,6 +84,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Configure the default protocol of the URL form fields (live channel, person, link and external player), deprecated since Symfony 7.1.
 - Upload thumbnails, banners, materials, live event images and tracks through the Uppy Dashboard; the upload actions answer JSON on request and adding a track to an object without type no longer fails.
 - Update composer dependencies (gedmo/doctrine-extensions, php-cs-fixer, pagerfanta, knp-menu-bundle, twig extensions, etc.).
+- Enable the optional features by default: playlists and places menus, live event series autocomplete, backoffice button in the simplified inbox, portal menu statistics, unpublished warning and recursive inbox file counts. See UPGRADE-6.0.md.
 
 #### Fixed
 

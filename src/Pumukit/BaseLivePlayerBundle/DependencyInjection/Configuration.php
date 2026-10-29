@@ -33,7 +33,7 @@ class Configuration implements ConfigurationInterface
             ->info('Advance live event session default create serie _pic')
             ->end()
             ->booleanNode('advance_live_event_autocomplete_series')
-            ->defaultFalse()
+            ->defaultTrue()
             ->info('Advance live event button to autocomplete series with event data')
             ->end()
             ->booleanNode('liveevent_contact_and_share')

@@ -512,7 +512,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     event_default_poster?: scalar|Param|null, // Default poster for Advanced Live Events // Default: "/bundles/pumukitwebtv/images/live_screen.jpg"
  *     advance_live_event_create_default_pic?: scalar|Param|null, // Advance live event session default create from serie pic // Default: "/bundles/pumukitwebtv/images/live/live_event_default_pic.jpg"
  *     advance_live_event_create_serie_pic?: scalar|Param|null, // Advance live event session default create serie _pic // Default: "/bundles/pumukitwebtv/images/live/live_event_series_pic.png"
- *     advance_live_event_autocomplete_series?: bool|Param, // Advance live event button to autocomplete series with event data // Default: false
+ *     advance_live_event_autocomplete_series?: bool|Param, // Advance live event button to autocomplete series with event data // Default: true
  *     liveevent_contact_and_share?: bool|Param, // Shows the advance live event contact form // Default: false
  *     chat?: array{
  *         enable?: bool|Param, // Enable chat in live channel // Default: false
@@ -558,7 +558,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     minFileSize?: scalar|Param|null, // Minimum file size in bytes for each // Default: "0MB"
  *     maxNumberOfFiles?: scalar|Param|null, // Total number of files that can be selected // Default: 500
  *     maxFileSize?: scalar|Param|null, // Maximum file size in bytes for each individual file // Default: "20GB"
- *     showBackofficeButtonInInbox?: bool|Param, // Default: false
+ *     showBackofficeButtonInInbox?: bool|Param, // Default: true
  * }
  * @psalm-type PumukitEncoderConfig = array{
  *     delete_inbox_files?: bool|Param, // Delete imported inbox files // Default: true
@@ -607,8 +607,8 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     }>,
  * }
  * @psalm-type PumukitNewAdminConfig = array{
- *     show_menu_place_and_precinct?: bool|Param, // Show separated menu places and precinct // Default: false
- *     enable_playlist?: bool|Param, // Enable playlist menu // Default: false
+ *     show_menu_place_and_precinct?: bool|Param, // Show separated menu places and precinct // Default: true
+ *     enable_playlist?: bool|Param, // Enable playlist menu // Default: true
  *     multimedia_object_label?: scalar|Param|null, // Name of the label of the list of Multimedia Objects in Menu Builder and in the title of the page // Default: "Multimedia Objects"
  *     show_naked_pub_tab?: bool|Param, // if true, it shows a simplified publication tab on the naked view // Default: false
  *     licenses?: list<scalar|Param|null>,
