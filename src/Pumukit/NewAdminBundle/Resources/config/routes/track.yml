@@ -72,7 +72,7 @@ pumukitnewadmin_track_info_job:
 
 pumukitnewadmin_track_pic:
     path: /{mmId}/{id}/pic
-    methods: [GET, PUT, POST]
+    methods: [PUT, POST]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\TrackController::picAction
 
@@ -84,7 +84,7 @@ pumukitnewadmin_track_download:
 
 pumukitnewadmin_track_retranscode:
     path: /{mmId}/{id}/{profile}/retranscode
-    methods: [GET, PUT, POST]
+    methods: [PUT, POST]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\TrackController::retranscodeAction
 

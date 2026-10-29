@@ -37,13 +37,9 @@ final class RouteSmokeTest extends PumukitTestCase
         'pumukit_new_admin_live_event_clone_session' => 'H41',
         'pumukit_new_admin_autocomplete_series_with_event_data' => 'H41',
         'pumukit_multimedia_object_reject_co_owner' => 'H41',
-        'pumukit_newadmin_series_styles_create' => 'H41',
-        'pumukit_newadmin_series_styles_delete' => 'H41',
-        'pumukitnewadmin_places_delete' => 'H41',
         'pumukitnewadmin_unesco_delete_tag' => 'H41',
         'pumukitnewadmin_unesco_delete' => 'H41',
         'pumukitnewadmin_unesco_clone' => 'H41',
-        'pumukitnewadmin_track_retranscode' => 'H41',
     ];
 
     private const NOT_REQUESTED = [

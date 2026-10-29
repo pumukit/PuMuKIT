@@ -52,7 +52,7 @@ class HeadAndTailController extends AdminController
         return $this->render('@PumukitNewAdmin/HeadAndTail/template.html.twig');
     }
 
-    #[Route('/headandtail/manager/xhr/remove/{type}/{element}', name: 'pumukit_newadmin_head_and_tail_manager_remove_item')]
+    #[Route('/headandtail/manager/xhr/remove/{type}/{element}', name: 'pumukit_newadmin_head_and_tail_manager_remove_item', methods: ['POST'])]
     public function removeAction(Request $request, string $type, string $element): JsonResponse
     {
         if ($this->headAndTailService->removeElement($type, $element)) {

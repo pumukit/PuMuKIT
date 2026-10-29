@@ -7,6 +7,7 @@
                 <li>
                     <a class="dropdown-item" href="#" data-action="click->admin--actions#load"
                        data-admin--actions-url-param="{{ path('pumukitnewadmin_track_retranscode', {'id': track.id, 'mmId': mm.id, 'profile': key}) }}"
+                       data-admin--actions-data-param="{{ {'_method': 'POST'}|json_encode }}"
                        data-admin--actions-target-param="#tracks_mms_{{ mm.id }}">
                         <i class="fa-solid fa-film"></i> {{ key }}
                     </a>

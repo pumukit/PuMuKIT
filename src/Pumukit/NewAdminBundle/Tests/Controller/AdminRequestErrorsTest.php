@@ -57,7 +57,7 @@ class AdminRequestErrorsTest extends PumukitTestCase
 
     public function testCreatingASeriesStyleWithoutNameIsRejected(): void
     {
-        $this->client->request('GET', '/admin/series/styles/create', ['name' => '  ']);
+        $this->client->request('POST', '/admin/series/styles/create', ['name' => '  ']);
 
         $this->assertResponseStatusCodeSame(400);
         $this->assertCount(0, $this->dm->getRepository(SeriesStyle::class)->findAll());

@@ -7,7 +7,7 @@ export default class extends Controller {
     create(event) {
         event.preventDefault();
         $('#series_style_msg').hide();
-        $.ajax({ url: this.urlsValue.create, type: 'GET', data: $(event.currentTarget).serialize() })
+        $.ajax({ url: this.urlsValue.create, type: 'POST', data: $(event.currentTarget).serialize() })
             .done((response) => {
                 this.reloadList();
                 $('#style_show').load(this.urlsValue.show.replace('__ID__', response.id));
@@ -24,7 +24,7 @@ export default class extends Controller {
 
     remove(event) {
         event.preventDefault();
-        $.ajax({ url: event.params.url, type: 'GET' })
+        $.ajax({ url: event.params.url, type: 'POST' })
             .done((response) => {
                 this.reloadList();
                 $('#style_show').load(this.urlsValue.empty);

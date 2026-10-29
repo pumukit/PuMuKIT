@@ -20,7 +20,7 @@
 
 <div class="row"><div class="col-12">
     <p>Crear un estilo:</p>
-    <form id="styleform" method="GET" action="{{ path('pumukit_newadmin_series_styles_create') }}" class="form-inline" data-action="submit->admin--series-styles#create">
+    <form id="styleform" method="POST" action="{{ path('pumukit_newadmin_series_styles_create') }}" class="form-inline" data-action="submit->admin--series-styles#create">
         <div class="mb-3">
             <input type="text" name="name" class="form-control"/>
         </div>

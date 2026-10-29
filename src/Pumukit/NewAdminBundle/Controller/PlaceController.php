@@ -123,7 +123,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
         return ['tag' => $tag, 'form' => $form->createView(), 'suggested_code' => $suggested_code, 'parent' => $parent];
     }
 
-    #[Route('/delete/{id}', name: 'pumukitnewadmin_places_delete')]
+    #[Route('/delete/{id}', name: 'pumukitnewadmin_places_delete', methods: ['POST'])]
     public function deletePlaceAction(Request $request, #[MapDocument(mapping: ['id' => 'id'])] Tag $tag)
     {
         try {

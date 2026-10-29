@@ -22,7 +22,7 @@ export default class extends Controller {
         if (!window.confirm(this.messagesValue.confirm)) {
             return;
         }
-        $.ajax({ url: this.url('delete', id), type: 'GET' })
+        $.ajax({ url: this.url('delete', id), type: 'POST' })
             .done(() => {
                 if (parent) {
                     $('.children-list').load(this.url('children', parent));

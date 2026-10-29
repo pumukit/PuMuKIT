@@ -56,10 +56,10 @@ class SeriesStylesController extends AbstractController
         return ['styles' => $styles];
     }
 
-    #[Route('/create', name: 'pumukit_newadmin_series_styles_create')]
+    #[Route('/create', name: 'pumukit_newadmin_series_styles_create', methods: ['POST'])]
     public function createAction(Request $request): JsonResponse
     {
-        $name = trim($request->query->getString('name'));
+        $name = trim($request->request->getString('name'));
         if ('' === $name) {
             return new JsonResponse(['error'], JsonResponse::HTTP_BAD_REQUEST);
         }
@@ -76,7 +76,7 @@ class SeriesStylesController extends AbstractController
         return new JsonResponse(['success', 'id' => $style->getId()]);
     }
 
-    #[Route('/edit', name: 'pumukit_newadmin_series_styles_edit')]
+    #[Route('/edit', name: 'pumukit_newadmin_series_styles_edit', methods: ['POST'])]
     public function editAction(Request $request): JsonResponse
     {
         $id = $request->request->get('id');
@@ -97,7 +97,7 @@ class SeriesStylesController extends AbstractController
         return new JsonResponse(['success']);
     }
 
-    #[Route('/delete/{id}', name: 'pumukit_newadmin_series_styles_delete')]
+    #[Route('/delete/{id}', name: 'pumukit_newadmin_series_styles_delete', methods: ['POST'])]
     public function deleteAction(string $id): JsonResponse
     {
         $session = $this->requestStack->getSession();
