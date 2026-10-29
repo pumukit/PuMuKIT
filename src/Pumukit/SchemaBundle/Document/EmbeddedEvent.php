@@ -248,7 +248,7 @@ class EmbeddedEvent
         return $this->live;
     }
 
-    public function setLive(Live $live): void
+    public function setLive(?Live $live): void
     {
         $this->live = $live;
     }
@@ -258,7 +258,7 @@ class EmbeddedEvent
         return $this->url;
     }
 
-    public function setUrl(string $url): void
+    public function setUrl(?string $url): void
     {
         $this->url = $url;
     }

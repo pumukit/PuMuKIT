@@ -90,6 +90,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 - The places and precincts page returning a 500 when the `PLACES` root tag does not exist: it now explains the reason, and `pumukit:init:repo tag` creates the tag.
 - Statistics API endpoints (`/api/media/views*`, `/api/media/*/most_viewed`) failing with a 500 when called without `from_date` or `to_date`.
+- Cloning a live event without URL or without live channel failing with a 500.
 - Series and playlist lists of the backoffice failing with a 500 for the rest of the session after a search request without text.
 - Series styles without a name breaking the series styles page; creating a style now requires a name.
 - Backoffice requests without their required parameters (`ids`, parent tag) answering with a 500 instead of a 400.
