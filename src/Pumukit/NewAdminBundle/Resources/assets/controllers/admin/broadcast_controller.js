@@ -125,7 +125,7 @@ export default class extends Controller {
             .fail((xhr, textStatus, errorThrown) => window.no_success(`${errorThrown}: ${xhr.responseText}`))
             .done((response) => {
                 if (undefined !== response.descriptioni18n) {
-                    $(this.descriptionValue).html(response.descriptioni18n);
+                    $(this.descriptionValue).text(response.descriptioni18n);
                 }
                 window.success(this.messagesValue.saved);
             });

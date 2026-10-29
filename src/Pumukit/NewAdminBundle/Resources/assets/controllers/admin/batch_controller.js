@@ -222,7 +222,7 @@ export default class extends Controller {
         $.ajax({ url: this.urlsValue.promote, type: 'POST', data: { ids, profile: option.data('profile') } })
             .fail(() => window.no_success(this.message('promoteError')))
             .done(() => {
-                ids.forEach((id) => $(`#profile${id}`).html(option.data('profilename')));
+                ids.forEach((id) => $(`#profile${id}`).text(option.data('profilename')));
                 $(`.${this.nameValue}_checkbox:checked`).prop('checked', false);
                 window.success(this.message('promoted'));
             });

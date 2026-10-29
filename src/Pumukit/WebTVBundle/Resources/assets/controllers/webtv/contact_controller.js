@@ -12,7 +12,7 @@ export default class extends Controller {
             data: $(this.formTarget).serialize(),
         }).done((data) => {
             $(this.messageTarget)
-                .html(data.message)
+                .text(data.message)
                 .attr('class', data.success ? 'bg-success' : 'bg-warning')
                 .show()
                 .delay(5000)
