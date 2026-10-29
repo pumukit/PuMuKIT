@@ -344,7 +344,20 @@ only creates the tags that do not exist yet; it does not change the existing one
 docker compose exec php php bin/console pumukit:init:repo tag
 ```
 
-### B.7 Clear the cache
+### B.7 Build the daily view statistics
+
+The statistics panel reads daily summaries that every new view updates. Build them once from the
+views already stored in `ViewsLog` (after B.4, which creates their indexes). It processes one day
+at a time, can run while the platform is in use and, if it is stopped, continues from the last day
+built when it is run again:
+
+```bash
+docker compose exec php php bin/console pumukit:stats:rollup
+```
+
+As a reference, two million views (about 500 MB of `ViewsLog`) take less than a minute.
+
+### B.8 Clear the cache
 
 ```bash
 docker compose exec php php bin/console cache:clear

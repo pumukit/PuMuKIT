@@ -18,6 +18,9 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - `pumukit:check:assets` command to list bundle assets and PuMuKIT templates referenced by templates that no installed bundle provides, removed JavaScript globals still in use, and overridden portal layouts without the importmap.
 - Stimulus (`symfony/stimulus-bundle`) and `symfony/ux-translator`, with the importmap and the `pumukit` entrypoint declared by the CoreBundle; bundles register their controllers with `FrontendAssets::register()`.
 - Route smoke test (`make test-smoke`, also run by CI): requests every GET route with a full set of fixtures and fails on server errors, on GET requests that modify data and on route parameters it cannot resolve.
+- Statistics panel at `/admin/stats` for administrators and teachers: views and unique views, views over time compared with the previous period, origin (portal, embedded player, LMS, other websites), devices, day and hour heatmap and the most viewed videos and series, with the same panel for one series or one video. Teachers only see their own videos.
+- Read-only statistics REST API under `/api/v1/stats/` (API Platform), protected by the statistics permission and filtered by the user's scope.
+- Daily view statistics updated on every view, and the `pumukit:stats:rollup` command to build them from the existing `ViewsLog`, so that the statistics do not read the raw view log.
 
 #### Changed
 
@@ -89,6 +92,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Upload thumbnails, banners, materials, live event images and tracks through the Uppy Dashboard; the upload actions answer JSON on request and adding a track to an object without type no longer fails.
 - Update composer dependencies (gedmo/doctrine-extensions, php-cs-fixer, pagerfanta, knp-menu-bundle, twig extensions, etc.).
 - Enable the optional features by default: playlists and places menus, live event series autocomplete, backoffice button in the simplified inbox, portal menu statistics, unpublished warning and recursive inbox file counts. See UPGRADE-6.0.md.
+- Store the IP of each view truncated to its network and a daily visitor hash instead of the full IP.
 
 #### Fixed
 
@@ -127,6 +131,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - The metadata translation button of the backoffice i18n fields, which was never implemented: `TranslateController`, the `pumukitnewadmin_metadata_translate` route, the `pumukitnewadmin.translatecontroller` alias and the `pumukit_new_admin.metadata_translators` parameter.
 - The `pumukitnewadmin_seriespic_index` and `pumukitnewadmin_mmspic_index` routes, which pointed to controller actions that do not exist.
 - The unused `copy` routes of series, multimedia objects, series types, roles, people and live channels, with `AdminController::copyAction()` and the `cloneResource()` methods of `Person`, `Role` and `Live`.
+- The previous statistics pages (`pumukit_stats_series_index`, `pumukit_stats_mmobj_index`, the `Search`, `MostViewed` and `Views` templates and the `stats-ui--stats` controller), replaced by the statistics panel.
 - The `pumukitnewadmin_seriespic_show`, `pumukitnewadmin_mmspic_show`, `pumukitnewadmin_track_info` and `pumukitnewadmin_track_autocomplete` routes, which pointed to controller actions that do not exist.
 
 

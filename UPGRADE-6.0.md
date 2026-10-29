@@ -788,6 +788,30 @@ they pointed to actions that never existed.
 - `ConfController::PAELLA_*_CONFIG_FOLDER` constants are removed with the unused method that read
   them.
 
+## Statistics
+
+The statistics pages of StatsUIBundle are replaced by a single audience panel:
+
+- The panel is served at `/admin/stats` (route `pumukit_stats_index`) and the backoffice menu has
+  a single "Stats" entry. The `pumukit_stats_series_index` and `pumukit_stats_mmobj_index` routes
+  are removed; the detail routes `pumukit_stats_series_index_id` and
+  `pumukit_stats_mmobj_index_id` keep their paths. Users with the personal scope only see the
+  statistics of their own multimedia objects (owner or groups), also in the detail pages.
+- The templates `@PumukitStatsUI/Search/*`, `@PumukitStatsUI/MostViewed/*` and
+  `@PumukitStatsUI/Views/*` and the `stats-ui--stats` controller are removed.
+- The panel reads a new read-only REST API under `/api/v1/stats/` (`summary`, `timeline`,
+  `sources`, `devices`, `heatmap`, `top-videos`, `top-series`), protected by `ROLE_ACCESS_STATS`
+  and filtered by the user's scope. The previous `/api/media/*` endpoints are kept.
+- The API reads three new collections that every view updates: `ViewsDailyStats` (one document
+  per day and multimedia object), `ViewsDailyTotals` (one document per day) and
+  `ViewsDailyVisitor` (unique-view keys, expired after three days). Run
+  `pumukit:stats:rollup` once to build them from the existing `ViewsLog` (see the deployment
+  guide).
+- `ViewsLog` stores the IP truncated to its /24 (IPv4) or /48 (IPv6) network and a daily
+  `visitor` hash used to count unique views. Existing documents keep the full IP.
+- `Pumukit\StatsBundle\EventListener\Log` takes three new constructor arguments:
+  `VisitorAnonymizer`, `ViewsDailyStatsService` and a `LoggerInterface`.
+
 ## Backoffice menu builder
 
 `Pumukit\NewAdminBundle\Menu\Builder` is now a service with constructor injection instead of a
