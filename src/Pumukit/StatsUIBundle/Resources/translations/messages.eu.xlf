@@ -5,14 +5,6 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
-      <trans-unit id=".GJQzzX" resname="All History">
-        <source>All History</source>
-        <target state="translated">Historia osoa</target>
-      </trans-unit>
-      <trans-unit id="R080Li7" resname="Clear filter">
-        <source>Clear filter</source>
-        <target state="translated">Garbitu iragazkia</target>
-      </trans-unit>
       <trans-unit id="pUMCuZL" resname="Custom range">
         <source>Custom range</source>
         <target state="translated">Tarte pertsonalizatua</target>
@@ -20,14 +12,6 @@
       <trans-unit id="Y8P2gR1" resname="Date range">
         <source>Date range</source>
         <target state="translated">Data-tartea</target>
-      </trans-unit>
-      <trans-unit id="a2XYljR" resname="General Statistics for Objects (videos/audios)">
-        <source>General Statistics for Objects (videos/audios)</source>
-        <target state="translated">Objektuen estatistika orokorrak (bideoak/audioak)</target>
-      </trans-unit>
-      <trans-unit id="vrgy8Li" resname="General Statistics for Series">
-        <source>General Statistics for Series</source>
-        <target state="translated">Serieen estatistika orokorrak</target>
       </trans-unit>
       <trans-unit id="yZi_A3F" resname="Last 30 Days">
         <source>Last 30 Days</source>
@@ -41,37 +25,13 @@
         <source>Last Month</source>
         <target state="translated">Joan den hilabetea</target>
       </trans-unit>
-      <trans-unit id="kAlC6DR" resname="Most viewed objects (videos/audios)">
-        <source>Most viewed objects (videos/audios)</source>
-        <target state="translated">Objektu ikusienak (bideoak/audioak)</target>
-      </trans-unit>
       <trans-unit id="LKFwu7Y" resname="Most viewed series">
         <source>Most viewed series</source>
         <target state="translated">Serie ikusienak</target>
       </trans-unit>
-      <trans-unit id="Xx.1XXl" resname="Ranking">
-        <source>Ranking</source>
-        <target state="translated">Sailkapena</target>
-      </trans-unit>
-      <trans-unit id="zVBSIvK" resname="Record date">
-        <source>Record date</source>
-        <target state="translated">Grabazio-data</target>
-      </trans-unit>
       <trans-unit id="wsKMxiJ" resname="Search by title">
         <source>Search by title</source>
         <target state="translated">Bilatu izenburuaren arabera</target>
-      </trans-unit>
-      <trans-unit id="Fd0gG5T" resname="Set URL parameters">
-        <source>Set URL parameters</source>
-        <target state="translated">Ezarri URLaren parametroak</target>
-      </trans-unit>
-      <trans-unit id="oDlzvE9" resname="Statistics of the object">
-        <source>Statistics of the object</source>
-        <target state="translated">Objektuaren estatistikak</target>
-      </trans-unit>
-      <trans-unit id="0a9mxR_" resname="Statistics of the series">
-        <source>Statistics of the series</source>
-        <target state="translated">Seriearen estatistikak</target>
       </trans-unit>
       <trans-unit id="VZeaizw" resname="This Month">
         <source>This Month</source>
@@ -81,25 +41,157 @@
         <source>This Year</source>
         <target state="translated">Urte hau</target>
       </trans-unit>
-      <trans-unit id="TWnDR16" resname="Total Objects">
-        <source>Total Objects</source>
-        <target state="translated">Objektuak guztira</target>
-      </trans-unit>
-      <trans-unit id="MpLugAd" resname="Total views in the date">
-        <source>Total views in the date</source>
-        <target state="translated">Ikustaldiak guztira data horretan</target>
-      </trans-unit>
-      <trans-unit id="NNdl4I_" resname="Views by time period">
-        <source>Views by time period</source>
-        <target state="translated">Ikustaldiak denbora-tartearen arabera</target>
-      </trans-unit>
-      <trans-unit id="FF17MBL" resname="Views of this series objects">
-        <source>Views of this series objects</source>
-        <target state="translated">Serie honetako objektuen ikustaldiak</target>
-      </trans-unit>
       <trans-unit id="eR0TDJ." resname="Yesterday">
         <source>Yesterday</source>
         <target state="translated">Atzo</target>
+      </trans-unit>
+      <trans-unit id="MskYrQS" resname="Audience">
+        <source>Audience</source>
+        <target state="translated">Ikusleak</target>
+      </trans-unit>
+      <trans-unit id="JUdglpF" resname="Backoffice">
+        <source>Backoffice</source>
+        <target state="translated">Backoffice</target>
+      </trans-unit>
+      <trans-unit id="dqXKUFD" resname="Computer">
+        <source>Computer</source>
+        <target state="translated">Ordenagailua</target>
+      </trans-unit>
+      <trans-unit id="Zro6IAa" resname="Devices">
+        <source>Devices</source>
+        <target state="translated">Gailuak</target>
+      </trans-unit>
+      <trans-unit id="wIOieUZ" resname="Direct or app">
+        <source>Direct or app</source>
+        <target state="translated">Zuzena edo aplikazioa</target>
+      </trans-unit>
+      <trans-unit id="4BOxIU6" resname="Embedded player">
+        <source>Embedded player</source>
+        <target state="translated">Txertatutako erreproduzigailua</target>
+      </trans-unit>
+      <trans-unit id=".GY_tH2" resname="LMS (Moodle, LTI)">
+        <source>LMS (Moodle, LTI)</source>
+        <target state="translated">LMS (Moodle, LTI)</target>
+      </trans-unit>
+      <trans-unit id="IeY0oyp" resname="Last 12 months">
+        <source>Last 12 months</source>
+        <target state="translated">Azken 12 hilabeteak</target>
+      </trans-unit>
+      <trans-unit id="hqUn5pv" resname="Last 90 days">
+        <source>Last 90 days</source>
+        <target state="translated">Azken 90 egunak</target>
+      </trans-unit>
+      <trans-unit id="HM_Az6v" resname="Less">
+        <source>Less</source>
+        <target state="translated">Gutxiago</target>
+      </trans-unit>
+      <trans-unit id="7VItq_h" resname="Mobile">
+        <source>Mobile</source>
+        <target state="translated">Mugikorra</target>
+      </trans-unit>
+      <trans-unit id="o3vRjwz" resname="More">
+        <source>More</source>
+        <target state="translated">Gehiago</target>
+      </trans-unit>
+      <trans-unit id="26KxF89" resname="Multimedia object">
+        <source>Multimedia object</source>
+        <target state="translated">Multimedia objektua</target>
+      </trans-unit>
+      <trans-unit id="t29.VG." resname="No views in this period.">
+        <source>No views in this period.</source>
+        <target state="translated">Ez dago bisitarik aldi honetan.</target>
+      </trans-unit>
+      <trans-unit id="x1CGnmA" resname="Other websites">
+        <source>Other websites</source>
+        <target state="translated">Beste webguneak</target>
+      </trans-unit>
+      <trans-unit id="ndGQ3BK" resname="Portal">
+        <source>Portal</source>
+        <target state="translated">Ataria</target>
+      </trans-unit>
+      <trans-unit id="HAah4t4" resname="Previous period">
+        <source>Previous period</source>
+        <target state="translated">Aurreko aldia</target>
+      </trans-unit>
+      <trans-unit id="hTzkSUu" resname="Series with views">
+        <source>Series with views</source>
+        <target state="translated">Bisitak dituzten serieak</target>
+      </trans-unit>
+      <trans-unit id="dAvkOI4" resname="Tablet">
+        <source>Tablet</source>
+        <target state="translated">Tableta</target>
+      </trans-unit>
+      <trans-unit id="XaAcv5x" resname="The same visitor watching the same video on the same day counts once">
+        <source>The same visitor watching the same video on the same day counts once</source>
+        <target state="translated">Bisitari berak bideo bera egun berean ikusteak behin zenbatzen du</target>
+      </trans-unit>
+      <trans-unit id="A1tp30S" resname="The statistics could not be loaded.">
+        <source>The statistics could not be loaded.</source>
+        <target state="translated">Ezin izan dira estatistikak kargatu.</target>
+      </trans-unit>
+      <trans-unit id="mAI55J6" resname="This period">
+        <source>This period</source>
+        <target state="translated">Aldi hau</target>
+      </trans-unit>
+      <trans-unit id="swKwU_O" resname="Today">
+        <source>Today</source>
+        <target state="translated">Gaur</target>
+      </trans-unit>
+      <trans-unit id="EZ3IeZk" resname="Unique views">
+        <source>Unique views</source>
+        <target state="translated">Bisita bakarrak</target>
+      </trans-unit>
+      <trans-unit id="KEhkI6s" resname="Unknown">
+        <source>Unknown</source>
+        <target state="translated">Ezezaguna</target>
+      </trans-unit>
+      <trans-unit id="31cFeaa" resname="Videos with views">
+        <source>Videos with views</source>
+        <target state="translated">Bisitak dituzten bideoak</target>
+      </trans-unit>
+      <trans-unit id="uz5WMuM" resname="Videos without views">
+        <source>Videos without views</source>
+        <target state="translated">Bisitarik gabeko bideoak</target>
+      </trans-unit>
+      <trans-unit id="AV.6uIX" resname="View in the portal">
+        <source>View in the portal</source>
+        <target state="translated">Ikusi atarian</target>
+      </trans-unit>
+      <trans-unit id="9iw4kSu" resname="Views of the catalogue">
+        <source>Views of the catalogue</source>
+        <target state="translated">Katalogoaren bisitak</target>
+      </trans-unit>
+      <trans-unit id="9LVcegG" resname="Views over time">
+        <source>Views over time</source>
+        <target state="translated">Bisitak denboran zehar</target>
+      </trans-unit>
+      <trans-unit id="X_VOMB1" resname="When they watch">
+        <source>When they watch</source>
+        <target state="translated">Noiz ikusten den</target>
+      </trans-unit>
+      <trans-unit id="ib_hRQO" resname="Where they watch from">
+        <source>Where they watch from</source>
+        <target state="translated">Nondik ikusten den</target>
+      </trans-unit>
+      <trans-unit id="51ml9M5" resname="published, in this period">
+        <source>published, in this period</source>
+        <target state="translated">argitaratuak, aldi honetan</target>
+      </trans-unit>
+      <trans-unit id="_1mQdRX" resname="%count% views">
+        <source>%count% views</source>
+        <target state="translated">%count% bisita</target>
+      </trans-unit>
+      <trans-unit id="w0HaHnE" resname="Most viewed videos in the period">
+        <source>Most viewed videos in the period</source>
+        <target state="translated">Aldiko bideo ikusienak</target>
+      </trans-unit>
+      <trans-unit id="ajVnBn8" resname="Most viewed series in the period">
+        <source>Most viewed series in the period</source>
+        <target state="translated">Aldiko serie ikusienak</target>
+      </trans-unit>
+      <trans-unit id="b66jQQT" resname="of %published% published">
+        <source>of %published% published</source>
+        <target state="translated">%published% argitaratutatik</target>
       </trans-unit>
     </body>
   </file>

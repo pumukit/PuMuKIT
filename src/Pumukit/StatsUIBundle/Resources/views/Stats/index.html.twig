@@ -6,49 +6,227 @@
 {% endblock %}
 
 {% block body %}
-    {% set stats_modes = {
-        'pumukit_stats_series_index': 'series',
-        'pumukit_stats_mmobj_index': 'mmobj',
-        'pumukit_stats_series_index_id': 'series-id',
-        'pumukit_stats_mmobj_index_id': 'mmobj-id'
+    {% set reports = {
+        summary: path('_api_/stats/summary_get'),
+        timeline: path('_api_/stats/timeline_get'),
+        sources: path('_api_/stats/sources_get'),
+        devices: path('_api_/stats/devices_get'),
+        heatmap: path('_api_/stats/heatmap_get'),
+        topVideos: path('stats_top_videos'),
+        topSeries: path('stats_top_series')
     } %}
-    {% set stats_urls = {
-        seriesMostViewed: path('pumukit_stats_api_seriesmostviewed'),
-        mmobjMostViewed: path('pumukit_stats_api_mmobjmostviewed'),
-        multimediaObjects: path('pumukit_schema_api_multimediaobjects'),
-        views: path('pumukit_stats_api_views'),
-        viewsSeries: path('pumukit_stats_api_viewsseries'),
-        viewsMmobj: path('pumukit_stats_api_viewsmmobj'),
-        seriesStats: path('pumukit_stats_series_index_id', {'id': '__ID__'}),
-        mmobjStats: path('pumukit_stats_mmobj_index_id', {'id': '__ID__'}),
-        mmobjPortal: path('pumukit_webtv_multimediaobject_index', {'id': '__ID__'})
+    {% set links = {
+        series: path('pumukit_stats_series_index_id', {'id': '__ID__'}),
+        multimediaObject: path('pumukit_stats_mmobj_index_id', {'id': '__ID__'})
+    } %}
+    {% set common_messages = {
+        loadError: 'The statistics could not be loaded.'|trans,
+        empty: 'No views in this period.'|trans,
+        views: '%count% views'|trans,
+        previousPeriod: 'Previous period'|trans
     } %}
 
-    <div class="container-fluid"
-         data-controller="stats-ui--stats"
-         data-stats-ui--stats-mode-value="{{ stats_modes[app.request.attributes.get('_route')]|default('series') }}"
-         data-stats-ui--stats-id-value="{{ app.request.attributes.get('id')|default('') }}"
-         data-stats-ui--stats-locale-value="{{ app.request.getLocale() }}"
-         data-stats-ui--stats-page-value="{{ app.request.query.getInt('page') }}"
-         data-stats-ui--stats-urls-value="{{ stats_urls|json_encode }}">
+    <div class="container-fluid stats-panel"
+         data-controller="stats-ui--panel"
+         data-stats-reports="{{ reports|json_encode }}"
+         data-stats-links="{{ links|json_encode }}"
+         data-stats-series="{{ mode == 'series' ? subject.id : '' }}"
+         data-stats-multimedia-object="{{ mode == 'multimediaObject' ? subject.id : '' }}">
 
         <h3 class="cab_body_div">
             <ul class="breadcrumb">
-                <li class="active breadcrumb-item">{{ template_title }}</li>
+                {% if subject %}
+                    <li class="breadcrumb-item"><a href="{{ path('pumukit_stats_index') }}">{% trans %}Stats{% endtrans %}</a></li>
+                    {% if mode == 'multimediaObject' %}
+                        <li class="breadcrumb-item"><a href="{{ path('pumukit_stats_series_index_id', {'id': subject.series.id}) }}">{{ subject.series.title|default('No title'|trans) }}</a></li>
+                    {% endif %}
+                    <li class="active breadcrumb-item">{{ subject.title|default('No title'|trans) }}</li>
+                {% else %}
+                    <li class="active breadcrumb-item">{% trans %}Stats{% endtrans %}</li>
+                {% endif %}
             </ul>
         </h3>
 
-        <div class="row block-search-and-views">
-            {% include "@PumukitStatsUI/Search/index.html.twig" %}
+        <div class="stats-toolbar">
+            <div class="stats-toolbar-title">
+                {% if mode == 'series' %}
+                    <span class="stats-eyebrow">{% trans %}Series{% endtrans %}</span>
+                    <h2>{{ subject.title|default('No title'|trans) }}</h2>
+                {% elseif mode == 'multimediaObject' %}
+                    <span class="stats-eyebrow">{% trans %}Multimedia object{% endtrans %}</span>
+                    <h2>
+                        {{ subject.title|default('No title'|trans) }}
+                        <a href="{{ path('pumukit_webtv_multimediaobject_index', {'id': subject.id}) }}" target="_blank" rel="noopener" class="stats-external" title="{% trans %}View in the portal{% endtrans %}"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    </h2>
+                {% else %}
+                    <span class="stats-eyebrow">{% trans %}Audience{% endtrans %}</span>
+                    <h2>{% trans %}Views of the catalogue{% endtrans %}</h2>
+                {% endif %}
+            </div>
+            <div class="stats-range" role="group" aria-label="{% trans %}Date range{% endtrans %}">
+                <select class="form-select" data-stats-ui--panel-target="preset" data-action="stats-ui--panel#preset" aria-label="{% trans %}Date range{% endtrans %}">
+                    <option value="today">{% trans %}Today{% endtrans %}</option>
+                    <option value="yesterday">{% trans %}Yesterday{% endtrans %}</option>
+                    <option value="last7">{% trans %}Last 7 Days{% endtrans %}</option>
+                    <option value="last30">{% trans %}Last 30 Days{% endtrans %}</option>
+                    <option value="last90">{% trans %}Last 90 days{% endtrans %}</option>
+                    <option value="thisMonth">{% trans %}This Month{% endtrans %}</option>
+                    <option value="lastMonth">{% trans %}Last Month{% endtrans %}</option>
+                    <option value="thisYear">{% trans %}This Year{% endtrans %}</option>
+                    <option value="last12">{% trans %}Last 12 months{% endtrans %}</option>
+                    <option value="">{% trans %}Custom range{% endtrans %}</option>
+                </select>
+                <input type="date" class="form-control" max="{{ 'now'|date('Y-m-d') }}" data-stats-ui--panel-target="from" data-action="change->stats-ui--panel#custom" aria-label="{% trans %}From{% endtrans %}">
+                <span class="stats-range-separator" aria-hidden="true">–</span>
+                <input type="date" class="form-control" max="{{ 'now'|date('Y-m-d') }}" data-stats-ui--panel-target="to" data-action="change->stats-ui--panel#custom" aria-label="{% trans %}Until{% endtrans %}">
+            </div>
         </div>
 
-        <div class="row block-stats-most-viewed">
-            {% include "@PumukitStatsUI/MostViewed/index.html.twig" %}
+        <div class="stats-kpis" data-controller="stats-ui--kpis" data-action="stats-ui:change@window->stats-ui--kpis#load"
+             data-stats-ui--kpis-messages-value="{{ (common_messages|merge({coverage: 'of %published% published'|trans}))|json_encode }}">
+            <div class="stats-kpi">
+                <div class="stats-kpi-label">{% trans %}Views{% endtrans %}</div>
+                <div class="stats-kpi-value" data-stats-ui--kpis-target="views">–</div>
+            </div>
+            <div class="stats-kpi">
+                <div class="stats-kpi-label" title="{% trans %}The same visitor watching the same video on the same day counts once{% endtrans %}">{% trans %}Unique views{% endtrans %}</div>
+                <div class="stats-kpi-value" data-stats-ui--kpis-target="uniqueViews">–</div>
+            </div>
+            {% if mode != 'multimediaObject' %}
+                <div class="stats-kpi">
+                    <div class="stats-kpi-label">{% trans %}Videos with views{% endtrans %}</div>
+                    <div class="stats-kpi-value" data-stats-ui--kpis-target="coverage">–</div>
+                    <div class="stats-kpi-aux" data-stats-ui--kpis-target="coverageDetail"></div>
+                </div>
+                <div class="stats-kpi">
+                    <div class="stats-kpi-label">{% trans %}Videos without views{% endtrans %}</div>
+                    <div class="stats-kpi-value" data-stats-ui--kpis-target="unviewed">–</div>
+                    <div class="stats-kpi-aux">{% trans %}published, in this period{% endtrans %}</div>
+                </div>
+            {% endif %}
+            {% if mode == 'overview' %}
+                <div class="stats-kpi">
+                    <div class="stats-kpi-label">{% trans %}Series with views{% endtrans %}</div>
+                    <div class="stats-kpi-value" data-stats-ui--kpis-target="series">–</div>
+                </div>
+            {% endif %}
         </div>
 
-        <div class="row block-views">
-            {% include "@PumukitStatsUI/Views/index.html.twig" %}
+        <div class="row">
+            <div class="col-lg-8">
+                <section class="stats-card">
+                    <header class="stats-card-header">
+                        <h3 class="stats-card-title">{% trans %}Views over time{% endtrans %}</h3>
+                    </header>
+                    <div class="stats-card-body stats-chart" data-controller="stats-ui--timeline" data-action="stats-ui:change@window->stats-ui--timeline#load"
+                         data-stats-ui--timeline-messages-value="{{ (common_messages|merge({current: 'This period'|trans}))|json_encode }}">
+                        <canvas data-stats-ui--timeline-target="canvas" role="img" aria-label="{% trans %}Views over time{% endtrans %}"></canvas>
+                        <p class="stats-state" data-stats-ui--timeline-target="state" hidden></p>
+                    </div>
+                </section>
+            </div>
+            <div class="col-lg-4">
+                <section class="stats-card">
+                    <header class="stats-card-header">
+                        <h3 class="stats-card-title">{% trans %}Where they watch from{% endtrans %}</h3>
+                    </header>
+                    <div class="stats-card-body" data-controller="stats-ui--bars" data-action="stats-ui:change@window->stats-ui--bars#load"
+                         data-stats-ui--bars-report-value="sources"
+                         data-stats-ui--bars-messages-value="{{ (common_messages|merge({labels: {
+                             portal: 'Portal'|trans,
+                             embed: 'Embedded player'|trans,
+                             lms: 'LMS (Moodle, LTI)'|trans,
+                             backoffice: 'Backoffice'|trans,
+                             external: 'Other websites'|trans,
+                             direct: 'Direct or app'|trans
+                         }}))|json_encode }}">
+                        <ul class="stats-bars stats-scroll" data-stats-ui--bars-target="list"></ul>
+                        <p class="stats-state" data-stats-ui--bars-target="state" hidden></p>
+                    </div>
+                </section>
+            </div>
         </div>
 
+        {% if mode != 'multimediaObject' %}
+            <div class="row">
+                <div class="{{ mode == 'overview' ? 'col-lg-6' : 'col-lg-12' }}">
+                    <section class="stats-card">
+                        <header class="stats-card-header">
+                            <h3 class="stats-card-title">{% trans %}Most viewed videos in the period{% endtrans %}</h3>
+                        </header>
+                        <div class="stats-card-body" data-controller="stats-ui--top" data-action="stats-ui:change@window->stats-ui--top#load"
+                             data-stats-ui--top-report-value="topVideos" data-stats-ui--top-link-value="multimediaObject"
+                             data-stats-ui--top-messages-value="{{ (common_messages|merge({untitled: 'No title'|trans}))|json_encode }}">
+                            <table class="table stats-top">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">{% trans %}Video{% endtrans %}</th>
+                                        <th scope="col" class="text-end">{% trans %}Views{% endtrans %}</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-stats-ui--top-target="body"></tbody>
+                            </table>
+                            <p class="stats-state" data-stats-ui--top-target="state" hidden></p>
+                        </div>
+                    </section>
+                </div>
+                {% if mode == 'overview' %}
+                    <div class="col-lg-6">
+                        <section class="stats-card">
+                            <header class="stats-card-header">
+                                <h3 class="stats-card-title">{% trans %}Most viewed series in the period{% endtrans %}</h3>
+                            </header>
+                            <div class="stats-card-body" data-controller="stats-ui--top" data-action="stats-ui:change@window->stats-ui--top#load"
+                                 data-stats-ui--top-report-value="topSeries" data-stats-ui--top-link-value="series"
+                                 data-stats-ui--top-messages-value="{{ (common_messages|merge({untitled: 'No title'|trans}))|json_encode }}">
+                                <table class="table stats-top">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">{% trans %}Series{% endtrans %}</th>
+                                            <th scope="col" class="text-end">{% trans %}Views{% endtrans %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-stats-ui--top-target="body"></tbody>
+                                </table>
+                                <p class="stats-state" data-stats-ui--top-target="state" hidden></p>
+                            </div>
+                        </section>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-lg-8">
+                <section class="stats-card">
+                    <header class="stats-card-header">
+                        <h3 class="stats-card-title">{% trans %}When they watch{% endtrans %}</h3>
+                    </header>
+                    <div class="stats-card-body" data-controller="stats-ui--heatmap" data-action="stats-ui:change@window->stats-ui--heatmap#load"
+                         data-stats-ui--heatmap-messages-value="{{ (common_messages|merge({less: 'Less'|trans, more: 'More'|trans}))|json_encode }}">
+                        <div class="stats-heatmap" data-stats-ui--heatmap-target="grid"></div>
+                        <p class="stats-state" data-stats-ui--heatmap-target="state" hidden></p>
+                    </div>
+                </section>
+            </div>
+            <div class="col-lg-4">
+                <section class="stats-card">
+                    <header class="stats-card-header">
+                        <h3 class="stats-card-title">{% trans %}Devices{% endtrans %}</h3>
+                    </header>
+                    <div class="stats-card-body" data-controller="stats-ui--bars" data-action="stats-ui:change@window->stats-ui--bars#load"
+                         data-stats-ui--bars-report-value="devices"
+                         data-stats-ui--bars-messages-value="{{ (common_messages|merge({labels: {
+                             desktop: 'Computer'|trans,
+                             mobile: 'Mobile'|trans,
+                             tablet: 'Tablet'|trans,
+                             unknown: 'Unknown'|trans
+                         }}))|json_encode }}">
+                        <ul class="stats-bars stats-scroll" data-stats-ui--bars-target="list"></ul>
+                        <p class="stats-state" data-stats-ui--bars-target="state" hidden></p>
+                    </div>
+                </section>
+            </div>
+        </div>
     </div>
 {% endblock %}

@@ -2,45 +2,21 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
     <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
         <body>
-            <trans-unit id="afbae52a868d11e8adc0fa7ae01bbebc" resname="General Statistics for Series">
-                <source>General Statistics for Series</source>
-                <target>General Statistics for Series</target>
-            </trans-unit>
             <trans-unit id="afbae7a0868d11e8adc0fa7ae01bbebc" resname="Search by title">
                 <source>Search by title</source>
                 <target>Search by title</target>
-            </trans-unit>
-            <trans-unit id="afbae8e0868d11e8adc0fa7ae01bbebc" resname="Set URL parameters">
-                <source>Set URL parameters</source>
-                <target>Set URL parameters</target>
-            </trans-unit>
-            <trans-unit id="afbaecc8868d11e8adc0fa7ae01bbebc" resname="Clear filter">
-                <source>Clear filter</source>
-                <target>Clear filter</target>
             </trans-unit>
             <trans-unit id="afbaee08868d11e8adc0fa7ae01bbebc" resname="Date range">
                 <source>Date range</source>
                 <target>Date range</target>
             </trans-unit>
-            <trans-unit id="afbaef2a868d11e8adc0fa7ae01bbebc" resname="Toggle date range">
-                <source>Toggle date range</source>
-                <target>Toggle date range</target>
-            </trans-unit>
             <trans-unit id="afbaf042868d11e8adc0fa7ae01bbebc" resname="Most viewed series">
                 <source>Most viewed series</source>
                 <target>Most viewed series</target>
             </trans-unit>
-            <trans-unit id="afbaf15a868d11e8adc0fa7ae01bbebc" resname="Ranking">
-                <source>Ranking</source>
-                <target>Ranking</target>
-            </trans-unit>
             <trans-unit id="afbaf2a4868d11e8adc0fa7ae01bbebc" resname="Views">
                 <source>Views</source>
                 <target>Views</target>
-            </trans-unit>
-            <trans-unit id="afbaf3d0868d11e8adc0fa7ae01bbebc" resname="Views by time period">
-                <source>Views by time period</source>
-                <target>Views by time period</target>
             </trans-unit>
             <trans-unit id="afbaf808868d11e8adc0fa7ae01bbebc" resname="Total">
                 <source>Total</source>
@@ -53,38 +29,6 @@
             <trans-unit id="afbafa60868d11e8adc0fa7ae01bbebc" resname="Month">
                 <source>Month</source>
                 <target>Month</target>
-            </trans-unit>
-            <trans-unit id="af337620868e11e8adc0fa7ae01bbebc" resname="Statistics of the series">
-                <source>Statistics of the series</source>
-                <target>Statistics of the series</target>
-            </trans-unit>
-            <trans-unit id="af3378b4868e11e8adc0fa7ae01bbebc" resname="Views of this series objects">
-                <source>Views of this series objects</source>
-                <target>Views of this series objects</target>
-            </trans-unit>
-            <trans-unit id="af3379f4868e11e8adc0fa7ae01bbebc" resname="Record date">
-                <source>Record date</source>
-                <target>Record date</target>
-            </trans-unit>
-            <trans-unit id="175f25a0868f11e8adc0fa7ae01bbebc" resname="General Statistics for Objects (videos/audios)">
-                <source>General Statistics for Objects (videos/audios)</source>
-                <target>General Statistics for Objects (videos/audios)</target>
-            </trans-unit>
-            <trans-unit id="175f28ca868f11e8adc0fa7ae01bbebc" resname="Most viewed objects (videos/audios)">
-                <source>Most viewed objects (videos/audios)</source>
-                <target>Most viewed objects (videos/audios)</target>
-            </trans-unit>
-            <trans-unit id="94a7c3dc868f11e8adc0fa7ae01bbebc" resname="Statistics of the object">
-                <source>Statistics of the object</source>
-                <target>Statistics of the object</target>
-            </trans-unit>
-            <trans-unit id="30a4587ca5fd11e898d0529269fb1459" resname="Total views in the date">
-                <source>Total views in the date</source>
-                <target>Total views in the date</target>
-            </trans-unit>
-            <trans-unit id="30a45b1aa5fd11e898d0529269fb1459" resname="Total Objects">
-                <source>Total Objects</source>
-                <target>Total Objects</target>
             </trans-unit>
             <trans-unit id="4f9c60f0a61911e898d0529269fb1459" resname="Previous">
                 <source>Previous</source>
@@ -122,10 +66,6 @@
                 <source>This Year</source>
                 <target>This Year</target>
             </trans-unit>
-            <trans-unit id="6e222261c8658154df838723c6c7a621" resname="All History">
-                <source>All History</source>
-                <target>All History</target>
-            </trans-unit>
             <trans-unit id="5da618e8e4b89c66fe86e32cdafde142" resname="From">
                 <source>From</source>
                 <target>From</target>
@@ -133,6 +73,154 @@
             <trans-unit id="3728af837fe70019577ddb0ed7125ee5" resname="Until">
                 <source>Until</source>
                 <target>Until</target>
+            </trans-unit>
+            <trans-unit id="MskYrQS" resname="Audience">
+                <source>Audience</source>
+                <target>Audience</target>
+            </trans-unit>
+            <trans-unit id="JUdglpF" resname="Backoffice">
+                <source>Backoffice</source>
+                <target>Backoffice</target>
+            </trans-unit>
+            <trans-unit id="dqXKUFD" resname="Computer">
+                <source>Computer</source>
+                <target>Computer</target>
+            </trans-unit>
+            <trans-unit id="Zro6IAa" resname="Devices">
+                <source>Devices</source>
+                <target>Devices</target>
+            </trans-unit>
+            <trans-unit id="wIOieUZ" resname="Direct or app">
+                <source>Direct or app</source>
+                <target>Direct or app</target>
+            </trans-unit>
+            <trans-unit id="4BOxIU6" resname="Embedded player">
+                <source>Embedded player</source>
+                <target>Embedded player</target>
+            </trans-unit>
+            <trans-unit id=".GY_tH2" resname="LMS (Moodle, LTI)">
+                <source>LMS (Moodle, LTI)</source>
+                <target>LMS (Moodle, LTI)</target>
+            </trans-unit>
+            <trans-unit id="IeY0oyp" resname="Last 12 months">
+                <source>Last 12 months</source>
+                <target>Last 12 months</target>
+            </trans-unit>
+            <trans-unit id="hqUn5pv" resname="Last 90 days">
+                <source>Last 90 days</source>
+                <target>Last 90 days</target>
+            </trans-unit>
+            <trans-unit id="HM_Az6v" resname="Less">
+                <source>Less</source>
+                <target>Less</target>
+            </trans-unit>
+            <trans-unit id="7VItq_h" resname="Mobile">
+                <source>Mobile</source>
+                <target>Mobile</target>
+            </trans-unit>
+            <trans-unit id="o3vRjwz" resname="More">
+                <source>More</source>
+                <target>More</target>
+            </trans-unit>
+            <trans-unit id="26KxF89" resname="Multimedia object">
+                <source>Multimedia object</source>
+                <target>Multimedia object</target>
+            </trans-unit>
+            <trans-unit id="t29.VG." resname="No views in this period.">
+                <source>No views in this period.</source>
+                <target>No views in this period.</target>
+            </trans-unit>
+            <trans-unit id="x1CGnmA" resname="Other websites">
+                <source>Other websites</source>
+                <target>Other websites</target>
+            </trans-unit>
+            <trans-unit id="ndGQ3BK" resname="Portal">
+                <source>Portal</source>
+                <target>Portal</target>
+            </trans-unit>
+            <trans-unit id="HAah4t4" resname="Previous period">
+                <source>Previous period</source>
+                <target>Previous period</target>
+            </trans-unit>
+            <trans-unit id="hTzkSUu" resname="Series with views">
+                <source>Series with views</source>
+                <target>Series with views</target>
+            </trans-unit>
+            <trans-unit id="dAvkOI4" resname="Tablet">
+                <source>Tablet</source>
+                <target>Tablet</target>
+            </trans-unit>
+            <trans-unit id="XaAcv5x" resname="The same visitor watching the same video on the same day counts once">
+                <source>The same visitor watching the same video on the same day counts once</source>
+                <target>The same visitor watching the same video on the same day counts once</target>
+            </trans-unit>
+            <trans-unit id="A1tp30S" resname="The statistics could not be loaded.">
+                <source>The statistics could not be loaded.</source>
+                <target>The statistics could not be loaded.</target>
+            </trans-unit>
+            <trans-unit id="mAI55J6" resname="This period">
+                <source>This period</source>
+                <target>This period</target>
+            </trans-unit>
+            <trans-unit id="swKwU_O" resname="Today">
+                <source>Today</source>
+                <target>Today</target>
+            </trans-unit>
+            <trans-unit id="EZ3IeZk" resname="Unique views">
+                <source>Unique views</source>
+                <target>Unique views</target>
+            </trans-unit>
+            <trans-unit id="KEhkI6s" resname="Unknown">
+                <source>Unknown</source>
+                <target>Unknown</target>
+            </trans-unit>
+            <trans-unit id="31cFeaa" resname="Videos with views">
+                <source>Videos with views</source>
+                <target>Videos with views</target>
+            </trans-unit>
+            <trans-unit id="uz5WMuM" resname="Videos without views">
+                <source>Videos without views</source>
+                <target>Videos without views</target>
+            </trans-unit>
+            <trans-unit id="AV.6uIX" resname="View in the portal">
+                <source>View in the portal</source>
+                <target>View in the portal</target>
+            </trans-unit>
+            <trans-unit id="9iw4kSu" resname="Views of the catalogue">
+                <source>Views of the catalogue</source>
+                <target>Views of the catalogue</target>
+            </trans-unit>
+            <trans-unit id="9LVcegG" resname="Views over time">
+                <source>Views over time</source>
+                <target>Views over time</target>
+            </trans-unit>
+            <trans-unit id="X_VOMB1" resname="When they watch">
+                <source>When they watch</source>
+                <target>When they watch</target>
+            </trans-unit>
+            <trans-unit id="ib_hRQO" resname="Where they watch from">
+                <source>Where they watch from</source>
+                <target>Where they watch from</target>
+            </trans-unit>
+            <trans-unit id="51ml9M5" resname="published, in this period">
+                <source>published, in this period</source>
+                <target>published, in this period</target>
+            </trans-unit>
+            <trans-unit id="_1mQdRX" resname="%count% views">
+                <source>%count% views</source>
+                <target>%count% views</target>
+            </trans-unit>
+            <trans-unit id="w0HaHnE" resname="Most viewed videos in the period">
+                <source>Most viewed videos in the period</source>
+                <target>Most viewed videos in the period</target>
+            </trans-unit>
+            <trans-unit id="ajVnBn8" resname="Most viewed series in the period">
+                <source>Most viewed series in the period</source>
+                <target>Most viewed series in the period</target>
+            </trans-unit>
+            <trans-unit id="b66jQQT" resname="of %published% published">
+                <source>of %published% published</source>
+                <target>of %published% published</target>
             </trans-unit>
         </body>
     </file>

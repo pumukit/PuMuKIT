@@ -4,44 +4,58 @@ declare(strict_types=1);
 
 namespace Pumukit\StatsUIBundle\Controller;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Series;
+use Pumukit\StatsBundle\Services\StatsScope;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/admin/stats')]
 #[IsGranted('ROLE_ACCESS_STATS')]
 class StatsController extends AbstractController
 {
-    private $translator;
+    public function __construct(
+        private readonly DocumentManager $documentManager,
+        private readonly StatsScope $scope,
+    ) {}
 
-    public function __construct(TranslatorInterface $translator)
+    #[Route('', name: 'pumukit_stats_index')]
+    public function indexAction(): Response
     {
-        $this->translator = $translator;
+        return $this->render('@PumukitStatsUI/Stats/index.html.twig', [
+            'mode' => 'overview',
+            'subject' => null,
+        ]);
     }
 
-    #[Route('/series', name: 'pumukit_stats_series_index')]
-    #[Route('/objects', name: 'pumukit_stats_mmobj_index')]
     #[Route('/series/{id}', name: 'pumukit_stats_series_index_id')]
-    #[Route('/objects/{id}', name: 'pumukit_stats_mmobj_index_id')]
-    public function indexAction(Request $request): Response
+    public function seriesAction(string $id): Response
     {
-        $routeName = $request->attributes->get('_route');
-
-        if ('pumukit_stats_series_index' === $routeName) {
-            $title = 'General Statistics for Series';
-        } elseif ('pumukit_stats_mmobj_index' === $routeName) {
-            $title = 'General Statistics for Objects (videos/audios)';
-        } elseif ('pumukit_stats_series_index_id' === $routeName) {
-            $title = 'Statistics of the series';
-        } else {
-            $title = 'Statistics of the object';
+        $series = preg_match('/^[0-9a-f]{24}$/', $id) ? $this->documentManager->getRepository(Series::class)->find($id) : null;
+        if (!$series instanceof Series || !$this->scope->canSeeSeries($id)) {
+            throw $this->createNotFoundException();
         }
 
         return $this->render('@PumukitStatsUI/Stats/index.html.twig', [
-            'template_title' => $this->translator->trans($title),
+            'mode' => 'series',
+            'subject' => $series,
+        ]);
+    }
+
+    #[Route('/objects/{id}', name: 'pumukit_stats_mmobj_index_id')]
+    public function multimediaObjectAction(string $id): Response
+    {
+        $multimediaObject = preg_match('/^[0-9a-f]{24}$/', $id) ? $this->documentManager->getRepository(MultimediaObject::class)->find($id) : null;
+        if (!$multimediaObject instanceof MultimediaObject || !$this->scope->canSeeMultimediaObject($id)) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render('@PumukitStatsUI/Stats/index.html.twig', [
+            'mode' => 'multimediaObject',
+            'subject' => $multimediaObject,
         ]);
     }
 }

@@ -7,7 +7,10 @@ namespace Pumukit\StatsUIBundle\Tests\Controller;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
+use Pumukit\SchemaBundle\Services\FactoryService;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 /**
@@ -17,6 +20,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 class StatsControllerTest extends PumukitTestCase
 {
     private KernelBrowser $client;
+    private MultimediaObject $multimediaObject;
 
     public function setUp(): void
     {
@@ -25,52 +29,91 @@ class StatsControllerTest extends PumukitTestCase
         $this->dm = static::getContainer()->get('doctrine_mongodb.odm.document_manager');
         $this->clearBBDD();
 
+        $factory = static::getContainer()->get(FactoryService::class);
+        $series = $factory->createSeries(null, ['en' => 'Stats series']);
+        $this->multimediaObject = $factory->createMultimediaObject($series);
+        $this->multimediaObject->setTitle('Stats video', 'en');
+        $this->dm->flush();
+    }
+
+    #[DataProvider('modes')]
+    public function testThePanelIsConfiguredForEachMode(string $page, string $series, string $multimediaObject, int $topLists, int $kpis): void
+    {
+        $this->client->loginUser($this->user(['ROLE_SUPER_ADMIN', PermissionProfile::SCOPE_GLOBAL, 'ROLE_ACCESS_STATS']), 'pumukit');
+        $this->client->request('GET', $this->url($page));
+
+        $this->assertResponseIsSuccessful();
+        $panel = $this->client->getCrawler()->filter('[data-controller="stats-ui--panel"]');
+        $this->assertCount(1, $panel);
+        $this->assertSame($this->id($series), $panel->attr('data-stats-series'));
+        $this->assertSame($this->id($multimediaObject), $panel->attr('data-stats-multimedia-object'));
+        $this->assertSame('/api/v1/stats/summary', json_decode($panel->attr('data-stats-reports'), true)['summary']);
+        $this->assertCount($topLists, $panel->filter('[data-controller="stats-ui--top"]'));
+        $this->assertCount($kpis, $panel->filter('.stats-kpi'));
+        $this->assertCount(1, $panel->filter('[data-controller="stats-ui--timeline"] canvas'));
+        $this->assertCount(2, $panel->filter('[data-controller="stats-ui--bars"]'));
+        $this->assertCount(1, $panel->filter('[data-controller="stats-ui--heatmap"]'));
+    }
+
+    public static function modes(): iterable
+    {
+        yield 'overview' => ['/admin/stats', '', '', 2, 5];
+
+        yield 'one series' => ['/admin/stats/series/{series}', 'series', '', 1, 4];
+
+        yield 'one object' => ['/admin/stats/objects/{mm}', '', 'mm', 0, 2];
+    }
+
+    public function testAPersonalUserCannotOpenTheStatsOfOtherObjects(): void
+    {
+        $this->client->loginUser($this->user([PermissionProfile::SCOPE_PERSONAL, 'ROLE_ACCESS_STATS']), 'pumukit');
+
+        $this->client->request('GET', $this->url('/admin/stats/objects/{mm}'));
+        $this->assertResponseStatusCodeSame(404);
+
+        $this->client->request('GET', $this->url('/admin/stats/series/{series}'));
+        $this->assertResponseStatusCodeSame(404);
+
+        $this->client->request('GET', '/admin/stats');
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testUnknownIdsAreNotFound(): void
+    {
+        $this->client->loginUser($this->user(['ROLE_SUPER_ADMIN', 'ROLE_ACCESS_STATS']), 'pumukit');
+
+        $this->client->request('GET', '/admin/stats/objects/5f0000000000000000000002');
+        $this->assertResponseStatusCodeSame(404);
+
+        $this->client->request('GET', '/admin/stats/series/not-an-id');
+        $this->assertResponseStatusCodeSame(404);
+    }
+
+    private function url(string $page): string
+    {
+        return str_replace(['{series}', '{mm}'], [$this->id('series'), $this->id('mm')], $page);
+    }
+
+    private function id(string $which): string
+    {
+        return match ($which) {
+            'series' => (string) $this->multimediaObject->getSeries()->getId(),
+            'mm' => (string) $this->multimediaObject->getId(),
+            default => '',
+        };
+    }
+
+    private function user(array $roles): User
+    {
         $user = new User();
-        $user->setUsername('statsadmin');
-        $user->setEmail('statsadmin@pumukit.local');
+        $user->setUsername('stats-'.md5(implode(',', $roles)));
+        $user->setEmail('stats@pumukit.local');
         $user->setPassword('unused');
         $user->setEnabled(true);
-        $user->setRoles(['ROLE_SUPER_ADMIN', 'ROLE_SCOPE_GLOBAL', 'ROLE_ACCESS_STATS']);
+        $user->setRoles($roles);
         $this->dm->persist($user);
         $this->dm->flush();
 
-        $this->client->loginUser($user, 'pumukit');
-    }
-
-    #[DataProvider('statsPages')]
-    public function testThePageIsConfiguredThroughTheStatsController(string $uri, string $mode, string $id): void
-    {
-        $crawler = $this->client->request('GET', $uri);
-
-        $this->assertResponseIsSuccessful();
-        $root = $crawler->filter('[data-controller="stats-ui--stats"]');
-        $this->assertCount(1, $root);
-        $this->assertSame($mode, $root->attr('data-stats-ui--stats-mode-value'));
-        $this->assertSame($id, $root->attr('data-stats-ui--stats-id-value'));
-
-        $urls = json_decode((string) $root->attr('data-stats-ui--stats-urls-value'), true, 512, JSON_THROW_ON_ERROR);
-        $this->assertSame('/admin/stats/series/__ID__', $urls['seriesStats']);
-        $this->assertSame('/api/media/views', $urls['views']);
-
-        $this->assertCount(1, $root->filter('input[type="date"][data-stats-ui--stats-target="from"]'));
-        $this->assertCount(1, $root->filter('input[type="date"][data-stats-ui--stats-target="to"]'));
-        $this->assertCount(str_ends_with($mode, '-id') ? 1 : 0, $root->filter('select[data-stats-ui--stats-target="preset"] option[value="all"]'));
-        $this->assertStringNotContainsString('daterangepicker.min.js', (string) $this->client->getResponse()->getContent());
-        $this->assertStringNotContainsString('moment-with-locales', (string) $this->client->getResponse()->getContent());
-        $this->assertCount(3, $root->filter('[data-stats-ui--stats-target="group"]'));
-        $this->assertCount('mmobj-id' === $mode ? 1 : 0, $root->filter('template[data-stats-ui--stats-target="previewTemplate"]'));
-        $this->assertCount('mmobj-id' === $mode ? 0 : 1, $root->filter('canvas[data-stats-ui--stats-target="mostViewedChart"]'));
-        $this->assertCount('mmobj-id' === $mode ? 0 : 1, $root->filter('[data-stats-ui--stats-target="title"]'));
-        $this->assertStringNotContainsString('nv.addGraph', (string) $this->client->getResponse()->getContent());
-    }
-
-    public static function statsPages(): array
-    {
-        return [
-            'series' => ['/admin/stats/series', 'series', ''],
-            'objects' => ['/admin/stats/objects', 'mmobj', ''],
-            'one series' => ['/admin/stats/series/5f0000000000000000000001', 'series-id', '5f0000000000000000000001'],
-            'one object' => ['/admin/stats/objects/5f0000000000000000000002', 'mmobj-id', '5f0000000000000000000002'],
-        ];
+        return $user;
     }
 }
