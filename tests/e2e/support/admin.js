@@ -42,9 +42,10 @@ export async function openMultimediaObject(page, seriesId, text) {
     const row = page.locator('tr', { hasText: text });
     await expect(row).toHaveCount(1);
     const id = await row.locator('input[type=checkbox]').getAttribute('id');
+    const editor = page.waitForResponse((response) => new URL(response.url()).pathname === `/admin/mms/${id}/edit` && response.ok());
     await row.locator('td', { hasText: text }).click();
+    await editor;
     await expect(page.locator('#mm_id_pub')).toHaveValue(id);
-    await page.waitForLoadState('networkidle');
 
     return id;
 }
