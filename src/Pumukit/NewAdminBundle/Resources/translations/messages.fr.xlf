@@ -3913,6 +3913,14 @@
         <source>Reject/report of publication in my name</source>
         <target state="needs-translation">Reject/report of publication in my name</target>
       </trans-unit>
+      <trans-unit id="rjCoOwQ" resname="Do you want to stop being an owner of the following multimedia object?">
+        <source>Do you want to stop being an owner of the following multimedia object?</source>
+        <target state="needs-translation">Do you want to stop being an owner of the following multimedia object?</target>
+      </trans-unit>
+      <trans-unit id="rjCoOwB" resname="Reject being an owner">
+        <source>Reject being an owner</source>
+        <target state="needs-translation">Reject being an owner</target>
+      </trans-unit>
       <trans-unit id="ge0Gbk8" resname="You've been deleted as owner of the following multimedia object">
         <source>You've been deleted as owner of the following multimedia object</source>
         <target state="needs-translation">You've been deleted as owner of the following multimedia object</target>

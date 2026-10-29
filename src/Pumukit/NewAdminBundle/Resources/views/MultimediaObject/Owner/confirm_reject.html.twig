@@ -1,0 +1,22 @@
+{% extends '@PumukitNewAdmin/layout.html.twig' %}
+{% block body %}
+    <div class="well text-center">
+        <h2>{% trans %}Reject/report of publication in my name{% endtrans %}</h2>
+        <p>{% trans %}Do you want to stop being an owner of the following multimedia object?{% endtrans %}</p>
+        <ul class="pmk-list-style-type-none">
+            <li>
+                <strong>{% trans %}Multimedia Object Id{% endtrans %}:</strong> {{ multimedia_object_id }}
+            </li>
+            <li>
+                <strong>{% trans %}Title{% endtrans %}:</strong> {{ multimedia_object_title }}
+            </li>
+            <li>
+                <strong>{% trans %}i18n.one.Series{% endtrans %}:</strong> {{ series_title }}
+            </li>
+        </ul>
+        <form method="post" action="{{ app.request.pathInfo }}">
+            <a class="btn btn-default" href="{{ path('pumukitnewadmin_series_index') }}">{% trans %}Cancel{% endtrans %}</a>
+            <button type="submit" class="btn btn-pumukit">{% trans %}Reject being an owner{% endtrans %}</button>
+        </form>
+    </div>
+{% endblock %}

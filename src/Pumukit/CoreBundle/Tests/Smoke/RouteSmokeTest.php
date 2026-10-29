@@ -31,7 +31,6 @@ final class RouteSmokeTest extends PumukitTestCase
     private const MODIFY_DATA_ON_GET = [
         'pumukit_live_chat_post' => 'H36',
         'pumukit_live_chat_basic_post' => 'H36',
-        'pumukit_multimedia_object_reject_co_owner' => 'H41',
     ];
 
     private const NOT_REQUESTED = [

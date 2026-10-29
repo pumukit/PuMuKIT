@@ -11,6 +11,7 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -37,10 +38,10 @@ class OwnerController extends AbstractController implements NewAdminControllerIn
         $this->templating = $templating;
     }
 
-    #[Route('/reject/{id}/owner/{owner}/coowner/{coOwner}', name: 'pumukit_multimedia_object_reject_co_owner')]
+    #[Route('/reject/{id}/owner/{owner}/coowner/{coOwner}', name: 'pumukit_multimedia_object_reject_co_owner', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
     #[Template('@PumukitNewAdmin/MultimediaObject/Owner/reject.html.twig')]
-    public function rejectCoOwnerAction(#[MapDocument(id: 'id')] MultimediaObject $multimediaObject, #[MapDocument(id: 'owner')] User $owner, #[MapDocument(id: 'coOwner')] User $coOwner)
+    public function rejectCoOwnerAction(Request $request, #[MapDocument(id: 'id')] MultimediaObject $multimediaObject, #[MapDocument(id: 'owner')] User $owner, #[MapDocument(id: 'coOwner')] User $coOwner)
     {
         $user = $this->getUser();
         $errorMessage = '';
@@ -59,6 +60,14 @@ class OwnerController extends AbstractController implements NewAdminControllerIn
 
         if (!$user || $this->wasUsedRejectedLink($multimediaObject, $coOwner) || !$this->multimediaObjectService->isUserOwner($user, $multimediaObject)) {
             return $this->renderErrorTemplate($errorMessage);
+        }
+
+        if (!$request->isMethod('POST')) {
+            return $this->render('@PumukitNewAdmin/MultimediaObject/Owner/confirm_reject.html.twig', [
+                'multimedia_object_id' => $multimediaObject->getId(),
+                'multimedia_object_title' => $multimediaObject->getTitle(),
+                'series_title' => $multimediaObject->getSeries()->getTitle(),
+            ]);
         }
 
         $multimediaObject = $this->ownerService->rejectCoOwnerFromMultimediaObject($multimediaObject, $user, $coOwner);
