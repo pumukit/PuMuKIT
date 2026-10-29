@@ -27,6 +27,7 @@ server {
     location ^~ /uploads {
         access_log off;
         add_header Cache-Control "public, max-age=86400";
+        add_header X-Content-Type-Options "nosniff" always;
     }
 
     # Bundles (Symfony assets)
