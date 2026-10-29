@@ -110,6 +110,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Backoffice requests without their required parameters (`ids`, parent tag) answering with a 500 instead of a 400.
 - User filters of the backoffice failing in debug mode when the saved criteria lacked the permission profile or the origin.
 - `pumukit_core.full_magic_url` was ignored and always behaved as enabled because of a broken parameter reference.
+- The "Content from same Series" block listed the hidden multimedia objects of the series with their magic URLs when the `Referer` header contained `magic`; it now only does so on a magic URL page or when coming from the magic URL of the series.
 - Several Symfony 6 runtime issues in the backoffice menu, the web profiler and the pagination adapters.
 - Security advisories in `guzzlehttp/guzzle`, `guzzlehttp/psr7` and `api-platform/core`.
 - Media API endpoint failing on multimedia objects whose metadata was stored as a JSON array.

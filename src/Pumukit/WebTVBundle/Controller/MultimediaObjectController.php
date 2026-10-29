@@ -211,14 +211,9 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
             }
         }
 
-        $relatedLink = false;
-        if ($referer) {
-            $relatedLink = strpos($referer, 'magic');
-        }
-
         $multimediaObjectMagicUrl = $request->attributes->get('magicUrl', false);
 
-        $showMagicUrl = ($fromSecret || $relatedLink || $multimediaObjectMagicUrl);
+        $showMagicUrl = ($fromSecret || $multimediaObjectMagicUrl);
         $fullMagicUrl = $this->getMagicUrlConfiguration();
         $status = ($showMagicUrl && $fullMagicUrl) ? [MultimediaObject::STATUS_PUBLISHED, MultimediaObject::STATUS_HIDDEN] : [MultimediaObject::STATUS_PUBLISHED];
 

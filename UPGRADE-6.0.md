@@ -763,6 +763,12 @@ parameter reference that behaved as `true`. It now works and keeps its default o
 so access through a magic URL no longer lists the hidden multimedia objects of the series
 unless a project sets it to `true`.
 
+With `full_magic_url: true`, the "Content from same Series" block of a video page lists
+the hidden multimedia objects only on a magic URL page or when the visitor comes from the
+magic URL of the series. It no longer trusts a `Referer` header that merely contains `magic`,
+so going from a magic URL page to a published video of the series shows only the published
+ones.
+
 ## Removed metadata translation
 
 The metadata translation button of the i18n fields was never implemented and is removed:
