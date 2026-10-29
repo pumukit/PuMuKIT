@@ -77,7 +77,10 @@ class ViewsLog
     #[MongoDB\Field(type: 'string')]
     private $user;
 
-    public function __construct($url, $ip, $userAgent, $referer, $multimediaObject, $series, $track, $user = null)
+    #[MongoDB\Field(type: 'string')]
+    private $visitor;
+
+    public function __construct($url, $ip, $userAgent, $referer, $multimediaObject, $series, $track, $user = null, ?string $visitor = null)
     {
         $this->date = new \DateTime('now');
         $this->url = $url;
@@ -88,6 +91,12 @@ class ViewsLog
         $this->series = $series;
         $this->track = $track;
         $this->user = $user;
+        $this->visitor = $visitor;
+    }
+
+    public function getVisitor(): ?string
+    {
+        return $this->visitor;
     }
 
     /**

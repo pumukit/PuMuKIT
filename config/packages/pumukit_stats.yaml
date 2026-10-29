@@ -17,6 +17,13 @@ services:
     tags:
       - { name: "kernel.event_listener", event: "multimediaobject.view", method: "onMultimediaObjectViewed" }
 
+  Pumukit\StatsBundle\Services\ViewsDailyStatsService: ~
+  Pumukit\StatsBundle\Services\ViewClassifier:
+    arguments:
+      $frontendHost: '%router.request_context.host%'
+  Pumukit\StatsBundle\Services\VisitorAnonymizer:
+    arguments:
+      $secret: '%kernel.secret%'
   Pumukit\StatsBundle\Services\StatsService:
     class: Pumukit\StatsBundle\Services\StatsService
     arguments:

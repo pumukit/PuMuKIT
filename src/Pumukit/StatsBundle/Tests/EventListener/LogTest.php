@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Pumukit\StatsBundle\Tests\EventListener;
 
+use MongoDB\BSON\ObjectId;
 use PHPUnit\Framework\Attributes\CoversNothing;
+use Psr\Log\NullLogger;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
@@ -16,8 +18,12 @@ use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
+use Pumukit\StatsBundle\Document\ViewsDailyStats;
+use Pumukit\StatsBundle\Document\ViewsDailyTotals;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Pumukit\StatsBundle\EventListener\Log;
+use Pumukit\StatsBundle\Services\ViewsDailyStatsService;
+use Pumukit\StatsBundle\Services\VisitorAnonymizer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -56,17 +62,44 @@ class LogTest extends PumukitTestCase
     public function testonMultimediaObjectViewed()
     {
         $requestStack = $this->createMockRequestStack();
-        $service = new Log($this->dm, $requestStack, $this->tokenStorage);
+        $service = new Log($this->dm, $requestStack, $this->tokenStorage, new VisitorAnonymizer('secret'), static::getContainer()->get(ViewsDailyStatsService::class), new NullLogger());
 
         $event = $this->createEvent();
         $service->onMultimediaObjectViewed($event);
         static::assertCount(1, $this->repo->findAll());
+
+        $log = $this->repo->findAll()[0];
+        static::assertSame('203.0.113.0', $log->getIp());
+        static::assertMatchesRegularExpression('/^[0-9a-f]{20}$/', $log->getVisitor());
+    }
+
+    public function testTheDailyStatsCountEveryViewAndEachVisitorOnce(): void
+    {
+        $event = $this->createEvent();
+        foreach (['http://localhost/video/1', 'http://localhost/iframe/1'] as $referer) {
+            $request = Request::create('/', 'GET', [], [], [], ['REMOTE_ADDR' => '203.0.113.42', 'HTTP_REFERER' => $referer, 'HTTP_USER_AGENT' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) Mobile/15E148']);
+            $requestStack = $this->createStub(RequestStack::class);
+            $requestStack->method('getMainRequest')->willReturn($request);
+            (new Log($this->dm, $requestStack, $this->tokenStorage, new VisitorAnonymizer('secret'), static::getContainer()->get(ViewsDailyStatsService::class), new NullLogger()))->onMultimediaObjectViewed($event);
+        }
+
+        $stats = $this->dm->getDocumentCollection(ViewsDailyStats::class)->findOne(['multimediaObject' => new ObjectId($event->getMultimediaObject()->getId())]);
+        static::assertSame(2, $stats['views']);
+        static::assertSame(1, $stats['uniqueViews']);
+        static::assertSame(1, $stats['sources']['portal']);
+        static::assertSame(1, $stats['sources']['embed']);
+        static::assertSame(2, $stats['devices']['mobile']);
+        static::assertSame(2, array_sum((array) $stats['hours']));
+
+        $totals = $this->dm->getDocumentCollection(ViewsDailyTotals::class)->findOne([]);
+        static::assertSame(2, $totals['views']);
+        static::assertSame(1, $totals['uniqueViews']);
     }
 
     public function testonMultimediaObjectWithoutTrackViewed()
     {
         $requestStack = $this->createMockRequestStack();
-        $service = new Log($this->dm, $requestStack, $this->tokenStorage);
+        $service = new Log($this->dm, $requestStack, $this->tokenStorage, new VisitorAnonymizer('secret'), static::getContainer()->get(ViewsDailyStatsService::class), new NullLogger());
 
         $event = $this->createEvent(false);
         $service->onMultimediaObjectViewed($event);
@@ -75,7 +108,7 @@ class LogTest extends PumukitTestCase
 
     private function createMockRequestStack()
     {
-        $request = Request::create('/');
+        $request = Request::create('/', 'GET', [], [], [], ['REMOTE_ADDR' => '203.0.113.42']);
         $requestStack = $this->getMockBuilder(RequestStack::class)->getMock();
         $requestStack->expects(static::once())->method('getMainRequest')->willReturn($request);
 

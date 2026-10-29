@@ -23,6 +23,9 @@ use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\StatsBundle\Document\ViewsAggregation;
+use Pumukit\StatsBundle\Document\ViewsDailyStats;
+use Pumukit\StatsBundle\Document\ViewsDailyTotals;
+use Pumukit\StatsBundle\Document\ViewsDailyVisitor;
 use Pumukit\StatsBundle\Document\ViewsLog;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -77,6 +80,9 @@ class PumukitTestCase extends WebTestCase
         $this->dm->getDocumentCollection(User::class)->deleteMany([]);
         $this->dm->getDocumentCollection(ViewsAggregation::class)->deleteMany([]);
         $this->dm->getDocumentCollection(ViewsLog::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(ViewsDailyStats::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(ViewsDailyVisitor::class)->deleteMany([]);
+        $this->dm->getDocumentCollection(ViewsDailyTotals::class)->deleteMany([]);
         $this->dm->flush();
     }
 
