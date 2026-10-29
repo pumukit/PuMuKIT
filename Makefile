@@ -2,7 +2,7 @@
         cc cc-envs ai \
         composer composer-install composer-update composer-validate fixtures \
         test-all test test-lint-yaml test-lint-twig test-lint-xliff test-lint-generic \
-        test-php-cs-fixer test-php-stan test-rector fix-test-perms \
+        test-php-cs-fixer test-php-stan test-rector fix-test-perms test-e2e test-e2e-down \
         integration integration-tests integration-clean \
         shell php-shell ps logs
 
@@ -12,6 +12,7 @@ DOCKER_COMP = docker compose
 
 DC_BASE = $(DOCKER_COMP) -f docker-compose.yml
 DC_TEST = $(DOCKER_COMP) -f docker-compose.test.yml
+DC_E2E = $(DOCKER_COMP) -f docker-compose.yml -f docker-compose.e2e.yml
 
 # Run a command in the php service: reuse the running container if the stack is up,
 # otherwise spin up an ephemeral one that is removed afterwards (--rm).
@@ -33,7 +34,7 @@ help:
 	@echo 'PuMuKIT makefile'
 	@echo ''
 	@echo 'Usage:'
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
+	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "    \033[36m%-22s\033[0m %s\n", $$1, $$2}'
 
 up:
@@ -111,6 +112,15 @@ test-php-stan:
 
 test-rector:
 	$(call run_php_test,composer php-rector)
+
+test-e2e: ## Run the Playwright browser tests against an isolated stack (pumukit-e2e); extra Playwright options in ARGS
+	@$(DC_E2E) up -d --wait
+	@$(DC_E2E) exec -T php chown -R www-data:www-data var
+	@$(DC_E2E) exec -T --user www-data php bin/console pumukit:create:user admin mail@example.com admin >/dev/null 2>&1 || true
+	@$(DC_E2E) run --rm --user $$(id -u):$$(id -g) playwright sh -c 'npm ci --no-audit --no-fund --loglevel=error && npx playwright test $(ARGS)'
+
+test-e2e-down: ## Remove the end-to-end stack and its data
+	@$(DC_E2E) --profile e2e down -v --remove-orphans
 
 integration: ## Check core + dev-bundles together: composer, container, routes, lints, deprecations, PHPStan
 	$(call run_php,php bin/integration-check $(ARGS))

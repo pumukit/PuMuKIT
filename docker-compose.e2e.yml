@@ -1,0 +1,54 @@
+name: pumukit-e2e
+
+services:
+  php:
+    restart: "no"
+    environment:
+      TRUSTED_HOSTS: localhost|proxy
+      PUMUKIT_FRONTEND_HOST: proxy
+      MAILER_DSN: null://null
+    volumes:
+      - e2e-var:/srv/pumukit/var
+      - e2e-storage:/srv/pumukit/public/storage
+      - e2e-uploads:/srv/pumukit/public/uploads
+    healthcheck:
+      test: ["CMD-SHELL", "grep -q 'php-fpm: master' /proc/1/cmdline"]
+      interval: 5s
+      timeout: 3s
+      retries: 120
+
+  proxy:
+    restart: "no"
+    ports: !reset []
+    volumes:
+      - e2e-storage:/srv/pumukit/public/storage
+      - e2e-uploads:/srv/pumukit/public/uploads
+
+  db:
+    restart: "no"
+    volumes: !reset []
+
+  redis:
+    restart: "no"
+
+  rabbitmq:
+    restart: "no"
+    volumes: !reset []
+
+  playwright:
+    image: mcr.microsoft.com/playwright:v1.64.1-noble
+    profiles: [e2e]
+    working_dir: /tests/e2e
+    environment:
+      BASE_URL: https://proxy
+      HOME: /tmp
+      CI: ${CI:-}
+    volumes:
+      - ./tests:/tests
+    depends_on:
+      - proxy
+
+volumes:
+  e2e-var: {}
+  e2e-storage: {}
+  e2e-uploads: {}
