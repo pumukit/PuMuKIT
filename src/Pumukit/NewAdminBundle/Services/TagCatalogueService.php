@@ -539,11 +539,7 @@ class TagCatalogueService
                 break;
 
             case 'series.id':
-                $text = $object->getSeries()->getId();
-                $route = $this->router->generate('pumukitnewadmin_mms_index', ['id' => $text]);
-                $text = "<a href='".$route."'>".(string) $text.'</a>';
-
-                break;
+                return $this->seriesLink($object, $object->getSeries()->getId());
 
             case 'title':
                 $text = $object->getTitle();
@@ -551,11 +547,7 @@ class TagCatalogueService
                 break;
 
             case 'seriesTitle':
-                $text = $object->getSeries()->getTitle();
-                $route = $this->router->generate('pumukitnewadmin_mms_index', ['id' => $object->getSeries()->getId()]);
-                $text = "<a href='".$route."'>".$text.'</a>';
-
-                break;
+                return $this->seriesLink($object, $object->getSeries()->getTitle());
 
             case 'subtitle':
                 $text = $object->getSubtitle();
@@ -663,7 +655,19 @@ class TagCatalogueService
                 $text = 'No data';
         }
 
-        return $text;
+        return $this->escape($text);
+    }
+
+    private function seriesLink(MultimediaObject $object, $text): string
+    {
+        $route = $this->router->generate('pumukitnewadmin_mms_index', ['id' => $object->getSeries()->getId()]);
+
+        return "<a href='".$this->escape($route)."'>".$this->escape($text).'</a>';
+    }
+
+    private function escape($text): string
+    {
+        return htmlspecialchars((string) $text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     }
 
     /**
@@ -744,7 +748,7 @@ class TagCatalogueService
         $text = '';
         foreach ($people as $person) {
             if ($person instanceof EmbeddedPerson) {
-                $text .= $person->getName()."\n";
+                $text .= $this->escape($person->getName())."\n";
             }
         }
 
