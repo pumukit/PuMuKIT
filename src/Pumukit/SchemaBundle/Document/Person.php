@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use Doctrine\ODM\MongoDB\Mapping\Attribute as MongoDB;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(operations: [new GetCollection(), new Get()], normalizationContext: ['groups' => ['person:read']])]
@@ -50,6 +51,7 @@ class Person implements PersonInterface
      */
     protected $locale = 'en';
 
+    #[Ignore]
     #[MongoDB\ReferenceOne(targetDocument: User::class, inversedBy: 'person', storeAs: 'id', cascade: ['persist'])]
     private $user;
 
