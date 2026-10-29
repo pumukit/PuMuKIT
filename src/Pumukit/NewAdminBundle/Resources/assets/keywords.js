@@ -19,7 +19,7 @@ class KeywordPool {
         try {
             const response = await fetch(this.url, { credentials: 'same-origin', headers: { Accept: 'application/json' } });
             const data = await response.json();
-            this.words = Object.values(data).map((item) => String(item?._id ?? '')).filter((word) => '' !== word);
+            this.words = (data.items ?? []).map((item) => String(item?.keyword ?? '')).filter((word) => '' !== word);
             this.store();
         } catch {
             this.words = [];

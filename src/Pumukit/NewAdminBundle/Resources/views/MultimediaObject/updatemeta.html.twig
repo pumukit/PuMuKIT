@@ -7,7 +7,7 @@
           data-action="submit->admin--meta-form#checkDates submit->admin--meta-form#hideRemember submit->admin--modal-form#submit change->admin--meta-form#changed admin--modal-form:saved->admin--meta-form#saved"
           data-admin--meta-form-remember-value="#remember_save_mm"
           data-admin--meta-form-prefix-value="pumukitnewadmin_mms_meta_"
-          data-admin--meta-form-keywords-value="{{ {mmobj: path('pumukit_schema_apikeywords_mmobj', {'_format': 'json'})}|json_encode }}"
+          data-admin--meta-form-keywords-value="{{ {mmobj: path('api_keywords_multimedia_objects')}|json_encode }}"
           data-admin--meta-form-dates-value="{{ {record: '#pumukitnewadmin_mms_meta_record_date', publication: '#pumukitnewadmin_mms_meta_public_date', message: 'Multimedia Object saved ERROR: Publication Date can not be lower than Recording Date.'|trans}|json_encode }}"
           data-admin--meta-form-title-value="{{ {source: '#pumukitnewadmin_mms_meta_i18n_title_' ~ app.request.getLocale(), target: '#inputMMTitle'}|json_encode }}"
           data-admin--modal-form-target-value="#list_mms"

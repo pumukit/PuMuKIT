@@ -9,7 +9,7 @@
           data-admin--modal-form-fail-message-value="{{ 'Series saved ERROR'|trans }}"
           data-admin--meta-form-remember-value="#remember_save_series"
           data-admin--meta-form-prefix-value="pumukitnewadmin_series_"
-          data-admin--meta-form-keywords-value="{{ {series: path('pumukit_schema_apikeywords_series', {'_format': 'json'})}|json_encode }}"
+          data-admin--meta-form-keywords-value="{{ {series: path('api_keywords_series')}|json_encode }}"
           action="{{ path('pumukitnewadmin_series_update', {'id': series.id}) }}" method="POST">
         {% form_theme form '@PumukitNewAdmin/Themes/fields.html.twig' %}
         <input type="hidden" name="id" id="series_id_updatemeta" value="{{ series.id }}">

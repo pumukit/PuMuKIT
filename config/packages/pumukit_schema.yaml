@@ -6,6 +6,9 @@ services:
     bind:
       $locales: '%pumukit.locales%'
 
+  Pumukit\SchemaBundle\State\:
+    resource: '../../src/Pumukit/SchemaBundle/State/'
+
   Pumukit\SchemaBundle\Controller\:
     resource: '../../src/Pumukit/SchemaBundle/Controller'
     tags: ['controller.service_arguments']
