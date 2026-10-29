@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\PaellaPlayerBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\CoreBundle\Controller\PersonalControllerInterface;
@@ -89,7 +90,7 @@ class PaellaRepositoryController extends AbstractController implements PersonalC
 
     #[Route('/paellaplaylist/{id}.{_format}', methods: ['GET'], defaults: ['_format' => 'json', 'no_channels' => true], requirements: ['_format' => 'json|xml'])]
     #[Route('/secret/paellaplaylist/{secret}.{_format}', methods: ['GET'], defaults: ['_format' => 'json', 'show_hide' => true, 'no_channels' => true], requirements: ['_format' => 'json|xml'])]
-    public function playlistAction(Request $request, Series $series): Response
+    public function playlistAction(Request $request, #[MapDocument(mapping: ['id' => 'id', 'secret' => 'secret'], stripNull: true)] Series $series): Response
     {
         $data = $this->playlistManifest->create($request->getHost(), $series, $request->query->getInt('videoPos') ?? 0, $request->getPathInfo());
         $response = $this->serializer->dataSerialize($data, $request->getRequestFormat());

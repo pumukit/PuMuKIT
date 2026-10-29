@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\BasePlayerBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Pumukit\BasePlayerBundle\Services\IntroService;
 use Pumukit\BasePlayerBundle\Services\ViewCounterService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -44,7 +45,7 @@ final class PlayerController extends BasePlayerController
     #[Route('/player/magic/{secret}', name: 'pumukit_player_magic_index')]
     #[Route('/iframe/player/magic/{secret}', name: 'pumukit_player_magic_index_iframe')]
     #[Template('@PumukitBasePlayer/player.html.twig')]
-    public function magicAction(Request $request, MultimediaObject $multimediaObject)
+    public function magicAction(Request $request, #[MapDocument(mapping: ['secret' => 'secret'])] MultimediaObject $multimediaObject)
     {
         return $this->doRender($request, $multimediaObject);
     }

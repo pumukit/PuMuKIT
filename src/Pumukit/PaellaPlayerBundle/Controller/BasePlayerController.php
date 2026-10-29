@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\PaellaPlayerBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Pumukit\BasePlayerBundle\Controller\BasePlayerController as BasePlayerAbstractController;
 use Pumukit\BasePlayerBundle\Services\IntroService;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
@@ -57,7 +58,7 @@ class BasePlayerController extends BasePlayerAbstractController
 
     #[Route('/videoplayer/magic/{secret}', name: 'pumukit_videoplayer_magicindex')]
     #[Template('@PumukitPaellaPlayer/PaellaPlayer/player.html.twig')]
-    public function magicAction(Request $request, MultimediaObject $multimediaObject)
+    public function magicAction(Request $request, #[MapDocument(mapping: ['secret' => 'secret'])] MultimediaObject $multimediaObject)
     {
         $secret = $request->attributes->get('secret') ?? $request->query->get('secret');
         if (!$secret) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pagerfanta\Pagerfanta;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
@@ -65,7 +66,7 @@ class SeriesController extends AbstractController implements WebTVControllerInte
     }
 
     #[Route('/series/magic/{secret}', name: 'pumukit_webtv_series_magicindex', defaults: ['show_hide' => true, 'broadcast' => false])]
-    public function magicIndexAction(Request $request, Series $series)
+    public function magicIndexAction(Request $request, #[MapDocument(mapping: ['secret' => 'secret'])] Series $series)
     {
         $request->attributes->set('noindex', true);
         $objects = $this->documentManager->getRepository(MultimediaObject::class)->createBuilderWithSeries(

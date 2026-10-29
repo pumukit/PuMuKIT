@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\WebTVBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\BasePlayerBundle\Services\IntroService;
 use Pumukit\BasePlayerBundle\Services\PlayerService;
@@ -128,7 +129,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
     }
 
     #[Route('/video/magic/{secret}', name: 'pumukit_webtv_multimediaobject_magicindex', defaults: ['show_hide' => true])]
-    public function magicIndexAction(Request $request, MultimediaObject $multimediaObject)
+    public function magicIndexAction(Request $request, #[MapDocument(mapping: ['secret' => 'secret'])] MultimediaObject $multimediaObject)
     {
         if ($this->multimediaObjectService->isPublished($multimediaObject, PumukitWebTVBundle::WEB_TV_TAG)) {
             if ($this->multimediaObjectService->hasPlayableResource($multimediaObject) && $multimediaObject->isPublicEmbeddedBroadcast()) {
@@ -173,7 +174,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
     }
 
     #[Route('/iframe/magic/{secret}', name: 'pumukit_webtv_multimediaobject_magiciframe', defaults: ['show_hide' => true])]
-    public function magicIframeAction(Request $request, MultimediaObject $multimediaObject): Response
+    public function magicIframeAction(Request $request, #[MapDocument(mapping: ['secret' => 'secret'])] MultimediaObject $multimediaObject): Response
     {
         $thumbnailUrl = $this->picService->getFirstUrlPic($multimediaObject, true, true);
 
@@ -185,7 +186,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
     }
 
     #[Route('/player_iframe/magic/{secret}', name: 'pumukit_webtv_multimediaobject_player_magiciframe', defaults: ['show_hide' => true])]
-    public function magicPlayerIframeAction(Request $request, MultimediaObject $multimediaObject): Response
+    public function magicPlayerIframeAction(Request $request, #[MapDocument(mapping: ['secret' => 'secret'])] MultimediaObject $multimediaObject): Response
     {
         $playerController = $this->playerService->getMagicControllerPlayer($multimediaObject);
 

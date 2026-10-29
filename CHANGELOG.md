@@ -94,6 +94,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Deleting a place that is in use answering with a 500 instead of a conflict.
 - `/api/user/users` failing with a circular reference when serializing the user's person.
 - Backoffice and inbox requests without required parameters or with unknown ids (wizard server upload, people autocomplete, track thumbnail, group resources, inbox folder, Paella configuration, external player, new multimedia object) answering with a 500 instead of a 400 or 404.
+- Deprecated Doctrine auto-mapping in the magic URL routes of the portal and the players: the documents are now mapped explicitly by `secret`.
 - Series and playlist lists of the backoffice failing with a 500 for the rest of the session after a search request without text.
 - Series styles without a name breaking the series styles page; creating a style now requires a name.
 - Backoffice requests without their required parameters (`ids`, parent tag) answering with a 500 instead of a 400.

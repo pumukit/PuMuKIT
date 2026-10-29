@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\PaellaPlayerBundle\Controller;
 
+use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\BasePlayerBundle\Controller\BasePlaylistController as BasePlaylistAbstractController;
@@ -43,7 +44,7 @@ class BasePlaylistController extends BasePlaylistAbstractController
 
     #[Route('/playlist/{id}', name: 'pumukit_playlistplayer_index', defaults: ['no_channels' => true])]
     #[Route('/playlist/magic/{secret}', name: 'pumukit_playlistplayer_magicindex', defaults: ['show_hide' => true, 'no_channels' => true])]
-    public function indexAction(Request $request, Series $series)
+    public function indexAction(Request $request, #[MapDocument(mapping: ['id' => 'id', 'secret' => 'secret'], stripNull: true)] Series $series)
     {
         return $this->redirectWithMmobj($series, $request, $request->query->get('videoId'), $request->query->get('videoPos'));
     }
