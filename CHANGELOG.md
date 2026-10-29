@@ -92,6 +92,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Series and playlist lists of the backoffice failing with a 500 for the rest of the session after a search request without text.
 - Series styles without a name breaking the series styles page; creating a style now requires a name.
 - Backoffice requests without their required parameters (`ids`, parent tag) answering with a 500 instead of a 400.
+- User filters of the backoffice failing in debug mode when the saved criteria lacked the permission profile or the origin.
 - `pumukit_core.full_magic_url` was ignored and always behaved as enabled because of a broken parameter reference.
 - Several Symfony 6 runtime issues in the backoffice menu, the web profiler and the pagination adapters.
 - Security advisories in `guzzlehttp/guzzle`, `guzzlehttp/psr7` and `api-platform/core`.

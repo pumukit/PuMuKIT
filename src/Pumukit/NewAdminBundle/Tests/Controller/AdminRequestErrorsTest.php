@@ -109,4 +109,11 @@ class AdminRequestErrorsTest extends PumukitTestCase
 
         yield 'tag reload' => ['/admin/mms/reloadtags'];
     }
+
+    public function testTheUserFiltersWorkWithPartialCriteria(): void
+    {
+        $this->client->request('GET', '/admin/user/', ['criteria' => ['username' => 'requests']]);
+
+        $this->assertResponseIsSuccessful();
+    }
 }

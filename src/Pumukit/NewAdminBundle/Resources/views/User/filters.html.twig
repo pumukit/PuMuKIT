@@ -36,9 +36,9 @@
                                 <label for="filters_profile" class="control-label">{% trans %}Permission Profile{% endtrans %}:</label>
                                 <div>
                                     <select class="form-control" name="criteria[permissionProfile]" id="filters_profile">
-                                        <option value="all" {% if criteria is null or criteria['permissionProfile'] == 'all' %}selected="selected"{% endif %}>{% trans %}All{% endtrans %}</option>
+                                        <option value="all" {% if criteria is null or criteria['permissionProfile']|default == 'all' %}selected="selected"{% endif %}>{% trans %}All{% endtrans %}</option>
                                         {% for profile in profiles %}
-                                            <option value="{{ profile.id }}" {% if criteria and criteria['permissionProfile'] == profile.id %}selected="selected"{% endif %}>{{ profile }}</option>
+                                            <option value="{{ profile.id }}" {% if criteria and criteria['permissionProfile']|default == profile.id %}selected="selected"{% endif %}>{{ profile }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -49,9 +49,9 @@
                                     <label for="filters_origin" class="control-label">{% trans %}Origin{% endtrans %}:</label>
                                     <div>
                                         <select class="form-control" name="criteria[origin]" id="filters_origin">
-                                            <option value="all" {% if criteria is null or criteria['origin'] == 'all' %}selected="selected"{% endif %}>{% trans %}All{% endtrans %}</option>
+                                            <option value="all" {% if criteria is null or criteria['origin']|default == 'all' %}selected="selected"{% endif %}>{% trans %}All{% endtrans %}</option>
                                             {% for origin in origins %}
-                                                <option value="{{ origin }}" {% if criteria and criteria['origin'] == origin %}selected="selected"{% endif %}>{{ origin }}</option>
+                                                <option value="{{ origin }}" {% if criteria and criteria['origin']|default == origin %}selected="selected"{% endif %}>{{ origin }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
