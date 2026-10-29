@@ -111,6 +111,7 @@ class MultimediaObjectMetaType extends AbstractType
                     'required' => false,
                     'attr' => ['aria-label' => $this->translator->trans('Copyright', [], null, $this->locale)],
                     'label' => $label,
+                    'label_html' => true,
                 ]
             );
         }
@@ -127,6 +128,7 @@ class MultimediaObjectMetaType extends AbstractType
                     'required' => false,
                     'attr' => ['aria-label' => $this->translator->trans('License', [], null, $this->locale)],
                     'label' => $label,
+                    'label_html' => true,
                 ]
             );
         }
