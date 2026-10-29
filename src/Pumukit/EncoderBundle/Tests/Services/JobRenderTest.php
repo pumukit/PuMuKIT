@@ -31,13 +31,13 @@ class JobRenderTest extends PumukitTestCase
         $job = new Job();
         $job->setMmId($multimediaObject->getId());
         $job->setProfile('master_copy');
-        $job->setPathIni('/tmp/Tom & Jerry "1" $(id) `id` \\.mp4');
+        $job->setPathIni('/tmp/Tom & Jerry "1" $(id) `id` \.mp4');
         $job->setPathEnd('/tmp/output.mp4');
         $this->dm->persist($job);
         $this->dm->flush();
 
         $command = static::getContainer()->get(JobRender::class)->renderBat($job);
 
-        $this->assertSame('cp "/tmp/Tom & Jerry \\"1\\" \\$(id) \\`id\\` \\\\.mp4" "/tmp/output.mp4"', $command);
+        $this->assertSame('cp "/tmp/Tom & Jerry \"1\" \$(id) \`id\` \\\.mp4" "/tmp/output.mp4"', $command);
     }
 }

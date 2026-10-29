@@ -60,7 +60,7 @@ final class JobRender
 
         $loader = new ArrayLoader(['bat' => $profile['bat']]);
         $twig = new Environment($loader, ['autoescape' => 'shell']);
-        $twig->getRuntime(EscaperRuntime::class)->setEscaper('shell', static fn (string $string): string => addcslashes($string, '\\"$`'));
+        $twig->getRuntime(EscaperRuntime::class)->setEscaper('shell', static fn (string $string): string => addcslashes($string, '\"$`'));
 
         $commandLine = $twig->render('bat', $vars);
         $this->logger->info('[renderBat] CommandLine: '.$commandLine);
