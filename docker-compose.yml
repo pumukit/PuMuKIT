@@ -11,6 +11,7 @@ services:
         - teltek/nginx
     depends_on:
       - db
+      - redis
       - rabbitmq
     volumes:
       # Uncomment the next lines in production
