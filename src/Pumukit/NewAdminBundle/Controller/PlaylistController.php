@@ -182,7 +182,7 @@ class PlaylistController extends CollectionController
 
     public function searchAction(Request $req): RedirectResponse
     {
-        $q = $req->query->get('q');
+        $q = $req->query->getString('q');
         $this->requestStack->getSession()->set('admin/playlist/criteria', ['search' => $q]);
 
         return $this->redirectToRoute('pumukitnewadmin_playlist_index');

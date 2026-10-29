@@ -528,7 +528,7 @@ class SeriesController extends AdminController
 
     public function searchAction(Request $req)
     {
-        $q = $req->query->get('q');
+        $q = $req->query->getString('q');
         $this->requestStack->getSession()->set('admin/series/criteria', ['search' => $q]);
 
         return $this->redirectToRoute('pumukitnewadmin_series_index');

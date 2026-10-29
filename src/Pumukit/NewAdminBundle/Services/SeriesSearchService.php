@@ -24,6 +24,10 @@ class SeriesSearchService
         $new_criteria = [];
 
         foreach ($reqCriteria as $property => $value) {
+            if (null === $value) {
+                continue;
+            }
+
             if (('search' === $property) && ('' !== $value)) {
                 if ($searchInObjects) {
                     $mmRepo = $this->dm->getRepository(MultimediaObject::class);
