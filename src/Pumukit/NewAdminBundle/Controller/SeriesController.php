@@ -31,6 +31,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -295,6 +296,10 @@ class SeriesController extends AdminController
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
+        if (!is_array($ids)) {
+            throw new BadRequestHttpException('Missing ids.');
+        }
+
         $deleteSeriesCount = 0;
         foreach ($ids as $id) {
             $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => new ObjectId($id)]);
@@ -337,6 +342,10 @@ class SeriesController extends AdminController
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
+        }
+
+        if (!is_array($ids)) {
+            throw new BadRequestHttpException('Missing ids.');
         }
 
         foreach ($ids as $id) {
@@ -617,6 +626,10 @@ class SeriesController extends AdminController
         $ids = $request->query->all()['ids'] ?? null;
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
+        }
+
+        if (!is_array($ids)) {
+            throw new BadRequestHttpException('Missing ids.');
         }
 
         $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);

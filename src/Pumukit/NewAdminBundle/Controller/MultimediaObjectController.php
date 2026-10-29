@@ -54,6 +54,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -594,6 +595,10 @@ class MultimediaObjectController extends SortableAdminController
         $mmId = $request->query->get('mmId');
 
         $parent = $repo->findOneBy(['_id' => $request->query->get('parent')]);
+        if (!$parent instanceof Tag) {
+            throw new BadRequestHttpException('Missing parent tag.');
+        }
+
         $parent_path = str_replace('|', '\|', $parent->getPath());
 
         $qb = $this->documentManager->createQueryBuilder(Tag::class);
@@ -680,6 +685,10 @@ class MultimediaObjectController extends SortableAdminController
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
+        if (!is_array($ids)) {
+            throw new BadRequestHttpException('Missing ids.');
+        }
+
         foreach ($ids as $id) {
             $resource = $this->find($id);
             if (!$resource || !$this->isUserAllowedToDelete($resource)) {
@@ -724,6 +733,10 @@ class MultimediaObjectController extends SortableAdminController
 
         if ('string' === gettype($ids)) {
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
+        }
+
+        if (!is_array($ids)) {
+            throw new BadRequestHttpException('Missing ids.');
         }
 
         $tagNew = $this->documentManager->getRepository(Tag::class)->findOneBy(['cod' => 'PUDENEW']);
@@ -898,6 +911,9 @@ class MultimediaObjectController extends SortableAdminController
 
         $mmId = $request->query->get('mmId');
         $parent = $repo->findOneBy(['_id' => $request->query->get('parentId')]);
+        if (!$parent instanceof Tag) {
+            throw new BadRequestHttpException('Missing parent tag.');
+        }
 
         return $this->render(
             '@PumukitNewAdmin/MultimediaObject/listtagsajax.html.twig',

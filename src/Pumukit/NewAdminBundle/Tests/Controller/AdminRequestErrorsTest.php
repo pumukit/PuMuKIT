@@ -88,4 +88,25 @@ class AdminRequestErrorsTest extends PumukitTestCase
     {
         $this->assertSame('', (string) new SeriesStyle());
     }
+
+    #[DataProvider('requestsWithoutRequiredParameters')]
+    public function testAMissingParameterIsABadRequest(string $path): void
+    {
+        $this->client->request('GET', $path);
+
+        $this->assertResponseStatusCodeSame(400);
+    }
+
+    public static function requestsWithoutRequiredParameters(): iterable
+    {
+        yield 'series info' => ['/admin/info_series'];
+
+        yield 'series announce' => ['/admin/series/invertannounce'];
+
+        yield 'multimedia object announce' => ['/admin/mms/invertannounce'];
+
+        yield 'tag search' => ['/admin/mms/search'];
+
+        yield 'tag reload' => ['/admin/mms/reloadtags'];
+    }
 }
