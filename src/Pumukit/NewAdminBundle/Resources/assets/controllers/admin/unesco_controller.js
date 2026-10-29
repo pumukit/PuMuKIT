@@ -174,7 +174,7 @@ export default class extends Controller {
     removeTag(event) {
         event.preventDefault();
         const { url, cod } = event.params;
-        $.ajax({ url, type: 'GET' }).done((response) => {
+        $.ajax({ url, type: 'POST' }).done((response) => {
             if (response.error) {
                 window.no_success(response.error);
 
@@ -187,7 +187,7 @@ export default class extends Controller {
     }
 
     addTag(cod, id, done) {
-        $.ajax({ url: this.urlsValue.addTag.replace('__COD__', encodeURIComponent(cod)).replace('__ID__', id), type: 'GET' })
+        $.ajax({ url: this.urlsValue.addTag.replace('__COD__', encodeURIComponent(cod)).replace('__ID__', id), type: 'POST' })
             .done(done)
             .fail(() => window.no_success(this.messagesValue.savingError));
     }

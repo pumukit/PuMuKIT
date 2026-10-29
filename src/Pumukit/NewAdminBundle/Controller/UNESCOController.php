@@ -495,7 +495,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         ];
     }
 
-    #[Route('/delete/tag/{multimediaObjectId}/{tagCod}', name: 'pumukitnewadmin_unesco_delete_tag')]
+    #[Route('/delete/tag/{multimediaObjectId}/{tagCod}', name: 'pumukitnewadmin_unesco_delete_tag', methods: ['POST'])]
     public function deleteTagDnDAction(string $tagCod, string $multimediaObjectId)
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
@@ -515,7 +515,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         return new JsonResponse(['success']);
     }
 
-    #[Route('/add/tag/{multimediaObjectId}/{tagCod}', name: 'pumukitnewadmin_unesco_add_tag')]
+    #[Route('/add/tag/{multimediaObjectId}/{tagCod}', name: 'pumukitnewadmin_unesco_add_tag', methods: ['POST'])]
     public function addTagDnDAction(string $tagCod, string $multimediaObjectId)
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
@@ -533,7 +533,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     /**
      * @param mixed $option
      */
-    #[Route('/option/selected/{option}', name: 'pumukitnewadmin_unesco_options_list')]
+    #[Route('/option/selected/{option}', name: 'pumukitnewadmin_unesco_options_list', methods: ['POST'])]
     public function optionsMultimediaObjectsAction(Request $request, $option)
     {
         $session = $this->requestStack->getSession();
@@ -573,7 +573,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         return new JsonResponse(['success']);
     }
 
-    #[Route('/delete/mms/{multimediaObjectId}', name: 'pumukitnewadmin_unesco_delete')]
+    #[Route('/delete/mms/{multimediaObjectId}', name: 'pumukitnewadmin_unesco_delete', methods: ['POST'])]
     public function deleteAction(string $multimediaObjectId)
     {
         $session = $this->requestStack->getSession();
@@ -593,7 +593,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         return new JsonResponse(['success']);
     }
 
-    #[Route('/clone/mms/{multimediaObjectId}', name: 'pumukitnewadmin_unesco_clone')]
+    #[Route('/clone/mms/{multimediaObjectId}', name: 'pumukitnewadmin_unesco_clone', methods: ['POST'])]
     public function cloneAction(string $multimediaObjectId)
     {
         $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($multimediaObjectId)]);
