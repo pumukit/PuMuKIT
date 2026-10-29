@@ -208,8 +208,8 @@ class APIController extends AbstractController implements NewAdminControllerInte
         // Request variables.
         $criteria = ($request->query->all()['criteria'] ?? $request->request->all()['criteria'] ?? null) ?: [];
         $sort = (int) ($request->query->all()['sort'] ?? $request->request->all()['sort'] ?? null);
-        $fromDate = $request->query->get('from_date', $request->request->get('from_date'));
-        $toDate = $request->query->get('to_date', $request->request->get('to_date'));
+        $fromDate = (string) $request->query->get('from_date', $request->request->get('from_date'));
+        $toDate = (string) $request->query->get('to_date', $request->request->get('to_date'));
         $limit = (int) $request->query->get('limit', $request->request->get('limit'));
         $page = (int) ($request->query->get('page', $request->request->get('page'))) ?: 0;
 
