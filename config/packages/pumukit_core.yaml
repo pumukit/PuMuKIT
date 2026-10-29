@@ -29,6 +29,9 @@ services:
     tags:
       - { name: "kernel.event_listener", event: "kernel.request", priority: "-255" }
 
+  Pumukit\CoreBundle\EventListener\LegacyApiListener:
+    tags:
+      - { name: "kernel.event_listener", event: "kernel.response", method: "onKernelResponse" }
   Pumukit\CoreBundle\EventListener\FilterListener:
     class: Pumukit\CoreBundle\EventListener\FilterListener
     tags:

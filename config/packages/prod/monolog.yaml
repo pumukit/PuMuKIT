@@ -1,15 +1,21 @@
 monolog:
-  channels: [ 'deprecation' ]
+  channels: [ 'deprecation', 'legacy_api' ]
   handlers:
+    legacy_api:
+      type: rotating_file
+      path: '%kernel.logs_dir%/legacy_api.log'
+      level: info
+      max_files: 30
+      channels: ['legacy_api']
     main:
       type: stream
       path: "%kernel.logs_dir%/%kernel.environment%.log"
       level: error
-      channels: ['!event', '!deprecation']
+      channels: ['!event', '!deprecation', '!legacy_api']
 
     debug_log:
       type: rotating_file
       path: '%kernel.logs_dir%/%kernel.environment%_debug.log'
       level: warning
       max_files: 20
-      channels: ['!event', '!deprecation']
+      channels: ['!event', '!deprecation', '!legacy_api']
