@@ -64,14 +64,6 @@ pumukitnewadmin_mms_clone:
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::cloneAction
 
-pumukitnewadmin_mms_copy:
-    path: /{id}/copy
-    methods: [GET, PUT, POST]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectController::copyAction
-        _sylius:
-            redirect: pumukitnewadmin_mms_index
-
 pumukitnewadmin_mms_show:
     path: /{id}/show
     methods: [GET, POST]

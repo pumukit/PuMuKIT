@@ -38,14 +38,6 @@ pumukitnewadmin_live_delete:
         _sylius:
             redirect: pumukitnewadmin_live_index
 
-pumukitnewadmin_live_copy:
-    path: /{id}/copy
-    methods: [GET, PUT, POST]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\LiveController::copyAction
-        _sylius:
-            redirect: pumukitnewadmin_live_index
-
 pumukitnewadmin_live_show:
     path: /{id}/show
     methods: [GET]

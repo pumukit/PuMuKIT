@@ -81,13 +81,6 @@ class LiveTest extends TestCase
         static::assertEquals(null, $liveo->getDescription($liveo->getLocale()));
     }
 
-    public function testCloneResource()
-    {
-        $live = new Live();
-
-        static::assertEquals($live, $live->cloneResource());
-    }
-
     public function testToString()
     {
         $live = new Live();

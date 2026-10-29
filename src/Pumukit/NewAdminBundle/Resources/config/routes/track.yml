@@ -40,12 +40,6 @@ pumukitnewadmin_track_list:
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\TrackController::listAction
 
-pumukitnewadmin_track_info:
-    path: /{id}/info/{mmId}
-    methods: [GET, PUT, POST]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\TrackController::infoAction
-
 pumukitnewadmin_track_retry_job:
     path: /{mmId}/retry/{jobId}
     methods: [GET, PUT, POST]
@@ -75,12 +69,6 @@ pumukitnewadmin_track_info_job:
     methods: [GET]
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\TrackController::infoJobAction
-
-pumukitnewadmin_track_autocomplete:
-    path: /{id}/autocomplete/{mmId}
-    methods: [GET, PUT, POST]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\TrackController::autocompleteAction
 
 pumukitnewadmin_track_pic:
     path: /{mmId}/{id}/pic

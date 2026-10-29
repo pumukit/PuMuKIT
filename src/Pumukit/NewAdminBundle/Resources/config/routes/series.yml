@@ -60,14 +60,6 @@ pumukitnewadmin_series_generate_magic_url:
     defaults:
         _controller: Pumukit\NewAdminBundle\Controller\SeriesController::generateMagicUrlAction
 
-pumukitnewadmin_series_copy:
-    path: /{id}/copy
-    methods: [GET, PUT, POST]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\SeriesController::copyAction
-        _sylius:
-            redirect: pumukitnewadmin_series_index
-
 pumukitnewadmin_series_show:
     path: /{id}/show
     methods: [GET]

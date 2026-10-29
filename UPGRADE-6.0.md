@@ -695,6 +695,16 @@ The metadata translation button of the i18n fields was never implemented and is 
 The `pumukitnewadmin_seriespic_index` and `pumukitnewadmin_mmspic_index` routes are removed too:
 they pointed to actions that never existed.
 
+## Removed backoffice routes
+
+- The `pumukitnewadmin_{series,mms,seriestype,role,person,live}_copy` routes were not used by the
+  backoffice and are removed, with `AdminController::copyAction()` and the `cloneResource()`
+  methods of `Person`, `Role` and `Live`.
+- `pumukitnewadmin_seriespic_show`, `pumukitnewadmin_mmspic_show`, `pumukitnewadmin_track_info`
+  and `pumukitnewadmin_track_autocomplete` pointed to actions that never existed.
+- `ConfController::PAELLA_*_CONFIG_FOLDER` constants are removed with the unused method that read
+  them.
+
 ## Backoffice menu builder
 
 `Pumukit\NewAdminBundle\Menu\Builder` is now a service with constructor injection instead of a

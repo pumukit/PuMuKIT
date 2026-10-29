@@ -261,12 +261,4 @@ class Person implements PersonInterface
 
         return implode(', ', $aux);
     }
-
-    public function cloneResource(): PersonInterface
-    {
-        $aux = clone $this;
-        $aux->id = null;
-
-        return $aux;
-    }
 }

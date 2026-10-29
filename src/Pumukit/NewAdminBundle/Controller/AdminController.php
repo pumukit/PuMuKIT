@@ -145,22 +145,6 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     }
 
     /**
-     * Clone the given resource.
-     */
-    public function copyAction(Request $request)
-    {
-        $resource = $this->findOr404($request);
-
-        $new_resource = $resource->cloneResource();
-
-        $this->update($new_resource);
-
-        $this->addFlash('success', 'copy');
-
-        return $this->redirectToIndex();
-    }
-
-    /**
      * Overwrite to update the session.
      */
     public function showAction(Request $request)

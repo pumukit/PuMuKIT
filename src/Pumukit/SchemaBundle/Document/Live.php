@@ -239,14 +239,6 @@ class Live
         return $this->locale;
     }
 
-    public function cloneResource(): Live
-    {
-        $aux = clone $this;
-        $aux->id = null;
-
-        return $aux;
-    }
-
     public function getInfo(): string
     {
         return sprintf('%s (%s/%s)', $this->getName(), $this->getUrl(), $this->getSourceName());

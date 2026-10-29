@@ -91,11 +91,4 @@ class PersonTest extends TestCase
         static::assertEquals($post, $person->getPost());
         static::assertEquals($bio, $person->getBio());
     }
-
-    public function testCloneResource()
-    {
-        $person = new Person();
-
-        static::assertEquals($person, $person->cloneResource());
-    }
 }

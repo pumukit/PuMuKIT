@@ -21,7 +21,6 @@ class RoleTest extends TestCase
         static::assertEquals('0', $role->getCod());
         static::assertTrue($role->getDisplay());
         static::assertEquals(0, $role->getNumberPeopleInMultimediaObject());
-        static::assertEquals($role, $role->cloneResource());
     }
 
     public function testGetterAndSetter()

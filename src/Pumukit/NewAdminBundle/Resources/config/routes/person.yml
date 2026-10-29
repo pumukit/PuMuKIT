@@ -36,14 +36,6 @@ pumukitnewadmin_person_delete:
         _sylius:
             redirect: pumukitnewadmin_person_index
 
-pumukitnewadmin_person_copy:
-    path: /{id}/copy
-    methods: [GET, PUT, POST]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\PersonController::copyAction
-        _sylius:
-            redirect: pumukitnewadmin_person_index
-
 pumukitnewadmin_person_show:
     path: /{id}/show
     methods: [GET]

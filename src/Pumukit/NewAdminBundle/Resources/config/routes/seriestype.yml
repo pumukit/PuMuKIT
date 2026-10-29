@@ -38,14 +38,6 @@ pumukitnewadmin_seriestype_delete:
         _sylius:
             redirect: pumukitnewadmin_seriestype_index
 
-pumukitnewadmin_seriestype_copy:
-    path: /{id}/copy
-    methods: [GET, PUT, POST]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\SeriesTypeController::copyAction
-        _sylius:
-            redirect: pumukitnewadmin_seriestype_index
-
 pumukitnewadmin_seriestype_show:
     path: /{id}/show
     methods: [GET]

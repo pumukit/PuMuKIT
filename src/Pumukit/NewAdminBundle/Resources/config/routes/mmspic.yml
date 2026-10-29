@@ -54,13 +54,6 @@ pumukitnewadmin_mmspic_list:
         _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectPicController::listAction
 
 
-pumukitnewadmin_mmspic_show:
-    path: /{id}/show
-    methods: [GET]
-    defaults:
-        _controller: Pumukit\NewAdminBundle\Controller\MultimediaObjectPicController::showAction
-
-
 pumukitnewadmin_mmspic_upload:
     path: /{id}/upload
     methods: [GET, POST]
