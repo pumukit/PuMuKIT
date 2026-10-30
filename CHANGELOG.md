@@ -48,11 +48,11 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Read request parameters from an explicit source (route attributes, query string or body) instead of `Request::get()`.
 - Upgrade MonologBundle to 4, API Platform to 5 and phpdocumentor/reflection-docblock to 6.
 - Replace the `style` attributes of the core templates with the classes of `bundles/pumukitcore/css/pumukit-utilities.css`, loaded by the portal layout; `pumukit:check:assets` reports an overridden portal layout that does not load it.
-- Serve bundle assets through Symfony AssetMapper; jQuery, Bootstrap 3.4.1, moment 2.30.1, jQuery UI and bootstrap-datetimepicker are shared from `bundles/pumukitcore/vendor/`.
+- Serve bundle assets through Symfony AssetMapper; jQuery, Bootstrap 3.4.1, moment 2.30.1 and bootstrap-datetimepicker are shared from `bundles/pumukitcore/vendor/`.
 - Move the backoffice, the portal, the inbox and the live pages to Bootstrap 5.3.8 without Bootstrap Material Design: the previous look is kept by `backoffice.css` and `webtv.css`, the backoffice messages are Bootstrap 5 toasts and the pages use the system font stack (see UPGRADE-6.0.md).
 - Upgrade Font Awesome to 7.3.1, shared by the backoffice (5.11.2) and the portal (4.7) from `bundles/pumukitcore/vendor/fontawesome/`, with the current icon names; `pumukit:check:assets` reports the icons that Font Awesome 7 does not provide.
 - Replace the Material Design icons of the backoffice (`mdi-*`) with Font Awesome 7 icons and remove the Material Design Icons font; `pumukit:check:assets` reports the `mdi-*` classes with their equivalent.
-- Upgrade jQuery 1.10.2 → 4.0.0 (without jQuery Migrate), jQuery UI 1.11.3 → 1.14.2 and bootstrap-datetimepicker 4.14.30 → 4.17.49; `pumukit:check:assets` reports the jQuery utilities removed in jQuery 4 (`$.trim`, `$.isArray`…).
+- Upgrade jQuery 1.10.2 → 4.0.0 (without jQuery Migrate) and bootstrap-datetimepicker 4.14.30 → 4.17.49; `pumukit:check:assets` reports the jQuery utilities removed in jQuery 4 (`$.trim`, `$.isArray`…).
 - Move the inline JavaScript of CoreBundle, EncoderBundle, WizardBundle, WebTVBundle and BaseLivePlayerBundle templates to Stimulus controllers; `@PumukitCore/Upload/uppy_tus.js.twig` and `@PumukitBaseLivePlayer/Advance/Sessions/*.js.twig` are replaced by `uppy_tus.html.twig` and `sessions.html.twig`, `announces_ajax.js` by the `webtv--announces` controller and `template_video.js` by the `webtv--dynamic-pic` controller.
 - Remove jQuery Countdown and Modernizr from WebTVBundle; the live player countdown and the mobile detection of the search filters are native.
 - Move the StatsUIBundle JavaScript to the `stats-ui--stats` Stimulus controller and replace D3 3 and NVD3 with Chart.js 4.5.1; titles are rendered as text, no longer as HTML.
@@ -88,7 +88,8 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Replace materialize-tags, typeahead.js and Bloodhound in the keyword fields of the backoffice with a module of the bundle that keeps the same look.
 - Replace moment, bootstrap-datetimepicker and daterangepicker with native date fields in the portal search and the statistics; the predefined ranges of the statistics are translated.
 - Replace hinclude.js with the `admin--include` Stimulus controller for the previews of the backoffice indexes; `pumukit:check:assets` reports the `render_hinclude()` calls left in a project.
-- Replace Select2 in the channel search of the live event form with the jQuery UI autocomplete already used by the series search.
+- Replace Select2 in the channel search of the live event form with the autocomplete already used by the series search.
+- Replace the jQuery UI autocomplete of the people, live event channel and series fields of the backoffice with a module of the bundle (`@pumukit/new-admin/suggest`); `pumukit:check:assets` reports the `.autocomplete()` calls left in a project.
 - Load Chart.js and its date adapter from the importmap in the backoffice dashboard and remove its separate Chart.js 4.4.6 build.
 - Answer the picture uploads with JSON only and remove the old iframe responses and the hidden banner URL form.
 - Configure the default protocol of the URL form fields (live channel, person, link and external player), deprecated since Symfony 7.1.
@@ -140,6 +141,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Vendored SIMILE Timeline 2.3.1 assets (~1 MB) under `NewAdminBundle/Resources/public/js/timeline_2.3.1/`.
 - Bootstrap 3.4.1 (`bundles/pumukitcore/vendor/bootstrap/` and the portal stylesheet with its glyphicons), Bootstrap Material Design 0.2 with its ripples and the RobotoDraft font loaded from Google Fonts, and SnackbarJS (see UPGRADE-6.0.md for the replacements).
 - Per-bundle copies of jQuery, Bootstrap, moment, jQuery UI and bootstrap-datetimepicker in `pumukitnewadmin`, `pumukitwebtv` and `pumukitstatsui` (see UPGRADE-6.0.md for the replacements).
+- jQuery UI (`bundles/pumukitcore/vendor/jquery-ui/`), `@PumukitNewAdmin/jquery-ui-autocomplete.css.twig` and its `pumukit_jquery_ui_autocomplete_css` route.
 - Unused fields from the encoder profile configuration schema (`format`, `codec`, `mime_type`, `bitrate`, `framerate`, `channels`, `app`, `rel_duration_size`, `rel_duration_trans`, `file_cfg`, `prescript`, and `streamserver.{name,type,host,description}`); these were declared but never read by the application. `validateProfilesDir()` now identifies the failing profile by its array key in its error message instead of the redundant `streamserver.name`.
 - The metadata translation button of the backoffice i18n fields, which was never implemented: `TranslateController`, the `pumukitnewadmin_metadata_translate` route, the `pumukitnewadmin.translatecontroller` alias and the `pumukit_new_admin.metadata_translators` parameter.
 - The `pumukitnewadmin_seriespic_index` and `pumukitnewadmin_mmspic_index` routes, which pointed to controller actions that do not exist.

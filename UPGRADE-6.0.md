@@ -132,7 +132,7 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
 
 - Reference bundle assets **without** a leading slash: `asset('bundles/pumukitwebtv/...')`.
   A path starting with `/` is not mapped and is served as a plain static file.
-- jQuery, Bootstrap and jQuery UI are shared from `bundles/pumukitcore/vendor/` and the copies
+- jQuery and Bootstrap are shared from `bundles/pumukitcore/vendor/` and the copies
   that each bundle had are removed. Overridden templates must load the shared files:
 
   | Removed | Replacement |
@@ -143,12 +143,10 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
   | `bundles/pumukitnewadmin/css/bootstrap.min.css` | `bundles/pumukitcore/vendor/bootstrap5/css/bootstrap.min.css` |
   | `bundles/pumukitwebtv/css/bootstrap.min.css` | `bundles/pumukitcore/vendor/bootstrap5/css/bootstrap.min.css` and `bundles/pumukitwebtv/css/webtv.css` |
   | `bundles/pumukitwebtv/js/moment-with-locales.min.js`, `bundles/pumukitstatsui/vendor/moment/moment.min.js` | nothing (moment is removed, see below) |
-  | `bundles/pumukitnewadmin/js/jquery-ui-1.11.3.custom.min.js` | `bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.js` |
-  | `bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom*.min.css` (3 files) | `bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.css` |
+  | `bundles/pumukitnewadmin/js/jquery-ui-1.11.3.custom.min.js`, `bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom*.min.css` (3 files) | nothing (jQuery UI is removed, see below) |
   | `bundles/pumukitwebtv/js/bootstrap-datetimepicker.min.js`, `bundles/pumukitwebtv/css/bootstrap-datetimepicker(.min).css` | nothing (bootstrap-datetimepicker is removed, see below) |
 
-  The shared versions are jQuery 4.0.0, Bootstrap 5.3.8 and jQuery UI 1.14.2 (autocomplete and
-  menu only, so it does not replace the Bootstrap tooltip).
+  The shared versions are jQuery 4.0.0 and Bootstrap 5.3.8.
 - **Dates without libraries.** moment, bootstrap-datetimepicker and daterangepicker are removed
   (`bundles/pumukitcore/vendor/moment/`, `bundles/pumukitcore/vendor/bootstrap-datetimepicker/`,
   `bundles/pumukitstatsui/vendor/daterangepicker/`). The date filters of the portal search are
@@ -172,15 +170,32 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
   - `focusin`/`focusout` follow the native order relative to `focus`/`blur`.
 
   The event shorthands (`.click(fn)`, `.change(fn)`…), `.bind()`, `.delegate()`, `$.proxy()` and
-  `$.Deferred` are still available. jQuery UI 1.14.2 supports jQuery 4. The APIs removed in
-  jQuery 3 found in PuMuKIT code were:
+  `$.Deferred` are still available. The APIs removed in jQuery 3 found in PuMuKIT code were:
   - `$.get(...).success()`/`.error()`/`.complete()`: use `.done()`/`.fail()`/`.always()`.
   - `.size()`: use `.length`.
   - `.load(function)`, `.unload()` and `.error(function)` as event shorthands: use
     `.on('load', ...)`, `.on('unload', ...)`, `.on('error', ...)`.
-- **jQuery UI 1.14.** The highlighted autocomplete item uses `ui-state-active` instead of
-  `ui-state-focus`; styles that targeted the focused item must include
-  `.ui-menu .ui-menu-item-wrapper.ui-state-active`.
+- **jQuery UI is removed.** The backoffice layout no longer loads jQuery UI, and
+  `bundles/pumukitcore/vendor/jquery-ui/`, `@PumukitNewAdmin/jquery-ui-autocomplete.css.twig` and its
+  route `pumukit_jquery_ui_autocomplete_css` (`/admin/jquery_ui_autocomplete.css`) are removed. The
+  autocompletes of the backoffice (people of a multimedia object, channel and series of a live
+  event) use the `SuggestInput` module of the bundle, importable as `@pumukit/new-admin/suggest`:
+
+  ```js
+  import { SuggestInput, remoteSource } from '@pumukit/new-admin/suggest';
+
+  new SuggestInput(input, {
+      source: remoteSource(url, (item) => ({ id: item.id, text: item.label, description: item.desc, value: item.value })),
+      minLength: 2,
+      select: (item) => { hiddenInput.value = item.id; },
+  });
+  ```
+
+  `remoteSource()` requests `url?term=…` and maps each item of the JSON list to `text` (the
+  option), `description` (an optional second line) and `value` (written in the field when it is
+  chosen). The list is a Bootstrap `dropdown-menu` with the `pmk-suggest-menu` class, and the field
+  has the `pmk-suggest-loading` class while it waits for the answer. Overridden templates that call
+  `.autocomplete()` must use it; `pumukit:check:assets` reports those calls.
 - **Inline styles.** The core templates no longer use `style` attributes: each declaration is a
   `pmk-<property>-<value>` class of `bundles/pumukitcore/css/pumukit-utilities.css` (for example
   `style="margin-top: 10px"` → `class="pmk-margin-top-10"`), so that the pages can run under a Content
@@ -518,7 +533,7 @@ objects of a playlist) use the `admin--include` controller instead of `render_hi
 `pumukit:check:assets` reports the `render_hinclude()` calls left in the project templates.
 
 Select2 is removed. The channel search of the live event form (`#live_channel_select`) is a text
-field with the jQuery UI autocomplete of `admin--live-event`, like the series search next to it:
+field with the `SuggestInput` autocomplete of `admin--live-event`, like the series search next to it:
 it lists every channel on focus, filters as you type and still fills `#live_channel_input_id` and
 `#live_channel_input_name`; emptying it after choosing a channel clears the choice.
 `@PumukitNewAdmin/LiveEvent/select2js.html.twig`, `bundles/pumukitnewadmin/js/select2/` and
