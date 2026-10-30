@@ -101,6 +101,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 #### Fixed
 
 - Command injection in the encoder through file names with `$(…)` or backticks, and failed transcodings of file names with `&` or `"`: the profile command variables are now escaped for the shell instead of HTML.
+- Stored XSS in the Paella player through WebVTT and DFXP caption text ([GHSA-m6c8-jcw2-5r25](https://github.com/advisories/GHSA-m6c8-jcw2-5r25)): the player is built with paella-core 1.49.7 → 1.50.7 and its plugins 1.50 (`teltek-paella-player-2026-10-30.js`).
 - `pumukit:check:assets` reporting removed JavaScript globals inside ids and classes such as `delete_mm{{ template }}_groups`.
 - The live chat stored anonymous messages even when it was disabled, without limits and with a session cookie that never existed: messages are now accepted only by `POST` with the chat enabled, limited to 10 per minute and IP address, and linked to a hash of the author's session.
 - Backoffice routes that created, deleted, cloned or reordered data on a `GET` request (reachable from a link on any website): they now require `POST` or `DELETE`, and cross-site requests that change data in `/admin` and `/chat` are rejected.
