@@ -5,7 +5,7 @@ PuMuKIT 6.0 has **two independent parts**:
 1. **Symfony core**: `5.4` (end of life) → `7.4` LTS on **PHP 8.5**, plus the dependency bumps it
    unblocked (api-platform 5, MonologBundle 4, knp-menu 3, tus-php 2, pagerfanta 4, DoctrineMongoDBBundle 5,
    etc.).
-2. **MongoDB stack**: server `5.0` → `8.0`, `ext-mongodb` `1.14.2` → `2.5.5`,
+2. **MongoDB stack**: server `5.0` → `9.0`, `ext-mongodb` `1.14.2` → `2.5.5`,
    `mongodb/mongodb` `1.13` → `2.5` and Doctrine ODM `2.6` → `2.17`.
 
 This guide describes the **exact, reproducible steps** so it can be replayed on any
@@ -145,31 +145,15 @@ Rebuild the image (`docker compose build --pull`); no data has to be migrated.
 
 ## MongoDB stack upgrade
 
-- **MongoDB server**: `5.0` → `8.0` (must be upgraded one major at a time).
+- **MongoDB server**: `5.0` → `9.0` (must be upgraded one major at a time).
 - **PHP driver** (`ext-mongodb`): `1.14.2` → `2.5.5`. The 2.x line is the one officially
   supported on PHP 8.5, and it supports MongoDB servers from 4.2 to 9.0.
 - **PHP MongoDB library** (`mongodb/mongodb`): `1.13` → `2.5` (Doctrine ODM `2.6` → `2.17`).
 - The denormalized **search text index must be rebuilt** after upgrading existing data.
 
-The 6.0 code already ships the final values (`docker-compose.yml` with `mongo:8.0`, the
+The 6.0 code already ships the final values (`docker-compose.yml` with `mongo:9.0`, the
 `Dockerfile` with `ext-mongodb 2.5.5`). You only need to align your **running
 containers and data** with that code.
-
-> **Hosts with Linux kernel 6.19 or newer.** MongoDB 8.0.21 to 8.0.34 refuse to start on
-> these kernels ("MongoDB cannot start: Linux kernel versions 6.19 and newer has a known
-> incompatibility", [SERVER-121912](https://jira.mongodb.org/browse/SERVER-121912)). Use
-> MongoDB **8.0.35 or newer** (pull the `mongo:8.0` image again). Until that image is
-> available, the check can be bypassed by overriding the `db` service, e.g. in
-> `docker-compose.override.yml`:
->
-> ```yaml
->   db:
->     entrypoint: ["setarch", "--uname-2.6", "docker-entrypoint.sh"]
->     command: ["mongod"]
-> ```
->
-> Remove the override once MongoDB 8.0.35 or newer is running. Check the kernel with
-> `uname -r` and the server with `db.version()`.
 
 Pick your scenario:
 
@@ -188,7 +172,7 @@ backfill** — you go straight to the values the 6.0 code ships.
 git clone <repository-url> pumukit && cd pumukit
 git checkout 6.0.x
 
-# 2. Build and start (ships mongo:8.0 and ext-mongodb 2.5.5)
+# 2. Build and start (ships mongo:9.0 and ext-mongodb 2.5.5)
 docker compose build
 docker compose up -d
 
@@ -211,7 +195,7 @@ in the project README. You are done — skip section B.
 
 **Order matters.** Back up first, switch to the 6.0 code, upgrade the **driver** while the
 server is still on 5.0 (the old `1.14` driver only supports MongoDB up to 6.0, so it must
-be raised to `2.5` before the server reaches 7.0/8.0), and only then upgrade the **server**
+be raised to `2.5` before the server reaches 7.0 and later), and only then upgrade the **server**
 in hops. Finally rebuild the indexes.
 
 ### B.0 Backup (mandatory)
@@ -238,9 +222,9 @@ git fetch origin
 git checkout 6.0.x
 ```
 
-> This updates `docker-compose.yml` to `mongo:8.0` and the `Dockerfile` to
+> This updates `docker-compose.yml` to `mongo:9.0` and the `Dockerfile` to
 > `ext-mongodb 2.5.5`. **Do not** recreate the `db` container yet: your data volume still
-> holds 5.0 data and an 8.0 server would refuse to start on it. Leave `db` running on its
+> holds 5.0 data and a 9.0 server would refuse to start on it. Leave `db` running on its
 > current 5.0 container until step **B.3**.
 
 Now apply the **[application changes](#application-changes-symfony-74)**: confirm you are
@@ -267,9 +251,9 @@ docker compose exec php composer install --no-dev --optimize-autoloader
 At this point you are running **6.0 code + driver 2.5 + server 5.0**, which is a supported
 combination.
 
-### B.3 Upgrade the MongoDB server (5.0 → 6.0 → 7.0 → 8.0)
+### B.3 Upgrade the MongoDB server (5.0 → 6.0 → 7.0 → 8.0 → 9.0)
 
-You **cannot skip major versions**. The 6.0 code ships `mongo:8.0`, but to migrate existing
+You **cannot skip major versions**. The 6.0 code ships `mongo:9.0`, but to migrate existing
 5.0 data you must pass through each intermediate image. Pin the current FCV first:
 
 ```bash
@@ -277,13 +261,28 @@ docker compose exec db mongosh --quiet --eval \
   'db.adminCommand({ setFeatureCompatibilityVersion: "5.0" })'
 ```
 
-Then repeat this cycle for each hop — `6.0`, then `7.0`, then `8.0`. Temporarily set the
-`db` image for the intermediate hops (the final `8.0` already matches the committed file):
+Then repeat this cycle for each hop — `6.0`, then `7.0`, then `8.0`, then `9.0`. Temporarily
+set the `db` image for the intermediate hops (the final `9.0` already matches the committed
+file):
 
 ```yaml
   db:
-    image: mongo:6.0   # hop 1; then 7.0 for hop 2; leave 8.0 (committed) for hop 3
+    image: mongo:6.0   # hop 1; then 7.0 and 8.0 for hops 2 and 3; leave 9.0 (committed) for hop 4
 ```
+
+> **Hosts with Linux kernel 6.19 or newer.** The `mongo:8.0` image (8.0.21 to 8.0.34) refuses
+> to start on these kernels ("MongoDB cannot start: Linux kernel versions 6.19 and newer has a
+> known incompatibility", [SERVER-121912](https://jira.mongodb.org/browse/SERVER-121912)).
+> MongoDB 9.0 is not affected. For the 8.0 hop only, bypass the check by overriding the `db`
+> service, e.g. in `docker-compose.override.yml`:
+>
+> ```yaml
+>   db:
+>     entrypoint: ["setarch", "--uname-2.6", "docker-entrypoint.sh"]
+>     command: ["mongod"]
+> ```
+>
+> Remove the override before the 9.0 hop. Check the kernel with `uname -r`.
 
 ```bash
 # Recreate only the db container with the new image
@@ -308,9 +307,13 @@ docker compose exec db mongosh --quiet --eval \
 # after hop to 8.0
 docker compose exec db mongosh --quiet --eval \
   'db.adminCommand({ setFeatureCompatibilityVersion: "8.0", confirm: true })'
+
+# after hop to 9.0
+docker compose exec db mongosh --quiet --eval \
+  'db.adminCommand({ setFeatureCompatibilityVersion: "9.0", confirm: true })'
 ```
 
-Verify after each hop (final state must be server `8.0.x`, FCV `8.0`):
+Verify after each hop (final state must be server `9.0.x`, FCV `9.0`):
 
 ```bash
 docker compose exec db mongosh --quiet --eval \
@@ -318,7 +321,7 @@ docker compose exec db mongosh --quiet --eval \
 ```
 
 After the last hop, make sure `docker-compose.yml` is back to the committed `image:
-mongo:8.0` (no leftover local edit).
+mongo:9.0` (no leftover local edit).
 
 ### B.4 Update the database indexes
 
@@ -367,7 +370,7 @@ docker compose exec php php bin/console cache:clear
 
 ## Verification checklist
 
-- `db.version()` reports `8.0.x` and FCV is `8.0`.
+- `db.version()` reports `9.0.x` and FCV is `9.0`.
 - `php --ri mongodb` reports `2.5.x`.
 - The backoffice (`/admin`) and the public portal load correctly.
 - Searching existing content by title returns results (text index rebuilt).

@@ -43,7 +43,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - Move PaellaPlayerBundle and StatsUIBundle into the core; they are no longer external packages.
 - Upgrade Pagerfanta to v4 and MobileDetect to v4.
 - Upgrade PHPUnit to 13 and migrate its configuration and tests (attributes, stubs). The suite fails on deprecations and PHPUnit notices.
-- Upgrade the MongoDB stack: server 5.0 → 8.0, `ext-mongodb` 1.14 → 2.5, `mongodb/mongodb` 1.13 → 2.5, Doctrine ODM 2.6 → 2.17 and DoctrineMongoDBBundle 4.6 → 5.6.
+- Upgrade the MongoDB stack: server 5.0 → 9.0, `ext-mongodb` 1.14 → 2.5, `mongodb/mongodb` 1.13 → 2.5, Doctrine ODM 2.6 → 2.17 and DoctrineMongoDBBundle 4.6 → 5.6.
 - Map documents with PHP attributes instead of Doctrine annotations; `doctrine/annotations` and `doctrine/cache` are no longer installed.
 - Read request parameters from an explicit source (route attributes, query string or body) instead of `Request::get()`.
 - Upgrade MonologBundle to 4, API Platform to 5 and phpdocumentor/reflection-docblock to 6.

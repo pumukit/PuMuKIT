@@ -5,7 +5,7 @@ PuMuKIT bundles and of projects that customize the core (own documents, services
 controllers or overridden templates). The deployment steps (Docker images, MongoDB server
 upgrade, indexes) are described in [doc/upgrade/from5.1to6.0.md](doc/upgrade/from5.1to6.0.md).
 
-> PuMuKIT 6.0 targets **PHP 8.5**, **Symfony 7.4 LTS** and **MongoDB 8.0** with the 2.x PHP
+> PuMuKIT 6.0 targets **PHP 8.5**, **Symfony 7.4 LTS** and **MongoDB 9.0** with the 2.x PHP
 > driver. This document is completed as each step of the migration lands on the `6.0.x` branch.
 
 ## Bundles
