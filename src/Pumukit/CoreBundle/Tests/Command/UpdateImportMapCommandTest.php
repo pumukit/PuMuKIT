@@ -82,6 +82,18 @@ class UpdateImportMapCommandTest extends TestCase
         $this->assertSame([], $this->required);
     }
 
+    public function testIgnoresTheDependenciesOfPackagesThatAreNoLongerInTheImportmap(): void
+    {
+        $this->versions['lonely'] = '1.2.0';
+        $this->installed['removed-package'] = ['version' => '2.0.0', 'dependencies' => ['lonely']];
+        $this->writeInstalled();
+
+        $tester = new CommandTester($this->command());
+        $tester->execute(['--dry-run' => true]);
+
+        $this->assertStringContainsString('lonely ^1.2.0', $tester->getDisplay());
+    }
+
     public function testUpdatesWithinTheMajorRestoresDowngradesAndRemovesUnusedDependencies(): void
     {
         $tester = new CommandTester($this->command());

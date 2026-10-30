@@ -87,7 +87,8 @@ EOT
             $this->importMapManager->require($this->requireOptions($downgraded));
         }
 
-        $orphans = array_keys(array_diff_key($this->remoteEntries(), $roots, $this->dependencies()));
+        $updated = $this->remoteEntries();
+        $orphans = array_keys(array_diff_key($updated, $roots, $this->dependencies($updated)));
         if ($orphans) {
             $this->importMapManager->remove($orphans);
         }
@@ -133,22 +134,24 @@ EOT
      */
     private function roots(array $entries): array
     {
-        $dependencies = $this->dependencies();
+        $dependencies = $this->dependencies($entries);
         $imported = $this->localImports();
 
         return array_filter($entries, static fn (ImportMapEntry $entry) => isset($imported[$entry->importName]) || !isset($dependencies[$entry->importName]));
     }
 
     /**
+     * @param array<string, ImportMapEntry> $entries
+     *
      * @return array<string, true>
      */
-    private function dependencies(): array
+    private function dependencies(array $entries): array
     {
         $file = $this->packageStorage->getStorageDir().'/installed.php';
         $installed = is_file($file) ? (static fn (string $file) => require $file)($file) : [];
 
         $dependencies = [];
-        foreach ($installed as $package) {
+        foreach (array_intersect_key($installed, $entries) as $package) {
             foreach ($package['dependencies'] ?? [] as $dependency) {
                 $dependencies[$dependency] = true;
             }
