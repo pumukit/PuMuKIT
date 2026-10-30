@@ -32,12 +32,12 @@
 		"webpack-dev-server": "^4.7.3"
 	},
 	"dependencies": {
-		"paella-basic-plugins": "^1.26.3",
-		"paella-core": "^1.49.5",
-		"paella-slide-plugins": "^1.8.1",
-		"paella-teltek-plugins": "^1.0.12",
-		"paella-user-tracking": "^1.8.0",
-		"paella-webgl-plugins": "^1.25.2",
-		"paella-zoom-plugin": "^1.29.0"
+		"paella-basic-plugins": "^1.50.3",
+		"paella-core": "^1.50.7",
+		"paella-slide-plugins": "^1.50.1",
+		"paella-teltek-plugins": "^1.0.17",
+		"paella-user-tracking": "^1.42.6",
+		"paella-webgl-plugins": "^1.41.1",
+		"paella-zoom-plugin": "^1.41.3"
 	}
 }
