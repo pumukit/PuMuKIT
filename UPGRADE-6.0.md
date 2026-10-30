@@ -485,8 +485,8 @@ update modals use `admin--modal-form`. The `load_children`, `data_children`, `de
 `delete_children_tag` classes are kept for styling only. `admin--modal-form` now shows the `status`
 of a JSON error response instead of the raw body. The slider manager uses `admin--slider`
 (drag and drop of the `.slider-item` rows and the save button, still `#save-slider-order`). The
-activity chart of the dashboard uses `admin--dashboard` on `#activity-chart`, with the activity, the
-time window and the grouping as values. It imports Chart.js and `chartjs-adapter-date-fns` from the importmap, so
+charts of the dashboard use `admin--dashboard`, which imports Chart.js from the importmap with
+category scales (the importmap has no date adapter), so
 `bundles/pumukitnewadmin/vendor/chartjs/chart.umd.min.js` and
 `bundles/pumukitnewadmin/vendor/chartjs/chartjs-adapter-date-fns.bundle.min.js` are removed. The unused
 `bundles/pumukitnewadmin/vendor/chartjs/chartjs-plugin-zoom.min.js` is removed, and so are
