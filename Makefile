@@ -3,7 +3,7 @@
         composer composer-install composer-update composer-validate fixtures \
         test-all test test-lint-yaml test-lint-twig test-lint-xliff test-lint-generic \
         test-php-cs-fixer test-php-stan test-rector fix-test-perms test-e2e test-e2e-down \
-        paella-build \
+        update update-composer update-importmap update-paella paella-build vendor-outdated \
         integration integration-tests integration-clean \
         shell php-shell ps logs
 
@@ -16,6 +16,7 @@ DC_TEST = $(DOCKER_COMP) -f docker-compose.test.yml
 DC_E2E = $(DOCKER_COMP) -f docker-compose.yml -f docker-compose.e2e.yml
 
 PAELLA_DIR = src/Pumukit/PaellaPlayerBundle/Resources/public/paella
+IMPORTMAP_DIR = src/Pumukit/CoreBundle/Resources/importmap
 
 # Run a command in the php service: reuse the running container if the stack is up,
 # otherwise spin up an ephemeral one that is removed afterwards (--rm).
@@ -25,6 +26,19 @@ define run_php
 	else \
 		$(DC_BASE) run --rm --user www-data php $(1); \
 	fi
+endef
+
+define run_php_root
+	@if [ -n "$$($(DOCKER_COMP) ps -q php 2>/dev/null)" ]; then \
+		$(DOCKER_COMP) exec -u root php $(1); \
+	else \
+		$(DC_BASE) run --rm --user root php $(1); \
+	fi
+endef
+
+define run_paella
+	@docker run --rm --user $$(id -u):$$(id -g) -e npm_config_cache=/tmp/.npm -v $(CURDIR)/$(PAELLA_DIR):/src node:24-alpine \
+		sh -c 'set -e; cp -a /src/. /tmp/build/; cd /tmp/build; $(1)'
 endef
 
 # Run a command in the php service of the test stack (always an ephemeral container).
@@ -125,9 +139,28 @@ test-e2e: ## Run the Playwright browser tests against an isolated stack (pumukit
 test-e2e-down: ## Remove the end-to-end stack and its data
 	@$(DC_E2E) --profile e2e down -v --remove-orphans
 
-paella-build: ## Build the Paella player into $(PAELLA_DIR)/dist with Node 24 (the file name carries the date: update @PumukitPaellaPlayer/PaellaPlayer/index.html.twig)
-	@docker run --rm --user $$(id -u):$$(id -g) -e npm_config_cache=/tmp/.npm -v $(CURDIR)/$(PAELLA_DIR):/src node:24-alpine \
-		sh -c 'cp -a /src/. /tmp/build/ && cd /tmp/build && npm ci --no-audit --no-fund --loglevel=error && npm run build -- --output-path /src/dist'
+update: update-composer update-importmap update-paella vendor-outdated ## Update composer, the importmap and Paella within their major versions; review the diff and commit by hand
+
+update-composer: ## composer update within composer.json, regenerate config/reference.php, validate, audit and list the new major versions (except Symfony 7.4 components)
+	$(call run_php_root,sh -c 'export COMPOSER_ALLOW_SUPERUSER=1; composer update && APP_ENV=prod APP_DEBUG=1 bin/console cache:clear --no-warmup >/dev/null && APP_ENV=prod APP_DEBUG=1 bin/console cache:warmup >/dev/null; status=$$?; chown -R www-data:www-data vendor var; chown --reference=composer.json composer.lock symfony.lock config/reference.php; exit $$status')
+	$(call run_php,composer validate --no-check-publish)
+	$(call run_php,composer audit)
+	$(call run_php,composer outdated --direct --major-only) | awk '!/^symfony\/[^ ]+ +7\.4\./'
+
+update-importmap: ## Update the importmap packages used by PuMuKIT within their major versions, remove the unused ones and audit
+	$(call run_php_root,sh -c 'bin/console pumukit:importmap:update; status=$$?; chown -R --reference=composer.json $(IMPORTMAP_DIR); chown -R www-data:www-data var; exit $$status')
+	$(call run_php,bin/console importmap:audit)
+
+update-paella: ## Update the Paella dependencies within package.json, fix the npm advisories and build the player
+	$(call run_paella,npm update --save --no-fund --loglevel=error; npm audit fix --no-fund --loglevel=error || true; cp package.json package-lock.json /src/; npm outdated || true; npm audit)
+	@$(MAKE) --no-print-directory paella-build
+
+paella-build: ## Build the Paella player into $(PAELLA_DIR)/dist with Node 24
+	$(call run_paella,npm ci --no-audit --no-fund --loglevel=error; npm run build -- --output-path /src/dist)
+
+vendor-outdated: ## List the updates of jQuery, Bootstrap and Font Awesome in bundles/pumukitcore/vendor (updated by hand)
+	$(call run_php,bin/console pumukit:vendor:outdated)
+
 
 integration: ## Check core + dev-bundles together: composer, container, routes, lints, deprecations, PHPStan
 	$(call run_php,php bin/integration-check $(ARGS))
