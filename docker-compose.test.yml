@@ -17,7 +17,7 @@ services:
       - ./:/srv/pumukit
 
   db:
-    image: mongo:8.0
+    image: mongo:9.0
 
   redis:
     image: valkey/valkey:9.1
