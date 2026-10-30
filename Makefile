@@ -3,6 +3,7 @@
         composer composer-install composer-update composer-validate fixtures \
         test-all test test-lint-yaml test-lint-twig test-lint-xliff test-lint-generic \
         test-php-cs-fixer test-php-stan test-rector fix-test-perms test-e2e test-e2e-down \
+        paella-build \
         integration integration-tests integration-clean \
         shell php-shell ps logs
 
@@ -13,6 +14,8 @@ DOCKER_COMP = docker compose
 DC_BASE = $(DOCKER_COMP) -f docker-compose.yml
 DC_TEST = $(DOCKER_COMP) -f docker-compose.test.yml
 DC_E2E = $(DOCKER_COMP) -f docker-compose.yml -f docker-compose.e2e.yml
+
+PAELLA_DIR = src/Pumukit/PaellaPlayerBundle/Resources/public/paella
 
 # Run a command in the php service: reuse the running container if the stack is up,
 # otherwise spin up an ephemeral one that is removed afterwards (--rm).
@@ -121,6 +124,10 @@ test-e2e: ## Run the Playwright browser tests against an isolated stack (pumukit
 
 test-e2e-down: ## Remove the end-to-end stack and its data
 	@$(DC_E2E) --profile e2e down -v --remove-orphans
+
+paella-build: ## Build the Paella player into $(PAELLA_DIR)/dist with Node 24 (the file name carries the date: update @PumukitPaellaPlayer/PaellaPlayer/index.html.twig)
+	@docker run --rm --user $$(id -u):$$(id -g) -e npm_config_cache=/tmp/.npm -v $(CURDIR)/$(PAELLA_DIR):/src node:24-alpine \
+		sh -c 'cp -a /src/. /tmp/build/ && cd /tmp/build && npm ci --no-audit --no-fund --loglevel=error && npm run build -- --output-path /src/dist'
 
 integration: ## Check core + dev-bundles together: composer, container, routes, lints, deprecations, PHPStan
 	$(call run_php,php bin/integration-check $(ARGS))
