@@ -52,6 +52,17 @@
     array (
     ),
   ),
+  'chart.js' => 
+  array (
+    'version' => '4.6.1',
+    'dependencies' => 
+    array (
+      0 => '@kurkle/color',
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
   '@kurkle/color' => 
   array (
     'version' => '0.3.4',
@@ -64,7 +75,7 @@
   ),
   '@uppy/core' => 
   array (
-    'version' => '6.2.0',
+    'version' => '6.3.0',
     'dependencies' => 
     array (
       0 => 'preact/jsx-runtime',
@@ -82,7 +93,7 @@
   ),
   '@uppy/dashboard' => 
   array (
-    'version' => '6.0.1',
+    'version' => '6.0.2',
     'dependencies' => 
     array (
       0 => '@uppy/core',
@@ -129,7 +140,7 @@
   ),
   '@uppy/locales/lib/es_ES.js' => 
   array (
-    'version' => '5.3.0',
+    'version' => '5.3.1',
     'dependencies' => 
     array (
     ),
@@ -139,7 +150,7 @@
   ),
   '@uppy/locales/lib/en_US.js' => 
   array (
-    'version' => '5.3.0',
+    'version' => '5.3.1',
     'dependencies' => 
     array (
     ),
@@ -149,7 +160,7 @@
   ),
   '@uppy/locales/lib/gl_ES.js' => 
   array (
-    'version' => '5.3.0',
+    'version' => '5.3.1',
     'dependencies' => 
     array (
     ),
@@ -159,7 +170,7 @@
   ),
   '@uppy/core/dist/style.min.css' => 
   array (
-    'version' => '6.2.0',
+    'version' => '6.3.0',
     'dependencies' => 
     array (
     ),
@@ -169,7 +180,7 @@
   ),
   '@uppy/dashboard/dist/style.min.css' => 
   array (
-    'version' => '6.0.1',
+    'version' => '6.0.2',
     'dependencies' => 
     array (
     ),
@@ -253,7 +264,7 @@
   ),
   'nanoid/non-secure' => 
   array (
-    'version' => '6.0.1',
+    'version' => '6.0.2',
     'dependencies' => 
     array (
     ),
@@ -263,7 +274,7 @@
   ),
   '@uppy/core/provider-views' => 
   array (
-    'version' => '6.2.0',
+    'version' => '6.3.0',
     'dependencies' => 
     array (
       0 => 'preact/jsx-runtime',
@@ -273,9 +284,8 @@
       4 => 'p-retry',
       5 => 'classnames',
       6 => 'lodash/debounce.js',
-      7 => '@transloadit/prettier-bytes',
-      8 => 'p-queue',
-      9 => 'preact',
+      7 => 'p-queue',
+      8 => 'preact',
     ),
     'extraFiles' => 
     array (
@@ -318,7 +328,7 @@
   ),
   '@uppy/core/utils/preact' => 
   array (
-    'version' => '6.2.0',
+    'version' => '6.3.0',
     'dependencies' => 
     array (
       0 => 'preact',
@@ -329,7 +339,7 @@
   ),
   '@uppy/core/utils/preact/hooks' => 
   array (
-    'version' => '6.2.0',
+    'version' => '6.3.0',
     'dependencies' => 
     array (
       0 => 'preact/hooks',
@@ -407,7 +417,7 @@
   ),
   'p-queue' => 
   array (
-    'version' => '9.3.3',
+    'version' => '9.3.5',
     'dependencies' => 
     array (
       0 => 'eventemitter3',
@@ -472,7 +482,7 @@
   ),
   'p-timeout' => 
   array (
-    'version' => '7.0.1',
+    'version' => '7.0.2',
     'dependencies' => 
     array (
     ),
@@ -512,20 +522,9 @@
     array (
     ),
   ),
-  'chart.js' => 
-  array (
-    'version' => '4.5.1',
-    'dependencies' => 
-    array (
-      0 => '@kurkle/color',
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
   'date-fns' => 
   array (
-    'version' => '4.1.0',
+    'version' => '4.4.0',
     'dependencies' => 
     array (
     ),

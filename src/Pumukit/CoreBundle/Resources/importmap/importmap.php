@@ -51,16 +51,16 @@ return [
         'version' => '2.1.12',
     ],
     'chart.js' => [
-        'version' => '4.5.1',
+        'version' => '4.6.1',
     ],
     '@kurkle/color' => [
         'version' => '0.3.4',
     ],
     '@uppy/core' => [
-        'version' => '6.2.0',
+        'version' => '6.3.0',
     ],
     '@uppy/dashboard' => [
-        'version' => '6.0.1',
+        'version' => '6.0.2',
     ],
     '@uppy/tus' => [
         'version' => '6.0.0',
@@ -69,20 +69,20 @@ return [
         'version' => '6.0.1',
     ],
     '@uppy/locales/lib/es_ES.js' => [
-        'version' => '5.3.0',
+        'version' => '5.3.1',
     ],
     '@uppy/locales/lib/en_US.js' => [
-        'version' => '5.3.0',
+        'version' => '5.3.1',
     ],
     '@uppy/locales/lib/gl_ES.js' => [
-        'version' => '5.3.0',
+        'version' => '5.3.1',
     ],
     '@uppy/core/dist/style.min.css' => [
-        'version' => '6.2.0',
+        'version' => '6.3.0',
         'type' => 'css',
     ],
     '@uppy/dashboard/dist/style.min.css' => [
-        'version' => '6.0.1',
+        'version' => '6.0.2',
         'type' => 'css',
     ],
     'preact/jsx-runtime' => [
@@ -107,10 +107,10 @@ return [
         'version' => '2.0.1',
     ],
     'nanoid/non-secure' => [
-        'version' => '6.0.1',
+        'version' => '6.0.2',
     ],
     '@uppy/core/provider-views' => [
-        'version' => '6.2.0',
+        'version' => '6.3.0',
     ],
     '@uppy/core/utils' => [
         'version' => '6.2.0',
@@ -122,10 +122,10 @@ return [
         'version' => '2.5.1',
     ],
     '@uppy/core/utils/preact' => [
-        'version' => '6.2.0',
+        'version' => '6.3.0',
     ],
     '@uppy/core/utils/preact/hooks' => [
-        'version' => '6.2.0',
+        'version' => '6.3.0',
     ],
     'shallow-equal' => [
         'version' => '3.1.0',
@@ -146,7 +146,7 @@ return [
         'version' => '8.0.1',
     ],
     'p-queue' => [
-        'version' => '9.3.3',
+        'version' => '9.3.5',
     ],
     'exifr/dist/mini.esm.mjs' => [
         'version' => '7.1.3',
@@ -164,7 +164,7 @@ return [
         'version' => '5.0.4',
     ],
     'p-timeout' => [
-        'version' => '7.0.1',
+        'version' => '7.0.2',
     ],
     'requires-port' => [
         'version' => '1.0.0',
@@ -176,6 +176,6 @@ return [
         'version' => '3.0.0',
     ],
     'date-fns' => [
-        'version' => '4.1.0',
+        'version' => '4.4.0',
     ],
 ];
