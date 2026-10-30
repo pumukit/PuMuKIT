@@ -18,6 +18,14 @@ class PumukitPaellaPlayerExtension extends Extension implements PrependExtension
             'asset_mapper' => [
                 'excluded_patterns' => [dirname(__DIR__).'/Resources/public/paella/*'],
             ],
+            'assets' => [
+                'packages' => [
+                    'paella' => [
+                        'base_path' => '/bundles/pumukitpaellaplayer/paella/dist',
+                        'json_manifest_path' => dirname(__DIR__).'/Resources/public/paella/dist/manifest.json',
+                    ],
+                ],
+            ],
         ]);
     }
 

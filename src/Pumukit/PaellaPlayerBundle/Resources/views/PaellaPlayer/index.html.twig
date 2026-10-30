@@ -12,7 +12,7 @@
   {% if live is not defined and event is not defined %}
     {{ parent() }}
   {% endif %}
-  <script type="text/javascript" src="{{ asset('bundles/pumukitpaellaplayer/paella/dist/teltek-paella-player-2026-10-30.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('teltek-paella-player.js', 'paella') }}"></script>
 {% endblock %}
 
 {% block title %}{{ parent() }} {% endblock %}
