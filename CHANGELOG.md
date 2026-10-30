@@ -9,6 +9,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Added
 
+- `make update` updates composer, the importmap and the Paella player within their major versions before a release (`update-composer`, `update-importmap`, `update-paella`) and lists the updates of jQuery, Bootstrap and Font Awesome (`vendor-outdated`), through the new `pumukit:importmap:update` and `pumukit:vendor:outdated` commands; `make paella-build` builds the player with Node 24 in Docker.
 - Versioned read-only REST API based on API Platform 5 under `/api/v1`, with Swagger UI and ReDoc, protected by the API access permission and exposing MultimediaObject, Series, Tag and Person collections.
 - Mailpit as a mail catcher for local development (web inbox at http://localhost:8025).
 - RabbitMQ 4.4 service and Symfony Messenger with the AMQP transport (PHP extension `amqp` in the Docker image), ready for the bundles to declare their own transports and queues.
@@ -26,6 +27,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Changed
 
+- Build the Paella player with a content hash in its file name and load it through the `paella` asset package, so a new build no longer changes the template.
 - Escape the backoffice form labels; labels with HTML need `label_html`. Sanitize the series header, footer and subseries titles with `symfony/html-sanitizer` (`pumukit.series_html`), print user URLs with the new `safe_url` Twig filter, accept only `http` and `https` in links and person webs, reject more uploads the browser can run and serve `/uploads` with `nosniff`.
 - Redesign the admin dashboard: drop the SIMILE Timeline 2.3.1 widget (and its `/dashboard/series/timeline.xml` feed) in favour of a Chart.js layout. The default view renders KPI cards (series, multimedia objects, total time, storage usage), a publication-activity bubble chart (date × 4-hour buckets, fed by a new `StatsService::getMmobjActivityByDayHour` aggregation over `properties.created`) with a day/month/year toggle that windows to the last 30 days / 12 months / 10 years, storage occupancy as HTML progress bars per `dir_out`, and a Last-5-series panel with owner username. The `?show_stats=1` gate is removed: everything renders on the default route. Scope-aware: users without `ROLE_SCOPE_GLOBAL` get storage hidden and their stats / recent series filtered by `properties.owners`. Chart.js (+ `chartjs-adapter-date-fns` + `chartjs-plugin-zoom`) is introduced as the planned successor for the D3 v3 + NVD3 stack still used in `StatsUIBundle`.
 - Upgrade the core to Symfony 7.4 LTS and PHP 8.5.

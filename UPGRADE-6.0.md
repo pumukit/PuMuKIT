@@ -222,6 +222,11 @@ bundle `Resources/public` directory is mapped automatically under its usual pref
   does not break the page, it only shows a 404 in the browser console.
 - Bundles that ship files whose JavaScript loads other files by relative URL (like the Paella
   build) must exclude them from AssetMapper with `framework.asset_mapper.excluded_patterns`.
+- The Paella player is built with a content hash in its file name
+  (`teltek-paella-player.<hash>.js`) and a `manifest.json` that the `paella` asset package reads.
+  An overridden `@PumukitPaellaPlayer/PaellaPlayer/index.html.twig` must load
+  `{{ asset('teltek-paella-player.js', 'paella') }}` instead of
+  `bundles/pumukitpaellaplayer/paella/dist/teltek-paella-player-<date>.js`.
 - Production builds must run `bin/console asset-map:compile` after `assets:install` (the
   Docker image does it).
 
