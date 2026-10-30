@@ -811,6 +811,10 @@ default). Projects that set `multimedia_object_add_owner_template` must use the 
 notation (`@PumukitNewAdmin/MultimediaObject/Owner/email.html.twig`) instead of
 `PumukitNewAdminBundle:MultimediaObject:Owner/email.html.twig`.
 
+Removed options, which had no effect: `pumukit_paella_player.force_dual` (projects that set it
+must remove it, or the configuration fails to load) and the `pumukit.show_mms_list_all_menu`,
+`debug_toolbar`, `debug_redirects` and `use_assetic_controller` parameters.
+
 ## Output escaping
 
 The core no longer prints user data as HTML. Projects that override these templates or reuse

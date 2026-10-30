@@ -37,7 +37,6 @@ class PumukitPaellaPlayerExtension extends Extension implements PrependExtension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('pumukit_paella_player.yaml');
 
-        $container->setParameter('pumukitpaella.force_dual', $config['force_dual']);
         $container->setParameter('pumukitpaella.custom_css_url', $config['custom_css_url']);
         $container->setParameter('pumukitpaella.logo', $config['logo']);
         $container->setParameter('pumukitpaella.xapi_endpoint', $config['xapi_endpoint']);

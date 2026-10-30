@@ -16,10 +16,6 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->booleanNode('force_dual')
-            ->defaultValue(false)
-            ->info('If true never send SBS')
-            ->end()
             ->scalarNode('custom_css_url')
             ->defaultValue(null)
             ->info('Custom CSS URL')

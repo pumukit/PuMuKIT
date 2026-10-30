@@ -636,7 +636,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     admin_email?: list<scalar|Param|null>,
  * }
  * @psalm-type PumukitPaellaPlayerConfig = array{
- *     force_dual?: bool|Param, // If true never send SBS // Default: false
  *     custom_css_url?: scalar|Param|null, // Custom CSS URL // Default: null
  *     logo?: scalar|Param|null, // Custom logo URL // Default: null
  *     xapi_endpoint?: scalar|Param|null, // LRS endpoint for xAPI // Default: null

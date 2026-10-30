@@ -4,15 +4,11 @@ parameters:
   pumukit.dynamicpicextractor.command: ffmpeg -i {{input}} -ss 00:00:05 -t 3 -quality 80 -r 10 -s {{width}}x{{height}} {{output}}
   pumukit.warning_on_unpublished:      true
   pumukit.show_dashboard_tab:          true
-  pumukit.show_mms_list_all_menu:      false
   pumukit.inbox_depth:                 true
   pumukit.customlanguages:
     - en
   locale:                              "%env(string:PUMUKIT_LOCALE)%"
   secret:                              "%env(string:PUMUKIT_SECRET)%"
-  debug_toolbar:                       true
-  debug_redirects:                     false
-  use_assetic_controller:              true
   router.request_context.scheme:       "%env(string:PUMUKIT_SCHEME)%"
   router.request_context.host:         "%env(string:PUMUKIT_FRONTEND_HOST)%"
 
