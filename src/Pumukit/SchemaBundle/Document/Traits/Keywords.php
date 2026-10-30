@@ -16,7 +16,7 @@ trait Keywords
         $keywords = [];
         foreach ($keyword as $lang => $value) {
             if (null !== $value) {
-                $keywords[$lang] = array_values(array_filter(array_map('trim', explode(',', $value))));
+                $keywords[$lang] = self::normalizeKeywords($value);
             }
         }
 
@@ -27,7 +27,7 @@ trait Keywords
     {
         $keywords = [];
         foreach ($this->keywords as $lang => $value) {
-            $keywords[$lang] = implode(',', $value);
+            $keywords[$lang] = implode(',', self::normalizeKeywords($value));
         }
 
         return $keywords;
@@ -48,10 +48,7 @@ trait Keywords
             $locale = $this->locale;
         }
 
-        if (!isset($this->keywords[$locale])) {
-            $this->keywords[$locale] = [];
-        }
-
+        $this->keywords[$locale] = self::normalizeKeywords($this->keywords[$locale] ?? []);
         $this->keywords[$locale][] = $keyword;
 
         return true;
@@ -63,10 +60,12 @@ trait Keywords
             $locale = $this->locale;
         }
 
-        $key = array_search($keyword, $this->keywords[$locale], true);
+        $keywords = self::normalizeKeywords($this->keywords[$locale] ?? []);
+        $key = array_search($keyword, $keywords, true);
 
         if (false !== $key) {
-            unset($this->keywords[$locale][$key]);
+            unset($keywords[$key]);
+            $this->keywords[$locale] = $keywords;
 
             return true;
         }
@@ -88,7 +87,7 @@ trait Keywords
             $locale = $this->locale;
         }
 
-        return $this->keywords[$locale] ?? [];
+        return self::normalizeKeywords($this->keywords[$locale] ?? []);
     }
 
     public function getKeywordsAsString($locale = null): string
@@ -98,11 +97,20 @@ trait Keywords
 
     public function setI18nKeywords(array $keywords): void
     {
-        $this->keywords = $keywords;
+        $this->keywords = array_map(self::normalizeKeywords(...), $keywords);
     }
 
     public function getI18nKeywords(): array
     {
-        return $this->keywords;
+        return array_map(self::normalizeKeywords(...), $this->keywords);
+    }
+
+    private static function normalizeKeywords(mixed $keywords): array
+    {
+        if (is_string($keywords)) {
+            return array_values(array_filter(array_map('trim', explode(',', $keywords))));
+        }
+
+        return is_array($keywords) ? $keywords : [];
     }
 }
