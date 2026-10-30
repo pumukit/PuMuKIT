@@ -20,6 +20,9 @@ return [
         'path' => '@pumukit/new-admin/backoffice.js',
         'entrypoint' => true,
     ],
+    '@pumukit/new-admin/suggest' => [
+        'path' => '@pumukit/new-admin/suggest.js',
+    ],
     '@pumukit/translator' => [
         'path' => '@pumukit/core/translator.js',
     ],

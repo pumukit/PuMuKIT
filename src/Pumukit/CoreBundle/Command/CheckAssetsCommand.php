@@ -34,10 +34,13 @@ class CheckAssetsCommand extends Command
         'bundles/pumukitwebtv/js/moment-with-locales.min.js' => 'nothing: dates use the native input type="date" (see @PumukitWebTV/Search/filtersmultimediaobjects.html.twig)',
         'bundles/pumukitstatsui/vendor/moment/moment.min.js' => 'nothing: dates use the native input type="date" (see @PumukitWebTV/Search/filtersmultimediaobjects.html.twig)',
         'bundles/pumukitlive/css/chat.css' => 'bundles/pumukitwebtv/css/live/chat.css',
-        'bundles/pumukitnewadmin/js/jquery-ui-1.11.3.custom.min.js' => 'bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.js',
-        'bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.min.css' => 'bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.css',
-        'bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.structure.min.css' => 'bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.css',
-        'bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.theme.min.css' => 'bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.css',
+        'bundles/pumukitnewadmin/js/jquery-ui-1.11.3.custom.min.js' => 'nothing: jQuery UI is removed, the backoffice autocompletes use the SuggestInput module of the bundle (see UPGRADE-6.0.md)',
+        'bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.min.css' => 'nothing: jQuery UI is removed, the backoffice autocompletes use the SuggestInput module of the bundle (see UPGRADE-6.0.md)',
+        'bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.structure.min.css' => 'nothing: jQuery UI is removed, the backoffice autocompletes use the SuggestInput module of the bundle (see UPGRADE-6.0.md)',
+        'bundles/pumukitnewadmin/css/jquery-ui-1.11.3.custom.theme.min.css' => 'nothing: jQuery UI is removed, the backoffice autocompletes use the SuggestInput module of the bundle (see UPGRADE-6.0.md)',
+        'bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.js' => 'nothing: jQuery UI is removed, the backoffice autocompletes use the SuggestInput module of the bundle (see UPGRADE-6.0.md)',
+        'bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.css' => 'nothing: jQuery UI is removed, the backoffice autocompletes use the SuggestInput module of the bundle (see UPGRADE-6.0.md)',
+        '@PumukitNewAdmin/jquery-ui-autocomplete.css.twig' => 'nothing: the autocomplete styles are in @PumukitNewAdmin/pumukit.css.twig',
         'bundles/pumukitwebtv/js/bootstrap-datetimepicker.min.js' => 'nothing: dates use the native input type="date" (see @PumukitWebTV/Search/filtersmultimediaobjects.html.twig)',
         'bundles/pumukitwebtv/css/bootstrap-datetimepicker.min.css' => 'nothing: dates use the native input type="date" (see @PumukitWebTV/Search/filtersmultimediaobjects.html.twig)',
         'bundles/pumukitwebtv/css/bootstrap-datetimepicker.css' => 'nothing: dates use the native input type="date" (see @PumukitWebTV/Search/filtersmultimediaobjects.html.twig)',
@@ -179,6 +182,10 @@ class CheckAssetsCommand extends Command
         'unique' => '$.uniqueSort()',
         'camelCase' => 'a local helper',
         'cssProps' => 'nothing: vendor prefixes are no longer needed',
+    ];
+
+    public const REMOVED_JQUERY_UI_WIDGETS = [
+        'autocomplete' => 'the SuggestInput module of the backoffice (see UPGRADE-6.0.md)',
     ];
 
     public const REMOVED_JAVASCRIPT_GLOBALS = [
@@ -416,6 +423,14 @@ EOT
                     if (preg_match('/(?<![\w$.])(?:\$|jQuery)\.'.$api.'\b/', $line)) {
                         ++$missing;
                         $output->writeln('Removed jQuery API: <info>$.'.$api.'</info> in '.$location.', jQuery 4 no longer provides it');
+                        $output->writeln('    use <comment>'.$replacement.'</comment>');
+                    }
+                }
+
+                foreach (self::REMOVED_JQUERY_UI_WIDGETS as $widget => $replacement) {
+                    if (preg_match('/\.'.$widget.'\(/', $line)) {
+                        ++$missing;
+                        $output->writeln('Removed jQuery UI widget: <info>.'.$widget.'()</info> in '.$location.', jQuery UI is no longer loaded');
                         $output->writeln('    use <comment>'.$replacement.'</comment>');
                     }
                 }

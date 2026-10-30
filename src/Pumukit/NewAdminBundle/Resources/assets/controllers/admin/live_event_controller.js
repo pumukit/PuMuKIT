@@ -1,9 +1,14 @@
 import { Controller } from '@hotwired/stimulus';
+import { SuggestInput, remoteSource } from '../../suggest.js';
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
     static targets = ['channel', 'tooltip', 'series'];
     static values = { urls: Object, messages: Object, current: String, autoload: Boolean, locale: String };
+
+    initialize() {
+        this.suggestions = new Map();
+    }
 
     connect() {
         if (!this.autoloadValue || !this.currentValue) {
@@ -16,36 +21,29 @@ export default class extends Controller {
     }
 
     channelTargetConnected(element) {
-        const input = $(element);
-        input.autocomplete({
-            source: (request, response) => {
-                $.getJSON(this.urlsValue.channelSuggest, { term: request.term })
-                    .done((data) => response(data.map((item) => ({ id: item.id, label: item.text, value: item.text }))))
-                    .fail(() => response([]));
-            },
-            delay: 250,
+        const suggest = new SuggestInput(element, {
+            source: remoteSource(this.urlsValue.channelSuggest, (item) => ({ id: item.id, text: item.text, value: item.text })),
             minLength: 0,
-            select: (event, ui) => {
-                $('#live_channel_input_name').val(ui.item.label);
-                $('#live_channel_input_id').val(ui.item.id);
+            openOnFocus: true,
+            select: (item) => {
+                $('#live_channel_input_name').val(item.text);
+                $('#live_channel_input_id').val(item.id);
                 this.channelChosen = true;
             },
         });
-        input.on('focus.adminLiveEvent', () => input.autocomplete('search', input.val()));
-        input.on('input.adminLiveEvent', () => {
-            if ('' === input.val() && this.channelChosen) {
+        element.addEventListener('input', () => {
+            if ('' === element.value && this.channelChosen) {
                 $('#live_channel_input_name').val('');
                 $('#live_channel_input_id').val('');
                 this.channelChosen = false;
             }
-        });
+        }, { signal: suggest.listeners.signal });
+        this.suggestions.set(element, suggest);
     }
 
     channelTargetDisconnected(element) {
-        $(element).off('.adminLiveEvent');
-        if ($(element).autocomplete('instance')) {
-            $(element).autocomplete('destroy');
-        }
+        this.suggestions.get(element)?.destroy();
+        this.suggestions.delete(element);
     }
 
     tooltipTargetConnected(element) {
@@ -53,24 +51,16 @@ export default class extends Controller {
     }
 
     seriesTargetConnected(element) {
-        const input = $(element);
-        input.autocomplete({
-            source: this.urlsValue.seriesSuggest,
-            delay: 250,
+        this.suggestions.set(element, new SuggestInput(element, {
+            source: remoteSource(this.urlsValue.seriesSuggest, (item) => ({ id: item.id, text: `${item.id} - ${item.title}`, value: item.title })),
             minLength: 2,
-            select: (event, ui) => $('#seriesSuggestValidate').val(ui.item.id),
-        });
-        input.autocomplete('instance')._renderItem = (ul, item) => {
-            const link = $('<a>').text(`${item.id} - ${item.title}`).append($('<br>'), $('<span class="form-control">'));
-
-            return $('<li>').append(link).appendTo(ul);
-        };
+            select: (item) => $('#seriesSuggestValidate').val(item.id),
+        }));
     }
 
     seriesTargetDisconnected(element) {
-        if ($(element).autocomplete('instance')) {
-            $(element).autocomplete('destroy');
-        }
+        this.suggestions.get(element)?.destroy();
+        this.suggestions.delete(element);
     }
 
     batch(event) {

@@ -324,18 +324,25 @@ body {
     background-color: #c05800;
 }
 
-.ui-autocomplete {
-    z-index: 1200 !important;
+.pmk-suggest-menu {
+    z-index: 1200;
     max-height: 300px;
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus, .ui-menu .ui-menu-item-wrapper.ui-state-active {
-    border: 1px !important;
-    background: #eee !important;
-    font-weight: normal !important;
-    color: #c05800 !important;
+.pmk-suggest-menu .dropdown-item {
+    cursor: pointer;
+    white-space: normal;
+}
+
+.pmk-suggest-menu .dropdown-item:hover, .pmk-suggest-menu .dropdown-item.active {
+    background: #eee;
+    color: #c05800;
+}
+
+.form-control.pmk-suggest-loading {
+    background: white url("{{ asset('bundles/pumukitnewadmin/images/admin/load/ui-anim_basic_35x35.gif') }}") right center no-repeat;
 }
 
 .pmk-job-animate-hover:hover {

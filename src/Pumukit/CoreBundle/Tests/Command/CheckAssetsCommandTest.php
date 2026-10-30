@@ -220,6 +220,24 @@ class CheckAssetsCommandTest extends PumukitTestCase
         $this->assertStringContainsString('Problems found: 2', $display);
     }
 
+    public function testReportsJqueryUiAutocompleteAndItsFiles(): void
+    {
+        file_put_contents(
+            $this->tmpDir.'/index.html.twig',
+            "<script src=\"{{ asset('bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.js') }}\"></script>\n<script>\n$('#login').autocomplete({source: url});\n</script>\n<input autocomplete=\"off\">\n"
+        );
+
+        $tester = $this->commandTester();
+        $tester->execute(['--path' => $this->tmpDir]);
+
+        $display = $tester->getDisplay();
+        $this->assertSame(Command::FAILURE, $tester->getStatusCode());
+        $this->assertStringContainsString('bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.js', $display);
+        $this->assertStringContainsString('Removed jQuery UI widget: .autocomplete() in index.html.twig:3', $display);
+        $this->assertStringContainsString('use the SuggestInput module of the backoffice', $display);
+        $this->assertStringContainsString('Problems found: 2', $display);
+    }
+
     public function testReportsFontAwesomeIconsMissingInFontAwesome7(): void
     {
         file_put_contents(

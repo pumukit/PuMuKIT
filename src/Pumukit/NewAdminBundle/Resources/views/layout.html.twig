@@ -12,9 +12,6 @@
     <!-- Bootstrap -->
     <link href="{{ asset('bundles/pumukitcore/vendor/bootstrap5/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Material Design Icons -->
-    <!-- jQuery UI custom (autocomplete) -->
-    <link href="{{ asset('bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
-    <link href="{{ path('pumukit_jquery_ui_autocomplete_css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/pumukitnewadmin/css/material.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/pumukitnewadmin/css/keywords.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/pumukitnewadmin/css/backoffice.css') }}" rel="stylesheet">
@@ -26,7 +23,6 @@
 {% block javascripts %}
     <script src="{{ asset('bundles/pumukitcore/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('bundles/pumukitcore/vendor/bootstrap5/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('bundles/pumukitcore/vendor/jquery-ui/jquery-ui.min.js') }}"></script>
 
     {{ importmap(['pumukit', '@pumukit/new-admin/backoffice']) }}
 {% endblock %}

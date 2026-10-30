@@ -19,16 +19,6 @@ pumukitnewadmin_css:
         _format: css
 
 
-pumukit_jquery_ui_autocomplete_css:
-    path: /admin/jquery_ui_autocomplete.css
-    methods: [GET]
-    defaults:
-        _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
-        template: '@PumukitNewAdmin/jquery-ui-autocomplete.css.twig'
-        maxAge:       86400
-        sharedAge:    86400
-        _format: css
-
 pumukitnewadmin_user:
     resource: "@PumukitNewAdminBundle/Resources/config/routes/user.yml"
     prefix: /admin/user

@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
+import { SuggestInput, remoteSource } from '../../suggest.js';
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
@@ -17,26 +18,18 @@ export default class extends Controller {
         if (!this.hasNameTarget || !this.autocompleteUrlValue) {
             return;
         }
-        const input = $(this.nameTarget);
-        input.autocomplete({
-            source: this.autocompleteUrlValue,
-            delay: 250,
+        this.suggest = new SuggestInput(this.nameTarget, {
+            source: remoteSource(this.autocompleteUrlValue, (item) => ({ id: item.id, text: item.label, description: String(item.desc ?? '').trim(), value: item.value })),
             minLength: 2,
-            select: (event, ui) => {
-                this.personTarget.value = ui.item.id;
+            select: (item) => {
+                this.personTarget.value = item.id;
             },
         });
-        input.autocomplete('instance')._renderItem = (ul, item) => {
-            const link = $('<a>').attr('title', item.id).text(item.label).append($('<br>'), $('<span class="form-control">').text(item.desc));
-
-            return $('<li>').append(link).appendTo(ul);
-        };
     }
 
     disconnect() {
-        if (this.hasNameTarget && $(this.nameTarget).autocomplete('instance')) {
-            $(this.nameTarget).autocomplete('destroy');
-        }
+        this.suggest?.destroy();
+        this.suggest = null;
     }
 
     clear() {
