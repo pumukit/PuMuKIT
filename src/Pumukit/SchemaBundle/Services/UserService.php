@@ -427,8 +427,8 @@ class UserService
                 $object->setProperty('owners', $owners);
                 $this->dm->persist($object);
                 if ($this->sendEmailWhenAddUserOwner && $object instanceof MultimediaObject) {
-                    $userLogged = $this->tokenStorage->getToken()->getUser();
-                    if ($userLogged->getUsername() !== $user->getEmail() && !$object->isPrototype()) {
+                    $userLogged = $this->tokenStorage->getToken()?->getUser();
+                    if ($userLogged instanceof User && $userLogged->getUsername() !== $user->getEmail() && !$object->isPrototype()) {
                         $this->multimediaObjectEventDispatcherService->dispatchMultimediaObjectAddOwner(
                             $object,
                             $userLogged,

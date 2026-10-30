@@ -802,6 +802,15 @@ magic URL of the series. It no longer trusts a `Referer` header that merely cont
 so going from a magic URL page to a published video of the series shows only the published
 ones.
 
+`pumukit_schema.send_email_on_user_added_as_owner` was not passed to the user service since
+4.0, so no email was sent when a user was added as owner of a multimedia object. It works
+again. `pumukit_schema.user_can_reject_owner_of_multimedia_object` was never read: it now
+decides whether that email includes the link to reject the co-ownership, and the
+`pumukit_multimedia_object_reject_co_owner` route returns a 404 when it is `false` (the
+default). Projects that set `multimedia_object_add_owner_template` must use the `@Bundle/path`
+notation (`@PumukitNewAdmin/MultimediaObject/Owner/email.html.twig`) instead of
+`PumukitNewAdminBundle:MultimediaObject:Owner/email.html.twig`.
+
 ## Output escaping
 
 The core no longer prints user data as HTML. Projects that override these templates or reuse

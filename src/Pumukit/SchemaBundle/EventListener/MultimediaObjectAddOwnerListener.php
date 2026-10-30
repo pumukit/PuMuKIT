@@ -14,15 +14,18 @@ class MultimediaObjectAddOwnerListener
     private $senderService;
     private $addedOwnerEmailSubject;
     private $addedOwnerEmailTemplate;
+    private $userCanRejectOwner;
 
     public function __construct(
         ?SenderService $senderService,
         string $addedOwnerEmailSubject,
-        string $addedOwnerEmailTemplate
+        string $addedOwnerEmailTemplate,
+        bool $userCanRejectOwner = false
     ) {
         $this->senderService = $senderService;
         $this->addedOwnerEmailSubject = $addedOwnerEmailSubject;
         $this->addedOwnerEmailTemplate = $addedOwnerEmailTemplate;
+        $this->userCanRejectOwner = $userCanRejectOwner;
     }
 
     public function add(MultimediaObjectAddOwnerEvent $event): void
@@ -70,6 +73,7 @@ class MultimediaObjectAddOwnerListener
             'user' => $user,
             'coOwner' => $coOwner,
             'multimediaObject' => $multimediaObject,
+            'can_reject' => $this->userCanRejectOwner,
             'sender_name' => $this->senderService->getSenderName(),
         ];
     }

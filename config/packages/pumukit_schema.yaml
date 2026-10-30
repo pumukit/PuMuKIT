@@ -181,6 +181,7 @@ services:
     class: Pumukit\SchemaBundle\Services\UserService
     arguments:
       $personalScopeDeleteOwners: '%pumukitschema.personal_scope_delete_owners%'
+      $sendEmailWhenAddUserOwner: '%pumukit_schema.send_email_on_user_added_as_owner%'
 
   Pumukit\SchemaBundle\Services\GroupService:
     class: Pumukit\SchemaBundle\Services\GroupService
@@ -239,6 +240,7 @@ services:
     arguments:
       $addedOwnerEmailSubject: '%pumukit_schema.multimedia_object_add_owner_subject%'
       $addedOwnerEmailTemplate: '%pumukit_schema.multimedia_object_add_owner_template%'
+      $userCanRejectOwner: '%pumukit_schema.user_can_reject_owner_of_multimedia_object%'
     tags:
       - { name: "kernel.event_listener", event: "multimedia_object.add_owner", method: "add" }
 

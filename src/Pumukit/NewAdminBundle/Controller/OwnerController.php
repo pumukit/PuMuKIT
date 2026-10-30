@@ -25,17 +25,20 @@ class OwnerController extends AbstractController implements NewAdminControllerIn
     private $multimediaObjectService;
     private $ownerService;
     private $templating;
+    private $userCanRejectOwner;
 
     public function __construct(
         TranslatorInterface $translator,
         MultimediaObjectService $multimediaObjectService,
         OwnerService $ownerService,
-        TemplatingEngine $templating
+        TemplatingEngine $templating,
+        bool $userCanRejectOwner = false
     ) {
         $this->translator = $translator;
         $this->multimediaObjectService = $multimediaObjectService;
         $this->ownerService = $ownerService;
         $this->templating = $templating;
+        $this->userCanRejectOwner = $userCanRejectOwner;
     }
 
     #[Route('/reject/{id}/owner/{owner}/coowner/{coOwner}', name: 'pumukit_multimedia_object_reject_co_owner', methods: ['GET', 'POST'])]
@@ -43,6 +46,10 @@ class OwnerController extends AbstractController implements NewAdminControllerIn
     #[Template('@PumukitNewAdmin/MultimediaObject/Owner/reject.html.twig')]
     public function rejectCoOwnerAction(Request $request, #[MapDocument(id: 'id')] MultimediaObject $multimediaObject, #[MapDocument(id: 'owner')] User $owner, #[MapDocument(id: 'coOwner')] User $coOwner)
     {
+        if (!$this->userCanRejectOwner) {
+            throw $this->createNotFoundException();
+        }
+
         $user = $this->getUser();
         $errorMessage = '';
 

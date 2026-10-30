@@ -1,5 +1,3 @@
-{% set multimediaObjectRejectLink = url('pumukit_multimedia_object_reject_co_owner', {'id': multimediaObject.getId(), 'owner': user.id, 'coOwner': coOwner.id }) %}
-
 <h2>{{ platform_name }}: {{ subject|trans }}</h2>
 <p>{{ "The user '%user%' has added you as co-owner of the video:"|trans({"%user%": user.username}, "messages") }}</p>
 <details>
@@ -16,5 +14,8 @@
         </li>
     </ul>
 </details>
-<p>{% trans %}You can reject being co-owner in the following URL link:{% endtrans %} <a href="{{ multimediaObjectRejectLink}}" target="_blank">{{ multimediaObjectRejectLink }}</a></p>
+{% if can_reject|default(false) %}
+    {% set multimediaObjectRejectLink = url('pumukit_multimedia_object_reject_co_owner', {'id': multimediaObject.getId(), 'owner': user.id, 'coOwner': coOwner.id }) %}
+    <p>{% trans %}You can reject being co-owner in the following URL link:{% endtrans %} <a href="{{ multimediaObjectRejectLink }}" target="_blank">{{ multimediaObjectRejectLink }}</a></p>
+{% endif %}
 {{ sender_name }}

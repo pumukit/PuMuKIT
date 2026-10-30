@@ -29,6 +29,7 @@ services:
       $pumukitLdapEnable: '%pumukit_ldap.ldap%'
       $pumukitNewAdminBaseCatalogueTag: '%pumukit_new_admin.base_catalogue_tag%'
       $personalScopeRoleCode: '%pumukitschema.personal_scope_role_code%'
+      $userCanRejectOwner: '%pumukit_schema.user_can_reject_owner_of_multimedia_object%'
       $enablePlaylist: '%pumukit_new_admin.enable_playlist%'
       $copyrightInfoUrl: '%pumukit.copyright_info_url%'
       $licenseInfoUrl: '%pumukit.license_info_url%'
