@@ -5,7 +5,7 @@ PuMuKIT 6.0 has **two independent parts**:
 1. **Symfony core**: `5.4` (end of life) → `7.4` LTS on **PHP 8.5**, plus the dependency bumps it
    unblocked (api-platform 5, MonologBundle 4, knp-menu 3, tus-php 2, pagerfanta 4, DoctrineMongoDBBundle 5,
    etc.).
-2. **MongoDB stack**: server `5.0` → `9.0`, `ext-mongodb` `1.14.2` → `2.5.5`,
+2. **MongoDB stack**: server `4.x`/`5.0` → `9.0`, `ext-mongodb` `1.14.2` → `2.5.5`,
    `mongodb/mongodb` `1.13` → `2.5` and Doctrine ODM `2.6` → `2.17`.
 
 This guide describes the **exact, reproducible steps** so it can be replayed on any
@@ -145,7 +145,7 @@ Rebuild the image (`docker compose build --pull`); no data has to be migrated.
 
 ## MongoDB stack upgrade
 
-- **MongoDB server**: `5.0` → `9.0` (must be upgraded one major at a time).
+- **MongoDB server**: `4.x`/`5.0` → `9.0`, by dump and restore or one major at a time in place.
 - **PHP driver** (`ext-mongodb`): `1.14.2` → `2.5.5`. The 2.x line is the one officially
   supported on PHP 8.5, and it supports MongoDB servers from 4.2 to 9.0.
 - **PHP MongoDB library** (`mongodb/mongodb`): `1.13` → `2.5` (Doctrine ODM `2.6` → `2.17`).
@@ -193,15 +193,31 @@ in the project README. You are done — skip section B.
 
 ## B. Upgrade from an existing 5.1.x
 
-**Order matters.** Back up first, switch to the 6.0 code, upgrade the **driver** while the
-server is still on 5.0 (the old `1.14` driver only supports MongoDB up to 6.0, so it must
-be raised to `2.5` before the server reaches 7.0 and later), and only then upgrade the **server**
-in hops. Finally rebuild the indexes.
+**Order matters.** Back up first, switch to the 6.0 code, build the new `php` image, move the
+data to a MongoDB 9.0 server and finally rebuild the indexes.
+
+There are two ways to move the data to 9.0 (step **B.3**):
+
+- **[Dump and restore](#b3-option-1-dump-and-restore-recommended) (recommended).** Dump the
+  database with the tools of the current server and restore it into an empty 9.0 server. It
+  works from any 4.x or 5.0 server in a single step, with any storage engine, and needs no
+  intermediate images. It was rehearsed with real PuMuKIT 4.x (MongoDB 4.0) and 5.1 (MongoDB
+  5.0) databases: same document count in every collection and the same indexes.
+- **[In-place upgrade](#b3-option-2-in-place-upgrade-one-major-at-a-time)**, one major version at
+  a time (4.0 → 4.2 → 4.4 → 5.0 → 6.0 → 7.0 → 8.0 → 9.0) on the same data volume.
+
+> **MongoDB 5.0 and later need a CPU with AVX** on x86_64. Check the host before you start:
+> `grep -c -w avx /proc/cpuinfo` must print a number greater than 0. Virtual machines must expose
+> the host CPU flags.
+
+> **Shell of the old images.** The `mongo:4.x` images only include the legacy `mongo` shell;
+> `mongosh` is available from `mongo:5.0`. Use `mongo` instead of `mongosh` in the commands below
+> while the `db` service still runs a 4.x image.
 
 ### B.0 Backup (mandatory)
 
-Feature Compatibility Version (FCV) cannot be downgraded once raised, so the backup is the
-only rollback path for the server upgrade.
+The backup is the only rollback path for the server upgrade: Feature Compatibility Version
+(FCV) cannot be downgraded once raised, and the dump and restore replaces the data volume.
 
 ```bash
 # Dump the database
@@ -224,17 +240,14 @@ git checkout 6.0.x
 
 > This updates `docker-compose.yml` to `mongo:9.0` and the `Dockerfile` to
 > `ext-mongodb 2.5.5`. **Do not** recreate the `db` container yet: your data volume still
-> holds 5.0 data and a 9.0 server would refuse to start on it. Leave `db` running on its
-> current 5.0 container until step **B.3**.
+> holds 4.x or 5.0 data and a 9.0 server would refuse to start on it. Leave `db` running on
+> its current image until step **B.3**.
 
 Now apply the **[application changes](#application-changes-symfony-74)**: confirm you are
 not blocked by SSO, set `MAILER_DSN`, update any ingest scripts using `--profile`, and
 review custom `security.yaml` overrides.
 
-### B.2 Upgrade the PHP driver and dependencies (server still on 5.0)
-
-Driver `2.5` is backward compatible with server `5.0`, so the app boots before the server
-upgrade.
+### B.2 Upgrade the PHP driver and dependencies
 
 ```bash
 # Rebuild ONLY the php service (do not touch db yet)
@@ -248,26 +261,85 @@ docker compose exec php php --ri mongodb | grep "MongoDB extension version"   # 
 docker compose exec php composer install --no-dev --optimize-autoloader
 ```
 
-At this point you are running **6.0 code + driver 2.5 + server 5.0**, which is a supported
-combination.
+Driver `2.5` connects to MongoDB **4.2 and later**. On a 4.2, 4.4 or 5.0 server the 6.0 code
+runs before the server upgrade. On a **4.0** server it cannot connect ("reports wire version 7,
+but this version of libmongoc requires at least 8"): the application is down from here until
+B.3 is finished, and the in-place upgrade must do the 4.2 hop before this step.
 
-### B.3 Upgrade the MongoDB server (5.0 → 6.0 → 7.0 → 8.0 → 9.0)
+### B.3 Option 1: dump and restore (recommended)
 
-You **cannot skip major versions**. The 6.0 code ships `mongo:9.0`, but to migrate existing
-5.0 data you must pass through each intermediate image. Pin the current FCV first:
+Stop the application so that no data changes after the dump. `db` keeps running on its current
+image:
+
+```bash
+docker compose stop proxy php
+```
+
+Dump the database with the tools of the **current** server, and save the number of documents
+of every collection to compare it after the restore (replace `pumukit` with your `MONGODB_DB`,
+and `mongosh` with `mongo` on a 4.x image):
+
+```bash
+docker compose exec db mongodump --db=pumukit --archive=/tmp/pumukit.archive.gz --gzip
+docker compose cp db:/tmp/pumukit.archive.gz ./pumukit.archive.gz
+
+docker compose exec -T db mongosh --quiet pumukit --eval \
+  'db.getCollectionNames().sort().forEach(function (c) { print(c + " " + db.getCollection(c).countDocuments({})) })' \
+  > counts-before.txt
+```
+
+Remove the old container and its data volume (the B.0 backup is your copy), and start an empty
+9.0 server from the committed `docker-compose.yml`:
+
+```bash
+docker compose rm --stop --force db
+docker volume rm "$(docker volume ls -q | grep db-data)"   # <project>_db-data
+docker compose up -d db
+
+until docker compose exec db mongosh --quiet --eval 'db.runCommand({ ping: 1 })' >/dev/null 2>&1; do sleep 2; done
+```
+
+Restore the dump and compare the counts:
+
+```bash
+docker compose cp ./pumukit.archive.gz db:/tmp/pumukit.archive.gz
+docker compose exec db mongorestore --archive=/tmp/pumukit.archive.gz --gzip
+
+docker compose exec -T db mongosh --quiet pumukit --eval \
+  'db.getCollectionNames().sort().forEach(function (c) { print(c + " " + db.getCollection(c).countDocuments({})) })' \
+  > counts-after.txt
+diff counts-before.txt counts-after.txt && echo "same documents"
+```
+
+The restore also recreates the indexes of the dump. A new server already starts with FCV `9.0`.
+Start the application again and continue with **B.4**:
+
+```bash
+docker compose up -d
+```
+
+### B.3 Option 2: in-place upgrade, one major at a time
+
+You **cannot skip major versions**. The 6.0 code ships `mongo:9.0`, but to upgrade the existing
+data volume you must pass through each intermediate image.
+
+> **From 4.0:** MongoDB 4.2 removed the MMAPv1 storage engine, so a 4.0 volume must use
+> WiredTiger (`db.serverStatus().storageEngine.name`); otherwise use option 1. Do the 4.2 hop
+> before **B.2** (driver 2.5 needs 4.2).
+
+Pin the current FCV first (the version of your current server, e.g. `4.0`, `4.4` or `5.0`):
 
 ```bash
 docker compose exec db mongosh --quiet --eval \
   'db.adminCommand({ setFeatureCompatibilityVersion: "5.0" })'
 ```
 
-Then repeat this cycle for each hop — `6.0`, then `7.0`, then `8.0`, then `9.0`. Temporarily
-set the `db` image for the intermediate hops (the final `9.0` already matches the committed
-file):
+Then repeat this cycle for each hop up to `9.0`. Temporarily set the `db` image for the
+intermediate hops (the final `9.0` already matches the committed file):
 
 ```yaml
   db:
-    image: mongo:6.0   # hop 1; then 7.0 and 8.0 for hops 2 and 3; leave 9.0 (committed) for hop 4
+    image: mongo:6.0   # each intermediate hop: 4.2, 4.4, 5.0, 6.0, 7.0, 8.0; leave 9.0 (committed) for the last one
 ```
 
 > **Hosts with Linux kernel 6.19 or newer.** The `mongo:8.0` image (8.0.21 to 8.0.34) refuses
@@ -296,6 +368,10 @@ Set FCV for the new version. **From 7.0 onwards `setFeatureCompatibilityVersion`
 `confirm: true`.**
 
 ```bash
+# after the hops to 4.2, 4.4 and 5.0 (legacy mongo shell on 4.x images)
+docker compose exec db mongo --quiet --eval \
+  'db.adminCommand({ setFeatureCompatibilityVersion: "4.2" })'   # then "4.4", then "5.0"
+
 # after hop to 6.0
 docker compose exec db mongosh --quiet --eval \
   'db.adminCommand({ setFeatureCompatibilityVersion: "6.0" })'
@@ -380,13 +456,14 @@ docker compose exec php php bin/console cache:clear
 
 - **Application/driver**: `git checkout` the 5.1 code and rebuild the `php` image
   (`docker compose build php && docker compose up -d php`), then `composer install`.
-- **Database**: the server upgrade is **not reversible** once FCV is raised. Restore the
-  backup from step B.0 onto a `mongo:5.0` container:
+- **Database**: the server upgrade is **not reversible** once FCV is raised or the volume is
+  replaced. Restore the backup from step B.0 onto a container with your previous image (e.g.
+  `mongo:5.0`; use `mongo` instead of `mongosh` on 4.x images):
 
 ```bash
 docker compose down
 # Restore the volume snapshot, or restore the dump:
-docker compose up -d db   # with image: mongo:5.0
+docker compose up -d db   # with your previous image, e.g. image: mongo:5.0
 docker compose cp ./backup-5.1 db:/data/db/backup-5.1
 docker compose exec db mongosh --quiet --eval 'db.dropDatabase()'
 docker compose exec db mongorestore /data/db/backup-5.1
