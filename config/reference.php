@@ -990,7 +990,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         resources?: Param|string|array<string, scalar|Param|null>,
  *     },
  *     messenger?: bool|array{ // Messenger configuration
- *         enabled?: bool|Param, // Default: false
+ *         enabled?: bool|Param, // Default: true
  *         routing?: array<string, Param|string|array{ // Default: []
  *             senders?: list<scalar|Param|null>,
  *         }>,
@@ -1925,7 +1925,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         include_type?: bool|Param, // Always include @type in updates (including delete ones). // Default: false
  *     },
  *     messenger?: bool|array{
- *         enabled?: bool|Param, // Default: false
+ *         enabled?: bool|Param, // Default: true
  *     },
  *     elasticsearch?: bool|array{
  *         enabled?: bool|Param, // Default: false
