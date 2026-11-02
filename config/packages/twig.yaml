@@ -4,6 +4,5 @@ twig:
   globals:
     pumukit_info:  "%pumukit.info%"
     locales:       "%pumukit.locales%"
-    custom_menu_templates: "%pumukit.custom_menu_templates%"
     enable_cookie_banner: '%env(bool:ENABLE_COOKIE_BANNER)%'
     cookie_banner_privacy_link: "%env(COOKIE_BANNER_PRIVACY_LINK)%"

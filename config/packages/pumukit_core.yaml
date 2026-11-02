@@ -47,6 +47,7 @@ services:
     class: Pumukit\CoreBundle\Twig\CoreExtension
     arguments:
       $kernelBundles: '%kernel.bundles%'
+      $customMenuTemplates: '%pumukit.custom_menu_templates%'
     tags:
       - { name: "twig.extension" }
 

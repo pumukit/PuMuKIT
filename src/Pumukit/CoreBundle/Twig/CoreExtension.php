@@ -5,18 +5,24 @@ declare(strict_types=1);
 namespace Pumukit\CoreBundle\Twig;
 
 use Twig\Extension\AbstractExtension;
+use Twig\Extension\GlobalsInterface;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
-class CoreExtension extends AbstractExtension
+class CoreExtension extends AbstractExtension implements GlobalsInterface
 {
     private const SAFE_URL_SCHEMES = ['http', 'https', 'mailto'];
 
     protected $kernelBundles;
 
-    public function __construct(array $kernelBundles)
+    public function __construct(array $kernelBundles, private readonly array $customMenuTemplates = [])
     {
         $this->kernelBundles = $kernelBundles;
+    }
+
+    public function getGlobals(): array
+    {
+        return ['custom_menu_templates' => $this->customMenuTemplates];
     }
 
     public function getFilters(): array
