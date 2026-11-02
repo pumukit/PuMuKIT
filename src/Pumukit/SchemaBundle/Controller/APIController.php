@@ -14,6 +14,7 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\SeriesService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +22,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/media")
+ *
+ * @Security("is_granted('ROLE_ACCESS_API')")
  */
 class APIController extends AbstractController implements NewAdminControllerInterface
 {

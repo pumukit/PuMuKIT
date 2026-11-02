@@ -16,8 +16,8 @@ use Symfony\Component\Serializer\Annotation\Ignore;
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\UserRepository")
  *
  * @ApiResource(
- *     collectionOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}},
- *     itemOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}}
+ *     collectionOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API') and is_granted('ROLE_SCOPE_GLOBAL')"}},
+ *     itemOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API') and is_granted('ROLE_SCOPE_GLOBAL')"}}
  * )
  */
 class User implements UserInterface

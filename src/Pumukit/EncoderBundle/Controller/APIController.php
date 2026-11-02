@@ -7,12 +7,15 @@ namespace Pumukit\EncoderBundle\Controller;
 use Pumukit\EncoderBundle\Services\CpuService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\Repository\JobRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/encoder")
+ *
+ * @Security("is_granted('ROLE_ACCESS_API') and is_granted('ROLE_SCOPE_GLOBAL')")
  */
 class APIController extends AbstractController
 {
