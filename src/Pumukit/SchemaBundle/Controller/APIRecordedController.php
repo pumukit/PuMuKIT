@@ -10,7 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_ACCESS_API')]
+#[IsGranted('ROLE_SCOPE_GLOBAL')]
 #[Route('/api/media')]
 class APIRecordedController extends AbstractController
 {

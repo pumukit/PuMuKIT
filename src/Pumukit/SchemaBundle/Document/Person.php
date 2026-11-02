@@ -96,7 +96,6 @@ class Person implements PersonInterface
         $this->email = $email;
     }
 
-    #[Groups(['person:read'])]
     public function getEmail(): ?string
     {
         return $this->email;

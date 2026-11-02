@@ -10,7 +10,10 @@ use Pumukit\EncoderBundle\Services\Repository\JobRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_ACCESS_API')]
+#[IsGranted('ROLE_SCOPE_GLOBAL')]
 #[Route('/api/encoder')]
 class APIController extends AbstractController
 {
