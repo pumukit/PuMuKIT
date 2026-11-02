@@ -979,6 +979,18 @@ Symfony 7):
   (`$this->parameters`, `$this->requestStack`, `$this->authorizationChecker`,
   `$this->menuItems`, `$this->blockItems`).
 
+## Custom menus
+
+A bundle can show its own bar above the back-office menu and the portal header without overriding templates:
+append a template to the `pumukit.custom_menu_templates` parameter in the `load()` of its extension.
+
+```php
+$templates = $container->hasParameter('pumukit.custom_menu_templates') ? $container->getParameter('pumukit.custom_menu_templates') : [];
+$container->setParameter('pumukit.custom_menu_templates', [...$templates, '@MyBundle/menu.html.twig']);
+```
+
+The template is included with `custom_menu_area` set to `admin` (not in the naked back-office) or `portal`.
+
 ## Twig
 
 The `spaceless` filter is deprecated since Twig 3.12. Core templates use the new

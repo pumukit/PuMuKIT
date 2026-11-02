@@ -30,6 +30,11 @@
 {% block body_base %}
     <div data-controller="admin--actions"{% if is_naked() %} data-naked-backoffice{% endif %}>
     {% block naked_menu %}
+        {% if not is_naked() %}
+            {% for template in custom_menu_templates %}
+                {% include template with {custom_menu_area: 'admin'} %}
+            {% endfor %}
+        {% endif %}
         {% include is_naked() ? '@PumukitNewAdmin/naked_menu.html.twig' : '@PumukitNewAdmin/menu.html.twig' %}
     {% endblock %}
     <div class="container-fluid main">
