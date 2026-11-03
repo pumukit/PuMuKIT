@@ -51,6 +51,7 @@ class PumukitCoreExtension extends Extension implements PrependExtensionInterfac
         if (!$container->hasParameter('pumukit.naked_menu_templates')) {
             $container->setParameter('pumukit.naked_menu_templates', []);
         }
+        $container->setParameter('pumukit.microsites', $config['microsites']);
         $container->setParameter('pumukit.locales', $config['locales']);
         $container->setParameter('pumukit.public_dir', $config['public_dir']);
         $container->setParameter('pumukit.storage_dir', $config['storage_dir']);

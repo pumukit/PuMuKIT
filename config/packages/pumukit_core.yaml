@@ -38,6 +38,16 @@ services:
     tags:
       - { name: "kernel.event_listener", event: "kernel.request", priority: 256 }
 
+  Pumukit\CoreBundle\Services\MicrositeService:
+    arguments:
+      $microsites: '%pumukit.microsites%'
+
+  Pumukit\CoreBundle\EventListener\MicrositeListener:
+    arguments:
+      $mainHost: '%router.request_context.host%'
+
+  Pumukit\CoreBundle\Twig\MicrositeExtension: ~
+
   Pumukit\CoreBundle\EventListener\FilterListener:
     class: Pumukit\CoreBundle\EventListener\FilterListener
     tags:

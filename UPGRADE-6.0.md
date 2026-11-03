@@ -994,6 +994,35 @@ The template is included with `custom_menu_area` set to `admin` (not in the nake
 The naked back-office has its own list, `pumukit.naked_menu_templates`, filled in the same way; its templates are
 included at the end of the naked menu.
 
+## Microsites
+
+The microsites are configured in the core, without a bundle per microsite. A microsite is a set of hosts where the
+portal only shows the multimedia objects with a tag:
+
+```yaml
+pumukit_core:
+    microsites:
+        library:
+            hosts: [library.tv.example.org]
+            tag: MICROSITE01000
+            layout: 'microsites/library/layout.html.twig'
+            css: 'microsites/library.css'
+            home_template: 'microsites/library/home.html.twig'
+```
+
+On those hosts the `microsite` filter only shows the multimedia objects with the tag, the back-office (`/admin`)
+redirects to the main host (`router.request_context.host`), and the request gets the `microsite` attribute (the
+configuration and its name) and the attributes that the core templates read: `microsite_custom_tag`,
+`microsite_custom_css`, `microsite_custom_base` (`layout`) and `microsite_home_template`. The `layout` template
+usually extends `@PumukitWebTV/Layout/template.html.twig` and overrides its blocks; the `home_template` is included
+at the top of the home page. In Twig, `microsite()` returns the configuration of the current microsite and
+`microsite_tag()` its tag.
+
+To move a microsite bundle to the project: put its templates in `templates/` and its stylesheet in `public/`, and
+translate its options: `subdomain` → `hosts`, `tag` → `tag`, `custom_path_css` → `css`, `custom_path_header` →
+`layout`, and the `custom_path_categories` controller → a `home_template` that uses `microsite_tag()`. The home page
+extends `@PumukitWebTV/layout.html.twig`, so it uses the `layout` of the microsite too.
+
 ## Twig
 
 The `spaceless` filter is deprecated since Twig 3.12. Core templates use the new
