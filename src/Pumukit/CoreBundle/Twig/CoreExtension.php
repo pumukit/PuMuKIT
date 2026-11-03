@@ -15,14 +15,14 @@ class CoreExtension extends AbstractExtension implements GlobalsInterface
 
     protected $kernelBundles;
 
-    public function __construct(array $kernelBundles, private readonly array $customMenuTemplates = [])
+    public function __construct(array $kernelBundles, private readonly array $customMenuTemplates = [], private readonly array $nakedMenuTemplates = [])
     {
         $this->kernelBundles = $kernelBundles;
     }
 
     public function getGlobals(): array
     {
-        return ['custom_menu_templates' => $this->customMenuTemplates];
+        return ['custom_menu_templates' => $this->customMenuTemplates, 'naked_menu_templates' => $this->nakedMenuTemplates];
     }
 
     public function getFilters(): array

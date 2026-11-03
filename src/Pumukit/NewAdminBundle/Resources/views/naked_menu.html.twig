@@ -38,4 +38,7 @@
             {% endif %}
         </ul>
     {% endif %}
+    {% for template in naked_menu_templates|default([]) %}
+        {% include template %}
+    {% endfor %}
 </div>

@@ -48,6 +48,7 @@ services:
     arguments:
       $kernelBundles: '%kernel.bundles%'
       $customMenuTemplates: '%pumukit.custom_menu_templates%'
+      $nakedMenuTemplates: '%pumukit.naked_menu_templates%'
     tags:
       - { name: "twig.extension" }
 

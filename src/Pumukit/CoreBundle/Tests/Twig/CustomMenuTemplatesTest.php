@@ -19,5 +19,6 @@ class CustomMenuTemplatesTest extends KernelTestCase
         $globals = $container->get('twig')->getGlobals();
 
         $this->assertSame($container->getParameter('pumukit.custom_menu_templates'), $globals['custom_menu_templates']);
+        $this->assertSame($container->getParameter('pumukit.naked_menu_templates'), $globals['naked_menu_templates']);
     }
 }

@@ -991,6 +991,9 @@ $container->setParameter('pumukit.custom_menu_templates', [...$templates, '@MyBu
 
 The template is included with `custom_menu_area` set to `admin` (not in the naked back-office) or `portal`.
 
+The naked back-office has its own list, `pumukit.naked_menu_templates`, filled in the same way; its templates are
+included at the end of the naked menu.
+
 ## Twig
 
 The `spaceless` filter is deprecated since Twig 3.12. Core templates use the new
