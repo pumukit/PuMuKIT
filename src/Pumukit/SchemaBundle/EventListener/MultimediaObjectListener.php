@@ -34,18 +34,4 @@ class MultimediaObjectListener
         $this->textIndexService->updateMultimediaObjectTextIndex($multimediaObject);
     }
 
-    private function getTracksType($tracks): int
-    {
-        if (0 === (is_countable($tracks) ? count($tracks) : 0)) {
-            return MultimediaObject::TYPE_UNKNOWN;
-        }
-
-        foreach ($tracks as $track) {
-            if (!$track->metadata()->isOnlyAudio()) {
-                return MultimediaObject::TYPE_VIDEO;
-            }
-        }
-
-        return MultimediaObject::TYPE_AUDIO;
-    }
 }

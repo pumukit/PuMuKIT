@@ -9,6 +9,7 @@ use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Document;
 use Pumukit\SchemaBundle\Document\MediaType\Image;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Finder\Finder;
@@ -50,6 +51,8 @@ class TrackService
             $multimediaObject->addDocument($media);
         }
 
+        $this->assignType($multimediaObject, $media);
+
         if ($executeFlush) {
             $this->dm->persist($multimediaObject);
             $this->dm->flush();
@@ -58,6 +61,26 @@ class TrackService
         $this->dispatcher->dispatchCreate($multimediaObject, $media);
 
         return $multimediaObject;
+    }
+
+    private function assignType(MultimediaObject $multimediaObject, MediaInterface $media): void
+    {
+        if (MultimediaObject::TYPE_UNKNOWN !== $multimediaObject->getType()) {
+            return;
+        }
+
+        if ($media instanceof Track) {
+            $metadata = $media->metadata();
+            if ($metadata instanceof VideoAudio && $metadata->isOnlyAudio()) {
+                $multimediaObject->setAudioType();
+            } else {
+                $multimediaObject->setVideoType();
+            }
+        } elseif ($media instanceof Image) {
+            $multimediaObject->setImageType();
+        } elseif ($media instanceof Document) {
+            $multimediaObject->setDocumentType();
+        }
     }
 
     public function updateTrackInMultimediaObject(MultimediaObject $multimediaObject, Track $track): MultimediaObject
