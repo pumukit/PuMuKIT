@@ -41,18 +41,24 @@
 <body class="{% block body_class %}{% endblock %}">
     {% block body_base %}
 
-        <header>
-            {% include '@PumukitWebTV/Layout/template_header.html.twig' %}
+        {% block header %}
+            <header>
+                {% include '@PumukitWebTV/Layout/template_header.html.twig' %}
 
-            <div class="template-menu-pmk">
-                {% include '@PumukitWebTV/Menu/template.html.twig' %}
-            </div>
-        </header>
+                {% block menu %}
+                    <div class="template-menu-pmk">
+                        {% include '@PumukitWebTV/Menu/template.html.twig' %}
+                    </div>
+                {% endblock %}
+            </header>
+        {% endblock %}
 
         <main>
-            {% if app.request.attributes.get('_route') != 'pumukit_webtv_index_index' %}
-                {{ render(controller('Pumukit\\WebTVBundle\\Controller\\ModulesController::breadcrumbsAction')) }}
-            {% endif %}
+            {% block breadcrumbs %}
+                {% if app.request.attributes.get('_route') != 'pumukit_webtv_index_index' %}
+                    {{ render(controller('Pumukit\\WebTVBundle\\Controller\\ModulesController::breadcrumbsAction')) }}
+                {% endif %}
+            {% endblock %}
 
             {% block custom_block_before_body %}{% endblock %}
 
@@ -73,7 +79,9 @@
         </main>
 
         <footer role="contentinfo" class="footer-pmk">
-            {% include "@PumukitWebTV/Layout/template_footer.html.twig" %}
+            {% block footer %}
+                {% include "@PumukitWebTV/Layout/template_footer.html.twig" %}
+            {% endblock %}
 
             <div class="container-fluid powered_by">
                 <div class="row">

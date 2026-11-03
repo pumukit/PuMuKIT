@@ -1014,8 +1014,10 @@ On those hosts the `microsite` filter only shows the multimedia objects with the
 redirects to the main host (`router.request_context.host`), and the request gets the `microsite` attribute (the
 configuration and its name) and the attributes that the core templates read: `microsite_custom_tag`,
 `microsite_custom_css`, `microsite_custom_base` (`layout`) and `microsite_home_template`. The `layout` template
-usually extends `@PumukitWebTV/Layout/template.html.twig` and overrides its blocks; the `home_template` is included
-at the top of the home page. In Twig, `microsite()` returns the configuration of the current microsite and
+usually extends `@PumukitWebTV/Layout/template.html.twig` and overrides its blocks: `header` (with `menu` inside),
+`breadcrumbs`, `footer` (the "Powered by PuMuKIT" line stays out of it), `custom_block_before_body`,
+`custom_block_after_body`, `stylesheets`, `javascripts`, `body_class`... The `home_template` is included at the top
+of the home page. In Twig, `microsite()` returns the configuration of the current microsite and
 `microsite_tag()` its tag.
 
 To move a microsite bundle to the project: put its templates in `templates/` and its stylesheet in `public/`, and
