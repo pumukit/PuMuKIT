@@ -5,6 +5,7 @@ export default class extends Controller {
     static targets = ['priority', 'priorityValue', 'priorityInput'];
     static values = {
         id: String,
+        token: String,
         updateUrl: String,
         retryUrl: String,
         errorUrl: String,
@@ -13,31 +14,46 @@ export default class extends Controller {
 
     togglePriority(event) {
         event.preventDefault();
-        $(this.priorityTargets).toggle();
+        this.priorityTargets.forEach((element) => element.classList.toggle('pmk-display-none'));
     }
 
-    savePriority(event) {
+    async savePriority(event) {
         event.preventDefault();
-        $.post(this.updateUrlValue, { jobId: this.idValue, priority: this.priorityInputTarget.value }).done((job) => {
-            $(this.priorityValueTarget).text(job.priority);
-            $(this.priorityTargets).toggle();
-        });
+        const job = await this.send(this.updateUrlValue, 'POST', { priority: this.priorityInputTarget.value });
+        if (job) {
+            this.priorityValueTarget.textContent = job.priority;
+            this.togglePriority(event);
+        }
     }
 
     retry(event) {
-        this.postAndReload(event, this.retryUrlValue, { jobId: this.idValue });
+        event.preventDefault();
+        this.send(this.retryUrlValue, 'POST');
     }
 
     stop(event) {
-        this.postAndReload(event, this.errorUrlValue, { jobId: this.idValue, _method: 'POST' });
+        event.preventDefault();
+        this.send(this.errorUrlValue, 'POST');
     }
 
     remove(event) {
-        this.postAndReload(event, this.deleteUrlValue, { jobId: this.idValue, _method: 'DELETE' });
+        event.preventDefault();
+        this.send(this.deleteUrlValue, 'DELETE');
     }
 
-    postAndReload(event, url, data) {
-        event.preventDefault();
-        $.post(url, data).always(() => window.location.reload());
+    async send(url, method, data = {}) {
+        try {
+            const response = await fetch(url, {
+                method,
+                body: new URLSearchParams({ jobId: this.idValue, _token: this.tokenValue, ...data }),
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            });
+
+            return response.ok ? await response.json() : null;
+        } catch {
+            return null;
+        } finally {
+            window.dispatchEvent(new CustomEvent('encoder:changed'));
+        }
     }
 }

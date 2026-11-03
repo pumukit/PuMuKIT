@@ -35,12 +35,14 @@ final class JobRepository
 
     public function getAllJobsStatusWithOwner($owner): array
     {
+        $count = fn (int $status): int => $this->jobRepository()->createQueryWithStatusAndOwner([$status], null, $owner)->count()->getQuery()->execute();
+
         return [
-            'paused' => is_countable($this->jobRepository()->findWithStatusAndOwner([Job::STATUS_PAUSED], [], $owner)) ? count($this->jobRepository()->findWithStatusAndOwner([Job::STATUS_PAUSED], [], $owner)) : 0,
-            'waiting' => is_countable($this->jobRepository()->findWithStatusAndOwner([Job::STATUS_WAITING], [], $owner)) ? count($this->jobRepository()->findWithStatusAndOwner([Job::STATUS_WAITING], [], $owner)) : 0,
-            'executing' => is_countable($this->jobRepository()->findWithStatusAndOwner([Job::STATUS_EXECUTING], [], $owner)) ? count($this->jobRepository()->findWithStatusAndOwner([Job::STATUS_EXECUTING], [], $owner)) : 0,
-            'finished' => is_countable($this->jobRepository()->findWithStatusAndOwner([Job::STATUS_FINISHED], [], $owner)) ? count($this->jobRepository()->findWithStatusAndOwner([Job::STATUS_FINISHED], [], $owner)) : 0,
-            'error' => is_countable($this->jobRepository()->findWithStatusAndOwner([Job::STATUS_ERROR], [], $owner)) ? count($this->jobRepository()->findWithStatusAndOwner([Job::STATUS_ERROR], [], $owner)) : 0,
+            'paused' => $count(Job::STATUS_PAUSED),
+            'waiting' => $count(Job::STATUS_WAITING),
+            'executing' => $count(Job::STATUS_EXECUTING),
+            'finished' => $count(Job::STATUS_FINISHED),
+            'error' => $count(Job::STATUS_ERROR),
         ];
     }
 

@@ -5,6 +5,7 @@
 <div class="modal-body"
      data-controller="encoder--job"
      data-encoder--job-id-value="{{ job.id }}"
+     data-encoder--job-token-value="{{ csrf_token(constant('Pumukit\\EncoderBundle\\Controller\\InfoController::CSRF_TOKEN')) }}"
      data-encoder--job-update-url-value="{{ path('pumukit_encoder_update_job') }}"
      data-encoder--job-retry-url-value="{{ path('pumukit_encoder_retry_job', {'id': job.id}) }}"
      data-encoder--job-error-url-value="{{ path('pumukit_encoder_error_job') }}"

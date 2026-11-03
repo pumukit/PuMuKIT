@@ -53,8 +53,12 @@ class CPUsController extends AbstractController
     }
 
     #[Route('/cpu/maintenance/{activateMaintenance}/{cpuName}', name: 'pumukit_encoder_cpu_maintenance_switch', requirements: ['activateMaintenance' => 'activate|deactivate'], methods: ['POST'])]
-    public function switchMaintenanceAction(string $activateMaintenance, string $cpuName): Response
+    public function switchMaintenanceAction(Request $request, string $activateMaintenance, string $cpuName): Response
     {
+        if ($this->isGranted('ROLE_SCOPE_PERSONAL') || !$this->isCsrfTokenValid(InfoController::CSRF_TOKEN, $request->request->getString('_token'))) {
+            throw $this->createAccessDeniedException();
+        }
+
         $cpu = $this->cpuService->getCpuByName($cpuName);
         if (!$cpu) {
             throw $this->createNotFoundException("The CPU with the name {$cpuName} does not exist");

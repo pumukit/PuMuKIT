@@ -1,0 +1,7 @@
+{% if block == 'stats' %}
+    {% include '@PumukitEncoder/Info/stats.html.twig' %}
+{% elseif block == 'cpus' %}
+    {% include '@PumukitEncoder/Info/cpus.html.twig' %}
+{% else %}
+    {% include '@PumukitEncoder/Info/jobs.html.twig' with {pageParameter: '[page_' ~ block ~ ']', title: {pending: 'Pending jobs (paused & waiting)'|trans, executing: 'Executing jobs'|trans, executed: 'Executed jobs'|trans}[block], jobs: jobs[block]} %}
+{% endif %}

@@ -9,24 +9,27 @@
     </h3>
 
     {% set can_access_jobs = app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_JOBS')) %}
-    <div class="row stats_jobs"{% if can_access_jobs %} data-controller="encoder--stats"{% endif %}>
+    <div{% if can_access_jobs %} data-controller="encoder--dashboard" data-encoder--dashboard-url-value="{{ path('pumukit_encoder_info_block', {block: '__block__'}) }}" data-encoder--dashboard-busy-value="{{ busy ? 'true' : 'false' }}"{% endif %}>
+    <div class="row stats_jobs" data-encoder--dashboard-target="block" data-block="stats">
         {% if can_access_jobs %}
-            {% include '@PumukitEncoder/Info/stats.html.twig' %}
+            {% include '@PumukitEncoder/Info/block.html.twig' with {block: 'stats'} %}
         {% endif %}
     </div>
 
     <div class="row">
-        {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_JOBS')) %}
+        {% if can_access_jobs %}
             <div class="col-md-9">
                 <div class="pmk-well" id="list_jobs">
-                    {% include '@PumukitEncoder/Info/jobs.html.twig' with {'pageParameter': '[page_pending]', 'title': 'Pending jobs (paused & waiting)'|trans, 'jobs': jobs.pending } %}
-                    {% include '@PumukitEncoder/Info/jobs.html.twig' with {'pageParameter': '[page_executing]', 'title': 'Executing jobs'|trans, 'jobs': jobs.executing } %}
-                    {% include '@PumukitEncoder/Info/jobs.html.twig' with {'pageParameter': '[page_executed]', 'title': 'Executed jobs'|trans, 'jobs': jobs.executed } %}
+                    {% for block in ['pending', 'executing', 'executed'] %}
+                        <div data-encoder--dashboard-target="block" data-block="{{ block }}">
+                            {% include '@PumukitEncoder/Info/block.html.twig' %}
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="pmk-well" id="list_cpus">
-                    {% include '@PumukitEncoder/Info/cpus.html.twig' %}
+                <div class="pmk-well" id="list_cpus" data-encoder--dashboard-target="block" data-block="cpus">
+                    {% include '@PumukitEncoder/Info/block.html.twig' with {block: 'cpus'} %}
                 </div>
             </div>
         {% else %}
@@ -37,6 +40,6 @@
             </div>
         {% endif %}
     </div>
-
+    </div>
 
 {% endblock %}

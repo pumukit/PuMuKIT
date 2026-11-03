@@ -8,7 +8,7 @@
       </div>
       <div class="row-content">
         <div class="least-content togglebutton form-check form-switch pmk-bottom-10 pmk-top-inherit">
-          <label><input class="form-check-input" role="switch" id="show_paused" type="checkbox" data-action="change->encoder--stats#filter" {% if app.request.query.get('show_paused', true) %}checked="checked"{% endif %}></label>
+          <label><input class="form-check-input" role="switch" id="show_paused" type="checkbox" data-action="change->encoder--dashboard#filter" {% if app.request.query.get('show_paused', true) %}checked="checked"{% endif %}></label>
         </div>
         <h4 class="list-group-item-heading">{% trans %}Paused{% endtrans %}</h4>
         <p class="list-group-item-text">{{ stats['paused'] }} {% trans %}jobs{% endtrans %}</p>
@@ -24,7 +24,7 @@
       </div>
       <div class="row-content">
         <div class="least-content togglebutton form-check form-switch pmk-bottom-10 pmk-top-inherit">
-          <label><input class="form-check-input" role="switch" id="show_waiting" type="checkbox" data-action="change->encoder--stats#filter" {% if app.request.query.get('show_waiting', true) %}checked="checked"{% endif %}></label>
+          <label><input class="form-check-input" role="switch" id="show_waiting" type="checkbox" data-action="change->encoder--dashboard#filter" {% if app.request.query.get('show_waiting', true) %}checked="checked"{% endif %}></label>
         </div>
         <h4 class="list-group-item-heading">{% trans %}Waiting{% endtrans %}</h4>
         <p class="list-group-item-text">{{ stats['waiting'] }} {% trans %}jobs{% endtrans %}</p>
@@ -54,7 +54,7 @@
       </div>
       <div class="row-content">
         <div class="least-content togglebutton form-check form-switch pmk-bottom-10 pmk-top-inherit">
-          <label><input class="form-check-input" role="switch" id="show_finished" type="checkbox" data-action="change->encoder--stats#filter" {% if app.request.query.get('show_finished', false) %}checked="checked"{% endif %}></label>
+          <label><input class="form-check-input" role="switch" id="show_finished" type="checkbox" data-action="change->encoder--dashboard#filter" {% if app.request.query.get('show_finished', false) %}checked="checked"{% endif %}></label>
         </div>
         <h4 class="list-group-item-heading">{% trans %}Finished{% endtrans %}</h4>
         <p class="list-group-item-text">{{ stats['finished'] }} {% trans %}jobs{% endtrans %}</p>
@@ -70,7 +70,7 @@
       </div>
       <div class="row-content">
         <div class="least-content togglebutton form-check form-switch pmk-bottom-10 pmk-top-inherit">
-          <label><input class="form-check-input" role="switch" id="show_error" type="checkbox" data-action="change->encoder--stats#filter" {% if app.request.query.get('show_error', true) %}checked="checked"{% endif %}></label>
+          <label><input class="form-check-input" role="switch" id="show_error" type="checkbox" data-action="change->encoder--dashboard#filter" {% if app.request.query.get('show_error', true) %}checked="checked"{% endif %}></label>
         </div>
         <h4 class="list-group-item-heading">{% trans %}Error{% endtrans %}</h4>
         <p class="list-group-item-text">{{ stats['error'] }} {% trans %}jobs{% endtrans %}</p>

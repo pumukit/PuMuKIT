@@ -35,7 +35,8 @@
                     <label>
                         <input class="form-check-input" role="switch" id="maintenance-{{name}}-toggle" type="checkbox" {% if not deactivated %}checked="checked"{% endif %}
                                data-controller="encoder--cpu-maintenance"
-                               data-action="click->encoder--cpu-maintenance#toggle"
+                               data-encoder--cpu-maintenance-token-value="{{ csrf_token(constant('Pumukit\\EncoderBundle\\Controller\\InfoController::CSRF_TOKEN')) }}"
+                               data-action="change->encoder--cpu-maintenance#toggle"
                                data-encoder--cpu-maintenance-activate-url-value="{{ path('pumukit_encoder_cpu_maintenance_switch', {'activateMaintenance': 'activate', 'cpuName': name}) }}"
                                data-encoder--cpu-maintenance-deactivate-url-value="{{ path('pumukit_encoder_cpu_maintenance_switch', {'activateMaintenance': 'deactivate', 'cpuName': name}) }}">
                     </label>

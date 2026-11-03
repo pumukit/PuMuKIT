@@ -14,11 +14,13 @@ use Pumukit\EncoderBundle\Services\JobUpdater;
 use Pumukit\EncoderBundle\Services\Repository\JobRepository;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\User;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -26,106 +28,48 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ACCESS_JOBS')]
 class InfoController extends AbstractController
 {
-    private JobRender $jobRender;
-    private JobRepository $jobRepository;
-    private JobUpdater $jobUpdater;
-    private JobRemover $jobRemover;
+    public const CSRF_TOKEN = 'encoder_job';
+    public const BLOCKS = ['stats', 'pending', 'executing', 'executed', 'cpus'];
 
-    public function __construct(JobRender $jobRender, JobRepository $jobRepository, JobUpdater $jobUpdater, JobRemover $jobRemover)
-    {
-        $this->jobRender = $jobRender;
-        $this->jobRepository = $jobRepository;
-        $this->jobUpdater = $jobUpdater;
-        $this->jobRemover = $jobRemover;
-    }
+    public function __construct(
+        private readonly JobRender $jobRender,
+        private readonly JobRepository $jobRepository,
+        private readonly JobUpdater $jobUpdater,
+        private readonly JobRemover $jobRemover,
+        private readonly DocumentManager $documentManager,
+        private readonly CpuService $cpuService,
+        private readonly PaginationService $paginationService,
+    ) {}
 
     #[Route('/', name: 'pumukit_encoder_info')]
-    #[Template('@PumukitEncoder/Info/index.html.twig')]
-    public function indexAction(Request $request, DocumentManager $documentManager, CpuService $cpuService, PaginationService $paginationService): array
+    public function indexAction(Request $request): Response
     {
-        $user = $this->getUser();
-        $cpus = $cpuService->getCpus();
-        $jobRepo = $documentManager->getRepository(Job::class);
+        return $this->render('@PumukitEncoder/Info/index.html.twig', $this->blocks(self::BLOCKS, $request));
+    }
 
-        $pendingStates = [];
-        if ($request->query->get('show_waiting', true)) {
-            $pendingStates[] = Job::STATUS_WAITING;
+    #[Route('/block/{block}', name: 'pumukit_encoder_info_block', methods: ['GET'])]
+    public function blockAction(Request $request, string $block): Response
+    {
+        if (!in_array($block, self::BLOCKS, true)) {
+            throw $this->createNotFoundException();
         }
-        if ($request->query->get('show_paused', true)) {
-            $pendingStates[] = Job::STATUS_PAUSED;
-        }
+        $parameters = $this->blocks([$block], $request);
+        $response = $this->render('@PumukitEncoder/Info/block.html.twig', ['block' => $block] + $parameters);
+        $response->headers->set('X-Encoder-Busy', $parameters['busy'] ? '1' : '0');
 
-        $pendingSort = [
-            'priority' => 'desc',
-            'timeini' => 'asc',
-        ];
-
-        if (!$user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
-            $pendingJobs = $jobRepo->createQueryWithStatus($pendingStates, $pendingSort);
-        } else {
-            $pendingJobs = $jobRepo->createQueryWithStatusAndOwner($pendingStates, $pendingSort, $user);
-        }
-
-        $executingSort = ['timestart' => 'desc'];
-        if (!$user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
-            $executingJobs = $jobRepo->createQueryWithStatus([Job::STATUS_EXECUTING], $executingSort);
-        } else {
-            $executingJobs = $jobRepo->createQueryWithStatusAndOwner([Job::STATUS_EXECUTING], $executingSort, $user);
-        }
-
-        $pendingStates = [];
-        if ($request->query->get('show_error', true)) {
-            $pendingStates[] = Job::STATUS_ERROR;
-        }
-        if ($request->query->get('show_finished', false)) {
-            $pendingStates[] = Job::STATUS_FINISHED;
-        }
-        $executedSort = ['timeend' => 'desc'];
-
-        if (!$user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
-            $executedJobs = $jobRepo->createQueryWithStatus($pendingStates, $executedSort);
-        } else {
-            $executedJobs = $jobRepo->createQueryWithStatusAndOwner($pendingStates, $executedSort, $user);
-        }
-
-        if (!$user->hasRole(PermissionProfile::SCOPE_PERSONAL)) {
-            $stats = $this->jobRepository->getAllJobsStatus();
-        } else {
-            $stats = $this->jobRepository->getAllJobsStatusWithOwner($user);
-        }
-
-        $deactivatedCpus = $cpuService->getCpuNamesInMaintenanceMode();
-
-        return [
-            'cpus' => $cpus,
-            'deactivated_cpus' => $deactivatedCpus,
-            'jobs' => [
-                'pending' => [
-                    'total' => ($stats['paused'] + $stats['waiting']),
-                    'jobs' => $this->createPager($paginationService, $pendingJobs, $request->query->get('page_pending', 1)),
-                ],
-                'executing' => [
-                    'total' => $stats['executing'],
-                    'jobs' => $this->createPager($paginationService, $executingJobs, $request->query->get('page_executing', 1), 20),
-                ],
-                'executed' => [
-                    'total' => ($stats['error'] + $stats['finished']),
-                    'jobs' => $this->createPager($paginationService, $executedJobs, $request->query->get('page_executed', 1)),
-                ],
-            ],
-            'stats' => $stats,
-        ];
+        return $response;
     }
 
     #[Route('/job/{id}', methods: ['GET'], name: 'pumukit_encoder_job')]
     #[Template('@PumukitEncoder/Info/infoJob.html.twig')]
-    public function infoJobAction(Request $request, Job $job): array
+    public function infoJobAction(Job $job): array
     {
+        $this->denyUnlessOwner($job);
         $deletedMultimediaObject = false;
 
         try {
             $command = $this->jobRender->renderBat($job);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $command = $e->getMessage();
             $deletedMultimediaObject = true;
         }
@@ -140,21 +84,17 @@ class InfoController extends AbstractController
     #[Route('/job', methods: ['POST'], name: 'pumukit_encoder_update_job')]
     public function updateJobPriorityAction(Request $request): JsonResponse
     {
-        $priority = (int) $request->request->get('priority');
-        $jobId = $request->request->get('jobId');
-        $job = $this->jobRepository->searchJob($jobId);
+        $job = $this->actionJob($request);
+        $priority = max(1, min(3, $request->request->getInt('priority')));
         $this->jobUpdater->updateJobPriority($job, $priority);
 
-        return new JsonResponse([
-            'jobId' => $jobId,
-            'priority' => $priority,
-        ]);
+        return new JsonResponse(['jobId' => $job->getId(), 'priority' => $priority]);
     }
 
     #[Route('/error/job', methods: ['POST'], name: 'pumukit_encoder_error_job')]
     public function setAsFailedAction(Request $request): JsonResponse
     {
-        $job = $this->jobRepository->searchJob($request->request->get('jobId'));
+        $job = $this->actionJob($request);
         $this->jobUpdater->errorJob($job);
 
         return new JsonResponse(['jobId' => $job->getId()]);
@@ -163,21 +103,20 @@ class InfoController extends AbstractController
     #[Route('/job', methods: ['DELETE'], name: 'pumukit_encoder_delete_job')]
     public function deleteJobAction(Request $request): JsonResponse
     {
-        $job = $this->jobRepository->searchJob($request->request->get('jobId'));
+        $job = $this->actionJob($request);
         $this->jobRemover->delete($job);
 
         return new JsonResponse(['jobId' => $job->getId()]);
     }
 
     #[Route('/job/retry/{id}', methods: ['POST'], name: 'pumukit_encoder_retry_job')]
-    public function retryJobAction(Job $job): JsonResponse
+    public function retryJobAction(Request $request, Job $job): JsonResponse
     {
+        $this->denyUnlessValidToken($request);
+        $this->denyUnlessOwner($job);
         $flashMessage = $this->jobUpdater->retryJob($job);
 
-        return new JsonResponse([
-            'jobId' => $job->getId(),
-            'mesage' => $flashMessage,
-        ]);
+        return new JsonResponse(['jobId' => $job->getId(), 'mesage' => $flashMessage]);
     }
 
     #[Route('/mm/{id}', methods: ['GET'], name: 'pumukit_encoder_mm')]
@@ -186,8 +125,89 @@ class InfoController extends AbstractController
         return $this->redirectToRoute('pumukitnewadmin_mms_shortener', ['id' => $multimediaObject->getId()]);
     }
 
-    private function createPager(PaginationService $paginationService, $objects, $page, $limit = 5)
+    private function blocks(array $blocks, Request $request): array
     {
-        return $paginationService->createDoctrineODMMongoDBAdapter($objects, (int) $page, (int) $limit);
+        $owner = $this->personalUser();
+        $stats = $owner ? $this->jobRepository->getAllJobsStatusWithOwner($owner) : $this->jobRepository->getAllJobsStatus();
+        $parameters = [
+            'stats' => $stats,
+            'busy' => $stats['executing'] + $stats['waiting'] > 0,
+            'jobs' => [],
+        ];
+
+        $lists = [
+            'pending' => [
+                [Job::STATUS_WAITING => $request->query->getBoolean('show_waiting', true), Job::STATUS_PAUSED => $request->query->getBoolean('show_paused', true)],
+                ['priority' => 'desc', 'timeini' => 'asc'],
+                $stats['waiting'] + $stats['paused'],
+                5,
+            ],
+            'executing' => [[Job::STATUS_EXECUTING => true], ['timestart' => 'desc'], $stats['executing'], 20],
+            'executed' => [
+                [Job::STATUS_ERROR => $request->query->getBoolean('show_error', true), Job::STATUS_FINISHED => $request->query->getBoolean('show_finished', false)],
+                ['timeend' => 'desc'],
+                $stats['error'] + $stats['finished'],
+                5,
+            ],
+        ];
+        foreach (array_intersect_key($lists, array_flip($blocks)) as $name => [$states, $sort, $total, $limit]) {
+            $parameters['jobs'][$name] = [
+                'total' => $total,
+                'jobs' => $this->paginationService->createDoctrineODMMongoDBAdapter(
+                    $this->query(array_keys(array_filter($states)), $sort, $owner),
+                    max(1, $request->query->getInt('page_'.$name, 1)),
+                    $limit
+                ),
+            ];
+        }
+
+        if (in_array('cpus', $blocks, true)) {
+            $parameters['cpus'] = $this->cpuService->getCpus();
+            $parameters['deactivated_cpus'] = $this->cpuService->getCpuNamesInMaintenanceMode();
+        }
+
+        return $parameters;
+    }
+
+    private function query(array $states, array $sort, ?User $owner)
+    {
+        $repository = $this->documentManager->getRepository(Job::class);
+
+        return $owner ? $repository->createQueryWithStatusAndOwner($states, $sort, $owner) : $repository->createQueryWithStatus($states, $sort);
+    }
+
+    private function personalUser(): ?User
+    {
+        $user = $this->getUser();
+
+        return $user instanceof User && $user->hasRole(PermissionProfile::SCOPE_PERSONAL) ? $user : null;
+    }
+
+    private function actionJob(Request $request): Job
+    {
+        $this->denyUnlessValidToken($request);
+        $jobId = $request->request->getString('jobId');
+        $job = preg_match('/^[a-f\d]{24}$/i', $jobId) ? $this->jobRepository->searchJob($jobId) : null;
+        if (!$job instanceof Job) {
+            throw $this->createNotFoundException();
+        }
+        $this->denyUnlessOwner($job);
+
+        return $job;
+    }
+
+    private function denyUnlessValidToken(Request $request): void
+    {
+        if (!$this->isCsrfTokenValid(self::CSRF_TOKEN, $request->request->getString('_token'))) {
+            throw $this->createAccessDeniedException('Invalid CSRF token');
+        }
+    }
+
+    private function denyUnlessOwner(Job $job): void
+    {
+        $owner = $this->personalUser();
+        if ($owner && $job->getEmail() !== $owner->getEmail()) {
+            throw $this->createAccessDeniedException();
+        }
     }
 }
