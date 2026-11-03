@@ -188,6 +188,7 @@ class MultimediaObject
     private $secondarytextindex = [];
 
     #[MongoDB\Field(type: 'date')]
+    #[MongoDB\Index]
     private $updatedAt;
 
     /**
@@ -1465,7 +1466,7 @@ class MultimediaObject
         $this->updatedAt = new \DateTime();
     }
 
-    public function isUpdatedAt(): \DateTime
+    public function isUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
