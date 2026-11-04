@@ -57,8 +57,7 @@ yarn-error.log
 tests/tmp/
 
 # External bundles cloned for local migration work — each keeps its own git history
-/dev-bundles/*
-!/dev-bundles/.gitkeep
+/dev-bundles/
 
 # Internal working notes (migration / security audits) — devs only, not for git
 /doc/migration/

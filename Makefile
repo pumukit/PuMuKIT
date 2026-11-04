@@ -4,7 +4,6 @@
         test-all test test-lint-yaml test-lint-twig test-lint-xliff test-lint-generic \
         test-php-cs-fixer test-php-stan test-rector fix-test-perms test-e2e test-e2e-down \
         update update-composer update-importmap update-paella paella-build vendor-outdated \
-        integration integration-tests integration-clean \
         shell php-shell ps logs
 
 .DEFAULT_GOAL := help
@@ -161,15 +160,6 @@ paella-build: ## Build the Paella player into $(PAELLA_DIR)/dist with Node 24
 vendor-outdated: ## List the updates of jQuery, Bootstrap and Font Awesome in bundles/pumukitcore/vendor (updated by hand)
 	$(call run_php,bin/console pumukit:vendor:outdated)
 
-
-integration: ## Check core + dev-bundles together: composer, container, routes, lints, deprecations, PHPStan
-	$(call run_php,php bin/integration-check $(ARGS))
-
-integration-tests: ## Same as integration plus PHPUnit (core suite and bundle tests)
-	$(call run_php_test,php bin/integration-check --tests $(ARGS))
-
-integration-clean: ## Remove the integration workspace (var/integration)
-	$(call run_php,rm -rf var/integration)
 
 fix-test-perms: ## Reset ownership of test fixture dirs (run after a stale root-owned state breaks make test)
 	@$(DC_TEST) run --rm --user root php sh -c 'chown -R www-data:www-data tests/tmp src/Pumukit/EncoderBundle/Tests/Resources .phpunit.cache'
