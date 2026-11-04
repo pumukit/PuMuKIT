@@ -78,6 +78,11 @@ class ProfileServiceTest extends PumukitTestCase
         static::assertNull($profileService->getDefaultMasterProfile());
     }
 
+    public function testGetProfileWithoutNameFindsNothing(): void
+    {
+        $this->assertNull($this->profileService->getProfile(null));
+    }
+
     public function testGetProfile()
     {
         $profiles = $this->getDemoProfiles();

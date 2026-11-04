@@ -69,13 +69,9 @@ class ProfileService
         return null;
     }
 
-    public function getProfile($profile)
+    public function getProfile(?string $profile)
     {
-        if (isset($this->profiles[$profile])) {
-            return $this->profiles[$profile];
-        }
-
-        return null;
+        return null === $profile ? null : $this->profiles[$profile] ?? null;
     }
 
     public function getDirOutInfo(): array
