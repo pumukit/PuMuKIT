@@ -8,9 +8,10 @@ monolog:
       max_files: 30
       channels: ['legacy_api']
     main:
-      type: stream
+      type: rotating_file
       path: "%kernel.logs_dir%/%kernel.environment%.log"
       level: error
+      max_files: 30
       channels: ['!event', '!deprecation', '!legacy_api']
 
     debug_log:
