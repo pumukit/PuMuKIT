@@ -30,6 +30,9 @@ class UnescapedOutputTest extends TestCase
         'CoreBundle/Twig/UploaderExtension.php' => [
             "new TwigFunction('uploader_attributes'",
         ],
+        'EncoderBundle/Resources/assets/controllers/encoder/dashboard_controller.js' => [
+            'element.innerHTML = html;',
+        ],
         'EncoderBundle/Resources/views/Info/infoJob.html.twig' => [
             '{{ command|e|replace({\' \':\'&nbsp;\', \'\n\': \'</li><li class="command">\'})|raw }}',
             "{{ job.getOutput()|e|replace({' ':'&nbsp;', '\\n': '</li><li>'})|raw }}",

@@ -6,6 +6,7 @@ namespace Pumukit\EncoderBundle\Tests\Controller;
 
 use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
+use Pumukit\EncoderBundle\Controller\InfoController;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
@@ -69,6 +70,32 @@ class InfoControllerTest extends PumukitTestCase
 
         $this->client->request('GET', '/admin/encoder/block/unknown');
         $this->assertResponseStatusCodeSame(404);
+    }
+
+    public function testTheBlocksEscapeTheStoredDataAndTheQuery(): void
+    {
+        $payload = '"><img src=x onerror=alert(1)>';
+        $this->multimediaObject->setTitle($payload, 'en');
+        for ($index = 0; $index < 6; ++$index) {
+            $job = $this->job(Job::STATUS_ERROR);
+            $job->setProfile($payload);
+            $job->setCpu($payload);
+        }
+        $this->dm->flush();
+        $this->login();
+
+        foreach (InfoController::BLOCKS as $block) {
+            $crawler = $this->client->request('GET', '/admin/encoder/block/'.$block, [$payload => $payload, 'nested' => [$payload => $payload]]);
+
+            $this->assertResponseIsSuccessful();
+            $this->assertStringNotContainsString('<img', (string) $this->client->getResponse()->getContent());
+            $this->assertCount(0, $crawler->filter('img, script, [onerror]'));
+
+            if ('executed' === $block) {
+                $this->assertStringContainsString($payload, $crawler->filter('tbody')->text());
+                $this->assertStringContainsString('onerror', (string) $crawler->filter('.pagination a[href]')->first()->attr('href'));
+            }
+        }
     }
 
     public function testTheActionsNeedTheTokenAndTheOwner(): void
