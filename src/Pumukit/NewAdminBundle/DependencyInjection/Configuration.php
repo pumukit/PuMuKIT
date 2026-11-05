@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->booleanNode('enable_playlist')
             ->defaultTrue()
-            ->info('Enable playlist menu')
+            ->info('Enable the playlists of the backoffice: with false the menu is hidden and their routes answer 404')
             ->end()
             ->scalarNode('multimedia_object_label')
             ->defaultValue('Multimedia Objects')

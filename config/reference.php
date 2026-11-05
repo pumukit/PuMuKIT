@@ -515,7 +515,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     advance_live_event_autocomplete_series?: bool|Param, // Advance live event button to autocomplete series with event data // Default: true
  *     liveevent_contact_and_share?: bool|Param, // Shows the advance live event contact form // Default: false
  *     chat?: array{
- *         enable?: bool|Param, // Enable chat in live channel // Default: false
+ *         enable?: bool|Param, // Enable chat in live channel: with false its routes answer 404 // Default: false
  *         update_interval?: int|Param, // Interval in milliseconds to refresh the content of the chat. // Default: 5000
  *     },
  *     twitter?: array{
@@ -608,7 +608,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  * }
  * @psalm-type PumukitNewAdminConfig = array{
  *     show_menu_place_and_precinct?: bool|Param, // Show separated menu places and precinct // Default: true
- *     enable_playlist?: bool|Param, // Enable playlist menu // Default: true
+ *     enable_playlist?: bool|Param, // Enable the playlists of the backoffice: with false the menu is hidden and their routes answer 404 // Default: true
  *     multimedia_object_label?: scalar|Param|null, // Name of the label of the list of Multimedia Objects in Menu Builder and in the title of the page // Default: "Multimedia Objects"
  *     show_naked_pub_tab?: bool|Param, // if true, it shows a simplified publication tab on the naked view // Default: false
  *     licenses?: list<scalar|Param|null>,

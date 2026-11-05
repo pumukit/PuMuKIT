@@ -30,11 +30,13 @@
                         {{ series_title }}
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link{{ playlist_active ? ' active' }}" title="{% trans %}Go to playlists{% endtrans %}" href="{{ url('pumukitnewadmin_playlist_index') }}">
-                        {{ playlist_title }}
-                    </a>
-                </li>
+                {% if is_playlist_enabled() %}
+                    <li class="nav-item">
+                        <a class="nav-link{{ playlist_active ? ' active' }}" title="{% trans %}Go to playlists{% endtrans %}" href="{{ url('pumukitnewadmin_playlist_index') }}">
+                            {{ playlist_title }}
+                        </a>
+                    </li>
+                {% endif %}
             {% endif %}
         </ul>
     {% endif %}

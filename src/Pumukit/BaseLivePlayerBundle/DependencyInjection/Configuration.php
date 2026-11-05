@@ -45,7 +45,7 @@ class Configuration implements ConfigurationInterface
             ->children()
             ->booleanNode('enable')
             ->defaultFalse()
-            ->info('Enable chat in live channel')
+            ->info('Enable chat in live channel: with false its routes answer 404')
             ->end()
             ->integerNode('update_interval')
             ->defaultValue(5000)

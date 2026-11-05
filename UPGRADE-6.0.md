@@ -791,6 +791,9 @@ they do not use. These options change their default value from `false` to `true`
 | `pumukit.warning_on_unpublished` (parameter) | Warning in the backoffice on unpublished or unplayable multimedia objects |
 | `pumukit.inbox_depth` (parameter) | Inbox folder file counts include subfolders |
 
+`pumukit_new_admin.enable_playlist: false` now really disables the playlists: every route of `/admin/playlist` and
+`/admin/playlistpic` answers `404`, and so does the LmsBundle link to the playlists of the backoffice. The public playlist player (`/playlist/{id}`) does not change.
+
 `pumukit_core.full_magic_url` was never read: the WebTV controllers received a broken
 parameter reference that behaved as `true`. It now works and keeps its default of `false`,
 so access through a magic URL no longer lists the hidden multimedia objects of the series
@@ -953,7 +956,8 @@ to the backoffice from a page on another domain must call an API instead.
 
 - `pumukit_live_chat_post` and `pumukit_live_chat_basic_post` only accept `POST`, and answer
   `404` when `pumukit_live.chat.enable` is `false` (the default): before, anyone could store
-  messages even with the chat disabled.
+  messages even with the chat disabled. The routes that show and list the messages also answer `404` when the chat is disabled. The live pages
+  that embed the chat keep working: it just does not appear.
 - Each IP address can post 10 messages per minute (`429` above that). The limit is the
   `chat_message` rate limiter declared by the WebTVBundle; a project can change it under
   `framework.rate_limiter.chat_message`. Until the proxy is configured as in

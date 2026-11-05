@@ -57,6 +57,13 @@ services:
     tags:
       - { name: 'console.command' }
 
+  Pumukit\CoreBundle\EventListener\DisabledFeatureListener:
+    arguments:
+      $enablePlaylist: '%pumukit_new_admin.enable_playlist%'
+      $enableChat: '%pumukit_live.chat.enable%'
+    tags:
+      - { name: "kernel.event_listener", event: "kernel.request", method: "onKernelRequest", priority: 16 }
+
   Pumukit\CoreBundle\EventListener\SameOriginRequestListener:
     class: Pumukit\CoreBundle\EventListener\SameOriginRequestListener
     tags:

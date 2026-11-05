@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\WebTVBundle\Tests\Controller;
 
 use PHPUnit\Framework\Attributes\CoversNothing;
+use Pumukit\CoreBundle\EventListener\DisabledFeatureListener;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Message;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -92,5 +93,7 @@ class ChatControllerTest extends PumukitTestCase
     {
         $controller = static::getContainer()->get(ChatController::class);
         (new \ReflectionProperty($controller, 'pumukitLiveChatEnable'))->setValue($controller, true);
+        $listener = static::getContainer()->get(DisabledFeatureListener::class);
+        (new \ReflectionProperty($listener, 'enableChat'))->setValue($listener, true);
     }
 }
