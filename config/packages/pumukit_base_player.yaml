@@ -21,6 +21,7 @@ services:
   Pumukit\BasePlayerBundle\Services\TrackUrlService:
     arguments:
       $secureTokenService: '@Pumukit\BasePlayerBundle\Services\SecureTokenService'
+      $downloadServerUrl: '%env(default::PUMUKIT_DOWNLOAD_SERVER_URL)%'
 
   Pumukit\BasePlayerBundle\Services\SeriesPlaylistService:
     class: Pumukit\BasePlayerBundle\Services\SeriesPlaylistService

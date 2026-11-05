@@ -42,6 +42,21 @@ services:
       - "80:80"
       - "443:443"
 
+  dls:
+    profiles: ["dls"]
+    restart: unless-stopped
+    env_file:
+      - .env
+    build:
+      context: ./
+      target: dls
+    depends_on:
+      - php
+    volumes:
+      - ./public/storage:/mnt/storage/pumukit:ro
+    ports:
+      - "${PUMUKIT_DLS_PORT:-8443}:443"
+
   db:
     image: mongo:9.0
     restart: unless-stopped

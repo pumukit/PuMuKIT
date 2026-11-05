@@ -13,13 +13,16 @@ class TrackUrlService
 {
     private UrlGeneratorInterface $router;
     private SecureTokenService $secureTokenService;
+    private ?string $downloadServerUrl;
 
     public function __construct(
         UrlGeneratorInterface $router,
-        SecureTokenService $secureTokenService
+        SecureTokenService $secureTokenService,
+        ?string $downloadServerUrl = null
     ) {
         $this->router = $router;
         $this->secureTokenService = $secureTokenService;
+        $this->downloadServerUrl = $downloadServerUrl;
     }
 
     public function generateTrackFileUrl(MediaInterface $track, int $reference_type = UrlGeneratorInterface::ABSOLUTE_PATH, bool $forceDownload = false): string
@@ -56,5 +59,15 @@ class TrackUrlService
     public function generateDirectTrackFileUrl(Track $track, ?Request $request = null): string
     {
         return $this->secureTokenService->generateDownloadUrl($track->storage()->url()->url());
+    }
+
+    public function isOnDownloadServer(string $url): bool
+    {
+        return !empty($this->downloadServerUrl) && str_starts_with($url, rtrim($this->downloadServerUrl, '/').'/');
+    }
+
+    public function signForDownloadServer(string $url): string
+    {
+        return $this->isOnDownloadServer($url) ? $this->secureTokenService->generateDownloadUrl($url) : $url;
     }
 }

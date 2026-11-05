@@ -10,6 +10,7 @@ use Psr\Log\LoggerInterface;
 use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\BasePlayerBundle\Services\SecureTokenService;
+use Pumukit\BasePlayerBundle\Services\TrackUrlService;
 use Pumukit\BasePlayerBundle\Services\ViewCounterService;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -31,19 +32,22 @@ class TrackFileController extends AbstractController
     private LoggerInterface $logger;
     private ?SecureTokenService $secureTokenService;
     private ?RateLimiterFactoryInterface $trackfileAccessLimiter;
+    private ?TrackUrlService $trackUrlService;
 
     public function __construct(
         DocumentManager $documentManager,
         EventDispatcherInterface $eventDispatcher,
         LoggerInterface $logger,
         ?SecureTokenService $secureTokenService = null,
-        ?RateLimiterFactoryInterface $trackfileAccessLimiter = null
+        ?RateLimiterFactoryInterface $trackfileAccessLimiter = null,
+        ?TrackUrlService $trackUrlService = null
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->documentManager = $documentManager;
         $this->logger = $logger;
         $this->secureTokenService = $secureTokenService;
         $this->trackfileAccessLimiter = $trackfileAccessLimiter;
+        $this->trackUrlService = $trackUrlService;
     }
 
     /**
@@ -82,6 +86,11 @@ class TrackFileController extends AbstractController
         }
 
         $storage = $track->storage();
+
+        $downloadServerUrl = $this->downloadServerUrl($request, $storage->url()?->url(), $fileName);
+        if (null !== $downloadServerUrl) {
+            return new RedirectResponse($downloadServerUrl);
+        }
 
         if ($storage && !$storage->isLocalStorageSystem() && $storage->url() && $storage->url()->url()) {
             $externalUrl = $storage->url()->url();
@@ -228,6 +237,19 @@ class TrackFileController extends AbstractController
         $event = new ViewedEvent($multimediaObject, $track);
 
         $this->eventDispatcher->dispatch($event, BasePlayerEvents::MULTIMEDIAOBJECT_VIEW);
+    }
+
+    private function downloadServerUrl(Request $request, ?string $url, ?string $fileName): ?string
+    {
+        if ($fileName || !$url || !$this->trackUrlService?->isOnDownloadServer($url)) {
+            return null;
+        }
+        if ('m3u8' === strtolower(pathinfo((string) parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION))) {
+            return null;
+        }
+        $signedUrl = $this->trackUrlService->signForDownloadServer($url);
+
+        return $request->query->getBoolean('forcedl') ? $signedUrl.'&forcedl=1' : $signedUrl;
     }
 
     private function invalidTokenReason(Request $request, string $id): string

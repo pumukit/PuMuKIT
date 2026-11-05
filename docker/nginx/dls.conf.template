@@ -1,0 +1,74 @@
+fastcgi_cache_path /var/cache/nginx/dls_auth levels=1:2 keys_zone=dls_auth:10m max_size=64m inactive=1m;
+
+map $arg_forcedl $dls_content_disposition {
+    default "";
+    "1" "attachment";
+}
+
+map $request_uri $dls_query_string {
+    default "";
+    "~\?(?<query>.*)$" $query;
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+
+    ssl_certificate /etc/nginx/ssl/cert.crt;
+    ssl_certificate_key /etc/nginx/ssl/cert.key;
+
+    server_name _;
+
+    add_header_inherit merge;
+    add_header X-Content-Type-Options "nosniff" always;
+
+    location ^~ /pumukit/ {
+        auth_request /_validate_token;
+        add_header Content-Disposition $dls_content_disposition;
+        alias /mnt/storage/pumukit/downloads/;
+    }
+
+    location ~* ^/opencast/(.+\.(?:jpg|jpeg|png|gif|webp|svg))$ {
+        alias /mnt/storage/opencast/downloads/$1;
+    }
+
+    location /opencast/ {
+        auth_request /_validate_token;
+        add_header Content-Disposition $dls_content_disposition;
+        alias /mnt/storage/opencast/downloads/;
+    }
+
+    location = /_validate_token {
+        internal;
+
+        fastcgi_pass php:9000;
+        fastcgi_pass_request_body off;
+
+        fastcgi_cache dls_auth;
+        fastcgi_cache_key $request_uri;
+        fastcgi_cache_valid 200 401 10s;
+        fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
+
+        fastcgi_param SCRIPT_FILENAME /srv/pumukit/public/index.php;
+        fastcgi_param SCRIPT_NAME /index.php;
+        fastcgi_param REQUEST_METHOD GET;
+        fastcgi_param REQUEST_URI /download/validate-token?$dls_query_string;
+        fastcgi_param QUERY_STRING $dls_query_string;
+        fastcgi_param CONTENT_LENGTH "";
+        fastcgi_param SERVER_NAME ${PUMUKIT_FRONTEND_HOST};
+        fastcgi_param SERVER_PORT 443;
+        fastcgi_param HTTPS on;
+        fastcgi_param REMOTE_ADDR $remote_addr;
+        fastcgi_param HTTP_HOST ${PUMUKIT_FRONTEND_HOST};
+        fastcgi_param HTTP_X_FORWARDED_FOR $remote_addr;
+        fastcgi_param HTTP_X_ORIGINAL_URI $request_uri;
+    }
+
+    location / {
+        return 404;
+    }
+
+    error_log /var/log/nginx/dls_error.log;
+    access_log /var/log/nginx/dls_access.log;
+}

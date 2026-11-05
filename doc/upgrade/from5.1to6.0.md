@@ -217,6 +217,48 @@ Rebuild the image (`docker compose build --pull`); no data has to be migrated.
   `X-Original-URI` header. Before, the token of any video opened every file of the server. Tracks that are redirected to a server with this validation get the new
   token; the links in progress stop working within `PUMUKITPLAYER_SECURE_DURATION`.
 
+  `docker-compose.yml` has an optional `dls` service that serves `/pumukit` and `/opencast` after asking PHP, with a 10 second cache. To use it, start it and
+  set the URL of the server:
+
+  ```bash
+  docker compose --profile dls up -d
+  ```
+
+  ```
+  PUMUKIT_DOWNLOAD_SERVER_URL=https://dls.example.org
+  ```
+
+  ```yaml
+  # config/services.yaml
+  pumukit.downloads_url: "https://dls.example.org/pumukit"
+  ```
+
+  `/trackfile` then checks its token and redirects the tracks stored under that URL to the server, with a token for that file. Without the variable nothing changes. New
+  tracks take `pumukit.downloads_url`; the URL of the existing ones is in the database. HLS playlists and their segments stay on `/trackfile`, because the segments of a playlist
+  would not carry the token. An HLS track with no path in PuMuKIT cannot be served from a server that validates.
+
+  The images of `/opencast` do not ask for a token, because PuMuKIT stores them as public URLs. To serve Opencast, also mount its storage on `/mnt/storage/opencast`. With validation,
+  a saved link to the server stops working: check first which URLs are used from outside (podcast clients, apps, other websites, LMS).
+
+  If you keep your own NGINX, `auth_request` sends no query string in the subrequest: take it from `$request_uri`. Send a `Host` accepted by `TRUSTED_HOSTS`, and the request in `X-Original-URI`:
+
+  ```nginx
+  map $request_uri $query_of_the_request {
+      default "";
+      "~\?(?<query>.*)$" $query;
+  }
+
+  location = /_validate_token {
+      internal;
+      rewrite ^ /download/validate-token?$query_of_the_request? break;
+      proxy_pass http://pumukit-frontend;
+      proxy_pass_request_body off;
+      proxy_set_header Content-Length "";
+      proxy_set_header Host pumukit.example.org;
+      proxy_set_header X-Original-URI $request_uri;
+  }
+  ```
+
 ---
 
 ## MongoDB stack upgrade

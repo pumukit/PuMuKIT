@@ -168,6 +168,15 @@ RUN openssl req -new -passout pass:NotSecure -key cert.key -out cert.csr \
     -subj '/C=ES/ST=PO/L=Vigo/O=PuMuKIT Dev/CN=localhost'
 RUN openssl x509 -req -sha256 -days 365 -in cert.csr -signkey cert.key -out cert.crt
 
+FROM nginx:$NGINX_VERSION-alpine AS dls
+
+RUN mkdir -p /etc/nginx/ssl/
+
+COPY --from=ssl /srv/pumukit/cert.key /etc/nginx/ssl/
+COPY --from=ssl /srv/pumukit/cert.crt /etc/nginx/ssl/
+COPY docker/nginx/dls.conf.template /etc/nginx/templates/default.conf.template
+COPY --chmod=755 docker/nginx/15-real-ip.sh /docker-entrypoint.d/15-real-ip.sh
+
 FROM nginx:$NGINX_VERSION-alpine AS proxy
 
 ENV PUMUKIT_STORAGE_DIR=/srv/pumukit/public/storage
