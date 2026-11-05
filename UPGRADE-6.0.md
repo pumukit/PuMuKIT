@@ -613,6 +613,17 @@ inside double quotes, as in the core profiles:
 bat: ffmpeg -y -i "{{input}}" -c:v libx264 "{{output}}"
 ```
 
+## Inspection and thumbnail commands
+
+The commands of `pumukit.inspection.command`, `pumukit.picextractor.command`,
+`pumukit.dynamicpicextractor.command` and the `$command` argument of the inspection services run as
+a list of arguments: every variable is one argument, with or without quotes in the template. A
+template with shell syntax outside single quotes (`|`, `>`, `2>&1`, `&&`, `$VAR`, `*`…) now throws
+an exception: move that logic to a script and point the parameter to it.
+
+`JobCreator` and `/tus` reject the extensions that are not up to 10 letters and numbers, so a name
+such as `video.tar~` no longer uploads. The files already stored keep working.
+
 ## Messenger and RabbitMQ
 
 The core installs Symfony Messenger with the AMQP transport (`symfony/amqp-messenger`, PHP

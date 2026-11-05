@@ -98,7 +98,7 @@ class TUSUploadController extends AbstractController
         $declaredMimeType = $this->consistentMetadata($metadata, 'type', 'filetype');
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
-        if (BlackListExtensions::isBlackListed($extension)) {
+        if (BlackListExtensions::isBlackListed($extension) || !BlackListExtensions::isWellFormed($extension)) {
             $this->logger->error("TUS ERROR: Blocked malicious extension: {$extension} (File: {$filename})");
 
             throw new BadRequestHttpException('File type strictly forbidden for security reasons.');

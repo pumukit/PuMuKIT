@@ -6,6 +6,7 @@ namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Utils\CommandTemplate;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -63,8 +64,7 @@ class DynamicPicExtractorService
             '{{width}}' => self::DEFAULT_WIDTH,
             '{{height}}' => self::DEFAULT_HEIGHT,
         ];
-        $commandLine = str_replace(array_keys($vars), array_values($vars), $this->command);
-        $this->executeProcess($commandLine);
+        $this->executeProcess(CommandTemplate::toArgv($this->command, $vars));
         $fileUrl = $this->mmsPicService->getTargetUrl($multimediaObject).'/'.$fileName;
         $filePath = $absCurrentDir.'/'.$fileName;
 
@@ -96,13 +96,9 @@ class DynamicPicExtractorService
         return $fileName;
     }
 
-    private function executeProcess($commandLine): void
+    private function executeProcess(array $arguments): void
     {
-        if (is_string($commandLine)) {
-            $process = Process::fromShellCommandline($commandLine);
-        } else {
-            $process = new Process($commandLine);
-        }
+        $process = new Process($arguments);
         $process->setTimeout(60);
         $process->run();
         if (!$process->isSuccessful()) {

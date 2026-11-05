@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\EncoderBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\CoreBundle\Utils\CommandTemplate;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\CoreBundle\Utils\FinderUtils;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
@@ -118,8 +119,7 @@ class PicExtractorService
                 '{{output}}' => $absCurrentDir.'/'.$picFileName,
             ];
 
-            $imageCommand = 'convert "{{input}}" -thumbnail "{{size}}" "{{output}}"';
-            $commandLine = str_replace(array_keys($vars), array_values($vars), $imageCommand);
+            $command = 'convert "{{input}}" -thumbnail "{{size}}" "{{output}}"';
         } else {
             $vars = [
                 '{{ss}}' => $media->metadata()->timeOfaFrame($frame),
@@ -128,15 +128,10 @@ class PicExtractorService
                 '{{output}}' => $absCurrentDir.'/'.$picFileName,
             ];
 
-            $commandLine = str_replace(array_keys($vars), array_values($vars), $this->command);
+            $command = $this->command;
         }
 
-        if (is_string($commandLine)) {
-            $process = Process::fromShellCommandline($commandLine);
-        } else {
-            $process = new Process($commandLine);
-        }
-
+        $process = new Process(CommandTemplate::toArgv($command, $vars));
         $process->setTimeout(60);
         $process->run();
         if (!$process->isSuccessful()) {

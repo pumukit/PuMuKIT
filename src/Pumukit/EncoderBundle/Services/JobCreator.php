@@ -54,6 +54,7 @@ final class JobCreator
     {
         $extension = strtolower(pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION));
         BlackListExtensions::assertNotBlackListed($extension);
+        BlackListExtensions::assertWellFormed($extension);
 
         $this->jobValidator->validateFile($file->getPathname());
         $fileName = $this->cleanFileName($file);
@@ -72,6 +73,7 @@ final class JobCreator
     {
         $extension = strtolower(pathinfo($filePath->path(), PATHINFO_EXTENSION));
         BlackListExtensions::assertNotBlackListed($extension);
+        BlackListExtensions::assertWellFormed($extension);
 
         $this->jobValidator->validateFile($filePath->path());
         $this->create($filePath->path(), $multimediaObject, $jobOptions);

@@ -113,6 +113,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Fixed
 
+- Command injection in the inspection services and the pic extractors through file names: their commands run as a list of arguments, and `JobCreator` and `/tus` reject malformed extensions.
 - Command injection in the encoder through file names with `$(…)` or backticks, and failed transcodings of file names with `&` or `"`: the profile command variables are now escaped for the shell instead of HTML.
 - Stored XSS in the Paella player through WebVTT and DFXP caption text ([GHSA-m6c8-jcw2-5r25](https://github.com/advisories/GHSA-m6c8-jcw2-5r25)): the player is built with paella-core 1.49.7 → 1.50.7 and its plugins 1.50 (`teltek-paella-player-2026-10-30.js`).
 - `pumukit:check:assets` reporting removed JavaScript globals inside ids and classes such as `delete_mm{{ template }}_groups`.

@@ -28,6 +28,40 @@ class BlackListExtensionsTest extends TestCase
         }
     }
 
+    #[DataProvider('wellFormedExtensions')]
+    public function testWellFormedExtensions(string $extension): void
+    {
+        $this->assertTrue(BlackListExtensions::isWellFormed($extension));
+    }
+
+    public static function wellFormedExtensions(): iterable
+    {
+        yield 'no extension' => [''];
+
+        foreach (['mp4', 'MP4', 'm4v', '3gp', 'mpeg2video'] as $extension) {
+            yield $extension => [$extension];
+        }
+    }
+
+    #[DataProvider('malformedExtensions')]
+    public function testMalformedExtensions(string $extension): void
+    {
+        $this->assertFalse(BlackListExtensions::isWellFormed($extension));
+    }
+
+    public static function malformedExtensions(): iterable
+    {
+        foreach (['m p4', 'mp4;', 'mp4 ', 'mp4'."\n", 'a$b', 'a`b', 'a(b)', 'a|b', 'a&b', 'a"b', "a'b", 'ñ', 'tar~', 'muchtoolongname'] as $extension) {
+            yield $extension => [$extension];
+        }
+    }
+
+    public function testAMalformedExtensionIsRejected(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        BlackListExtensions::assertWellFormed('m p4');
+    }
+
     #[DataProvider('materials')]
     public function testCommonMaterialsAreAccepted(string $extension): void
     {

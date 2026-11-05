@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\InspectionBundle\Services;
 
 use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Utils\CommandTemplate;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Symfony\Component\Process\Process;
 
@@ -80,15 +81,12 @@ class InspectionFfprobeService implements InspectionServiceInterface
 
     private function getMediaInfo(string $file): string
     {
-        $command = str_replace('{{file}}', escapeshellarg($file), $this->command);
-        $command = str_replace('"', "'", $command);
-
-        $process = Process::fromShellCommandline($command);
+        $process = new Process(CommandTemplate::toArgv($this->command, ['{{file}}' => $file]));
         $process->setTimeout(60);
         $process->run();
 
         if (!$process->isSuccessful()) {
-            $message = 'Exception executing "'.$command.'": '.$process->getExitCode().' '
+            $message = 'Exception executing "'.$process->getCommandLine().'": '.$process->getExitCode().' '
               .$process->getExitCodeText().'. '.$process->getErrorOutput();
             if ($this->logger) {
                 $this->logger->error($message);

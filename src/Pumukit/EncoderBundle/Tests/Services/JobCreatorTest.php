@@ -178,6 +178,25 @@ final class JobCreatorTest extends PumukitTestCase
         return $this->factoryService->createMultimediaObject($series ?? $this->factoryService->createSeries());
     }
 
+    public function testFromPathRejectsAMalformedExtension(): void
+    {
+        $multimediaObject = $this->createMultimediaObject($this->createSeries());
+        $path = Path::create($this->copyFileToUse($this->projectDir.'/tests/files/pumukit.mp4', 'pumukit.m p4'));
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->generateJobFromPath($multimediaObject, $path, new JobOptions('master_copy', 2, 'en', [], []));
+    }
+
+    public function testFromUploadedFileRejectsAMalformedExtension(): void
+    {
+        $multimediaObject = $this->createMultimediaObject($this->createSeries());
+        $path = $this->copyFileToUse($this->projectDir.'/tests/files/pumukit.mp4', 'pumukit.mp4');
+        $uploadedFile = new UploadedFile($path, 'pumukit.m p4', null, null, true);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->generateJobFromUploadedFile($multimediaObject, $uploadedFile, new JobOptions('master_copy', 2, 'en', [], []));
+    }
+
     public function createSeries(): Series
     {
         return $this->factoryService->createSeries();

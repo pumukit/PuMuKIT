@@ -55,6 +55,7 @@ class TUSUploadControllerTest extends PumukitTestCase
             'repeated name' => [['name' => 'evil.php', 'name ' => 'video.mp4']],
             'stored type differs from the validated one' => [['name' => 'video.mp4', 'filename' => 'video.mp4', 'type' => 'text/html', 'filetype' => 'video/mp4']],
             'no file name' => [['type' => 'video/mp4']],
+            'malformed extension' => [['name' => 'video.m p4', 'filename' => 'video.m p4', 'type' => 'video/mp4', 'filetype' => 'video/mp4']],
         ];
     }
 

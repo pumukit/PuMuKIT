@@ -22,6 +22,18 @@ final class BlackListExtensions
         return in_array(strtolower($extension), self::all(), true);
     }
 
+    public static function isWellFormed(string $extension): bool
+    {
+        return 1 === preg_match('/^[a-z0-9]{0,10}$/iD', $extension);
+    }
+
+    public static function assertWellFormed(string $extension): void
+    {
+        if (!self::isWellFormed($extension)) {
+            throw new \InvalidArgumentException(sprintf('File extension "%s" is not allowed: use up to 10 letters and numbers.', $extension));
+        }
+    }
+
     public static function assertNotBlackListed(string $extension): void
     {
         if (self::isBlackListed($extension)) {
