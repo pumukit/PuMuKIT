@@ -2,7 +2,7 @@
 {% set lmsUrl = inbox_lms_upload_url() %}
 {% set currentSeries = folder is defined ? folder : series.id %}
 {% if isNaked and lmsUrl %}
-    {% set endpoint = lmsUrl ~ '?' ~ {'series': currentSeries, 'username': username|default(''), 'email': email|default(''), 'hash': hash|default('')}|url_encode %}
+    {% set endpoint = lmsUrl ~ '?' ~ {'series': currentSeries}|url_encode %}
 {% else %}
     {% set endpoint = inboxUploadURL|default(inbox_upload_url()) ~ '?' ~ {'series': currentSeries, 'temporaryFolder': folder is defined ? '0' : '1'}|url_encode %}
 {% endif %}
