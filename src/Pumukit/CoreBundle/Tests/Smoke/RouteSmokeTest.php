@@ -254,6 +254,7 @@ final class RouteSmokeTest extends PumukitTestCase
         return match ($variable) {
             'id' => $class ? $this->documentId($class, (string) $method, $path, $isEvent) : null,
             'mmId', 'multimediaObject', 'multimediaObjectId', 'element' => $isEvent ? $this->ids['eventMm'] : $this->ids['mm'],
+            'block' => 'stats',
             'series' => $this->ids['series'],
             'roleId' => $this->ids['role'],
             'session_id' => $this->ids['session'],
