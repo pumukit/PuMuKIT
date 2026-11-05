@@ -616,7 +616,10 @@ bat: ffmpeg -y -i "{{input}}" -c:v libx264 "{{output}}"
 ## Messenger and RabbitMQ
 
 The core installs Symfony Messenger with the AMQP transport (`symfony/amqp-messenger`, PHP
-extension `amqp` in the Docker image) and ships a RabbitMQ service. It defines no transport,
+extension `amqp` in the Docker image) and ships a RabbitMQ service. `docker-compose.yml` has an optional
+`worker` service that consumes every transport: start it with `docker compose --profile worker up -d` once a project or bundle declares one.
+Without any transport the command fails and the container restarts, so do not enable it before. It stops every hour or at 256 MB of memory
+and starts again; mount the same storage volumes as `php`. The core defines no transport,
 queue or failure transport of its own: each bundle declares the ones it needs, with the
 `MESSENGER_TRANSPORT_DSN` connection, from the `prepend()` method of its extension:
 

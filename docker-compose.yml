@@ -20,6 +20,22 @@ services:
       # Uncomment the next line for dev
       - ./:/srv/pumukit
 
+  worker:
+    profiles: ["worker"]
+    restart: unless-stopped
+    env_file:
+      - .env
+    build:
+      context: ./
+      target: production
+    depends_on:
+      - db
+      - redis
+      - rabbitmq
+    command: ["setpriv", "--reuid=www-data", "--regid=www-data", "--init-groups", "bin/console", "messenger:consume", "--all", "--time-limit=3600", "--memory-limit=256M"]
+    volumes:
+      - ./:/srv/pumukit
+
   proxy:
     restart: unless-stopped
     env_file:
