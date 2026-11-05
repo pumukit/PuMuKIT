@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/api/keywords")
  *
- * @Security("is_granted('ROLE_ACCESS_API') and is_granted('ROLE_SCOPE_GLOBAL')")
+ * @Security("is_granted('ROLE_ACCESS_API')")
  */
 class APIKeywordsController extends AbstractController
 {
