@@ -9,6 +9,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Added
 
+- `symfony/scheduler` and `dragonmantank/cron-expression`, not used yet: scheduled tasks stay on cron until 6.1.
 - `make update` updates composer, the importmap and the Paella player within their major versions before a release (`update-composer`, `update-importmap`, `update-paella`) and lists the updates of jQuery, Bootstrap and Font Awesome (`vendor-outdated`), through the new `pumukit:importmap:update` and `pumukit:vendor:outdated` commands; `make paella-build` builds the player with Node 24 in Docker.
 - Versioned read-only REST API based on API Platform 5 under `/api/v1`, with Swagger UI and ReDoc, protected by the API access permission and exposing MultimediaObject, Series, Tag and Person collections.
 - Mailpit as a mail catcher for local development (web inbox at http://localhost:8025).
