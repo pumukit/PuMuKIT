@@ -209,6 +209,10 @@ Rebuild the image (`docker compose build --pull`); no data has to be migrated.
 
   PHP now sends `REDIS_USER` and `REDIS_PASSWORD` to Valkey, also for the resumable uploads. If you keep your own compose file and run Valkey or Redis
   without a user, leave both empty.
+- **Remote encoder.** `docker/remote-encoder/webserver.php` no longer has fixed credentials: set `PUMUKIT_ENCODER_USER` and `PUMUKIT_ENCODER_PASSWORD` in the web
+  server of every encoder machine, with the same values as the `user` and `password` of the CPU in `encoder.yaml`, and update the file. It answers 503 without them or with the old password. The
+  `host` of a CPU can now include the scheme, as in `https://encoder.example.org`; without one it is still `http://`, and the password travels unencrypted.
+
 ---
 
 ## MongoDB stack upgrade

@@ -1,7 +1,13 @@
 <?php
 
-define('USER', 'pumukit');
-define('PASSWORD', 'PUMUKIT');
+$encoderUser = (string) getenv('PUMUKIT_ENCODER_USER');
+$encoderPassword = (string) getenv('PUMUKIT_ENCODER_PASSWORD');
+if ('' === $encoderUser || '' === $encoderPassword || 'PUMUKIT' === $encoderPassword) {
+    header('HTTP/1.0 503 Service Unavailable');
+    echo 'Set PUMUKIT_ENCODER_USER and PUMUKIT_ENCODER_PASSWORD with your own values.';
+
+    exit;
+}
 
 function rrmdir($dir)
 {
@@ -35,7 +41,7 @@ $userpass = $_SERVER['PHP_AUTH_PW'] ?? null;
 if (!isset($username)) {
     showLogin();
 } else {
-    if (USER == $username && PASSWORD == $userpass) {
+    if (hash_equals($encoderUser, (string) $username) && hash_equals($encoderPassword, (string) $userpass)) {
         header('HTTP/1.0 200 OK');
         header('Content-Type: text/html');
 

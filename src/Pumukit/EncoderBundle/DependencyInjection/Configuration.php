@@ -104,7 +104,7 @@ class Configuration implements ConfigurationInterface
             ->prototype('array')
             ->children()
             ->scalarNode('host')->isRequired()->cannotBeEmpty()
-            ->info('Encoder Hostnames (or IPs)')->end()
+            ->info('Encoder Hostnames (or IPs). A remote encoder can include the scheme, as in https://encoder.example.org')->end()
             ->integerNode('number')->min(0)->defaultValue(1)
                                 // BC Delete in Pumukit 2.2
             ->info('Deprecated since version 2, to be removed in 2.2.')->end()

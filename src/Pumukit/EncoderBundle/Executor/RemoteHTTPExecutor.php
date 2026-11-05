@@ -21,7 +21,7 @@ class RemoteHTTPExecutor implements ExecutorInterface
         }
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_URL, 'http://'.$cpu['host'].'/webserver.php');
+        curl_setopt($curl, CURLOPT_URL, $this->url($cpu['host']));
         if (isset($cpu['user'], $cpu['password'])) {
             curl_setopt($curl, CURLOPT_HTTPHEADER, ['Authorization: Basic '.base64_encode($cpu['user'].':'.$cpu['password'])]);
         }
@@ -42,5 +42,12 @@ class RemoteHTTPExecutor implements ExecutorInterface
         }
 
         return $response;
+    }
+
+    public function url(string $host): string
+    {
+        $url = str_contains($host, '://') ? $host : 'http://'.$host;
+
+        return rtrim($url, '/').'/webserver.php';
     }
 }
