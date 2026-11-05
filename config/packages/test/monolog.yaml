@@ -20,5 +20,5 @@ monolog:
       type: rotating_file
       path: '%kernel.logs_dir%/%kernel.environment%_debug.log'
       level: info
-      max_files: 20
+      max_files: '%env(int:PUMUKIT_LOG_MAX_FILES)%'
       channels: ['!event', '!deprecation', '!legacy_api']

@@ -44,6 +44,7 @@ class PumukitCoreExtension extends Extension implements PrependExtensionInterfac
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('env(PUMUKIT_LOG_MAX_FILES)', '15');
         $container->setParameter('pumukit.info', $config['info']);
         if (!$container->hasParameter('pumukit.custom_menu_templates')) {
             $container->setParameter('pumukit.custom_menu_templates', []);

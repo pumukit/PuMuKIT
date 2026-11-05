@@ -37,6 +37,9 @@ deployment:
   `security.yaml`** you must port it to the new keys (`custom_authenticators`,
   `password_hashers`, `PUBLIC_ACCESS` instead of `guard`, `encoders`,
   `anonymous`/`IS_AUTHENTICATED_ANONYMOUSLY`).
+- **Log retention.** Every rotating log, including those of the bundles, keeps `PUMUKIT_LOG_MAX_FILES` daily
+  files, 15 by default. Older files are removed at the next rotation. If you keep your own `monolog.yaml`, use
+  `max_files: '%env(int:PUMUKIT_LOG_MAX_FILES)%'`.
 - **Logging.** MonologBundle 4 removes some options and handler types. If you override the
   `monolog` configuration, replace `excluded_404s` with `excluded_http_codes` and do not use
   the `elasticsearch`, `mongo`, `sentry` or `raven` handler types (see

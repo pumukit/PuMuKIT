@@ -5,18 +5,18 @@ monolog:
       type: rotating_file
       path: '%kernel.logs_dir%/legacy_api.log'
       level: info
-      max_files: 30
+      max_files: '%env(int:PUMUKIT_LOG_MAX_FILES)%'
       channels: ['legacy_api']
     main:
       type: rotating_file
       path: "%kernel.logs_dir%/%kernel.environment%.log"
       level: error
-      max_files: 30
+      max_files: '%env(int:PUMUKIT_LOG_MAX_FILES)%'
       channels: ['!event', '!deprecation', '!legacy_api']
 
     debug_log:
       type: rotating_file
       path: '%kernel.logs_dir%/%kernel.environment%_debug.log'
       level: warning
-      max_files: 20
+      max_files: '%env(int:PUMUKIT_LOG_MAX_FILES)%'
       channels: ['!event', '!deprecation', '!legacy_api']
