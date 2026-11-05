@@ -15,9 +15,10 @@ use Symfony\Component\Routing\Attribute\Route;
  * Internal endpoint used by the nginx auth_request directive on the download vhost.
  * Validates HMAC-SHA256 tokens before nginx serves any file from the downloads directory.
  * This prevents unauthenticated access to media files even when MongoDB ObjectIds are known.
+ * The token signs the path of the file, so it does not open any other file of the server.
  *
- * nginx calls GET /download/validate-token?token=XXX&expires=YYY&resource=ZZZ
- * Returns 200 (allow) or 401 (deny).
+ * nginx calls GET /download/validate-token?token=XXX&expires=YYY&resource=<path of the file>
+ * with the requested URI in X-Original-URI. Returns 200 (allow) or 401 (deny).
  */
 class DownloadAuthController extends AbstractController
 {
@@ -38,10 +39,21 @@ class DownloadAuthController extends AbstractController
         $resource = $request->query->get('resource', '');
         $clientIp = $request->getClientIp();
         $originalUri = $request->headers->get('X-Original-URI', $request->getRequestUri());
+        $originalPath = rawurldecode((string) parse_url($originalUri, PHP_URL_PATH));
 
         if (!$token || !$expires || !$resource) {
             $this->logger->warning('Download blocked: missing token parameters', [
                 'ip' => $clientIp,
+                'uri' => $originalUri,
+            ]);
+
+            return new Response('', Response::HTTP_UNAUTHORIZED);
+        }
+
+        if ($resource !== $originalPath) {
+            $this->logger->warning('Download blocked: the token belongs to another file', [
+                'ip' => $clientIp,
+                'resource' => $resource,
                 'uri' => $originalUri,
             ]);
 

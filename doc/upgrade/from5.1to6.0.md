@@ -213,6 +213,10 @@ Rebuild the image (`docker compose build --pull`); no data has to be migrated.
   server of every encoder machine, with the same values as the `user` and `password` of the CPU in `encoder.yaml`, and update the file. It answers 503 without them or with the old password. The
   `host` of a CPU can now include the scheme, as in `https://encoder.example.org`; without one it is still `http://`, and the password travels unencrypted.
 
+- **Download server.** `/download/validate-token` now needs a token that signs the path of the requested file, and the requested URI in the
+  `X-Original-URI` header. Before, the token of any video opened every file of the server. Tracks that are redirected to a server with this validation get the new
+  token; the links in progress stop working within `PUMUKITPLAYER_SECURE_DURATION`.
+
 ---
 
 ## MongoDB stack upgrade

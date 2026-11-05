@@ -76,6 +76,11 @@ class SecureTokenService
         );
     }
 
+    public function generateDownloadUrl(string $url): string
+    {
+        return $this->generateSecureUrl($url, rawurldecode((string) parse_url($url, PHP_URL_PATH)));
+    }
+
     public function validateTokenFromRequest(Request $request, string $resourceId): bool
     {
         $token = $request->query->get('token');

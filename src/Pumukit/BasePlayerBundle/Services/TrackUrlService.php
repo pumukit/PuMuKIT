@@ -55,17 +55,6 @@ class TrackUrlService
 
     public function generateDirectTrackFileUrl(Track $track, ?Request $request = null): string
     {
-        $tokenData = $this->secureTokenService->generateToken($track->id());
-
-        $separator = str_contains($track->storage()->url()->url(), '?') ? '&' : '?';
-
-        return sprintf(
-            '%s%stoken=%s&expires=%d&resource=%s',
-            $track->storage()->url()->url(),
-            $separator,
-            $tokenData['token'],
-            $tokenData['expires'],
-            urlencode($track->id())
-        );
+        return $this->secureTokenService->generateDownloadUrl($track->storage()->url()->url());
     }
 }
