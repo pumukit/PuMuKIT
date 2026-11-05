@@ -9,6 +9,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Added
 
+- `PUMUKIT_FRAME_ANCESTORS` and `frame_ancestors.log`: the backoffice can only be embedded from the same site, the LmsBundle domains and that list.
 - `PUMUKIT_LOG_MAX_FILES` sets how many daily files every rotating log keeps, 15 by default.
 - `symfony/scheduler` and `dragonmantank/cron-expression`, not used yet: scheduled tasks stay on cron until 6.1.
 - `make update` updates composer, the importmap and the Paella player within their major versions before a release (`update-composer`, `update-importmap`, `update-paella`) and lists the updates of jQuery, Bootstrap and Font Awesome (`vendor-outdated`), through the new `pumukit:importmap:update` and `pumukit:vendor:outdated` commands; `make paella-build` builds the player with Node 24 in Docker.

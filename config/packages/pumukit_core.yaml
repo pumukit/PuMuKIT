@@ -33,6 +33,14 @@ services:
     tags:
       - { name: "kernel.event_listener", event: "kernel.response", method: "onKernelResponse" }
 
+  Pumukit\CoreBundle\Services\FrameAncestorsService:
+    arguments:
+      $extra: '%env(default::PUMUKIT_FRAME_ANCESTORS)%'
+
+  Pumukit\CoreBundle\EventListener\FrameAncestorsListener:
+    tags:
+      - { name: "kernel.event_listener", event: "kernel.response", method: "onKernelResponse" }
+
   Pumukit\CoreBundle\EventListener\SameOriginRequestListener:
     class: Pumukit\CoreBundle\EventListener\SameOriginRequestListener
     tags:

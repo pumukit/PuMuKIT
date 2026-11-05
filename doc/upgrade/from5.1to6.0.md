@@ -144,6 +144,14 @@ Informational (no action required):
 
 Rebuild the image (`docker compose build --pull`); no data has to be migrated.
 
+## Security changes in the deployment
+
+- **Iframes.** Only the backoffice (`/admin`) is restricted: it can be embedded from the same site, from the
+  `pumukit_lms.domains` of LmsBundle and from the domains of `PUMUKIT_FRAME_ANCESTORS`, separated by spaces (`*` allows any
+  site). The player, the live pages, LTI and `/trackfile` send no new header, and the `X-Frame-Options` that NGINX sent
+  on every route is gone. When the browser is going to block an iframe of the backoffice, the origin is written to
+  `var/log/frame_ancestors-YYYY-MM-DD.log`. If your proxy adds a `Content-Security-Policy` with `frame-ancestors https://*`, it can stay:
+  the browser applies both policies. An `X-Frame-Options` in your proxy has to go if you embed anything from another site.
 ---
 
 ## MongoDB stack upgrade
