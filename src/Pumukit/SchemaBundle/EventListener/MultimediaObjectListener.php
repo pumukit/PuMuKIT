@@ -33,5 +33,4 @@ class MultimediaObjectListener
     {
         $this->textIndexService->updateMultimediaObjectTextIndex($multimediaObject);
     }
-
 }

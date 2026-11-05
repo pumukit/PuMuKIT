@@ -63,26 +63,6 @@ class TrackService
         return $multimediaObject;
     }
 
-    private function assignType(MultimediaObject $multimediaObject, MediaInterface $media): void
-    {
-        if (MultimediaObject::TYPE_UNKNOWN !== $multimediaObject->getType()) {
-            return;
-        }
-
-        if ($media instanceof Track) {
-            $metadata = $media->metadata();
-            if ($metadata instanceof VideoAudio && $metadata->isOnlyAudio()) {
-                $multimediaObject->setAudioType();
-            } else {
-                $multimediaObject->setVideoType();
-            }
-        } elseif ($media instanceof Image) {
-            $multimediaObject->setImageType();
-        } elseif ($media instanceof Document) {
-            $multimediaObject->setDocumentType();
-        }
-    }
-
     public function updateTrackInMultimediaObject(MultimediaObject $multimediaObject, Track $track): MultimediaObject
     {
         $this->dm->flush();
@@ -137,6 +117,26 @@ class TrackService
     public function getTempDirs(): array
     {
         return [$this->tmpPath];
+    }
+
+    private function assignType(MultimediaObject $multimediaObject, MediaInterface $media): void
+    {
+        if (MultimediaObject::TYPE_UNKNOWN !== $multimediaObject->getType()) {
+            return;
+        }
+
+        if ($media instanceof Track) {
+            $metadata = $media->metadata();
+            if ($metadata instanceof VideoAudio && $metadata->isOnlyAudio()) {
+                $multimediaObject->setAudioType();
+            } else {
+                $multimediaObject->setVideoType();
+            }
+        } elseif ($media instanceof Image) {
+            $multimediaObject->setImageType();
+        } elseif ($media instanceof Document) {
+            $multimediaObject->setDocumentType();
+        }
     }
 
     private function deleteFileOnDisk(string $path): void
