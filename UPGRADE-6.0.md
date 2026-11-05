@@ -265,6 +265,8 @@ its ripples and SnackbarJS are removed (`bundles/pumukitcore/vendor/bootstrap/`,
   - Carousel: `item` → `carousel-item`, indicators are `button`s with `data-bs-slide-to` starting at 0, the controls
     are `carousel-control-prev/next`.
   - Glyphicons → Font Awesome 7 (`fa-solid fa-*`, see below).
+  - `pumukit:check:assets` warns about the Bootstrap 3 classes and `data-*` attributes left in the templates of a project, with their replacement
+    (`CheckAssetsCommand::BOOTSTRAP3_CLASSES`). They are warnings: the command does not fail for them, because `webtv.css` keeps some of them working in the portal.
 - `[hidden]` is `display: none !important` in Bootstrap 5: `$(element).show()` no longer reveals an element with the
   `hidden` attribute; set `element.hidden = false`.
 - The backoffice messages `window.success()` and `window.no_success()` show Bootstrap 5 toasts instead of SnackbarJS;

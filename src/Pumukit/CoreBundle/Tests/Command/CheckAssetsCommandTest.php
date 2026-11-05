@@ -57,6 +57,56 @@ class CheckAssetsCommandTest extends PumukitTestCase
         $this->assertStringNotContainsString('bootstrap.min.css', $display);
     }
 
+    public function testWarnsAboutBootstrap3MarkupWithoutFailing(): void
+    {
+        file_put_contents(
+            $this->tmpDir.'/page.html.twig',
+            <<<'TWIG'
+                <div class="col-xs-6 col-md-offset-2 panel panel-default" data-toggle="modal"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="col-xs-6"></div>
+                <a class="btn btn-default pull-right" data-target="#x">Link</a>
+
+                TWIG
+        );
+
+        $tester = $this->commandTester();
+        $tester->execute(['--path' => $this->tmpDir]);
+
+        $display = $tester->getDisplay();
+        $this->assertSame(Command::SUCCESS, $tester->getStatusCode());
+        $this->assertStringContainsString('Bootstrap 3 markup: col-xs-6 in page.html.twig:1', $display);
+        $this->assertStringNotContainsString('col-xs-6 in page.html.twig:2', $display);
+        $this->assertStringContainsString('use col-6', $display);
+        $this->assertStringContainsString('use offset-md-2', $display);
+        $this->assertStringContainsString('Bootstrap 3 markup: panel-default in page.html.twig:1', $display);
+        $this->assertStringContainsString('Bootstrap 3 markup: data-toggle in page.html.twig:1', $display);
+        $this->assertStringContainsString('use data-bs-toggle', $display);
+        $this->assertStringContainsString('Bootstrap 3 markup: glyphicon-ok in page.html.twig:1', $display);
+        $this->assertStringContainsString('use btn-secondary', $display);
+        $this->assertStringContainsString('use float-end', $display);
+        $this->assertStringContainsString('Bootstrap 3 markup: data-target in page.html.twig:3', $display);
+        $this->assertStringContainsString('Problems found: 0', $display);
+        $this->assertStringContainsString('Bootstrap 3 warnings, one per file and class: 10', $display);
+    }
+
+    public function testBootstrap5AndOwnMarkupAreNotReported(): void
+    {
+        file_put_contents(
+            $this->tmpDir.'/page.html.twig',
+            <<<'TWIG'
+                <div class="col-6 card card-body embed-responsive-item" data-bs-toggle="modal" data-controller="panel" data-admin--panel-target="well">panel well caret</div>
+                <label class="form-label">pull-left</label>
+
+                TWIG
+        );
+
+        $tester = $this->commandTester();
+        $tester->execute(['--path' => $this->tmpDir]);
+
+        $this->assertSame(Command::SUCCESS, $tester->getStatusCode());
+        $this->assertStringNotContainsString('Bootstrap 3', $tester->getDisplay());
+    }
+
     public function testReportsAssetOfBundleThatIsNotInstalled(): void
     {
         file_put_contents($this->tmpDir.'/chat.html.twig', "<link href=\"/bundles/pumukitmissing/css/chat.css\">\n");

@@ -323,6 +323,60 @@ class CheckAssetsCommand extends Command
         'checkRecordDateAndPublicDate' => 'the dates value of the admin--meta-form controller (see @PumukitNewAdmin/MultimediaObject/updatemeta.html.twig)',
     ];
 
+    public const BOOTSTRAP3_CLASSES = [
+        'panel' => 'card',
+        'panel-default' => 'card',
+        'panel-primary' => 'card',
+        'panel-success' => 'card',
+        'panel-info' => 'card',
+        'panel-warning' => 'card',
+        'panel-danger' => 'card',
+        'panel-group' => 'accordion or nothing',
+        'panel-heading' => 'card-header',
+        'panel-title' => 'card-title',
+        'panel-body' => 'card-body',
+        'panel-footer' => 'card-footer',
+        'well' => 'card card-body (pmk-well in the backoffice)',
+        'label-default' => 'badge text-bg-secondary',
+        'label-primary' => 'badge text-bg-primary',
+        'label-success' => 'badge text-bg-success',
+        'label-info' => 'badge text-bg-info',
+        'label-warning' => 'badge text-bg-warning',
+        'label-danger' => 'badge text-bg-danger',
+        'btn-default' => 'btn-secondary',
+        'btn-xs' => 'btn-sm',
+        'btn-block' => 'w-100',
+        'img-responsive' => 'img-fluid',
+        'img-circle' => 'rounded-circle',
+        'img-rounded' => 'rounded',
+        'pull-left' => 'float-start',
+        'pull-right' => 'float-end',
+        'text-left' => 'text-start',
+        'text-right' => 'text-end',
+        'center-block' => 'mx-auto d-block',
+        'hidden-xs' => 'd-none d-sm-block',
+        'hidden-sm' => 'd-sm-none d-md-block',
+        'hidden-md' => 'd-md-none d-lg-block',
+        'hidden-lg' => 'd-lg-none',
+        'visible-xs' => 'd-block d-sm-none',
+        'sr-only' => 'visually-hidden',
+        'input-group-addon' => 'input-group-text',
+        'input-group-btn' => 'nothing: put the button directly in the input-group',
+        'form-group' => 'mb-3',
+        'control-label' => 'form-label',
+        'help-block' => 'form-text',
+        'table-condensed' => 'table-sm',
+        'embed-responsive' => 'ratio',
+        'embed-responsive-16by9' => 'ratio-16x9',
+        'embed-responsive-4by3' => 'ratio-4x3',
+        'caret' => 'nothing: dropdown-toggle draws it',
+        'navbar-default' => 'navbar-expand-md with a color class',
+        'navbar-inverse' => 'navbar-dark with a color class',
+        'navbar-toggle' => 'navbar-toggler',
+        'dropdown-menu-right' => 'dropdown-menu-end',
+    ];
+    private const BOOTSTRAP3_ATTRIBUTE_PATTERN = '/(?<![\w-])data-(toggle|target|dismiss|parent|slide|slide-to|ride|spy|placement|backdrop)\s*=/';
+    private const CLASS_ATTRIBUTE_PATTERN = '/(?<![\w-])class\s*=\s*(["\'])(.*?)\1/';
     private const REFERENCE_PATTERN = '#(?<![\w./-])/?(bundles/([a-z0-9_]+)/[^\'"\s?\#{}()]*)#';
     private const TEMPLATE_PATTERN = '#[\'"](@Pumukit[A-Za-z]+/[^\'"]+\.twig)[\'"]#';
     private const PORTAL_LAYOUT = 'PumukitWebTVBundle/Layout/template.html.twig';
@@ -383,6 +437,7 @@ EOT
 
         $publicDirs = $this->bundlePublicDirs();
         $missing = 0;
+        $warnings = 0;
 
         $files = [];
         foreach ((new Finder())->files()->in($path)->name('*.twig')->sortByName() as $file) {
@@ -392,8 +447,13 @@ EOT
         $icons = $this->fontAwesomeIcons($publicDirs);
 
         foreach ($files as $relativePathname => $lines) {
+            $bootstrap3 = [];
             foreach ($lines as $index => $line) {
                 $location = $relativePathname.':'.($index + 1);
+
+                foreach (self::bootstrap3Markup($line) as $markup => $replacement) {
+                    $bootstrap3[$markup] ??= [$replacement, $location];
+                }
 
                 foreach ($removedGlobals as $global) {
                     if (preg_match('/(?:(?<![\w$.])|(?<=window\.))'.$global.'\b(?![-{])/', $line)) {
@@ -474,6 +534,12 @@ EOT
                 }
             }
 
+            foreach ($bootstrap3 as $markup => [$replacement, $location]) {
+                ++$warnings;
+                $output->writeln('Bootstrap 3 markup: <info>'.$markup.'</info> in '.$location);
+                $output->writeln('    use <comment>'.$replacement.'</comment>');
+            }
+
             if (str_ends_with($relativePathname, self::PORTAL_LAYOUT) && !str_contains(implode('', $lines), 'importmap(')) {
                 ++$missing;
                 $output->writeln('Missing <info>{{ importmap(\'pumukit\') }}</info> in the javascripts block of '.$relativePathname);
@@ -486,8 +552,53 @@ EOT
         }
 
         $output->writeln('<comment>***** Problems found: '.$missing.' *****</comment>');
+        if ($warnings > 0) {
+            $output->writeln('<comment>***** Bootstrap 3 warnings, one per file and class: '.$warnings.' (see UPGRADE-6.0.md) *****</comment>');
+        }
 
         return $missing > 0 ? Command::FAILURE : Command::SUCCESS;
+    }
+
+    private static function bootstrap3Markup(string $line): array
+    {
+        $markup = [];
+        preg_match_all(self::BOOTSTRAP3_ATTRIBUTE_PATTERN, $line, $matches);
+        foreach ($matches[1] as $attribute) {
+            $markup['data-'.$attribute] = 'data-bs-'.$attribute;
+        }
+
+        preg_match_all(self::CLASS_ATTRIBUTE_PATTERN, $line, $matches);
+        foreach ($matches[2] as $classes) {
+            foreach (preg_split('/\s+/', $classes, -1, PREG_SPLIT_NO_EMPTY) as $class) {
+                $replacement = self::bootstrap3Class($class);
+                if (null !== $replacement) {
+                    $markup[$class] = $replacement;
+                }
+            }
+        }
+
+        return $markup;
+    }
+
+    private static function bootstrap3Class(string $class): ?string
+    {
+        if (isset(self::BOOTSTRAP3_CLASSES[$class])) {
+            return self::BOOTSTRAP3_CLASSES[$class];
+        }
+        if (preg_match('/^col-xs-(\d+)$/', $class, $match)) {
+            return 'col-'.$match[1];
+        }
+        if (preg_match('/^col-xs-offset-(\d+)$/', $class, $match)) {
+            return 'offset-'.$match[1];
+        }
+        if (preg_match('/^col-(sm|md|lg)-offset-(\d+)$/', $class, $match)) {
+            return 'offset-'.$match[1].'-'.$match[2];
+        }
+        if (preg_match('/^glyphicon(-[a-z-]+)?$/', $class)) {
+            return 'a Font Awesome 7 icon (fa-solid fa-...)';
+        }
+
+        return null;
     }
 
     private static function removedGlobals(): array
