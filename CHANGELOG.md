@@ -9,6 +9,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Added
 
+- `pumukit:check:secrets` fails if the installation keeps sample secrets, and in production PuMuKIT does not answer requests or run commands with them.
 - `PUMUKIT_FRAME_ANCESTORS` and `frame_ancestors.log`: the backoffice can only be embedded from the same site, the LmsBundle domains and that list.
 - `PUMUKIT_REAL_IP_FROM`: NGINX works out the client IP behind a trusted proxy, and `TRUSTED_PROXIES` is empty by default.
 - `docker-compose.yml` requires authentication in MongoDB, Valkey and RabbitMQ, and PHP sends `REDIS_USER` and `REDIS_PASSWORD` to Valkey.

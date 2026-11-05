@@ -178,6 +178,19 @@ Rebuild the image (`docker compose build --pull`); no data has to be migrated.
   on every route is gone. When the browser is going to block an iframe of the backoffice, the origin is written to
   `var/log/frame_ancestors-YYYY-MM-DD.log`. If your proxy adds a `Content-Security-Policy` with `frame-ancestors https://*`, it can stay:
   the browser applies both policies. An `X-Frame-Options` in your proxy has to go if you embed anything from another site.
+- **Sample secrets.** In production PuMuKIT does not answer requests or run commands with a value that comes from the
+  repository in `PUMUKIT_SECRET`, `PUMUKITPLAYER_SECURE_SECRET`, `PUMUKIT_PASS`, `MONGODB_PASSWORD`, `REDIS_PASSWORD` and
+  `RABBITMQ_DEFAULT_PASS`, nor with those passwords in `MONGODB_URL` and `MESSENGER_TRANSPORT_DSN`. The commands that build the image
+  (`cache:*`, `assets:*`, `importmap:*`, `asset-map:*`) still run. Add this to your deployment pipeline, so that it fails before going live:
+
+  ```bash
+  bin/console pumukit:check:secrets --env=prod
+  ```
+
+  It also warns if MongoDB has no user or connects as `root` or `admin`, and if Valkey has no password. Use a different
+  `PUMUKIT_SECRET` in every installation. Changing it logs out the "remember me" sessions, invalidates the LmsBundle uploads and LTI launches in
+  progress, and makes a visitor count twice in the unique visits of that day. Nothing stored in the database depends on it. `APP_SECRET` was not used and is
+  gone.
 - **Service credentials.** `docker-compose.yml` starts MongoDB with `--auth` and a user with `readWrite` on the database, Valkey with its own user
   (the `default` user is off), and RabbitMQ with its own user and vhost. Set `MONGODB_USER`, `MONGODB_PASSWORD`, `MONGODB_URL`, `REDIS_USER`,
   `REDIS_PASSWORD` and the RabbitMQ variables above. Encode the special characters of the passwords in the URLs.
