@@ -2,7 +2,7 @@
         cc cc-envs ai \
         composer composer-install composer-update composer-validate fixtures \
         test-all test test-lint-yaml test-lint-twig test-lint-xliff test-lint-generic \
-        test-php-cs-fixer test-php-stan test-rector fix-test-perms test-e2e test-e2e-down \
+        test-php-cs-fixer test-php-stan test-rector fix-test-perms \
         update update-composer update-importmap update-paella paella-build vendor-outdated \
         shell php-shell ps logs
 
@@ -12,7 +12,6 @@ DOCKER_COMP = docker compose
 
 DC_BASE = $(DOCKER_COMP) -f docker-compose.yml
 DC_TEST = $(DOCKER_COMP) -f docker-compose.test.yml
-DC_E2E = $(DOCKER_COMP) -f docker-compose.yml -f docker-compose.e2e.yml
 
 PAELLA_DIR = src/Pumukit/PaellaPlayerBundle/Resources/public/paella
 IMPORTMAP_DIR = src/Pumukit/CoreBundle/Resources/importmap
@@ -128,15 +127,6 @@ test-php-stan:
 
 test-rector:
 	$(call run_php_test,composer php-rector)
-
-test-e2e: ## Run the Playwright browser tests against an isolated stack (pumukit-e2e); extra Playwright options in ARGS
-	@$(DC_E2E) up -d --wait
-	@$(DC_E2E) exec -T php chown -R www-data:www-data var
-	@$(DC_E2E) exec -T --user www-data php bin/console pumukit:create:user admin mail@example.com admin >/dev/null 2>&1 || true
-	@$(DC_E2E) run --rm --user $$(id -u):$$(id -g) playwright sh -c 'npm ci --no-audit --no-fund --loglevel=error && npx playwright test $(ARGS)'
-
-test-e2e-down: ## Remove the end-to-end stack and its data
-	@$(DC_E2E) --profile e2e down -v --remove-orphans
 
 update: update-composer update-importmap update-paella vendor-outdated ## Update composer, the importmap and Paella within their major versions; review the diff and commit by hand
 
