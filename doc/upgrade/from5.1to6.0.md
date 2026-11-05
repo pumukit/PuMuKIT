@@ -102,12 +102,13 @@ Informational (no action required):
   The core declares no queue yet; the bundles that use it declare their own. Add the service to
   your deployment compose file with a fixed `hostname` and a volume for `/var/lib/rabbitmq`
   (RabbitMQ keeps its data under the node name, which comes from the host name), as in
-  `docker-compose.yml`, and set in `.env.local`:
+  `docker-compose.yml`, and set in the environment of your deployment:
 
   ```
   RABBITMQ_DEFAULT_USER=<user>
   RABBITMQ_DEFAULT_PASS=<password>
-  MESSENGER_TRANSPORT_DSN=amqp://<user>:<password>@rabbitmq:5672/%2f/messages
+  RABBITMQ_DEFAULT_VHOST=<vhost>
+  MESSENGER_TRANSPORT_DSN=amqp://<user>:<password>@rabbitmq:5672/<vhost>/messages
   ```
 
   The user is only created on the first start, with an empty volume; change it later with
@@ -177,6 +178,24 @@ Rebuild the image (`docker compose build --pull`); no data has to be migrated.
   on every route is gone. When the browser is going to block an iframe of the backoffice, the origin is written to
   `var/log/frame_ancestors-YYYY-MM-DD.log`. If your proxy adds a `Content-Security-Policy` with `frame-ancestors https://*`, it can stay:
   the browser applies both policies. An `X-Frame-Options` in your proxy has to go if you embed anything from another site.
+- **Service credentials.** `docker-compose.yml` starts MongoDB with `--auth` and a user with `readWrite` on the database, Valkey with its own user
+  (the `default` user is off), and RabbitMQ with its own user and vhost. Set `MONGODB_USER`, `MONGODB_PASSWORD`, `MONGODB_URL`, `REDIS_USER`,
+  `REDIS_PASSWORD` and the RabbitMQ variables above. Encode the special characters of the passwords in the URLs.
+
+  ```
+  MONGODB_URL=mongodb://<user>:<password>@db:27017/pumukit?authSource=pumukit
+  ```
+
+  The users are only created with an empty volume. For an existing volume, before recreating the containers:
+
+  ```bash
+  docker compose exec db mongosh pumukit --eval 'db.createUser({user: "<user>", pwd: "<password>", roles: [{role: "readWrite", db: "pumukit"}]})'
+  docker compose exec rabbitmq rabbitmqctl add_vhost <vhost>
+  docker compose exec rabbitmq rabbitmqctl set_permissions -p <vhost> <user> '.*' '.*' '.*'
+  ```
+
+  PHP now sends `REDIS_USER` and `REDIS_PASSWORD` to Valkey, also for the resumable uploads. If you keep your own compose file and run Valkey or Redis
+  without a user, leave both empty.
 ---
 
 ## MongoDB stack upgrade
@@ -325,7 +344,8 @@ docker compose exec -T db mongosh --quiet pumukit --eval \
 ```
 
 Remove the old container and its data volume (the B.0 backup is your copy), and start an empty
-9.0 server from the committed `docker-compose.yml`:
+9.0 server from the committed `docker-compose.yml`. It creates the user of `MONGODB_USER` and starts with
+authentication:
 
 ```bash
 docker compose rm --stop --force db
@@ -339,9 +359,9 @@ Restore the dump and compare the counts:
 
 ```bash
 docker compose cp ./pumukit.archive.gz db:/tmp/pumukit.archive.gz
-docker compose exec db mongorestore --archive=/tmp/pumukit.archive.gz --gzip
+docker compose exec db sh -c 'mongorestore -u "$MONGODB_USER" -p "$MONGODB_PASSWORD" --authenticationDatabase "$MONGO_INITDB_DATABASE" --archive=/tmp/pumukit.archive.gz --gzip'
 
-docker compose exec -T db mongosh --quiet pumukit --eval \
+docker compose exec -T db mongosh --quiet "mongodb://<user>:<password>@localhost:27017/pumukit?authSource=pumukit" --eval \
   'db.getCollectionNames().sort().forEach(function (c) { print(c + " " + db.getCollection(c).countDocuments({})) })' \
   > counts-after.txt
 diff counts-before.txt counts-after.txt && echo "same documents"
@@ -355,6 +375,9 @@ docker compose up -d
 ```
 
 ### B.3 Option 2: in-place upgrade, one major at a time
+
+An existing volume has no user, so remove `command: ["--auth"]` from the `db` service during the upgrade. When it finishes, create
+the user as in [Security changes in the deployment](#security-changes-in-the-deployment) and restore that line.
 
 You **cannot skip major versions**. The 6.0 code ships `mongo:9.0`, but to upgrade the existing
 data volume you must pass through each intermediate image.

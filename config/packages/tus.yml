@@ -5,6 +5,7 @@ services:
 
   TusPhp\Cache\FileStore:
     class: TusPhp\Cache\RedisStore
+    factory: ['Pumukit\CoreBundle\Utils\RedisUtils', 'createTusStore']
 
   TusPhp\Tus\Server:
     class: TusPhp\Tus\Server

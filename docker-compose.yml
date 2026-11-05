@@ -45,21 +45,42 @@ services:
   db:
     image: mongo:9.0
     restart: unless-stopped
+    command: ["--auth"]
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGODB_DB}
+      MONGODB_USER: ${MONGODB_USER}
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
     volumes:
       - db-data:/data/db:rw
+      - ./docker/mongo/create-app-user.sh:/docker-entrypoint-initdb.d/create-app-user.sh:ro
 
   redis:
     image: valkey/valkey:9.1
     restart: unless-stopped
-    env_file:
-      - .env
+    command:
+      - valkey-server
+      - --user
+      - default
+      - "off"
+      - --user
+      - ${REDIS_USER}
+      - "on"
+      - ">${REDIS_PASSWORD}"
+      - "~*"
+      - "&*"
+      - "+@all"
+      - "-@admin"
+      - "-flushall"
+      - "-flushdb"
 
   rabbitmq:
     image: rabbitmq:4.4-management
     hostname: rabbitmq
     restart: unless-stopped
-    env_file:
-      - .env
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_DEFAULT_VHOST}
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq:rw
 
