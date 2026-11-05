@@ -177,6 +177,7 @@ RUN mkdir -p /etc/nginx/ssl/
 COPY --from=ssl /srv/pumukit/cert.key /etc/nginx/ssl/
 COPY --from=ssl /srv/pumukit/cert.crt /etc/nginx/ssl/
 COPY docker/nginx/default.conf.template /etc/nginx/templates/default.conf.template
+COPY --chmod=755 docker/nginx/15-real-ip.sh /docker-entrypoint.d/15-real-ip.sh
 
 COPY --from=production /srv/pumukit/public public/
 

@@ -146,6 +146,31 @@ Rebuild the image (`docker compose build --pull`); no data has to be migrated.
 
 ## Security changes in the deployment
 
+- **Real client IP.** `TRUSTED_PROXIES` is now empty by default, and NGINX works out the client IP. PHP
+  no longer receives the `X-Forwarded-For` header sent by the client, so nobody can choose the IP used for the
+  login lock, the download and chat limits, the statistics and the logs. If there is a balancer or another proxy in
+  front of the `proxy` container, set its addresses, separated by commas, in `PUMUKIT_REAL_IP_FROM`:
+
+  ```
+  PUMUKIT_REAL_IP_FROM=10.0.0.0/8,2001:db8::/32
+  ```
+
+  The proxy in front has to send `X-Forwarded-For` and the original `Host`. Do not set `TRUSTED_PROXIES` to wide
+  ranges: `10.0.0.0/0` means every IPv4 address. If you keep your own NGINX configuration, make the same change there,
+  in every NGINX the request goes through. With `TRUSTED_PROXIES` empty Symfony ignores `X-Forwarded-Proto`, `Host` and
+  `Port`, so also send the real values to PHP-FPM:
+
+  ```nginx
+  set_real_ip_from 10.0.0.0/8;
+  real_ip_header X-Forwarded-For;
+  real_ip_recursive on;
+
+  fastcgi_param HTTP_X_FORWARDED_FOR $remote_addr;
+  fastcgi_param HTTPS on;
+  fastcgi_param SERVER_PORT 443;
+  fastcgi_param HTTP_HOST $host;
+  ```
+
 - **Iframes.** Only the backoffice (`/admin`) is restricted: it can be embedded from the same site, from the
   `pumukit_lms.domains` of LmsBundle and from the domains of `PUMUKIT_FRAME_ANCESTORS`, separated by spaces (`*` allows any
   site). The player, the live pages, LTI and `/trackfile` send no new header, and the `X-Frame-Options` that NGINX sent

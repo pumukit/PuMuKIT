@@ -13,9 +13,8 @@ server {
     root /srv/pumukit/public;
 
     # Security headers
-    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header_inherit merge;
     add_header X-Content-Type-Options "nosniff" always;
-    add_header X-XSS-Protection "1; mode=block" always;
 
     # Block direct access to storage
     location ^~ /storage {
@@ -27,7 +26,6 @@ server {
     location ^~ /uploads {
         access_log off;
         add_header Cache-Control "public, max-age=86400";
-        add_header X-Content-Type-Options "nosniff" always;
     }
 
     # Bundles (Symfony assets)
@@ -72,7 +70,6 @@ server {
 
     location / {
         try_files $uri /index.php$is_args$args;
-        proxy_cookie_path / "/; secure; HttpOnly; SameSite=none";
     }
 
     # PHP-FPM handler
@@ -85,11 +82,7 @@ server {
         fastcgi_param HTTPS on;
         fastcgi_param HTTP_X_SENDFILE_TYPE X-Accel-Redirect;
         fastcgi_param HTTP_X_ACCEL_MAPPING ${PUMUKIT_STORAGE_DIR}/=/internal-storage/;
-
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Host $host;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header X-Forwarded-Port 443;
+        fastcgi_param HTTP_X_FORWARDED_FOR $remote_addr;
     }
 
     # Deny access to any other .php files
