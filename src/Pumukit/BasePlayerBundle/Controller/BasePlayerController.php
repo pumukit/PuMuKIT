@@ -7,6 +7,7 @@ namespace Pumukit\BasePlayerBundle\Controller;
 use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\BasePlayerBundle\Services\IntroService;
+use Pumukit\BasePlayerBundle\Services\TrackUrlService;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
@@ -16,6 +17,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\Service\Attribute\Required;
 
 abstract class BasePlayerController extends AbstractController
 {
@@ -27,6 +30,7 @@ abstract class BasePlayerController extends AbstractController
     protected $embeddedBroadcastService;
     protected $multimediaObjectService;
     protected $basePlayerIntroService;
+    protected ?TrackUrlService $trackUrlService = null;
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -38,6 +42,12 @@ abstract class BasePlayerController extends AbstractController
         $this->embeddedBroadcastService = $embeddedBroadcastService;
         $this->multimediaObjectService = $multimediaObjectService;
         $this->basePlayerIntroService = $basePlayerIntroService;
+    }
+
+    #[Required]
+    public function setTrackUrlService(TrackUrlService $trackUrlService): void
+    {
+        $this->trackUrlService = $trackUrlService;
     }
 
     #[Route('/videoplayer/{id}', name: 'pumukit_videoplayer_index')]
@@ -63,7 +73,7 @@ abstract class BasePlayerController extends AbstractController
     {
         $media = $request->query->has('track_id') ? $multimediaObject->getTrackById($request->query->get('track_id')) : $multimediaObject->getDisplayTrack();
         if ($media && $media->tags()->containsTag('download')) {
-            return $this->redirect($media->getUrl());
+            return $this->redirect($this->trackUrlService->generateTrackFileUrl($media, UrlGeneratorInterface::ABSOLUTE_URL));
         }
 
         return $media;

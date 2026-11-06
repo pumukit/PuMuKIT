@@ -12,6 +12,7 @@ use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -61,9 +62,14 @@ final class PlayerController extends BasePlayerController
             $this->viewCounter->registerAdminPreview($multimediaObject);
         }
 
+        $media = $this->checkMultimediaObjectTracks($request, $multimediaObject);
+        if ($media instanceof RedirectResponse) {
+            return $media;
+        }
+
         return [
             'object' => $multimediaObject,
-            'media' => $this->checkMultimediaObjectTracks($request, $multimediaObject),
+            'media' => $media,
         ];
     }
 }

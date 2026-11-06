@@ -8,6 +8,7 @@ use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\BasePlayerBundle\Services\IntroService;
 use Pumukit\BasePlayerBundle\Services\PlayerService;
+use Pumukit\BasePlayerBundle\Services\TrackUrlService;
 use Pumukit\BasePlayerBundle\Services\ViewCounterService;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -24,6 +25,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class MultimediaObjectController extends AbstractController implements WebTVControllerInterface
 {
@@ -40,6 +42,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
     protected $pumukitFullMagicUrl;
     protected $cinemaMode;
     protected $picService;
+    protected ?TrackUrlService $trackUrlService = null;
 
     public function __construct(
         ChapterMarkService $chapterMarksService,
@@ -71,6 +74,12 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
         $this->picService = $picService;
     }
 
+    #[Required]
+    public function setTrackUrlService(TrackUrlService $trackUrlService): void
+    {
+        $this->trackUrlService = $trackUrlService;
+    }
+
     #[Route('/video/{id}', name: 'pumukit_webtv_multimediaobject_index')]
     public function indexAction(Request $request, MultimediaObject $multimediaObject, ViewCounterService $viewCounter)
     {
@@ -84,10 +93,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
             }
 
             if ($track->tags()->containsTag('download')) {
-                $url = $track->getUrl();
-                $url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?').'forcedl=1';
-
-                return $this->redirect($url);
+                return $this->redirect($this->trackUrlService->generateTrackFileUrl($track, UrlGeneratorInterface::ABSOLUTE_URL, true));
             }
         }
 
@@ -151,10 +157,7 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
             }
 
             if ($track->tags()->containsTag('download')) {
-                $url = $track->getUrl();
-                $url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?').'forcedl=1';
-
-                return $this->redirect($url);
+                return $this->redirect($this->trackUrlService->generateTrackFileUrl($track, UrlGeneratorInterface::ABSOLUTE_URL, true));
             }
         }
 
