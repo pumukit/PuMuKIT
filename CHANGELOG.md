@@ -37,6 +37,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Changed
 
+- The `production` Docker image installs composer without the development dependencies (`--no-dev`): PHPUnit, PHPStan, Rector, PHP CS Fixer, the debug and web profiler bundles are no longer in its `vendor`. Run the tests and the tools on a stack that mounts the code, as `docker-compose.test.yml` does.
 - `pumukit_new_admin.enable_playlist: false` and `chat.enable: false` also cut their routes, which answer 404; before they only hid the interface or the sending of messages.
 - Build the Paella player with a content hash in its file name and load it through the `paella` asset package, so a new build no longer changes the template.
 - Escape the backoffice form labels; labels with HTML need `label_html`. Sanitize the series header, footer and subseries titles with `symfony/html-sanitizer` (`pumukit.series_html`), print user URLs with the new `safe_url` Twig filter, accept only `http` and `https` in links and person webs, reject more uploads the browser can run and serve `/uploads` with `nosniff`.
