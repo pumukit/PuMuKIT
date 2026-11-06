@@ -130,8 +130,8 @@ test-rector:
 
 update: update-composer update-importmap update-paella vendor-outdated ## Update composer, the importmap and Paella within their major versions; review the diff and commit by hand
 
-update-composer: ## composer update within composer.json, regenerate config/reference.php, validate, audit and list the new major versions (except Symfony 7.4 components)
-	$(call run_php_root,sh -c 'export COMPOSER_ALLOW_SUPERUSER=1; composer update && APP_ENV=prod APP_DEBUG=1 bin/console cache:clear --no-warmup >/dev/null && APP_ENV=prod APP_DEBUG=1 bin/console cache:warmup >/dev/null; status=$$?; chown -R www-data:www-data vendor var; chown --reference=composer.json composer.lock symfony.lock config/reference.php; exit $$status')
+update-composer: ## composer update within composer.json, validate, audit and list the new major versions (except Symfony 7.4 components)
+	$(call run_php_root,sh -c 'export COMPOSER_ALLOW_SUPERUSER=1; composer update && APP_ENV=prod APP_DEBUG=0 bin/console cache:clear --no-warmup >/dev/null && APP_ENV=prod APP_DEBUG=0 bin/console cache:warmup >/dev/null; status=$$?; chown -R www-data:www-data vendor var; chown --reference=composer.json composer.lock symfony.lock; exit $$status')
 	$(call run_php,composer validate --no-check-publish)
 	$(call run_php,composer audit)
 	$(call run_php,composer outdated --direct --major-only) | awk '!/^symfony\/[^ ]+ +7\.4\./'
