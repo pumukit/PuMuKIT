@@ -5,24 +5,27 @@ map $arg_forcedl $dls_content_disposition {
     "1" "attachment";
 }
 
+map $http_origin $dls_cors_origin {
+    default "";
+    "~${PUMUKIT_DLS_CORS_ORIGIN}" $http_origin;
+}
+
 map $request_uri $dls_query_string {
     default "";
     "~\?(?<query>.*)$" $query;
 }
 
 server {
-    listen 443 ssl;
-    listen [::]:443 ssl;
-    http2 on;
+    listen 80;
+    listen [::]:80;
     server_tokens off;
-
-    ssl_certificate /etc/nginx/ssl/cert.crt;
-    ssl_certificate_key /etc/nginx/ssl/cert.key;
 
     server_name _;
 
     add_header_inherit merge;
     add_header X-Content-Type-Options "nosniff" always;
+    add_header Access-Control-Allow-Origin $dls_cors_origin always;
+    add_header Vary Origin always;
 
     location ^~ /pumukit/ {
         auth_request /_validate_token;

@@ -22,6 +22,10 @@ make up
 
 You can then access the local PuMuKIT instance at: https://localhost
 
+The certificate is self-signed: accept it once at https://localhost and at https://dls.localhost, the download server that delivers the
+videos. Until you accept the second one, the videos do not play and the browser shows no error in the page. Browsers resolve
+`dls.localhost` by themselves; if yours does not, add `127.0.0.1 dls.localhost` to `/etc/hosts`.
+
 Useful commands (see `make help` for the full list):
 
 ```sh

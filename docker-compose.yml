@@ -48,6 +48,7 @@ services:
         - teltek/nginx
     depends_on:
       - php
+      - dls
     volumes:
       # Uncomment the next lines in production
       # - ./public/storage:/srv/pumukit/public/storage:rw,cached
@@ -59,10 +60,11 @@ services:
       - "443:443"
 
   dls:
-    profiles: ["dls"]
     restart: unless-stopped
     env_file:
       - .env
+    environment:
+      PUMUKIT_REAL_IP_FROM: ${PUMUKIT_DLS_REAL_IP_FROM:-10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
     build:
       context: ./
       target: dls
@@ -70,8 +72,6 @@ services:
       - php
     volumes:
       - ./public/storage:/mnt/storage/pumukit:ro
-    ports:
-      - "${PUMUKIT_DLS_PORT:-8443}:443"
 
   db:
     image: mongo:9.0

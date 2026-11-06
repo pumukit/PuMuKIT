@@ -217,24 +217,21 @@ Rebuild the image (`docker compose build --pull`); no data has to be migrated.
   `X-Original-URI` header. Before, the token of any video opened every file of the server. Tracks that are redirected to a server with this validation get the new
   token; the links in progress stop working within `PUMUKITPLAYER_SECURE_DURATION`.
 
-  `docker-compose.yml` has an optional `dls` service that serves `/pumukit` and `/opencast` after asking PHP, with a 10 second cache. To use it, start it and
-  set the URL of the server:
-
-  ```bash
-  docker compose --profile dls up -d
-  ```
+  `docker-compose.yml` serves the files through the `dls` service, on its own host, as the deployments of the projects do: the `proxy` sends the host of
+  `PUMUKIT_DLS_HOST` (`dls.localhost` in development) to `dls`, which serves `/pumukit` and `/opencast` after asking PHP, with a 10 second cache. The `.env` sets:
 
   ```
-  PUMUKIT_DOWNLOAD_SERVER_URL=https://dls.example.org
+  PUMUKIT_DLS_HOST=dls.localhost
+  PUMUKIT_DOWNLOAD_SERVER_URL=https://${PUMUKIT_DLS_HOST}
+  PUMUKIT_DLS_CORS_ORIGIN='^https://([a-z0-9-]+\.)?localhost$'
   ```
 
-  ```yaml
-  # config/services.yaml
-  pumukit.downloads_url: "https://dls.example.org/pumukit"
-  ```
-
-  `/trackfile` then checks its token and redirects the tracks stored under that URL to the server, with a token for that file. Without the variable nothing changes. New
-  tracks take `pumukit.downloads_url`; the URL of the existing ones is in the database. HLS playlists and their segments stay on `/trackfile`, because the segments of a playlist
+  and `pumukit.downloads_url` is `https://<PUMUKIT_DLS_HOST>/pumukit`. `/trackfile` checks its token and redirects the tracks stored under
+  `PUMUKIT_DOWNLOAD_SERVER_URL` to the server, with a token for that file. With an empty `PUMUKIT_DOWNLOAD_SERVER_URL` nothing is redirected. New
+  tracks take `pumukit.downloads_url`; the URL of the existing ones is in the database, so the tracks transcoded before keep their old URL and stay on `/trackfile`.
+  The download server is another origin: `PUMUKIT_DLS_CORS_ORIGIN` is the regular expression of the origins allowed to read the files from JavaScript, which the
+  thumbnail generator of the backoffice and the HardVideoEditorBundle do. In a real installation, give the server its own DNS name and certificate, and set
+  `PUMUKIT_DLS_REAL_IP_FROM` if the network of the `proxy` is not a private range. The `dls` service publishes no port: only the `proxy` reaches it. HLS playlists and their segments stay on `/trackfile`, because the segments of a playlist
   would not carry the token. An HLS track with no path in PuMuKIT cannot be served from a server that validates.
 
   The images of `/opencast` do not ask for a token, because PuMuKIT stores them as public URLs. To serve Opencast, also mount its storage on `/mnt/storage/opencast`. With validation,

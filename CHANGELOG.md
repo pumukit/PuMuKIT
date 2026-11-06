@@ -11,7 +11,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 - `pumukit:check:assets` warns about the Bootstrap 3 classes and attributes of the overridden templates, with their replacement.
 - Optional `worker` service in `docker-compose.yml` (`--profile worker`) that consumes every Messenger transport.
-- Optional `dls` service in `docker-compose.yml` and `PUMUKIT_DOWNLOAD_SERVER_URL`: `/trackfile` redirects the tracks of that server with a token for their file, and the server asks PHP before serving it.
+- `dls` service in `docker-compose.yml`, on its own host (`PUMUKIT_DLS_HOST`, `dls.localhost` in development) behind the `proxy`, and `PUMUKIT_DOWNLOAD_SERVER_URL`: `/trackfile` redirects the tracks of that server with a token for their file, and the server asks PHP before serving it.
 - `pumukit:check:secrets` fails if the installation keeps sample secrets, and in production PuMuKIT does not answer requests or run commands with them.
 - `PUMUKIT_FRAME_ANCESTORS` and `frame_ancestors.log`: the backoffice can only be embedded from the same site, the LmsBundle domains and that list.
 - `PUMUKIT_REAL_IP_FROM`: NGINX works out the client IP behind a trusted proxy, and `TRUSTED_PROXIES` is empty by default.

@@ -27,6 +27,9 @@ make up
 
 Then open https://localhost. See the [Docker installation guide](docker/README.md) for requirements and build instructions.
 
+The development certificate is self-signed. Accept it once in the browser at https://localhost and at https://dls.localhost, the download
+server that delivers the videos: until you accept the second one, the videos do not play and the browser shows no error in the page.
+
 ## Documentation
 
 | Topic                    | Link                                 |
