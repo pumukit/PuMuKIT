@@ -32,11 +32,9 @@ USER root
 
 RUN apt-get update \
 		&& apt-get install -y --no-install-recommends \
-		python3-pip \
 		gettext \
 		git \
-		&& apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* \
-		&& pip install google-api-python-client --break-system-packages
+		&& apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 RUN apt-get update \
 		&& apt-get install -y --no-install-recommends \

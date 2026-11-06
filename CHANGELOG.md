@@ -150,6 +150,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Removed
 
+- Python 3, pip and `google-api-python-client` from the Docker image: the YoutubeBundle uses the PHP Google API client (`google/apiclient`) since 2023.
 - API Platform 2.7 (replaced by 4.x), removing the two GraphQL security advisories and their audit ignores.
 - `sensio/framework-extra-bundle` (abandoned).
 - `symfony/templating` (unused), Swiftmailer and `symfony/swiftmailer-bundle`.
