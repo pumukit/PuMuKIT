@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\InspectionBundle\Services;
 
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Pumukit\CoreBundle\Utils\CommandTemplate;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Symfony\Component\Process\Process;
@@ -17,7 +18,7 @@ final class InspectionImageService implements InspectionServiceInterface
     public function __construct(?string $command = null, ?LoggerInterface $logger = null)
     {
         $this->command = $command ?: 'exiftool -json "{{file}}"';
-        $this->logger = $logger;
+        $this->logger = $logger ?? new NullLogger();
     }
 
     public function getFileMetadata(?Path $path): string

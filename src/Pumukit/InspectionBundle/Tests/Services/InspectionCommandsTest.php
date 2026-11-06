@@ -76,6 +76,21 @@ class InspectionCommandsTest extends TestCase
         }
     }
 
+    #[DataProvider('servicesWithAnOptionalLogger')]
+    public function testAFailedCommandWithoutALoggerReturnsNoMetadata(string $class): void
+    {
+        $service = new $class('false "{{file}}"');
+
+        $this->assertSame('', $service->getFileMetadata(Path::create($this->file('a.mp4'))));
+    }
+
+    public static function servicesWithAnOptionalLogger(): iterable
+    {
+        yield 'image' => [InspectionImageService::class];
+
+        yield 'document' => [InspectionDocumentService::class];
+    }
+
     private function file(string $name): string
     {
         $file = $this->dir.'/'.$name;
