@@ -14,6 +14,7 @@ server {
     listen 443 ssl;
     listen [::]:443 ssl;
     http2 on;
+    server_tokens off;
 
     ssl_certificate /etc/nginx/ssl/cert.crt;
     ssl_certificate_key /etc/nginx/ssl/cert.key;
