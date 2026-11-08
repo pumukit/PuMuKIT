@@ -46,10 +46,10 @@ final class DashboardApiTest extends PumukitTestCase
 
         $factory = self::getContainer()->get(FactoryService::class);
         $series = $factory->createSeries();
-        $own = $this->multimediaObject($factory, $series, MultimediaObject::STATUS_PUBLISHED, 600, '-1 month');
+        $own = $this->multimediaObject($factory, $series, MultimediaObject::STATUS_PUBLISHED, 600, 'first day of last month');
         $own->addPersonWithRole($person, $role);
         $this->multimediaObject($factory, $series, MultimediaObject::STATUS_HIDDEN, 1200, 'now');
-        $this->multimediaObject($factory, $factory->createSeries(), MultimediaObject::STATUS_BLOCKED, 1800, '-14 months');
+        $this->multimediaObject($factory, $factory->createSeries(), MultimediaObject::STATUS_BLOCKED, 1800, 'first day of -14 months');
 
         foreach ([Job::STATUS_WAITING, Job::STATUS_EXECUTING, Job::STATUS_ERROR] as $status) {
             $job = new Job();
