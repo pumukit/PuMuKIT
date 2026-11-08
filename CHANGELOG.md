@@ -114,6 +114,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Fixed
 
+- Bootstrap 3 classes left in the core templates: the «Cancel» button of the owner rejection page and the column of the channel list.
 - The vertical design of the media block failed with a series, such as an announced series in the legacy «Recently added» module: it included a template that does not exist.
 - The tracks tagged `download` opened from `/video/{id}?track_id=`, its magic URL, `/player/{id}` and the player redirected to their path on disk: they now go through the signed `/trackfile` URL, and the portal ones are delivered as an attachment.
 - Command injection in the inspection services and the pic extractors through file names: their commands run as a list of arguments, and `JobCreator` and `/tus` reject malformed extensions.
