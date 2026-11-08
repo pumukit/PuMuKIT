@@ -32,7 +32,7 @@
         <div class="row">
             {% for object in objects %}
                 {% if object.isCollection() %}
-                    {% include '@PumukitWebTV/Resources/template_series_old.html.twig' %}
+                    {% include '@PumukitWebTV/Resources/template_series.html.twig' %}
                 {% else %}
                     {% include '@PumukitWebTV/Resources/template_video_legacy.html.twig' %}
                 {% endif %}
