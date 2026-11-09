@@ -44,6 +44,9 @@ deployment:
   `monolog` configuration, replace `excluded_404s` with `excluded_http_codes` and do not use
   the `elasticsearch`, `mongo`, `sentry` or `raven` handler types (see
   [UPGRADE-6.0.md](../../UPGRADE-6.0.md#dependencies)).
+- **Interface languages.** The interface is translated into `en`, `es`, `ca`, `gl`, `eu` and `val`. The French and
+  Chinese (`zh-CN`, `zh-TW`) translations, 7–14 % complete, are removed: with those locales in `PUMUKIT_LOCALES` the
+  interface shows in English. The content in those languages (titles, descriptions) is not touched.
 - **Other local customizations.** Any code or config you maintain on top of the core
   (overridden templates, services, controllers) should be reviewed against the Symfony 7.4 APIs.
   The code-level changes are listed in [UPGRADE-6.0.md](../../UPGRADE-6.0.md).

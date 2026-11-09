@@ -193,6 +193,14 @@
         <source>of %published% published</source>
         <target state="translated">de %published% publicats</target>
       </trans-unit>
+      <trans-unit id="afbaf93e868d11e8adc0fa7ae01bbebc" resname="Day">
+        <source>Day</source>
+        <target>Dia</target>
+      </trans-unit>
+      <trans-unit id="afbafa60868d11e8adc0fa7ae01bbebc" resname="Month">
+        <source>Month</source>
+        <target>Mes</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

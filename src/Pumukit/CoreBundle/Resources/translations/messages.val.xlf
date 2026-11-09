@@ -121,6 +121,10 @@
         <source>Web</source>
         <target state="translated">Web</target>
       </trans-unit>
+      <trans-unit id="UtKUPLn" resname="The file was uploaded but could not be imported">
+        <source>The file was uploaded but could not be imported</source>
+        <target>El fitxer s'ha pujat però no s'ha pogut importar</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

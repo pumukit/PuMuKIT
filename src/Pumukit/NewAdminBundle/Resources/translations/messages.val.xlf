@@ -4437,6 +4437,10 @@ una acció...</target>
         <source>Without playable media</source>
         <target state="translated">Sense mitjans reproduïbles</target>
       </trans-unit>
+      <trans-unit id="1J6rCfr" resname="System Super Administrator">
+        <source>System Super Administrator</source>
+        <target>Superadministrador del sistema</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

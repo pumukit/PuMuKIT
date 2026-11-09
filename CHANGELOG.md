@@ -157,6 +157,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Removed
 
+- The French, Simplified Chinese and Traditional Chinese translations of the interface (7–14 % translated): those locales show the interface in English. The Crowdin integration is gone; the translations are changed in the repository (`doc/i18n.md`) and `TranslationCatalogueTest` fails if an English key is not translated in `es`, `ca`, `gl`, `eu` or `val`.
 - Python 3, pip and `google-api-python-client` from the Docker image: the YoutubeBundle uses the PHP Google API client (`google/apiclient`) since 2023.
 - API Platform 2.7 (replaced by 4.x), removing the two GraphQL security advisories and their audit ignores.
 - `sensio/framework-extra-bundle` (abandoned).

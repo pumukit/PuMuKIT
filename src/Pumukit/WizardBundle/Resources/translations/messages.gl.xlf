@@ -45,6 +45,14 @@
         <source>You dont have enough permissions to upload files from the server</source>
         <target state="translated">Non tes permisos suficientes para subir ficheiros desde o servidor</target>
       </trans-unit>
+      <trans-unit id="tHcCuTz" resname="Encrypted copy">
+        <source>Encrypted copy</source>
+        <target>Copia cifrada</target>
+      </trans-unit>
+      <trans-unit id="4JZSO3t" resname="Without copy">
+        <source>Without copy</source>
+        <target>Sen copia</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

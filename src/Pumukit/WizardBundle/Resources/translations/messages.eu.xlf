@@ -45,6 +45,14 @@
         <source>You dont have enough permissions to upload files from the server</source>
         <target state="translated">Ez duzu baimen nahikorik zerbitzaritik fitxategiak igotzeko</target>
       </trans-unit>
+      <trans-unit id="tHcCuTz" resname="Encrypted copy">
+        <source>Encrypted copy</source>
+        <target>Kopia zifratua</target>
+      </trans-unit>
+      <trans-unit id="4JZSO3t" resname="Without copy">
+        <source>Without copy</source>
+        <target>Kopiarik gabe</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
