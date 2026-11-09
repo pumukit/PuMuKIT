@@ -9,6 +9,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Added
 
+- The Paella player shows a «Show player controls» button to keyboard users when it hides its controls, keeps the keyboard focus in the order of the page and translates the «Play video» label.
 - `pumukit:check:assets` warns about the Bootstrap 3 classes and attributes of the overridden templates, with their replacement.
 - Optional `worker` service in `docker-compose.yml` (`--profile worker`) that consumes every Messenger transport.
 - `dls` service in `docker-compose.yml`, on its own host (`PUMUKIT_DLS_HOST`, `dls.localhost` in development) behind the `proxy`, and `PUMUKIT_DOWNLOAD_SERVER_URL`: `/trackfile` redirects the tracks of that server with a token for their file, and the server asks PHP before serving it.
@@ -118,6 +119,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Fixed
 
+- The Paella player loaded the wrong video when its URL had `track_id`, and it overflowed the iframes that embed it: it takes the size of the window and keeps 16:9.
 - `/api/keywords/mmobj` and `/api/keywords/series` required the global scope: they only ask for API access, like `/api/v1/keywords/`.
 - Bootstrap 3 classes left in the core templates: the «Cancel» button of the owner rejection page and the column of the channel list.
 - The vertical design of the media block failed with a series, such as an announced series in the legacy «Recently added» module: it included a template that does not exist.

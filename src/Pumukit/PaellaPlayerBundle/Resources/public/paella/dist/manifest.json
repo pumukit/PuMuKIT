@@ -1,11 +1,11 @@
 {
-  "teltek-paella-player.js": "teltek-paella-player.e6ac5cef65ce50e4005a.js",
+  "teltek-paella-player.js": "teltek-paella-player.3bfcbd53df6598632e44.js",
   "config/config.json": "config/config.json",
   "config/present-mode-4.svg": "config/present-mode-4.svg",
   "config/present-mode-3.svg": "config/present-mode-3.svg",
   "config/present-mode-2.svg": "config/present-mode-2.svg",
-  "config/present-mode-1.svg": "config/present-mode-1.svg",
   "style.css": "style.css",
+  "config/present-mode-1.svg": "config/present-mode-1.svg",
   "index.html": "index.html",
-  "teltek-paella-player.js.map": "teltek-paella-player.e6ac5cef65ce50e4005a.js.map"
+  "teltek-paella-player.js.map": "teltek-paella-player.3bfcbd53df6598632e44.js.map"
 }

@@ -22,22 +22,30 @@ window.onload = async () => {
     const baseURL = window.location.href;
     let configID = "";
 
-    if (baseURL.indexOf('id=') !== -1) {
-        configID = utils.getUrlParameter('id');
-    }
-    else if (baseURL.indexOf('playlist') !== -1) {
-        configID = utils.getUrlParameter('videoId');
-    }
-    else {
+    const params = new URLSearchParams(window.location.search);
+
+    function getIdFromPath() {
         const path = window.location.pathname;
         const segments = path.split('/');
         const filtered = [];
+
         for (let i = 0; i < segments.length; i++) {
             if (segments[i]) {
                 filtered.push(segments[i]);
             }
         }
-        configID = filtered[filtered.length - 1];
+
+        return filtered[filtered.length - 1];
+    }
+
+    if (params.has('track_id')) {
+        configID = getIdFromPath();
+    } else if (params.has('id')) {
+        configID = params.get('id');
+    } else if (baseURL.indexOf('playlist') !== -1) {
+        configID = utils.getUrlParameter('videoId');
+    } else {
+        configID = getIdFromPath();
     }
 
     let loadIntro = false;
@@ -129,6 +137,124 @@ window.onload = async () => {
 
     const paella = new PaellaPlayer('player-container', initParams);
 
+    paella.addDictionary('es', {
+        'Show player controls': 'Mostrar controles del reproductor',
+        'Play video': 'Reproducir vídeo',
+    });
+    paella.addDictionary('ca', {
+        'Show player controls': 'Mostra els controls del reproductor',
+        'Play video': 'Reprodueix el vídeo',
+    });
+    paella.addDictionary('gl', {
+        'Show player controls': 'Amosar os controis do reprodutor',
+        'Play video': 'Reproducir o vídeo',
+    });
+    paella.addDictionary('eu', {
+        'Show player controls': 'Erakutsi erreproduzitzailearen kontrolak',
+        'Play video': 'Erreproduzitu bideoa',
+    });
+
+    const playerContainer = document.getElementById('player-container');
+    let accessibilityEntry = null;
+
+    if (playerContainer) {
+        accessibilityEntry = document.createElement('button');
+
+        accessibilityEntry.type = 'button';
+        accessibilityEntry.className = 'player-accessibility-entry';
+        accessibilityEntry.textContent = 'Show player controls';
+        accessibilityEntry.tabIndex = -1;
+        accessibilityEntry.hidden = true;
+
+        playerContainer.prepend(accessibilityEntry);
+
+        const normalizeTabIndex = (element) => {
+            if (!(element instanceof HTMLElement)) {
+                return;
+            }
+
+            if (element !== accessibilityEntry && element.tabIndex > 0) {
+                element.tabIndex = 0;
+            }
+
+            element.querySelectorAll('[tabindex]').forEach((child) => {
+                if (child !== accessibilityEntry && child.tabIndex > 0) {
+                    child.tabIndex = 0;
+                }
+            });
+        };
+
+        const translatePreview = (element) => {
+            if (!(element instanceof HTMLElement)) {
+                return;
+            }
+
+            if (element.getAttribute('aria-label') === 'Play video') {
+                element.setAttribute(
+                    'aria-label',
+                    paella.translate('Play video')
+                );
+            }
+
+            element.querySelectorAll('[aria-label="Play video"]').forEach((child) => {
+                child.setAttribute(
+                    'aria-label',
+                    paella.translate('Play video')
+                );
+            });
+        };
+
+        const updateAccessibilityEntry = () => {
+            const playbackBar = playerContainer.querySelector('.playback-bar');
+
+            if (!playbackBar) {
+                return;
+            }
+
+            const hidden = playbackBar.style.display === 'none';
+
+            if (hidden && accessibilityEntry.hidden) {
+                accessibilityEntry.tabIndex = 0;
+                accessibilityEntry.hidden = false;
+            } else if (!hidden && !accessibilityEntry.hidden) {
+                accessibilityEntry.tabIndex = -1;
+                accessibilityEntry.hidden = true;
+            }
+        };
+
+        const tabIndexObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes') {
+                    normalizeTabIndex(mutation.target);
+                    return;
+                }
+
+                mutation.addedNodes.forEach((node) => {
+                    normalizeTabIndex(node);
+                    translatePreview(node);
+                });
+            });
+            updateAccessibilityEntry();
+        });
+
+        normalizeTabIndex(playerContainer);
+        translatePreview(playerContainer);
+
+        tabIndexObserver.observe(playerContainer, {
+            subtree: true,
+            childList: true,
+            attributes: true,
+            attributeFilter: ['tabindex', 'style'],
+        });
+
+        const showControls = () => {
+            paella.showUserInterface();
+        };
+
+        accessibilityEntry.addEventListener('focus', showControls);
+        accessibilityEntry.addEventListener('click', showControls);
+    }
+
     try {
         await paella.loadManifest().then(() => {
             paella.addCustomPluginIcon("es.upv.paella.playPauseButton","play",playIcon);
@@ -142,6 +268,9 @@ window.onload = async () => {
             paella.addCustomPluginIcon("es.upv.paella.volumeButtonPlugin","volumeMuteIcon",volumeMuteIcon);
         });
         await utils.loadStyle('src/style.css');
+        if (accessibilityEntry) {
+            accessibilityEntry.textContent = paella.translate('Show player controls');
+        }
     } catch (e) {
         console.error(e);
     }

@@ -11,16 +11,20 @@
   {{ parent() }}
     <script>
         function resizeFrame(elem) {
-            var width = $(elem).width();
-            var height = width / 16 * 9;
-            $(elem).height(height);
+            var availableWidth = $(window).width();
+            var availableHeight = $(window).height();
+
+            var width = Math.min(availableWidth, availableHeight * 16 / 9);
+            var height = width * 9 / 16;
+
+            $(elem).css({
+                width: width + 'px',
+                height: height + 'px',
+                margin: '0 auto'
+            });
         }
 
-        $(window).resize(function () {
-            resizeFrame($('#player-container'));
-        });
-
-        $(window).on("load", function() {
+        $(window).on('resize load', function () {
             resizeFrame($('#player-container'));
         });
     </script>
