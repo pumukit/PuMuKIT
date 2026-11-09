@@ -1,6 +1,3 @@
-parameters:
-  pumukit_ldap.ldap: false
-
 services:
   _defaults:
     autowire:      true
@@ -25,7 +22,7 @@ services:
       $warningOnUnpublished: '%pumukit.warning_on_unpublished%'
       $kernelEnvironment: '%kernel.environment%'
       $pumukitNewAdminMultimediaObjectLabel: '%pumukit_new_admin.multimedia_object_label%'
-      $pumukitLdapEnable: '%pumukit_ldap.ldap%'
+      $personPickerTemplates: '%pumukit.person_picker_templates%'
       $pumukitNewAdminBaseCatalogueTag: '%pumukit_new_admin.base_catalogue_tag%'
       $personalScopeRoleCode: '%pumukitschema.personal_scope_role_code%'
       $userCanRejectOwner: '%pumukit_schema.user_can_reject_owner_of_multimedia_object%'

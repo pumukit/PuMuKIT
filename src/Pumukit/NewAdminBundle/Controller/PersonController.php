@@ -36,7 +36,6 @@ class PersonController extends AdminController
 
     /** @var ValidatorInterface */
     private $validator;
-    private $pumukitLdapEnable;
     private $pumukitSchemaPersonalScopeRoleCode;
 
     public function __construct(
@@ -48,12 +47,11 @@ class PersonController extends AdminController
         RequestStack $requestStack,
         PersonService $personService,
         TranslatorInterface $translator,
-        $pumukitLdapEnable,
-        $pumukitSchemaPersonalScopeRoleCode
+        $pumukitSchemaPersonalScopeRoleCode,
+        private readonly array $personPickerTemplates = [],
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $requestStack, $translator);
         $this->personService = $personService;
-        $this->pumukitLdapEnable = $pumukitLdapEnable;
         $this->pumukitSchemaPersonalScopeRoleCode = $pumukitSchemaPersonalScopeRoleCode;
     }
 
@@ -189,8 +187,6 @@ class PersonController extends AdminController
         $resources = $this->getResources($request, $criteria, $selectedPersonId);
 
         $template = $multimediaObject->isPrototype() ? '_template' : '';
-        $ldapEnabled = $this->pumukitLdapEnable ?? false;
-
         $owner = $request->query->get('owner', false);
 
         try {
@@ -204,7 +200,7 @@ class PersonController extends AdminController
             'mm' => $multimediaObject,
             'role' => $role,
             'template' => $template,
-            'ldap_enabled' => $ldapEnabled,
+            'person_picker_templates' => $this->personPickerTemplates,
             'owner' => $owner,
             'personal_scope_role_code' => $personalScopeRole->getCod(),
         ];

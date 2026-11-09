@@ -1014,6 +1014,13 @@ The template is included with `custom_menu_area` set to `admin` (not in the nake
 The naked back-office has its own list, `pumukit.naked_menu_templates`, filled in the same way; its templates are
 included at the end of the naked menu.
 
+## Person picker buttons
+
+The `pumukit_ldap.ldap` parameter and the call to the LDAP bundle in the People tab were removed. A bundle can add
+buttons next to "Use" in the person picker of a multimedia object by appending a template to the
+`pumukit.person_picker_templates` parameter in the same way. The template is included with `mm`, `role` and
+`personal_scope_role_code`. The LDAP bundle adds its "New from LDAP" button with its `person_button` option.
+
 ## Microsites
 
 The microsites are configured in the core, without a bundle per microsite. A microsite is a set of hosts where the

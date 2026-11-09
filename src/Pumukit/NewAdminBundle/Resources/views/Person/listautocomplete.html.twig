@@ -25,9 +25,9 @@
             </div>
         </fieldset>
         <div class="modal-footer">
-            {% if ldap_enabled  and role.cod != personal_scope_role_code %}
-                {{ render(controller('Pumukit\\LDAPBundle\\Controller\\PersonController::buttonAction', {'mmId': mm.id, 'roleId': role.id})) }}
-            {% endif %}
+            {% for person_picker_template in person_picker_templates %}
+                {{ include(person_picker_template) }}
+            {% endfor %}
             <button type="button" class="btn btn-primary" data-action="click->admin--person-picker#use">
                 {% trans %}Use{% endtrans %}
             </button>
