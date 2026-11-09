@@ -73,12 +73,6 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        $user = $token->getUser();
-        if ($user instanceof User) {
-            $user->resetLoginAttempts();
-            $this->objectManager->flush();
-        }
-
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
@@ -92,12 +86,6 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             $request->getSession()->getFlashBag()->add('error', $exception->getMessage());
 
             return new RedirectResponse($this->urlGenerator->generate(self::LOGIN_ROUTE));
-        }
-
-        $username = $request->request->get('username');
-        $user = $this->objectManager->getRepository(User::class)->findOneBy(['username' => $username]);
-        if ($user) {
-            $this->updateUser($user);
         }
 
         $request->getSession()->getFlashBag()->add('error', 'Invalid credentials or account temporarily blocked.');
@@ -127,16 +115,5 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         return $user;
-    }
-
-    private function updateUser(User $user): void
-    {
-        $user->addLoginAttempt();
-
-        if ($user->isResetLoginAttemptsAllowed()) {
-            $user->resetLoginAttempts();
-        }
-
-        $this->objectManager->flush();
     }
 }

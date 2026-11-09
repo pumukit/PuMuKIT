@@ -232,6 +232,12 @@ services:
   Pumukit\SchemaBundle\Security\LoginFormAuthenticator:
     class: Pumukit\SchemaBundle\Security\LoginFormAuthenticator
 
+  Pumukit\SchemaBundle\Security\LoginAttemptUserChecker:
+    class: Pumukit\SchemaBundle\Security\LoginAttemptUserChecker
+
+  Pumukit\SchemaBundle\EventListener\LoginAttemptListener:
+    class: Pumukit\SchemaBundle\EventListener\LoginAttemptListener
+
   Pumukit\SchemaBundle\Services\CreateUserService:
     class: Pumukit\SchemaBundle\Services\CreateUserService
 

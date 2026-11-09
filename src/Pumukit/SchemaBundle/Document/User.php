@@ -188,6 +188,10 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
 
     public function isResetLoginAttemptsAllowed(): bool
     {
+        if (null === $this->getLastLoginAttempt()) {
+            return true;
+        }
+
         $lastLoginAttempt = clone $this->getLastLoginAttempt();
         $lastLoginAttempt->add(\DateInterval::createFromDateString(self::RESET_LOGIN_ATTEMPTS_INTERVAL));
         $now = new \DateTime();

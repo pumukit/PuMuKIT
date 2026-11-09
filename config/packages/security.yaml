@@ -13,6 +13,10 @@ security:
       pattern: ^/api
       context: pumukit
       provider: pumukit
+      user_checker: Pumukit\SchemaBundle\Security\LoginAttemptUserChecker
+      login_throttling:
+        max_attempts: 5
+        interval: '1 minute'
       http_basic:
         realm:    "secure-api"
 

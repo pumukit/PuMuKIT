@@ -39,6 +39,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Changed
 
+- `/api` with HTTP Basic applies the login lock of the form: three wrong passwords within 5 minutes, through the form or the API, lock the account for 5 minutes in both, and a locked account no longer gets into `/api`. `/api` also throttles the failures by user and IP (`login_throttling`, 5 per minute). The failures are counted atomically, failures older than 5 minutes no longer add up, and a wrong CSRF token no longer counts as a failure.
 - The `production` Docker image installs composer without the development dependencies (`--no-dev`): PHPUnit, PHPStan, Rector, PHP CS Fixer, the debug and web profiler bundles are no longer in its `vendor`. Run the tests and the tools on a stack that mounts the code, as `docker-compose.test.yml` does.
 - `pumukit_new_admin.enable_playlist: false` and `chat.enable: false` also cut their routes, which answer 404; before they only hid the interface or the sending of messages.
 - Build the Paella player with a content hash in its file name and load it through the `paella` asset package, so a new build no longer changes the template.

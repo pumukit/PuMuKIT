@@ -172,6 +172,12 @@ Rebuild the image (`docker compose build --pull`); no data has to be migrated.
   fastcgi_param HTTP_HOST $host;
   ```
 
+- **Login lock in `/api`.** The integrations that call `/api` with HTTP Basic (`-u user:password`) now go through the login lock of
+  the form: three wrong passwords within 5 minutes lock the account for 5 minutes, in the API and in the login form, and more than 5
+  failures per minute of a user from the same IP are rejected. A locked account gets a `401`, as with a wrong password. An integration
+  with a wrong password locks the account it uses every 5 minutes, and a person who mistypes the password in the login form stops
+  the integrations that share that account, so give every integration its own account with only the roles it needs. Nothing changes
+  for the backoffice, which calls `/api` with its session, nor for the users that log in with CAS, SAML or the LMS.
 - **Iframes.** Only the backoffice (`/admin`) is restricted: it can be embedded from the same site, from the
   `pumukit_lms.domains` of LmsBundle and from the domains of `PUMUKIT_FRAME_ANCESTORS`, separated by spaces (`*` allows any
   site). The player, the live pages, LTI and `/trackfile` send no new header, and the `X-Frame-Options` that NGINX sent
