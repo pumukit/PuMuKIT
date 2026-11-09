@@ -178,6 +178,24 @@ Rebuild the image (`docker compose build --pull`); no data has to be migrated.
   with a wrong password locks the account it uses every 5 minutes, and a person who mistypes the password in the login form stops
   the integrations that share that account, so give every integration its own account with only the roles it needs. Nothing changes
   for the backoffice, which calls `/api` with its session, nor for the users that log in with CAS, SAML or the LMS.
+- **Password hashes.** `security.yaml` hashes the passwords with `auto` (bcrypt, cost 12) and migrates from `sha512` and
+  from `md5` (`iterations: 1`, `encode_as_base64: false`): when a user logs in with a password, through the login form
+  or `/api`, the hash is rewritten. Users that never log in again keep their old hash and can still log in. `encoders`
+  no longer exists in Symfony 7, so every installation rewrites this block; take the one of the core unless a CAS server
+  checks the hashes of PuMuKIT (the CAS file of GalicasterMediaServerBundle or `cas.authn.mongo`). That CAS checks MD5,
+  so those installations keep their hasher until the CAS accepts bcrypt:
+
+  ```yaml
+  password_hashers:
+    Symfony\Component\Security\Core\User\UserInterface:
+      algorithm: md5
+      iterations: 1
+      encode_as_base64: false
+  ```
+
+  A bcrypt hash takes about 160 ms to check, against 1.5 ms of `sha512`. The integrations that call `/api` with HTTP
+  Basic pay it on every request that does not reuse the session cookie. To roll back to 5.1, set the 5.1 hasher to
+  `auto` with `migrate_from: [sha512]` too, or the users that logged in to 6.0 will not log in with their password.
 - **Iframes.** Only the backoffice (`/admin`) is restricted: it can be embedded from the same site, from the
   `pumukit_lms.domains` of LmsBundle and from the domains of `PUMUKIT_FRAME_ANCESTORS`, separated by spaces (`*` allows any
   site). The player, the live pages, LTI and `/trackfile` send no new header, and the `X-Frame-Options` that NGINX sent

@@ -6,7 +6,18 @@ security:
       mongodb: { class: Pumukit\SchemaBundle\Document\User, property: username }
 
   password_hashers:
-    Symfony\Component\Security\Core\User\UserInterface: sha512
+    legacy_sha512:
+      algorithm: sha512
+    legacy_md5:
+      algorithm: md5
+      iterations: 1
+      encode_as_base64: false
+    Symfony\Component\Security\Core\User\UserInterface:
+      algorithm: auto
+      cost: 12
+      migrate_from:
+        - legacy_sha512
+        - legacy_md5
 
   firewalls:
     api:
@@ -48,3 +59,13 @@ security:
   role_hierarchy:
     ROLE_ADMIN:       ROLE_USER
     ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+when@test:
+  security:
+    password_hashers:
+      Symfony\Component\Security\Core\User\UserInterface:
+        algorithm: auto
+        cost: 4
+        migrate_from:
+          - legacy_sha512
+          - legacy_md5

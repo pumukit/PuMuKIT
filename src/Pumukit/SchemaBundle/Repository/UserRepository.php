@@ -8,10 +8,23 @@ use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\User;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class UserRepository extends DocumentRepository
+class UserRepository extends DocumentRepository implements PasswordUpgraderInterface
 {
+    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
+    {
+        if (!$user instanceof User) {
+            return;
+        }
+
+        $user->setPassword($newHashedPassword);
+        $user->setSalt(null);
+        $this->dm->flush();
+    }
+
     public function userExists(array $criteria)
     {
         return $this->dm->getRepository(User::class)->findOneBy($criteria);
