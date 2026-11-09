@@ -7,19 +7,22 @@ on:
       - "master"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
       -
         name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
       -
         name: Login to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -27,7 +30,7 @@ jobs:
         name: Build and push base
         env:
           TAG: ${{ github.ref_name == 'master' && 'latest' || github.ref_name }}
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           push: true
           target: base
@@ -36,7 +39,7 @@ jobs:
         name: Build and push PuMuKIT
         env:
           TAG: ${{ github.ref_name == 'master' && 'latest' || github.ref_name }}
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           push: true
           target: production
@@ -45,7 +48,7 @@ jobs:
         name: Build and push PuMuKIT Proxy
         env:
           TAG: ${{ github.ref_name == 'master' && 'latest' || github.ref_name }}
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           push: true
           target: proxy

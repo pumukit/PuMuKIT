@@ -26,6 +26,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 - RabbitMQ 4.4 service and Symfony Messenger with the AMQP transport (PHP extension `amqp` in the Docker image), ready for the bundles to declare their own transports and queues.
 - Functional tests for user creation, login and logout.
 - `make php-shell` and `make composer` targets to work inside the PHP container.
+- `make composer-audit`, `make importmap-audit` and `make paella-audit`, also run by CI: they fail if a composer dependency, an importmap package or a runtime dependency of Paella has a security advisory. The workflows run with a read-only `GITHUB_TOKEN`, the CI checkout does not keep it and the actions are on their current major versions.
 - `pumukit:textindex:rebuild` command to regenerate the search text index for all Multimedia Objects and Series.
 - `pumukit:check:assets` command to list bundle assets and PuMuKIT templates referenced by templates that no installed bundle provides, removed JavaScript globals still in use, and overridden portal layouts without the importmap.
 - Stimulus (`symfony/stimulus-bundle`) and `symfony/ux-translator`, with the importmap and the `pumukit` entrypoint declared by the CoreBundle; bundles register their controllers with `FrontendAssets::register()`.

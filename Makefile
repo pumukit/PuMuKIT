@@ -1,6 +1,6 @@
 .PHONY: help up start stop clean down debug pull build \
         cc cc-envs ai \
-        composer composer-install composer-update composer-validate fixtures check-delivery \
+        composer composer-install composer-update composer-validate composer-audit importmap-audit paella-audit fixtures check-delivery \
         test-all test test-lint-yaml test-lint-twig test-lint-xliff test-lint-generic \
         test-php-cs-fixer test-php-stan test-rector fix-test-perms \
         update update-composer update-importmap update-paella paella-build vendor-outdated \
@@ -95,6 +95,15 @@ composer:
 
 composer-validate:
 	$(call run_php,composer validate)
+
+composer-audit: ## Fail if a composer dependency has a security advisory
+	$(call run_php,composer audit)
+
+importmap-audit: ## Fail if an importmap package has a security advisory
+	$(call run_php,bin/console importmap:audit)
+
+paella-audit: ## Fail if a runtime dependency of Paella has a security advisory
+	$(call run_paella,npm audit --omit=dev --no-fund --no-update-notifier --loglevel=error)
 
 fixtures:
 	$(call run_php,bin/console pumukit:init:repo all --force)
