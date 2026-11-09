@@ -133,10 +133,6 @@ final class ApiScopeTest extends PumukitTestCase
 
         yield ['/api/encoder/profiles.json'];
 
-        yield ['/api/keywords/mmobj.json'];
-
-        yield ['/api/keywords/series.json'];
-
         yield ['/api/media/mmobj/num_recorded.json'];
 
         yield ['/api/media/series/published.json'];
@@ -150,6 +146,23 @@ final class ApiScopeTest extends PumukitTestCase
         yield ['/api/live/events.json'];
 
         yield ['/api/live/live_events.json'];
+    }
+
+    #[DataProvider('keywordRoutes')]
+    public function testAPersonalApiUserCanUseTheLegacyKeywords(string $path): void
+    {
+        $this->request($this->publisher, $path);
+        $this->assertResponseIsSuccessful();
+
+        $this->request($this->teacher, $path);
+        $this->assertResponseStatusCodeSame(403);
+    }
+
+    public static function keywordRoutes(): iterable
+    {
+        yield ['/api/keywords/mmobj.json'];
+
+        yield ['/api/keywords/series.json'];
     }
 
     private function members(User $user, string $path): array

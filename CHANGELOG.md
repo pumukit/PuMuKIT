@@ -118,6 +118,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Fixed
 
+- `/api/keywords/mmobj` and `/api/keywords/series` required the global scope: they only ask for API access, like `/api/v1/keywords/`.
 - Bootstrap 3 classes left in the core templates: the «Cancel» button of the owner rejection page and the column of the channel list.
 - The vertical design of the media block failed with a series, such as an announced series in the legacy «Recently added» module: it included a template that does not exist.
 - The tracks tagged `download` opened from `/video/{id}?track_id=`, its magic URL, `/player/{id}` and the player redirected to their path on disk: they now go through the signed `/trackfile` URL, and the portal ones are delivered as an attachment.
