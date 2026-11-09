@@ -23,7 +23,6 @@ services:
       $pumukitInboxDepth: '%pumukit.inbox_depth%'
       $pumukitNewAdminShowNakedPubTab: '%pumukit_new_admin.show_naked_pub_tab%'
       $warningOnUnpublished: '%pumukit.warning_on_unpublished%'
-      $kernelBundles: '%kernel.bundles%'
       $kernelEnvironment: '%kernel.environment%'
       $pumukitNewAdminMultimediaObjectLabel: '%pumukit_new_admin.multimedia_object_label%'
       $pumukitLdapEnable: '%pumukit_ldap.ldap%'

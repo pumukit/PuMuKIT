@@ -48,7 +48,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     private InspectionFfprobeService $inspectionService;
     private PicExtractorService $picExtractorService;
     private $kernelEnvironment;
-    private $kernelBundles;
     private JobCreator $jobCreator;
     private JobRender $jobRender;
     private JobRepository $jobRepository;
@@ -75,8 +74,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         InspectionFfprobeService $inspectionService,
         PicExtractorService $picExtractorService,
         InboxService $inboxService,
-        $kernelEnvironment,
-        $kernelBundles
+        $kernelEnvironment
     ) {
         $this->logger = $logger;
         $this->documentManager = $documentManager;
@@ -85,7 +83,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $this->inspectionService = $inspectionService;
         $this->picExtractorService = $picExtractorService;
         $this->kernelEnvironment = $kernelEnvironment;
-        $this->kernelBundles = $kernelBundles;
         $this->jobCreator = $jobCreator;
         $this->jobRender = $jobRender;
         $this->jobRepository = $jobRepository;
@@ -265,7 +262,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $jobs = $this->jobRepository->getNotFinishedJobsByMultimediaObjectId($multimediaObject->getId());
 
         $notMasterProfiles = $this->profileService->getProfiles(null, true, false);
-        $opencastExists = array_key_exists('PumukitOpencastBundle', $this->kernelBundles);
 
         return $this->render('@PumukitNewAdmin/Media/list.html.twig', [
             'mm' => $multimediaObject,
@@ -273,7 +269,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
             'jobs' => $jobs,
             'not_master_profiles' => $notMasterProfiles,
             'oc' => '',
-            'opencast_exists' => $opencastExists,
             'reload_links' => $request->query->get('reload_links', false),
         ]);
     }

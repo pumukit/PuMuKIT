@@ -104,7 +104,6 @@ class MultimediaObjectController extends SortableAdminController
     private $showLatestWithPudeNew;
     private $pumukitNewAdminShowNakedPubTab;
     private $warningOnUnpublished;
-    private $kernelBundles;
     private $pumukitNewAdminMultimediaObjectLabel;
     private JobRepository $jobRepository;
     private MediaCreator $mediaCreator;
@@ -139,7 +138,6 @@ class MultimediaObjectController extends SortableAdminController
         $showLatestWithPudeNew,
         $pumukitNewAdminShowNakedPubTab,
         $warningOnUnpublished,
-        $kernelBundles,
         $pumukitNewAdminMultimediaObjectLabel,
         MediaUpdater $mediaUpdater
     ) {
@@ -160,7 +158,6 @@ class MultimediaObjectController extends SortableAdminController
         $this->showLatestWithPudeNew = $showLatestWithPudeNew;
         $this->pumukitNewAdminShowNakedPubTab = $pumukitNewAdminShowNakedPubTab;
         $this->warningOnUnpublished = $warningOnUnpublished;
-        $this->kernelBundles = $kernelBundles;
         $this->pumukitNewAdminMultimediaObjectLabel = $pumukitNewAdminMultimediaObjectLabel;
         $this->jobRepository = $jobRepository;
         $this->mediaCreator = $mediaCreator;
@@ -333,8 +330,6 @@ class MultimediaObjectController extends SortableAdminController
 
         $activeEditor = $this->checkHasEditor();
         $changePubChannel = $this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
-        $allBundles = $this->kernelBundles;
-        $opencastExists = array_key_exists('PumukitOpencastBundle', $allBundles);
 
         $allGroups = $this->getAllGroups();
 
@@ -355,7 +350,6 @@ class MultimediaObjectController extends SortableAdminController
             'not_master_profiles' => $notMasterProfiles,
             'template' => $template,
             'active_editor' => $activeEditor,
-            'opencast_exists' => $opencastExists,
             'not_change_pub_channel' => !$changePubChannel,
             'groups' => $allGroups,
             'show_simple_pub_tab' => $showSimplePubTab,

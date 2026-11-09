@@ -117,7 +117,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     private $multimediaObjectSearchService;
     private $showLatestWithPudeNew;
     private $pumukitNewAdminBaseCatalogueTag;
-    private $kernelBundles;
     private JobRepository $jobRepository;
 
     public function __construct(
@@ -136,8 +135,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         RouterInterface $router,
         MultimediaObjectSearchService $multimediaObjectSearchService,
         $showLatestWithPudeNew,
-        $pumukitNewAdminBaseCatalogueTag,
-        $kernelBundles
+        $pumukitNewAdminBaseCatalogueTag
     ) {
         $this->paginationService = $paginationService;
         $this->tagCatalogueService = $tagCatalogueService;
@@ -153,7 +151,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
         $this->router = $router;
         $this->showLatestWithPudeNew = $showLatestWithPudeNew;
         $this->pumukitNewAdminBaseCatalogueTag = $pumukitNewAdminBaseCatalogueTag;
-        $this->kernelBundles = $kernelBundles;
         $this->multimediaObjectSearchService = $multimediaObjectSearchService;
         $this->jobRepository = $jobRepository;
     }
@@ -386,7 +383,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
         $activeEditor = $this->checkHasEditor();
         $notChangePubChannel = !$this->isGranted(Permission::CHANGE_MMOBJECT_PUBCHANNEL);
-        $opencastExists = array_key_exists('PumukitOpencastBundle', $this->kernelBundles);
 
         $allGroups = $this->getAllGroups();
 
@@ -404,7 +400,6 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
             'not_master_profiles' => $notMasterProfiles,
             'template' => $template,
             'active_editor' => $activeEditor,
-            'opencast_exists' => $opencastExists,
             'not_change_pub_channel' => $notChangePubChannel,
             'groups' => $allGroups,
         ];
