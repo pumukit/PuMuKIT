@@ -1,6 +1,6 @@
 .PHONY: help up start stop clean down debug pull build \
         cc cc-envs ai \
-        composer composer-install composer-update composer-validate fixtures \
+        composer composer-install composer-update composer-validate fixtures check-delivery \
         test-all test test-lint-yaml test-lint-twig test-lint-xliff test-lint-generic \
         test-php-cs-fixer test-php-stan test-rector fix-test-perms \
         update update-composer update-importmap update-paella paella-build vendor-outdated \
@@ -103,6 +103,9 @@ test-all: test test-smoke test-lint-yaml test-lint-twig test-lint-xliff test-lin
 
 test:
 	$(call run_php_test,composer tests)
+
+check-delivery: ## Request a temporary file through the proxy and the download server: fails if it is served without a valid token
+	$(call run_php,bin/console pumukit:check:delivery --connect-to=proxy --insecure)
 
 test-smoke: ## Request every GET route with fixtures: fails on server errors, GET requests that modify data and unresolved route parameters
 	$(call run_php_test,composer tests-smoke)

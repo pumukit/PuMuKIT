@@ -56,3 +56,6 @@ jobs:
 
       - name: Fixtures
         run:  make fixtures
+
+      - name: Delivery check
+        run:  make check-delivery

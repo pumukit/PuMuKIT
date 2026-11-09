@@ -23,6 +23,15 @@ services:
       $secureTokenService: '@Pumukit\BasePlayerBundle\Services\SecureTokenService'
       $downloadServerUrl: '%env(default::PUMUKIT_DOWNLOAD_SERVER_URL)%'
 
+  Pumukit\BasePlayerBundle\Command\:
+    resource: '../../src/Pumukit/BasePlayerBundle/Command/'
+
+  Pumukit\BasePlayerBundle\Services\DeliveryChecker:
+    arguments:
+      $downloadsDir: '%pumukit.downloads_dir%'
+      $downloadsUrl: '%pumukit.downloads_url%'
+      $frontendUrl: '%router.request_context.scheme%://%router.request_context.host%'
+
   Pumukit\BasePlayerBundle\Services\SeriesPlaylistService:
     class: Pumukit\BasePlayerBundle\Services\SeriesPlaylistService
 
