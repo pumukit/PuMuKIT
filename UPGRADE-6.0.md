@@ -1021,6 +1021,21 @@ buttons next to "Use" in the person picker of a multimedia object by appending a
 `pumukit.person_picker_templates` parameter in the same way. The template is included with `mm`, `role` and
 `personal_scope_role_code`. The LDAP bundle adds its "New from LDAP" button with its `person_button` option.
 
+## Personal series
+
+The personal series is no longer created on login: the `ROLE_AUTO_CREATE_PERSONAL_SERIES` permission
+(`Permission::AUTO_CREATE_PERSONAL_SERIES`) and the `PersonalSeriesListener` are removed. A bundle that uploads
+for a user without a series chosen by them asks for it when the multimedia object is about to be created:
+
+| 5.x | 6.0 |
+|-----|-----|
+| `PersonalSeriesService::find()`, which created the series of the logged in user | `find(User $user): ?Series`, which never creates it |
+| `PersonalSeriesService::create()` | `getOrCreate(User $user): Series` |
+
+`getOrCreate()` does not need a security token, titles the series in every locale with the full name of the user
+(the username if it has none) and, when two uploads arrive at the same time, keeps one series. The `personal_series` property and `User::getPersonalSeries()` do not change.
+The LmsBundle, PersonalRecorderBundle and PoddiumBundle no longer upload to shared series: see their READMEs.
+
 ## Microsites
 
 The microsites are configured in the core, without a bundle per microsite. A microsite is a set of hosts where the

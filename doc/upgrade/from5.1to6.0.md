@@ -47,6 +47,10 @@ deployment:
 - **Interface languages.** The interface is translated into `en`, `es`, `ca`, `gl`, `eu` and `val`. The French and
   Chinese (`zh-CN`, `zh-TW`) translations, 7–14 % complete, are removed: with those locales in `PUMUKIT_LOCALES` the
   interface shows in English. The content in those languages (titles, descriptions) is not touched.
+- **Personal series.** They are created with the first upload or recording of the user, not on login, and the
+  bundles no longer upload to shared series. Remove `default_series_title` from the `pumukit_lms` and
+  `pumukit_poddium` configuration and `shared_series_properties` from `pumukit_personal_recorder`: they are rejected.
+  See [B.8](#b8-clean-the-personal-series).
 - **Other local customizations.** Any code or config you maintain on top of the core
   (overridden templates, services, controllers) should be reviewed against the Symfony 7.4 APIs.
   The code-level changes are listed in [UPGRADE-6.0.md](../../UPGRADE-6.0.md).
@@ -582,7 +586,37 @@ docker compose exec php php bin/console pumukit:stats:rollup
 
 As a reference, two million views (about 500 MB of `ViewsLog`) take less than a minute.
 
-### B.8 Clear the cache
+### B.8 Clean the personal series
+
+PuMuKIT 6.0 creates the personal series of a user with their first upload or recording, not on every login, and
+the `ROLE_AUTO_CREATE_PERSONAL_SERIES` permission is removed. Remove it from the stored profiles and users:
+
+```bash
+docker compose exec -T db mongosh --quiet "mongodb://<user>:<password>@localhost:27017/pumukit?authSource=pumukit" --eval '
+  db.PermissionProfile.updateMany({}, { $pull: { permissions: "ROLE_AUTO_CREATE_PERSONAL_SERIES" } });
+  db.User.updateMany({}, { $pull: { roles: "ROLE_AUTO_CREATE_PERSONAL_SERIES" } })'
+```
+
+Then count the empty personal series created by the old logins and, with `--force`, delete them. A user whose
+series is deleted gets a new one with their next upload. The series created less than a day ago are kept, because
+an upload in progress already has its series but not its video yet; change it with `--older-than=<days>`:
+
+```bash
+docker compose exec php php bin/console pumukit:personal-series:clean
+docker compose exec php php bin/console pumukit:personal-series:clean --force
+```
+
+The shared upload series of the LmsBundle (`My LMS Uploads`), the PersonalRecorderBundle and the PoddiumBundle
+(`My Poddium Uploads`) are no longer used. Their videos are not moved automatically: to move the videos of one of
+them to the personal series of their owners, check first with `--dry-run`. The videos with no owner, with two or
+more owners or whose owner has no user are listed and stay in the series:
+
+```bash
+docker compose exec php php bin/console pumukit:personal-series:move <series id> --dry-run
+docker compose exec php php bin/console pumukit:personal-series:move <series id>
+```
+
+### B.9 Clear the cache
 
 ```bash
 docker compose exec php php bin/console cache:clear

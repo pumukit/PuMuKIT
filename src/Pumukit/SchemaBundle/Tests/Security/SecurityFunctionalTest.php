@@ -36,9 +36,6 @@ class SecurityFunctionalTest extends WebTestCase
         $this->dm = $container->get('doctrine_mongodb.odm.document_manager');
         $this->clearCollections();
 
-        // A plain ROLE_USER avoids the personal-series side effects triggered on
-        // login for users with the AUTO_CREATE_PERSONAL_SERIES permission, keeping
-        // the test focused on the authentication flow.
         $hasher = $container->get(UserPasswordHasherInterface::class);
         $user = new User();
         $user->setUsername(self::USERNAME);

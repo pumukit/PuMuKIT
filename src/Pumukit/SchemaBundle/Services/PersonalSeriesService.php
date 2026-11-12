@@ -7,124 +7,106 @@ namespace Pumukit\SchemaBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Security\Permission;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PersonalSeriesService
 {
     public const DEFAULT_PERSONAL_SERIES_PROPERTY = 'personal_series';
 
-    private $documentManager;
-    private $factoryService;
-    private $authorizationChecker;
-    private $tokenStorage;
-    private $translator;
-    private $locales;
-    private $personalScopeRoleCode;
-
     public function __construct(
-        DocumentManager $documentManager,
-        FactoryService $factoryService,
-        AuthorizationCheckerInterface $authorizationChecker,
-        TokenStorageInterface $tokenStorage,
-        TranslatorInterface $translator,
-        array $locales,
-        string $personalScopeRoleCode
-    ) {
-        $this->documentManager = $documentManager;
-        $this->factoryService = $factoryService;
-        $this->authorizationChecker = $authorizationChecker;
-        $this->tokenStorage = $tokenStorage;
-        $this->translator = $translator;
-        $this->locales = $locales;
-        $this->personalScopeRoleCode = $personalScopeRoleCode;
-    }
+        private readonly DocumentManager $documentManager,
+        private readonly FactoryService $factoryService,
+        private readonly TranslatorInterface $translator,
+        private readonly array $locales,
+        private readonly string $personalScopeRoleCode,
+    ) {}
 
-    public function find(): ?Series
+    public function find(User $user): ?Series
     {
-        if (!$this->hasUserAutoCreateSeriesRole()) {
+        $series = $this->series((string) $user->getPersonalSeries());
+        if (!$series instanceof Series || !$this->isOwner($user, $series)) {
             return null;
         }
-
-        if (!$this->isValidPersonalSeries()) {
-            return $this->create();
-        }
-
-        return $this->getSeries($this->getLoggedUser());
-    }
-
-    public function create(): Series
-    {
-        $user = $this->getLoggedUser();
-        $series = $this->factoryService->createSeries($user, $this->generateDefaultPersonalSeriesTitle());
-        $series->setProperty(self::DEFAULT_PERSONAL_SERIES_PROPERTY, true);
-        $user->setPersonalSeries($series->getId());
-
-        $this->documentManager->flush();
 
         return $series;
     }
 
-    private function getLoggedUser()
+    public function getOrCreate(User $user): Series
     {
-        return $this->tokenStorage->getToken()->getUser();
-    }
-
-    private function hasUserAutoCreateSeriesRole(): bool
-    {
-        return $this->authorizationChecker->isGranted(Permission::AUTO_CREATE_PERSONAL_SERIES);
-    }
-
-    private function generateDefaultPersonalSeriesTitle(): array
-    {
-        $i18nTitle = [];
-        foreach ($this->locales as $locale) {
-            $i18nTitle[$locale] = $this->translator->trans('Videos of ').$this->getLoggedUser()->getUsername();
+        $series = $this->find($user);
+        if ($series instanceof Series) {
+            return $series;
         }
 
-        return $i18nTitle;
-    }
+        $previous = $user->getPersonalSeries();
+        $series = $this->factoryService->createSeries($user, $this->title($user));
+        $series->setProperty(self::DEFAULT_PERSONAL_SERIES_PROPERTY, true);
+        $this->documentManager->flush();
 
-    private function isValidPersonalSeries(): bool
-    {
-        $user = $this->getLoggedUser();
+        $result = $this->documentManager->getDocumentCollection(User::class)->updateOne(
+            ['_id' => new ObjectId($user->getId()), 'personalSeries' => $previous],
+            ['$set' => ['personalSeries' => $series->getId()]]
+        );
 
-        if (!$user->getPersonalSeries()) {
-            return false;
-        }
-
-        $series = $this->getSeries($user);
-
-        if (!$series instanceof Series) {
-            return false;
-        }
-
-        if (!$this->isOwnerOfAssociatedSeries($series)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private function isOwnerOfAssociatedSeries(Series $series): bool
-    {
-        $user = $this->getLoggedUser();
-        $prototype = $this->documentManager->getRepository(MultimediaObject::class)->findPrototype($series);
-        if ($prototype instanceof MultimediaObject) {
-            if (!$user->getPerson()) {
-                return false;
+        if (0 === $result->getMatchedCount()) {
+            $this->factoryService->deleteSeries($series);
+            $this->documentManager->refresh($user);
+            $winner = $this->find($user);
+            if ($winner instanceof Series) {
+                return $winner;
             }
 
-            $role = $this->documentManager->getRepository(Role::class)->findOneBy([
-                'cod' => $this->personalScopeRoleCode,
-            ]);
+            throw new \RuntimeException(sprintf('The personal series of the user "%s" could not be created.', $user->getUsername()));
+        }
 
-            if ($prototype->containsPersonWithRole($user->getPerson(), $role)) {
+        $user->setPersonalSeries($series->getId());
+
+        return $series;
+    }
+
+    public function owners(MultimediaObject $multimediaObject): array
+    {
+        return $multimediaObject->getPeopleByRoleCod($this->personalScopeRoleCode, true);
+    }
+
+    public function userOf(string $personId): ?User
+    {
+        if (!preg_match('/^[a-f\d]{24}$/i', $personId)) {
+            return null;
+        }
+
+        $person = $this->documentManager->getRepository(Person::class)->find(new ObjectId($personId));
+        if ($person instanceof Person && $person->getUser() instanceof User) {
+            return $person->getUser();
+        }
+
+        $user = $this->documentManager->getRepository(User::class)->findOneBy(['person' => new ObjectId($personId)]);
+
+        return $user instanceof User ? $user : null;
+    }
+
+    private function isOwner(User $user, Series $series): bool
+    {
+        $prototype = $this->documentManager->getRepository(MultimediaObject::class)->findPrototype($series);
+        if (!$prototype instanceof MultimediaObject) {
+            return false;
+        }
+
+        $owners = $this->owners($prototype);
+        if ([] === $owners) {
+            return true;
+        }
+
+        $person = $user->getPerson();
+        if (!$person instanceof Person) {
+            return false;
+        }
+
+        foreach ($owners as $owner) {
+            if ((string) $owner->getId() === (string) $person->getId()) {
                 return true;
             }
         }
@@ -132,10 +114,29 @@ class PersonalSeriesService
         return false;
     }
 
-    private function getSeries(User $user)
+    private function series(string $id): ?Series
     {
-        return $this->documentManager->getRepository(Series::class)->findOneBy([
-            '_id' => new ObjectId($user->getPersonalSeries()),
-        ]);
+        if (!preg_match('/^[a-f\d]{24}$/i', $id)) {
+            return null;
+        }
+
+        $series = $this->documentManager->getRepository(Series::class)->find(new ObjectId($id));
+
+        return $series instanceof Series ? $series : null;
+    }
+
+    private function title(User $user): array
+    {
+        $name = trim((string) $user->getFullName());
+        if ('' === $name) {
+            $name = (string) $user->getUsername();
+        }
+
+        $title = [];
+        foreach ($this->locales as $locale) {
+            $title[$locale] = $this->translator->trans('Videos of ', [], null, $locale).$name;
+        }
+
+        return $title;
     }
 }

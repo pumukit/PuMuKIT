@@ -38,7 +38,6 @@ class Permission
     public const ROLE_SEND_NOTIFICATION_ERRORS = 'ROLE_SEND_NOTIFICATION_ERRORS';
     public const ACCESS_SERIES_STYLE = 'ROLE_ACCESS_SERIES_STYLE';
     public const ADD_EXTERNAL_PLAYER = 'ROLE_ADD_EXTERNAL_PLAYER';
-    public const AUTO_CREATE_PERSONAL_SERIES = 'ROLE_AUTO_CREATE_PERSONAL_SERIES';
     public const ACCESS_HEAD_AND_TAIL_MANAGER = 'ROLE_ACCESS_HEAD_AND_TAIL_MANAGER';
     public const ADD_HEAD_AND_TAIL = 'ROLE_ADD_HEAD_AND_TAIL';
 
@@ -281,13 +280,6 @@ class Permission
         ],
         self::ADD_EXTERNAL_PLAYER => [
             'description' => 'Add an external player (iframe) into a multimedia object',
-            'dependencies' => [
-                PermissionProfile::SCOPE_GLOBAL => [],
-                PermissionProfile::SCOPE_PERSONAL => [],
-            ],
-        ],
-        self::AUTO_CREATE_PERSONAL_SERIES => [
-            'description' => 'Auto create personal series for the user',
             'dependencies' => [
                 PermissionProfile::SCOPE_GLOBAL => [],
                 PermissionProfile::SCOPE_PERSONAL => [],
