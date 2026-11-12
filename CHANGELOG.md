@@ -119,6 +119,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Fixed
 
+- In production the metadata of the documents was not cached between requests: it is kept in the `cache.system` pool, and the unused `doctrine_mongodb.system_cache_provider` service, whose class no longer exists, is removed.
 - The Paella player loaded the wrong video when its URL had `track_id`, and it overflowed the iframes that embed it: it takes the size of the window and keeps 16:9.
 - `/api/keywords/mmobj` and `/api/keywords/series` required the global scope: they only ask for API access, like `/api/v1/keywords/`.
 - Bootstrap 3 classes left in the core templates: the «Cancel» button of the owner rejection page and the column of the channel list.

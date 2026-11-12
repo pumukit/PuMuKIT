@@ -51,6 +51,20 @@ deployment:
   bundles no longer upload to shared series. Remove `default_series_title` from the `pumukit_lms` and
   `pumukit_poddium` configuration and `shared_series_properties` from `pumukit_personal_recorder`: they are rejected.
   See [B.8](#b8-clean-the-personal-series).
+- **Doctrine metadata cache.** `Symfony\Component\Cache\DoctrineProvider` no longer exists. If your
+  `config/packages/prod/doctrine_mongodb.yaml` defines `doctrine_mongodb.system_cache_provider` with that class, remove
+  the service and point `metadata_cache_driver` straight to the cache pool, as the core does:
+
+  ```yaml
+  doctrine_mongodb:
+    document_managers:
+      default:
+        metadata_cache_driver:
+          type: service
+          id: doctrine_mongodb.system_cache_pool
+  ```
+
+  With the old service, PuMuKIT fails as soon as it starts in `prod`.
 - **Other local customizations.** Any code or config you maintain on top of the core
   (overridden templates, services, controllers) should be reviewed against the Symfony 7.4 APIs.
   The code-level changes are listed in [UPGRADE-6.0.md](../../UPGRADE-6.0.md).

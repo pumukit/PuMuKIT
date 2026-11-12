@@ -9,6 +9,9 @@ doctrine_mongodb:
   document_managers:
     default:
       auto_mapping: true
+      metadata_cache_driver:
+        type: service
+        id: doctrine_mongodb.system_cache_pool
       filters:
         frontend:
           class:     Pumukit\CoreBundle\Filter\WebTVFilter
@@ -22,13 +25,6 @@ doctrine_mongodb:
         microsite:
           class:     Pumukit\CoreBundle\Filter\MicrositeFilter
           enabled:   false
-
-services:
-    doctrine_mongodb.system_cache_provider:
-        class: Symfony\Component\Cache\DoctrineProvider
-        public: false
-        arguments:
-            - '@doctrine_mongodb.system_cache_pool'
 
 framework:
     cache:
