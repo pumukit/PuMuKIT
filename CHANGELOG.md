@@ -9,6 +9,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Added
 
+- `pumukit:setup` creates what PuMuKIT and its enabled bundles need in the database (indexes, base tags, roles, permission profiles, the super administrator and the setup commands tagged `pumukit.setup` by the bundles). It only adds what is missing, so it can run on every deployment; the development entrypoint uses it.
 - The Paella player shows a «Show player controls» button to keyboard users when it hides its controls, keeps the keyboard focus in the order of the page and translates the «Play video» label.
 - `pumukit:check:assets` warns about the Bootstrap 3 classes and attributes of the overridden templates, with their replacement.
 - Optional `worker` service in `docker-compose.yml` (`--profile worker`) that consumes every Messenger transport.

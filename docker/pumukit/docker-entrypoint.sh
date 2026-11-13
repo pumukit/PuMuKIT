@@ -14,10 +14,10 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
     if [ "$APP_ENV" != 'prod' ]; then
         composer install --prefer-dist --no-progress --classmap-authoritative --no-interaction
         set +e
-        bin/console doctrine:mongodb:schema:create || true
-        bin/console pumukit:init:repo all
         if [ "$AUTOCREATE_PUMUKIT_USER" = 'true' ]; then
-            php bin/console pumukit:create:user "$PUMUKIT_USER" "$PUMUKIT_USER_MAIL" "$PUMUKIT_PASS" || true
+            bin/console pumukit:setup --user="$PUMUKIT_USER" --email="$PUMUKIT_USER_MAIL" --password="$PUMUKIT_PASS"
+        else
+            bin/console pumukit:setup
         fi
         set -e
     fi

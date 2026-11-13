@@ -1021,6 +1021,14 @@ buttons next to "Use" in the person picker of a multimedia object by appending a
 `pumukit.person_picker_templates` parameter in the same way. The template is included with `mm`, `role` and
 `personal_scope_role_code`. The LDAP bundle adds its "New from LDAP" button with its `person_button` option.
 
+## Setup command
+
+`pumukit:setup` updates the indexes, loads the missing tags, roles and permission profiles, creates the super
+administrator of `--user`, `--email` and `--password` when it does not exist, and runs the setup command of every
+enabled bundle. It only adds what is missing, so a deployment can run it every time instead of a list of init commands.
+A bundle adds its setup command with `#[AutoconfigureTag('pumukit.setup')]`; the command must only create what is
+missing and return a non-zero status on a failure, which stops the setup.
+
 ## Personal series
 
 The personal series is no longer created on login: the `ROLE_AUTO_CREATE_PERSONAL_SERIES` permission

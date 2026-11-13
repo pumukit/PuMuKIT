@@ -339,8 +339,8 @@ docker compose up -d
 # 3. Install dependencies
 docker compose exec php composer install
 
-# 4. Create the database schema and indexes
-docker compose exec php php bin/console doctrine:mongodb:schema:update
+# 4. Create the database indexes, the base tags, roles and permission profiles, and run the setup of the bundles
+docker compose exec php php bin/console pumukit:setup
 
 # 5. Clear cache
 docker compose exec php php bin/console cache:clear
