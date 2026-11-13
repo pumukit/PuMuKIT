@@ -1,7 +1,17 @@
+{% if jobs|length > 0 %}
+    {% set track_options = is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_MULTIMEDIA_TRACKS_OPTIONS')) %}
+    {% if mm.isVideoType() %}
+        {% set track_columns = 4 + (track_options ? (is_naked() ? 3 : 5) : 0) %}
+    {% elseif mm.isAudioType() %}
+        {% set track_columns = 3 + (track_options ? (is_naked() ? 3 : 5) : 0) %}
+    {% else %}
+        {% set track_columns = 4 + (track_options ? (is_naked() ? 2 : 4) : 0) %}
+    {% endif %}
+{% endif %}
 {% for job in jobs %}
     <tr>
         <td><ul><li></li></ul></td>
-        <td {% if mm.isVideoType() %}colspan="6"{% else %}colspan="5"{% endif %}>&nbsp;</td>
+        <td colspan="{{ max(1, track_columns - 3) }}">&nbsp;</td>
         <td{% if constant('STATUS_ERROR', job) == job.getStatus() %} class="pmk-color-red"{% endif %}>
             <a class="pmk-color-inherit" title="{% trans %}Encoder Job info{% endtrans %}"
                data-bs-toggle="modal" data-bs-backdrop="static" data-bs-dismiss="modal" data-bs-target="#myModal"
