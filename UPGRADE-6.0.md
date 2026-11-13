@@ -1029,6 +1029,13 @@ enabled bundle. It only adds what is missing, so a deployment can run it every t
 A bundle adds its setup command with `#[AutoconfigureTag('pumukit.setup')]`; the command must only create what is
 missing and return a non-zero status on a failure, which stops the setup.
 
+## Paella frame list
+
+`Pumukit\PaellaPlayerBundle\Services\FrameListManifest` takes no constructor arguments and builds the frames of the
+player only from the segments of the multimedia object (`getEmbeddedSegments()`). It no longer asks Opencast: that
+call used a class that did not exist, so the Opencast videos had no frames. The OpencastBundle stores the segments
+when it imports a recording (see its README).
+
 ## Personal series
 
 The personal series is no longer created on login: the `ROLE_AUTO_CREATE_PERSONAL_SERIES` permission
