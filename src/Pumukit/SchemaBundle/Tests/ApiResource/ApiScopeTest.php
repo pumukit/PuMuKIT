@@ -146,10 +146,6 @@ final class ApiScopeTest extends PumukitTestCase
 
         yield ['/api/encoder/profiles.json'];
 
-        yield ['/api/keywords/mmobj.json'];
-
-        yield ['/api/keywords/series.json'];
-
         yield ['/api/media/mmobj/num_recorded.json'];
 
         yield ['/api/media/series/published.json'];
@@ -163,6 +159,22 @@ final class ApiScopeTest extends PumukitTestCase
         yield ['/api/live/events.json'];
 
         yield ['/api/live/live_events.json'];
+    }
+
+    public function apiUserKeywordRoutes(): iterable
+    {
+        yield ['/api/keywords/mmobj.json'];
+
+        yield ['/api/keywords/series.json'];
+    }
+
+    /**
+     * @dataProvider apiUserKeywordRoutes
+     */
+    public function testAnyApiUserCanUseTheKeywordRoutes(string $path): void
+    {
+        $this->request($this->publisher, $path);
+        $this->assertResponseIsSuccessful();
     }
 
     /**
