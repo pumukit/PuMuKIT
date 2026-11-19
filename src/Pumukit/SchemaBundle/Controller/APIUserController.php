@@ -7,6 +7,7 @@ namespace Pumukit\SchemaBundle\Controller;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Services\SerializerService;
 use Pumukit\SchemaBundle\Document\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/user")
+ *
+ * @Security("is_granted('ROLE_ACCESS_API') and is_granted('ROLE_SCOPE_GLOBAL')")
  */
 class APIUserController extends AbstractController
 {

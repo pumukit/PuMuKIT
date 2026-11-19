@@ -12,8 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @MongoDB\Document(repositoryClass="Pumukit\EncoderBundle\Repository\JobRepository")
  *
  * @ApiResource(
- *          collectionOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}},
- *          itemOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}}
+ *          collectionOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API') and is_granted('ROLE_SCOPE_GLOBAL')"}},
+ *          itemOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API') and is_granted('ROLE_SCOPE_GLOBAL')"}}
  *      )
  */
 class Job

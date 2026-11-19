@@ -6,6 +6,12 @@ services:
     bind:
       $locales: '%pumukit.locales%'
 
+  Pumukit\SchemaBundle\Doctrine\ScopeExtension:
+    autoconfigure: false
+    tags:
+      - { name: 'api_platform.doctrine_mongodb.odm.aggregation_extension.collection', priority: 64 }
+      - { name: 'api_platform.doctrine_mongodb.odm.aggregation_extension.item', priority: 64 }
+
   Pumukit\SchemaBundle\Controller\:
     resource: '../../src/Pumukit/SchemaBundle/Controller'
     tags: ['controller.service_arguments']

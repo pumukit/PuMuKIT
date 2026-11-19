@@ -12,8 +12,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @MongoDB\Document(repositoryClass="Pumukit\SchemaBundle\Repository\RoleRepository")
  *
  * @ApiResource(
- *            collectionOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}},
- *            itemOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API')"}}
+ *            collectionOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API') and is_granted('ROLE_SCOPE_GLOBAL')"}},
+ *            itemOperations={"get"={"method"="GET", "access_control"="is_granted('ROLE_ACCESS_API') and is_granted('ROLE_SCOPE_GLOBAL')"}}
  *        )
  */
 class Role implements RoleInterface
