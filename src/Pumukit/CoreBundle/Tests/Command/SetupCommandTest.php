@@ -87,6 +87,7 @@ class SetupCommandTest extends PumukitTestCase
             {
                 parent::__construct($name);
                 $this->addArgument('repo');
+                $this->addOption('disable-validators');
             }
 
             protected function execute(InputInterface $input, OutputInterface $output): int

@@ -58,7 +58,7 @@ EOT
         }
 
         $commands = [
-            ['doctrine:mongodb:schema:update', []],
+            ['doctrine:mongodb:schema:update', ['--disable-validators' => true]],
             ['pumukit:init:repo', ['repo' => 'all']],
         ];
 
