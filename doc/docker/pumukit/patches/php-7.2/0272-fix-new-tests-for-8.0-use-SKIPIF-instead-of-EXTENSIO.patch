@@ -1,0 +1,123 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Tue, 17 Nov 2026 08:32:28 +0100
+Subject: fix new tests for 8.0 (use SKIPIF instead of --EXTENSIONS--,
+ use the http ServerClientTestCase.inc)
+
+(cherry picked from commit 8658823a8cf566f05b48c614cc3b39b6fcfccbec)
+(cherry picked from commit 138cbb49a8873f734eef2efae77399093dbc0482)
+(cherry picked from commit 62daec242113e72c7ab78fd48e856989dbd6ad49)
+---
+ ext/date/tests/GHSA-gr4f-wgx5-jpfv.phpt             |  8 +++++---
+ ext/phar/tests/ghsa-68fq-fh7h-f8gr.phpt             |  5 ++---
+ ext/soap/tests/GHSA-4646-p932-gw34.phpt             |  4 ++--
+ ext/standard/tests/http/ghsa-f6gg-rchx-xw8j.phpt    | 10 +++++-----
+ ext/standard/tests/streams/ghsa-f6gg-rchx-xw8j.phpt |  4 ++--
+ 5 files changed, 16 insertions(+), 15 deletions(-)
+
+diff --git a/ext/date/tests/GHSA-gr4f-wgx5-jpfv.phpt b/ext/date/tests/GHSA-gr4f-wgx5-jpfv.phpt
+index c76d9bf..9ca9866 100644
+--- a/ext/date/tests/GHSA-gr4f-wgx5-jpfv.phpt
++++ b/ext/date/tests/GHSA-gr4f-wgx5-jpfv.phpt
+@@ -5,9 +5,11 @@ Sebastian Bergmann
+ --CGI--
+ --ENV--
+ QUERY_STRING=a=1&b=2
+---EXTENSIONS--
+-session
+-zend_test
++--SKIPIF--
++<?php
++if (!extension_loaded('session')) die('skip session extension not available');
++if (!extension_loaded('zend-test')) die('skip zend-test extension not available');
++?>
+ --INI--
+ error_log="{TMP}/GHSA-gr4f-wgx5-jpfv.log"
+ log_errors=1
+diff --git a/ext/phar/tests/ghsa-68fq-fh7h-f8gr.phpt b/ext/phar/tests/ghsa-68fq-fh7h-f8gr.phpt
+index e03123f..68a8915 100644
+--- a/ext/phar/tests/ghsa-68fq-fh7h-f8gr.phpt
++++ b/ext/phar/tests/ghsa-68fq-fh7h-f8gr.phpt
+@@ -1,10 +1,9 @@
+ --TEST--
+ GHSA-68fq-fh7h-f8gr (OpenSSL signature bypass by downgrading the algorithm to a keyless one)
+---EXTENSIONS--
+-phar
+-openssl
+ --SKIPIF--
+ <?php
++if (!extension_loaded("phar")) die("skip phar extension not available");
++if (!extension_loaded("openssl")) die("skip openssl extension not available");
+ if (!in_array("OpenSSL", Phar::getSupportedSignatures())) die("skip openssl support required");
+ ?>
+ --INI--
+diff --git a/ext/soap/tests/GHSA-4646-p932-gw34.phpt b/ext/soap/tests/GHSA-4646-p932-gw34.phpt
+index 8e3567d..7c95060 100644
+--- a/ext/soap/tests/GHSA-4646-p932-gw34.phpt
++++ b/ext/soap/tests/GHSA-4646-p932-gw34.phpt
+@@ -14,8 +14,8 @@ GHSA-4646-p932-gw34: DTD entity references must not outlive their declarations
+     <ns1:echo_><param0 xsi:type="xsd:string">x</param0></ns1:echo_>
+   </SOAP-ENV:Body>
+ </SOAP-ENV:Envelope>
+---EXTENSIONS--
+-soap
++--SKIPIF--
++<?php if (!extension_loaded('soap')) die('skip soap extension not available'); ?>
+ --FILE--
+ <?php
+ function echo_($x) {
+diff --git a/ext/standard/tests/http/ghsa-f6gg-rchx-xw8j.phpt b/ext/standard/tests/http/ghsa-f6gg-rchx-xw8j.phpt
+index 11bfa68..461d9a3 100644
+--- a/ext/standard/tests/http/ghsa-f6gg-rchx-xw8j.phpt
++++ b/ext/standard/tests/http/ghsa-f6gg-rchx-xw8j.phpt
+@@ -25,16 +25,16 @@ $serverCode = <<<'CODE'
+             }
+         }
+         $request .= stream_get_contents($conn, strlen('opensec-sensitive-body'));
+-        $result = str_contains($request, 'Authorization: Basic ')
+-            && str_contains($request, 'X-Opensec-Request: validation')
+-            && str_contains($request, 'opensec-sensitive-body')
++        $result = strpos($request, 'Authorization: Basic ') !== false
++            && strpos($request, 'X-Opensec-Request: validation') !== false
++            && strpos($request, 'opensec-sensitive-body') !== false
+                 ? 'plaintext credentials and body'
+                 : 'unexpected plaintext request';
+     }
+ 
+     fclose($conn);
+     fclose($server);
+-    phpt_notify(message: $result);
++    phpt_notify(WORKER_DEFAULT_NAME, $result);
+ CODE;
+ 
+ $clientCode = <<<'CODE'
+@@ -53,7 +53,7 @@ $clientCode = <<<'CODE'
+     echo phpt_wait();
+ CODE;
+ 
+-include sprintf('%s/../../../openssl/tests/ServerClientTestCase.inc', __DIR__);
++include sprintf('%s/ServerClientTestCase.inc', __DIR__);
+ ServerClientTestCase::getInstance()->run($clientCode, $serverCode);
+ ?>
+ --EXPECT--
+diff --git a/ext/standard/tests/streams/ghsa-f6gg-rchx-xw8j.phpt b/ext/standard/tests/streams/ghsa-f6gg-rchx-xw8j.phpt
+index 8c70015..7c8cc7e 100644
+--- a/ext/standard/tests/streams/ghsa-f6gg-rchx-xw8j.phpt
++++ b/ext/standard/tests/streams/ghsa-f6gg-rchx-xw8j.phpt
+@@ -18,7 +18,7 @@ $serverCode = <<<'CODE'
+ 
+     fclose($conn);
+     fclose($server);
+-    phpt_notify(message: $command);
++    phpt_notify(WORKER_DEFAULT_NAME, $command);
+ CODE;
+ 
+ $clientCode = <<<'CODE'
+@@ -26,7 +26,7 @@ $clientCode = <<<'CODE'
+     echo phpt_wait();
+ CODE;
+ 
+-include sprintf('%s/../../../openssl/tests/ServerClientTestCase.inc', __DIR__);
++include sprintf('%s/../http/ServerClientTestCase.inc', __DIR__);
+ ServerClientTestCase::getInstance()->run($clientCode, $serverCode);
+ ?>
+ --EXPECT--

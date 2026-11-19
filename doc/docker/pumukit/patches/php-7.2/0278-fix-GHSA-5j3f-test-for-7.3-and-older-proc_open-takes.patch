@@ -1,0 +1,34 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Tue, 17 Nov 2026 08:42:19 +0100
+Subject: fix GHSA-5j3f test for 7.3 and older (proc_open() takes a string
+ command, no scalar types, no ??)
+
+(cherry picked from commit 8ee2bc67c144c58e882047b36ca04e8df1e28489)
+---
+ sapi/cgi/tests/ghsa-5j3f-64r7-f564.phpt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/sapi/cgi/tests/ghsa-5j3f-64r7-f564.phpt b/sapi/cgi/tests/ghsa-5j3f-64r7-f564.phpt
+index cab27ad..8d8809a 100644
+--- a/sapi/cgi/tests/ghsa-5j3f-64r7-f564.phpt
++++ b/sapi/cgi/tests/ghsa-5j3f-64r7-f564.phpt
+@@ -8,16 +8,16 @@ include "include.inc";
+ 
+ $php = get_cgi_path();
+ $script = __DIR__ . "/ghsa-5j3f-64r7-f564.target.php";
+-file_put_contents($script, '<?php var_dump($_SERVER["PATH_INFO"] ?? null, $_SERVER["ORIG_PATH_INFO"] ?? null);');
++file_put_contents($script, '<?php var_dump(isset($_SERVER["PATH_INFO"]) ? $_SERVER["PATH_INFO"] : null, isset($_SERVER["ORIG_PATH_INFO"]) ? $_SERVER["ORIG_PATH_INFO"] : null);');
+ 
+-function run_cgi(string $php, array $env): void {
++function run_cgi($php, array $env) {
+     /* Keep what is needed to start the binary (e.g. sanitizer runtime on Windows). */
+     $base_env = array_filter([
+         "PATH" => getenv("PATH"),
+         "SystemRoot" => getenv("SystemRoot"),
+     ], 'is_string');
+     $p = proc_open(
+-        [$php, "-n", "-d", "cgi.fix_pathinfo=1"],
++        escapeshellarg($php) . " -n -d cgi.fix_pathinfo=1",
+         [0 => ["pipe", "r"], 1 => ["pipe", "w"]],
+         $pipes,
+         null,

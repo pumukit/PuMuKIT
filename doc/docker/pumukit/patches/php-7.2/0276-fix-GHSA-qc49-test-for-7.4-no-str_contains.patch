@@ -1,0 +1,53 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Tue, 17 Nov 2026 08:36:51 +0100
+Subject: fix GHSA-qc49 test for 7.4 (no str_contains())
+
+(cherry picked from commit fa73cac885eb7dd5816bd507a5e8d7f5babda980)
+(cherry picked from commit d17cbec84adab63186b8842d280d78307845a61f)
+---
+ sapi/fpm/tests/unread-body-keep-conn.phpt      | 4 ++--
+ sapi/fpm/tests/unread-body-partial-record.phpt | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/sapi/fpm/tests/unread-body-keep-conn.phpt b/sapi/fpm/tests/unread-body-keep-conn.phpt
+index 5d818c5..42a9d3e 100644
+--- a/sapi/fpm/tests/unread-body-keep-conn.phpt
++++ b/sapi/fpm/tests/unread-body-keep-conn.phpt
+@@ -101,7 +101,7 @@ $outerParams = [
+ foreach ([false, true] as $keep) {
+     $response = transact($tester->getAddr(), request(1, $keep, $outerParams, $body));
+     echo 'keep ', $keep ? 'on' : 'off', ': ',
+-        str_contains($response, 'smuggled') ? 'smuggled' : 'safe', "\n";
++        strpos($response, 'smuggled') !== false ? 'smuggled' : 'safe', "\n";
+ }
+ 
+ $body = 'A' . $hidden;
+@@ -109,7 +109,7 @@ $outerParams['CONTENT_TYPE'] = 'application/octet-stream';
+ $outerParams['CONTENT_LENGTH'] = '1';
+ $response = transact($tester->getAddr(), request(1, true, $outerParams, $body));
+ echo 'partial frame: ',
+-    str_contains($response, 'smuggled') ? 'smuggled' : 'safe', "\n";
++    strpos($response, 'smuggled') !== false ? 'smuggled' : 'safe', "\n";
+ 
+ $tester->terminate();
+ $tester->close();
+diff --git a/sapi/fpm/tests/unread-body-partial-record.phpt b/sapi/fpm/tests/unread-body-partial-record.phpt
+index 4f3eed4..5bd1ea7 100644
+--- a/sapi/fpm/tests/unread-body-partial-record.phpt
++++ b/sapi/fpm/tests/unread-body-partial-record.phpt
+@@ -101,12 +101,12 @@ unset($plainParams['CONTENT_TYPE']);
+ foreach ([false, true] as $keep) {
+     $response = transact($tester->getAddr(), request(1, $keep, $outerParams, 'A' . $hidden));
+     echo 'keep ', $keep ? 'on' : 'off', ': ',
+-        str_contains($response, 'smuggled') ? 'smuggled' : 'safe', ', ',
+-        str_contains($response, 'outer 1') ? 'served' : 'not served', "\n";
++        strpos($response, 'smuggled') !== false ? 'smuggled' : 'safe', ', ',
++        strpos($response, 'outer 1') !== false ? 'served' : 'not served', "\n";
+     /* The only worker must still serve new connections. */
+     foreach ([1, 2] as $n) {
+         $response = transact($tester->getAddr(), request(1, false, $plainParams, ''));
+-        echo "  next connection $n: ", str_contains($response, 'outer 0') ? 'served' : 'not served', "\n";
++        echo "  next connection $n: ", strpos($response, 'outer 0') !== false ? 'served' : 'not served', "\n";
+     }
+ }
+ 

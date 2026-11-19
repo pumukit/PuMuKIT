@@ -1,0 +1,35 @@
+From: Remi Collet <remi@remirepo.net>
+Date: Tue, 27 Oct 2026 10:21:22 +0100
+Subject: missing in previous Avoid state corruption via bailout
+
+(cherry picked from commit f6ecc88cd106c63ddd3b4cc21ef46151f6bc443f)
+---
+ Zend/zend_execute_API.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/Zend/zend_execute_API.c b/Zend/zend_execute_API.c
+index 90214d4..99d4ffa 100644
+--- a/Zend/zend_execute_API.c
++++ b/Zend/zend_execute_API.c
+@@ -263,8 +263,21 @@ void shutdown_executor(void) /* {{{ */
+ 		zend_close_rsrc_list(&EG(regular_list));
+ 	} zend_end_try();
+ 
++	if (fast_shutdown) {
++		/* may be used by zend_error before init_executor */
++		ZVAL_UNDEF(&EG(user_error_handler));
++		ZVAL_UNDEF(&EG(user_exception_handler));
++		memset(&EG(user_error_handlers_error_reporting), 0, sizeof(EG(user_error_handlers_error_reporting)));
++		memset(&EG(user_error_handlers), 0, sizeof(EG(user_error_handlers)));
++		memset(&EG(user_exception_handlers), 0, sizeof(EG(user_exception_handlers)));
++	}
++
+ 	zend_objects_store_free_object_storage(&EG(objects_store), fast_shutdown);
+ 
++	/* may be used by zend_error before init_executor */
++	EG(error_handling) = EH_NORMAL;
++	EG(exception) = NULL;
++
+ 	/* All resources and objects are destroyed. */
+ 	/* No PHP callback functions may be called after this point. */
+ 	EG(active) = 0;

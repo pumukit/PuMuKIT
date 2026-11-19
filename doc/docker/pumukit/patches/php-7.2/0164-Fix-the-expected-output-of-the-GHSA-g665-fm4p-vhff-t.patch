@@ -1,0 +1,39 @@
+From: Jamal Tantaoui <jamal@tantaoui.com>
+Date: Sun, 25 Oct 2026 16:03:46 +0100
+Subject: Fix the expected output of the GHSA-g665-fm4p-vhff tests
+
+Before 8.0, ldap_escape() reports a value that is too long with
+zend_throw_exception(), as ValueError and zend_argument_value_error() do not
+exist there, so the message has no "ldap_escape(): " prefix. These tests only
+run on 32-bit builds.
+
+(cherry picked from commit 458a1fd247f0fcb04e1129243125aa56a51ac648)
+---
+ ext/ldap/tests/GHSA-g665-fm4p-vhff-1.phpt | 4 ++--
+ ext/ldap/tests/GHSA-g665-fm4p-vhff-2.phpt | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/ext/ldap/tests/GHSA-g665-fm4p-vhff-1.phpt b/ext/ldap/tests/GHSA-g665-fm4p-vhff-1.phpt
+index 734bbe9..53844e0 100644
+--- a/ext/ldap/tests/GHSA-g665-fm4p-vhff-1.phpt
++++ b/ext/ldap/tests/GHSA-g665-fm4p-vhff-1.phpt
+@@ -24,5 +24,5 @@ try {
+ }
+ ?>
+ --EXPECT--
+-ldap_escape(): Argument #1 ($value) is too long
+-ldap_escape(): Argument #1 ($value) is too long
++Argument #1 ($value) is too long
++Argument #1 ($value) is too long
+diff --git a/ext/ldap/tests/GHSA-g665-fm4p-vhff-2.phpt b/ext/ldap/tests/GHSA-g665-fm4p-vhff-2.phpt
+index 5c1b0fb..c774cc8 100644
+--- a/ext/ldap/tests/GHSA-g665-fm4p-vhff-2.phpt
++++ b/ext/ldap/tests/GHSA-g665-fm4p-vhff-2.phpt
+@@ -25,5 +25,5 @@ try {
+ }
+ ?>
+ --EXPECT--
+-ldap_escape(): Argument #1 ($value) is too long
+-ldap_escape(): Argument #1 ($value) is too long
++Argument #1 ($value) is too long
++Argument #1 ($value) is too long

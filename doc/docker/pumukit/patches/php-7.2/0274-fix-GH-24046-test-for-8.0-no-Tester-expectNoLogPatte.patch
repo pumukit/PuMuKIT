@@ -1,0 +1,32 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Tue, 17 Nov 2026 08:32:28 +0100
+Subject: fix GH-24046 test for 8.0 (no Tester::expectNoLogPattern())
+
+(cherry picked from commit 3228d26f075985b513d761807edc1d4daaaf77a1)
+(cherry picked from commit c58ddc8d16d43b517a0b2ab73be761fd761947c9)
+(cherry picked from commit 4db3e4f7e320ac86294fa3d95496c6f3993f1790)
+---
+ sapi/fpm/tests/gh24046-stdio-pipe-double-close.phpt | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/sapi/fpm/tests/gh24046-stdio-pipe-double-close.phpt b/sapi/fpm/tests/gh24046-stdio-pipe-double-close.phpt
+index 7a0a78b..2cc14a7 100644
+--- a/sapi/fpm/tests/gh24046-stdio-pipe-double-close.phpt
++++ b/sapi/fpm/tests/gh24046-stdio-pipe-double-close.phpt
+@@ -43,7 +43,15 @@ $tester->request('bg=1')->expectBody('ok');
+ usleep(1500000);
+ $tester->request()->expectBody('ok');
+ $tester->terminate();
+-$tester->expectNoLogPattern('/unable to (remove|read)/');
++/* Tester::expectNoLogPattern() is not available here, check the log file directly */
++$logFile = substr(__FILE__, 0, -4) . '.log';
++for ($i = 0; $i < 50 && strpos((string) @file_get_contents($logFile), 'bye-bye') === false; $i++) {
++    usleep(100000);
++}
++$log = (string) @file_get_contents($logFile);
++if (preg_match('/unable to (remove|read)/', $log)) {
++    echo "ERROR: unexpected message in the log\n", $log;
++}
+ $addr = $tester->getAddr();
+ $tester->close();
+ /* The background process also inherits the listening socket: wait until it is

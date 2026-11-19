@@ -7,76 +7,43 @@ Minimal mitigation for EOL version.
 Fix GHSA-w8hw-w9fx-j79w (CVE-2026-109618)
 Fix GHSA-6wmf-4rv5-p3rp (CVE-2026-109619)
 
-Backported from the PHP 7.4 version:
-- shutdown_executor() frees the object store before the error handlers,
-  so the fast shutdown resets are done just before
-  zend_objects_store_free_object_storage().
-- "|| 1" instead of "|| true" in the session upload progress callback
-  (no stdbool.h).
-- The max_multipart_body_parts hunk of the 7.4 patch is left out, the
-  code is already there.
-- array_init_singleton() is implemented in zend_API.c, there is no
-  zend_new_array(); HT_HASH_RESET() uses memset(), so the SSE2 change is
-  not needed.
-
 Co-authored-by: Ilija Tovilo <ilija.tovilo@me.com>
+(cherry picked from commit b62095c75da776f46b917a8e2a750d6a21d82a99)
+(cherry picked from commit 802c21075308066362aab4993478dcd0577993a6)
+(cherry picked from commit 962194040ebdb403b47f80b04ccf3c55df8f3ff1)
 ---
- Zend/zend_API.c         |   8 +++
- Zend/zend_API.h         |   2 +
- Zend/zend_alloc.c       |  68 +++++++++++++++++--------
+ Zend/zend_API.h         |   1 +
+ Zend/zend_alloc.c       |  68 +++++++++++++++++++++---------
  Zend/zend_alloc.h       |   2 +
- Zend/zend_execute_API.c |  15 ++++++
- Zend/zend_hash.c        |   6 +--
+ Zend/zend_execute_API.c |   2 +
+ Zend/zend_hash.c        |  20 +++++++--
+ Zend/zend_hash.h        |   2 +
  Zend/zend_llist.c       |   2 +
  Zend/zend_multiply.h    |   4 +-
  Zend/zend_strtod.c      |   4 +-
- Zend/zend_vm_def.h      |  12 +++++
- Zend/zend_vm_execute.h  | 108 ++++++++++++++++++++++++++++++++++++++++
+ Zend/zend_vm_def.h      |  12 ++++++
+ Zend/zend_vm_execute.h  | 108 ++++++++++++++++++++++++++++++++++++++++++++++++
  ext/session/session.c   |   2 +-
- main/SAPI.c             |   5 ++
- main/main.c             |   5 ++
- main/php_variables.c    |   8 +--
- main/rfc1867.c          |  29 ++++++++---
- 16 files changed, 240 insertions(+), 40 deletions(-)
+ main/SAPI.c             |   5 +++
+ main/main.c             |   5 +++
+ main/php_variables.c    |   8 ++--
+ main/rfc1867.c          |  28 +++++++++----
+ 16 files changed, 234 insertions(+), 39 deletions(-)
 
-diff --git a/Zend/zend_API.c b/Zend/zend_API.c
-index 604450e9..738266cf 100644
---- a/Zend/zend_API.c
-+++ b/Zend/zend_API.c
-@@ -1093,6 +1093,14 @@ ZEND_API int _array_init(zval *arg, uint32_t size ZEND_FILE_LINE_DC) /* {{{ */
- }
- /* }}} */
- 
-+ZEND_API int _array_init_singleton(zval *arg ZEND_FILE_LINE_DC) /* {{{ */
-+{
-+	_array_init(arg, 0 ZEND_FILE_LINE_RELAY_CC);
-+	Z_ARRVAL_P(arg)->nTableSize = 1;
-+	return SUCCESS;
-+}
-+/* }}} */
-+
- /* This function should be called after the constructor has been called
-  * because it may call __set from the uninitialized object otherwise. */
- ZEND_API void zend_merge_properties(zval *obj, HashTable *properties) /* {{{ */
 diff --git a/Zend/zend_API.h b/Zend/zend_API.h
-index 38407703..763c64ab 100644
+index 3840770..6bdb5e8 100644
 --- a/Zend/zend_API.h
 +++ b/Zend/zend_API.h
-@@ -392,10 +392,12 @@ ZEND_API char *zend_get_type_by_const(int type);
+@@ -392,6 +392,7 @@ ZEND_API char *zend_get_type_by_const(int type);
  
  #define array_init(arg)			_array_init((arg), 0 ZEND_FILE_LINE_CC)
  #define array_init_size(arg, size) _array_init((arg), (size) ZEND_FILE_LINE_CC)
-+#define array_init_singleton(arg)	_array_init_singleton((arg) ZEND_FILE_LINE_CC)
++#define array_init_singleton(arg)	ZVAL_ARR((arg), zend_new_array_singleton())
  #define object_init(arg)		_object_init((arg) ZEND_FILE_LINE_CC)
  #define object_init_ex(arg, ce)	_object_init_ex((arg), (ce) ZEND_FILE_LINE_CC)
  #define object_and_properties_init(arg, ce, properties)	_object_and_properties_init((arg), (ce), (properties) ZEND_FILE_LINE_CC)
- ZEND_API int _array_init(zval *arg, uint32_t size ZEND_FILE_LINE_DC);
-+ZEND_API int _array_init_singleton(zval *arg ZEND_FILE_LINE_DC);
- ZEND_API int _object_init(zval *arg ZEND_FILE_LINE_DC);
- ZEND_API int _object_init_ex(zval *arg, zend_class_entry *ce ZEND_FILE_LINE_DC);
- ZEND_API int _object_and_properties_init(zval *arg, zend_class_entry *ce, HashTable *properties ZEND_FILE_LINE_DC);
 diff --git a/Zend/zend_alloc.c b/Zend/zend_alloc.c
-index f4a61795..4b914251 100644
+index f4a6179..4b91425 100644
 --- a/Zend/zend_alloc.c
 +++ b/Zend/zend_alloc.c
 @@ -59,6 +59,7 @@
@@ -214,7 +181,7 @@ index f4a61795..4b914251 100644
  
  ZEND_API void * __zend_malloc(size_t len)
 diff --git a/Zend/zend_alloc.h b/Zend/zend_alloc.h
-index e3ab221e..334004c5 100644
+index e3ab221..334004c 100644
 --- a/Zend/zend_alloc.h
 +++ b/Zend/zend_alloc.h
 @@ -399,6 +399,8 @@ static void apc_init_heap(void)
@@ -227,32 +194,10 @@ index e3ab221e..334004c5 100644
  
  #endif
 diff --git a/Zend/zend_execute_API.c b/Zend/zend_execute_API.c
-index 9f10843b..99d4ffa6 100644
+index 9f10843..90214d4 100644
 --- a/Zend/zend_execute_API.c
 +++ b/Zend/zend_execute_API.c
-@@ -263,8 +263,21 @@ void shutdown_executor(void) /* {{{ */
- 		zend_close_rsrc_list(&EG(regular_list));
- 	} zend_end_try();
- 
-+	if (fast_shutdown) {
-+		/* may be used by zend_error before init_executor */
-+		ZVAL_UNDEF(&EG(user_error_handler));
-+		ZVAL_UNDEF(&EG(user_exception_handler));
-+		memset(&EG(user_error_handlers_error_reporting), 0, sizeof(EG(user_error_handlers_error_reporting)));
-+		memset(&EG(user_error_handlers), 0, sizeof(EG(user_error_handlers)));
-+		memset(&EG(user_exception_handlers), 0, sizeof(EG(user_exception_handlers)));
-+	}
-+
- 	zend_objects_store_free_object_storage(&EG(objects_store), fast_shutdown);
- 
-+	/* may be used by zend_error before init_executor */
-+	EG(error_handling) = EH_NORMAL;
-+	EG(exception) = NULL;
-+
- 	/* All resources and objects are destroyed. */
- 	/* No PHP callback functions may be called after this point. */
- 	EG(active) = 0;
-@@ -299,6 +312,8 @@ void shutdown_executor(void) /* {{{ */
+@@ -299,6 +299,8 @@ void shutdown_executor(void) /* {{{ */
  		} ZEND_HASH_FOREACH_END_DEL();
  
  		zend_cleanup_internal_classes();
@@ -262,7 +207,7 @@ index 9f10843b..99d4ffa6 100644
  		zend_hash_graceful_reverse_destroy(&EG(symbol_table));
  
 diff --git a/Zend/zend_hash.c b/Zend/zend_hash.c
-index f5fba679..d6c022a2 100644
+index f5fba67..876ec52 100644
 --- a/Zend/zend_hash.c
 +++ b/Zend/zend_hash.c
 @@ -103,7 +103,7 @@ static zend_always_inline uint32_t zend_hash_check_size(uint32_t nSize)
@@ -274,7 +219,25 @@ index f5fba679..d6c022a2 100644
  	}
  
  #if defined(ZEND_WIN32)
-@@ -189,7 +189,7 @@ static void ZEND_FASTCALL zend_hash_packed_grow(HashTable *ht)
+@@ -185,11 +185,25 @@ ZEND_API void ZEND_FASTCALL _zend_hash_init(HashTable *ht, uint32_t nSize, dtor_
+ 	ht->nTableSize = zend_hash_check_size(nSize);
+ }
+ 
++ZEND_API HashTable* ZEND_FASTCALL _zend_new_array_0(void)
++{
++	HashTable *ht = emalloc(sizeof(HashTable));
++	_zend_hash_init(ht, HT_MIN_SIZE, ZVAL_PTR_DTOR, 0);
++	return ht;
++}
++
++ZEND_API HashTable* ZEND_FASTCALL zend_new_array_singleton(void)
++{
++	HashTable *ht = _zend_new_array_0();
++	ht->nTableSize = 1;
++	return ht;
++}
++
+ static void ZEND_FASTCALL zend_hash_packed_grow(HashTable *ht)
  {
  	HT_ASSERT_RC1(ht);
  	if (ht->nTableSize >= HT_MAX_SIZE) {
@@ -283,7 +246,7 @@ index f5fba679..d6c022a2 100644
  	}
  	ht->nTableSize += ht->nTableSize;
  	HT_SET_DATA_ADDR(ht, perealloc2(HT_GET_DATA_ADDR(ht), HT_SIZE(ht), HT_USED_SIZE(ht), ht->u.flags & HASH_FLAG_PERSISTENT));
-@@ -865,7 +865,7 @@ static void ZEND_FASTCALL zend_hash_do_resize(HashTable *ht)
+@@ -865,7 +879,7 @@ static void ZEND_FASTCALL zend_hash_do_resize(HashTable *ht)
  		pefree(old_data, ht->u.flags & HASH_FLAG_PERSISTENT);
  		zend_hash_rehash(ht);
  	} else {
@@ -292,8 +255,21 @@ index f5fba679..d6c022a2 100644
  	}
  }
  
+diff --git a/Zend/zend_hash.h b/Zend/zend_hash.h
+index 386248d..45e98c4 100644
+--- a/Zend/zend_hash.h
++++ b/Zend/zend_hash.h
+@@ -250,6 +250,8 @@ ZEND_API zval* ZEND_FASTCALL zend_hash_minmax(const HashTable *ht, compare_func_
+ 
+ ZEND_API int ZEND_FASTCALL zend_hash_rehash(HashTable *ht);
+ 
++ZEND_API HashTable* ZEND_FASTCALL _zend_new_array_0(void);
++ZEND_API HashTable* ZEND_FASTCALL zend_new_array_singleton(void);
+ ZEND_API uint32_t zend_array_count(HashTable *ht);
+ ZEND_API HashTable* ZEND_FASTCALL zend_array_dup(HashTable *source);
+ ZEND_API void ZEND_FASTCALL zend_array_destroy(HashTable *ht);
 diff --git a/Zend/zend_llist.c b/Zend/zend_llist.c
-index de93f295..4b0509cb 100644
+index de93f29..4b0509c 100644
 --- a/Zend/zend_llist.c
 +++ b/Zend/zend_llist.c
 @@ -114,6 +114,8 @@ ZEND_API void zend_llist_destroy(zend_llist *l)
@@ -306,7 +282,7 @@ index de93f295..4b0509cb 100644
  }
  
 diff --git a/Zend/zend_multiply.h b/Zend/zend_multiply.h
-index 26853a3c..386f9353 100644
+index 26853a3..386f935 100644
 --- a/Zend/zend_multiply.h
 +++ b/Zend/zend_multiply.h
 @@ -309,7 +309,7 @@ static zend_always_inline size_t zend_safe_address_guarded(size_t nmemb, size_t
@@ -328,7 +304,7 @@ index 26853a3c..386f9353 100644
  	}
  	return ret;
 diff --git a/Zend/zend_strtod.c b/Zend/zend_strtod.c
-index 3aa99f8d..01c1779d 100644
+index 3aa99f8..01c1779 100644
 --- a/Zend/zend_strtod.c
 +++ b/Zend/zend_strtod.c
 @@ -600,7 +600,7 @@ Balloc
@@ -350,7 +326,7 @@ index 3aa99f8d..01c1779d 100644
  #endif
  		rv->k = k;
 diff --git a/Zend/zend_vm_def.h b/Zend/zend_vm_def.h
-index ed84d17b..ebdb2fdc 100644
+index ed84d17..ebdb2fd 100644
 --- a/Zend/zend_vm_def.h
 +++ b/Zend/zend_vm_def.h
 @@ -316,11 +316,17 @@ ZEND_VM_HANDLER(8, ZEND_CONCAT, CONST|TMPVAR|CV, CONST|TMPVAR|CV)
@@ -390,7 +366,7 @@ index ed84d17b..ebdb2fdc 100644
  				memcpy(ZSTR_VAL(str), ZSTR_VAL(op1_str), ZSTR_LEN(op1_str));
  				memcpy(ZSTR_VAL(str) + ZSTR_LEN(op1_str), ZSTR_VAL(op2_str), ZSTR_LEN(op2_str)+1);
 diff --git a/Zend/zend_vm_execute.h b/Zend/zend_vm_execute.h
-index 3f975dec..b0170aff 100644
+index 3f975de..b0170af 100644
 --- a/Zend/zend_vm_execute.h
 +++ b/Zend/zend_vm_execute.h
 @@ -4406,11 +4406,17 @@ static ZEND_OPCODE_HANDLER_RET ZEND_FASTCALL ZEND_CONCAT_SPEC_CONST_CONST_HANDLE
@@ -718,7 +694,7 @@ index 3f975dec..b0170aff 100644
  				memcpy(ZSTR_VAL(str), ZSTR_VAL(op1_str), ZSTR_LEN(op1_str));
  				memcpy(ZSTR_VAL(str) + ZSTR_LEN(op1_str), ZSTR_VAL(op2_str), ZSTR_LEN(op2_str)+1);
 diff --git a/ext/session/session.c b/ext/session/session.c
-index 0f0d9bcb..8be81f6d 100644
+index 0f0d9bc..8be81f6 100644
 --- a/ext/session/session.c
 +++ b/ext/session/session.c
 @@ -3071,7 +3071,7 @@ static int php_session_rfc1867_callback(unsigned int event, void *event_data, vo
@@ -731,7 +707,7 @@ index 0f0d9bcb..8be81f6d 100644
  	}
  
 diff --git a/main/SAPI.c b/main/SAPI.c
-index 01383357..17afa0e0 100644
+index 0138335..17afa0e 100644
 --- a/main/SAPI.c
 +++ b/main/SAPI.c
 @@ -515,18 +515,23 @@ SAPI_API void sapi_deactivate(void)
@@ -759,7 +735,7 @@ index 01383357..17afa0e0 100644
  	if (sapi_module.deactivate) {
  		sapi_module.deactivate();
 diff --git a/main/main.c b/main/main.c
-index 0cfdb913..92c19e46 100644
+index 0cfdb91..92c19e4 100644
 --- a/main/main.c
 +++ b/main/main.c
 @@ -1895,6 +1895,8 @@ void php_request_shutdown(void *dummy)
@@ -782,7 +758,7 @@ index 0cfdb913..92c19e46 100644
  /* }}} */
  
 diff --git a/main/php_variables.c b/main/php_variables.c
-index 3e0e8d76..a5a9af19 100644
+index 3e0e8d7..a5a9af1 100644
 --- a/main/php_variables.c
 +++ b/main/php_variables.c
 @@ -213,7 +213,7 @@ PHPAPI void php_register_variable_ex(char *var_name, zval *val, zval *track_vars
@@ -822,7 +798,7 @@ index 3e0e8d76..a5a9af19 100644
  				case PARSE_POST:
  					zval_ptr_dtor(&PG(http_globals)[TRACK_VARS_POST]);
 diff --git a/main/rfc1867.c b/main/rfc1867.c
-index 43b94c05..b7d1ed2a 100644
+index 43b94c0..f186b65 100644
 --- a/main/rfc1867.c
 +++ b/main/rfc1867.c
 @@ -407,6 +407,14 @@ static int find_boundary(multipart_buffer *self, char *boundary)
@@ -840,12 +816,12 @@ index 43b94c05..b7d1ed2a 100644
  /* parse headers */
  static int multipart_buffer_headers(multipart_buffer *self, zend_llist *header)
  {
-@@ -447,10 +455,15 @@ static int multipart_buffer_headers(multipart_buffer *self, zend_llist *header)
+@@ -447,10 +455,16 @@ static int multipart_buffer_headers(multipart_buffer *self, zend_llist *header)
  			}
  
  			*value = '\0';
 -			do { value++; } while (isspace(*value));
--
+ 
 -			key = estrdup(line);
 -			smart_string_appends(&buf_value, value);
 +			/* Keep only headers we use, and ignore duplicates */
@@ -854,13 +830,13 @@ index 43b94c05..b7d1ed2a 100644
 +				key = NULL;
 +			} else {
 +				key = estrdup(line);
-+				do { value++; } while (isspace(*value));
++				do { value++; } while (isspace((unsigned char)*value));
 +				smart_string_appends(&buf_value, value);
 +			}
  		} else if (buf_value.c) { /* If no ':' on the line, add to previous line */
  			smart_string_appends(&buf_value, line);
  		} else {
-@@ -524,11 +537,11 @@ static char *php_ap_getword(const zend_encoding *encoding, char **line, char sto
+@@ -524,11 +538,11 @@ static char *php_ap_getword(const zend_encoding *encoding, char **line, char sto
  	return res;
  }
  
@@ -874,7 +850,7 @@ index 43b94c05..b7d1ed2a 100644
  
  	for (i = 0; i < len && start[i] != quote; ++i) {
  		if (start[i] == '\\' && (start[i + 1] == '\\' || (quote && start[i + 1] == quote))) {
-@@ -556,14 +569,14 @@ static char *php_ap_getword_conf(const zend_encoding *encoding, char *str)
+@@ -556,14 +570,14 @@ static char *php_ap_getword_conf(const zend_encoding *encoding, char *str)
  		char quote = *str;
  
  		str++;

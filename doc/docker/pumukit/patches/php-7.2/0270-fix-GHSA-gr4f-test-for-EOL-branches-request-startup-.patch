@@ -1,0 +1,24 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Tue, 17 Nov 2026 08:23:13 +0100
+Subject: fix GHSA-gr4f test for EOL branches (request startup warnings are
+ reported as "Unknown")
+
+(cherry picked from commit 7ca76f32a79a18833231ac5885ebc90aa9f695f5)
+(cherry picked from commit 4022f55b2e66b5cdcbba5a7712afd2fed67a508f)
+(cherry picked from commit 3005adec15a1a351d9c42f9f846e390ac1df669a)
+(cherry picked from commit 80dbc5f31170d8d66d72b0af4925b754493b3097)
+---
+ ext/date/tests/GHSA-gr4f-wgx5-jpfv.phpt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ext/date/tests/GHSA-gr4f-wgx5-jpfv.phpt b/ext/date/tests/GHSA-gr4f-wgx5-jpfv.phpt
+index bb81c93..c76d9bf 100644
+--- a/ext/date/tests/GHSA-gr4f-wgx5-jpfv.phpt
++++ b/ext/date/tests/GHSA-gr4f-wgx5-jpfv.phpt
+@@ -18,5 +18,5 @@ zend_test.warn_on_startup=1
+ echo "Hello world\n";
+ ?>
+ --EXPECTF--
+-Warning: PHP Request Startup: Input variables exceeded 1. To increase the limit change max_input_vars in php.ini. in Unknown on line 0
++Warning: Unknown: Input variables exceeded 1. To increase the limit change max_input_vars in php.ini. in Unknown on line 0
+ Hello world%r(?:\n\nWarning: Test startup warning from zend_test in Unknown on line 0)?%r

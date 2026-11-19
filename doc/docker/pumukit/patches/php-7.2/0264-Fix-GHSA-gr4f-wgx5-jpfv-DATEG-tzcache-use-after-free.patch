@@ -1,0 +1,106 @@
+From: Ilija Tovilo <ilija.tovilo@me.com>
+Date: Sun, 15 Nov 2026 15:25:20 +0100
+Subject: Fix GHSA-gr4f-wgx5-jpfv: DATEG(tzcache) use-after-free
+
+(cherry picked from commit f986c5ca37c0fdc50595d8291a9920a1df23bf38)
+(cherry picked from commit b3a6786b50a3df7df665b201d45aa8dbb45b9e0e)
+(cherry picked from commit 3ea77dfbe4f451599d62ed8192720a81c1c747df)
+(cherry picked from commit 1b2a0beddcb339c2833030ab88fce55001b19321)
+(cherry picked from commit db78019ba131c6d57579db76367383d4b3cce536)
+---
+ ext/date/tests/GHSA-gr4f-wgx5-jpfv.phpt | 22 ++++++++++++++++++++++
+ ext/zend_test/test.c                    | 18 ++++++++++++++++++
+ main/main.c                             | 10 +---------
+ 3 files changed, 41 insertions(+), 9 deletions(-)
+ create mode 100644 ext/date/tests/GHSA-gr4f-wgx5-jpfv.phpt
+
+diff --git a/ext/date/tests/GHSA-gr4f-wgx5-jpfv.phpt b/ext/date/tests/GHSA-gr4f-wgx5-jpfv.phpt
+new file mode 100644
+index 0000000..bb81c93
+--- /dev/null
++++ b/ext/date/tests/GHSA-gr4f-wgx5-jpfv.phpt
+@@ -0,0 +1,22 @@
++--TEST--
++GHSA-gr4f-wgx5-jpfv: DATEG(tzcache) use-after-free
++--CREDITS--
++Sebastian Bergmann
++--CGI--
++--ENV--
++QUERY_STRING=a=1&b=2
++--EXTENSIONS--
++session
++zend_test
++--INI--
++error_log="{TMP}/GHSA-gr4f-wgx5-jpfv.log"
++log_errors=1
++max_input_vars=1
++zend_test.warn_on_startup=1
++--FILE--
++<?php
++echo "Hello world\n";
++?>
++--EXPECTF--
++Warning: PHP Request Startup: Input variables exceeded 1. To increase the limit change max_input_vars in php.ini. in Unknown on line 0
++Hello world%r(?:\n\nWarning: Test startup warning from zend_test in Unknown on line 0)?%r
+diff --git a/ext/zend_test/test.c b/ext/zend_test/test.c
+index 5181808..0047f51 100644
+--- a/ext/zend_test/test.c
++++ b/ext/zend_test/test.c
+@@ -210,6 +210,19 @@ static zend_function_entry zend_test_trait_methods[] = {
+     ZEND_FE_END
+ };
+ 
++static PHP_INI_MH(OnUpdateZendTestWarnOnStartup)
++{
++	/* zend_ini_parse_bool() is not available here */
++	if (atoi(ZSTR_VAL(new_value)) != 0) {
++		zend_error(E_WARNING, "Test startup warning from zend_test");
++	}
++	return SUCCESS;
++}
++
++PHP_INI_BEGIN()
++	PHP_INI_ENTRY("zend_test.warn_on_startup", "0", PHP_INI_SYSTEM, OnUpdateZendTestWarnOnStartup)
++PHP_INI_END()
++
+ PHP_MINIT_FUNCTION(zend_test)
+ {
+ 	zend_class_entry class_entry;
+@@ -233,11 +246,16 @@ PHP_MINIT_FUNCTION(zend_test)
+ 	zend_declare_property_null(zend_test_trait, "testProp", sizeof("testProp")-1, ZEND_ACC_PUBLIC);
+ 
+ 	zend_register_class_alias("_ZendTestClassAlias", zend_test_class);
++
++	REGISTER_INI_ENTRIES();
++
+ 	return SUCCESS;
+ }
+ 
+ PHP_MSHUTDOWN_FUNCTION(zend_test)
+ {
++	UNREGISTER_INI_ENTRIES();
++
+ 	return SUCCESS;
+ }
+ 
+diff --git a/main/main.c b/main/main.c
+index 92c19e4..987f45a 100644
+--- a/main/main.c
++++ b/main/main.c
+@@ -696,15 +696,7 @@ PHPAPI ZEND_COLD void php_log_err_with_severity(char *log_message, int syslog_ty
+ 			zend_string *error_time_str;
+ 
+ 			time(&error_time);
+-#ifdef ZTS
+-			if (!php_during_module_startup()) {
+-				error_time_str = php_format_date("d-M-Y H:i:s e", 13, error_time, 1);
+-			} else {
+-				error_time_str = php_format_date("d-M-Y H:i:s e", 13, error_time, 0);
+-			}
+-#else
+-			error_time_str = php_format_date("d-M-Y H:i:s e", 13, error_time, 1);
+-#endif
++			error_time_str = php_format_date("d-M-Y H:i:s e", 13, error_time, PG(modules_activated) && EG(active));
+ 			len = spprintf(&tmp, 0, "[%s] %s%s", ZSTR_VAL(error_time_str), log_message, PHP_EOL);
+ #ifdef PHP_WIN32
+ 			php_flock(fd, 2);

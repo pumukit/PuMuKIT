@@ -1,0 +1,38 @@
+From: Arnaud Le Blanc <arnaud.lb@gmail.com>
+Date: Mon, 9 Nov 2026 12:02:32 +0100
+Subject: Fix GHSA-658j-r8rw-q6mx: session.upload_progress.enabled is off by
+ default
+
+Default change only: upload progress is already disabled in EOL versions,
+so the runtime check of the session INI settings is not backported.
+
+(cherry picked from commit 3f70f66611583bca4ec18385f7f407e2808fa61f)
+(cherry picked from commit 5a80b303fc9942cdd3483f9338c99330fb32e36f)
+(cherry picked from commit 62a316a5ecae7852bf58f139d9d1ab968f76062e)
+(cherry picked from commit 9035a0672e35e2f9c73f4aed8147e240f23ce9ad)
+(cherry picked from commit b6650ff64052ce030dbcb1bb4fa37404936223ca)
+---
+ ext/session/session.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/ext/session/session.c b/ext/session/session.c
+index 8be81f6..b49cfca 100644
+--- a/ext/session/session.c
++++ b/ext/session/session.c
+@@ -816,7 +816,7 @@ PHP_INI_BEGIN()
+ 
+ 	/* Upload progress */
+ 	STD_PHP_INI_BOOLEAN("session.upload_progress.enabled",
+-	                                                "1",     ZEND_INI_PERDIR, OnUpdateBool,        rfc1867_enabled, php_ps_globals, ps_globals)
++	                                                "0",     ZEND_INI_PERDIR, OnUpdateBool,        rfc1867_enabled, php_ps_globals, ps_globals)
+ 	STD_PHP_INI_BOOLEAN("session.upload_progress.cleanup",
+ 	                                                "1",     ZEND_INI_PERDIR, OnUpdateBool,        rfc1867_cleanup, php_ps_globals, ps_globals)
+ 	STD_PHP_INI_ENTRY("session.upload_progress.prefix",
+@@ -2826,6 +2826,7 @@ static PHP_GINIT_FUNCTION(ps) /* {{{ */
+ 	ps_globals->mod = NULL;
+ 	ps_globals->serializer = NULL;
+ 	ps_globals->mod_data = NULL;
++	ps_globals->rfc1867_enabled = 0;
+ 	ps_globals->session_status = php_session_none;
+ 	ps_globals->default_mod = NULL;
+ 	ps_globals->mod_user_implemented = 0;

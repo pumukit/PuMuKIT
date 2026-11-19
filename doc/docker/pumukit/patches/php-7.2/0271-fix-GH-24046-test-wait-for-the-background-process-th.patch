@@ -1,0 +1,36 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Tue, 17 Nov 2026 08:32:13 +0100
+Subject: fix GH-24046 test (wait for the background process that inherits the
+ listening socket)
+
+(cherry picked from commit 8465347277fb6c00b04eae896b906995405bc086)
+(cherry picked from commit 4aec74676feb251921a2a6d9b5269bdd2a531a4e)
+(cherry picked from commit 91fa0816e341c41c5e805df0b1e0a31a57984758)
+(cherry picked from commit 8d8b057fdd855cefcd2539954e302da5e9ca6d2a)
+---
+ sapi/fpm/tests/gh24046-stdio-pipe-double-close.phpt | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/sapi/fpm/tests/gh24046-stdio-pipe-double-close.phpt b/sapi/fpm/tests/gh24046-stdio-pipe-double-close.phpt
+index af0c8bd..7a0a78b 100644
+--- a/sapi/fpm/tests/gh24046-stdio-pipe-double-close.phpt
++++ b/sapi/fpm/tests/gh24046-stdio-pipe-double-close.phpt
+@@ -44,7 +44,18 @@ usleep(1500000);
+ $tester->request()->expectBody('ok');
+ $tester->terminate();
+ $tester->expectNoLogPattern('/unable to (remove|read)/');
++$addr = $tester->getAddr();
+ $tester->close();
++/* The background process also inherits the listening socket: wait until it is
++ * gone, otherwise the next FPM test cannot bind the same port. */
++for ($i = 0; $i < 50; $i++) {
++    $socket = @stream_socket_server('tcp://' . $addr);
++    if ($socket) {
++        fclose($socket);
++        break;
++    }
++    usleep(100000);
++}
+ 
+ ?>
+ Done

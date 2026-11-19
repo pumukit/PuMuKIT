@@ -22,7 +22,7 @@ ENV PHP_FPM_PM="dynamic" \
 	PHP_DEFAULT_CHARSET=UTF-8
 
 # PHP 7.2 is EOL: rebuild PHP 7.2.34 with the security backports from
-# deb.sury.org (php7.2 7.2.34-66). The patched source is repacked into
+# deb.sury.org (php7.2 7.2.34-70). The patched source is repacked into
 # /usr/src/php.tar.xz so docker-php-ext-install builds the extensions from it.
 # See patches/php-7.2/series for the selected patches.
 ENV PHP_VERSION=7.2.34 \

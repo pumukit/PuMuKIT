@@ -1,0 +1,21 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Tue, 17 Nov 2026 08:47:33 +0100
+Subject: fix GH-24046 test for 7.2 and older (no decorate_workers_output
+ option)
+
+---
+ sapi/fpm/tests/gh24046-stdio-pipe-double-close.phpt | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/sapi/fpm/tests/gh24046-stdio-pipe-double-close.phpt b/sapi/fpm/tests/gh24046-stdio-pipe-double-close.phpt
+index 2cc14a7..9969950 100644
+--- a/sapi/fpm/tests/gh24046-stdio-pipe-double-close.phpt
++++ b/sapi/fpm/tests/gh24046-stdio-pipe-double-close.phpt
+@@ -16,7 +16,6 @@ pm = static
+ pm.max_children = 1
+ pm.max_requests = 1
+ catch_workers_output = yes
+-decorate_workers_output = no
+ EOT;
+ 
+ $code = <<<'EOT'

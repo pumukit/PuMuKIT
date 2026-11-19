@@ -1,0 +1,59 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Tue, 17 Nov 2026 08:32:28 +0100
+Subject: fix GHSA-3mg3 test for 8.0 (JSON status output is not escaped there,
+ add the delay option to Tester::multiRequest())
+
+(cherry picked from commit 35f370409a96ddfb2c0d79d2922b3d9db597b2b1)
+(cherry picked from commit cbc13b6b6bc213584fad51638a50dd2e3eb7ea77)
+(cherry picked from commit 04ccb1e59382b6afa822ba156e4de6c7098cb075)
+---
+ sapi/fpm/tests/ghsa-3mg3-cr28-46gc-status-xss.phpt | 9 ---------
+ sapi/fpm/tests/tester.inc                          | 5 +++++
+ 2 files changed, 5 insertions(+), 9 deletions(-)
+
+diff --git a/sapi/fpm/tests/ghsa-3mg3-cr28-46gc-status-xss.phpt b/sapi/fpm/tests/ghsa-3mg3-cr28-46gc-status-xss.phpt
+index 0a40a5a..1d74ca5 100644
+--- a/sapi/fpm/tests/ghsa-3mg3-cr28-46gc-status-xss.phpt
++++ b/sapi/fpm/tests/ghsa-3mg3-cr28-46gc-status-xss.phpt
+@@ -40,16 +40,9 @@ $responses = $tester
+                     ],
+                 ],
+                 ['uri' => '/status', 'query' => 'full&html', 'delay' => 100000],
+-                ['uri' => '/status', 'query' => 'full&json', 'delay' => 100000],
+         ]);
+ var_dump(strpos($responses[1]->getBody(), '<svg'));
+ var_dump(substr_count($responses[1]->getBody(), '&lt;svg'));
+-$status = json_decode($responses[2]->getBody('application/json'), true);
+-foreach ($status['processes'] as $proc) {
+-    if ($proc['request method'] === '<svg>') {
+-        var_dump($proc['user'], $proc['script'] === $scriptFilename);
+-    }
+-}
+ $tester->terminate();
+ $tester->expectLogTerminatingNotices();
+ $tester->close();
+@@ -59,8 +52,6 @@ Done
+ --EXPECT--
+ bool(false)
+ int(4)
+-string(15) ""<svg onload=x>"
+-bool(true)
+ Done
+ --CLEAN--
+ <?php
+diff --git a/sapi/fpm/tests/tester.inc b/sapi/fpm/tests/tester.inc
+index 3922c01..c9af479 100644
+--- a/sapi/fpm/tests/tester.inc
++++ b/sapi/fpm/tests/tester.inc
+@@ -652,6 +652,11 @@ class Tester
+                     $requestData['headers'] ?? [],
+                     $requestData['uri'] ?? null
+                 );
++
++                if (isset($requestData['delay'])) {
++                    usleep($requestData['delay']);
++                }
++
+                 return [
+                     'client' => $client,
+                     'requestId' => $client->async_request($params, false),
