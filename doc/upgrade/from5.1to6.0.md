@@ -202,17 +202,11 @@ Rebuild the image (`docker compose build --pull`); no data has to be migrated.
 - **Password hashes.** `security.yaml` hashes the passwords with `auto` (bcrypt, cost 12) and migrates from `sha512` and
   from `md5` (`iterations: 1`, `encode_as_base64: false`): when a user logs in with a password, through the login form
   or `/api`, the hash is rewritten. Users that never log in again keep their old hash and can still log in. `encoders`
-  no longer exists in Symfony 7, so every installation rewrites this block; take the one of the core unless a CAS server
-  checks the hashes of PuMuKIT (the CAS file of GalicasterMediaServerBundle or `cas.authn.mongo`). That CAS checks MD5,
-  so those installations keep their hasher until the CAS accepts bcrypt:
-
-  ```yaml
-  password_hashers:
-    Symfony\Component\Security\Core\User\UserInterface:
-      algorithm: md5
-      iterations: 1
-      encode_as_base64: false
-  ```
+  no longer exists in Symfony 7, so every installation rewrites this block; take the one of the core unless another
+  system checks the password hashes of PuMuKIT, such as a CAS server that reads the PuMuKIT database
+  (`cas.authn.mongo`) or a file with the hashes. That system has to accept bcrypt before the hasher changes; until then
+  keep the 5.1 hasher, written in `password_hashers`. With CAS as the login of PuMuKIT, PuMuKIT seldom gets the password,
+  so the old hashes stay until their users change it.
 
   A bcrypt hash takes about 160 ms to check, against 1.5 ms of `sha512`. The integrations that call `/api` with HTTP
   Basic pay it on every request that does not reuse the session cookie. To roll back to 5.1, set the 5.1 hasher to
