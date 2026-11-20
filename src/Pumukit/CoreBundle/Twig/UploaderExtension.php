@@ -16,6 +16,7 @@ class UploaderExtension extends AbstractExtension
 {
     private const NESTED_OPTIONS = ['restrictions', 'tus', 'xhr', 'import', 'dashboard'];
     private const STYLES = ['vendor/@uppy/core/dist/style.min.css', 'vendor/@uppy/dashboard/dist/style.min.css'];
+    private const TUS_CHUNK_SIZE = 50 * 1024 * 1024;
 
     public function __construct(
         private readonly InboxService $inboxService,
@@ -62,6 +63,7 @@ class UploaderExtension extends AbstractExtension
             'tus' => [
                 'overridePatchMethod' => $this->inboxService->overridePatchMethod(),
                 'limit' => $this->inboxService->inboxUploadLIMIT(),
+                'chunkSize' => self::TUS_CHUNK_SIZE,
             ],
             'xhr' => [
                 'fieldName' => 'files[]',

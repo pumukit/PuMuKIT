@@ -39,6 +39,7 @@ class UploaderExtensionTest extends KernelTestCase
         $this->assertSame(MediaMimeTypeUtils::allowedMimeTypes(), $options['restrictions']['allowedFileTypes']);
         $this->assertSame($this->inboxService->overridePatchMethod(), $options['tus']['overridePatchMethod']);
         $this->assertSame($this->inboxService->inboxUploadLIMIT(), $options['tus']['limit']);
+        $this->assertSame(52428800, $options['tus']['chunkSize']);
         $this->assertNull($options['import']);
         $this->assertCount(2, $options['styles']);
         $this->assertMatchesRegularExpression('#^/assets/vendor/@uppy/core/dist/style\.min-[\w-]+\.css$#', $options['styles'][0]);

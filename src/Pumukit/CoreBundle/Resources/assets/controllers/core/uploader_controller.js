@@ -53,6 +53,7 @@ export default class extends Controller {
                 endpoint: options.endpoint,
                 overridePatchMethod: Boolean(options.tus.overridePatchMethod),
                 limit: options.tus.limit,
+                chunkSize: options.tus.chunkSize,
             });
         }
 
