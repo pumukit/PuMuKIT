@@ -33,6 +33,10 @@ class TUSUploadController extends AbstractController
     #[IsGranted('ROLE_UPLOAD_INBOX')]
     public function server(Request $request, Server $server)
     {
+        if ($request->hasSession() && $request->getSession()->isStarted()) {
+            $request->getSession()->save();
+        }
+
         if ($request->isMethod('DELETE')) {
             throw new AccessDeniedHttpException('File deletion is not allowed.');
         }

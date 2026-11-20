@@ -10,6 +10,8 @@ use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\Permission;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @internal
@@ -75,6 +77,35 @@ class TUSUploadControllerTest extends PumukitTestCase
         ]);
 
         $this->assertNotSame(400, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testTheSessionIsReleasedBeforeTheUploadIsServed(): void
+    {
+        $sessionStartedAtResponse = null;
+        static::getContainer()->get('event_dispatcher')->addListener(
+            KernelEvents::RESPONSE,
+            static function (ResponseEvent $event) use (&$sessionStartedAtResponse): void {
+                if ($event->isMainRequest() && $event->getRequest()->hasSession()) {
+                    $sessionStartedAtResponse = $event->getRequest()->getSession()->isStarted();
+                }
+            },
+            1024
+        );
+
+        $this->createUpload(['name' => 'video.mp4', 'filename' => 'video.mp4', 'type' => 'video/mp4', 'filetype' => 'video/mp4']);
+
+        $this->assertNotSame(400, $this->client->getResponse()->getStatusCode());
+        $this->assertFalse($sessionStartedAtResponse);
+    }
+
+    public function testAnonymousUploadsAreRejected(): void
+    {
+        self::ensureKernelShutdown();
+        $this->client = static::createClient();
+
+        $this->createUpload(['name' => 'video.mp4', 'filename' => 'video.mp4', 'type' => 'video/mp4', 'filetype' => 'video/mp4']);
+
+        $this->assertContains($this->client->getResponse()->getStatusCode(), [302, 401, 403]);
     }
 
     private function createUpload(array $metadata): void
