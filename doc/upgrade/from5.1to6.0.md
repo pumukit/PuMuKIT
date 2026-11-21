@@ -309,6 +309,34 @@ of the old HLS tracks, rewritten by `pumukit:hls:move-to-own-directory`.
   The images of `/opencast` do not ask for a token, because PuMuKIT stores them as public URLs. To serve Opencast, also mount its storage on `/mnt/storage/opencast`. With validation,
   a saved link to the server stops working: check first which URLs are used from outside (podcast clients, apps, other websites, LMS).
 
+  **Links to `/trackfile` without a token.** `/trackfile` answers 404 to a request without a valid token. For the old links that cannot be
+  changed, two optional lists, empty by default, let it redirect to the download server (still with a signed URL of that track, and only when
+  the `play` permission allows the object) when the token is missing, expired or invalid. It replaces the client class that overrode
+  `SecureTokenService` for a list of series:
+
+  ```yaml
+  pumukit_base_player:
+      trackfile_without_token:
+          series: ['5f9d88b9c5e1a2b3c4d5e6f7']
+          referer_hosts: ['uned.es']
+  ```
+
+  `series` takes series ids. `referer_hosts` takes host names, with no scheme, port or path, in lowercase: a page of that host or of any of its
+  subdomains (`campus.uned.es` for `uned.es`) opens the tracks; `uned.es.example.com` or `notuned.es` do not. A wrong value stops the container from
+  compiling. The `Referer` is not a security measure, because any client can forge it. Between domains the browser sends only the host, and
+  nothing with `Referrer-Policy: no-referrer`, from HTTPS to HTTP, from links written by hand or from download managers: for those, list the
+  series. A website that plays HLS with hls.js also needs its origin in `PUMUKIT_DLS_CORS_ORIGIN`.
+
+  Every request without a valid token is written to `var/log/legacy_trackfile.log`, those delivered ("served") and those rejected, even with
+  both lists empty, with `trackId`, `multimediaObjectId`, `seriesId`, `refererHost`, `tokenState` (`missing`, `expired` or `invalid`) and, for the
+  delivered ones, `reason` (`series` or `referer`). To know who links without a token, before deciding what to list:
+
+  ```
+  grep 'rejected without a valid token' var/log/legacy_trackfile*.log | grep -o '"refererHost":"[^"]*"' | sort | uniq -c | sort -rn
+  ```
+
+  and the same with `"seriesId"`.
+
   If you keep your own NGINX, `auth_request` sends no query string in the subrequest: take it from `$request_uri`. Send a `Host` accepted by `TRUSTED_HOSTS`, and the request in `X-Original-URI`:
 
   ```nginx
