@@ -275,6 +275,17 @@ class TrackDeliveryServiceTest extends TestCase
         $this->assertNull($this->service()->undeliverableReason($track));
     }
 
+    public function testExternalTrackExpiryCoversTheDuration(): void
+    {
+        $track = $this->externalTrack('https://dls/files/downloads/s/a.mp4', 7200);
+
+        $url = $this->service()->downloadServerUrl($track);
+
+        parse_str((string) parse_url((string) $url, PHP_URL_QUERY), $query);
+        $this->assertGreaterThanOrEqual(time() + 3600 + 7200, (int) $query['expires']);
+        $this->assertTrue($this->tokens->validateToken($query['token'], '/files/downloads/s/a.mp4', (int) $query['expires']));
+    }
+
     public function testExternalTrackElsewhereKeepsTheQuery(): void
     {
         $plain = $this->externalTrack('https://example.org/video.mp4');
@@ -331,9 +342,9 @@ class TrackDeliveryServiceTest extends TestCase
         return $this->track(Storage::local(StorageUrl::create($url), Path::create($file)), $duration);
     }
 
-    private function externalTrack(string $url): Track
+    private function externalTrack(string $url, int $duration = 0): Track
     {
-        return $this->track(Storage::external(StorageUrl::create($url)), 0);
+        return $this->track(Storage::external(StorageUrl::create($url)), $duration);
     }
 
     private function track(Storage $storage, int $duration): Track

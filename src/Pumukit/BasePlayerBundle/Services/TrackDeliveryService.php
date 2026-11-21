@@ -62,7 +62,7 @@ class TrackDeliveryService
                 return null;
             }
 
-            return $this->forceDownload($this->trackUrlService->signForDownloadServer($url), $forceDownload);
+            return $this->forceDownload($this->secureTokenService->generateDownloadUrl($url, $this->validFor($track)), $forceDownload);
         }
 
         if (null !== $this->undeliverableReason($track)) {
@@ -71,7 +71,7 @@ class TrackDeliveryService
 
         $realPath = (string) realpath($this->localPath($track));
         $relative = substr($realPath, strlen($this->realStorageDir()) + 1);
-        $validFor = $this->secureTokenService->getTokenDuration() + $track->getDuration();
+        $validFor = $this->validFor($track);
         $baseUrl = rtrim((string) $this->downloadServerUrl, '/');
 
         if ($this->isHls($realPath)) {
@@ -171,6 +171,11 @@ class TrackDeliveryService
     private function isHls(string $realPath): bool
     {
         return str_ends_with(strtolower($realPath), '.m3u8');
+    }
+
+    private function validFor(Media $track): int
+    {
+        return $this->secureTokenService->getTokenDuration() + $track->getDuration();
     }
 
     private function forceDownload(string $url, bool $forceDownload): string

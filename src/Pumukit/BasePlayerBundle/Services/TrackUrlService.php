@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pumukit\BasePlayerBundle\Services;
 
+use Pumukit\SchemaBundle\Document\MediaType\Media;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +44,8 @@ class TrackUrlService
             $baseUrl .= (str_contains($baseUrl, '?') ? '&' : '?').'forcedl=1';
         }
 
-        $tokenData = $this->secureTokenService->generateToken($track->id());
+        $duration = $track instanceof Media ? $track->getDuration() : 0;
+        $tokenData = $this->secureTokenService->generateToken($track->id(), time() + $this->secureTokenService->getTokenDuration() + $duration);
         $separator = str_contains($baseUrl, '?') ? '&' : '?';
         $baseUrl .= sprintf(
             '%stoken=%s&expires=%d&resource=%s',
