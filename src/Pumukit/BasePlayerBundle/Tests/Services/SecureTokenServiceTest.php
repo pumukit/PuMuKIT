@@ -68,12 +68,35 @@ class SecureTokenServiceTest extends TestCase
         $this->assertFalse($this->service->validateHlsPath($this->prefix().'/files/downloads/s/j/stream_0//data00.ts'));
     }
 
+    public function testHlsPathRejectsControlCharacters(): void
+    {
+        $this->assertFalse($this->service->validateHlsPath($this->prefix()."/files/downloads/s/j/a.mp4\0.ts"));
+        $this->assertFalse($this->service->validateHlsPath($this->prefix()."/files/downloads/s/j/a\n.ts"));
+    }
+
+    public function testTamperedExpiryIsRejected(): void
+    {
+        $path = (string) parse_url($this->service->generateHlsUrl('https://dls', '/files/downloads/s/j/', 'j.m3u8'), PHP_URL_PATH);
+        $tampered = (string) preg_replace_callback('#^/hls/(\d+)/#', static fn (array $m): string => '/hls/'.((int) $m[1] + 1).'/', $path);
+
+        $this->assertNotSame($path, $tampered);
+        $this->assertFalse($this->service->validateHlsPath($tampered));
+    }
+
+    public function testWrongSecretIsRejected(): void
+    {
+        $url = (new SecureTokenService('other', 3600))->generateHlsUrl('https://dls', '/files/downloads/s/j/', 'j.m3u8');
+
+        $this->assertFalse($this->service->validateHlsPath((string) parse_url($url, PHP_URL_PATH)));
+    }
+
     public function testValidForExtendsTheExpiry(): void
     {
+        $before = time();
         $url = $this->service->generateDownloadUrl('https://dls/files/downloads/s/j/video.mp4', 7200);
 
         parse_str((string) parse_url($url, PHP_URL_QUERY), $query);
-        $this->assertGreaterThanOrEqual(time() + 7200, (int) $query['expires']);
+        $this->assertGreaterThanOrEqual($before + 7200, (int) $query['expires']);
     }
 
     public function testExpiredHlsTokenIsRejected(): void

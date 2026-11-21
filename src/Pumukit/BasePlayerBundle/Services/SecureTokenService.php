@@ -103,6 +103,9 @@ class SecureTokenService
         }
 
         foreach ($segments as $segment) {
+            if (1 === preg_match('/[\x00-\x1f\x7f]/', $segment)) {
+                return false;
+            }
             if ('' === $segment || '.' === $segment || '..' === $segment) {
                 return false;
             }
