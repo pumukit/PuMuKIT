@@ -83,6 +83,12 @@ class TrackFileController extends AbstractController
             return new Response('Not Found', Response::HTTP_NOT_FOUND);
         }
 
+        if ($request->query->has('file')) {
+            $this->logger->warning('Trackfile request with a file parameter', ['trackId' => $id]);
+
+            return new Response('Not Found', Response::HTTP_NOT_FOUND);
+        }
+
         if (null !== $invalidTokenReason) {
             $allowedReason = $this->trackfileWithoutTokenPolicy?->allowedReason($mmobj, $request);
             $context = [
@@ -101,12 +107,6 @@ class TrackFileController extends AbstractController
             }
 
             $this->legacyTrackfileLogger?->info('Trackfile served without a valid token', $context + ['reason' => $allowedReason]);
-        }
-
-        if ($request->query->has('file')) {
-            $this->logger->warning('Trackfile request with a file parameter', ['trackId' => $id]);
-
-            return new Response('Not Found', Response::HTTP_NOT_FOUND);
         }
 
         if (null === $this->trackDeliveryService) {

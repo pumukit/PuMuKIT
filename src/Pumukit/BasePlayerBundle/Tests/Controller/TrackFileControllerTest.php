@@ -259,6 +259,32 @@ class TrackFileControllerTest extends PumukitTestCase
         static::assertSame([], $this->legacyTrackfileRecords());
     }
 
+    public function testAFileParameterWithAListedSeriesIsNotLoggedAsServed(): void
+    {
+        $this->usePolicy([(string) $this->multimediaObject->getSeries()->getId()], []);
+
+        $this->client->request('GET', '/trackfile/'.$this->track->id().'.mp4?file=x');
+
+        $this->assertResponseStatusCodeSame(404);
+        $this->assertResponseNotHasHeader('Location');
+        static::assertSame([], $this->legacyTrackfileRecords());
+    }
+
+    public function testNoTokenAndAnUnlistedRefererIsRejectedAndLogged(): void
+    {
+        $this->usePolicy(['5f9d88b9c5e1a2b3c4d5e6f7'], ['uned.es']);
+
+        $this->client->request('GET', '/trackfile/'.$this->track->id().'.mp4', [], [], ['HTTP_REFERER' => 'https://other.example.net/page']);
+
+        $this->assertResponseStatusCodeSame(404);
+        $this->assertResponseNotHasHeader('Location');
+        $records = $this->legacyTrackfileRecords();
+        static::assertCount(1, $records);
+        static::assertSame('Trackfile rejected without a valid token', $records[0]['message']);
+        static::assertSame('missing', $records[0]['context']['tokenState']);
+        static::assertSame('other.example.net', $records[0]['context']['refererHost']);
+    }
+
     public function testAValidTokenLogsNothingInTheLegacyChannel(): void
     {
         $this->usePolicy([], []);
