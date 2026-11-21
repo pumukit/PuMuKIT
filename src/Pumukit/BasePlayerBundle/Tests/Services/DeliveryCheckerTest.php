@@ -114,6 +114,7 @@ class DeliveryCheckerTest extends TestCase
             ...self::FILES_TOKEN_CHECKS,
             ...self::HLS_TOKEN_CHECKS,
             'Download server denies CORS to another origin',
+            'Download server allows CORS to the frontend on /hls/',
         ]];
 
         yield 'HLS cache keyed by the token only' => ['hls-cache-token-only', ['Download server denies an HLS token on a directory it was not signed for']];
@@ -128,6 +129,8 @@ class DeliveryCheckerTest extends TestCase
         ]];
 
         yield 'CORS open to any origin' => ['cors-any', ['Download server denies CORS to another origin']];
+
+        yield 'CORS closed to the frontend' => ['cors-none', ['Download server allows CORS to the frontend on /hls/']];
     }
 
     public function testAnUnreachableServerFailsEveryCheck(): void
@@ -315,7 +318,7 @@ class DeliveryCheckerTest extends TestCase
                 }
 
                 $origin = $requestHeaders['origin'] ?? null;
-                if (null !== $origin && ($this->broken('cors-any') || 'https://localhost' === $origin)) {
+                if (null !== $origin && !$this->broken('cors-none') && ($this->broken('cors-any') || 'https://localhost' === $origin)) {
                     $responseHeaders['access-control-allow-origin'] = $origin;
                 }
 

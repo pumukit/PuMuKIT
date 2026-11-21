@@ -153,6 +153,8 @@ final class DeliveryChecker
         $results[] = $this->denied('Download server keeps the token validator internal', $probe->fetch($origin.'/_validate_token?'.$query), $forbidden);
         $results[] = $this->denied('Download server denies an Opencast video without a token', $probe->fetch($origin.'/opencast/'.$name.'/canary.mp4'), $forbidden);
         $results[] = $this->foreignOrigin($probe->fetch($signed, ['Origin: '.self::FOREIGN_ORIGIN]));
+        $frontendOrigin = $this->origin($frontendUrl);
+        $results[] = $this->frontendOrigin($probe->fetch($this->hlsUrl($origin, $hlsToken, $hlsDirectory, 'canary.m3u8'), ['Origin: '.$frontendOrigin]), $frontendOrigin);
         $results[] = $this->denied('Frontend denies the storage directory', $probe->fetch($frontendUrl.'/storage/downloads/'.$name.'/canary.mp4'), $forbidden);
         $results[] = $this->denied('Frontend denies the storage directory with a valid token', $probe->fetch($frontendUrl.'/storage/downloads/'.$name.'/canary.mp4?'.$query), $forbidden);
         $results[] = $this->denied('Frontend denies the files outside the downloads', $probe->fetch($frontendUrl.'/storage/'.$name.'.txt'), $forbidden);
@@ -230,6 +232,31 @@ final class DeliveryChecker
         }
 
         return new DeliveryCheckResult($name, true, 'no Access-Control-Allow-Origin');
+    }
+
+    private function frontendOrigin(DeliveryResponse $response, string $origin): DeliveryCheckResult
+    {
+        $name = 'Download server allows CORS to the frontend on /hls/';
+        if (200 !== $response->status) {
+            return new DeliveryCheckResult($name, false, sprintf('expected HTTP 200, got %s', $this->describe($response)));
+        }
+
+        $allowed = (string) $response->header('Access-Control-Allow-Origin');
+        if ($allowed !== $origin) {
+            return new DeliveryCheckResult($name, false, '' === $allowed ? sprintf('no Access-Control-Allow-Origin for %s', $origin) : sprintf('Access-Control-Allow-Origin: %s', $allowed));
+        }
+
+        return new DeliveryCheckResult($name, true, sprintf('Access-Control-Allow-Origin: %s', $allowed));
+    }
+
+    private function origin(string $url): string
+    {
+        $parts = parse_url($url);
+        if (!isset($parts['scheme'], $parts['host'])) {
+            return $url;
+        }
+
+        return $parts['scheme'].'://'.$parts['host'].(isset($parts['port']) ? ':'.$parts['port'] : '');
     }
 
     /**
