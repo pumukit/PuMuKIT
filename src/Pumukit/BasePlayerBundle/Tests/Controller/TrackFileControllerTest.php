@@ -30,18 +30,23 @@ class TrackFileControllerTest extends PumukitTestCase
 
     private KernelBrowser $client;
     private TrackUrlService $trackUrlService;
-    private string $filesDir;
+    private string $storageDir;
     private Track $track;
     private MultimediaObject $multimediaObject;
 
     public function setUp(): void
     {
+        $this->storageDir = (string) realpath(sys_get_temp_dir()).'/trackfile-'.bin2hex(random_bytes(6));
+        mkdir($this->storageDir.'/downloads/serie', 0777, true);
+        mkdir($this->storageDir.'/masters', 0777, true);
+        $_ENV['PUMUKIT_STORAGE_DIR'] = $_SERVER['PUMUKIT_STORAGE_DIR'] = $this->storageDir;
+        $_ENV['PUMUKIT_DOWNLOAD_SERVER_URL'] = $_SERVER['PUMUKIT_DOWNLOAD_SERVER_URL'] = self::DOWNLOAD_SERVER;
         self::ensureKernelShutdown();
         $this->client = static::createClient();
         $this->dm = static::getContainer()->get('doctrine_mongodb.odm.document_manager');
         $this->clearBBDD();
         $this->trackUrlService = static::getContainer()->get('pumukit_baseplayer.trackurl');
-        $this->filesDir = static::getContainer()->getParameter('kernel.project_dir').'/tests/files/';
+        file_put_contents($this->storageDir.'/downloads/serie/pumukit.mp4', 'video');
 
         $this->track = Track::create(
             'pumukit.mp4',
@@ -51,7 +56,7 @@ class TrackFileControllerTest extends PumukitTestCase
             false,
             true,
             0,
-            Storage::create(StorageUrl::create(''), Path::create($this->filesDir.'pumukit.mp4')),
+            Storage::create(StorageUrl::create(''), Path::create($this->storageDir.'/downloads/serie/pumukit.mp4')),
             VideoAudio::create('{"format":{"duration":"10.000000"}}')
         );
         $series = new Series();
@@ -72,58 +77,84 @@ class TrackFileControllerTest extends PumukitTestCase
 
     public function tearDown(): void
     {
-        unset($_ENV['PUMUKIT_DOWNLOAD_SERVER_URL'], $_SERVER['PUMUKIT_DOWNLOAD_SERVER_URL']);
+        unset($_ENV['PUMUKIT_DOWNLOAD_SERVER_URL'], $_SERVER['PUMUKIT_DOWNLOAD_SERVER_URL'], $_ENV['PUMUKIT_STORAGE_DIR'], $_SERVER['PUMUKIT_STORAGE_DIR']);
+        $this->removeDirectory($this->storageDir);
         parent::tearDown();
     }
 
-    public function testTheProxyDeliversTheTrackWhenItSendsTheAccelMapping(): void
-    {
-        $this->client->request('GET', $this->trackUrlService->generateTrackFileUrl($this->track), server: $this->accelHeaders($this->filesDir));
-
-        $this->assertResponseIsSuccessful();
-        $this->assertResponseHeaderSame('X-Accel-Redirect', rawurlencode('/internal-storage/pumukit.mp4'));
-        $this->assertSame('', $this->client->getInternalResponse()->getContent());
-        $this->assertStringContainsString('inline', $this->client->getResponse()->headers->get('Content-Disposition'));
-    }
-
-    public function testTheProxyDeliversTheDownloadAsAnAttachment(): void
-    {
-        $this->client->request('GET', $this->trackUrlService->generateTrackFileUrl($this->track, forceDownload: true), server: $this->accelHeaders($this->filesDir));
-
-        $this->assertResponseHeaderSame('X-Accel-Redirect', rawurlencode('/internal-storage/pumukit.mp4'));
-        $this->assertStringContainsString('attachment', $this->client->getResponse()->headers->get('Content-Disposition'));
-    }
-
-    public function testPhpSendsTheTrackOutsideTheAccelMapping(): void
-    {
-        $this->client->request('GET', $this->trackUrlService->generateTrackFileUrl($this->track), server: $this->accelHeaders('/srv/other-storage/'));
-
-        $this->assertResponseIsSuccessful();
-        $this->assertResponseNotHasHeader('X-Accel-Redirect');
-        $this->assertSame(filesize($this->filesDir.'pumukit.mp4'), strlen($this->client->getInternalResponse()->getContent()));
-    }
-
-    public function testPhpSendsTheTrackWithoutTheProxyHeaders(): void
+    public function testAMp4IsRedirectedToTheDownloadServer(): void
     {
         $this->client->request('GET', $this->trackUrlService->generateTrackFileUrl($this->track));
 
-        $this->assertResponseIsSuccessful();
-        $this->assertResponseNotHasHeader('X-Accel-Redirect');
-        $this->assertSame(filesize($this->filesDir.'pumukit.mp4'), strlen($this->client->getInternalResponse()->getContent()));
+        $this->assertResponseRedirects();
+        $location = (string) $this->client->getResponse()->headers->get('Location');
+        static::assertStringStartsWith(self::DOWNLOAD_SERVER.'/files/downloads/serie/pumukit.mp4?token=', $location);
+        static::assertStringNotContainsString('forcedl', $location);
+    }
+
+    public function testAForcedDownloadKeepsTheAttachment(): void
+    {
+        $this->client->request('GET', $this->trackUrlService->generateTrackFileUrl($this->track, forceDownload: true));
+
+        $this->assertResponseRedirects();
+        static::assertStringEndsWith('&forcedl=1', (string) $this->client->getResponse()->headers->get('Location'));
+    }
+
+    public function testAPlaylistIsRedirectedToTheHlsPath(): void
+    {
+        $track = $this->addLocalTrack('downloads/abc/def/def.m3u8');
+
+        $this->client->request('GET', $this->trackUrlService->generateTrackFileUrl($track));
+
+        $this->assertResponseRedirects();
+        static::assertMatchesRegularExpression(
+            '#^'.preg_quote(self::DOWNLOAD_SERVER, '#').'/hls/\d+/[^/]+/files/downloads/abc/def/def\.m3u8$#',
+            (string) $this->client->getResponse()->headers->get('Location')
+        );
+    }
+
+    public function testAFileParameterIsNotDelivered(): void
+    {
+        $this->client->request('GET', $this->trackUrlService->generateTrackFileUrl($this->track).'&file=data_000.ts');
+
+        $this->assertResponseStatusCodeSame(404);
+        $this->assertResponseNotHasHeader('Location');
+    }
+
+    public function testTheTokenOfAnotherTrackDoesNotOpenIt(): void
+    {
+        $other = $this->addLocalTrack('downloads/serie/other.mp4');
+
+        $this->client->request('GET', '/trackfile/'.$other->id().'.mp4?'.$this->tokenQuery($this->track));
+        $this->assertResponseStatusCodeSame(404);
+        $this->assertResponseNotHasHeader('Location');
+
+        $this->client->request('GET', $this->trackUrlService->generateTrackFileUrl($this->track).'&file=other.mp4');
+        $this->assertResponseStatusCodeSame(404);
+        $this->assertResponseNotHasHeader('Location');
+    }
+
+    public function testAMissingFileIsNotFound(): void
+    {
+        $url = $this->trackUrlService->generateTrackFileUrl($this->track);
+        unlink($this->storageDir.'/downloads/serie/pumukit.mp4');
+
+        $this->client->request('GET', $url);
+
+        $this->assertResponseStatusCodeSame(404);
     }
 
     public function testAnInvalidTokenIsNotDelivered(): void
     {
-        $this->client->request('GET', '/trackfile/'.$this->track->id().'.mp4?token=invalid&expires='.(time() + 60).'&resource='.$this->track->id(), server: $this->accelHeaders($this->filesDir));
+        $this->client->request('GET', '/trackfile/'.$this->track->id().'.mp4?token=invalid&expires='.(time() + 60).'&resource='.$this->track->id());
 
         $this->assertResponseStatusCodeSame(404);
-        $this->assertResponseNotHasHeader('X-Accel-Redirect');
+        $this->assertResponseNotHasHeader('Location');
     }
 
     public function testATrackOfTheDownloadServerIsRedirectedWithTheTokenOfItsFile(): void
     {
-        $track = $this->addTrack(self::DOWNLOAD_SERVER.'/pumukit/my%20video.mp4');
-        $this->useTheDownloadServer();
+        $track = $this->addTrack(self::DOWNLOAD_SERVER.'/pumukit/my%20video.mp4', null);
 
         $this->client->request('GET', $this->trackUrlService->generateTrackFileUrl($track));
 
@@ -135,60 +166,9 @@ class TrackFileControllerTest extends PumukitTestCase
         static::assertArrayNotHasKey('forcedl', $query);
     }
 
-    public function testADownloadFromTheDownloadServerKeepsTheAttachment(): void
-    {
-        $track = $this->addTrack(self::DOWNLOAD_SERVER.'/pumukit/video.mp4');
-        $this->useTheDownloadServer();
-
-        $this->client->request('GET', $this->trackUrlService->generateTrackFileUrl($track, forceDownload: true));
-
-        $this->assertResponseRedirects();
-        static::assertStringEndsWith('&forcedl=1', (string) $this->client->getResponse()->headers->get('Location'));
-    }
-
-    public function testAnInvalidTokenIsNotRedirectedToTheDownloadServer(): void
-    {
-        $track = $this->addTrack(self::DOWNLOAD_SERVER.'/pumukit/video.mp4');
-        $this->useTheDownloadServer();
-
-        $this->client->request('GET', '/trackfile/'.$track->id().'.mp4?token=invalid&expires='.(time() + 60).'&resource='.$track->id());
-
-        $this->assertResponseStatusCodeSame(404);
-    }
-
-    public function testAPlaylistStaysOnTheTrackfileRoute(): void
-    {
-        $track = $this->addTrack(self::DOWNLOAD_SERVER.'/pumukit/video.m3u8');
-        $this->useTheDownloadServer();
-
-        $this->client->request('GET', $this->trackUrlService->generateTrackFileUrl($track));
-
-        $this->assertResponseIsSuccessful();
-    }
-
-    public function testASegmentStaysOnTheTrackfileRoute(): void
-    {
-        $track = $this->addTrack(self::DOWNLOAD_SERVER.'/pumukit/video.mp4');
-        $this->useTheDownloadServer();
-
-        $this->client->request('GET', $this->trackUrlService->generateTrackFileUrl($track).'&file=pumukit.mp4');
-
-        $this->assertResponseIsSuccessful();
-    }
-
-    public function testATrackIsNotRedirectedWithoutADownloadServer(): void
-    {
-        $track = $this->addTrack(self::DOWNLOAD_SERVER.'/pumukit/video.mp4');
-
-        $this->client->request('GET', $this->trackUrlService->generateTrackFileUrl($track));
-
-        $this->assertResponseIsSuccessful();
-    }
-
     public function testAnExternalTrackOutsideTheDownloadServerKeepsItsQuery(): void
     {
         $track = $this->addTrack('https://example.org/video.mp4', null);
-        $this->useTheDownloadServer();
 
         $this->client->request('GET', $this->trackUrlService->generateTrackFileUrl($track));
 
@@ -199,7 +179,18 @@ class TrackFileControllerTest extends PumukitTestCase
         static::assertSame($track->id(), $query['resource']);
     }
 
-    private function addTrack(string $url, ?string $path = 'pumukit.mp4'): Track
+    private function addLocalTrack(string $relative): Track
+    {
+        $path = $this->storageDir.'/'.$relative;
+        if (!is_dir(dirname($path))) {
+            mkdir(dirname($path), 0777, true);
+        }
+        file_put_contents($path, 'data');
+
+        return $this->addTrack('', $path);
+    }
+
+    private function addTrack(string $url, ?string $path = null): Track
     {
         $track = Track::create(
             'pumukit.mp4',
@@ -209,7 +200,7 @@ class TrackFileControllerTest extends PumukitTestCase
             false,
             true,
             0,
-            Storage::create(StorageUrl::create($url), null === $path ? null : Path::create($this->filesDir.$path)),
+            Storage::create(StorageUrl::create($url), null === $path ? null : Path::create($path)),
             VideoAudio::create('{"format":{"duration":"10.000000"}}')
         );
         $this->multimediaObject->addTrack($track);
@@ -218,20 +209,19 @@ class TrackFileControllerTest extends PumukitTestCase
         return $track;
     }
 
-    private function useTheDownloadServer(): void
+    private function tokenQuery(Track $track): string
     {
-        $_ENV['PUMUKIT_DOWNLOAD_SERVER_URL'] = $_SERVER['PUMUKIT_DOWNLOAD_SERVER_URL'] = self::DOWNLOAD_SERVER;
-        self::ensureKernelShutdown();
-        $this->client = static::createClient();
-        $this->dm = static::getContainer()->get('doctrine_mongodb.odm.document_manager');
-        $this->trackUrlService = static::getContainer()->get('pumukit_baseplayer.trackurl');
+        return (string) parse_url($this->trackUrlService->generateTrackFileUrl($track), PHP_URL_QUERY);
     }
 
-    private function accelHeaders(string $storageDir): array
+    private function removeDirectory(string $dir): void
     {
-        return [
-            'HTTP_X_SENDFILE_TYPE' => 'X-Accel-Redirect',
-            'HTTP_X_ACCEL_MAPPING' => $storageDir.'=/internal-storage/',
-        ];
+        if (!is_dir($dir)) {
+            return;
+        }
+        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST) as $item) {
+            $item->isDir() ? rmdir($item->getPathname()) : unlink($item->getPathname());
+        }
+        rmdir($dir);
     }
 }

@@ -7,6 +7,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
+use Pumukit\BasePlayerBundle\Services\TrackDeliveryService;
 use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Services\InboxService;
 use Pumukit\EncoderBundle\Document\Job;
@@ -29,11 +30,9 @@ use Pumukit\SchemaBundle\Services\MediaUpdater;
 use Pumukit\SchemaBundle\Services\TrackService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -57,6 +56,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     private MediaUpdater $mediaUpdater;
     private i18nService $i18nService;
     private InboxService $inboxService;
+    private TrackDeliveryService $trackDelivery;
 
     public function __construct(
         LoggerInterface $logger,
@@ -74,6 +74,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         InspectionFfprobeService $inspectionService,
         PicExtractorService $picExtractorService,
         InboxService $inboxService,
+        TrackDeliveryService $trackDelivery,
         $kernelEnvironment
     ) {
         $this->logger = $logger;
@@ -92,6 +93,7 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $this->mediaUpdater = $mediaUpdater;
         $this->i18nService = $i18nService;
         $this->inboxService = $inboxService;
+        $this->trackDelivery = $trackDelivery;
     }
 
     #[IsGranted('ROLE_ACCESS_ADVANCED_UPLOAD')]
@@ -334,20 +336,11 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         ]);
     }
 
-    public function downloadAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): BinaryFileResponse
+    public function downloadAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response
     {
         $track = $multimediaObject->getTrackById($request->attributes->get('id'));
-        $path = $track->storage()->path()->path();
 
-        $response = new BinaryFileResponse($path);
-        $response::trustXSendfileTypeHeader();
-        $response->setContentDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            basename($path),
-            iconv('UTF-8', 'ASCII//TRANSLIT', basename($path))
-        );
-
-        return $response;
+        return $this->trackDelivery->response($track, true);
     }
 
     public function retranscodeAction(Request $request, #[MapDocument(id: 'mmId')] MultimediaObject $multimediaObject): Response

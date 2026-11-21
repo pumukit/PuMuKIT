@@ -77,15 +77,11 @@ class TrackUrlServiceTest extends PumukitTestCase
         static::assertStringContainsString('expires=', $genUrl);
         static::assertStringContainsString('resource=', $genUrl);
 
-        // Normal request returns 200
         $this->client->request('GET', $genUrl);
-        static::assertEquals(200, $this->client->getResponse()->getStatusCode());
+        static::assertEquals(503, $this->client->getResponse()->getStatusCode());
 
-        // forcedl=1 should return 200 with attachment Content-Disposition
-        $genUrl = $this->trackurlService->generateTrackFileUrl($track);
         $this->client->request('GET', $genUrl.'&forcedl=1');
-        static::assertEquals(200, $this->client->getResponse()->getStatusCode());
-        static::assertStringContainsString('attachment', $this->client->getResponse()->headers->get('Content-Disposition'));
+        static::assertEquals(503, $this->client->getResponse()->getStatusCode());
     }
 
     public function testGenerateTrackFileUrlBadExt()
