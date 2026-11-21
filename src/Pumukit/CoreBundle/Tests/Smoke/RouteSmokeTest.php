@@ -86,9 +86,18 @@ final class RouteSmokeTest extends PumukitTestCase
     private array $ids;
     private array $snapshot = [];
     private string $projectDir;
+    private string $storageDir;
+    private array $previousEnv = [];
 
     public function setUp(): void
     {
+        $this->storageDir = (string) realpath(sys_get_temp_dir()).'/smoke-'.bin2hex(random_bytes(6));
+        mkdir($this->storageDir.'/downloads', 0777, true);
+        mkdir($this->storageDir.'/masters', 0777, true);
+        foreach (['PUMUKIT_STORAGE_DIR' => $this->storageDir, 'PUMUKIT_DOWNLOAD_SERVER_URL' => 'https://dls.example.org'] as $name => $value) {
+            $this->previousEnv[$name] = [$_ENV[$name] ?? null, $_SERVER[$name] ?? null];
+            $_ENV[$name] = $_SERVER[$name] = $value;
+        }
         self::ensureKernelShutdown();
         $this->client = self::createClient();
         $this->client->followRedirects(false);
@@ -106,12 +115,23 @@ final class RouteSmokeTest extends PumukitTestCase
             $container->get(FactoryService::class),
             $container->get(TagService::class),
             $this->projectDir,
+            $this->storageDir,
         );
         $this->ids = $fixtures->load();
 
         foreach ($this->database->listCollectionNames() as $name) {
             $this->snapshot[$name] = $this->database->selectCollection($name)->find([], ['typeMap' => ['root' => 'bson', 'document' => 'bson', 'array' => 'bson']])->toArray();
         }
+    }
+
+    public function tearDown(): void
+    {
+        foreach ($this->previousEnv as $name => [$env, $server]) {
+            null === $env ? $this->unsetKey($_ENV, $name) : $_ENV[$name] = $env;
+            null === $server ? $this->unsetKey($_SERVER, $name) : $_SERVER[$name] = $server;
+        }
+        $this->removeDirectory($this->storageDir);
+        parent::tearDown();
     }
 
     public function testEveryGetRouteAnswersWithoutServerErrorsOrDataChanges(): void
@@ -343,5 +363,21 @@ final class RouteSmokeTest extends PumukitTestCase
         }
 
         return explode('|', $requirement)[0];
+    }
+
+    private function unsetKey(array &$bag, string $name): void
+    {
+        unset($bag[$name]);
+    }
+
+    private function removeDirectory(string $dir): void
+    {
+        if (!is_dir($dir)) {
+            return;
+        }
+        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST) as $item) {
+            $item->isDir() ? rmdir($item->getPathname()) : unlink($item->getPathname());
+        }
+        rmdir($dir);
     }
 }

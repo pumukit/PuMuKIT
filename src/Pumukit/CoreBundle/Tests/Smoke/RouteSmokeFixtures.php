@@ -44,6 +44,7 @@ final class RouteSmokeFixtures
         private readonly FactoryService $factoryService,
         private readonly TagService $tagService,
         private readonly string $projectDir,
+        private readonly string $storageDir,
     ) {}
 
     public function load(): array
@@ -86,7 +87,7 @@ final class RouteSmokeFixtures
             false,
             true,
             0,
-            Storage::create(StorageUrl::create(''), Path::create($this->projectDir.'/tests/files/pumukit.mp4')),
+            Storage::create(StorageUrl::create(''), Path::create($this->storedFile())),
             VideoAudio::create('{"format":{"duration":"10.000000"},"streams":[{"codec_type":"video","codec_name":"h264","width":640,"height":360}]}')
         );
         $multimediaObject->addTrack($track);
@@ -238,5 +239,17 @@ final class RouteSmokeFixtures
             'seriesSecret' => $series->getSecret(),
             'playlistSecret' => $playlist->getSecret(),
         ];
+    }
+
+    private function storedFile(): string
+    {
+        $dir = $this->storageDir.'/downloads/smoke';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+        $path = $dir.'/pumukit.mp4';
+        copy($this->projectDir.'/tests/files/pumukit.mp4', $path);
+
+        return $path;
     }
 }
