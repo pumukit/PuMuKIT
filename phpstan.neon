@@ -5,3 +5,7 @@ includes:
 parameters:
     doctrine:
         objectManagerLoader: bin/object-manager.php
+    ignoreErrors:
+        -
+            identifier: constructor.unusedParameter
+            path: src/Pumukit/BasePlayerBundle/Controller/TrackFileController.php
