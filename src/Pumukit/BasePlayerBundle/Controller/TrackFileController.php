@@ -11,6 +11,7 @@ use Pumukit\BasePlayerBundle\Event\BasePlayerEvents;
 use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\BasePlayerBundle\Services\SecureTokenService;
 use Pumukit\BasePlayerBundle\Services\TrackDeliveryService;
+use Pumukit\BasePlayerBundle\Services\TrackfileWithoutTokenPolicy;
 use Pumukit\BasePlayerBundle\Services\TrackUrlService;
 use Pumukit\BasePlayerBundle\Services\ViewCounterService;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
@@ -31,6 +32,8 @@ class TrackFileController extends AbstractController
     private ?SecureTokenService $secureTokenService;
     private ?RateLimiterFactoryInterface $trackfileAccessLimiter;
     private ?TrackDeliveryService $trackDeliveryService;
+    private ?TrackfileWithoutTokenPolicy $trackfileWithoutTokenPolicy;
+    private ?LoggerInterface $legacyTrackfileLogger;
 
     public function __construct(
         DocumentManager $documentManager,
@@ -39,7 +42,9 @@ class TrackFileController extends AbstractController
         ?SecureTokenService $secureTokenService = null,
         ?RateLimiterFactoryInterface $trackfileAccessLimiter = null,
         ?TrackUrlService $trackUrlService = null,
-        ?TrackDeliveryService $trackDeliveryService = null
+        ?TrackDeliveryService $trackDeliveryService = null,
+        ?TrackfileWithoutTokenPolicy $trackfileWithoutTokenPolicy = null,
+        ?LoggerInterface $legacyTrackfileLogger = null
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->documentManager = $documentManager;
@@ -47,6 +52,8 @@ class TrackFileController extends AbstractController
         $this->secureTokenService = $secureTokenService;
         $this->trackfileAccessLimiter = $trackfileAccessLimiter;
         $this->trackDeliveryService = $trackDeliveryService;
+        $this->trackfileWithoutTokenPolicy = $trackfileWithoutTokenPolicy;
+        $this->legacyTrackfileLogger = $legacyTrackfileLogger;
     }
 
     /**
@@ -57,30 +64,43 @@ class TrackFileController extends AbstractController
     #[Route('/trackfile/{id}', name: 'pumukit_trackfile_index_no_ext')]
     public function indexAction(string $id, Request $request, DocumentManager $documentManager, string $pumukitPlayerWhenDispatchViewEvent, $secret, $secureDuration)
     {
-        $clientIp = $request->getClientIp();
-
-        if (null !== $this->secureTokenService) {
-            if (!$this->secureTokenService->validateTokenFromRequest($request, $id)) {
-                $this->logger->error('Invalid token', [
-                    'trackId' => $id,
-                    'referer' => $request->headers->get('referer', 'none'),
-                    'origin' => $request->headers->get('origin', 'none'),
-                    'clientIp' => $clientIp,
-                    'userAgent' => $request->headers->get('user-agent', 'none'),
-                    'path' => $request->getPathInfo(),
-                    'reason' => $this->invalidTokenReason($request, $id),
-                ]);
-
-                return new Response('Invalid Token', Response::HTTP_NOT_FOUND);
-            }
+        $invalidTokenReason = null;
+        if (null !== $this->secureTokenService && !$this->secureTokenService->validateTokenFromRequest($request, $id)) {
+            $invalidTokenReason = $this->invalidTokenReason($request, $id);
         }
 
         try {
             [$mmobj, $track] = $this->getMmobjAndTrack($documentManager, $id);
         } catch (\Exception $e) {
+            if (null !== $invalidTokenReason) {
+                $this->logInvalidToken($request, $id, $invalidTokenReason);
+
+                return new Response('Invalid Token', Response::HTTP_NOT_FOUND);
+            }
+
             $this->logger->error('Multimedia Object not found');
 
             return new Response('Not Found', Response::HTTP_NOT_FOUND);
+        }
+
+        if (null !== $invalidTokenReason) {
+            $allowedReason = $this->trackfileWithoutTokenPolicy?->allowedReason($mmobj, $request);
+            $context = [
+                'trackId' => $id,
+                'multimediaObjectId' => (string) $mmobj->getId(),
+                'seriesId' => $this->trackfileWithoutTokenPolicy?->seriesId($mmobj) ?? 'none',
+                'refererHost' => $this->trackfileWithoutTokenPolicy?->refererHost($request) ?? 'none',
+                'tokenState' => $this->tokenState($invalidTokenReason),
+            ];
+
+            if (null === $allowedReason) {
+                $this->legacyTrackfileLogger?->info('Trackfile rejected without a valid token', $context);
+                $this->logInvalidToken($request, $id, $invalidTokenReason);
+
+                return new Response('Invalid Token', Response::HTTP_NOT_FOUND);
+            }
+
+            $this->legacyTrackfileLogger?->info('Trackfile served without a valid token', $context + ['reason' => $allowedReason]);
         }
 
         if ($request->query->has('file')) {
@@ -182,6 +202,28 @@ class TrackFileController extends AbstractController
         $event = new ViewedEvent($multimediaObject, $track);
 
         $this->eventDispatcher->dispatch($event, BasePlayerEvents::MULTIMEDIAOBJECT_VIEW);
+    }
+
+    private function logInvalidToken(Request $request, string $id, string $reason): void
+    {
+        $this->logger->error('Invalid token', [
+            'trackId' => $id,
+            'referer' => $request->headers->get('referer', 'none'),
+            'origin' => $request->headers->get('origin', 'none'),
+            'clientIp' => $request->getClientIp(),
+            'userAgent' => $request->headers->get('user-agent', 'none'),
+            'path' => $request->getPathInfo(),
+            'reason' => $reason,
+        ]);
+    }
+
+    private function tokenState(string $reason): string
+    {
+        if ('missing token' === $reason || 'missing expires' === $reason) {
+            return 'missing';
+        }
+
+        return str_starts_with($reason, 'expired') ? 'expired' : 'invalid';
     }
 
     private function invalidTokenReason(Request $request, string $id): string

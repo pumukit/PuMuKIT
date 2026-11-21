@@ -17,5 +17,7 @@ class PumukitBasePlayerExtension extends Extension
         $container->setParameter('pumukitplayer.secure_secret', $config['secure_secret']);
         $container->setParameter('pumukitplayer.secure_duration', $config['secure_duration']);
         $container->setParameter('pumukitplayer.when_dispatch_view_event', $config['when_dispatch_view_event']);
+        $container->setParameter('pumukitplayer.trackfile_without_token.series', $config['trackfile_without_token']['series']);
+        $container->setParameter('pumukitplayer.trackfile_without_token.referer_hosts', $config['trackfile_without_token']['referer_hosts']);
     }
 }

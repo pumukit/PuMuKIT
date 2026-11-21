@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Pumukit\BasePlayerBundle\Tests\Controller;
 
+use Monolog\Handler\TestHandler;
 use PHPUnit\Framework\Attributes\CoversNothing;
+use Pumukit\BasePlayerBundle\Services\TrackfileWithoutTokenPolicy;
 use Pumukit\BasePlayerBundle\Services\TrackUrlService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
@@ -177,6 +179,108 @@ class TrackFileControllerTest extends PumukitTestCase
         parse_str((string) parse_url($location, PHP_URL_QUERY), $query);
         static::assertStringStartsWith('https://example.org/video.mp4?', $location);
         static::assertSame($track->id(), $query['resource']);
+    }
+
+    public function testASeriesInTheListIsDeliveredWithoutToken(): void
+    {
+        $this->usePolicy([(string) $this->multimediaObject->getSeries()->getId()], []);
+
+        $this->client->request('GET', '/trackfile/'.$this->track->id().'.mp4');
+
+        $this->assertResponseRedirects();
+        static::assertStringStartsWith(self::DOWNLOAD_SERVER.'/files/downloads/serie/pumukit.mp4?token=', (string) $this->client->getResponse()->headers->get('Location'));
+        $records = $this->legacyTrackfileRecords();
+        static::assertCount(1, $records);
+        static::assertSame('Trackfile served without a valid token', $records[0]['message']);
+        static::assertSame('series', $records[0]['context']['reason']);
+        static::assertSame('missing', $records[0]['context']['tokenState']);
+        static::assertSame($this->track->id(), $records[0]['context']['trackId']);
+        static::assertSame((string) $this->multimediaObject->getId(), $records[0]['context']['multimediaObjectId']);
+        static::assertSame((string) $this->multimediaObject->getSeries()->getId(), $records[0]['context']['seriesId']);
+        static::assertSame('none', $records[0]['context']['refererHost']);
+    }
+
+    public function testAnExpiredTokenWithAListedRefererIsDelivered(): void
+    {
+        $this->usePolicy([], ['uned.es']);
+
+        $this->client->request('GET', '/trackfile/'.$this->track->id().'.mp4?token=abc&expires='.(time() - 60), [], [], ['HTTP_REFERER' => 'https://campus.UNED.es/curso']);
+
+        $this->assertResponseRedirects();
+        static::assertStringStartsWith(self::DOWNLOAD_SERVER.'/files/', (string) $this->client->getResponse()->headers->get('Location'));
+        $records = $this->legacyTrackfileRecords();
+        static::assertCount(1, $records);
+        static::assertSame('referer', $records[0]['context']['reason']);
+        static::assertSame('expired', $records[0]['context']['tokenState']);
+        static::assertSame('campus.uned.es', $records[0]['context']['refererHost']);
+    }
+
+    public function testALookalikeRefererIsRejectedAndLogged(): void
+    {
+        $this->usePolicy([], ['uned.es']);
+
+        $this->client->request('GET', '/trackfile/'.$this->track->id().'.mp4?token=bad&expires='.(time() + 60), [], [], ['HTTP_REFERER' => 'https://uned.es.atacante.com/']);
+
+        $this->assertResponseStatusCodeSame(404);
+        $this->assertResponseNotHasHeader('Location');
+        $records = $this->legacyTrackfileRecords();
+        static::assertCount(1, $records);
+        static::assertSame('Trackfile rejected without a valid token', $records[0]['message']);
+        static::assertSame('uned.es.atacante.com', $records[0]['context']['refererHost']);
+        static::assertSame('invalid', $records[0]['context']['tokenState']);
+        static::assertArrayNotHasKey('reason', $records[0]['context']);
+    }
+
+    public function testEmptyListsRejectAndLogWithoutToken(): void
+    {
+        $this->usePolicy([], []);
+
+        $this->client->request('GET', '/trackfile/'.$this->track->id().'.mp4');
+
+        $this->assertResponseStatusCodeSame(404);
+        $this->assertResponseNotHasHeader('Location');
+        $records = $this->legacyTrackfileRecords();
+        static::assertCount(1, $records);
+        static::assertSame('Trackfile rejected without a valid token', $records[0]['message']);
+        static::assertSame('missing', $records[0]['context']['tokenState']);
+        static::assertSame('none', $records[0]['context']['refererHost']);
+    }
+
+    public function testAListedSeriesDoesNotOpenAnObjectThePlayVoterDenies(): void
+    {
+        $this->multimediaObject->setStatus(MultimediaObject::STATUS_BLOCKED);
+        $this->dm->flush();
+        $this->usePolicy([(string) $this->multimediaObject->getSeries()->getId()], ['uned.es']);
+
+        $this->client->request('GET', '/trackfile/'.$this->track->id().'.mp4', [], [], ['HTTP_REFERER' => 'https://uned.es/']);
+
+        $this->assertResponseStatusCodeSame(404);
+        $this->assertResponseNotHasHeader('Location');
+        static::assertSame([], $this->legacyTrackfileRecords());
+    }
+
+    public function testAValidTokenLogsNothingInTheLegacyChannel(): void
+    {
+        $this->usePolicy([], []);
+
+        $this->client->request('GET', $this->trackUrlService->generateTrackFileUrl($this->track));
+
+        $this->assertResponseRedirects();
+        static::assertSame([], $this->legacyTrackfileRecords());
+    }
+
+    private function usePolicy(array $series, array $refererHosts): void
+    {
+        $this->client->disableReboot();
+        static::getContainer()->set(TrackfileWithoutTokenPolicy::class, new TrackfileWithoutTokenPolicy($series, $refererHosts));
+    }
+
+    private function legacyTrackfileRecords(): array
+    {
+        $handler = $this->client->getContainer()->get('monolog.handler.legacy_trackfile');
+        static::assertInstanceOf(TestHandler::class, $handler);
+
+        return array_map(static fn ($record) => ['message' => $record['message'], 'context' => $record['context']], $handler->getRecords());
     }
 
     private function addLocalTrack(string $relative): Track

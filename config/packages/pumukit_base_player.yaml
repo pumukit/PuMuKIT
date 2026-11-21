@@ -28,6 +28,11 @@ services:
       $storageDir: '%pumukit.storage_dir%'
       $downloadServerUrl: '%env(default::PUMUKIT_DOWNLOAD_SERVER_URL)%'
 
+  Pumukit\BasePlayerBundle\Services\TrackfileWithoutTokenPolicy:
+    arguments:
+      $series: '%pumukitplayer.trackfile_without_token.series%'
+      $refererHosts: '%pumukitplayer.trackfile_without_token.referer_hosts%'
+
   Pumukit\BasePlayerBundle\Command\:
     resource: '../../src/Pumukit/BasePlayerBundle/Command/'
 

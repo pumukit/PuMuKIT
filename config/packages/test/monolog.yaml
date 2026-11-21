@@ -1,9 +1,12 @@
 monolog:
-  channels: [ 'deprecation', 'legacy_api', 'frame_ancestors' ]
+  channels: [ 'deprecation', 'legacy_api', 'legacy_trackfile', 'frame_ancestors' ]
   handlers:
     legacy_api:
       type: test
       channels: ['legacy_api']
+    legacy_trackfile:
+      type: test
+      channels: ['legacy_trackfile']
     frame_ancestors:
       type: test
       channels: ['frame_ancestors']
@@ -17,11 +20,11 @@ monolog:
       type: stream
       path: "%kernel.logs_dir%/%kernel.environment%.log"
       level: error
-      channels: ['!event', '!deprecation', '!legacy_api', '!frame_ancestors']
+      channels: ['!event', '!deprecation', '!legacy_api', '!legacy_trackfile', '!frame_ancestors']
 
     debug_log:
       type: rotating_file
       path: '%kernel.logs_dir%/%kernel.environment%_debug.log'
       level: info
       max_files: '%env(int:PUMUKIT_LOG_MAX_FILES)%'
-      channels: ['!event', '!deprecation', '!legacy_api', '!frame_ancestors']
+      channels: ['!event', '!deprecation', '!legacy_api', '!legacy_trackfile', '!frame_ancestors']
