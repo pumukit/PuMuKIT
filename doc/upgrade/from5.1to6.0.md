@@ -137,32 +137,66 @@ Informational (no action required):
   RabbitMQ minor version gets community fixes, so upgrade it when a new one is released.
 - **File delivery through the download server**: every file leaves through the download server
   (DLS), never through PHP. `/trackfile/` still checks the token and the permissions in PHP, and
-  then answers a 302 to a signed DLS URL computed from the disk path of the track: `/files/...`
-  with a file token for downloads and masters, and `/hls/<expires>/<token>/...` with a directory
-  token for HLS (only `.m3u8` and `.ts`). The DLS validates the signature with PHP through
-  `auth_request` and serves the bytes (ranges, `forcedl=1` downloads), so a video no longer keeps a
-  PHP-FPM worker busy while it plays. There is no PHP fallback: a track outside `downloads/` or
-  `masters/` of the storage, or an HLS track that shares its directory with other tracks, gets a
-  503, and a missing file gets a 404. The `file` parameter of `/trackfile/` is removed, so a token
-  only opens its own track.
+  then answers a 302 to a signed DLS URL computed from the disk path of the track, whatever URL the
+  track has in the database, so the tracks transcoded with 5.x are served too: `/files/downloads/...`
+  or `/files/masters/...` with a token for that file, and
+  `/hls/<expires>/<token>/files/downloads/<series>/<job>/<playlist>` with a token for the directory
+  of the track for HLS (only `.m3u8` and `.ts`). Every token lasts `PUMUKITPLAYER_SECURE_DURATION`
+  plus the duration of the track, so a long video does not stop halfway. The DLS validates the
+  signature with PHP through `auth_request` and serves the bytes (ranges, `forcedl=1` downloads), so
+  a video no longer keeps a PHP-FPM worker busy while it plays.
+
+  There is no PHP fallback: with an empty `PUMUKIT_DOWNLOAD_SERVER_URL`, for a track outside
+  `downloads/` or `masters/` of the storage, or for an HLS track that shares its directory with other
+  tracks, `/trackfile/` answers 503 and logs a `critical` error; a missing file gets a 404 and an
+  `error` log. External tracks (Opencast) are signed when their URL is on the DLS, and otherwise
+  redirected to their URL. The `file` parameter of `/trackfile/` is removed, so a token only opens
+  its own track. The bundles that hand files out through PHP (podcast feeds, External API,
+  transcriptions) answer the same 302, 404 or 503: their clients must follow redirects and reach
+  the DLS host.
+
+  `PUMUKIT_DOWNLOAD_SERVER_URL` is the origin of the DLS, with no path (`https://vod.example.org`,
+  not `https://vod.example.org/pumukit`): `/files/`, `/hls/` and `/pumukit/` are at its root.
+
+  **HLS needs CORS.** The player (hls.js) reads the playlists and the segments from the DLS with
+  XHR, from another origin. `PUMUKIT_DLS_CORS_ORIGIN` must match every host that shows the player,
+  microsites and other portals included; otherwise every HLS video stops playing while MP4 keeps
+  working. `make check-delivery` checks it for the frontend host.
+
+  **HLS encoder profiles.** New HLS jobs write to their own directory,
+  `<dir_out>/<series>/<job>/<job>.m3u8`, and the DLS signs that directory. A custom profile with
+  `extension: m3u8` must write its playlists and segments relative to `{{output_dirname}}`
+  (subdirectories are fine), as the core profile does. Only `.m3u8` and `.ts` are served under
+  `/hls/`: fragmented MP4 (`.m4s`, `init.mp4`), subtitles (`.vtt`) and keys (`.key`) are not, so a
+  profile that writes them does not play.
 
   The `proxy` container no longer needs the storage, `/internal-storage/` or the `X-Accel`
   parameters: remove the storage volume from the `proxy` service and, in projects with their own
   NGINX configuration, the `/internal-storage/` location and the `HTTP_X_SENDFILE_TYPE` and
-  `HTTP_X_ACCEL_MAPPING` `fastcgi_param` lines. `PUMUKIT_STORAGE_DIR` is still read by PHP and by
-  the DLS.
+  `HTTP_X_ACCEL_MAPPING` `fastcgi_param` lines. `PUMUKIT_STORAGE_DIR` is still read by PHP, but not
+  by the DLS: mount the PuMuKIT storage on `/mnt/storage/pumukit` of the `dls` container, the path
+  its template serves `downloads/` and `masters/` from.
 
   **Before upgrading the core**, the DLS of each project must have the `/files/` and `/hls/`
-  locations (see `docker/nginx/dls.conf.template`). Without them every video stops playing.
-  Upgrade in this order:
+  locations and the `/_validate_hls` validator (see `docker/nginx/dls.conf.template` and the NGINX
+  example in the security changes below). Without them every video stops playing. Then:
 
-  1. `bin/console pumukit:hls:move-to-own-directory` moves the old HLS tracks out of the shared
+  1. Let the encoder queue drain. Jobs queued before the upgrade still write their HLS in the shared
      series directory.
-  2. `bin/console pumukit:check:track-delivery` lists the tracks the DLS cannot serve: outside the
-     storage, missing file or shared HLS directory. Fix them before going on.
-  3. `make check-delivery` (`pumukit:check:delivery`) checks the deployment itself.
+  2. `bin/console pumukit:hls:move-to-own-directory` (try `--dry-run` first) moves the old HLS
+     tracks to their own directory and rewrites their path and URL in the database. The tracks
+     whose playlists share files with another track are listed as `shared, re-encode`: re-encode
+     them. Running it again later is safe, for example after a job that finished late.
+  3. `bin/console pumukit:check:track-delivery` lists the tracks, documents and images the DLS
+     cannot serve: outside the storage, missing file or shared HLS directory. Fix them before going
+     on.
+  4. `make check-delivery` (`pumukit:check:delivery`) checks the deployment itself.
 
-Rebuild the image (`docker compose build --pull`); no data has to be migrated.
+  Moving an HLS track changes its URL. The podcast feeds use that URL as the `guid` of the episode,
+  so podcast apps may show the moved episodes again.
+
+Rebuild the image (`docker compose build --pull`). The only data that changes is the path and URL
+of the old HLS tracks, rewritten by `pumukit:hls:move-to-own-directory`.
 
 ## Security changes in the deployment
 
@@ -251,11 +285,12 @@ Rebuild the image (`docker compose build --pull`); no data has to be migrated.
   `host` of a CPU can now include the scheme, as in `https://encoder.example.org`; without one it is still `http://`, and the password travels unencrypted.
 
 - **Download server.** `/download/validate-token` now needs a token that signs the path of the requested file, and the requested URI in the
-  `X-Original-URI` header. Before, the token of any video opened every file of the server. Tracks that are redirected to a server with this validation get the new
-  token; the links in progress stop working within `PUMUKITPLAYER_SECURE_DURATION`.
+  `X-Original-URI` header; `/download/validate-hls` validates the HLS URLs, whose token signs the directory of the track. Before, the token of any
+  video opened every file of the server. The links in progress stop working within `PUMUKITPLAYER_SECURE_DURATION`.
 
   `docker-compose.yml` serves the files through the `dls` service, on its own host, as the deployments of the projects do: the `proxy` sends the host of
-  `PUMUKIT_DLS_HOST` (`dls.localhost` in development) to `dls`, which serves `/pumukit` and `/opencast` after asking PHP, with a 10 second cache. The `.env` sets:
+  `PUMUKIT_DLS_HOST` (`dls.localhost` in development) to `dls`, which serves `/files/`, `/hls/`, `/pumukit/` and `/opencast/` after asking PHP, with a
+  10 second cache. The `.env` sets:
 
   ```
   PUMUKIT_DLS_HOST=dls.localhost
@@ -263,13 +298,13 @@ Rebuild the image (`docker compose build --pull`); no data has to be migrated.
   PUMUKIT_DLS_CORS_ORIGIN='^https://([a-z0-9-]+\.)?localhost$'
   ```
 
-  and `pumukit.downloads_url` is `https://<PUMUKIT_DLS_HOST>/pumukit`. `/trackfile` checks its token and redirects the tracks stored under
-  `PUMUKIT_DOWNLOAD_SERVER_URL` to the server, with a token for that file. With an empty `PUMUKIT_DOWNLOAD_SERVER_URL` nothing is redirected. New
-  tracks take `pumukit.downloads_url`; the URL of the existing ones is in the database, so the tracks transcoded before keep their old URL and stay on `/trackfile`.
-  The download server is another origin: `PUMUKIT_DLS_CORS_ORIGIN` is the regular expression of the origins allowed to read the files from JavaScript, which the
-  thumbnail generator of the backoffice and the HardVideoEditorBundle do. In a real installation, give the server its own DNS name and certificate, and set
-  `PUMUKIT_DLS_REAL_IP_FROM` if the network of the `proxy` is not a private range. The `dls` service publishes no port: only the `proxy` reaches it. HLS playlists and their segments stay on `/trackfile`, because the segments of a playlist
-  would not carry the token. An HLS track with no path in PuMuKIT cannot be served from a server that validates.
+  and `pumukit.downloads_url` is `https://<PUMUKIT_DLS_HOST>/pumukit`. `PUMUKIT_DOWNLOAD_SERVER_URL` is an origin with no path. `/trackfile` checks its
+  token and redirects every local track to `/files/` or `/hls/` of the server, from its path on disk, so the old tracks need no change of URL. With an
+  empty `PUMUKIT_DOWNLOAD_SERVER_URL` every local track gets a 503. The download server is another origin: `PUMUKIT_DLS_CORS_ORIGIN` is the regular
+  expression of the origins allowed to read the files from JavaScript, which the HLS player, the thumbnail generator of the backoffice and the
+  HardVideoEditorBundle do. It must match every frontend host, microsites included, or no HLS video plays. In a real installation, give the server its
+  own DNS name and certificate, and set `PUMUKIT_DLS_REAL_IP_FROM` if the network of the `proxy` is not a private range. The `dls` service publishes no
+  port: only the `proxy` reaches it.
 
   The images of `/opencast` do not ask for a token, because PuMuKIT stores them as public URLs. To serve Opencast, also mount its storage on `/mnt/storage/opencast`. With validation,
   a saved link to the server stops working: check first which URLs are used from outside (podcast clients, apps, other websites, LMS).
@@ -292,6 +327,55 @@ Rebuild the image (`docker compose build --pull`); no data has to be migrated.
       proxy_set_header X-Original-URI $request_uri;
   }
   ```
+
+  Add the `/files/` and `/hls/` locations and the HLS validator, as in `docker/nginx/dls.conf.template`. The HLS validator takes no query string,
+  and its cache key is the token and the signed directory: with the token alone, a token would open another directory, and with the URI every
+  segment would ask PHP. Point the `alias` lines to the PuMuKIT storage:
+
+  ```nginx
+  location ~ ^/files/(?<dls_file>(?:downloads|masters)/.+)$ {
+      auth_request /_validate_token;
+      add_header Content-Disposition $dls_content_disposition;
+      add_header X-Robots-Tag "noindex";
+      alias /mnt/storage/pumukit/$dls_file;
+  }
+
+  location ~ ^/hls/(?<hls_expires>\d+)/(?<hls_token>[A-Za-z0-9_-]+)/files/(?<hls_dir>downloads/[^/]+/[^/]+/)(?<hls_rel>.+\.(?:m3u8|ts))$ {
+      auth_request /_validate_hls;
+      add_header X-Robots-Tag "noindex";
+      alias /mnt/storage/pumukit/$hls_dir$hls_rel;
+  }
+
+  location = /_validate_hls {
+      internal;
+
+      fastcgi_pass php:9000;
+      fastcgi_pass_request_body off;
+
+      fastcgi_cache dls_auth;
+      fastcgi_cache_key $hls_token$hls_dir;
+      fastcgi_cache_valid 200 401 10s;
+      fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
+
+      fastcgi_param SCRIPT_FILENAME /srv/pumukit/public/index.php;
+      fastcgi_param SCRIPT_NAME /index.php;
+      fastcgi_param REQUEST_METHOD GET;
+      fastcgi_param REQUEST_URI /download/validate-hls;
+      fastcgi_param QUERY_STRING "";
+      fastcgi_param CONTENT_LENGTH "";
+      fastcgi_param SERVER_NAME pumukit.example.org;
+      fastcgi_param SERVER_PORT 443;
+      fastcgi_param HTTPS on;
+      fastcgi_param REMOTE_ADDR $remote_addr;
+      fastcgi_param HTTP_HOST pumukit.example.org;
+      fastcgi_param HTTP_X_FORWARDED_FOR $remote_addr;
+      fastcgi_param HTTP_X_ORIGINAL_URI $request_uri;
+  }
+  ```
+
+  `$dls_content_disposition` is the `map $arg_forcedl` of the template, and the `dls_auth` cache its `fastcgi_cache_path`. The `/files/` and `/hls/`
+  responses also need `Access-Control-Allow-Origin` for the allowed origins and `Vary: Origin`. The template sets them for the whole server with
+  `add_header_inherit merge`; without it, a location with its own `add_header` drops them, so repeat them there.
 
 ---
 
