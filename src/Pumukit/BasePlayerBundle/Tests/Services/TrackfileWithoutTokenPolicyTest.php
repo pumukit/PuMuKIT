@@ -29,60 +29,60 @@ final class TrackfileWithoutTokenPolicyTest extends TestCase
 
     public function testExactRefererHostIsAllowed(): void
     {
-        $policy = new TrackfileWithoutTokenPolicy([], ['uned.es']);
+        $policy = new TrackfileWithoutTokenPolicy([], ['example.org']);
 
-        self::assertSame('referer', $policy->allowedReason($this->multimediaObject(self::SERIES_ID), $this->requestFrom('https://uned.es/curso?x=1')));
+        self::assertSame('referer', $policy->allowedReason($this->multimediaObject(self::SERIES_ID), $this->requestFrom('https://example.org/curso?x=1')));
     }
 
     public function testRefererSubdomainIsAllowed(): void
     {
-        $policy = new TrackfileWithoutTokenPolicy([], ['uned.es']);
+        $policy = new TrackfileWithoutTokenPolicy([], ['example.org']);
 
-        self::assertSame('referer', $policy->allowedReason($this->multimediaObject(self::SERIES_ID), $this->requestFrom('https://campus.uned.es:8443/a')));
+        self::assertSame('referer', $policy->allowedReason($this->multimediaObject(self::SERIES_ID), $this->requestFrom('https://campus.example.org:8443/a')));
     }
 
     public function testLookalikeHostIsRejected(): void
     {
-        $policy = new TrackfileWithoutTokenPolicy([], ['uned.es']);
+        $policy = new TrackfileWithoutTokenPolicy([], ['example.org']);
 
-        foreach (['https://uned.es.atacante.com/uned.es', 'https://notuned.es/', 'https://atacante.com/?r=uned.es', 'https://atacante.com/campus.uned.es'] as $referer) {
+        foreach (['https://example.org.attacker.example/example.org', 'https://notexample.org/', 'https://attacker.example/?r=example.org', 'https://attacker.example/campus.example.org'] as $referer) {
             self::assertNull($policy->allowedReason($this->multimediaObject(self::SERIES_ID), $this->requestFrom($referer)), $referer);
         }
     }
 
     public function testRefererHostCaseInsensitive(): void
     {
-        $policy = new TrackfileWithoutTokenPolicy([], ['uned.es']);
+        $policy = new TrackfileWithoutTokenPolicy([], ['example.org']);
 
-        self::assertSame('referer', $policy->allowedReason($this->multimediaObject(self::SERIES_ID), $this->requestFrom('https://CAMPUS.Uned.ES/')));
+        self::assertSame('referer', $policy->allowedReason($this->multimediaObject(self::SERIES_ID), $this->requestFrom('https://CAMPUS.Example.ORG/')));
     }
 
     public function testMissingOrMalformedRefererIsRejected(): void
     {
-        $policy = new TrackfileWithoutTokenPolicy([], ['uned.es']);
+        $policy = new TrackfileWithoutTokenPolicy([], ['example.org']);
         $multimediaObject = $this->multimediaObject(self::SERIES_ID);
 
         self::assertNull($policy->allowedReason($multimediaObject, new Request()));
         self::assertNull($policy->allowedReason($multimediaObject, $this->requestFrom('')));
-        self::assertNull($policy->allowedReason($multimediaObject, $this->requestFrom('uned.es')));
-        self::assertNull($policy->allowedReason($multimediaObject, $this->requestFrom('http:///uned.es')));
+        self::assertNull($policy->allowedReason($multimediaObject, $this->requestFrom('example.org')));
+        self::assertNull($policy->allowedReason($multimediaObject, $this->requestFrom('http:///example.org')));
     }
 
     public function testEmptyListsAllowNothing(): void
     {
         $policy = new TrackfileWithoutTokenPolicy([], []);
 
-        self::assertNull($policy->allowedReason($this->multimediaObject(self::SERIES_ID), $this->requestFrom('https://uned.es/')));
+        self::assertNull($policy->allowedReason($this->multimediaObject(self::SERIES_ID), $this->requestFrom('https://example.org/')));
     }
 
     public function testOrphanObjectWithoutSeriesOnlyByReferer(): void
     {
-        $policy = new TrackfileWithoutTokenPolicy([self::SERIES_ID], ['uned.es']);
+        $policy = new TrackfileWithoutTokenPolicy([self::SERIES_ID], ['example.org']);
         $orphan = new MultimediaObject();
 
         self::assertNull($policy->seriesId($orphan));
         self::assertNull($policy->allowedReason($orphan, new Request()));
-        self::assertSame('referer', $policy->allowedReason($orphan, $this->requestFrom('https://uned.es/')));
+        self::assertSame('referer', $policy->allowedReason($orphan, $this->requestFrom('https://example.org/')));
     }
 
     private function multimediaObject(string $seriesId): MultimediaObject

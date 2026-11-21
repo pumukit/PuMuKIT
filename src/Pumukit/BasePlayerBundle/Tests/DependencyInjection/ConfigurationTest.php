@@ -29,11 +29,11 @@ final class ConfigurationTest extends TestCase
     {
         $config = $this->process(['trackfile_without_token' => [
             'series' => ['5f9d88b9c5e1a2b3c4d5e6f7'],
-            'referer_hosts' => ['UNED.es', 'campus.example.org'],
+            'referer_hosts' => ['EXAMPLE.org', 'campus.example.org'],
         ]]);
 
         self::assertSame(['5f9d88b9c5e1a2b3c4d5e6f7'], $config['trackfile_without_token']['series']);
-        self::assertSame(['uned.es', 'campus.example.org'], $config['trackfile_without_token']['referer_hosts']);
+        self::assertSame(['example.org', 'campus.example.org'], $config['trackfile_without_token']['referer_hosts']);
     }
 
     #[DataProvider('invalidHosts')]
@@ -46,11 +46,11 @@ final class ConfigurationTest extends TestCase
 
     public static function invalidHosts(): iterable
     {
-        yield 'scheme' => ['https://uned.es'];
+        yield 'scheme' => ['https://example.org'];
 
-        yield 'path' => ['uned.es/x'];
+        yield 'path' => ['example.org/x'];
 
-        yield 'port' => ['uned.es:8080'];
+        yield 'port' => ['example.org:8080'];
 
         yield 'single label' => ['localhost'];
 

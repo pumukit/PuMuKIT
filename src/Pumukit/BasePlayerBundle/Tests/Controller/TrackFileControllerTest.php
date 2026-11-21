@@ -202,9 +202,9 @@ class TrackFileControllerTest extends PumukitTestCase
 
     public function testAnExpiredTokenWithAListedRefererIsDelivered(): void
     {
-        $this->usePolicy([], ['uned.es']);
+        $this->usePolicy([], ['example.org']);
 
-        $this->client->request('GET', '/trackfile/'.$this->track->id().'.mp4?token=abc&expires='.(time() - 60), [], [], ['HTTP_REFERER' => 'https://campus.UNED.es/curso']);
+        $this->client->request('GET', '/trackfile/'.$this->track->id().'.mp4?token=abc&expires='.(time() - 60), [], [], ['HTTP_REFERER' => 'https://campus.EXAMPLE.org/curso']);
 
         $this->assertResponseRedirects();
         static::assertStringStartsWith(self::DOWNLOAD_SERVER.'/files/', (string) $this->client->getResponse()->headers->get('Location'));
@@ -212,21 +212,21 @@ class TrackFileControllerTest extends PumukitTestCase
         static::assertCount(1, $records);
         static::assertSame('referer', $records[0]['context']['reason']);
         static::assertSame('expired', $records[0]['context']['tokenState']);
-        static::assertSame('campus.uned.es', $records[0]['context']['refererHost']);
+        static::assertSame('campus.example.org', $records[0]['context']['refererHost']);
     }
 
     public function testALookalikeRefererIsRejectedAndLogged(): void
     {
-        $this->usePolicy([], ['uned.es']);
+        $this->usePolicy([], ['example.org']);
 
-        $this->client->request('GET', '/trackfile/'.$this->track->id().'.mp4?token=bad&expires='.(time() + 60), [], [], ['HTTP_REFERER' => 'https://uned.es.atacante.com/']);
+        $this->client->request('GET', '/trackfile/'.$this->track->id().'.mp4?token=bad&expires='.(time() + 60), [], [], ['HTTP_REFERER' => 'https://example.org.attacker.example/']);
 
         $this->assertResponseStatusCodeSame(404);
         $this->assertResponseNotHasHeader('Location');
         $records = $this->legacyTrackfileRecords();
         static::assertCount(1, $records);
         static::assertSame('Trackfile rejected without a valid token', $records[0]['message']);
-        static::assertSame('uned.es.atacante.com', $records[0]['context']['refererHost']);
+        static::assertSame('example.org.attacker.example', $records[0]['context']['refererHost']);
         static::assertSame('invalid', $records[0]['context']['tokenState']);
         static::assertArrayNotHasKey('reason', $records[0]['context']);
     }
@@ -250,9 +250,9 @@ class TrackFileControllerTest extends PumukitTestCase
     {
         $this->multimediaObject->setStatus(MultimediaObject::STATUS_BLOCKED);
         $this->dm->flush();
-        $this->usePolicy([(string) $this->multimediaObject->getSeries()->getId()], ['uned.es']);
+        $this->usePolicy([(string) $this->multimediaObject->getSeries()->getId()], ['example.org']);
 
-        $this->client->request('GET', '/trackfile/'.$this->track->id().'.mp4', [], [], ['HTTP_REFERER' => 'https://uned.es/']);
+        $this->client->request('GET', '/trackfile/'.$this->track->id().'.mp4', [], [], ['HTTP_REFERER' => 'https://example.org/']);
 
         $this->assertResponseStatusCodeSame(404);
         $this->assertResponseNotHasHeader('Location');
@@ -272,7 +272,7 @@ class TrackFileControllerTest extends PumukitTestCase
 
     public function testNoTokenAndAnUnlistedRefererIsRejectedAndLogged(): void
     {
-        $this->usePolicy(['5f9d88b9c5e1a2b3c4d5e6f7'], ['uned.es']);
+        $this->usePolicy(['5f9d88b9c5e1a2b3c4d5e6f7'], ['example.org']);
 
         $this->client->request('GET', '/trackfile/'.$this->track->id().'.mp4', [], [], ['HTTP_REFERER' => 'https://other.example.net/page']);
 
