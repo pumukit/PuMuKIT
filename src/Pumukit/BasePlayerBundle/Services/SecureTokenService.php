@@ -60,9 +60,9 @@ class SecureTokenService
         }
     }
 
-    public function generateSecureUrl(string $baseUrl, string $resourceId): string
+    public function generateSecureUrl(string $baseUrl, string $resourceId, ?int $validFor = null): string
     {
-        $tokenData = $this->generateToken($resourceId);
+        $tokenData = $this->generateToken($resourceId, time() + ($validFor ?? $this->tokenDuration));
 
         $separator = str_contains($baseUrl, '?') ? '&' : '?';
 
@@ -76,9 +76,54 @@ class SecureTokenService
         );
     }
 
-    public function generateDownloadUrl(string $url): string
+    public function generateDownloadUrl(string $url, ?int $validFor = null): string
     {
-        return $this->generateSecureUrl($url, rawurldecode((string) parse_url($url, PHP_URL_PATH)));
+        return $this->generateSecureUrl($url, rawurldecode((string) parse_url($url, PHP_URL_PATH)), $validFor);
+    }
+
+    public function generateHlsUrl(string $downloadServerUrl, string $directory, string $fileName, ?int $validFor = null): string
+    {
+        $tokenData = $this->generateToken($directory, time() + ($validFor ?? $this->tokenDuration));
+
+        return sprintf(
+            '%s/hls/%d/%s%s%s',
+            rtrim($downloadServerUrl, '/'),
+            $tokenData['expires'],
+            $tokenData['token'],
+            $directory,
+            rawurlencode($fileName)
+        );
+    }
+
+    public function validateHlsPath(string $path): bool
+    {
+        $segments = explode('/', $path);
+        if ('' !== array_shift($segments)) {
+            return false;
+        }
+
+        foreach ($segments as $segment) {
+            if ('' === $segment || '.' === $segment || '..' === $segment) {
+                return false;
+            }
+        }
+
+        if (count($segments) < 8 || 'hls' !== $segments[0] || 'files' !== $segments[3] || 'downloads' !== $segments[4]) {
+            return false;
+        }
+
+        if (!ctype_digit($segments[1])) {
+            return false;
+        }
+
+        $last = $segments[count($segments) - 1];
+        if (!str_ends_with($last, '.m3u8') && !str_ends_with($last, '.ts')) {
+            return false;
+        }
+
+        $directory = sprintf('/files/downloads/%s/%s/', $segments[5], $segments[6]);
+
+        return $this->validateToken($segments[2], $directory, (int) $segments[1]);
     }
 
     public function validateTokenFromRequest(Request $request, string $resourceId): bool
