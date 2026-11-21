@@ -6,6 +6,9 @@ namespace Pumukit\BasePlayerBundle\Tests\Command;
 
 use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
+use Pumukit\SchemaBundle\Document\MediaType\Document;
+use Pumukit\SchemaBundle\Document\MediaType\Image;
+use Pumukit\SchemaBundle\Document\MediaType\Metadata\Generic;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
@@ -136,6 +139,33 @@ class CheckTrackDeliveryCommandTest extends PumukitTestCase
         static::assertSame(Command::SUCCESS, $tester->getStatusCode());
         static::assertStringContainsString('Checked 1 tracks, 0 cannot be served', $tester->getDisplay());
         static::assertStringNotContainsString('external.mp4', $tester->getDisplay());
+    }
+
+    public function testListsDocumentsAndImagesOfObjectsWithoutTracks(): void
+    {
+        $documentPath = $this->storageDir.'/inbox/document.pdf';
+        $imagePath = $this->storageDir.'/downloads/serie/gone.jpg';
+        file_put_contents($documentPath, 'pdf');
+        file_put_contents($imagePath, 'jpg');
+        $storage = static fn (string $path): Storage => Storage::create(StorageUrl::create(''), Path::create($path));
+        $document = Document::create('document.pdf', i18nText::create(['en' => '']), 'en', Tags::create([]), false, true, 0, $storage($documentPath), Generic::create(''));
+        $image = Image::create('gone.jpg', i18nText::create(['en' => '']), 'en', Tags::create([]), false, true, 0, $storage($imagePath), Generic::create(''));
+        $multimediaObject = new MultimediaObject();
+        $multimediaObject->setNumericalID(++$this->numericalId);
+        $multimediaObject->addDocument($document);
+        $multimediaObject->addImage($image);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+        unlink($imagePath);
+
+        $tester = $this->commandTester();
+        $tester->execute([]);
+
+        $display = $tester->getDisplay();
+        static::assertSame(Command::FAILURE, $tester->getStatusCode());
+        static::assertStringContainsString('Checked 2 tracks, 2 cannot be served', $display);
+        static::assertStringContainsString($multimediaObject->getId().' '.$document->id().' '.$documentPath.' outside the storage', $display);
+        static::assertStringContainsString($multimediaObject->getId().' '.$image->id().' '.$imagePath.' missing file', $display);
     }
 
     private function commandTester(): CommandTester

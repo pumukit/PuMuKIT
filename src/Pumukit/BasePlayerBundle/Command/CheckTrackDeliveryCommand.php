@@ -42,8 +42,11 @@ final class CheckTrackDeliveryCommand extends Command
         }
         $limit = (int) $rawLimit;
 
-        $cursor = $this->documentManager->createQueryBuilder(MultimediaObject::class)
-            ->field('tracks')->exists(true)
+        $queryBuilder = $this->documentManager->createQueryBuilder(MultimediaObject::class);
+        foreach (['tracks', 'documents', 'images'] as $field) {
+            $queryBuilder->addOr($queryBuilder->expr()->field($field.'.0')->exists(true));
+        }
+        $cursor = $queryBuilder
             ->setRewindable(false)
             ->getQuery()
             ->execute()
@@ -53,7 +56,7 @@ final class CheckTrackDeliveryCommand extends Command
         $undeliverable = 0;
         $processed = 0;
         foreach ($cursor as $multimediaObject) {
-            foreach ($multimediaObject->getTracks() as $track) {
+            foreach ($multimediaObject->getMediasWithoutExternal() as $track) {
                 $path = $this->trackDeliveryService->localPath($track);
                 if ('' === $path) {
                     continue;
