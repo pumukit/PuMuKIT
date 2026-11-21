@@ -31,6 +31,27 @@ class DeliveryCheckerTest extends TestCase
         'Download server denies a player token',
     ];
 
+    private const array FILES_TOKEN_CHECKS = [
+        'Download server denies a /files/ download without a token',
+        'Download server denies the token of another file on /files/',
+    ];
+
+    private const array HLS_TOKEN_CHECKS = [
+        'Download server denies an HLS token of another directory',
+        'Download server denies an expired HLS token',
+    ];
+
+    private const array SERVED_CHECKS = [
+        'Download server serves a signed file',
+        'Download server serves a byte range',
+        'Download server forces the download',
+        'Download server serves a signed download through /files/',
+        'Download server serves a signed master through /files/',
+        'Download server serves an HLS playlist with the directory token',
+        'Download server serves an HLS segment with the directory token',
+        'Download server serves an HLS segment of a subdirectory',
+    ];
+
     private string $storageDir;
     private string $downloadsDir;
     private SecureTokenService $secureTokenService;
@@ -71,7 +92,7 @@ class DeliveryCheckerTest extends TestCase
 
     public static function brokenDeployments(): iterable
     {
-        yield 'download server without auth_request' => ['no-token', self::TOKEN_CHECKS];
+        yield 'download server without auth_request' => ['no-token', [...self::TOKEN_CHECKS, ...self::FILES_TOKEN_CHECKS, ...self::HLS_TOKEN_CHECKS]];
 
         yield 'storage open on the frontend' => ['open-storage', [
             'Frontend denies the storage directory',
@@ -80,11 +101,18 @@ class DeliveryCheckerTest extends TestCase
         ]];
 
         yield 'validator failing' => ['validator-500', [
-            'Download server serves a signed file',
-            'Download server serves a byte range',
-            'Download server forces the download',
+            ...self::SERVED_CHECKS,
             ...self::TOKEN_CHECKS,
+            ...self::FILES_TOKEN_CHECKS,
+            ...self::HLS_TOKEN_CHECKS,
             'Download server denies CORS to another origin',
+        ]];
+
+        yield 'HLS without validation' => ['hls-no-token', self::HLS_TOKEN_CHECKS];
+
+        yield 'files open to the whole storage' => ['files-wide', [
+            'Download server denies the inbox through /files/',
+            'Download server denies the temporary files through /files/',
         ]];
 
         yield 'CORS open to any origin' => ['cors-any', ['Download server denies CORS to another origin']];
@@ -183,6 +211,14 @@ class DeliveryCheckerTest extends TestCase
                     return new DeliveryResponse(401);
                 }
 
+                if (str_starts_with($path, '/files/')) {
+                    return $this->files($path, $query, $requestHeaders);
+                }
+
+                if (str_starts_with($path, '/hls/')) {
+                    return $this->hls($path, $query, $requestHeaders);
+                }
+
                 if (str_contains($path, '..') || false !== stripos($path, '%2e') || !str_starts_with($path, '/pumukit/')) {
                     return new DeliveryResponse(404);
                 }
@@ -197,6 +233,44 @@ class DeliveryCheckerTest extends TestCase
                 }
 
                 return $this->file($this->downloadsDir.'/'.rawurldecode(substr($path, strlen('/pumukit/'))), $query, $requestHeaders);
+            }
+
+            private function files(string $path, string $query, array $requestHeaders): DeliveryResponse
+            {
+                $pattern = $this->broken('files-wide') ? '#^/files/((?:downloads|masters|inbox|tmp)/.+)$#' : '#^/files/((?:downloads|masters)/.+)$#';
+                if (str_contains($path, '..') || false !== stripos($path, '%2e') || 1 !== preg_match($pattern, $path, $matches)) {
+                    return new DeliveryResponse(404);
+                }
+
+                if (!$this->broken('no-token')) {
+                    $request = Request::create('/download/validate-token?'.$query);
+                    $request->headers->set('X-Original-URI', $path.'?'.$query);
+                    $status = $this->broken('validator-500') ? 500 : $this->controller->validateToken($request)->getStatusCode();
+                    if (200 !== $status) {
+                        return new DeliveryResponse($status);
+                    }
+                }
+
+                return $this->file(dirname($this->downloadsDir).'/'.rawurldecode($matches[1]), $query, $requestHeaders);
+            }
+
+            private function hls(string $path, string $query, array $requestHeaders): DeliveryResponse
+            {
+                $pattern = '#^/hls/\d+/[A-Za-z0-9_-]+/files/(downloads/[^/]+/[^/]+/)(.+\.(?:m3u8|ts))$#';
+                if (str_contains($path, '..') || false !== stripos($path, '%2e') || 1 !== preg_match($pattern, $path, $matches)) {
+                    return new DeliveryResponse(404);
+                }
+
+                if (!$this->broken('hls-no-token') && !$this->broken('no-token')) {
+                    $request = Request::create('/download/validate-hls');
+                    $request->headers->set('X-Original-URI', $path);
+                    $status = $this->broken('validator-500') ? 500 : $this->controller->validateHls($request)->getStatusCode();
+                    if (200 !== $status) {
+                        return new DeliveryResponse($status);
+                    }
+                }
+
+                return $this->file(dirname($this->downloadsDir).'/'.$matches[1].rawurldecode($matches[2]), $query, $requestHeaders);
             }
 
             private function broken(string $breakage): bool

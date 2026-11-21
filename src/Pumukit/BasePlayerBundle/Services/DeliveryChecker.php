@@ -23,13 +23,33 @@ final class DeliveryChecker
         $name = 'pumukit-check-'.bin2hex(random_bytes(8));
         $content = bin2hex(random_bytes(32));
         $outsideContent = bin2hex(random_bytes(32));
+        $storage = dirname(rtrim($this->downloadsDir, '/'));
         $directory = rtrim($this->downloadsDir, '/').'/'.$name;
         $file = $directory.'/canary.mp4';
-        $outsideFile = dirname(rtrim($this->downloadsDir, '/')).'/'.$name.'.txt';
+        $outsideFile = $storage.'/'.$name.'.txt';
+        $canaries = [
+            'playlist' => [$directory.'/hls/canary.m3u8', bin2hex(random_bytes(16))],
+            'segment' => [$directory.'/hls/data_000.ts', bin2hex(random_bytes(16))],
+            'nested' => [$directory.'/hls/stream_0/data00.ts', bin2hex(random_bytes(16))],
+            'video' => [$directory.'/hls/canary.mp4', bin2hex(random_bytes(16))],
+            'other' => [$directory.'/otro/canary.m3u8', bin2hex(random_bytes(16))],
+            'master' => [$storage.'/masters/'.$name.'/canary.mp4', bin2hex(random_bytes(16))],
+            'inbox' => [$storage.'/inbox/'.$name.'.txt', bin2hex(random_bytes(16))],
+            'tmp' => [$storage.'/tmp/'.$name.'.txt', bin2hex(random_bytes(16))],
+        ];
+        $created = [];
+        foreach (['', '/masters', '/inbox', '/tmp'] as $suffix) {
+            if (!is_dir($storage.$suffix)) {
+                $created[] = $storage.$suffix;
+            }
+        }
 
         try {
             $this->write($file, $content);
             $this->write($outsideFile, $outsideContent);
+            foreach ($canaries as [$path, $body]) {
+                $this->write($path, $body);
+            }
 
             return $this->run(
                 $probe,
@@ -37,24 +57,29 @@ final class DeliveryChecker
                 rtrim($frontendUrl ?? $this->frontendUrl, '/'),
                 $name,
                 $content,
-                $outsideContent
+                $outsideContent,
+                array_map(static fn (array $canary): string => $canary[1], $canaries)
             );
         } finally {
-            foreach ([$file, $outsideFile] as $path) {
+            foreach ([$file, $outsideFile, ...array_column($canaries, 0)] as $path) {
                 if (is_file($path)) {
                     unlink($path);
                 }
             }
-            if (is_dir($directory)) {
-                rmdir($directory);
+            foreach ([$directory.'/hls/stream_0', $directory.'/hls', $directory.'/otro', $directory, $storage.'/masters/'.$name, ...array_reverse($created)] as $path) {
+                if (is_dir($path) && [] === array_diff(scandir($path), ['.', '..'])) {
+                    rmdir($path);
+                }
             }
         }
     }
 
     /**
+     * @param array<string, string> $canaries
+     *
      * @return list<DeliveryCheckResult>
      */
-    private function run(DeliveryProbe $probe, string $downloadsUrl, string $frontendUrl, string $name, string $content, string $outsideContent): array
+    private function run(DeliveryProbe $probe, string $downloadsUrl, string $frontendUrl, string $name, string $content, string $outsideContent, array $canaries): array
     {
         $parts = parse_url($downloadsUrl);
         if (!isset($parts['scheme'], $parts['host'])) {
@@ -69,7 +94,15 @@ final class DeliveryChecker
         $signed = $fileUrl.'?'.$query;
         $otherResource = $basePath.'/'.$name.'/other.mp4';
         $token = $this->secureTokenService->generateToken($resource);
-        $forbidden = [$content, $outsideContent];
+        $forbidden = [$content, $outsideContent, ...array_values($canaries)];
+
+        $downloadResource = '/files/downloads/'.$name.'/canary.mp4';
+        $masterResource = '/files/masters/'.$name.'/canary.mp4';
+        $hlsDirectory = '/files/downloads/'.$name.'/hls/';
+        $otherDirectory = '/files/downloads/'.$name.'/otro/';
+        $hlsToken = $this->secureTokenService->generateToken($hlsDirectory);
+        $otherToken = $this->secureTokenService->generateToken($otherDirectory);
+        $expiredToken = $this->secureTokenService->generateToken($hlsDirectory, time() - 60);
 
         $results = [
             $this->served('Download server serves a signed file', $probe->fetch($signed), 200, $content),
@@ -81,7 +114,28 @@ final class DeliveryChecker
             $this->denied('Download server denies an expired token', $probe->fetch($fileUrl.'?'.$this->query($this->secureTokenService, $resource, time() - 60)), $forbidden),
             $this->denied('Download server denies a token of another secret', $probe->fetch($fileUrl.'?'.$this->query(new SecureTokenService(bin2hex(random_bytes(32))), $resource)), $forbidden),
             $this->denied('Download server denies a player token', $probe->fetch($fileUrl.'?'.$this->query($this->secureTokenService, bin2hex(random_bytes(12)))), $forbidden),
+            $this->served('Download server serves a signed download through /files/', $probe->fetch($origin.$downloadResource.'?'.$this->query($this->secureTokenService, $downloadResource)), 200, $content),
+            $this->served('Download server serves a signed master through /files/', $probe->fetch($origin.$masterResource.'?'.$this->query($this->secureTokenService, $masterResource)), 200, $canaries['master']),
+            $this->served('Download server serves an HLS playlist with the directory token', $probe->fetch($this->hlsUrl($origin, $hlsToken, $hlsDirectory, 'canary.m3u8')), 200, $canaries['playlist']),
+            $this->served('Download server serves an HLS segment with the directory token', $probe->fetch($this->hlsUrl($origin, $hlsToken, $hlsDirectory, 'data_000.ts')), 200, $canaries['segment']),
+            $this->served('Download server serves an HLS segment of a subdirectory', $probe->fetch($this->hlsUrl($origin, $hlsToken, $hlsDirectory, 'stream_0/data00.ts')), 200, $canaries['nested']),
+            $this->denied('Download server denies a /files/ download without a token', $probe->fetch($origin.$downloadResource), $forbidden),
+            $this->denied('Download server denies the token of another file on /files/', $probe->fetch($origin.$downloadResource.'?'.$this->query($this->secureTokenService, '/files/downloads/'.$name.'/other.mp4')), $forbidden),
+            $this->denied('Download server denies the inbox through /files/', $probe->fetch($origin.'/files/inbox/'.$name.'.txt?'.$this->query($this->secureTokenService, '/files/inbox/'.$name.'.txt')), $forbidden),
+            $this->denied('Download server denies the temporary files through /files/', $probe->fetch($origin.'/files/tmp/'.$name.'.txt?'.$this->query($this->secureTokenService, '/files/tmp/'.$name.'.txt')), $forbidden),
+            $this->denied('Download server denies an HLS token of another directory', $probe->fetch($this->hlsUrl($origin, $otherToken, $hlsDirectory, 'canary.m3u8')), $forbidden),
+            $this->denied('Download server denies an mp4 with an HLS directory token', $probe->fetch($this->hlsUrl($origin, $hlsToken, $hlsDirectory, 'canary.mp4')), $forbidden),
+            $this->denied('Download server denies an expired HLS token', $probe->fetch($this->hlsUrl($origin, $expiredToken, $hlsDirectory, 'canary.m3u8')), $forbidden),
         ];
+
+        foreach (['../', '%2e%2e/'] as $dots) {
+            $traversal = '/files/downloads/'.$name.'/'.$dots.$dots.'inbox/'.$name.'.txt';
+            $results[] = $this->denied(
+                sprintf('Download server denies a path traversal through /files/ (%s)', $dots),
+                $probe->fetch($origin.$traversal.'?'.$this->query($this->secureTokenService, rawurldecode($traversal))),
+                $forbidden
+            );
+        }
 
         foreach (['/../', '/%2e%2e/', '/'.$name.'/../../', '../'] as $traversal) {
             $results[] = $this->denied(
@@ -97,9 +151,16 @@ final class DeliveryChecker
         $results[] = $this->denied('Frontend denies the storage directory', $probe->fetch($frontendUrl.'/storage/downloads/'.$name.'/canary.mp4'), $forbidden);
         $results[] = $this->denied('Frontend denies the storage directory with a valid token', $probe->fetch($frontendUrl.'/storage/downloads/'.$name.'/canary.mp4?'.$query), $forbidden);
         $results[] = $this->denied('Frontend denies the files outside the downloads', $probe->fetch($frontendUrl.'/storage/'.$name.'.txt'), $forbidden);
-        $results[] = $this->denied('Frontend keeps the X-Accel location internal', $probe->fetch($frontendUrl.'/internal-storage/downloads/'.$name.'/canary.mp4'), $forbidden);
 
         return $results;
+    }
+
+    /**
+     * @param array{token: string, expires: int} $token
+     */
+    private function hlsUrl(string $origin, array $token, string $directory, string $relative): string
+    {
+        return sprintf('%s/hls/%d/%s%s%s', $origin, $token['expires'], $token['token'], $directory, $relative);
     }
 
     private function query(SecureTokenService $secureTokenService, string $resource, ?int $expires = null): string

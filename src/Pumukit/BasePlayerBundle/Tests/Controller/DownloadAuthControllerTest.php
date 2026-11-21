@@ -75,6 +75,43 @@ final class DownloadAuthControllerTest extends TestCase
         self::assertSame(401, $this->statusOf(self::URL, self::URI));
     }
 
+    public function testValidateHlsAcceptsAFileOfTheSignedDirectory(): void
+    {
+        $url = $this->tokens->generateHlsUrl('https://dls.example.org', '/files/downloads/abc/def/', 'stream_0/data00.ts');
+
+        self::assertSame(200, $this->hlsStatusOf(rawurldecode((string) parse_url($url, PHP_URL_PATH))));
+    }
+
+    public function testValidateHlsRejectsAnotherDirectory(): void
+    {
+        $url = $this->tokens->generateHlsUrl('https://dls.example.org', '/files/downloads/abc/def/', 'data.ts');
+        $path = str_replace('/files/downloads/abc/def/', '/files/downloads/abc/other/', rawurldecode((string) parse_url($url, PHP_URL_PATH)));
+
+        self::assertSame(401, $this->hlsStatusOf($path));
+    }
+
+    public function testValidateHlsRejectsAnMp4(): void
+    {
+        $url = $this->tokens->generateHlsUrl('https://dls.example.org', '/files/downloads/abc/def/', 'canary.mp4');
+
+        self::assertSame(401, $this->hlsStatusOf(rawurldecode((string) parse_url($url, PHP_URL_PATH))));
+    }
+
+    public function testValidateHlsRejectsAnEncodedTraversal(): void
+    {
+        $url = $this->tokens->generateHlsUrl('https://dls.example.org', '/files/downloads/abc/def/', 'x.ts');
+
+        self::assertSame(401, $this->hlsStatusOf(str_replace('/def/x.ts', '/def/%2e%2e/x.ts', (string) parse_url($url, PHP_URL_PATH))));
+    }
+
+    private function hlsStatusOf(string $originalUri): int
+    {
+        $request = Request::create('/download/validate-hls', 'GET');
+        $request->headers->set('X-Original-URI', $originalUri);
+
+        return $this->controller->validateHls($request)->getStatusCode();
+    }
+
     private function statusOf(string $url, ?string $originalUri): int
     {
         parse_str((string) parse_url($url, PHP_URL_QUERY), $query);

@@ -72,4 +72,23 @@ class DownloadAuthController extends AbstractController
 
         return new Response('', Response::HTTP_OK);
     }
+
+    #[Route('/download/validate-hls', name: 'pumukit_download_validate_hls', methods: ['GET'])]
+    public function validateHls(Request $request): Response
+    {
+        $clientIp = $request->getClientIp();
+        $originalUri = $request->headers->get('X-Original-URI', $request->getRequestUri());
+        $originalPath = rawurldecode((string) parse_url($originalUri, PHP_URL_PATH));
+
+        if (!$this->secureTokenService->validateHlsPath($originalPath)) {
+            $this->logger->warning('Download blocked: invalid HLS path or token', [
+                'ip' => $clientIp,
+                'uri' => $originalUri,
+            ]);
+
+            return new Response('', Response::HTTP_UNAUTHORIZED);
+        }
+
+        return new Response('', Response::HTTP_OK);
+    }
 }
