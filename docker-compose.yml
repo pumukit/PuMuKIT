@@ -50,8 +50,7 @@ services:
       - php
       - dls
     volumes:
-      # Uncomment the next lines in production
-      # - ./public/storage:/srv/pumukit/public/storage:rw,cached
+      # Uncomment the next line in production
       # - ./public/uploads:/srv/pumukit/public/uploads:rw,cached
       # Uncomment the next line for dev
       - ./:/srv/pumukit

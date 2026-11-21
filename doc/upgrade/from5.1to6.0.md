@@ -135,34 +135,32 @@ Informational (no action required):
   The user is only created on the first start, with an empty volume; change it later with
   `rabbitmqctl`. The management interface (port 15672) is not published. Only the latest
   RabbitMQ minor version gets community fixes, so upgrade it when a new one is released.
-- **File delivery through NGINX**: `/trackfile/` still checks the token and the permissions in
-  PHP, and then hands the file to NGINX with `X-Accel-Redirect` instead of sending every byte
-  from PHP-FPM. NGINX serves it from the internal `/internal-storage/` location (ranges,
-  `forcedl=1` downloads and the same headers as before), so a video no longer keeps a PHP-FPM
-  worker busy while it plays. The NGINX configuration is now a template,
-  `docker/nginx/default.conf.template`, that the `proxy` container renders when it starts:
-  the storage path comes from `PUMUKIT_STORAGE_DIR`, the same variable PHP reads from `.env`,
-  so a project with its own storage directory needs no change in it. Write the path without a
-  trailing slash. The `proxy` container must see the storage at that same path: in production,
-  mount the storage in both the `php` and the `proxy` services, as the commented volumes of
-  `docker-compose.yml` show. Otherwise NGINX answers 404 for the files, instead of sending them
-  slowly from PHP. Files outside `PUMUKIT_STORAGE_DIR` keep being sent by PHP. Projects with
-  their own NGINX configuration keep the previous behaviour until they add the internal
-  location and these two parameters to the PHP-FPM location, with their storage path:
+- **File delivery through the download server**: every file leaves through the download server
+  (DLS), never through PHP. `/trackfile/` still checks the token and the permissions in PHP, and
+  then answers a 302 to a signed DLS URL computed from the disk path of the track: `/files/...`
+  with a file token for downloads and masters, and `/hls/<expires>/<token>/...` with a directory
+  token for HLS (only `.m3u8` and `.ts`). The DLS validates the signature with PHP through
+  `auth_request` and serves the bytes (ranges, `forcedl=1` downloads), so a video no longer keeps a
+  PHP-FPM worker busy while it plays. There is no PHP fallback: a track outside `downloads/` or
+  `masters/` of the storage, or an HLS track that shares its directory with other tracks, gets a
+  503, and a missing file gets a 404. The `file` parameter of `/trackfile/` is removed, so a token
+  only opens its own track.
 
-  ```nginx
-  location ^~ /internal-storage/ {
-      internal;
-      alias /srv/pumukit/public/storage/;
-  }
+  The `proxy` container no longer needs the storage, `/internal-storage/` or the `X-Accel`
+  parameters: remove the storage volume from the `proxy` service and, in projects with their own
+  NGINX configuration, the `/internal-storage/` location and the `HTTP_X_SENDFILE_TYPE` and
+  `HTTP_X_ACCEL_MAPPING` `fastcgi_param` lines. `PUMUKIT_STORAGE_DIR` is still read by PHP and by
+  the DLS.
 
-  fastcgi_param HTTP_X_SENDFILE_TYPE X-Accel-Redirect;
-  fastcgi_param HTTP_X_ACCEL_MAPPING /srv/pumukit/public/storage/=/internal-storage/;
-  ```
+  **Before upgrading the core**, the DLS of each project must have the `/files/` and `/hls/`
+  locations (see `docker/nginx/dls.conf.template`). Without them every video stops playing.
+  Upgrade in this order:
 
-  NGINX replaces any `X-Sendfile-Type` or `X-Accel-Mapping` header sent by the client with
-  these values. A separate download server (`VOD_HOSTNAME` and the `url_out` of the encoder
-  profiles) keeps working as before: those URLs do not go through `/trackfile/`.
+  1. `bin/console pumukit:hls:move-to-own-directory` moves the old HLS tracks out of the shared
+     series directory.
+  2. `bin/console pumukit:check:track-delivery` lists the tracks the DLS cannot serve: outside the
+     storage, missing file or shared HLS directory. Fix them before going on.
+  3. `make check-delivery` (`pumukit:check:delivery`) checks the deployment itself.
 
 Rebuild the image (`docker compose build --pull`); no data has to be migrated.
 

@@ -174,8 +174,6 @@ COPY --chmod=755 docker/nginx/15-real-ip.sh /docker-entrypoint.d/15-real-ip.sh
 
 FROM nginx:$NGINX_VERSION-alpine AS proxy
 
-ENV PUMUKIT_STORAGE_DIR=/srv/pumukit/public/storage
-
 RUN mkdir -p /etc/nginx/ssl/
 
 COPY --from=ssl /srv/pumukit/cert.key /etc/nginx/ssl/

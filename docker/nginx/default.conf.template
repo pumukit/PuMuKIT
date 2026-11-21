@@ -64,11 +64,6 @@ server {
         try_files $uri /index.php$is_args$args;
     }
 
-    location ^~ /internal-storage/ {
-        internal;
-        alias ${PUMUKIT_STORAGE_DIR}/;
-    }
-
     location / {
         try_files $uri /index.php$is_args$args;
     }
@@ -81,8 +76,6 @@ server {
 
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param HTTPS on;
-        fastcgi_param HTTP_X_SENDFILE_TYPE X-Accel-Redirect;
-        fastcgi_param HTTP_X_ACCEL_MAPPING ${PUMUKIT_STORAGE_DIR}/=/internal-storage/;
         fastcgi_param HTTP_X_FORWARDED_FOR $remote_addr;
     }
 
