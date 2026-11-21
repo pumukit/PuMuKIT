@@ -36,7 +36,13 @@ final class CheckTrackDeliveryCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $limit = max(0, (int) $input->getOption('limit'));
+        $rawLimit = (string) $input->getOption('limit');
+        if (1 !== preg_match('/^\d+$/', $rawLimit)) {
+            $io->error('The limit must be a non-negative integer.');
+
+            return Command::INVALID;
+        }
+        $limit = (int) $rawLimit;
 
         $cursor = $this->documentManager->createQueryBuilder(MultimediaObject::class)
             ->field('tracks')->exists(true)
@@ -49,6 +55,11 @@ final class CheckTrackDeliveryCommand extends Command
         $processed = 0;
         foreach ($cursor as $multimediaObject) {
             foreach ($multimediaObject->getTracks() as $track) {
+                $path = $this->path($track);
+                if ('' === $path) {
+                    continue;
+                }
+
                 ++$checked;
                 $reason = $this->trackDeliveryService->undeliverableReason($track);
                 if (null === $reason) {
@@ -57,7 +68,7 @@ final class CheckTrackDeliveryCommand extends Command
 
                 ++$undeliverable;
                 if ($undeliverable <= $limit) {
-                    $output->writeln(sprintf('%s %s %s %s', $multimediaObject->getId(), $track->id(), $this->path($track), $reason));
+                    $output->writeln(sprintf('%s %s %s %s', $multimediaObject->getId(), $track->id(), $path, $reason));
                 }
             }
 

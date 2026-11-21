@@ -96,6 +96,48 @@ class CheckTrackDeliveryCommandTest extends PumukitTestCase
         static::assertSame(1, substr_count($display, 'outside the storage'));
     }
 
+    public function testAnInvalidLimitIsRejected(): void
+    {
+        $this->addTrack('inbox/a.mp4');
+
+        foreach (['abc', '-5', '1.5', ''] as $value) {
+            $tester = $this->commandTester();
+            $tester->execute(['--limit' => $value]);
+
+            static::assertSame(Command::INVALID, $tester->getStatusCode(), $value);
+            static::assertStringContainsString('non-negative integer', $tester->getDisplay());
+            static::assertStringNotContainsString('Checked', $tester->getDisplay());
+        }
+    }
+
+    public function testExternalTracksAreNeitherCountedNorListed(): void
+    {
+        $this->addTrack('downloads/serie/ok.mp4');
+        $track = Track::create(
+            'external.mp4',
+            i18nText::create(['en' => '']),
+            'en',
+            Tags::create(['display']),
+            false,
+            true,
+            0,
+            Storage::create(StorageUrl::create('https://example.org/external.mp4'), null),
+            VideoAudio::create('{"format":{"duration":"10.000000"}}')
+        );
+        $multimediaObject = new MultimediaObject();
+        $multimediaObject->setNumericalID(++$this->numericalId);
+        $multimediaObject->addTrack($track);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $tester = $this->commandTester();
+        $tester->execute([]);
+
+        static::assertSame(Command::SUCCESS, $tester->getStatusCode());
+        static::assertStringContainsString('Checked 1 tracks, 0 cannot be served', $tester->getDisplay());
+        static::assertStringNotContainsString('external.mp4', $tester->getDisplay());
+    }
+
     private function commandTester(): CommandTester
     {
         $application = new Application(self::$kernel);
