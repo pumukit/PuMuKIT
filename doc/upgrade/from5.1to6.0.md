@@ -327,6 +327,11 @@ of the old HLS tracks, rewritten by `pumukit:hls:move-to-own-directory`.
   nothing with `Referrer-Policy: no-referrer`, from HTTPS to HTTP, from links written by hand or from download managers: for those, list the
   series. A website that plays HLS with hls.js also needs its origin in `PUMUKIT_DLS_CORS_ORIGIN`.
 
+  Do not list the host of an LMS (Moodle, Blackboard or any LTI platform) to fix its embedded player: the LTI embed loads the PuMuKIT player in
+  an iframe, so the `Referer` that reaches `/trackfile` is the PuMuKIT host, and those requests already carry a token. For the same reason the
+  LMS origin is not needed in `PUMUKIT_DLS_CORS_ORIGIN`. The host of an LMS belongs in `referer_hosts` only for raw `/trackfile` links pasted
+  in a course page.
+
   Every request without a valid token is written to `var/log/legacy_trackfile.log`, those delivered ("served") and those rejected, even with
   both lists empty, with `trackId`, `multimediaObjectId`, `seriesId`, `refererHost`, `tokenState` (`missing`, `expired` or `invalid`) and, for the
   delivered ones, `reason` (`series` or `referer`). To know who links without a token, before deciding what to list:
