@@ -13,6 +13,7 @@ use Pumukit\EncoderBundle\Services\JobCreator;
 use Pumukit\EncoderBundle\Services\JobExecutor;
 use Pumukit\EncoderBundle\Services\JobValidator;
 use Pumukit\EncoderBundle\Services\MultimediaObjectPropertyJobService;
+use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\ProfileValidator;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
@@ -173,6 +174,30 @@ final class JobCreatorTest extends PumukitTestCase
         $this->assertCount(1, $jobs);
     }
 
+    public function testHlsProfilesWriteInTheirOwnDirectory(): void
+    {
+        $series = $this->createSeries();
+        $multimediaObject = $this->createMultimediaObject($series);
+
+        $job = $this->createJobWithExtension('m3u8', $multimediaObject);
+
+        $expectedDir = $this->tmpPath.'/dir_out/'.$series->getId().'/'.$job->getId();
+        $this->assertStringEndsWith('/'.$series->getId().'/'.$job->getId().'/'.$job->getId().'.m3u8', $job->getPathEnd());
+        $this->assertDirectoryExists($expectedDir);
+        $this->assertSame(realpath($expectedDir).'/'.$job->getId().'.m3u8', $job->getPathEnd());
+    }
+
+    public function testOtherProfilesKeepTheSeriesDirectory(): void
+    {
+        $series = $this->createSeries();
+        $multimediaObject = $this->createMultimediaObject($series);
+
+        $job = $this->createJobWithExtension('mp4', $multimediaObject);
+
+        $this->assertStringEndsWith('/'.$series->getId().'/'.$job->getId().'.mp4', $job->getPathEnd());
+        $this->assertDirectoryDoesNotExist($this->tmpPath.'/dir_out/'.$series->getId().'/'.$job->getId());
+    }
+
     public function createMultimediaObject(?Series $series = null): MultimediaObject
     {
         return $this->factoryService->createMultimediaObject($series ?? $this->factoryService->createSeries());
@@ -210,6 +235,31 @@ final class JobCreatorTest extends PumukitTestCase
     public function generateJobFromPath(MultimediaObject $multimediaObject, Path $path, JobOptions $jobOptions): MultimediaObject
     {
         return $this->jobCreator->fromPath($multimediaObject, $path, $jobOptions);
+    }
+
+    private function createJobWithExtension(string $extension, MultimediaObject $multimediaObject): Job
+    {
+        $profileService = new ProfileService([
+            'test_profile' => [
+                'extension' => $extension,
+                'streamserver' => ['dir_out' => $this->tmpPath.'/dir_out'],
+            ],
+        ]);
+        $jobCreator = new JobCreator(
+            $this->dm,
+            $this->jobExecutor,
+            $this->jobValidator,
+            new ProfileValidator($profileService, $this->logger),
+            $this->propService,
+            $this->tokenStorage,
+            $this->logger,
+            $this->tmpPath
+        );
+
+        $path = Path::create($this->copyFileToUse($this->projectDir.'/tests/files/pumukit.mp4', 'pumukit.mp4'));
+        $jobCreator->fromPath($multimediaObject, $path, new JobOptions('test_profile', 2, 'en', [], []));
+
+        return $this->dm->getRepository(Job::class)->findOneBy(['mm_id' => $multimediaObject->getId()]);
     }
 
     private function copyFileToUse(string $origin, string $fileName): string

@@ -226,6 +226,9 @@ final class JobCreator
         $finalExtension = $profile['extension'] ?? $extension;
 
         $tempDir = $profile['streamserver']['dir_out'].'/'.$dir;
+        if ('m3u8' === $finalExtension) {
+            $tempDir .= '/'.$file;
+        }
         FileSystemUtils::createFolder($tempDir);
 
         return realpath($tempDir).'/'.$file.'.'.$finalExtension;
