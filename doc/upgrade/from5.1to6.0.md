@@ -318,11 +318,11 @@ of the old HLS tracks, rewritten by `pumukit:hls:move-to-own-directory`.
   pumukit_base_player:
       trackfile_without_token:
           series: ['5f9d88b9c5e1a2b3c4d5e6f7']
-          referer_hosts: ['uned.es']
+          referer_hosts: ['example.org']
   ```
 
-  `series` takes series ids. `referer_hosts` takes host names, with no scheme, port or path, in lowercase: a page of that host or of any of its
-  subdomains (`campus.uned.es` for `uned.es`) opens the tracks; `uned.es.example.com` or `notuned.es` do not. A wrong value stops the container from
+  `series` takes series ids. `referer_hosts` takes host names, with no scheme, port or path (they are compared in lowercase): a page of that host or of any of its
+  subdomains (`campus.example.org` for `example.org`) opens the tracks; `example.org.attacker.example` or `notexample.org` do not. A wrong value stops the container from
   compiling. The `Referer` is not a security measure, because any client can forge it. Between domains the browser sends only the host, and
   nothing with `Referrer-Policy: no-referrer`, from HTTPS to HTTP, from links written by hand or from download managers: for those, list the
   series. A website that plays HLS with hls.js also needs its origin in `PUMUKIT_DLS_CORS_ORIGIN`.
