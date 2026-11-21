@@ -28,17 +28,26 @@ class DownloadTrackRedirectTest extends PumukitTestCase
     private const DOWNLOAD_SERVER = 'https://dls.example.org';
 
     private KernelBrowser $client;
-    private string $filesDir;
+    private string $storageDir;
+    private string $trackPath;
+    private array $previousEnv = [];
     private Tag $webTVTag;
     private Series $series;
 
     public function setUp(): void
     {
+        $this->storageDir = (string) realpath(sys_get_temp_dir()).'/webtv-'.bin2hex(random_bytes(6));
+        mkdir($this->storageDir.'/downloads/media', 0777, true);
+        foreach (['PUMUKIT_STORAGE_DIR' => $this->storageDir, 'PUMUKIT_DOWNLOAD_SERVER_URL' => self::DOWNLOAD_SERVER] as $name => $value) {
+            $this->previousEnv[$name] = [$_ENV[$name] ?? null, $_SERVER[$name] ?? null];
+            $_ENV[$name] = $_SERVER[$name] = $value;
+        }
         self::ensureKernelShutdown();
         $this->client = static::createClient();
         $this->dm = static::getContainer()->get('doctrine_mongodb.odm.document_manager');
         $this->clearBBDD();
-        $this->filesDir = static::getContainer()->getParameter('kernel.project_dir').'/tests/files/';
+        $this->trackPath = $this->storageDir.'/downloads/media/pumukit.mp4';
+        copy(static::getContainer()->getParameter('kernel.project_dir').'/tests/files/pumukit.mp4', $this->trackPath);
 
         $this->webTVTag = new Tag();
         $this->webTVTag->setCod(PumukitWebTVBundle::WEB_TV_TAG);
@@ -51,7 +60,11 @@ class DownloadTrackRedirectTest extends PumukitTestCase
 
     public function tearDown(): void
     {
-        unset($_ENV['PUMUKIT_DOWNLOAD_SERVER_URL'], $_SERVER['PUMUKIT_DOWNLOAD_SERVER_URL']);
+        foreach ($this->previousEnv as $name => [$env, $server]) {
+            null === $env ? $this->unsetKey($_ENV, $name) : $_ENV[$name] = $env;
+            null === $server ? $this->unsetKey($_SERVER, $name) : $_SERVER[$name] = $server;
+        }
+        $this->removeDirectory($this->storageDir);
         parent::tearDown();
     }
 
@@ -82,33 +95,28 @@ class DownloadTrackRedirectTest extends PumukitTestCase
         $this->assertTrackfileRedirect($track, false);
     }
 
-    public function testTheDownloadOfALocalTrackIsDeliveredAsAnAttachment(): void
+    public function testTheDownloadOfALocalTrackEndsOnTheDownloadServerAsAnAttachment(): void
     {
         [$multimediaObject, $track] = $this->createMultimediaObjectWithTrack(MultimediaObject::STATUS_PUBLISHED, '/storage/downloads/pumukit.mp4');
 
-        $this->client->request('GET', '/video/'.$multimediaObject->getId().'?track_id='.$track->id());
-        $this->client->request('GET', $this->client->getResponse()->headers->get('Location'));
-
-        $this->assertResponseIsSuccessful();
-        $this->assertStringContainsString('attachment', $this->client->getResponse()->headers->get('Content-Disposition'));
+        $this->assertDownloadEndsOnTheDownloadServer($multimediaObject, $track);
     }
 
     public function testTheDownloadOfATrackOnTheDownloadServerEndsThereAsAnAttachment(): void
     {
-        $_ENV['PUMUKIT_DOWNLOAD_SERVER_URL'] = $_SERVER['PUMUKIT_DOWNLOAD_SERVER_URL'] = self::DOWNLOAD_SERVER;
-        self::ensureKernelShutdown();
-        $this->client = static::createClient();
-        $this->dm = static::getContainer()->get('doctrine_mongodb.odm.document_manager');
-        $this->webTVTag = $this->dm->getRepository(Tag::class)->findOneBy(['cod' => PumukitWebTVBundle::WEB_TV_TAG]);
-        $this->series = $this->dm->getRepository(Series::class)->findOneBy([]);
         [$multimediaObject, $track] = $this->createMultimediaObjectWithTrack(MultimediaObject::STATUS_PUBLISHED, self::DOWNLOAD_SERVER.'/pumukit/pumukit.mp4');
 
+        $this->assertDownloadEndsOnTheDownloadServer($multimediaObject, $track);
+    }
+
+    private function assertDownloadEndsOnTheDownloadServer(MultimediaObject $multimediaObject, Track $track): void
+    {
         $this->client->request('GET', '/video/'.$multimediaObject->getId().'?track_id='.$track->id());
         $this->client->request('GET', $this->client->getResponse()->headers->get('Location'));
 
         $this->assertResponseRedirects();
         $location = $this->client->getResponse()->headers->get('Location');
-        $this->assertStringStartsWith(self::DOWNLOAD_SERVER.'/pumukit/pumukit.mp4?', $location);
+        $this->assertStringStartsWith(self::DOWNLOAD_SERVER.'/files/downloads/media/pumukit.mp4?', $location);
         $this->assertStringContainsString('token=', $location);
         $this->assertStringEndsWith('&forcedl=1', $location);
     }
@@ -119,7 +127,7 @@ class DownloadTrackRedirectTest extends PumukitTestCase
         $location = $this->client->getResponse()->headers->get('Location');
         $this->assertStringStartsWith('http://localhost/trackfile/'.$track->id().'.mp4?', $location);
         $this->assertStringContainsString('token=', $location);
-        $this->assertStringNotContainsString($this->filesDir, $location);
+        $this->assertStringNotContainsString($this->storageDir, $location);
         if ($forceDownload) {
             $this->assertStringContainsString('forcedl=1', $location);
         } else {
@@ -153,8 +161,24 @@ class DownloadTrackRedirectTest extends PumukitTestCase
             false,
             true,
             0,
-            Storage::create(StorageUrl::create($url), Path::create($this->filesDir.'pumukit.mp4')),
+            Storage::create(StorageUrl::create($url), Path::create($this->trackPath)),
             VideoAudio::create('{"format":{"duration":"10.000000"}}')
         );
+    }
+
+    private function unsetKey(array &$bag, string $name): void
+    {
+        unset($bag[$name]);
+    }
+
+    private function removeDirectory(string $dir): void
+    {
+        if (!is_dir($dir)) {
+            return;
+        }
+        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST) as $item) {
+            $item->isDir() ? rmdir($item->getPathname()) : unlink($item->getPathname());
+        }
+        rmdir($dir);
     }
 }
