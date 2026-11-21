@@ -195,7 +195,9 @@ class TrackDeliveryServiceTest extends TestCase
 
         $this->assertSame(Response::HTTP_NOT_FOUND, $response->getStatusCode());
         $this->assertSame('missing file', $this->service()->undeliverableReason($track));
-        $this->assertSame([], $this->logger->levels);
+        $this->assertSame(['error'], $this->logger->levels);
+        $this->assertSame($track->id(), $this->logger->contexts[0]['track']);
+        $this->assertSame($this->storage.'/downloads/s/a.mp4', $this->logger->contexts[0]['path']);
     }
 
     public function testNoDownloadServerIs503(): void

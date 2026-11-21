@@ -34,6 +34,11 @@ class TrackDeliveryService
         $reason = $this->undeliverableReason($track);
         if (null !== $reason) {
             if (self::REASON_MISSING_FILE === $reason) {
+                $this->logger->error('Track file not found', [
+                    'track' => $track->id(),
+                    'path' => $this->path($track),
+                ]);
+
                 return new Response('Not Found', Response::HTTP_NOT_FOUND);
             }
 
