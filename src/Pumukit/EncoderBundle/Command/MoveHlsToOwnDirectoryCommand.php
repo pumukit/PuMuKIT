@@ -28,9 +28,11 @@ final class MoveHlsToOwnDirectoryCommand extends Command
     private const BATCH_SIZE = 100;
     private const NAME_PATTERN = '/^[A-Za-z0-9_-]+$/';
     private const REASON_SHARED = 'shared, re-encode';
+    private const REASON_INTERRUPTED = 'moved, database not updated';
 
     private readonly Filesystem $filesystem;
     private string $root = '';
+    private array $interrupted = [];
 
     public function __construct(
         private readonly DocumentManager $documentManager,
@@ -65,6 +67,11 @@ final class MoveHlsToOwnDirectoryCommand extends Command
         $moved = 0;
         $shared = 0;
         $skipped = 0;
+        foreach ($this->interrupted as $track) {
+            $output->writeln(sprintf('%s %s %s %s', $track['mmId'], $track['trackId'], $track['path'], self::REASON_INTERRUPTED));
+            ++$skipped;
+        }
+
         foreach ($directories as $directory => $tracks) {
             if (count($tracks) > 1) {
                 foreach ($tracks as $track) {
@@ -112,14 +119,22 @@ final class MoveHlsToOwnDirectoryCommand extends Command
     {
         $groups = [];
         $withCandidate = [];
+        $this->interrupted = [];
         foreach ($this->tracks() as [$mmId, $track, $path]) {
             if (!$this->isHls($path)) {
                 continue;
             }
 
             $realPath = realpath($path);
+            $collected = ['mmId' => $mmId, 'trackId' => $track->id(), 'path' => $path];
+            if (false === $realPath && $this->isInterruptedMove($path)) {
+                $this->interrupted[] = $collected;
+
+                continue;
+            }
+
             $directory = false === $realPath ? dirname($path) : dirname($realPath);
-            $groups[$directory][] = ['mmId' => $mmId, 'trackId' => $track->id(), 'path' => $path];
+            $groups[$directory][] = $collected;
 
             if (false !== $realPath && $this->isCandidate($track, $realPath)) {
                 $withCandidate[$directory] = true;
@@ -152,6 +167,7 @@ final class MoveHlsToOwnDirectoryCommand extends Command
     {
         $cursor = $this->documentManager->createQueryBuilder(MultimediaObject::class)
             ->field('tracks')->exists(true)
+            ->setRewindable(false)
             ->getQuery()
             ->execute()
         ;
@@ -171,6 +187,14 @@ final class MoveHlsToOwnDirectoryCommand extends Command
         }
 
         $this->documentManager->clear();
+    }
+
+    private function isInterruptedMove(string $path): bool
+    {
+        $master = basename($path);
+        $name = substr($master, 0, -strlen('.m3u8'));
+
+        return '' !== $name && is_file(dirname($path).'/'.$name.'/'.$master);
     }
 
     private function isCandidate(Media $track, string $realPath): bool
@@ -256,7 +280,7 @@ final class MoveHlsToOwnDirectoryCommand extends Command
 
     private function playlistFiles(string $directory, string $master): array|string
     {
-        $files = [$master];
+        $files = [];
         $seen = [$master => true];
         $queue = [$master];
         while ([] !== $queue) {
@@ -266,8 +290,13 @@ final class MoveHlsToOwnDirectoryCommand extends Command
                 return 'unreadable playlist: '.$playlist;
             }
 
+            $references = $this->references($content);
+            if (is_string($references)) {
+                return $references;
+            }
+
             $base = dirname($playlist);
-            foreach ($this->references($content) as $uri) {
+            foreach ($references as $uri) {
                 if (1 === preg_match('#^[A-Za-z][A-Za-z0-9+.-]*://#', $uri)) {
                     return 'absolute URL: '.$uri;
                 }
@@ -300,10 +329,12 @@ final class MoveHlsToOwnDirectoryCommand extends Command
             }
         }
 
+        $files[] = $master;
+
         return $files;
     }
 
-    private function references(string $content): array
+    private function references(string $content): array|string
     {
         $references = [];
         foreach (preg_split('/\R/', (string) preg_replace('/^\xEF\xBB\xBF/', '', $content)) ?: [] as $line) {
@@ -318,9 +349,15 @@ final class MoveHlsToOwnDirectoryCommand extends Command
                 continue;
             }
 
-            if (str_starts_with($line, '#EXT') && preg_match_all('/[:,]URI="([^"]*)"/', $line, $matches) > 0) {
-                array_push($references, ...$matches[1]);
+            if (!str_starts_with($line, '#EXT')) {
+                continue;
             }
+
+            $parsed = preg_match_all('/[:,]URI="([^"]*)"/', $line, $matches);
+            if ($parsed !== preg_match_all('/URI=/i', $line)) {
+                return 'unparsed URI attribute: '.$line;
+            }
+            array_push($references, ...$matches[1]);
         }
 
         return $references;

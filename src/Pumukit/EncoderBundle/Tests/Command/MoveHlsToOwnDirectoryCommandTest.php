@@ -224,6 +224,63 @@ class MoveHlsToOwnDirectoryCommandTest extends PumukitTestCase
         static::assertFileDoesNotExist($this->dir.'/x/x.m3u8');
     }
 
+    public function testUnparsedUriAttributeIsNotMoved(): void
+    {
+        file_put_contents($this->dir.'/x.m3u8', "#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=4000000\nindex.m3u8\n");
+        file_put_contents($this->dir.'/index.m3u8', "#EXTM3U\n#EXT-X-MAP:URI=init.mp4\n#EXTINF:10,\ndata_000.ts\n#EXT-X-ENDLIST\n");
+        file_put_contents($this->dir.'/init.mp4', 'init');
+        file_put_contents($this->dir.'/data_000.ts', 'ts');
+        [$mmId, $trackId] = $this->addTrack('x.m3u8');
+
+        $tester = $this->runCommand();
+
+        static::assertSame(Command::FAILURE, $tester->getStatusCode());
+        static::assertStringContainsString(sprintf('%s %s %s/x.m3u8 unparsed URI attribute: #EXT-X-MAP:URI=init.mp4', $mmId, $trackId, $this->dir), $tester->getDisplay());
+        $this->assertNothingMoved(['x.m3u8', 'index.m3u8', 'init.mp4', 'data_000.ts'], 'x', $mmId, $trackId);
+    }
+
+    public function testInterruptedMoveIsReported(): void
+    {
+        $this->writeSingleQuality('x');
+        [$mmId, $trackId] = $this->addTrack('x.m3u8');
+        mkdir($this->dir.'/x');
+        foreach (['index.m3u8', 'data_000.ts', 'x.m3u8'] as $file) {
+            rename($this->dir.'/'.$file, $this->dir.'/x/'.$file);
+        }
+
+        $tester = $this->runCommand();
+
+        static::assertSame(Command::FAILURE, $tester->getStatusCode());
+        static::assertStringContainsString(sprintf('%s %s %s/x.m3u8 moved, database not updated', $mmId, $trackId, $this->dir), $tester->getDisplay());
+        static::assertStringContainsString('Moved 0 tracks, 0 in shared directories, 1 skipped.', $tester->getDisplay());
+        foreach (['x.m3u8', 'index.m3u8', 'data_000.ts'] as $file) {
+            static::assertFileExists($this->dir.'/x/'.$file);
+        }
+    }
+
+    public function testFailedMoveIsRolledBack(): void
+    {
+        mkdir($this->dir.'/stream_0');
+        file_put_contents($this->dir.'/x.m3u8', "#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=4000000\nindex.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=1000000\nstream_0/stream.m3u8\n");
+        file_put_contents($this->dir.'/index.m3u8', "#EXTM3U\n#EXTINF:10,\ndata_000.ts\n#EXT-X-ENDLIST\n");
+        file_put_contents($this->dir.'/data_000.ts', 'ts');
+        file_put_contents($this->dir.'/stream_0/stream.m3u8', "#EXTM3U\n#EXTINF:10,\ndata00.ts\n#EXT-X-ENDLIST\n");
+        file_put_contents($this->dir.'/stream_0/data00.ts', 'ts');
+        [$mmId, $trackId] = $this->addTrack('x.m3u8');
+        chmod($this->dir.'/stream_0', 0555);
+
+        try {
+            $tester = $this->runCommand();
+        } finally {
+            chmod($this->dir.'/stream_0', 0777);
+        }
+
+        static::assertSame(Command::FAILURE, $tester->getStatusCode());
+        static::assertStringContainsString(sprintf('%s %s %s/x.m3u8 move failed: stream_0/stream.m3u8', $mmId, $trackId, $this->dir), $tester->getDisplay());
+        static::assertStringNotContainsString('rollback incomplete', $tester->getDisplay());
+        $this->assertNothingMoved(['x.m3u8', 'index.m3u8', 'data_000.ts', 'stream_0/stream.m3u8', 'stream_0/data00.ts'], 'x', $mmId, $trackId);
+    }
+
     private function writeSingleQuality(string $name): void
     {
         file_put_contents($this->dir.'/'.$name.'.m3u8', "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=4000000\nindex.m3u8\n");
