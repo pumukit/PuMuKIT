@@ -6,7 +6,6 @@ namespace Pumukit\EncoderBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\BasePlayerBundle\Services\TrackDeliveryService;
-use Pumukit\SchemaBundle\Document\Exception\PathException;
 use Pumukit\SchemaBundle\Document\MediaType\Media;
 use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -175,7 +174,7 @@ final class MoveHlsToOwnDirectoryCommand extends Command
         $processed = 0;
         foreach ($cursor as $multimediaObject) {
             foreach ($multimediaObject->getTracks() as $track) {
-                $path = $this->path($track);
+                $path = $this->trackDeliveryService->localPath($track);
                 if ('' !== $path) {
                     yield [$multimediaObject->getId(), $track, $path];
                 }
@@ -215,7 +214,7 @@ final class MoveHlsToOwnDirectoryCommand extends Command
     {
         $multimediaObject = $this->documentManager->find(MultimediaObject::class, $collected['mmId']);
         $track = $multimediaObject?->getTrackById($collected['trackId']);
-        if (!$track instanceof Media || $this->path($track) !== $collected['path']) {
+        if (!$track instanceof Media || $this->trackDeliveryService->localPath($track) !== $collected['path']) {
             return 'changed during the run';
         }
 
@@ -426,14 +425,5 @@ final class MoveHlsToOwnDirectoryCommand extends Command
     private function isHls(string $path): bool
     {
         return str_ends_with(strtolower($path), '.m3u8');
-    }
-
-    private function path(Media $track): string
-    {
-        try {
-            return $track->storage()->path()?->path() ?? '';
-        } catch (PathException) {
-            return (string) $track->getUrl();
-        }
     }
 }

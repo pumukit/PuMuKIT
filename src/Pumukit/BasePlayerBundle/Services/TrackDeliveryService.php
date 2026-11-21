@@ -36,7 +36,7 @@ class TrackDeliveryService
             if (self::REASON_MISSING_FILE === $reason) {
                 $this->logger->error('Track file not found', [
                     'track' => $track->id(),
-                    'path' => $this->path($track),
+                    'path' => $this->localPath($track),
                 ]);
 
                 return new Response('Not Found', Response::HTTP_NOT_FOUND);
@@ -44,7 +44,7 @@ class TrackDeliveryService
 
             $this->logger->critical('Track cannot be delivered by the download server', [
                 'track' => $track->id(),
-                'path' => $this->path($track),
+                'path' => $this->localPath($track),
                 'reason' => $reason,
             ]);
 
@@ -69,7 +69,7 @@ class TrackDeliveryService
             return null;
         }
 
-        $realPath = (string) realpath($this->path($track));
+        $realPath = (string) realpath($this->localPath($track));
         $relative = substr($realPath, strlen($this->realStorageDir()) + 1);
         $validFor = $this->secureTokenService->getTokenDuration() + $track->getDuration();
         $baseUrl = rtrim((string) $this->downloadServerUrl, '/');
@@ -101,7 +101,7 @@ class TrackDeliveryService
             return self::REASON_NO_DOWNLOAD_SERVER;
         }
 
-        $realPath = realpath($this->path($track));
+        $realPath = realpath($this->localPath($track));
         if (false === $realPath || !is_file($realPath)) {
             return self::REASON_MISSING_FILE;
         }
@@ -122,18 +122,18 @@ class TrackDeliveryService
         return null;
     }
 
-    private function isExternal(Media $track): bool
-    {
-        return '' === $this->path($track);
-    }
-
-    private function path(Media $track): string
+    public function localPath(Media $track): string
     {
         try {
             return $track->storage()->path()?->path() ?? '';
         } catch (PathException) {
             return (string) $track->getUrl();
         }
+    }
+
+    private function isExternal(Media $track): bool
+    {
+        return '' === $this->localPath($track);
     }
 
     private function externalUrl(Media $track): ?string

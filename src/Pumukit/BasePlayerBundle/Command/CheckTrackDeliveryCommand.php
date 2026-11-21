@@ -6,8 +6,6 @@ namespace Pumukit\BasePlayerBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\BasePlayerBundle\Services\TrackDeliveryService;
-use Pumukit\SchemaBundle\Document\Exception\PathException;
-use Pumukit\SchemaBundle\Document\MediaType\Media;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -56,7 +54,7 @@ final class CheckTrackDeliveryCommand extends Command
         $processed = 0;
         foreach ($cursor as $multimediaObject) {
             foreach ($multimediaObject->getTracks() as $track) {
-                $path = $this->path($track);
+                $path = $this->trackDeliveryService->localPath($track);
                 if ('' === $path) {
                     continue;
                 }
@@ -92,14 +90,5 @@ final class CheckTrackDeliveryCommand extends Command
         $io->success($summary);
 
         return Command::SUCCESS;
-    }
-
-    private function path(Media $track): string
-    {
-        try {
-            return $track->storage()->path()?->path() ?? '';
-        } catch (PathException) {
-            return (string) $track->getUrl();
-        }
     }
 }
