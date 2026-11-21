@@ -50,10 +50,12 @@ class TrackDeliveryServiceTest extends TestCase
         $this->tokens = new SecureTokenService(self::SECRET, 3600);
         $this->logger = new class extends AbstractLogger {
             public array $levels = [];
+            public array $contexts = [];
 
             public function log($level, $message, array $context = []): void
             {
                 $this->levels[] = $level;
+                $this->contexts[] = $context;
             }
         };
     }
@@ -205,6 +207,37 @@ class TrackDeliveryServiceTest extends TestCase
         $this->assertSame(Response::HTTP_SERVICE_UNAVAILABLE, $response->getStatusCode());
         $this->assertSame('no download server', $this->service('')->undeliverableReason($track));
         $this->assertSame(['critical'], $this->logger->levels);
+        $this->assertSame($track->id(), $this->logger->contexts[0]['track']);
+        $this->assertSame($this->storage.'/downloads/s/a.mp4', $this->logger->contexts[0]['path']);
+        $this->assertSame('no download server', $this->logger->contexts[0]['reason']);
+    }
+
+    public function testUnresolvableStorageDirIsNotDeliverable(): void
+    {
+        $track = $this->localTrack('downloads/s/a.mp4');
+        $service = new TrackDeliveryService(
+            $this->root.'/does-not-exist',
+            self::DLS,
+            $this->tokens,
+            new TrackUrlService($this->createStub(UrlGeneratorInterface::class), $this->tokens, self::DLS),
+            $this->logger
+        );
+
+        $response = $service->response($track);
+
+        $this->assertSame(Response::HTTP_SERVICE_UNAVAILABLE, $response->getStatusCode());
+        $this->assertSame('outside the storage', $service->undeliverableReason($track));
+        $this->assertSame(['critical'], $this->logger->levels);
+    }
+
+    public function testHlsDirectoryWithUnsafeCharactersIsNotDeliverable(): void
+    {
+        $track = $this->localTrack('downloads/s x/j x/j x.m3u8');
+
+        $response = $this->service()->response($track);
+
+        $this->assertSame(Response::HTTP_SERVICE_UNAVAILABLE, $response->getStatusCode());
+        $this->assertSame('shared HLS directory', $this->service()->undeliverableReason($track));
     }
 
     public function testDeliverableTrackHasNoReason(): void

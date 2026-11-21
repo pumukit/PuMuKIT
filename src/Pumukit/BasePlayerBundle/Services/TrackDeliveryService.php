@@ -102,6 +102,10 @@ class TrackDeliveryService
         }
 
         $root = $this->realStorageDir();
+        if ('' === $root) {
+            return self::REASON_OUTSIDE_STORAGE;
+        }
+
         if (!str_starts_with($realPath, $root.'/downloads/') && !str_starts_with($realPath, $root.'/masters/')) {
             return self::REASON_OUTSIDE_STORAGE;
         }
@@ -154,8 +158,8 @@ class TrackDeliveryService
         $segments = explode('/', substr($realPath, strlen($prefix)));
 
         return 3 === count($segments)
-            && '' !== $segments[0]
-            && '' !== $segments[1]
+            && 1 === preg_match('/^[A-Za-z0-9_-]+$/', $segments[0])
+            && 1 === preg_match('/^[A-Za-z0-9_-]+$/', $segments[1])
             && $segments[1].'.m3u8' === $segments[2];
     }
 
