@@ -46,6 +46,7 @@ final class CheckTrackDeliveryCommand extends Command
 
         $cursor = $this->documentManager->createQueryBuilder(MultimediaObject::class)
             ->field('tracks')->exists(true)
+            ->setRewindable(false)
             ->getQuery()
             ->execute()
         ;
