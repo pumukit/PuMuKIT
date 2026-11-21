@@ -30,7 +30,6 @@ class TrackFileController extends AbstractController
     private LoggerInterface $logger;
     private ?SecureTokenService $secureTokenService;
     private ?RateLimiterFactoryInterface $trackfileAccessLimiter;
-    private ?TrackUrlService $trackUrlService;
     private ?TrackDeliveryService $trackDeliveryService;
 
     public function __construct(
@@ -47,7 +46,6 @@ class TrackFileController extends AbstractController
         $this->logger = $logger;
         $this->secureTokenService = $secureTokenService;
         $this->trackfileAccessLimiter = $trackfileAccessLimiter;
-        $this->trackUrlService = $trackUrlService;
         $this->trackDeliveryService = $trackDeliveryService;
     }
 
