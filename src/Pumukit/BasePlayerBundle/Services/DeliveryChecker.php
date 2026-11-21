@@ -124,9 +124,14 @@ final class DeliveryChecker
             $this->denied('Download server denies the inbox through /files/', $probe->fetch($origin.'/files/inbox/'.$name.'.txt?'.$this->query($this->secureTokenService, '/files/inbox/'.$name.'.txt')), $forbidden),
             $this->denied('Download server denies the temporary files through /files/', $probe->fetch($origin.'/files/tmp/'.$name.'.txt?'.$this->query($this->secureTokenService, '/files/tmp/'.$name.'.txt')), $forbidden),
             $this->denied('Download server denies an HLS token of another directory', $probe->fetch($this->hlsUrl($origin, $otherToken, $hlsDirectory, 'canary.m3u8')), $forbidden),
+            $this->denied('Download server denies an HLS token on a directory it was not signed for', $probe->fetch($this->hlsUrl($origin, $hlsToken, $otherDirectory, 'canary.m3u8')), $forbidden),
             $this->denied('Download server denies an mp4 with an HLS directory token', $probe->fetch($this->hlsUrl($origin, $hlsToken, $hlsDirectory, 'canary.mp4')), $forbidden),
             $this->denied('Download server denies an expired HLS token', $probe->fetch($this->hlsUrl($origin, $expiredToken, $hlsDirectory, 'canary.m3u8')), $forbidden),
         ];
+
+        $results[] = $this->noindex('Download server sends X-Robots-Tag on /pumukit/', $probe->fetch($signed));
+        $results[] = $this->noindex('Download server sends X-Robots-Tag on /files/', $probe->fetch($origin.$downloadResource.'?'.$this->query($this->secureTokenService, $downloadResource)));
+        $results[] = $this->noindex('Download server sends X-Robots-Tag on /hls/', $probe->fetch($this->hlsUrl($origin, $hlsToken, $hlsDirectory, 'canary.m3u8')));
 
         foreach (['../', '%2e%2e/'] as $dots) {
             $traversal = '/files/downloads/'.$name.'/'.$dots.$dots.'inbox/'.$name.'.txt';
@@ -196,6 +201,20 @@ final class DeliveryChecker
         }
 
         return new DeliveryCheckResult($name, true, $disposition);
+    }
+
+    private function noindex(string $name, DeliveryResponse $response): DeliveryCheckResult
+    {
+        if (200 !== $response->status) {
+            return new DeliveryCheckResult($name, false, sprintf('expected HTTP 200, got %s', $this->describe($response)));
+        }
+
+        $robots = (string) $response->header('X-Robots-Tag');
+        if (!str_contains(strtolower($robots), 'noindex')) {
+            return new DeliveryCheckResult($name, false, '' === $robots ? 'no X-Robots-Tag' : sprintf('X-Robots-Tag: %s', $robots));
+        }
+
+        return new DeliveryCheckResult($name, true, $robots);
     }
 
     private function foreignOrigin(DeliveryResponse $response): DeliveryCheckResult

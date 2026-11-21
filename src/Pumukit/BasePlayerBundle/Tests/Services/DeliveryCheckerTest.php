@@ -36,8 +36,15 @@ class DeliveryCheckerTest extends TestCase
         'Download server denies the token of another file on /files/',
     ];
 
+    private const array ROBOTS_CHECKS = [
+        'Download server sends X-Robots-Tag on /pumukit/',
+        'Download server sends X-Robots-Tag on /files/',
+        'Download server sends X-Robots-Tag on /hls/',
+    ];
+
     private const array HLS_TOKEN_CHECKS = [
         'Download server denies an HLS token of another directory',
+        'Download server denies an HLS token on a directory it was not signed for',
         'Download server denies an expired HLS token',
     ];
 
@@ -102,11 +109,16 @@ class DeliveryCheckerTest extends TestCase
 
         yield 'validator failing' => ['validator-500', [
             ...self::SERVED_CHECKS,
+            ...self::ROBOTS_CHECKS,
             ...self::TOKEN_CHECKS,
             ...self::FILES_TOKEN_CHECKS,
             ...self::HLS_TOKEN_CHECKS,
             'Download server denies CORS to another origin',
         ]];
+
+        yield 'HLS cache keyed by the token only' => ['hls-cache-token-only', ['Download server denies an HLS token on a directory it was not signed for']];
+
+        yield 'robots header missing' => ['no-robots', self::ROBOTS_CHECKS];
 
         yield 'HLS without validation' => ['hls-no-token', self::HLS_TOKEN_CHECKS];
 
@@ -264,7 +276,13 @@ class DeliveryCheckerTest extends TestCase
                 if (!$this->broken('hls-no-token') && !$this->broken('no-token')) {
                     $request = Request::create('/download/validate-hls');
                     $request->headers->set('X-Original-URI', $path);
-                    $status = $this->broken('validator-500') ? 500 : $this->controller->validateHls($request)->getStatusCode();
+                    $cacheKey = explode('/', $path)[3];
+                    if ($this->broken('hls-cache-token-only') && isset($this->cache[$cacheKey])) {
+                        $status = $this->cache[$cacheKey];
+                    } else {
+                        $status = $this->broken('validator-500') ? 500 : $this->controller->validateHls($request)->getStatusCode();
+                        $this->cache[$cacheKey] = $status;
+                    }
                     if (200 !== $status) {
                         return new DeliveryResponse($status);
                     }
@@ -272,6 +290,8 @@ class DeliveryCheckerTest extends TestCase
 
                 return $this->file(dirname($this->downloadsDir).'/'.$matches[1].rawurldecode($matches[2]), $query, $requestHeaders);
             }
+
+            private array $cache = [];
 
             private function broken(string $breakage): bool
             {
@@ -287,6 +307,9 @@ class DeliveryCheckerTest extends TestCase
                 $content = (string) file_get_contents($file);
                 parse_str($query, $parameters);
                 $responseHeaders = [];
+                if (!$this->broken('no-robots')) {
+                    $responseHeaders['x-robots-tag'] = 'noindex';
+                }
                 if ('1' === ($parameters['forcedl'] ?? null)) {
                     $responseHeaders['content-disposition'] = 'attachment';
                 }
