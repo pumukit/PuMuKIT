@@ -77,6 +77,27 @@ class MoveHlsToOwnDirectoryCommandTest extends PumukitTestCase
         $this->assertTrackMoved($mmId, $trackId, 'x');
     }
 
+    public function testMovesWithoutADownloadServer(): void
+    {
+        $_ENV['PUMUKIT_DOWNLOAD_SERVER_URL'] = $_SERVER['PUMUKIT_DOWNLOAD_SERVER_URL'] = '';
+        self::ensureKernelShutdown();
+        static::bootKernel(['environment' => 'test']);
+        $this->dm = static::getContainer()->get('doctrine_mongodb.odm.document_manager');
+        $this->writeSingleQuality('x');
+        [$mmId, $trackId] = $this->addTrack('x.m3u8');
+
+        $tester = $this->runCommand();
+
+        static::assertSame(Command::SUCCESS, $tester->getStatusCode());
+        static::assertStringContainsString('Moved 1 tracks, 0 in shared directories, 0 skipped.', $tester->getDisplay());
+        foreach (['x.m3u8', 'index.m3u8', 'data_000.ts'] as $file) {
+            static::assertFileExists($this->dir.'/x/'.$file);
+        }
+        $track = $this->findTrack($mmId, $trackId);
+        static::assertSame($this->dir.'/x/x.m3u8', $track->storage()->path()->path());
+        static::assertSame(self::URL.'x/x.m3u8', $track->storage()->url()->url());
+    }
+
     public function testMovesSeveralQualitiesInTheSameDirectory(): void
     {
         file_put_contents($this->dir.'/x.m3u8', "#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=4000000\nindex_high.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=1000000\nindex_low.m3u8\n");

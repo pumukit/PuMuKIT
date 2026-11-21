@@ -135,7 +135,7 @@ final class MoveHlsToOwnDirectoryCommand extends Command
             $directory = false === $realPath ? dirname($path) : dirname($realPath);
             $groups[$directory][] = $collected;
 
-            if (false !== $realPath && $this->isCandidate($track, $realPath)) {
+            if (false !== $realPath && $this->isCandidate($realPath)) {
                 $withCandidate[$directory] = true;
             }
         }
@@ -196,9 +196,9 @@ final class MoveHlsToOwnDirectoryCommand extends Command
         return '' !== $name && is_file(dirname($path).'/'.$name.'/'.$master);
     }
 
-    private function isCandidate(Media $track, string $realPath): bool
+    private function isCandidate(string $realPath): bool
     {
-        if (TrackDeliveryService::REASON_SHARED_HLS_DIRECTORY !== $this->trackDeliveryService->undeliverableReason($track)) {
+        if (!is_file($realPath) || $this->trackDeliveryService->isInOwnHlsDirectory($realPath)) {
             return false;
         }
 

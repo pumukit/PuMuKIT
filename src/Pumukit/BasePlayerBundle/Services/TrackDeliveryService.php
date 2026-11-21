@@ -115,11 +115,31 @@ class TrackDeliveryService
             return self::REASON_OUTSIDE_STORAGE;
         }
 
-        if ($this->isHls($realPath) && !$this->isOwnHlsDirectory($realPath)) {
+        if ($this->isHls($realPath) && !$this->isInOwnHlsDirectory($realPath)) {
             return self::REASON_SHARED_HLS_DIRECTORY;
         }
 
         return null;
+    }
+
+    public function isInOwnHlsDirectory(string $path): bool
+    {
+        $realPath = realpath($path);
+        if (false === $realPath || !$this->isHls($realPath)) {
+            return false;
+        }
+
+        $prefix = $this->realStorageDir().'/downloads/';
+        if (!str_starts_with($realPath, $prefix)) {
+            return false;
+        }
+
+        $segments = explode('/', substr($realPath, strlen($prefix)));
+
+        return 3 === count($segments)
+            && 1 === preg_match('/^[A-Za-z0-9_-]+$/', $segments[0])
+            && 1 === preg_match('/^[A-Za-z0-9_-]+$/', $segments[1])
+            && $segments[1].'.m3u8' === $segments[2];
     }
 
     public function localPath(Media $track): string
@@ -151,21 +171,6 @@ class TrackDeliveryService
     private function isHls(string $realPath): bool
     {
         return str_ends_with(strtolower($realPath), '.m3u8');
-    }
-
-    private function isOwnHlsDirectory(string $realPath): bool
-    {
-        $prefix = $this->realStorageDir().'/downloads/';
-        if (!str_starts_with($realPath, $prefix)) {
-            return false;
-        }
-
-        $segments = explode('/', substr($realPath, strlen($prefix)));
-
-        return 3 === count($segments)
-            && 1 === preg_match('/^[A-Za-z0-9_-]+$/', $segments[0])
-            && 1 === preg_match('/^[A-Za-z0-9_-]+$/', $segments[1])
-            && $segments[1].'.m3u8' === $segments[2];
     }
 
     private function forceDownload(string $url, bool $forceDownload): string

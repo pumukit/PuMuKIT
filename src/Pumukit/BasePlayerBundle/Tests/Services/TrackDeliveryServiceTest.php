@@ -134,6 +134,21 @@ class TrackDeliveryServiceTest extends TestCase
         $this->assertSame(['critical', 'critical'], $this->logger->levels);
     }
 
+    public function testOwnHlsDirectoryDoesNotDependOnTheDownloadServer(): void
+    {
+        $this->localTrack('downloads/s/j/j.m3u8');
+        $this->localTrack('downloads/s/x.m3u8');
+        $this->localTrack('downloads/s/a.mp4');
+
+        foreach ([self::DLS, ''] as $downloadServer) {
+            $service = $this->service($downloadServer);
+            $this->assertTrue($service->isInOwnHlsDirectory($this->storage.'/downloads/s/j/j.m3u8'));
+            $this->assertFalse($service->isInOwnHlsDirectory($this->storage.'/downloads/s/x.m3u8'));
+            $this->assertFalse($service->isInOwnHlsDirectory($this->storage.'/downloads/s/a.mp4'));
+            $this->assertFalse($service->isInOwnHlsDirectory($this->storage.'/downloads/s/missing/missing.m3u8'));
+        }
+    }
+
     public function testExpiryCoversTheDuration(): void
     {
         $track = $this->localTrack('downloads/s/a.mp4', 7200);
