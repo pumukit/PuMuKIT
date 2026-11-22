@@ -74,6 +74,16 @@ class TrackListTest extends PumukitTestCase
             : $this->assertSelectorNotExists('table[data-admin--track-list-poll-value]');
     }
 
+    public static function jobStatuses(): array
+    {
+        return [
+            'no jobs' => [null, false],
+            'waiting job' => [Job::STATUS_WAITING, true],
+            'executing job' => [Job::STATUS_EXECUTING, true],
+            'failed job' => [Job::STATUS_ERROR, false],
+        ];
+    }
+
     #[DataProvider('jobColumns')]
     public function testTheJobRowSpansTheColumnsOfTheTracks(int $type, bool $trackOptions, int $colspan): void
     {
@@ -106,16 +116,6 @@ class TrackListTest extends PumukitTestCase
             'video' => [MultimediaObject::TYPE_VIDEO, true, 6],
             'audio' => [MultimediaObject::TYPE_AUDIO, true, 5],
             'video without the track options' => [MultimediaObject::TYPE_VIDEO, false, 1],
-        ];
-    }
-
-    public static function jobStatuses(): array
-    {
-        return [
-            'no jobs' => [null, false],
-            'waiting job' => [Job::STATUS_WAITING, true],
-            'executing job' => [Job::STATUS_EXECUTING, true],
-            'failed job' => [Job::STATUS_ERROR, false],
         ];
     }
 }
