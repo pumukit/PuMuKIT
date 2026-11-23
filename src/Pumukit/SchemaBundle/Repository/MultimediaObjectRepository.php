@@ -1016,6 +1016,32 @@ class MultimediaObjectRepository extends DocumentRepository
         return $this->createStandardQueryBuilder()->field('series')->references($series)->count()->getQuery()->execute();
     }
 
+    public function countInEachSeries(array $seriesIds): array
+    {
+        if ([] === $seriesIds) {
+            return [];
+        }
+
+        $criteria = $this->dm->getFilterCollection()->getFilterCriteria($this->getClassMetadata());
+        $pipeline = [] === $criteria ? [] : [['$match' => $criteria]];
+        $pipeline = [
+            ...$pipeline,
+            ['$match' => [
+                'status' => ['$nin' => [MultimediaObject::STATUS_PROTOTYPE, MultimediaObject::STATUS_NEW]],
+                'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
+                'series' => ['$in' => array_map(static fn ($id) => new ObjectId((string) $id), array_values($seriesIds))],
+            ]],
+            ['$group' => ['_id' => '$series', 'count' => ['$sum' => 1]]],
+        ];
+
+        $counts = array_fill_keys(array_map('strval', $seriesIds), 0);
+        foreach ($this->getDocumentManager()->getDocumentCollection(MultimediaObject::class)->aggregate($pipeline) as $result) {
+            $counts[(string) $result['_id']] = $result['count'];
+        }
+
+        return $counts;
+    }
+
     public function countEventsInSeries($series): int
     {
         return $this->createStandardQueryBuilder()->field('type')->equals(MultimediaObject::TYPE_LIVE)->field('series')->references($series)->count()->getQuery()->execute();

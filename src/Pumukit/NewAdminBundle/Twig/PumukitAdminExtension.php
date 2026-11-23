@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Pumukit\NewAdminBundle\Twig;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Iterator\CachingIterator;
 use MongoDB\BSON\ObjectId;
+use Pagerfanta\PagerfantaInterface;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\Repository\JobRepository;
 use Pumukit\NewAdminBundle\Form\Type\Base\CustomLanguageType;
@@ -21,13 +23,14 @@ use Pumukit\SchemaBundle\Services\SpecialTranslationService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
 use Symfony\Component\Intl\Languages;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Service\ResetInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
-class PumukitAdminExtension extends AbstractExtension
+class PumukitAdminExtension extends AbstractExtension implements ResetInterface
 {
     private $dm;
     private $languages;
@@ -41,6 +44,7 @@ class PumukitAdminExtension extends AbstractExtension
     private $eventService;
     private $enablePlaylist;
     private JobRepository $jobRepository;
+    private array $multimediaObjectCounts = [];
 
     public function __construct(ProfileService $profileService, DocumentManager $documentManager, TranslatorInterface $translator, RouterInterface $router, MultimediaObjectService $mmobjService, SpecialTranslationService $specialTranslationService, EmbeddedEventSessionService $eventService, JobRepository $jobRepository, $enablePlaylist)
     {
@@ -102,6 +106,7 @@ class PumukitAdminExtension extends AbstractExtension
             new TwigFunction('is_immutable', [$this, 'isImmutable']),
             new TwigFunction('is_addon_language', [$this, 'isAddonLanguage']),
             new TwigFunction('has_pending_jobs', [$this, 'hasPendingJobs']),
+            new TwigFunction('prefetch_multimedia_object_counts', [$this, 'prefetchMultimediaObjectCounts']),
         ];
     }
 
@@ -397,7 +402,31 @@ class PumukitAdminExtension extends AbstractExtension
 
     public function countMultimediaObjects(Series $series): int
     {
-        return $this->dm->getRepository(MultimediaObject::class)->countInSeries($series);
+        return $this->multimediaObjectCounts[(string) $series->getId()] ?? $this->dm->getRepository(MultimediaObject::class)->countInSeries($series);
+    }
+
+    public function prefetchMultimediaObjectCounts(mixed $objects): void
+    {
+        if ($objects instanceof PagerfantaInterface) {
+            $objects = $objects->getCurrentPageResults();
+        }
+        if (!is_array($objects) && !$objects instanceof CachingIterator) {
+            return;
+        }
+
+        $seriesIds = [];
+        foreach ($objects as $object) {
+            if ($object instanceof Series && !isset($this->multimediaObjectCounts[(string) $object->getId()])) {
+                $seriesIds[] = (string) $object->getId();
+            }
+        }
+
+        $this->multimediaObjectCounts += $this->dm->getRepository(MultimediaObject::class)->countInEachSeries(array_unique($seriesIds));
+    }
+
+    public function reset(): void
+    {
+        $this->multimediaObjectCounts = [];
     }
 
     public function countEvents(Series $series): int

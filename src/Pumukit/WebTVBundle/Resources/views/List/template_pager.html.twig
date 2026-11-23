@@ -5,6 +5,7 @@
         </h2>
     </div>
     <div class="announces">
+        {% do prefetch_multimedia_object_counts(objects) %}
         {% for object in objects %}
             {% if object.isCollection() %}
                 {% include '@PumukitWebTV/Resources/template_series.html.twig' with {'show_info': true } %}

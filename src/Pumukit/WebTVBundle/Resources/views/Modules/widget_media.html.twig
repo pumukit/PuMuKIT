@@ -1,4 +1,5 @@
 {% set selected_design = design|default('horizontal') %}
+{% do prefetch_multimedia_object_counts(objects) %}
 {% set textShowMore = "Show more"|trans %}
 
 {% if objects and selected_design == 'horizontal' %}
