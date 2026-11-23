@@ -685,6 +685,28 @@ class PersonServiceTest extends PumukitTestCase
         static::assertCount(1, $this->repo->findAll());
     }
 
+    public function testDeletePersonOnlyInASeriesTemplateFails(): void
+    {
+        $person = new Person();
+        $person->setName('Template owner');
+        $role = new Role();
+        $role->setCod('owner');
+        $this->dm->persist($person);
+        $this->dm->persist($role);
+        $this->dm->flush();
+
+        $series = $this->factoryService->createSeries();
+        $template = $this->repoMmobj->findPrototype($series);
+        $template->addPersonWithRole($person, $role);
+        $this->dm->flush();
+
+        static::assertSame(0, $this->personService->countMultimediaObjectsWithPerson($person));
+        static::assertTrue($this->personService->isUsedInMultimediaObjects($person));
+
+        $this->expectException(\Exception::class);
+        $this->personService->deletePerson($person);
+    }
+
     public function testReferencePersonIntoUser()
     {
         static::assertCount(0, $this->repo->findAll());

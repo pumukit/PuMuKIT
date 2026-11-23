@@ -67,6 +67,32 @@ class PersonDeleteMessagesTest extends PumukitTestCase
         $this->assertMessage('Can not delete the person "%name%": it has multimedia objects.');
     }
 
+    public function testDeletingAPersonOnlyInASeriesTemplateIsRefused(): void
+    {
+        $role = new Role();
+        $role->setCod('owner');
+        $this->dm->persist($role);
+
+        $series = new Series();
+        $series->setNumericalID(1);
+        $this->dm->persist($series);
+
+        $template = new MultimediaObject();
+        $template->setNumericalID(1);
+        $template->setSeries($series);
+        $template->setStatus(MultimediaObject::STATUS_PROTOTYPE);
+        $template->addPersonWithRole($this->person, $role);
+        $this->dm->persist($template);
+        $this->dm->flush();
+
+        $this->client->request('DELETE', $this->url('pumukitnewadmin_person_delete', ['id' => $this->person->getId()]));
+
+        $this->assertResponseStatusCodeSame(409);
+        $this->assertMessage('Can not delete the person "%name%": it has multimedia objects.');
+        $this->dm->clear();
+        $this->assertNotNull($this->dm->getRepository(Person::class)->find($this->person->getId()));
+    }
+
     public function testDeletingThePersonOfAUserNamesThePerson(): void
     {
         $user = new User();

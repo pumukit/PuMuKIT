@@ -108,6 +108,35 @@ class FactoryServiceTest extends PumukitTestCase
         }
     }
 
+    public function testCreateMultimediaObjectSkipsATemplateOwnerThatNoLongerExists(): void
+    {
+        $owner = new Role();
+        $owner->setCod('owner');
+        $kept = new Person();
+        $kept->setName('Kept owner');
+        $deleted = new Person();
+        $deleted->setName('Deleted owner');
+        $this->dm->persist($owner);
+        $this->dm->persist($kept);
+        $this->dm->persist($deleted);
+        $this->dm->flush();
+
+        $series = $this->factory->createSeries();
+        $template = $this->multimediaObjectRepo->findPrototype($series);
+        $template->addPersonWithRole($kept, $owner);
+        $template->addPersonWithRole($deleted, $owner);
+        $this->dm->flush();
+        $deletedId = $deleted->getId();
+        $this->dm->remove($deleted);
+        $this->dm->flush();
+
+        $multimediaObject = $this->factory->createMultimediaObject($series);
+
+        $owners = array_map(static fn ($person) => $person->getId(), $multimediaObject->getPeopleByRoleCod('owner', true));
+        static::assertContains($kept->getId(), $owners);
+        static::assertNotContains($deletedId, $owners);
+    }
+
     public function testSeriesType(): void
     {
         $series_type1 = new SeriesType();

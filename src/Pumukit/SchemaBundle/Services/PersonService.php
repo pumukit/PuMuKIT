@@ -228,7 +228,7 @@ class PersonService
 
     public function deletePerson(PersonInterface $person, bool $deleteFromUser = false): void
     {
-        if (0 !== $this->repoMmobj->countByPersonId($person->getId())) {
+        if ($this->isUsedInMultimediaObjects($person)) {
             throw new \Exception("Couldn't remove Person with id ".$person->getId().'. There are multimedia objects with this person');
         }
 
@@ -261,6 +261,11 @@ class PersonService
     public function countMultimediaObjectsWithPerson(PersonInterface $person)
     {
         return $this->repoMmobj->countByPersonId($person->getId());
+    }
+
+    public function isUsedInMultimediaObjects(PersonInterface $person): bool
+    {
+        return 0 !== $this->repoMmobj->countWithTemplatesByPersonId($person->getId());
     }
 
     public function referencePersonIntoUser(User $user): User

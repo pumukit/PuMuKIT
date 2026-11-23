@@ -217,6 +217,9 @@ class FactoryService
                     $role = $this->dm->getRepository(Role::class)->findOneBy(['cod' => $this->personService->getPersonalScopeRoleCode()]);
                     foreach ($embeddedRole->getPeople() as $embeddedPerson) {
                         $person = $this->dm->getRepository(Person::class)->findOneBy(['_id' => $embeddedPerson->getId()]);
+                        if (null === $person) {
+                            continue;
+                        }
                         $mm = $this->personService->createRelationPerson($person, $role, $mm, $flush, $dispatch);
                     }
                 }

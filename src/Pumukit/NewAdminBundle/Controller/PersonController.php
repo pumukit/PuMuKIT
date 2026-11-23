@@ -510,7 +510,7 @@ class PersonController extends AdminController
         $person = $this->personService->findPersonById($request->attributes->get('id'));
 
         try {
-            if (0 === $this->personService->countMultimediaObjectsWithPerson($person)) {
+            if (!$this->personService->isUsedInMultimediaObjects($person)) {
                 $this->personService->deletePerson($person);
             } else {
                 return new Response($this->translator->trans('Can not delete the person "%name%": it has multimedia objects.', ['%name%' => $person->getName()]), 409);
@@ -531,11 +531,9 @@ class PersonController extends AdminController
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
-        $mmRepo = $this->documentManager->getRepository(MultimediaObject::class);
-
         foreach ($ids as $id) {
             $person = $this->find($id);
-            if (0 !== (is_countable($mmRepo->findByPersonId($person->getId())) ? count($mmRepo->findByPersonId($person->getId())) : 0)) {
+            if ($this->personService->isUsedInMultimediaObjects($person)) {
                 return new Response($this->translator->trans('Can not delete the person "%name%": it has multimedia objects.', ['%name%' => $person->getName()]), Response::HTTP_BAD_REQUEST);
             }
         }

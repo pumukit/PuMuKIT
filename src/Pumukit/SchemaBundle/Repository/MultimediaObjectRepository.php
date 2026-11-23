@@ -128,6 +128,16 @@ class MultimediaObjectRepository extends DocumentRepository
         ;
     }
 
+    public function countWithTemplatesByPersonId(string $personId): int
+    {
+        return $this->createQueryBuilder()
+            ->field('people.people._id')->equals(new ObjectId($personId))
+            ->count()
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
     /**
      * Find multimedia objects by role code.
      *
