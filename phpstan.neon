@@ -3,7 +3,7 @@ includes:
     - vendor/phpstan/phpstan-symfony/extension.neon
 
 parameters:
-    level: 2
+    level: 3
     paths:
         - src
     doctrine:

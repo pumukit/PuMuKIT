@@ -22,7 +22,7 @@ final class External extends Media
         int $views,
         Storage $storage,
         MediaMetadata $mediaMetadata
-    ): MediaInterface {
+    ): self {
         return new self($originalName, $description, $language, $tags, $hide, $isDownloadable, $views, $storage, $mediaMetadata);
     }
 }
