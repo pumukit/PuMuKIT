@@ -84,8 +84,9 @@ class MicrositeListenerTest extends PumukitTestCase
 
         $this->listener()($event);
 
-        $this->assertInstanceOf(RedirectResponse::class, $event->getResponse());
-        $this->assertSame('https://tv.example.org/admin/series/?page=2', $event->getResponse()->getTargetUrl());
+        $response = $event->getResponse();
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertSame('https://tv.example.org/admin/series/?page=2', $response->getTargetUrl());
         $this->assertFalse($this->dm->getFilterCollection()->isEnabled('microsite'));
     }
 
