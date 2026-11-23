@@ -4085,14 +4085,6 @@
         <source>Your user has no associated person, so its videos cannot be searched.</source>
         <target state="translated">O teu usuario non ten unha persoa asociada, así que non pode buscar vídeos.</target>
       </trans-unit>
-      <trans-unit id="6hj1INW" resname="&apos; with MultimediaObject &apos;">
-        <source>' with MultimediaObject '</source>
-        <target state="translated">' co obxecto multimedia '</target>
-      </trans-unit>
-      <trans-unit id="Uz7TeWb" resname="&apos;. There are Multimedia objects with this Person.">
-        <source>'. There are Multimedia objects with this Person.</source>
-        <target state="translated">'. Hai obxectos multimedia con esta persoa.</target>
-      </trans-unit>
       <trans-unit id="yRa_9kI" resname="Add new track">
         <source>Add new track</source>
         <target state="translated">Engadir nova pista</target>
@@ -4101,21 +4093,21 @@
         <source>Bio</source>
         <target state="translated">Biografía</target>
       </trans-unit>
-      <trans-unit id="RdGR424" resname="Can not delete Person &apos;">
-        <source>Can not delete Person '</source>
-        <target state="translated">Non se pode eliminar a persoa '</target>
+      <trans-unit id="pRsRm01" resname="Can not remove the person &quot;%name%&quot; from the multimedia object &quot;%title%&quot;.">
+        <source>Can not remove the person "%name%" from the multimedia object "%title%".</source>
+        <target state="translated">Non se pode quitar a persoa "%name%" do obxecto multimedia "%title%".</target>
       </trans-unit>
-      <trans-unit id="CDLeyDv" resname="Can not delete relation of Person &apos;">
-        <source>Can not delete relation of Person '</source>
-        <target state="translated">Non se pode eliminar a relación da persoa '</target>
+      <trans-unit id="pRsDl02" resname="Can not delete the person &quot;%name%&quot;: it has multimedia objects.">
+        <source>Can not delete the person "%name%": it has multimedia objects.</source>
+        <target state="translated">Non se pode eliminar a persoa "%name%": ten obxectos multimedia.</target>
+      </trans-unit>
+      <trans-unit id="pRsDl03" resname="Can not delete the person &quot;%name%&quot;.">
+        <source>Can not delete the person "%name%".</source>
+        <target state="translated">Non se pode eliminar a persoa "%name%".</target>
       </trans-unit>
       <trans-unit id="JcTpces" resname="Can&apos;t clone this multimediaObject">
         <source>Can't clone this multimediaObject</source>
         <target state="translated">Non se pode clonar este obxecto multimedia</target>
-      </trans-unit>
-      <trans-unit id="csUqMzZ" resname="Can&apos;t delete Person&apos;">
-        <source>Can't delete Person'</source>
-        <target state="translated">Non se pode eliminar a persoa '</target>
       </trans-unit>
       <trans-unit id="9jsPQ68" resname="Can&apos;t delete this multimediaObject">
         <source>Can't delete this multimediaObject</source>

@@ -478,7 +478,7 @@ class PersonController extends AdminController
             $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
             $multimediaObject = $this->personService->deleteRelation($person, $role, $multimediaObject);
         } catch (\Exception $e) {
-            return new Response($this->translator->trans("Can not delete relation of Person '").$person->getName().$this->translator->trans("' with MultimediaObject '").$multimediaObject->getId()."'. ", 409);
+            return new Response($this->translator->trans('Can not remove the person "%name%" from the multimedia object "%title%".', ['%name%' => $person->getName(), '%title%' => $multimediaObject->getTitle()]), 409);
         }
 
         $template = '';
@@ -513,10 +513,10 @@ class PersonController extends AdminController
             if (0 === $this->personService->countMultimediaObjectsWithPerson($person)) {
                 $this->personService->deletePerson($person);
             } else {
-                return new Response($this->translator->trans("Can't delete Person'").' '.$person->getName().$this->translator->trans("'. There are Multimedia objects with this Person."), 409);
+                return new Response($this->translator->trans('Can not delete the person "%name%": it has multimedia objects.', ['%name%' => $person->getName()]), 409);
             }
         } catch (\Exception $e) {
-            return new Response($this->translator->trans("Can't delete Person'").' '.$person->getName()."'. ", 409);
+            return new Response($this->translator->trans('Can not delete the person "%name%".', ['%name%' => $person->getName()]), 409);
         }
 
         return $this->redirectToRoute('pumukitnewadmin_person_list');
@@ -536,7 +536,7 @@ class PersonController extends AdminController
         foreach ($ids as $id) {
             $person = $this->find($id);
             if (0 !== (is_countable($mmRepo->findByPersonId($person->getId())) ? count($mmRepo->findByPersonId($person->getId())) : 0)) {
-                return new Response($this->translator->trans("Can not delete Person '").$person->getName()."'. ", Response::HTTP_BAD_REQUEST);
+                return new Response($this->translator->trans('Can not delete the person "%name%": it has multimedia objects.', ['%name%' => $person->getName()]), Response::HTTP_BAD_REQUEST);
             }
         }
 
@@ -546,7 +546,7 @@ class PersonController extends AdminController
             try {
                 $this->personService->deletePerson($person);
             } catch (\Exception $e) {
-                return new Response($this->translator->trans("Can not delete Person '").$person->getName()."'. ", Response::HTTP_BAD_REQUEST);
+                return new Response($this->translator->trans('Can not delete the person "%name%".', ['%name%' => $person->getName()]), Response::HTTP_BAD_REQUEST);
             }
             if ($id === $this->requestStack->getSession()->get('admin/person/id')) {
                 $this->requestStack->getSession()->remove('admin/person/id');
