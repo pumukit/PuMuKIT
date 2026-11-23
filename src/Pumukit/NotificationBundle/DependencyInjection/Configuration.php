@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
             ->booleanNode('enable')
-            ->defaultFalse()
+            ->defaultTrue()
             ->info('Enable notifications to send emails')
             ->end()
             ->scalarNode('platform_name')

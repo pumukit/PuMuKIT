@@ -806,9 +806,18 @@ they do not use. These options change their default value from `false` to `true`
 | `menu.show_stats` (parameter) | Statistics block in the portal menu |
 | `pumukit.warning_on_unpublished` (parameter) | Warning in the backoffice on unpublished or unplayable multimedia objects |
 | `pumukit.inbox_depth` (parameter) | Inbox folder file counts include subfolders |
+| `pumukit_notification.enable` | Emails sent by PuMuKIT and its bundles |
 
 `pumukit_new_admin.enable_playlist: false` now really disables the playlists: every route of `/admin/playlist` and
 `/admin/playlistpic` answers `404`, and so does the LmsBundle link to the playlists of the backoffice. The public playlist player (`/playlist/{id}`) does not change.
+
+`pumukit_notification.enable` is the switch of every email that goes through the notification sender: the end or failure of
+an encoding job to the owners whose permission profile has the notification permissions (every default backoffice profile
+has them), the email to a user added as owner of a multimedia object, and the emails of the
+bundles that use it. Nothing leaves while `MAILER_DSN` is `null://null`, the default; once a project sets a real transport,
+those emails start to go out. Set `pumukit_notification.sender_email` to an address of the installation's own domain (the
+default `notifications@pumukit.org` is likely rejected by the receiving servers) and `admin_email` to receive the encoding
+errors, or `enable: false` to keep the behaviour of 5.x.
 
 `pumukit_core.full_magic_url` was never read: the WebTV controllers received a broken
 parameter reference that behaved as `true`. It now works and keeps its default of `false`,

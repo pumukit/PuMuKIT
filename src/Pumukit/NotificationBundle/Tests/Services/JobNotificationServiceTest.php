@@ -9,14 +9,20 @@ use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Event\JobEvent;
+use Pumukit\NotificationBundle\Services\JobNotificationService;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
+use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\FactoryService;
 
 /**
@@ -38,17 +44,12 @@ class JobNotificationServiceTest extends PumukitTestCase
         parent::setUp();
         $this->containerHelper = self::$kernel->getContainer();
 
-        if (!array_key_exists('PumukitNotificationBundle', $this->containerHelper->getParameter('kernel.bundles'))
-            || false === $this->containerHelper->getParameter('pumukit_notification.enable')) {
-            static::markTestSkipped('NotificationBundle is not installed');
-        }
-
         $this->i18nService = new i18nService(['en', 'es'], 'en');
 
         $this->factoryService = self::$kernel->getContainer()->get(FactoryService::class);
         $this->repo = $this->dm->getRepository(Job::class);
 
-        $this->jobNotificationService = $this->containerHelper->get('pumukit_notification.listener');
+        $this->jobNotificationService = $this->containerHelper->get(JobNotificationService::class);
     }
 
     public function tearDown(): void
@@ -64,6 +65,7 @@ class JobNotificationServiceTest extends PumukitTestCase
     public function testOnJobSuccess()
     {
         $multimediaObject = $this->factoryService->createMultimediaObject($this->factoryService->createSeries());
+        $this->addOwner($multimediaObject, Permission::ROLE_SEND_NOTIFICATION_COMPLETE);
         $track = $this->generateTrackMedia();
         $multimediaObject->addTrack($track);
         $this->dm->flush();
@@ -79,11 +81,14 @@ class JobNotificationServiceTest extends PumukitTestCase
 
         static::assertEquals(1, $output);
         static::assertCount(1, $this->repo->findAll());
+        static::assertEmailCount(1);
+        static::assertEmailAddressContains(static::getMailerMessage(), 'To', 'owner@pumukit.local');
     }
 
     public function testOnJobError()
     {
         $multimediaObject = $this->factoryService->createMultimediaObject($this->factoryService->createSeries());
+        $this->addOwner($multimediaObject, Permission::ROLE_SEND_NOTIFICATION_ERRORS);
         $track = $this->generateTrackMedia();
         $multimediaObject->addTrack($track);
         $this->dm->flush();
@@ -99,6 +104,30 @@ class JobNotificationServiceTest extends PumukitTestCase
 
         static::assertEquals(1, $output);
         static::assertCount(1, $this->repo->findAll());
+        static::assertEmailCount(1);
+        static::assertEmailAddressContains(static::getMailerMessage(), 'To', 'owner@pumukit.local');
+    }
+
+    private function addOwner(MultimediaObject $multimediaObject, string $permission): void
+    {
+        $email = 'owner@pumukit.local';
+        $person = new Person();
+        $person->setName('Owner');
+        $person->setEmail($email);
+        $user = new User();
+        $user->setUsername('owner');
+        $user->setEmail($email);
+        $user->setPassword('unused');
+        $user->setRoles([$permission]);
+        $user->setPerson($person);
+        $person->setUser($user);
+        $role = new Role();
+        $role->setCod(JobNotificationService::PERSONAL_SCOPE_ROLE_CODE);
+        $this->dm->persist($person);
+        $this->dm->persist($user);
+        $this->dm->persist($role);
+        $multimediaObject->addPersonWithRole($person, $role);
+        $this->dm->flush();
     }
 
     private function createNewJob($status, $multimediaObject)

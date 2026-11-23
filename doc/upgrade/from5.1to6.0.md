@@ -28,6 +28,10 @@ deployment:
   Configure the transport via the **`MAILER_DSN`** environment variable (e.g.
   `smtp://user:pass@host:port` or `null://null` to disable). The old `swiftmailer.yaml`
   and the `PUMUKIT_MAILER_*` variables are no longer used.
+- **Notifications enabled by default.** `pumukit_notification.enable` is now `true`: with a real
+  `MAILER_DSN`, owners get an email when the encoding job of their video ends or fails (every
+  default backoffice profile has the notification permissions) and when they are added as owners. Set `pumukit_notification.sender_email` to an address of your domain, or
+  `enable: false` to keep them off (see "Configuration defaults" in `UPGRADE-6.0.md`).
 - **Ingest command option renamed.** `--profile` collided with Symfony 6.1+'s global
   `--profile` option and was renamed to **`--encoding-profile`** in
   `pumukit:import:inbox` and `pumukit:import:multimedia:file`. Update any cron jobs or
