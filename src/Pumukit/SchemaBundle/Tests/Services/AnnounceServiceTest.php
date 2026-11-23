@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Tests\Services;
 
 use PHPUnit\Framework\Attributes\CoversNothing;
+use Pumukit\CoreBundle\Tests\Mongo\MongoCommandCounter;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 
@@ -127,5 +129,53 @@ class AnnounceServiceTest extends PumukitTestCase
         [$dateEnd, $last] = $this->announceService->getNextLatestUploads($dateEnd);
         static::assertEquals([], $last);
         static::assertEquals(null, $dateEnd);
+    }
+
+    public function testTheLatestUploadsKeepTheAnnouncedSeriesThatHaveMultimediaObjects(): void
+    {
+        $date = new \DateTime('2024-03-15');
+        $withVideos = $this->announcedSeries($date, 2);
+        $onlyTemplate = $this->announcedSeries($date, 0);
+        $withoutAnything = new Series();
+        $withoutAnything->setNumericalID(999);
+        $withoutAnything->setAnnounce(true);
+        $withoutAnything->setPublicDate($date);
+        $this->dm->persist($withoutAnything);
+        $this->dm->flush();
+
+        $ids = array_map(static fn ($object): string => (string) $object->getId(), $this->announceService->getLatestUploadsByDates(new \DateTime('2024-03-01'), new \DateTime('2024-03-31 23:59:59')));
+
+        static::assertContains((string) $withVideos->getId(), $ids);
+        static::assertContains((string) $onlyTemplate->getId(), $ids);
+        static::assertNotContains((string) $withoutAnything->getId(), $ids);
+    }
+
+    public function testTheLatestUploadsDoNotQueryEachAnnouncedSeries(): void
+    {
+        $date = new \DateTime('2024-03-15');
+        foreach (range(1, 5) as $number) {
+            $this->announcedSeries($date, 1);
+        }
+        $this->dm->clear();
+
+        $counter = MongoCommandCounter::start();
+        $this->announceService->getLatestUploadsByDates(new \DateTime('2024-03-01'), new \DateTime('2024-03-31 23:59:59'));
+        $counter->stop();
+
+        static::assertSame(1, $counter->count('find', 'MultimediaObject'));
+        static::assertLessThanOrEqual(1, $counter->count('distinct', 'MultimediaObject'));
+    }
+
+    private function announcedSeries(\DateTime $date, int $videos): Series
+    {
+        $series = $this->factoryService->createSeries();
+        $series->setAnnounce(true);
+        $series->setPublicDate($date);
+        for ($i = 0; $i < $videos; ++$i) {
+            $this->factoryService->createMultimediaObject($series)->setStatus(MultimediaObject::STATUS_PUBLISHED);
+        }
+        $this->dm->flush();
+
+        return $series;
     }
 }

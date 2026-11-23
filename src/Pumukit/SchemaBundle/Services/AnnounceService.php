@@ -56,9 +56,10 @@ class AnnounceService
 
         $last = [];
 
+        $lastSeries = $lastSeries->toArray();
+        $seriesWithMultimediaObjects = $this->seriesWithMultimediaObjects($lastSeries);
         foreach ($lastSeries as $serie) {
-            $haveMmojb = $this->mmobjRepo->findBy(['series' => new ObjectId($serie->getId())]);
-            if (0 !== (is_countable($haveMmojb) ? count($haveMmojb) : 0)) {
+            if (isset($seriesWithMultimediaObjects[(string) $serie->getId()])) {
                 $last[] = $serie;
             }
         }
@@ -175,5 +176,22 @@ class AnnounceService
         }
 
         return $return;
+    }
+
+    private function seriesWithMultimediaObjects(array $series): array
+    {
+        if ([] === $series) {
+            return [];
+        }
+
+        $seriesIds = array_map(static fn (Series $oneSeries): ObjectId => new ObjectId($oneSeries->getId()), array_values($series));
+        $found = $this->mmobjRepo->createQueryBuilder()
+            ->distinct('series')
+            ->field('series')->in($seriesIds)
+            ->getQuery()
+            ->execute()
+        ;
+
+        return array_fill_keys(array_map('strval', is_array($found) ? $found : iterator_to_array($found, false)), true);
     }
 }
