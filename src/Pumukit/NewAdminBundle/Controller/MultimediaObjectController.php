@@ -28,7 +28,6 @@ use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\TagInterface;
-use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\ValueObject\Url;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
@@ -235,7 +234,7 @@ class MultimediaObjectController extends SortableAdminController
 
         $session->set('admin/series/id', $series->getId());
 
-        $mmobj = $this->factoryService->createMultimediaObject($series, true, $this->getUser());
+        $mmobj = $this->factoryService->createMultimediaObject($series, true, $this->loggedInUser());
         $this->sortedMultimediaObjectService->reorder($series);
 
         if ($request->attributes->has('microsite_custom_tag')) {
@@ -1038,7 +1037,7 @@ class MultimediaObjectController extends SortableAdminController
 
     public function userLastRelationAction(Request $request)
     {
-        $loggedInUser = $this->getUser();
+        $loggedInUser = $this->loggedInUser();
 
         $response = null;
         if (!$this->userService->hasPersonalScope($loggedInUser)) {
@@ -1239,12 +1238,12 @@ class MultimediaObjectController extends SortableAdminController
                 'metatag' => true,
                 'display' => true,
             ],
-            ['cod' => 1]
+            ['cod' => 'asc']
         );
         if (!$tags) {
             throw new \Exception($this->translator->trans('No tags defined with metatag'));
         }
-        $roles = $this->documentManager->getRepository(Role::class)->findBy([], ["name.{$locale}" => 1]);
+        $roles = $this->documentManager->getRepository(Role::class)->findBy([], ["name.{$locale}" => 'asc']);
         if (0 === count($roles)) {
             throw new \Exception($this->translator->trans('No roles defined'));
         }
@@ -1337,7 +1336,7 @@ class MultimediaObjectController extends SortableAdminController
     protected function isUserAllowedToDelete(MultimediaObject $resource)
     {
         if (!$this->isGranted(Permission::MODIFY_OWNER)) {
-            $loggedInUser = $this->getUser();
+            $loggedInUser = $this->loggedInUser();
 
             $person = $this->personService->getPersonFromLoggedInUser($loggedInUser);
             $role = $this->personService->getPersonalScopeRole();
@@ -1466,10 +1465,7 @@ class MultimediaObjectController extends SortableAdminController
 
     private function isUserStillRelated(MultimediaObject $multimediaObject)
     {
-        $loggedInUser = $this->getUser();
-        if (!$loggedInUser instanceof User) {
-            throw $this->createAccessDeniedException();
-        }
+        $loggedInUser = $this->loggedInUser();
         $superAdmin = $loggedInUser->hasRole('ROLE_SUPER_ADMIN');
         if ($superAdmin) {
             return true;

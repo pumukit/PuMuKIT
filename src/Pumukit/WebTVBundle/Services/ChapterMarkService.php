@@ -59,7 +59,7 @@ class ChapterMarkService
             }
 
             usort($editorChapters, static function ($a, $b) {
-                return $a['real_time'] > $b['real_time'];
+                return $a['real_time'] <=> $b['real_time'];
             });
         }
 

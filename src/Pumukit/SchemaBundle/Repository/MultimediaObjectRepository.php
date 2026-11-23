@@ -1055,8 +1055,8 @@ class MultimediaObjectRepository extends DocumentRepository
     /**
      * Find by tag query.
      *
-     * @param Tag   $tag
-     * @param array $sort
+     * @param TagInterface $tag
+     * @param array        $sort
      *
      * @return mixed
      */

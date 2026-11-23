@@ -213,7 +213,7 @@ class EmbeddedEvent
     {
         $embeddedEventSession = $this->embeddedEventSession->toArray();
         usort($embeddedEventSession, static function (EmbeddedEventSession $a, EmbeddedEventSession $b) {
-            return $a->getStart() > $b->getStart();
+            return $a->getStart() <=> $b->getStart();
         });
 
         return $embeddedEventSession;

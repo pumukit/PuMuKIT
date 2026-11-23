@@ -181,13 +181,13 @@ class PicService
     }
 
     /**
-     * @param string $id
-     * @param string $size
-     * @param string $path
-     * @param string $extension
-     * @param string $tags
-     * @param string $exists
-     * @param string $type
+     * @param string|null $id
+     * @param string|null $size
+     * @param string|null $path
+     * @param string|null $extension
+     * @param string|null $tags
+     * @param string|null $exists
+     * @param string|null $type
      *
      * @return array
      *

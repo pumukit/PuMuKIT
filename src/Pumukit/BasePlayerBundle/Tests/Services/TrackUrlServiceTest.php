@@ -9,7 +9,6 @@ use Pumukit\BasePlayerBundle\Services\SecureTokenService;
 use Pumukit\BasePlayerBundle\Services\TrackUrlService;
 use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
-use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
@@ -120,7 +119,7 @@ class TrackUrlServiceTest extends PumukitTestCase
         static::assertTrue($tokens->validateToken($query['token'], $track->id(), (int) $query['expires']));
     }
 
-    private function generateTrackMedia(string $url, int $duration = 10): MediaInterface
+    private function generateTrackMedia(string $url, int $duration = 10): Track
     {
         $originalName = 'originalName'.random_int(0, mt_getrandmax());
         $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));

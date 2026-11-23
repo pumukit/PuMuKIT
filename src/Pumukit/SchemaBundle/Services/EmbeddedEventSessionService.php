@@ -463,7 +463,7 @@ class EmbeddedEventSessionService
      */
     public function findEventsMenu(array $criteria = [], $limit = 0)
     {
-        $todayStarts = mktime(00, 00, 00, date('m'), date('d'), date('Y')) * 1000;
+        $todayStarts = mktime(0, 0, 0, (int) date('m'), (int) date('d'), (int) date('Y')) * 1000;
 
         $pipeline = [];
 
@@ -739,7 +739,7 @@ class EmbeddedEventSessionService
         if (isset($event['embeddedEventSession'])) {
             $date = $event['date'];
             usort($event['embeddedEventSession'], function ($a, $b) {
-                return $a['start'] >= $b['start'];
+                return $a['start'] <=> $b['start'];
             });
             foreach ($event['embeddedEventSession'] as $session) {
                 if (!isset($session['start']) && !isset($session['ends'])) {
@@ -811,7 +811,7 @@ class EmbeddedEventSessionService
         foreach ($result as $key => $element) {
             foreach ($element['data'] as $eventData) {
                 usort($eventData['event']['embeddedEventSession'], function ($a, $b) {
-                    return $a['start'] >= $b['start'];
+                    return $a['start'] <=> $b['start'];
                 });
                 foreach ($eventData['event']['embeddedEventSession'] as $embeddedSession) {
                     $startDate = $embeddedSession['start']->toDateTime();
@@ -970,7 +970,7 @@ class EmbeddedEventSessionService
         foreach ($result as $key => $element) {
             foreach ($element['data'] as $eventData) {
                 usort($eventData['event']['embeddedEventSession'], function ($a, $b) {
-                    return $a['start'] >= $b['start'];
+                    return $a['start'] <=> $b['start'];
                 });
                 foreach ($eventData['event']['embeddedEventSession'] as $embeddedSession) {
                     $startDate = $embeddedSession['start']->toDateTime();

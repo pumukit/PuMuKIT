@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Event;
 
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class AnnotationsUpdateEvent extends Event
@@ -12,12 +11,12 @@ class AnnotationsUpdateEvent extends Event
     public const EVENT_NAME = 'annotations.update';
 
     /**
-     * @var MultimediaObject
+     * @var string
      */
     protected $multimediaObject;
 
     /**
-     * @param MultimediaObject $multimediaObject
+     * @param string $multimediaObject
      */
     public function __construct($multimediaObject)
     {
@@ -25,7 +24,7 @@ class AnnotationsUpdateEvent extends Event
     }
 
     /**
-     * @return MultimediaObject
+     * @return string
      */
     public function getMultimediaObject()
     {

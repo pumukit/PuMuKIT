@@ -23,6 +23,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AdminController extends ResourceController implements NewAdminControllerInterface
 {
+    use LoggedInUserTrait;
+
     /** @var FactoryService */
     protected $factoryService;
 
@@ -291,7 +293,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     /**
      * Overwrite to get form with translations.
      *
-     * @param string|null $resource
+     * @param object|null $resource
      * @param string      $locale
      *
      * @return Form|FormInterface
@@ -312,10 +314,7 @@ class AdminController extends ResourceController implements NewAdminControllerIn
      */
     public function getAllGroups()
     {
-        $loggedInUser = $this->getUser();
-        if (!$loggedInUser instanceof User) {
-            throw $this->createAccessDeniedException();
-        }
+        $loggedInUser = $this->loggedInUser();
         if ($loggedInUser->isSuperAdmin() || $this->userService->hasGlobalScope($loggedInUser)) {
             $allGroups = $this->groupService->findAll();
         } else {

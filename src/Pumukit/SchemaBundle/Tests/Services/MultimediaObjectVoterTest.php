@@ -8,7 +8,6 @@ use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\Group;
-use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
@@ -215,7 +214,7 @@ class MultimediaObjectVoterTest extends WebTestCase
         return $method->invokeArgs($object, $parameters);
     }
 
-    private function generateTrackMedia(): MediaInterface
+    private function generateTrackMedia(): Track
     {
         $originalName = 'originalName'.random_int(0, mt_getrandmax());
         $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));

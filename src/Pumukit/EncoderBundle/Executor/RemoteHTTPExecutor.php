@@ -22,7 +22,7 @@ class RemoteHTTPExecutor implements ExecutorInterface
         if (isset($cpu['user'], $cpu['password'])) {
             curl_setopt($curl, CURLOPT_HTTPHEADER, ['Authorization: Basic '.base64_encode($cpu['user'].':'.$cpu['password'])]);
         }
-        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query(['command' => $command]));
 
         $response = curl_exec($curl);

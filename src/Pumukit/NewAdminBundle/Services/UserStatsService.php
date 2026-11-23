@@ -9,7 +9,6 @@ use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserStatsService
 {
@@ -20,7 +19,7 @@ class UserStatsService
         $this->documentManager = $documentManager;
     }
 
-    public function getUserMultimediaObjectsGroupByStats(UserInterface $user): array
+    public function getUserMultimediaObjectsGroupByStats(User $user): array
     {
         $collection = $this->documentManager->getDocumentCollection(MultimediaObject::class);
         $code = 'owner';
@@ -47,7 +46,7 @@ class UserStatsService
         ];
     }
 
-    public function getUserMultimediaObjectsGroupByRole(UserInterface $user): array
+    public function getUserMultimediaObjectsGroupByRole(User $user): array
     {
         $result = [];
         $roles = $this->documentManager->getRepository(Role::class)->findAll();
@@ -66,7 +65,7 @@ class UserStatsService
         return $result;
     }
 
-    public function getUserStorageMB(UserInterface $user)
+    public function getUserStorageMB(User $user)
     {
         $collection = $this->documentManager->getDocumentCollection(MultimediaObject::class);
         $code = 'owner';
@@ -92,7 +91,7 @@ class UserStatsService
         return reset($result)['size'] / 1048576;
     }
 
-    public function getUserUploadedHours(UserInterface $user)
+    public function getUserUploadedHours(User $user)
     {
         $collection = $this->documentManager->getDocumentCollection(MultimediaObject::class);
         $code = 'owner';

@@ -87,7 +87,7 @@ class ListService
         switch ($sort) {
             case 'alphabetically':
                 $sortField = 'title.'.$locale;
-                $series = $seriesRepository->findBy($criteria, [$sortField => 1]);
+                $series = $seriesRepository->findBy($criteria, [$sortField => 'asc']);
 
                 foreach ($series as $serie) {
                     if (!isset($aggregatedNumMmobjs[$serie->getId()])) {
@@ -105,7 +105,7 @@ class ListService
 
             case 'date':
                 $sortField = 'public_date';
-                $series = $seriesRepository->findBy($criteria, [$sortField => -1]);
+                $series = $seriesRepository->findBy($criteria, [$sortField => 'desc']);
 
                 foreach ($series as $serie) {
                     if (!isset($aggregatedNumMmobjs[$serie->getId()])) {

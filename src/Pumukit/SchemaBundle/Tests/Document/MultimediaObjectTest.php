@@ -9,7 +9,6 @@ use Pumukit\CoreBundle\Services\i18nService;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Link;
 use Pumukit\SchemaBundle\Document\Material;
-use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
@@ -691,7 +690,7 @@ class MultimediaObjectTest extends PumukitTestCase
         static::assertEquals($duration_in_minutes_and_seconds2, $mm->getDurationInMinutesAndSeconds());
     }
 
-    private function createNewTrack(?int $duration = 10): MediaInterface
+    private function createNewTrack(?int $duration = 10): Track
     {
         $originalName = 'originalName';
         $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));

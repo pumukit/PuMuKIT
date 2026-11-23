@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Pumukit\SchemaBundle\Repository;
 
-use Doctrine\ODM\MongoDB\MongoDBException;
 use Doctrine\ODM\MongoDB\Query\Builder;
 use Doctrine\ODM\MongoDB\Query\Query;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
@@ -15,7 +14,6 @@ use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\SeriesType;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\TagInterface;
-use Pumukit\SchemaBundle\Document\User;
 
 /**
  * SeriesRepository.
@@ -267,9 +265,9 @@ class SeriesRepository extends DocumentRepository
     /**
      * Create QueryBuilder to find series with tag and series type.
      *
-     * @param Tag    $tag
-     * @param object $seriesType
-     * @param array  $sort
+     * @param TagInterface $tag
+     * @param object       $seriesType
+     * @param array        $sort
      *
      * @return mixed
      */
@@ -362,59 +360,6 @@ class SeriesRepository extends DocumentRepository
         $query = $this->findByTitleWithLocaleQuery($title, $locale, $sort, $limit, $page);
 
         return $query->execute();
-    }
-
-    /**
-     * @param User $user
-     * @param bool $onlyAdminSeries
-     *
-     * @return array
-     *
-     * @throws MongoDBException
-     */
-    public function findUserSeries($user, $onlyAdminSeries = false)
-    {
-        $dm = $this->getDocumentManager();
-
-        // Find user series (properties.owners)
-        $seriesCollection = $dm->getDocumentCollection(Series::class);
-
-        if (($permissionProfile = $user->getPermissionProfile()) && $permissionProfile->isGlobal() && !$onlyAdminSeries) {
-            $group = ['_id' => ['id' => '$_id', 'title' => '$title']];
-            $command = [['$group' => $group]];
-
-            return iterator_to_array($seriesCollection->aggregate($command, ['cursor' => []]));
-        }
-
-        $match = [];
-        $match['properties.owners'] = ['$in' => [$user->getId()]];
-        $group = ['_id' => ['id' => '$_id', 'title' => '$title']];
-
-        $command = [['$match' => $match], ['$group' => $group]];
-        $aSeries = iterator_to_array($seriesCollection->aggregate($command, ['cursor' => []]));
-
-        // Find mmo user groups
-        $mmoCollection = $dm->getDocumentCollection(MultimediaObject::class);
-
-        $groups = [];
-        foreach ($user->getGroups() as $group) {
-            $groups[] = new ObjectId($group->getId());
-        }
-
-        $match = [];
-        $unwind = ['$unwind' => '$groups'];
-        $match['groups'] = ['$in' => $groups];
-        $group = ['_id' => ['id' => '$series', 'title' => '$seriesTitle']];
-
-        $command = [$unwind, ['$match' => $match], ['$group' => $group]];
-        $aMMO = $mmoCollection->aggregate($command, ['cursor' => []]);
-
-        $aSeries = array_merge($aSeries, $aMMO);
-        usort($aSeries, function ($a, $b) {
-            return ($a['_id']['title'] <= $b['_id']['title']) ? -1 : 1;
-        });
-
-        return $aSeries;
     }
 
     /**

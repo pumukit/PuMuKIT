@@ -320,7 +320,7 @@ class PersonService
     public function getRoles()
     {
         $criteria = [];
-        $sort = ['rank' => 1];
+        $sort = ['rank' => 'asc'];
 
         return $this->repoRole->findBy($criteria, $sort);
     }

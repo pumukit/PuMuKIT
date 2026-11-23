@@ -73,7 +73,7 @@ class MenuService
                 }
 
                 $sessionStart = $sessionData['session']['start']->toDateTime()->format('U');
-                $todayEnds = strtotime(date('Y-m-d H:i:s', mktime(23, 59, 59, date('m'), date('d'), date('Y'))));
+                $todayEnds = strtotime(date('Y-m-d H:i:s', mktime(23, 59, 59, (int) date('m'), (int) date('d'), (int) date('Y'))));
                 if ($sessionStart > $todayEnds) {
                     $nowOrFuture = false;
                 }

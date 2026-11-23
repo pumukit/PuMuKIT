@@ -255,7 +255,7 @@ class TagService
      *
      * @throws \Exception
      */
-    public function deleteTag(TagInterface $tag)
+    public function deleteTag(Tag $tag)
     {
         if ($this->canDeleteTag($tag)) {
             $multimediaObjectIds = $this->dm->createQueryBuilder(MultimediaObject::class)

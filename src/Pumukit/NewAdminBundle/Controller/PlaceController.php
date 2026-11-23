@@ -168,7 +168,7 @@ class PlaceController extends AbstractController implements NewAdminControllerIn
             return [];
         }
 
-        return $this->documentManager->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($placeTag->getId())], ['title.'.$locale => 1]);
+        return $this->documentManager->getRepository(Tag::class)->findBy(['parent.$id' => new ObjectId($placeTag->getId())], ['title.'.$locale => 'asc']);
     }
 
     private function autogenerateCode(Tag $parent, bool $isPrecinct)

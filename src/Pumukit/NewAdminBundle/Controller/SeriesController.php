@@ -139,7 +139,7 @@ class SeriesController extends AdminController
 
     public function createAction(Request $request)
     {
-        $series = $this->factoryService->createSeries($this->getUser());
+        $series = $this->factoryService->createSeries($this->loggedInUser());
         $this->requestStack->getSession()->set('admin/series/id', $series->getId());
 
         return new JsonResponse(['seriesId' => $series->getId()]);
@@ -428,7 +428,7 @@ class SeriesController extends AdminController
                 $emptySeries[] = $series['_id'];
             }
             $criteria['playlist.multimedia_objects'] = ['$size' => 0];
-            $criteria = array_merge($criteria, ['_id' => ['$in' => array_values($emptySeries)]]);
+            $criteria = array_merge($criteria, ['_id' => ['$in' => $emptySeries]]);
             $this->requestStack->getSession()->set('admin/series/criteria', $criteria);
         }
 
@@ -653,7 +653,7 @@ class SeriesController extends AdminController
     protected function isUserAllowedToDelete(Series $series)
     {
         if (!$this->isGranted(Permission::MODIFY_OWNER)) {
-            $loggedInUser = $this->getUser();
+            $loggedInUser = $this->loggedInUser();
 
             $person = $this->personService->getPersonFromLoggedInUser($loggedInUser);
             $role = $this->personService->getPersonalScopeRole();

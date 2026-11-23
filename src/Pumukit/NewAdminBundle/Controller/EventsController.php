@@ -20,7 +20,6 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
@@ -39,6 +38,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[IsGranted('ROLE_ACCESS_LIVE_EVENTS')]
 class EventsController extends AbstractController implements NewAdminControllerInterface
 {
+    use LoggedInUserTrait;
+
     protected static $regex = '/^[0-9a-z]{24}$/';
 
     /** @var DocumentManager */
@@ -156,7 +157,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
         $createSeries = false;
         if (!$series) {
-            $series = $this->factoryService->createSeries($this->getUser());
+            $series = $this->factoryService->createSeries($this->loggedInUser());
             $this->documentManager->persist($series);
             $createSeries = true;
         } else {
@@ -165,7 +166,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
             );
         }
 
-        $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $this->getUser());
+        $multimediaObject = $this->factoryService->createMultimediaObject($series, true, $this->loggedInUser());
         $multimediaObject->setType(MultimediaObject::TYPE_LIVE);
 
         if (!$createSeries) {
@@ -532,10 +533,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
 
         $aggregate = $this->documentManager->getDocumentCollection(Series::class);
 
-        $user = $this->getUser();
-        if (!$user instanceof User) {
-            throw $this->createAccessDeniedException();
-        }
+        $user = $this->loggedInUser();
         $pipeline = [];
         $pipeline[] = ['$match' => ['title.'.$request->getLocale() => new Regex($value, 'i')]];
         $pipeline[] = ['$match' => ['type' => Series::TYPE_SERIES]];
@@ -885,10 +883,7 @@ class EventsController extends AbstractController implements NewAdminControllerI
     private function deleteEventAndSeries(MultimediaObject $multimediaObject)
     {
         $aggregate = $this->documentManager->getDocumentCollection(MultimediaObject::class);
-        $user = $this->getUser();
-        if (!$user instanceof User) {
-            throw $this->createAccessDeniedException();
-        }
+        $user = $this->loggedInUser();
         $pipeline = [];
         $pipeline[] = ['$match' => ['series' => new ObjectId($multimediaObject->getSeries()->getId())]];
         $ownerKey = $this->pumukitSchemaPersonalScopeRoleCode;

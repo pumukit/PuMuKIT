@@ -6,7 +6,6 @@ namespace Pumukit\NewAdminBundle\Controller;
 
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateProfileType;
 use Pumukit\NewAdminBundle\Services\UserStatsService;
-use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\UpdateUserService;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +18,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class UserProfileController extends AbstractController
 {
+    use LoggedInUserTrait;
+
     protected $translator;
     protected $updateUserService;
     protected $userStatsService;
@@ -37,10 +38,7 @@ class UserProfileController extends AbstractController
     #[Template('@PumukitNewAdmin/UserProfile/template.html.twig')]
     public function profileAction(Request $request): array
     {
-        $user = $this->getUser();
-        if (!$user instanceof User) {
-            throw $this->createAccessDeniedException();
-        }
+        $user = $this->loggedInUser();
 
         $locale = $request->getLocale();
         $form = $this->createForm(UserUpdateProfileType::class, $user, ['translator' => $this->translator, 'locale' => $locale]);
@@ -59,15 +57,15 @@ class UserProfileController extends AbstractController
     #[Template('@PumukitNewAdmin/UserProfile/template_user_stats.html.twig')]
     public function userStatsAction(): array
     {
-        $user = $this->getUser();
-        if (!$user instanceof User || !$user->getPerson()) {
+        $user = $this->loggedInUser();
+        if (!$user->getPerson()) {
             return ['error' => $this->translator->trans('Your user has no associated person, so its stats cannot be shown.')];
         }
 
-        $objectsByStatus = $this->userStatsService->getUserMultimediaObjectsGroupByStats($this->getUser());
-        $objectsByRole = $this->userStatsService->getUserMultimediaObjectsGroupByRole($this->getUser());
-        $userStorage = $this->userStatsService->getUserStorageMB($this->getUser());
-        $userDuration = $this->userStatsService->getUserUploadedHours($this->getUser());
+        $objectsByStatus = $this->userStatsService->getUserMultimediaObjectsGroupByStats($user);
+        $objectsByRole = $this->userStatsService->getUserMultimediaObjectsGroupByRole($user);
+        $userStorage = $this->userStatsService->getUserStorageMB($user);
+        $userDuration = $this->userStatsService->getUserUploadedHours($user);
 
         return [
             'objectsByStatus' => $objectsByStatus,

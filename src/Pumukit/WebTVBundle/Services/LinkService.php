@@ -27,7 +27,7 @@ class LinkService
 
     /**
      * @param string|null $tagCod
-     * @param string|null $onlyGeneral
+     * @param bool|null   $onlyGeneral
      *
      * @return string
      */

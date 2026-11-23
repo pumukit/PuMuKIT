@@ -326,10 +326,7 @@ class UserController extends AdminController
     {
         $repo = $this->documentManager->getRepository(User::class);
 
-        $loggedInUser = $this->getUser();
-        if (!$loggedInUser instanceof User) {
-            throw $this->createAccessDeniedException();
-        }
+        $loggedInUser = $this->loggedInUser();
 
         if ($loggedInUser === $userToDelete) {
             return new Response("Can not delete the logged in user '".$loggedInUser->getUsername()."'", 409);

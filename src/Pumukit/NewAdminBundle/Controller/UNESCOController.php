@@ -19,7 +19,6 @@ use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
-use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
@@ -41,6 +40,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class UNESCOController extends AbstractController implements NewAdminControllerInterface
 {
+    use LoggedInUserTrait;
+
     public static $baseTags = [
         'Health Sciences' => [
             'U310000',
@@ -823,10 +824,7 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
 
     private function getAllGroups()
     {
-        $loggedInUser = $this->getUser();
-        if (!$loggedInUser instanceof User) {
-            throw $this->createAccessDeniedException();
-        }
+        $loggedInUser = $this->loggedInUser();
         if ($loggedInUser->isSuperAdmin() || $this->userService->hasGlobalScope($loggedInUser)) {
             $allGroups = $this->groupService->findAll();
         } else {

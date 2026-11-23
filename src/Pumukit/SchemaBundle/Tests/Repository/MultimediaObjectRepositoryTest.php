@@ -15,7 +15,6 @@ use Pumukit\SchemaBundle\Document\EmbeddedTag;
 use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\Link;
 use Pumukit\SchemaBundle\Document\Material;
-use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
@@ -3291,7 +3290,7 @@ class MultimediaObjectRepositoryTest extends PumukitTestCase
         return $group;
     }
 
-    private function generateTrackMedia(array $tags, bool $hide = false): MediaInterface
+    private function generateTrackMedia(array $tags, bool $hide = false): Track
     {
         $originalName = 'originalName'.random_int(0, mt_getrandmax());
         $description = i18nText::create($this->i18nService->generateI18nText('18nDescription'));

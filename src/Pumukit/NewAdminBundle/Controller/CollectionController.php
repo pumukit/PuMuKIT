@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CollectionController extends AbstractController implements NewAdminControllerInterface
 {
+    use LoggedInUserTrait;
+
     /** @var DocumentManager */
     protected $documentManager;
 
@@ -55,7 +57,7 @@ class CollectionController extends AbstractController implements NewAdminControl
     protected function isUserAllowedToDelete(Series $series)
     {
         if (!$this->isGranted(Permission::MODIFY_OWNER)) {
-            $loggedInUser = $this->getUser();
+            $loggedInUser = $this->loggedInUser();
             $person = $this->personService->getPersonFromLoggedInUser($loggedInUser);
             $role = $this->personService->getPersonalScopeRole();
             if (!$person) {
