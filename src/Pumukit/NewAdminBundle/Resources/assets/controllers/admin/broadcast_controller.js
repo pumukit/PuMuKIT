@@ -1,5 +1,8 @@
 import { Controller } from '@hotwired/stimulus';
 
+const PASSWORD_LENGTH = 12;
+const PASSWORD_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
     static targets = ['submit', 'password', 'fail', 'empty', 'passwordPanel', 'groupsPanel', 'lists', 'current', 'mm', 'warning'];
@@ -13,7 +16,10 @@ export default class extends Controller {
     };
 
     type(event) {
-        const type = event.currentTarget.value;
+        this.showType(event.currentTarget.value);
+    }
+
+    showType(type) {
         if (this.passwordTypeValue === type) {
             this.groupsPanelTarget.classList.add('pumukitnewadmin-broadcast-hidden');
             this.passwordPanelTarget.classList.remove('pumukitnewadmin-broadcast-hidden');
@@ -48,8 +54,7 @@ export default class extends Controller {
     }
 
     generate() {
-        const length = Math.floor(Math.random() * 7 + 6);
-        const password = Array.from({ length }, () => String.fromCharCode(Math.floor(Math.random() * 26 + 65))).join('');
+        const password = this.randomPassword();
         $(this.failTarget).hide();
         $(this.emptyTarget).hide();
         this.passwordTargets.forEach((input) => {
@@ -92,8 +97,8 @@ export default class extends Controller {
                 });
                 const { addGroups, deleteGroups } = response.groups;
                 this.dispatch('load', { target: this.listsTarget, prefix: 'admin--group-lists', detail: { add: addGroups, delete: deleteGroups } });
-                if (0 !== Object.keys(addGroups).length + Object.keys(deleteGroups).length) {
-                    this.updateGroupsButton();
+                if (radio) {
+                    this.showType(response.type);
                 }
             });
     }
@@ -129,6 +134,20 @@ export default class extends Controller {
                 }
                 window.success(this.messagesValue.saved);
             });
+    }
+
+    randomPassword() {
+        const limit = 256 - (256 % PASSWORD_ALPHABET.length);
+        const characters = [];
+        while (characters.length < PASSWORD_LENGTH) {
+            for (const value of crypto.getRandomValues(new Uint8Array(PASSWORD_LENGTH * 2))) {
+                if (value < limit && characters.length < PASSWORD_LENGTH) {
+                    characters.push(PASSWORD_ALPHABET[value % PASSWORD_ALPHABET.length]);
+                }
+            }
+        }
+
+        return characters.join('');
     }
 
     updatePasswordButton() {
