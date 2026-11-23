@@ -25,7 +25,7 @@ class PasswordService
             $user->setPassword($this->userPasswordHasher->hashPassword($user, $password));
             $this->documentManager->flush();
         } catch (\Exception $exception) {
-            throw new \Exception($exception);
+            throw new \Exception($exception->getMessage(), 0, $exception);
         }
     }
 }
