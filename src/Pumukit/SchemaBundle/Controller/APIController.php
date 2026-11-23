@@ -125,7 +125,7 @@ class APIController extends AbstractController implements NewAdminControllerInte
             if (isset($criteria['owner'])) {
                 $user = $this->documentManager->getRepository(User::class)->createQueryBuilder()->field('username')->equals($criteria['owner'])->getQuery()->getSingleResult();
                 $qb->addAnd($qb->expr()->field('people')->elemMatch(
-                    $qb->expr()->field('cod')->equals('owner')->field('people.id')->equals($user->getPerson()->getId())
+                    $qb->expr()->field('cod')->equals($this->personService->getPersonalScopeRoleCode())->field('people.id')->equals($user->getPerson()->getId())
                 ));
                 $tempCriteria['owner'] = $criteria['owner'];
                 unset($criteria['owner']);

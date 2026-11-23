@@ -94,6 +94,8 @@ services:
 
   Pumukit\SchemaBundle\Services\MultimediaObjectService:
     class: Pumukit\SchemaBundle\Services\MultimediaObjectService
+    arguments:
+      $personalScopeRoleCode: '%pumukitschema.personal_scope_role_code%'
 
   Pumukit\SchemaBundle\Services\MultimediaObjectVoter:
     class: Pumukit\SchemaBundle\Services\MultimediaObjectVoter

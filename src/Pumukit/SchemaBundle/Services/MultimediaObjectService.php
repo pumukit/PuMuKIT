@@ -19,7 +19,7 @@ class MultimediaObjectService
     private $dispatcher;
     private $seriesRepo;
 
-    public function __construct(DocumentManager $documentManager, MultimediaObjectEventDispatcherService $dispatcher)
+    public function __construct(DocumentManager $documentManager, MultimediaObjectEventDispatcherService $dispatcher, private readonly string $personalScopeRoleCode)
     {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository(MultimediaObject::class);
@@ -152,7 +152,7 @@ class MultimediaObjectService
         }
 
         $userIsOwnerOnRoles = false;
-        $ownersPeople = $multimediaObject->getPeopleByRoleCod('owner');
+        $ownersPeople = $multimediaObject->getPeopleByRoleCod($this->personalScopeRoleCode);
         foreach ($ownersPeople as $person) {
             if ($person->getId() === $user->getPerson()->getId()) {
                 $userIsOwnerOnRoles = true;

@@ -13,6 +13,9 @@ use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Storage;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\Person;
+use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
@@ -20,6 +23,7 @@ use Pumukit\SchemaBundle\Document\ValueObject\Path;
 use Pumukit\SchemaBundle\Document\ValueObject\StorageUrl;
 use Pumukit\SchemaBundle\Document\ValueObject\Tags;
 use Pumukit\SchemaBundle\Services\FactoryService;
+use Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Pumukit\SchemaBundle\Services\TagService;
 use Pumukit\WebTVBundle\PumukitWebTVBundle;
@@ -382,6 +386,36 @@ class MultimediaObjectServiceTest extends PumukitTestCase
         static::assertFalse($this->mmsService->isUserOwner($user2, $mm2));
         static::assertTrue($this->mmsService->isUserOwner($user1, $mm3));
         static::assertTrue($this->mmsService->isUserOwner($user2, $mm3));
+    }
+
+    public function testAUserIsOwnerThroughTheConfiguredPersonalScopeRole(): void
+    {
+        $person = new Person();
+        $person->setName('Ana');
+        $this->dm->persist($person);
+        $user = new User();
+        $user->setUsername('ana');
+        $user->setEmail('ana@pumukit.local');
+        $user->setPassword('unused');
+        $user->setPerson($person);
+        $this->dm->persist($user);
+        $author = new Role();
+        $author->setCod('author');
+        $this->dm->persist($author);
+        $series = new Series();
+        $series->setNumericalID(1);
+        $this->dm->persist($series);
+        $multimediaObject = new MultimediaObject();
+        $multimediaObject->setNumericalID(1);
+        $multimediaObject->setSeries($series);
+        $multimediaObject->addPersonWithRole($person, $author);
+        $this->dm->persist($multimediaObject);
+        $this->dm->flush();
+
+        $dispatcher = static::getContainer()->get(MultimediaObjectEventDispatcherService::class);
+
+        static::assertTrue((new MultimediaObjectService($this->dm, $dispatcher, 'author'))->isUserOwner($user, $multimediaObject));
+        static::assertFalse((new MultimediaObjectService($this->dm, $dispatcher, 'owner'))->isUserOwner($user, $multimediaObject));
     }
 
     public function testDeleteAllFromGroup()
