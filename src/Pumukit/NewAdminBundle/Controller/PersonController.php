@@ -34,8 +34,6 @@ class PersonController extends AdminController
     /** @var PersonService */
     protected $personService;
 
-    /** @var ValidatorInterface */
-    private $validator;
     private $pumukitSchemaPersonalScopeRoleCode;
 
     public function __construct(
@@ -48,6 +46,7 @@ class PersonController extends AdminController
         PersonService $personService,
         TranslatorInterface $translator,
         $pumukitSchemaPersonalScopeRoleCode,
+        private readonly ValidatorInterface $validator,
         private readonly array $personPickerTemplates = [],
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $requestStack, $translator);
