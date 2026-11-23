@@ -20,6 +20,10 @@ security:
         - legacy_md5
 
   firewalls:
+    dev:
+      pattern:  ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+
     api:
       pattern: ^/api
       context: pumukit
@@ -44,10 +48,6 @@ security:
         path:     /
       logout:
         path: pumukit_logout
-
-    dev:
-      pattern:  ^/(_(profiler|wdt)|css|images|js)/
-      security: false
 
   access_control:
     - { path: ^/login$, roles: PUBLIC_ACCESS }
