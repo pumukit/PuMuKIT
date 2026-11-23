@@ -12,7 +12,6 @@ use Pumukit\SchemaBundle\Services\LinkService;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -25,13 +24,10 @@ class LinkController extends AbstractController implements NewAdminControllerInt
     /** @var LinkService */
     private $linkService;
 
-    private $requestStack;
-
-    public function __construct(TranslatorInterface $translator, LinkService $linkService, RequestStack $requestStack)
+    public function __construct(TranslatorInterface $translator, LinkService $linkService)
     {
         $this->translator = $translator;
         $this->linkService = $linkService;
-        $this->requestStack = $requestStack;
     }
 
     #[Template('@PumukitNewAdmin/Link/create.html.twig')]

@@ -12,7 +12,6 @@ use Pumukit\BasePlayerBundle\Event\ViewedEvent;
 use Pumukit\BasePlayerBundle\Services\SecureTokenService;
 use Pumukit\BasePlayerBundle\Services\TrackDeliveryService;
 use Pumukit\BasePlayerBundle\Services\TrackfileWithoutTokenPolicy;
-use Pumukit\BasePlayerBundle\Services\TrackUrlService;
 use Pumukit\BasePlayerBundle\Services\ViewCounterService;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -21,7 +20,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class TrackFileController extends AbstractController
@@ -30,7 +28,6 @@ class TrackFileController extends AbstractController
     private EventDispatcherInterface $eventDispatcher;
     private LoggerInterface $logger;
     private ?SecureTokenService $secureTokenService;
-    private ?RateLimiterFactoryInterface $trackfileAccessLimiter;
     private ?TrackDeliveryService $trackDeliveryService;
     private ?TrackfileWithoutTokenPolicy $trackfileWithoutTokenPolicy;
     private ?LoggerInterface $legacyTrackfileLogger;
@@ -40,8 +37,6 @@ class TrackFileController extends AbstractController
         EventDispatcherInterface $eventDispatcher,
         LoggerInterface $logger,
         ?SecureTokenService $secureTokenService = null,
-        ?RateLimiterFactoryInterface $trackfileAccessLimiter = null,
-        ?TrackUrlService $trackUrlService = null,
         ?TrackDeliveryService $trackDeliveryService = null,
         ?TrackfileWithoutTokenPolicy $trackfileWithoutTokenPolicy = null,
         ?LoggerInterface $legacyTrackfileLogger = null
@@ -50,7 +45,6 @@ class TrackFileController extends AbstractController
         $this->documentManager = $documentManager;
         $this->logger = $logger;
         $this->secureTokenService = $secureTokenService;
-        $this->trackfileAccessLimiter = $trackfileAccessLimiter;
         $this->trackDeliveryService = $trackDeliveryService;
         $this->trackfileWithoutTokenPolicy = $trackfileWithoutTokenPolicy;
         $this->legacyTrackfileLogger = $legacyTrackfileLogger;

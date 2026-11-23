@@ -105,7 +105,6 @@ class MultimediaObjectController extends SortableAdminController
     private $showLatestWithPudeNew;
     private $pumukitNewAdminShowNakedPubTab;
     private $warningOnUnpublished;
-    private $pumukitNewAdminMultimediaObjectLabel;
     private JobRepository $jobRepository;
     private MediaCreator $mediaCreator;
     private SeriesRepository $seriesRepository;
@@ -139,7 +138,6 @@ class MultimediaObjectController extends SortableAdminController
         $showLatestWithPudeNew,
         $pumukitNewAdminShowNakedPubTab,
         $warningOnUnpublished,
-        $pumukitNewAdminMultimediaObjectLabel,
         MediaUpdater $mediaUpdater
     ) {
         parent::__construct($documentManager, $paginationService, $factoryService, $groupService, $userService, $requestStack, $translator);
@@ -159,7 +157,6 @@ class MultimediaObjectController extends SortableAdminController
         $this->showLatestWithPudeNew = $showLatestWithPudeNew;
         $this->pumukitNewAdminShowNakedPubTab = $pumukitNewAdminShowNakedPubTab;
         $this->warningOnUnpublished = $warningOnUnpublished;
-        $this->pumukitNewAdminMultimediaObjectLabel = $pumukitNewAdminMultimediaObjectLabel;
         $this->jobRepository = $jobRepository;
         $this->mediaCreator = $mediaCreator;
         $this->seriesRepository = $seriesRepository;

@@ -35,14 +35,12 @@ class EmbeddedRole implements RoleInterface
 
     public function __construct(RoleInterface $role)
     {
-        if (null !== $role) {
-            $this->id = $role->getId();
-            $this->cod = $role->getCod();
-            $this->xml = $role->getXml();
-            $this->display = $role->getDisplay();
-            $this->setI18nName($role->getI18nName());
-            $this->setI18nText($role->getI18nText());
-        }
+        $this->id = $role->getId();
+        $this->cod = $role->getCod();
+        $this->xml = $role->getXml();
+        $this->display = $role->getDisplay();
+        $this->setI18nName($role->getI18nName());
+        $this->setI18nText($role->getI18nText());
         $this->people = new ArrayCollection();
     }
 

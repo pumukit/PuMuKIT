@@ -7,7 +7,6 @@ namespace Pumukit\PaellaPlayerBundle\Controller;
 use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Pumukit\BasePlayerBundle\Controller\BasePlayerController as BasePlayerAbstractController;
 use Pumukit\BasePlayerBundle\Services\IntroService;
-use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
@@ -15,7 +14,6 @@ use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class BasePlayerController extends BasePlayerAbstractController
@@ -23,7 +21,6 @@ class BasePlayerController extends BasePlayerAbstractController
     private $pumukitOpencastHost;
     private $paellaCustomCssUrl;
     private $paellaLogo;
-    private $pumukitIntro;
     private $paellaAutoPlay;
     private $pumukitPlayerWhenDispatchViewEvent;
 
@@ -35,7 +32,6 @@ class BasePlayerController extends BasePlayerAbstractController
         $pumukitOpencastHost,
         $paellaCustomCssUrl,
         $paellaLogo,
-        $pumukitIntro,
         $paellaAutoPlay,
         string $pumukitPlayerWhenDispatchViewEvent
     ) {
@@ -43,7 +39,6 @@ class BasePlayerController extends BasePlayerAbstractController
         $this->pumukitOpencastHost = $pumukitOpencastHost;
         $this->paellaCustomCssUrl = $paellaCustomCssUrl;
         $this->paellaLogo = $paellaLogo;
-        $this->pumukitIntro = $pumukitIntro;
         $this->paellaAutoPlay = $paellaAutoPlay;
         $this->pumukitPlayerWhenDispatchViewEvent = $pumukitPlayerWhenDispatchViewEvent;
     }
@@ -103,17 +98,6 @@ class BasePlayerController extends BasePlayerAbstractController
         }
 
         return $autoStart;
-    }
-
-    private function generateBasePlayerRaw(Request $request, MultimediaObject $multimediaObject, Track $track): Response
-    {
-        return $this->render('@PumukitPaellaPlayer/BasePlayer/player.html.twig', [
-            'autostart' => $this->getAutoStart($request),
-            'autoplay_fallback' => $this->paellaAutoPlay,
-            'when_dispatch_view_event' => $this->pumukitPlayerWhenDispatchViewEvent,
-            'multimediaObject' => $multimediaObject,
-            'track' => $track,
-        ]);
     }
 
     private function getParametersForPlayer(Request $request, MultimediaObject $multimediaObject, array $tracks): array

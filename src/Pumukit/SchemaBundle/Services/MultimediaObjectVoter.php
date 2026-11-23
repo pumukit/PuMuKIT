@@ -21,12 +21,10 @@ class MultimediaObjectVoter extends Voter
     public const VIEW_METADATA = 'view_metadata';
 
     private $mmobjService;
-    private $requestStack;
 
-    public function __construct(MultimediaObjectService $mmobjService, RequestStack $requestStack)
+    public function __construct(MultimediaObjectService $mmobjService)
     {
         $this->mmobjService = $mmobjService;
-        $this->requestStack = $requestStack;
     }
 
     protected function supports(string $attribute, $subject): bool

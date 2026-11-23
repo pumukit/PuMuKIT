@@ -64,10 +64,10 @@ class PicServiceTest extends PumukitTestCase
         $tmpDir = static::$kernel->getContainer()->getParameter('pumukit.tmp');
         $dispatcher = new EventDispatcher();
         $logger = new Logger('test');
-        $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService(), $logger);
+        $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
         $this->trackDispatcher = static::$kernel->getContainer()->get('pumukitschema.track_dispatcher');
-        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $logger, $tmpDir);
+        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $tmpDir);
     }
 
     public function tearDown(): void

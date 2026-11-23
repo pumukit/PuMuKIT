@@ -144,10 +144,7 @@ class SeriesPicService
         $pic = new Pic();
         $pic->setUrl(str_replace($this->targetPath, $this->targetUrl, $path->getPathname()));
 
-        if (!is_string($path)) {
-            $path = $path->getPathname();
-        }
-        $pic->setPath($path);
+        $pic->setPath($path->getPathname());
         if ($isBanner) {
             $pic->setHide(true);
             $pic->addTag('banner');

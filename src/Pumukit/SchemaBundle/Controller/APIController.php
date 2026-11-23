@@ -109,7 +109,6 @@ class APIController extends AbstractController implements NewAdminControllerInte
             $limit = 100;
         }
         if ($page && $page > 0) {
-            $limit = $limit ?: 10;
             $skip = $limit * ($page - 1);
         } else {
             $page = null;
@@ -254,7 +253,6 @@ class APIController extends AbstractController implements NewAdminControllerInte
             $limit = 100;
         }
         if ($page && $page > 0) {
-            $limit = $limit ?: 10;
             $skip = $limit * ($page - 1);
         } else {
             $page = null;

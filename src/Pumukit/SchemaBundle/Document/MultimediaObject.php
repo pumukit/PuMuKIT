@@ -15,7 +15,6 @@ use Pumukit\SchemaBundle\Document\MediaType\Document;
 use Pumukit\SchemaBundle\Document\MediaType\External;
 use Pumukit\SchemaBundle\Document\MediaType\Image;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
-use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\ValueObject\Immutable;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -835,7 +834,7 @@ class MultimediaObject
     {
         $this->tracks->add($track);
 
-        if ($track->metadata() instanceof VideoAudio && $track->metadata()->duration() > $this->getDuration()) {
+        if ($track->metadata()->duration() > $this->getDuration()) {
             $this->setDuration($track->metadata()->duration());
         }
     }

@@ -165,8 +165,8 @@ abstract class Media implements MediaInterface
         }
 
         return Storage::create(
-            StorageUrl::create($this->storage['url']) ?? null,
-            Path::create($this->storage['path']) ?? null,
+            StorageUrl::create($this->storage['url']),
+            Path::create($this->storage['path']),
         );
     }
 
@@ -186,7 +186,7 @@ abstract class Media implements MediaInterface
 
     public function getDuration(): int
     {
-        return $this->metadata()->duration() ?? 0;
+        return $this->metadata()->duration();
     }
 
     public function videoMetadata(): VideoAudio

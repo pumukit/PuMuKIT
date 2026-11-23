@@ -133,14 +133,10 @@ class HeadAndTailUpdateController extends AdminController
             return new JsonResponse(['success' => 'Head added successfully']);
         }
 
-        if ('tail' === $type) {
-            $multimediaObject->setVideoTail($headOrTail->getId());
-            $this->documentManager->flush();
+        $multimediaObject->setVideoTail($headOrTail->getId());
+        $this->documentManager->flush();
 
-            return new JsonResponse(['success' => 'Tail added successfully']);
-        }
-
-        return new JsonResponse(['error' => 'Unknown error. Please contact with administrator.']);
+        return new JsonResponse(['success' => 'Tail added successfully']);
     }
 
     #[Route('/headandtail/series/update/{series}/{type}/{element}', name: 'pumukit_newadmin_head_and_tail_series_update', methods: ['POST'])]
@@ -193,13 +189,9 @@ class HeadAndTailUpdateController extends AdminController
             return new JsonResponse(['success' => 'Head added successfully']);
         }
 
-        if ('tail' === $type) {
-            $series->setVideoTail($headOrTail->getId());
-            $this->documentManager->flush();
+        $series->setVideoTail($headOrTail->getId());
+        $this->documentManager->flush();
 
-            return new JsonResponse(['success' => 'Tail added successfully']);
-        }
-
-        return new JsonResponse(['error' => 'Unknown error. Please contact with administrator.']);
+        return new JsonResponse(['success' => 'Tail added successfully']);
     }
 }

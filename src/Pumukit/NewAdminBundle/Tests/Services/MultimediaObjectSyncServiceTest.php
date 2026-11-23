@@ -7,7 +7,6 @@ namespace Pumukit\NewAdminBundle\Tests\Services;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\Group;
-use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -18,8 +17,6 @@ use Pumukit\SchemaBundle\Document\Tag;
 #[CoversNothing]
 class MultimediaObjectSyncServiceTest extends PumukitTestCase
 {
-    private $mmobjRepo;
-    private $announceService;
     private $factoryService;
     private $tagService;
     private $syncService;
@@ -29,7 +26,6 @@ class MultimediaObjectSyncServiceTest extends PumukitTestCase
         $options = ['environment' => 'test'];
         static::bootKernel($options);
         parent::setUp();
-        $this->mmobjRepo = $this->dm->getRepository(MultimediaObject::class);
 
         $this->syncService = static::$kernel->getContainer()->get('pumukitnewadmin.multimedia_object_sync');
         $this->tagService = static::$kernel->getContainer()->get('pumukitschema.tag');
@@ -40,8 +36,6 @@ class MultimediaObjectSyncServiceTest extends PumukitTestCase
     {
         parent::tearDown();
         $this->dm->close();
-        $this->mmobjRepo = null;
-        $this->announceService = null;
         $this->factoryService = null;
         $this->tagService = null;
         gc_collect_cycles();

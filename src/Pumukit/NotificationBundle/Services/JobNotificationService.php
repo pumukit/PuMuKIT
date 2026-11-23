@@ -105,10 +105,6 @@ class JobNotificationService
             $subject = $this->getSubjectEmail($job, $error);
             $subjectInParameters = $this->getSubjectEmailInParameters($job, $error);
             $parameters = $this->getParametersEmail($job, $multimediaObject, $subjectInParameters);
-
-            if (!$emailsTo) {
-                return false;
-            }
             if (is_array($emailsTo)) {
                 $output = false;
                 foreach ($emailsTo as $email) {

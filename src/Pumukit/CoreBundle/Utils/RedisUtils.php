@@ -31,7 +31,7 @@ final class RedisUtils
         ], static fn (?string $value): bool => null !== $value);
     }
 
-    public static function elementsByKeyPattern(string $pattern): ?array
+    public static function elementsByKeyPattern(string $pattern): array
     {
         return self::createConnection()->keys($pattern);
     }

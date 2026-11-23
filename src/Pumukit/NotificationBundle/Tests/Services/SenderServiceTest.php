@@ -21,14 +21,12 @@ class SenderServiceTest extends PumukitTestCase
     private $senderService;
     private $mailer;
     private $templating;
-    private $translator;
     private $enable;
     private $senderName;
     private $senderEmail;
     private $adminEmail;
     private $notificateErrorsToAdmin;
     private $platformName;
-    private $environment;
     private $enableMultiLang;
     private $subjectSuccessTrans;
     private $locales;
@@ -44,7 +42,6 @@ class SenderServiceTest extends PumukitTestCase
         $this->logger = $this->createStub(LoggerInterface::class);
         $this->templating = $this->createStub(Environment::class);
         $this->mailer = $this->createStub(MailerInterface::class);
-        $this->translator = $container->get('translator');
         $this->session = $container->get('request_stack');
         $this->enable = true;
         $this->senderEmail = 'sender@pumukit.org';
@@ -56,9 +53,8 @@ class SenderServiceTest extends PumukitTestCase
         $this->adminEmail = 'admin@pumukit.org';
         $this->notificateErrorsToAdmin = true;
         $this->platformName = 'Pumukit tv';
-        $this->environment = 'dev';
 
-        $this->senderService = new SenderService($this->mailer, $this->templating, $this->translator, $this->dm, $this->logger, $this->session, $this->enable, $this->senderEmail, $this->senderName, $this->enableMultiLang, $this->locales, $this->subjectSuccessTrans, $this->subjectFailsTrans, $this->adminEmail, $this->notificateErrorsToAdmin, $this->platformName);
+        $this->senderService = new SenderService($this->mailer, $this->templating, $this->dm, $this->logger, $this->session, $this->enable, $this->senderEmail, $this->senderName, $this->enableMultiLang, $this->locales, $this->subjectSuccessTrans, $this->subjectFailsTrans, $this->adminEmail, $this->notificateErrorsToAdmin, $this->platformName);
     }
 
     public function tearDown(): void
@@ -68,7 +64,6 @@ class SenderServiceTest extends PumukitTestCase
         $this->logger = null;
         $this->mailer = null;
         $this->templating = null;
-        $this->translator = null;
         $this->enable = null;
         $this->senderEmail = null;
         $this->senderName = null;

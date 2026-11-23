@@ -151,9 +151,7 @@ final class JobCreator
         $job->setDuration($duration);
         $job->setPriority($jobOptions->priority());
         $job->setInitVars($jobOptions->initVars());
-        if (null !== $jobOptions->language()) {
-            $job->setLanguageId($jobOptions->language());
-        }
+        $job->setLanguageId($jobOptions->language());
         if (!empty($jobOptions->description())) {
             $job->setI18nDescription($jobOptions->description());
         }

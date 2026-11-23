@@ -52,20 +52,18 @@ class EmbeddedTag implements TagInterface
 
     public function __construct(TagInterface $tag)
     {
-        if (null !== $tag) {
-            $this->id = $tag->getId();
-            $this->setI18nTitle($tag->getI18nTitle());
-            $this->setI18nDescription($tag->getI18nDescription());
-            $this->slug = $tag->getSlug();
-            $this->cod = $tag->getCod();
-            $this->metatag = $tag->getMetatag();
-            $this->display = $tag->isDisplay();
-            $this->locale = $tag->getLocale();
-            $this->created = $tag->getCreated();
-            $this->updated = $tag->getUpdated();
-            $this->path = $tag->getPath();
-            $this->level = $tag->getLevel();
-        }
+        $this->id = $tag->getId();
+        $this->setI18nTitle($tag->getI18nTitle());
+        $this->setI18nDescription($tag->getI18nDescription());
+        $this->slug = $tag->getSlug();
+        $this->cod = $tag->getCod();
+        $this->metatag = $tag->getMetatag();
+        $this->display = $tag->isDisplay();
+        $this->locale = $tag->getLocale();
+        $this->created = $tag->getCreated();
+        $this->updated = $tag->getUpdated();
+        $this->path = $tag->getPath();
+        $this->level = $tag->getLevel();
     }
 
     public function __toString(): string

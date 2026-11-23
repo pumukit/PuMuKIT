@@ -12,7 +12,6 @@ use Pumukit\SchemaBundle\Services\MaterialService;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -24,16 +23,13 @@ class MaterialController extends AbstractController implements NewAdminControlle
     /** @var TranslatorInterface */
     private $translator;
 
-    private $requestStack;
-
     /** @var MaterialService */
     private $materialService;
 
-    public function __construct(TranslatorInterface $translator, MaterialService $materialService, RequestStack $requestStack)
+    public function __construct(TranslatorInterface $translator, MaterialService $materialService)
     {
         $this->translator = $translator;
         $this->materialService = $materialService;
-        $this->requestStack = $requestStack;
     }
 
     #[Template('@PumukitNewAdmin/Material/create.html.twig')]

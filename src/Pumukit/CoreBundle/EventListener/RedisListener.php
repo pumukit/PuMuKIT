@@ -23,7 +23,7 @@ class RedisListener
         }
     }
 
-    private function redisElementsByPattern(): ?array
+    private function redisElementsByPattern(): array
     {
         return RedisUtils::elementsByKeyPattern(self::INBOX_UPLOAD_REDIS_PREFIX);
     }

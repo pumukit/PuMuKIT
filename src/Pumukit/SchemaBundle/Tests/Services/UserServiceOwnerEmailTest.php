@@ -12,8 +12,6 @@ use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Event\MultimediaObjectAddOwnerEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService;
-use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
-use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Services\PermissionService;
 use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
 use Pumukit\SchemaBundle\Services\UserService;
@@ -80,7 +78,6 @@ class UserServiceOwnerEmailTest extends PumukitTestCase
             $this->dm,
             new UserEventDispatcherService($this->dispatcher),
             $permissionService,
-            new PermissionProfileService($this->dm, new PermissionProfileEventDispatcherService($this->dispatcher), $permissionService),
             new MultimediaObjectEventDispatcherService($this->dispatcher),
             $this->tokenStorage,
             false,

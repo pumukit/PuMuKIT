@@ -23,7 +23,6 @@ class UserService
     private $permissionService;
     private $personalScopeDeleteOwners;
     private $dispatcher;
-    private $permissionProfileService;
     private $multimediaObjectEventDispatcherService;
     private $tokenStorage;
     private $sendEmailWhenAddUserOwner;
@@ -32,7 +31,6 @@ class UserService
         DocumentManager $documentManager,
         UserEventDispatcherService $dispatcher,
         PermissionService $permissionService,
-        PermissionProfileService $permissionProfileService,
         MultimediaObjectEventDispatcherService $multimediaObjectEventDispatcherService,
         TokenStorageInterface $tokenStorage,
         $personalScopeDeleteOwners = false,
@@ -48,7 +46,6 @@ class UserService
         $this->multimediaObjectEventDispatcherService = $multimediaObjectEventDispatcherService;
         $this->tokenStorage = $tokenStorage;
         $this->personalScopeDeleteOwners = $personalScopeDeleteOwners;
-        $this->permissionProfileService = $permissionProfileService;
         $this->sendEmailWhenAddUserOwner = $sendEmailWhenAddUserOwner;
     }
 

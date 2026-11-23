@@ -22,10 +22,10 @@ final class Exif implements MediaMetadata
 
     public function toString(): string
     {
-        return $this->metadata() ?? '';
+        return $this->metadata();
     }
 
-    public function metadata(): ?string
+    public function metadata(): string
     {
         return $this->metadata;
     }

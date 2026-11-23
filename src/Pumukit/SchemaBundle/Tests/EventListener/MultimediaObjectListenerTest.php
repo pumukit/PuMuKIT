@@ -44,12 +44,12 @@ class MultimediaObjectListenerTest extends PumukitTestCase
 
         $dispatcher = new EventDispatcher();
         $logger = new Logger('test');
-        $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService(), $logger);
+        $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
         $this->trackDispatcher = static::$kernel->getContainer()->get(TrackEventDispatcherService::class);
         $this->factoryService = static::$kernel->getContainer()->get(FactoryService::class);
         $logger = new Logger('test');
-        $this->trackService = new TrackService($this->dm, $this->trackDispatcher, $logger);
+        $this->trackService = new TrackService($this->dm, $this->trackDispatcher);
         $this->i18nService = new i18nService(['en', 'es'], 'en');
         $this->projectDir = static::$kernel->getContainer()->getParameter('kernel.project_dir');
     }

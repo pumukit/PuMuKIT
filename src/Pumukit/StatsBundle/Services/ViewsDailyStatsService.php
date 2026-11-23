@@ -102,9 +102,9 @@ final class ViewsDailyStatsService
             $device = $this->classifier->device($row['_id']['userAgent'] ?? null);
             $hour = (string) $row['_id']['hour'];
             $document['views'] += $views;
-            $document['sources'][$source] = ($document['sources'][$source] ?? 0) + $views;
-            $document['devices'][$device] = ($document['devices'][$device] ?? 0) + $views;
-            $document['hours'][$hour] = ($document['hours'][$hour] ?? 0) + $views;
+            $document['sources'] = self::addViews($document['sources'], $source, $views);
+            $document['devices'] = self::addViews($document['devices'], $device, $views);
+            $document['hours'] = self::addViews($document['hours'], $hour, $views);
             unset($document);
         }
 
@@ -220,5 +220,12 @@ final class ViewsDailyStatsService
     private function logs(): Collection
     {
         return $this->documentManager->getDocumentCollection(ViewsLog::class);
+    }
+
+    private static function addViews(array $counts, string $key, int $views): array
+    {
+        $counts[$key] = ($counts[$key] ?? 0) + $views;
+
+        return $counts;
     }
 }

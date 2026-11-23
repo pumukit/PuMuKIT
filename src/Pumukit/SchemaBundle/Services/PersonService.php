@@ -373,16 +373,14 @@ class PersonService
 
     private function updateEmbeddedPerson(PersonInterface $person, PersonInterface $embeddedPerson): PersonInterface
     {
-        if (null !== $person) {
-            $embeddedPerson->setName($person->getName());
-            $embeddedPerson->setEmail($person->getEmail());
-            $embeddedPerson->setWeb($person->getWeb());
-            $embeddedPerson->setPhone($person->getPhone());
-            $embeddedPerson->setI18nHonorific($person->getI18nHonorific());
-            $embeddedPerson->setI18nFirm($person->getI18nFirm());
-            $embeddedPerson->setI18nPost($person->getI18nPost());
-            $embeddedPerson->setI18nBio($person->getI18nBio());
-        }
+        $embeddedPerson->setName($person->getName());
+        $embeddedPerson->setEmail($person->getEmail());
+        $embeddedPerson->setWeb($person->getWeb());
+        $embeddedPerson->setPhone($person->getPhone());
+        $embeddedPerson->setI18nHonorific($person->getI18nHonorific());
+        $embeddedPerson->setI18nFirm($person->getI18nFirm());
+        $embeddedPerson->setI18nPost($person->getI18nPost());
+        $embeddedPerson->setI18nBio($person->getI18nBio());
 
         return $embeddedPerson;
     }

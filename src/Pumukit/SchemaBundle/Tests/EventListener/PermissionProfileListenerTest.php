@@ -16,7 +16,6 @@ use Pumukit\SchemaBundle\Services\PermissionProfileEventDispatcherService;
 use Pumukit\SchemaBundle\Services\PermissionProfileService;
 use Pumukit\SchemaBundle\Services\PermissionService;
 use Pumukit\SchemaBundle\Services\PersonService;
-use Pumukit\SchemaBundle\Services\UpdateUserService;
 use Pumukit\SchemaBundle\Services\UserEventDispatcherService;
 use Pumukit\SchemaBundle\Services\UserService;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -33,7 +32,6 @@ class PermissionProfileListenerTest extends PumukitTestCase
     private $userService;
     private $permissionProfileService;
     private $listener;
-    private $updateUserService;
     private $userPasswordEncoder;
     private $createUserService;
 
@@ -62,7 +60,6 @@ class PermissionProfileListenerTest extends PumukitTestCase
             $this->dm,
             $userDispatcher,
             $permissionService,
-            $this->permissionProfileService,
             $multimediaObjectEventDispatcher,
             $tokenStorage,
             $personalScopeDeleteOwners,
@@ -81,14 +78,7 @@ class PermissionProfileListenerTest extends PumukitTestCase
             $userDispatcher
         );
 
-        $this->updateUserService = new UpdateUserService(
-            $this->dm,
-            $this->permissionProfileService,
-            $this->userPasswordEncoder,
-            $userDispatcher
-        );
-
-        $this->listener = new PermissionProfileListener($this->dm, $this->userService, $this->updateUserService);
+        $this->listener = new PermissionProfileListener($this->userService);
         $dispatcher->addListener('permissionprofile.update', [$this->listener, 'postUpdate']);
     }
 

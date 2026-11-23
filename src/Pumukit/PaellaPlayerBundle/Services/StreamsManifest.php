@@ -17,21 +17,18 @@ class StreamsManifest
     private $trackUrlService;
     private $liveService;
     private $requestContextScheme;
-    private $requestContextHost;
     private $refererContext;
 
     public function __construct(
         PicService $picService,
         TrackUrlService $trackUrlService,
         LiveService $liveService,
-        string $requestContextScheme,
-        string $requestContextHost
+        string $requestContextScheme
     ) {
         $this->picService = $picService;
         $this->trackUrlService = $trackUrlService;
         $this->liveService = $liveService;
         $this->requestContextScheme = $requestContextScheme;
-        $this->requestContextHost = $requestContextHost;
     }
 
     public function createStreamsForVoD(MultimediaObject $multimediaObject, ?string $trackId, string $referer): array

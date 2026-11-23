@@ -17,11 +17,9 @@ use Symfony\Component\Finder\Finder;
 class PicService
 {
     private $dm;
-    private $fileSystem;
     private $finder;
     private $mmsPicService;
     private $max_width = 1920;
-    private $max_height = 1080;
 
     /**
      * PicService constructor.

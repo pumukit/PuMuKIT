@@ -17,14 +17,12 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 final class JobValidator
 {
     private DocumentManager $documentManager;
-    private ProfileService $profileService;
     private InspectionFfprobeService $inspectionService;
     private LoggerInterface $logger;
 
-    public function __construct(DocumentManager $documentManager, ProfileService $profileService, InspectionFfprobeService $inspectionService, LoggerInterface $logger)
+    public function __construct(DocumentManager $documentManager, InspectionFfprobeService $inspectionService, LoggerInterface $logger)
     {
         $this->documentManager = $documentManager;
-        $this->profileService = $profileService;
         $this->inspectionService = $inspectionService;
         $this->logger = $logger;
     }

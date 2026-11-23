@@ -114,7 +114,7 @@ class SeriesTest extends TestCase
         static::assertEquals(null, $series->getDescription());
         static::assertEquals(null, $series->getHeader());
         static::assertEquals(null, $series->getFooter());
-        static::assertNotNull($series->getKeywordsAsString($langKeyword));
+        static::assertSame('keyword,test', $series->getKeywordsAsString($langKeyword));
         static::assertEquals(null, $series->getLine2());
     }
 

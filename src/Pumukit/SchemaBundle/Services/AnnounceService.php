@@ -116,7 +116,7 @@ class AnnounceService
             $dateStart->modify('first day of last month');
             $dateEnd->modify('last day of last month');
             $last = $this->getLatestUploadsByDates($dateStart, $dateEnd, $withPudenewTag, $useRecordDate);
-        } while (empty($last) && $lastMm && $lastDate <= $dateEnd);
+        } while (empty($last) && $lastDate <= $dateEnd);
 
         if (empty($last)) {
             $dateEnd = null;

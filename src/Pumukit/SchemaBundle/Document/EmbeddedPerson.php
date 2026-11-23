@@ -47,17 +47,15 @@ class EmbeddedPerson implements PersonInterface
 
     public function __construct(PersonInterface $person)
     {
-        if (null !== $person) {
-            $this->id = $person->getId();
-            $this->name = $person->getName();
-            $this->email = $person->getEmail();
-            $this->web = $person->getWeb();
-            $this->phone = $person->getPhone();
-            $this->setI18nHonorific($person->getI18nHonorific());
-            $this->setI18nFirm($person->getI18nFirm());
-            $this->setI18nPost($person->getI18nPost());
-            $this->setI18nBio($person->getI18nBio());
-        }
+        $this->id = $person->getId();
+        $this->name = $person->getName();
+        $this->email = $person->getEmail();
+        $this->web = $person->getWeb();
+        $this->phone = $person->getPhone();
+        $this->setI18nHonorific($person->getI18nHonorific());
+        $this->setI18nFirm($person->getI18nFirm());
+        $this->setI18nPost($person->getI18nPost());
+        $this->setI18nBio($person->getI18nBio());
     }
 
     public function __toString(): string

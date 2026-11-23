@@ -113,9 +113,7 @@ class FilterService
 
         $person = $this->personService->getPersonFromLoggedInUser($user);
 
-        if (null !== $people = $this->getPeopleMongoQuery($person)) {
-            $filter->setParameter('people', $people);
-        }
+        $filter->setParameter('people', $this->getPeopleMongoQuery($person));
 
         if (null !== $person) {
             $filter->setParameter('person_id', $person->getId());
@@ -125,9 +123,7 @@ class FilterService
             $filter->setParameter('role_code', $roleCode);
         }
 
-        if (null !== $groups = $this->getGroupsMongoQuery($user)) {
-            $filter->setParameter('groups', $groups);
-        }
+        $filter->setParameter('groups', $this->getGroupsMongoQuery($user));
         $filter->setParameter('series_groups', $user->getGroupsIds());
     }
 

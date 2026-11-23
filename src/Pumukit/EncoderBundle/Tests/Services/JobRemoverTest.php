@@ -103,15 +103,6 @@ final class JobRemoverTest extends PumukitTestCase
         return $job;
     }
 
-    private function createJobFinishedFromInbox(): Job
-    {
-        $job = $this->createJobFinishedStatus();
-        $job->setPathIni($this->projectDir.'/inbox/pumukit.mp4');
-        $this->dm->flush();
-
-        return $job;
-    }
-
     private function copyFileToUse(string $origin, string $fileName): string
     {
         $tmpPath = $this->projectDir.'/tests/tmp/';

@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 
@@ -33,7 +32,6 @@ class SenderService
     private $adminEmail;
     private $notificateErrorsToAdmin;
     private $platformName;
-    private $translator;
     private $subject = "Can't send email to this address.";
     private $template = self::TEMPLATE_ERROR;
     private $logger;
@@ -46,7 +44,6 @@ class SenderService
     public function __construct(
         MailerInterface $mailer,
         Environment $templating,
-        TranslatorInterface $translator,
         DocumentManager $documentManager,
         LoggerInterface $logger,
         RequestStack $requestStack,
@@ -63,7 +60,6 @@ class SenderService
     ) {
         $this->mailer = $mailer;
         $this->templating = $templating;
-        $this->translator = $translator;
         $this->logger = $logger;
         $this->enable = $enable;
         $this->senderEmail = $senderEmail;

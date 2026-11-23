@@ -10,7 +10,6 @@ use Pumukit\SchemaBundle\Document\Group;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Twig\Environment as TemplatingEngine;
 
@@ -20,9 +19,7 @@ class EmbeddedBroadcastService
     private $repo;
     private $mmsService;
     private $dispatcher;
-    private $disabledBroadcast;
     private $authorizationChecker;
-    private $router;
     private $templating;
 
     public function __construct(
@@ -30,8 +27,7 @@ class EmbeddedBroadcastService
         MultimediaObjectService $mmsService,
         MultimediaObjectEventDispatcherService $dispatcher,
         AuthorizationCheckerInterface $authorizationChecker,
-        TemplatingEngine $templating,
-        RouterInterface $router
+        TemplatingEngine $templating
     ) {
         $this->dm = $documentManager;
         $this->repo = $this->dm->getRepository(MultimediaObject::class);
@@ -39,7 +35,6 @@ class EmbeddedBroadcastService
         $this->dispatcher = $dispatcher;
         $this->authorizationChecker = $authorizationChecker;
         $this->templating = $templating;
-        $this->router = $router;
     }
 
     /**

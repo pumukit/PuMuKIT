@@ -28,8 +28,6 @@ final class RouteSmokeTest extends PumukitTestCase
 {
     private const SKIPPED_PATHS = '#^/(_|admin/logout$|logout$|login$)#';
 
-    private const MODIFY_DATA_ON_GET = [];
-
     private const NOT_REQUESTED = [
         'tus_post_token' => 'TUS upload server',
         'tus_files' => 'TUS upload server',
@@ -140,14 +138,14 @@ final class RouteSmokeTest extends PumukitTestCase
         $failures = [];
         $requested = 0;
 
-        foreach (array_merge(self::MODIFY_DATA_ON_GET, self::NOT_REQUESTED) as $name => $reason) {
+        foreach (self::NOT_REQUESTED as $name => $reason) {
             if (null === $routes->get($name)) {
                 $failures[] = "{$name}: excluded ({$reason}) but the route no longer exists, remove it from the list";
             }
         }
 
         foreach ($routes as $name => $route) {
-            if (!$this->isGetRoute($route) || preg_match(self::SKIPPED_PATHS, $route->getPath()) || isset(self::MODIFY_DATA_ON_GET[$name]) || isset(self::NOT_REQUESTED[$name])) {
+            if (!$this->isGetRoute($route) || preg_match(self::SKIPPED_PATHS, $route->getPath()) || isset(self::NOT_REQUESTED[$name])) {
                 continue;
             }
 

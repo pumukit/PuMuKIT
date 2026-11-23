@@ -43,7 +43,6 @@ class JobGeneratorListenerTest extends PumukitTestCase
 {
     private $logger;
     private $listener;
-    private $trackDispatcher;
     private $jobGeneratorListener;
     private $i18nService;
     private $projectDir;
@@ -65,9 +64,8 @@ class JobGeneratorListenerTest extends PumukitTestCase
         $jobCreator = static::$kernel->getContainer()->get(JobCreator::class);
         $this->jobGeneratorListener = new JobGeneratorListener($this->dm, $jobCreator, $profileService, $mediaUpdater, $this->logger);
         $dispatcher = new EventDispatcher();
-        $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService(), $this->logger);
+        $this->listener = new MultimediaObjectListener($this->dm, new TextIndexService());
         $dispatcher->addListener('multimediaobject.update', [$this->listener, 'postUpdate']);
-        $this->trackDispatcher = static::$kernel->getContainer()->get('pumukitschema.track_dispatcher');
         $this->factoryService = static::$kernel->getContainer()->get(FactoryService::class);
     }
 
@@ -79,7 +77,6 @@ class JobGeneratorListenerTest extends PumukitTestCase
         $this->logger = null;
         $this->jobGeneratorListener = null;
         $this->listener = null;
-        $this->trackDispatcher = null;
         gc_collect_cycles();
     }
 

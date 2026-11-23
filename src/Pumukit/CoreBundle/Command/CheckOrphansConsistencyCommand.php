@@ -28,7 +28,6 @@ class CheckOrphansConsistencyCommand extends Command
     ];
 
     private DocumentManager $documentManager;
-    private ?string $path;
 
     public function __construct(DocumentManager $documentManager)
     {
@@ -68,8 +67,6 @@ EOT
 
             return Command::FAILURE;
         }
-
-        $this->path = $path;
 
         $files = FinderUtils::filesFromPath($path);
         $output->writeln('<comment>***** Files to check: '.count($files).' *****</comment>');

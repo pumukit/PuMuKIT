@@ -92,7 +92,7 @@ class PaellaRepositoryController extends AbstractController implements PersonalC
     #[Route('/secret/paellaplaylist/{secret}.{_format}', methods: ['GET'], defaults: ['_format' => 'json', 'show_hide' => true, 'no_channels' => true], requirements: ['_format' => 'json|xml'])]
     public function playlistAction(Request $request, #[MapDocument(mapping: ['id' => 'id', 'secret' => 'secret'], stripNull: true)] Series $series): Response
     {
-        $data = $this->playlistManifest->create($request->getHost(), $series, $request->query->getInt('videoPos') ?? 0, $request->getPathInfo());
+        $data = $this->playlistManifest->create($request->getHost(), $series, $request->query->getInt('videoPos'), $request->getPathInfo());
         $response = $this->serializer->dataSerialize($data, $request->getRequestFormat());
 
         return new Response($response);

@@ -945,21 +945,19 @@ class EventsController extends AbstractController implements NewAdminControllerI
                 return 0;
             }
 
-            if (!$validSessionA && $validSessionB) {
+            if (!$validSessionA) {
                 return 1;
             }
 
-            if ($validSessionA && !$validSessionB) {
+            if (!$validSessionB) {
                 return -1;
             }
 
-            if ($validSessionA && $validSessionB) {
-                if ('desc' == $sortType) {
-                    return ($validSessionA < $validSessionB) ? 1 : -1;
-                }
-
-                return ($validSessionA < $validSessionB) ? -1 : 1;
+            if ('desc' == $sortType) {
+                return ($validSessionA < $validSessionB) ? 1 : -1;
             }
+
+            return ($validSessionA < $validSessionB) ? -1 : 1;
         });
 
         return $multimediaObjects;

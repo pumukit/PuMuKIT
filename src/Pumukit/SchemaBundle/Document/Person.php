@@ -58,7 +58,7 @@ class Person implements PersonInterface
     public function __toString(): string
     {
         if ($this->getName()) {
-            return $this->getName() ?? '';
+            return $this->getName();
         }
 
         return '';

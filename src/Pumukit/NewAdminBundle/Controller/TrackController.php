@@ -18,7 +18,6 @@ use Pumukit\EncoderBundle\Services\JobUpdater;
 use Pumukit\EncoderBundle\Services\PicExtractorService;
 use Pumukit\EncoderBundle\Services\ProfileService;
 use Pumukit\EncoderBundle\Services\Repository\JobRepository;
-use Pumukit\InspectionBundle\Services\InspectionFfprobeService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\ValueObject\i18nText;
 use Pumukit\SchemaBundle\Document\ValueObject\Path;
@@ -43,7 +42,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
     private DocumentManager $documentManager;
     private TrackService $trackService;
     private ProfileService $profileService;
-    private InspectionFfprobeService $inspectionService;
     private PicExtractorService $picExtractorService;
     private $kernelEnvironment;
     private JobCreator $jobCreator;
@@ -69,7 +67,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         i18nService $i18nService,
         TrackService $trackService,
         ProfileService $profileService,
-        InspectionFfprobeService $inspectionService,
         PicExtractorService $picExtractorService,
         TrackDeliveryService $trackDelivery,
         $kernelEnvironment
@@ -78,7 +75,6 @@ class TrackController extends AbstractController implements NewAdminControllerIn
         $this->documentManager = $documentManager;
         $this->trackService = $trackService;
         $this->profileService = $profileService;
-        $this->inspectionService = $inspectionService;
         $this->picExtractorService = $picExtractorService;
         $this->kernelEnvironment = $kernelEnvironment;
         $this->jobCreator = $jobCreator;

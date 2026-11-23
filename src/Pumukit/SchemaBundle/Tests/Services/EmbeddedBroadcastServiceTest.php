@@ -29,7 +29,6 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
     private $dispatcher;
     private $authorizationChecker;
     private $templating;
-    private $router;
 
     public function setUp(): void
     {
@@ -44,8 +43,6 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->dispatcher = static::$kernel->getContainer()->get('pumukitschema.multimediaobject_dispatcher');
         $this->authorizationChecker = static::getContainer()->get('security.authorization_checker');
         $this->templating = $this->createStub(Environment::class);
-
-        $this->router = static::$kernel->getContainer()->get('router');
     }
 
     public function tearDown(): void
@@ -59,13 +56,12 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $this->dispatcher = null;
         $this->authorizationChecker = null;
         $this->templating = null;
-        $this->router = null;
         gc_collect_cycles();
     }
 
     public function testCreateEmbeddedBroadcastByType()
     {
-        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating, $this->router);
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating);
         $passwordBroadcast = $embeddedBroadcastService->createEmbeddedBroadcastByType(EmbeddedBroadcast::TYPE_PASSWORD);
         $ldapBroadcast = $embeddedBroadcastService->createEmbeddedBroadcastByType(EmbeddedBroadcast::TYPE_LOGIN);
         $groupsBroadcast = $embeddedBroadcastService->createEmbeddedBroadcastByType(EmbeddedBroadcast::TYPE_GROUPS);
@@ -151,7 +147,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
 
     public function testGetAllBroadcastTypes()
     {
-        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating, $this->router);
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating);
         $broadcasts = [
             EmbeddedBroadcast::TYPE_PUBLIC => EmbeddedBroadcast::NAME_PUBLIC,
             EmbeddedBroadcast::TYPE_PASSWORD => EmbeddedBroadcast::NAME_PASSWORD,
@@ -163,7 +159,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
 
     public function testCreatePublicEmbeddedBroadcast()
     {
-        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating, $this->router);
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $this->authorizationChecker, $this->templating);
         $publicBroadcast = $embeddedBroadcastService->createPublicEmbeddedBroadcast();
         static::assertEquals(EmbeddedBroadcast::TYPE_PUBLIC, $publicBroadcast->getType());
         static::assertEquals(EmbeddedBroadcast::NAME_PUBLIC, $publicBroadcast->getName());
@@ -496,7 +492,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $templating = $this->createStub(Environment::class);
         $templating->method('render')->willReturn($content);
 
-        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating, $this->router);
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating);
 
         $response = $embeddedBroadcastService->canUserPlayMultimediaObject($mm, null, '');
         static::assertInstanceOf(Response::class, $response);
@@ -511,7 +507,7 @@ class EmbeddedBroadcastServiceTest extends PumukitTestCase
         $authorizationChecker = $this->createStub(AuthorizationCheckerInterface::class);
         $authorizationChecker->method('isGranted')->willReturn(true);
 
-        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating, $this->router);
+        $embeddedBroadcastService = new EmbeddedBroadcastService($this->dm, $this->mmsService, $this->dispatcher, $authorizationChecker, $templating);
 
         static::assertTrue($embeddedBroadcastService->canUserPlayMultimediaObject($mm, $user, ''));
 

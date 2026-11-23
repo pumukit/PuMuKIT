@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Psr\Log\LoggerInterface;
 use Pumukit\SchemaBundle\Document\MediaType\Document;
 use Pumukit\SchemaBundle\Document\MediaType\Image;
 use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
-use Pumukit\SchemaBundle\Document\MediaType\Metadata\VideoAudio;
 use Pumukit\SchemaBundle\Document\MediaType\Track;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Symfony\Component\Finder\Finder;
@@ -19,14 +17,12 @@ class TrackService
     private DocumentManager $dm;
 
     private TrackEventDispatcherService $dispatcher;
-    private ?string $tmpPath;
+    private string $tmpPath;
     private bool $forceDeleteOnDisk;
-    private LoggerInterface $logger;
 
     public function __construct(
         DocumentManager $documentManager,
         TrackEventDispatcherService $dispatcher,
-        LoggerInterface $logger,
         ?string $tmpPath = null,
         bool $forceDeleteOnDisk = true
     ) {
@@ -34,7 +30,6 @@ class TrackService
         $this->dispatcher = $dispatcher;
         $this->tmpPath = (is_string($tmpPath) && '' !== $tmpPath) ? $tmpPath : sys_get_temp_dir();
         $this->forceDeleteOnDisk = $forceDeleteOnDisk;
-        $this->logger = $logger;
     }
 
     public function addTrackToMultimediaObject(MultimediaObject $multimediaObject, MediaInterface $media, bool $executeFlush = true): MultimediaObject
@@ -127,7 +122,7 @@ class TrackService
 
         if ($media instanceof Track) {
             $metadata = $media->metadata();
-            if ($metadata instanceof VideoAudio && $metadata->isOnlyAudio()) {
+            if ($metadata->isOnlyAudio()) {
                 $multimediaObject->setAudioType();
             } else {
                 $multimediaObject->setVideoType();
