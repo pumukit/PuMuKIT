@@ -310,6 +310,16 @@ of the old HLS tracks, rewritten by `pumukit:hls:move-to-own-directory`.
   own DNS name and certificate, and set `PUMUKIT_DLS_REAL_IP_FROM` if the network of the `proxy` is not a private range. The `dls` service publishes no
   port: only the `proxy` reaches it.
 
+  The download server is published as `teltek/pumukit-dls:<branch>`, next to `teltek/pumukit` and `teltek/nginx`. Use it as it is, build on it
+  (`FROM teltek/pumukit-dls:6.0.x`) to add NGINX settings of your own, or take only the PuMuKIT part into another NGINX image: the locations
+  are in `/etc/nginx/pumukit-dls/` and `/docker-entrypoint.d/25-pumukit-dls.sh` writes their settings from the environment when the container
+  starts. Another server only has to include `/etc/nginx/pumukit-dls/http.conf` in the `http` context and `/etc/nginx/pumukit-dls/locations.conf`
+  in its `server`. It mounts the storage read only on `/mnt/storage/pumukit`. By default it checks
+  each signed URL with PHP-FPM over FastCGI (`PUMUKIT_DLS_PHP_FPM`, `php:9000`), which needs the `php` service in the same network. On another
+  server, set `PUMUKIT_DLS_VALIDATION_URL` to the URL of PuMuKIT (an origin with no path, for example `https://pumukit.example.org` or an internal
+  address of its web server) and it checks them over HTTP with `/download/validate-token` and `/download/validate-hls`. Both modes send
+  `PUMUKIT_FRONTEND_HOST` as host, which must be in `TRUSTED_HOSTS`, and keep each answer 10 seconds.
+
   The images of `/opencast` do not ask for a token, because PuMuKIT stores them as public URLs. To serve Opencast, also mount its storage on `/mnt/storage/opencast`. With validation,
   a saved link to the server stops working: check first which URLs are used from outside (podcast clients, apps, other websites, LMS).
 

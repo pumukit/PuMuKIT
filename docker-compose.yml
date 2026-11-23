@@ -64,6 +64,7 @@ services:
       - .env
     environment:
       PUMUKIT_REAL_IP_FROM: ${PUMUKIT_DLS_REAL_IP_FROM:-10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
+      PUMUKIT_DLS_VALIDATION_URL: ${PUMUKIT_DLS_VALIDATION_URL:-}
     build:
       context: ./
       target: dls

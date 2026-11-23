@@ -171,6 +171,8 @@ FROM nginx:$NGINX_VERSION-alpine AS dls
 
 COPY docker/nginx/dls.conf.template /etc/nginx/templates/default.conf.template
 COPY --chmod=755 docker/nginx/15-real-ip.sh /docker-entrypoint.d/15-real-ip.sh
+COPY docker/nginx/pumukit-dls/ /etc/nginx/pumukit-dls/
+COPY --chmod=755 docker/nginx/25-pumukit-dls.sh /docker-entrypoint.d/25-pumukit-dls.sh
 
 FROM nginx:$NGINX_VERSION-alpine AS proxy
 
