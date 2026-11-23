@@ -77,6 +77,7 @@ build:
 	@$(DOCKER_COMP) build
 
 cc-envs:
+	$(call run_php,sh -c 'rm -rf var/cache/*/asset_mapper')
 	$(call run_php,bin/console c:c)
 	$(call run_php,bin/console c:c --env=prod)
 
