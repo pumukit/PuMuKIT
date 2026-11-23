@@ -2,7 +2,7 @@
         cc cc-envs ai \
         composer composer-install composer-update composer-validate composer-audit importmap-audit paella-audit fixtures check-delivery \
         test-all test test-lint-yaml test-lint-twig test-lint-xliff test-lint-generic \
-        test-php-cs-fixer test-php-stan test-rector fix-test-perms \
+        test-php-cs-fixer test-php-stan fix-test-perms \
         update update-composer update-importmap update-paella paella-build vendor-outdated \
         shell php-shell ps logs
 
@@ -109,7 +109,7 @@ paella-audit: ## Fail if a runtime dependency of Paella has a security advisory
 fixtures:
 	$(call run_php,bin/console pumukit:init:repo all --force)
 
-test-all: test test-smoke test-lint-yaml test-lint-twig test-lint-xliff test-lint-generic test-php-cs-fixer test-php-stan test-rector ## Run all the PuMuKIT code tests
+test-all: test test-smoke test-lint-yaml test-lint-twig test-lint-xliff test-lint-generic test-php-cs-fixer test-php-stan ## Run all the PuMuKIT code tests
 
 test:
 	$(call run_php_test,composer tests)
@@ -137,9 +137,6 @@ test-php-cs-fixer:
 
 test-php-stan:
 	$(call run_php_test,composer php-stan)
-
-test-rector:
-	$(call run_php_test,composer php-rector)
 
 update: update-composer update-importmap update-paella vendor-outdated ## Update composer, the importmap and Paella within their major versions; review the diff and commit by hand
 

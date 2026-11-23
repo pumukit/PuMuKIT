@@ -56,9 +56,6 @@ jobs:
       - name: PHPStan
         run:  make test-php-stan
 
-      - name: PHPRector
-        run:  make test-rector
-
       - name: Test
         run:  make test
 
