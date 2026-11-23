@@ -1,3 +1,4 @@
+{% set columns = is_naked() ? 7 : 6 %}
 <div class="table-responsive pmk-overflow-visible">
     {% if app.user and is_granted(constant('Pumukit\\SchemaBundle\\Security\\Permission::ACCESS_EDIT_PLAYLIST')) %}
         <input type="hidden" name="pumukitnewadmin_playlist_sort_change_type" id="pumukitnewadmin_playlist_sort_change_type" value="{{ app.session.get('admin/playlist/type')=='asc'?'desc':'asc' }}"/>
@@ -55,7 +56,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="5" headers="th-checkbox th-icons th-img th-title th-mm">
+                    <td colspan="{{ columns }}" headers="th-checkbox th-icons th-img th-title th-mm th-play">
                         {% trans %}There are no playlist with those values.{% endtrans %}
                     </td>
                 </tr>
@@ -78,7 +79,7 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="6" class="foot-td">
+                <td colspan="{{ columns }}" class="foot-td">
                     <div class="row">
                         <div class="col-md-6">
                             {{ series.getNbResults }}
