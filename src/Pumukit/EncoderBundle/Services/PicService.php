@@ -299,12 +299,7 @@ class PicService
             $aExtensions = [$extension];
         }
 
-        array_map('trim', $aExtensions);
-        array_filter($aExtensions, function ($value) {
-            return '' !== $value;
-        });
-
-        return $aExtensions;
+        return array_values(array_filter(array_map('trim', $aExtensions), static fn (string $value): bool => '' !== $value));
     }
 
     /**
@@ -331,12 +326,7 @@ class PicService
             $aTags = [$tags];
         }
 
-        array_map('trim', $aTags);
-        array_filter($aTags, function ($value) {
-            return '' !== $value;
-        });
-
-        return $aTags;
+        return array_values(array_filter(array_map('trim', $aTags), static fn (string $value): bool => '' !== $value));
     }
 
     /**
