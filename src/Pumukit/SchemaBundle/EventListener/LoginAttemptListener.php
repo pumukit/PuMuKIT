@@ -9,7 +9,10 @@ use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
+use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
@@ -18,7 +21,10 @@ use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
 final class LoginAttemptListener implements EventSubscriberInterface
 {
-    public function __construct(private readonly DocumentManager $documentManager) {}
+    public function __construct(
+        private readonly DocumentManager $documentManager,
+        private readonly PasswordHasherFactoryInterface $passwordHasherFactory,
+    ) {}
 
     public static function getSubscribedEvents(): array
     {
@@ -31,7 +37,17 @@ final class LoginAttemptListener implements EventSubscriberInterface
     public function onLoginFailure(LoginFailureEvent $event): void
     {
         $passport = $event->getPassport();
-        if (!$event->getException() instanceof BadCredentialsException || !$this->checksAPassword($passport)) {
+        if (!$this->checksAPassword($passport)) {
+            return;
+        }
+
+        if ($this->passwordWasNotChecked($event->getException())) {
+            $this->hashThePassword($passport);
+
+            return;
+        }
+
+        if (!$event->getException() instanceof BadCredentialsException) {
             return;
         }
 
@@ -63,6 +79,25 @@ final class LoginAttemptListener implements EventSubscriberInterface
             ['_id' => new ObjectId((string) $user->getId())],
             ['$set' => ['loginAttempt' => 0, 'enabled' => true, 'lastLoginAttempt' => new UTCDateTime()]]
         );
+    }
+
+    private function passwordWasNotChecked(\Throwable $exception): bool
+    {
+        for ($current = $exception; null !== $current; $current = $current->getPrevious()) {
+            if ($current instanceof UserNotFoundException || $current instanceof AccountStatusException) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function hashThePassword(Passport $passport): void
+    {
+        try {
+            $this->passwordHasherFactory->getPasswordHasher(User::class)->hash($passport->getBadge(PasswordCredentials::class)->getPassword());
+        } catch (\Throwable) {
+        }
     }
 
     private function checksAPassword(?Passport $passport): bool
