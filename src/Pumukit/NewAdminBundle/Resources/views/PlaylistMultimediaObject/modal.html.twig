@@ -11,7 +11,7 @@
         url: path('pumukitnewadmin_playlistmms_modal_url', {'mmid': '__id__'}),
         videos: url('pumukitnewadmin_playlistmms_modal_mymmobjs', {'id': playlist.id, 'modal_page': '__page__', 'modal_limit': mmobjs_limit})
      }|json_encode }}"
-     data-admin--playlist-modal-pages-value="{{ ((mmobjs_total|length) / mmobjs_limit)|round(0, 'ceil') }}">
+     data-admin--playlist-modal-pages-value="{{ (mmobjs_total / mmobjs_limit)|round(0, 'ceil') }}">
   <div role="tabpanel">
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item" role="search">

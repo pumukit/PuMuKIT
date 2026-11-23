@@ -1,3 +1,6 @@
+{% if noPerson is defined %}
+<p class="alert alert-warning">{% trans %}Your user has no associated person, so its videos cannot be searched.{% endtrans %}</p>
+{% else %}
 {% for mmobj in my_mmobjs %}
   <div class="row"><div class="col-md-12 mmobj">
     <input class="pmk-display-none" type="checkbox" name="{{mmobj.id}}" id="modal-{{mmobj.id}}" value="{{mmobj.id}}"/>
@@ -8,3 +11,4 @@
     </label>
   </div></div>
 {% endfor %}
+{% endif %}

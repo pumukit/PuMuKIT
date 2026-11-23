@@ -10,6 +10,7 @@ use MongoDB\BSON\ObjectId;
 use Pumukit\CoreBundle\Services\PaginationService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
+use Pumukit\SchemaBundle\Document\PersonInterface;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
@@ -166,19 +167,11 @@ class PlaylistMultimediaObjectController extends AbstractController
     public function modalAction(Series $playlist, Request $request)
     {
         $limit = $request->query->get('modal_limit', 20);
-        // Get all multimedia objects. The filter will do the rest.
-        $mmobjs = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
-        $total = $mmobjs->count()->getQuery()->execute();
-
-        if (!$this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
-            $total = $this->getPersonalVideos();
-        } else {
-            $mmobjs = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
-            $total = $mmobjs->count()->getQuery()->execute();
-        }
+        $total = $this->myVideos()->count()->getQuery()->execute();
 
         return [
             'my_mmobjs' => [],
+            'noPerson' => !$this->isGranted(PermissionProfile::SCOPE_GLOBAL) && !$this->currentPerson(),
             'mmobjs_total' => $total,
             'mmobjs_limit' => $limit,
             'playlist' => $playlist,
@@ -196,15 +189,11 @@ class PlaylistMultimediaObjectController extends AbstractController
         $page = $request->query->get('modal_page', 1);
         $limit = $request->query->get('modal_limit', 20);
 
-        // Filter doesnt work here because add conditions like $or and createStandardQueryBuilder is a generic condition. This is a WA.
-        if (!$this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
-            $mmobjs = $this->getPersonalVideos();
-        } else {
-            $mmobjs = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
-            $mmobjs->field('type')->in([MultimediaObject::TYPE_VIDEO, MultimediaObject::TYPE_AUDIO]);
+        if (!$this->isGranted(PermissionProfile::SCOPE_GLOBAL) && !$this->currentPerson()) {
+            return ['noPerson' => true];
         }
 
-        $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($mmobjs, (int) $page, (int) $limit);
+        $pager = $this->paginationService->createDoctrineODMMongoDBAdapter($this->myVideos(), (int) $page, (int) $limit);
 
         return [
             'my_mmobjs' => $pager,
@@ -518,21 +507,32 @@ class PlaylistMultimediaObjectController extends AbstractController
         return json_decode($raw, true, 512, JSON_THROW_ON_ERROR);
     }
 
-    private function getPersonalVideos()
+    private function myVideos(): Builder
     {
         $builder = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
+        $builder->field('type')->in([MultimediaObject::TYPE_VIDEO, MultimediaObject::TYPE_AUDIO]);
 
-        $builder
-            ->field('people')->elemMatch(
-                $builder->expr()
-                    ->field('people._id')->equals(new ObjectId($this->getUser()->getPerson()->getId()))
-                    ->field('cod')->equals('owner')
-            )
-            ->field('type')->in([MultimediaObject::TYPE_VIDEO, MultimediaObject::TYPE_AUDIO])
-        ;
-        $builder->getQuery()->execute();
+        if ($this->isGranted(PermissionProfile::SCOPE_GLOBAL)) {
+            return $builder;
+        }
 
-        return $builder;
+        $person = $this->currentPerson();
+        if (!$person) {
+            return $builder->field('_id')->in([]);
+        }
+
+        return $builder->field('people')->elemMatch(
+            $builder->expr()
+                ->field('people._id')->equals(new ObjectId($person->getId()))
+                ->field('cod')->equals($this->personService->getPersonalScopeRoleCode())
+        );
+    }
+
+    private function currentPerson(): ?PersonInterface
+    {
+        $user = $this->getUser();
+
+        return $user instanceof User ? $user->getPerson() : null;
     }
 
     private function searchVideos(Builder $builder, string $text = '', string $locale = 'en'): Builder
@@ -544,7 +544,7 @@ class PlaylistMultimediaObjectController extends AbstractController
                     ->field('people')->elemMatch(
                         $builder->expr()
                             ->field('people._id')->equals(new ObjectId($this->getUser()->getPerson()->getId()))
-                            ->field('cod')->equals('owner')
+                            ->field('cod')->equals($this->personService->getPersonalScopeRoleCode())
                     )
             )
             ->addOr(
@@ -561,8 +561,6 @@ class PlaylistMultimediaObjectController extends AbstractController
                 '$language' => TextIndexUtils::getCloseLanguage($locale),
             ]);
         }
-
-        $builder->getQuery()->execute();
 
         return $builder;
     }
