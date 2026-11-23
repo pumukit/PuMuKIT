@@ -38,6 +38,9 @@ class UserProfileController extends AbstractController
     public function profileAction(Request $request): array
     {
         $user = $this->getUser();
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException();
+        }
 
         $locale = $request->getLocale();
         $form = $this->createForm(UserUpdateProfileType::class, $user, ['translator' => $this->translator, 'locale' => $locale]);

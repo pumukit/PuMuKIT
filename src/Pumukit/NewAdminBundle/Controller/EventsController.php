@@ -20,6 +20,7 @@ use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\EmbeddedEventSessionService;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectPicService;
@@ -532,6 +533,9 @@ class EventsController extends AbstractController implements NewAdminControllerI
         $aggregate = $this->documentManager->getDocumentCollection(Series::class);
 
         $user = $this->getUser();
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException();
+        }
         $pipeline = [];
         $pipeline[] = ['$match' => ['title.'.$request->getLocale() => new Regex($value, 'i')]];
         $pipeline[] = ['$match' => ['type' => Series::TYPE_SERIES]];
@@ -882,6 +886,9 @@ class EventsController extends AbstractController implements NewAdminControllerI
     {
         $aggregate = $this->documentManager->getDocumentCollection(MultimediaObject::class);
         $user = $this->getUser();
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException();
+        }
         $pipeline = [];
         $pipeline[] = ['$match' => ['series' => new ObjectId($multimediaObject->getSeries()->getId())]];
         $ownerKey = $this->pumukitSchemaPersonalScopeRoleCode;

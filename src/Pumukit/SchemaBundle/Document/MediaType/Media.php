@@ -179,7 +179,7 @@ abstract class Media implements MediaInterface
         return $this->storage['path'];
     }
 
-    public function metadata(): MediaMetadata
+    public function metadata(): VideoAudio
     {
         return VideoAudio::create($this->metadata);
     }
@@ -189,17 +189,17 @@ abstract class Media implements MediaInterface
         return $this->metadata()->duration() ?? 0;
     }
 
-    public function videoMetadata(): MediaMetadata
+    public function videoMetadata(): VideoAudio
     {
         return VideoAudio::create($this->metadata);
     }
 
-    public function imageMetadata(): MediaMetadata
+    public function imageMetadata(): Exif
     {
         return Exif::create($this->metadata);
     }
 
-    public function documentMetadata(): MediaMetadata
+    public function documentMetadata(): Exif
     {
         return Exif::create($this->metadata);
     }

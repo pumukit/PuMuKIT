@@ -269,7 +269,7 @@ class Tag implements TagInterface
         $this->number_multimedia_objects = $count;
     }
 
-    public function setParent(?TagInterface $parent = null): void
+    public function setParent(?Tag $parent = null): void
     {
         $this->parent = $parent;
 

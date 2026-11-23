@@ -214,7 +214,7 @@ class PlaylistMultimediaObjectController extends AbstractController
 
         // Filter doesnt work here because add conditions like $or and createStandardQueryBuilder is a generic condition. This is a WA.
         $queryBuilder = $this->documentManager->getRepository(MultimediaObject::class)->createStandardQueryBuilder();
-        $queryBuilder = $this->searchVideos($queryBuilder, $value, $request->getLocale());
+        $queryBuilder = $this->searchVideos($queryBuilder, $user->getPerson(), $value, $request->getLocale());
         $queryBuilder->limit($limit);
         if (!empty($value)) {
             $queryBuilder->sortMeta('score', 'textScore');
@@ -535,7 +535,7 @@ class PlaylistMultimediaObjectController extends AbstractController
         return $user instanceof User ? $user->getPerson() : null;
     }
 
-    private function searchVideos(Builder $builder, string $text = '', string $locale = 'en'): Builder
+    private function searchVideos(Builder $builder, PersonInterface $person, string $text = '', string $locale = 'en'): Builder
     {
         $builder
             ->field('type')->in([MultimediaObject::TYPE_VIDEO, MultimediaObject::TYPE_AUDIO])
@@ -543,7 +543,7 @@ class PlaylistMultimediaObjectController extends AbstractController
                 $builder->expr()
                     ->field('people')->elemMatch(
                         $builder->expr()
-                            ->field('people._id')->equals(new ObjectId($this->getUser()->getPerson()->getId()))
+                            ->field('people._id')->equals(new ObjectId($person->getId()))
                             ->field('cod')->equals($this->personService->getPersonalScopeRoleCode())
                     )
             )

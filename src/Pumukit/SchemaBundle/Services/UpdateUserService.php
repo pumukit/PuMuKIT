@@ -7,7 +7,6 @@ namespace Pumukit\SchemaBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class UpdateUserService extends CommonUserService
 {
@@ -28,11 +27,11 @@ class UpdateUserService extends CommonUserService
     }
 
     public function update(
-        UserInterface $user,
+        User $user,
         bool $executeFlush = true,
         bool $checkOrigin = true,
         bool $execute_dispatch = true
-    ): UserInterface {
+    ): User {
         if (!$this->isValidOrigin($user, $checkOrigin)) {
             throw new \Exception('The user "'.$user->getUsername().'" is not local and can not be modified.');
         }
@@ -52,7 +51,7 @@ class UpdateUserService extends CommonUserService
         return $user;
     }
 
-    private function updateUserPassword(UserInterface $user): void
+    private function updateUserPassword(User $user): void
     {
         if (null !== $user->getPlainPassword()) {
             $user->setPassword($this->userPasswordHasher->hashPassword(

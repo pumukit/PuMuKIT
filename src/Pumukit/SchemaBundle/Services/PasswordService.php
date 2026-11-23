@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Services;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class PasswordService
 {
@@ -19,7 +19,7 @@ class PasswordService
         $this->userPasswordHasher = $userPasswordHasher;
     }
 
-    public function changePassword(UserInterface $user, string $password): void
+    public function changePassword(User $user, string $password): void
     {
         try {
             $user->setPassword($this->userPasswordHasher->hashPassword($user, $password));

@@ -28,7 +28,7 @@ class InboxUploadListener
             $this->kernelProjectDir.'/bin/console',
             'pumukit:import:inbox',
             $filePath,
-            '--user='.$event->getUser()->getUsername(),
+            '--user='.$event->getUser()->getUserIdentifier(),
             '--series='.$series,
             '--encoding-profile='.$event->getProfile(),
         ];

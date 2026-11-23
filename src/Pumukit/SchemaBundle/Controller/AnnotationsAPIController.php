@@ -9,6 +9,7 @@ use MongoDB\BSON\ObjectId;
 use Pumukit\CoreBundle\Services\SerializerService;
 use Pumukit\SchemaBundle\Document\Annotation;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Event\AnnotationsEvents;
 use Pumukit\SchemaBundle\Event\AnnotationsUpdateEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -129,7 +130,8 @@ class AnnotationsAPIController extends AbstractController
         $annotation->setPrivate($isPrivate);
         $annotation->setLength(0); // This field is not very useful.
         $annotation->setCreated(new \DateTime());
-        $userId = $this->getUser() ? $this->getUser()->getId() : 'anonymous';
+        $user = $this->getUser();
+        $userId = $user instanceof User ? $user->getId() : 'anonymous';
         $annotation->setUserId($userId);
         $session = new Session(); // Using symfony sessions instead of php session_id()
         $session = $session->getId();

@@ -31,7 +31,7 @@ class TagService
      * @param string $tagId
      * @param bool   $executeFlush
      *
-     * @return array[Tag] addded tags
+     * @return Tag[] addded tags
      *
      * @throws \Exception
      */
@@ -51,7 +51,7 @@ class TagService
      * @param string $tagCod
      * @param bool   $executeFlush
      *
-     * @return array[Tag] addded tags
+     * @return Tag[] addded tags
      *
      * @throws \Exception
      */
@@ -70,7 +70,7 @@ class TagService
      *
      * @param bool $executeFlush
      *
-     * @return array[Tag] addded tags
+     * @return Tag[] addded tags
      */
     public function addTag(MultimediaObject $mmobj, TagInterface $tag, $executeFlush = true)
     {
@@ -107,7 +107,7 @@ class TagService
      * @param string $tagId
      * @param bool   $executeFlush
      *
-     * @return array[Tag] removed tags
+     * @return Tag[] removed tags
      *
      * @throws \Exception
      */
@@ -126,7 +126,7 @@ class TagService
      *
      * @param bool $executeFlush
      *
-     * @return array[Tag] removed tags
+     * @return Tag[] removed tags
      */
     public function removeTag(MultimediaObject $mmobj, TagInterface $tag, $executeFlush = true)
     {
@@ -162,7 +162,7 @@ class TagService
      * @param string $tagId
      * @param bool   $executeFlush
      *
-     * @return array[Tag] removed tags
+     * @return Tag[] removed tags
      *
      * @throws \Exception
      */
@@ -181,9 +181,9 @@ class TagService
      *
      * @param bool $executeFlush
      *
-     * @return array[Tag] removed tags
+     * @return Tag[] removed tags
      */
-    public function removeOneTag(MultimediaObject $mmobj, TagInterface $tag, $executeFlush = true)
+    public function removeOneTag(MultimediaObject $mmobj, Tag $tag, $executeFlush = true)
     {
         $removed = $mmobj->removeTag($tag);
         if ($removed && !$mmobj->isPrototype()) {
@@ -297,7 +297,7 @@ class TagService
      *
      * @return bool
      */
-    public function canDeleteTag(TagInterface $tag)
+    public function canDeleteTag(Tag $tag)
     {
         return (bool) ((0 == (is_countable($tag->getChildren()) ? count($tag->getChildren()) : 0)) && (0 == $tag->getNumberMultimediaObjects()));
     }

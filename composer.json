@@ -110,7 +110,7 @@
         ],
         "php-cs-fixer": "vendor/bin/php-cs-fixer fix src --dry-run --using-cache=no -v",
         "php-stan": [
-            "vendor/bin/phpstan analyse -l 1 src"
+            "vendor/bin/phpstan analyse"
         ],
         "tests": "APP_ENV=test vendor/bin/phpunit",
         "tests-smoke": "APP_ENV=test vendor/bin/phpunit --group smoke",

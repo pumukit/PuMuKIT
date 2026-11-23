@@ -7,6 +7,7 @@ namespace Pumukit\NewAdminBundle\Controller;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\Regex;
 use Pumukit\CoreBundle\Services\PaginationService;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
 use Pumukit\SchemaBundle\Services\UserService;
@@ -312,6 +313,9 @@ class AdminController extends ResourceController implements NewAdminControllerIn
     public function getAllGroups()
     {
         $loggedInUser = $this->getUser();
+        if (!$loggedInUser instanceof User) {
+            throw $this->createAccessDeniedException();
+        }
         if ($loggedInUser->isSuperAdmin() || $this->userService->hasGlobalScope($loggedInUser)) {
             $allGroups = $this->groupService->findAll();
         } else {

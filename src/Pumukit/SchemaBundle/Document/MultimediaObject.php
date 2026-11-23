@@ -1342,7 +1342,7 @@ class MultimediaObject
         }
     }
 
-    public function getEmbeddedRole(RoleInterface $role): ?RoleInterface
+    public function getEmbeddedRole(RoleInterface $role): ?EmbeddedRole
     {
         foreach ($this->people as $embeddedRole) {
             if ($role->getCod() === $embeddedRole->getCod()) {
@@ -1353,7 +1353,7 @@ class MultimediaObject
         return null;
     }
 
-    public function createEmbeddedRole(RoleInterface $role): RoleInterface
+    public function createEmbeddedRole(RoleInterface $role): EmbeddedRole
     {
         if ($role instanceof EmbeddedRole) {
             return $role;

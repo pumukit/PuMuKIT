@@ -8,7 +8,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class CreateUserService extends CommonUserService
 {
@@ -32,17 +31,17 @@ class CreateUserService extends CommonUserService
         $this->userRepository = $objectManager->getRepository(User::class);
     }
 
-    public function createUser(string $username, string $password, string $email, string $fullName, PermissionProfile $permissionProfile): UserInterface
+    public function createUser(string $username, string $password, string $email, string $fullName, PermissionProfile $permissionProfile): User
     {
         return $this->create($username, $password, $email, $fullName, $permissionProfile);
     }
 
-    public function createSuperAdmin(string $username, string $password, string $email): UserInterface
+    public function createSuperAdmin(string $username, string $password, string $email): User
     {
         return $this->create($username, $password, $email, null, null);
     }
 
-    private function create(string $username, string $password, string $email, ?string $fullName, ?PermissionProfile $permissionProfile): UserInterface
+    private function create(string $username, string $password, string $email, ?string $fullName, ?PermissionProfile $permissionProfile): User
     {
         if ($this->userExists(['username' => strtolower($username)])) {
             throw new \Exception('Username already on database');

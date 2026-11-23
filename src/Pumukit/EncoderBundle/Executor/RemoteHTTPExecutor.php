@@ -6,15 +6,12 @@ namespace Pumukit\EncoderBundle\Executor;
 
 class RemoteHTTPExecutor implements ExecutorInterface
 {
-    public function execute($command, array $cpu)
+    public function execute(array|string $command, array $cpu): string
     {
         if (!function_exists('curl_init')) {
             throw new ExecutorException('Curl is required to execute remote commands.');
         }
 
-        /**
-         * @var bool|resource
-         */
         $curl = curl_init();
         if (false === $curl) {
             throw new ExecutorException('Unable to create a new curl handle.');

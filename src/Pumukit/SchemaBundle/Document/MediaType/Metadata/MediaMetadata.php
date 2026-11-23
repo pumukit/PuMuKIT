@@ -8,6 +8,8 @@ interface MediaMetadata
 {
     public function toArray(): array;
 
+    public function toString(): string;
+
     public function metadata(): ?string;
 
     public function isEmpty(): bool;

@@ -28,6 +28,7 @@ use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Document\TagInterface;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Document\ValueObject\Url;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
@@ -1469,6 +1470,9 @@ class MultimediaObjectController extends SortableAdminController
     private function isUserStillRelated(MultimediaObject $multimediaObject)
     {
         $loggedInUser = $this->getUser();
+        if (!$loggedInUser instanceof User) {
+            throw $this->createAccessDeniedException();
+        }
         $superAdmin = $loggedInUser->hasRole('ROLE_SUPER_ADMIN');
         if ($superAdmin) {
             return true;

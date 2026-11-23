@@ -9,6 +9,7 @@ use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -85,12 +86,12 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         if ($exception instanceof CustomUserMessageAuthenticationException) {
-            $request->getSession()->getFlashBag()->add('error', $exception->getMessage());
+            $this->addError($request, $exception->getMessage());
 
             return new RedirectResponse($this->urlGenerator->generate(self::LOGIN_ROUTE));
         }
 
-        $request->getSession()->getFlashBag()->add('error', 'Invalid credentials or account temporarily blocked.');
+        $this->addError($request, 'Invalid credentials or account temporarily blocked.');
 
         return new RedirectResponse($this->urlGenerator->generate(self::LOGIN_ROUTE));
     }
@@ -117,5 +118,13 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         return $user;
+    }
+
+    private function addError(Request $request, string $message): void
+    {
+        $session = $request->getSession();
+        if ($session instanceof FlashBagAwareSessionInterface) {
+            $session->getFlashBag()->add('error', $message);
+        }
     }
 }

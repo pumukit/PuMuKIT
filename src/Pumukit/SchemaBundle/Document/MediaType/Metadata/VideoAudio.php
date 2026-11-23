@@ -120,7 +120,7 @@ final class VideoAudio implements MediaMetadata
             return (float) ($frame * (int) $aux[1] / (int) $aux[0]);
         }
 
-        return (float) ($frame / $this->frameRate());
+        return (float) ($frame / (float) $this->frameRate());
     }
 
     public function isEmpty(): bool

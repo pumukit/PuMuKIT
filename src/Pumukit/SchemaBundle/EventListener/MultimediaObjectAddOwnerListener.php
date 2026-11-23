@@ -6,8 +6,8 @@ namespace Pumukit\SchemaBundle\EventListener;
 
 use Pumukit\NotificationBundle\Services\SenderService;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Event\MultimediaObjectAddOwnerEvent;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class MultimediaObjectAddOwnerListener
 {
@@ -39,7 +39,7 @@ class MultimediaObjectAddOwnerListener
         }
     }
 
-    private function sendNotificationEmail(MultimediaObject $multimediaObject, UserInterface $user, UserInterface $coOwner): void
+    private function sendNotificationEmail(MultimediaObject $multimediaObject, User $user, User $coOwner): void
     {
         $subject = implode(' ', [
             $this->getPredefinedSubject(),
@@ -65,7 +65,7 @@ class MultimediaObjectAddOwnerListener
         return $this->addedOwnerEmailTemplate;
     }
 
-    private function generateParametersForEmail(MultimediaObject $multimediaObject, UserInterface $user, UserInterface $coOwner, string $subject): array
+    private function generateParametersForEmail(MultimediaObject $multimediaObject, User $user, User $coOwner, string $subject): array
     {
         return [
             'platform_name' => $this->senderService->getPlatformName(),

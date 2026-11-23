@@ -66,7 +66,7 @@ class MicrositeListenerTest extends PumukitTestCase
         $this->assertSame('microsites/library.css', $request->attributes->get('microsite_custom_css'));
         $this->assertSame('microsites/library/layout.html.twig', $request->attributes->get('microsite_custom_base'));
         $this->assertFalse($request->attributes->has('microsite_home_template'));
-        $ids = array_map(static fn (MultimediaObject $multimediaObject): string => $multimediaObject->getId(), $this->dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder()->getQuery()->execute()->toArray());
+        $ids = array_map(static fn (MultimediaObject $multimediaObject): string => $multimediaObject->getId(), $this->dm->getRepository(MultimediaObject::class)->createStandardQueryBuilder()->getQuery()->toArray());
         $this->assertSame([$tagged->getId()], array_values($ids));
     }
 
@@ -89,6 +89,16 @@ class MicrositeListenerTest extends PumukitTestCase
         $this->assertFalse($this->dm->getFilterCollection()->isEnabled('microsite'));
     }
 
+    public function testTheTwigFunctionsGiveNothingOutsideAMicrosite(): void
+    {
+        $requestStack = new RequestStack();
+        $extension = new MicrositeExtension($requestStack, $this->dm);
+
+        $requestStack->push(Request::create('https://tv.example.org/'));
+        $this->assertNull($extension->microsite());
+        $this->assertNull($extension->micrositeTag());
+    }
+
     public function testTheTwigFunctionsGiveTheCurrentMicrosite(): void
     {
         $tag = new Tag();
@@ -98,11 +108,6 @@ class MicrositeListenerTest extends PumukitTestCase
         $requestStack = new RequestStack();
         $extension = new MicrositeExtension($requestStack, $this->dm);
 
-        $requestStack->push(Request::create('https://tv.example.org/'));
-        $this->assertNull($extension->microsite());
-        $this->assertNull($extension->micrositeTag());
-
-        $requestStack->pop();
         $requestStack->push($this->dispatch('https://library.tv.example.org/'));
         $this->assertSame('library', $extension->microsite()['name']);
         $this->assertSame('MICROSITE01000', $extension->micrositeTag()?->getCod());

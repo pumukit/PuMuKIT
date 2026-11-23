@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Services;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Event\MultimediaObjectAddOwnerEvent;
 use Pumukit\SchemaBundle\Event\MultimediaObjectCloneEvent;
 use Pumukit\SchemaBundle\Event\MultimediaObjectEvent;
 use Pumukit\SchemaBundle\Event\SchemaEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class MultimediaObjectEventDispatcherService
 {
@@ -58,7 +58,7 @@ class MultimediaObjectEventDispatcherService
         $this->dispatcher->dispatch($event, SchemaEvents::MULTIMEDIAOBJECT_CLONE);
     }
 
-    public function dispatchMultimediaObjectAddOwner(MultimediaObject $multimediaObject, UserInterface $user, UserInterface $coOwner): void
+    public function dispatchMultimediaObjectAddOwner(MultimediaObject $multimediaObject, User $user, User $coOwner): void
     {
         $event = new MultimediaObjectAddOwnerEvent($multimediaObject, $user, $coOwner);
         $this->dispatcher->dispatch($event, SchemaEvents::MULTIMEDIA_OBJECT_ADD_OWNER);

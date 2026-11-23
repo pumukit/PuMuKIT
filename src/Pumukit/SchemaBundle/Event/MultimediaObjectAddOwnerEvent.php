@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Event;
 
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Pumukit\SchemaBundle\Document\User;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class MultimediaObjectAddOwnerEvent extends Event
@@ -14,7 +14,7 @@ class MultimediaObjectAddOwnerEvent extends Event
     protected $user;
     protected $coOwner;
 
-    public function __construct(MultimediaObject $multimediaObject, UserInterface $user, UserInterface $coOwner)
+    public function __construct(MultimediaObject $multimediaObject, User $user, User $coOwner)
     {
         $this->multimediaObject = $multimediaObject;
         $this->user = $user;
@@ -26,12 +26,12 @@ class MultimediaObjectAddOwnerEvent extends Event
         return $this->multimediaObject;
     }
 
-    public function getUser(): UserInterface
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    public function getCoOwner(): UserInterface
+    public function getCoOwner(): User
     {
         return $this->coOwner;
     }

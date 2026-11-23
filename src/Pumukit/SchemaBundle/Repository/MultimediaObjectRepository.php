@@ -1572,8 +1572,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param array $seriesList
      *
-     * @return array() A key/value hash where the key is the series id (string) and the value is the count
-     * @return array
+     * @return array<string, int>
      *
      * @throws MongoDBException
      */
@@ -1613,8 +1612,7 @@ class MultimediaObjectRepository extends DocumentRepository
      *
      * @param array $tagCodsList
      *
-     * @return array() A key/value hash where the key is the tag cod (string) and the value is the count
-     * @return array
+     * @return array<string, int>
      *
      * @throws MongoDBException
      */

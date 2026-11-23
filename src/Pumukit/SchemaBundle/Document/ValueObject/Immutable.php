@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\SchemaBundle\Document\ValueObject;
 
 use Doctrine\ODM\MongoDB\Mapping\Attribute as MongoDB;
+use Pumukit\SchemaBundle\Document\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[MongoDB\EmbeddedDocument]
@@ -23,7 +24,7 @@ class Immutable
     {
         $this->value = $value;
         $this->date = new \DateTime();
-        $userId = $user?->getId();
+        $userId = $user instanceof User ? $user->getId() : null;
         $this->user = $userId ? (string) $userId : null;
     }
 

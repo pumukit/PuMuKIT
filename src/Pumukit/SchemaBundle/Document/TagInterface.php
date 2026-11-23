@@ -41,4 +41,14 @@ interface TagInterface
     public function getPath(): ?string;
 
     public function getLevel(): ?int;
+
+    public function getSlug(): ?string;
+
+    public function getLocale(): ?string;
+
+    public function getCreated(): ?\DateTime;
+
+    public function getUpdated(): ?\DateTime;
+
+    public function setUpdated(\DateTime $updated): void;
 }

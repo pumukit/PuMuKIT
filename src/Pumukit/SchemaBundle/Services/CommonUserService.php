@@ -7,7 +7,6 @@ namespace Pumukit\SchemaBundle\Services;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class CommonUserService
 {
@@ -28,7 +27,7 @@ class CommonUserService
         return $this->userRepository->userExists($criteria);
     }
 
-    protected function isValidOrigin(UserInterface $user, bool $checkOrigin = true): bool
+    protected function isValidOrigin(User $user, bool $checkOrigin = true): bool
     {
         if (!$checkOrigin) {
             return true;
@@ -37,7 +36,7 @@ class CommonUserService
         return $user->isLocal();
     }
 
-    protected function updateUserRolesAndPermission(UserInterface $user): void
+    protected function updateUserRolesAndPermission(User $user): void
     {
         if ($user->isSuperAdmin()) {
             return;
@@ -56,7 +55,7 @@ class CommonUserService
         }
     }
 
-    protected function setUserScope(UserInterface $user, string $oldScope = '', string $newScope = ''): void
+    protected function setUserScope(User $user, string $oldScope = '', string $newScope = ''): void
     {
         if ($user->hasRole($oldScope)) {
             $user->removeRole($oldScope);
@@ -65,14 +64,14 @@ class CommonUserService
         $this->addUserScope($user, $newScope);
     }
 
-    protected function addUserScope(UserInterface $user, string $scope = ''): void
+    protected function addUserScope(User $user, string $scope = ''): void
     {
         if (array_key_exists($scope, PermissionProfile::$scopeDescription) && !$user->hasRole($scope)) {
             $user->addRole($scope);
         }
     }
 
-    protected function addUserRoles(UserInterface $user, array $permissions = []): void
+    protected function addUserRoles(User $user, array $permissions = []): void
     {
         $user->setRoles($permissions);
     }

@@ -148,7 +148,7 @@ class PersonService
         return $seriesCollection;
     }
 
-    public function createRelationPerson(PersonInterface $person, RoleInterface $role, MultimediaObject $multimediaObject, bool $flush = true, bool $dispatch = true): MultimediaObject
+    public function createRelationPerson(Person $person, Role $role, MultimediaObject $multimediaObject, bool $flush = true, bool $dispatch = true): MultimediaObject
     {
         $this->dm->persist($person);
         $multimediaObject->addPersonWithRole($person, $role);
@@ -208,7 +208,7 @@ class PersonService
         return $multimediaObject;
     }
 
-    public function deleteRelation(PersonInterface $person, RoleInterface $role, MultimediaObject $multimediaObject): MultimediaObject
+    public function deleteRelation(Person $person, Role $role, MultimediaObject $multimediaObject): MultimediaObject
     {
         $hasBeenRemoved = $multimediaObject->removePersonWithRole($person, $role);
         if ($hasBeenRemoved) {
@@ -226,7 +226,7 @@ class PersonService
         return $multimediaObject;
     }
 
-    public function deletePerson(PersonInterface $person, bool $deleteFromUser = false): void
+    public function deletePerson(Person $person, bool $deleteFromUser = false): void
     {
         if ($this->isUsedInMultimediaObjects($person)) {
             throw new \Exception("Couldn't remove Person with id ".$person->getId().'. There are multimedia objects with this person');
@@ -325,7 +325,7 @@ class PersonService
         return $this->repoRole->findBy($criteria, $sort);
     }
 
-    public function removeUserFromPerson(User $user, PersonInterface $person, bool $executeFlush = true): void
+    public function removeUserFromPerson(User $user, Person $person, bool $executeFlush = true): void
     {
         $person->setUser(null);
         $this->dm->persist($person);

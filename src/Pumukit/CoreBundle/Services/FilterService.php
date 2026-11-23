@@ -32,7 +32,7 @@ class FilterService
         MultimediaObject::STATUS_BLOCKED,
     ];
 
-    /** @var PersonService; */
+    /** @var PersonService */
     private $personService;
 
     /** @var TokenStorageInterface */

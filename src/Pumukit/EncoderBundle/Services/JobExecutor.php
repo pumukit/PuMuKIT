@@ -214,8 +214,7 @@ final class JobExecutor
                 continue;
             }
 
-            $maxExecutionJobTime = clone $timestart;
-            $maxExecutionJobTime->add(new \DateInterval('PT'.$this->maxExecutionJobSeconds.'S'));
+            $maxExecutionJobTime = \DateTimeImmutable::createFromInterface($timestart)->add(new \DateInterval('PT'.$this->maxExecutionJobSeconds.'S'));
             if ($nowDateTime > $maxExecutionJobTime) {
                 $job->setStatus(Job::STATUS_ERROR);
                 $message = '[checkService] Job executing for a long time, set status to ERROR. Máx execution time was '

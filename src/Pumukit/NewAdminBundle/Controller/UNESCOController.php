@@ -19,6 +19,7 @@ use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Role;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Security\Permission;
 use Pumukit\SchemaBundle\Services\FactoryService;
 use Pumukit\SchemaBundle\Services\GroupService;
@@ -823,6 +824,9 @@ class UNESCOController extends AbstractController implements NewAdminControllerI
     private function getAllGroups()
     {
         $loggedInUser = $this->getUser();
+        if (!$loggedInUser instanceof User) {
+            throw $this->createAccessDeniedException();
+        }
         if ($loggedInUser->isSuperAdmin() || $this->userService->hasGlobalScope($loggedInUser)) {
             $allGroups = $this->groupService->findAll();
         } else {

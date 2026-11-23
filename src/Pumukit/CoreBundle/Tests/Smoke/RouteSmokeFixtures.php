@@ -158,7 +158,7 @@ final class RouteSmokeFixtures
         $dm->flush();
 
         $legacyEvent = new Event();
-        $legacyEvent->setName('Smoke legacy event', 'en');
+        $legacyEvent->setName('Smoke legacy event');
         $legacyEvent->setLive($live);
         $legacyEvent->setDate(new \DateTime('+2 days'));
         $legacyEvent->setDuration(60);
