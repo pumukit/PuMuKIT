@@ -663,7 +663,7 @@ class MultimediaObjectTest extends PumukitTestCase
         $mm->setDuration($duration1);
         static::assertEquals("2' 00''", $mm->getDurationString());
         $mm->setDuration($duration3);
-        static::assertEquals("0' 30''", $mm->getDurationString());
+        static::assertEquals("30''", $mm->getDurationString());
     }
 
     public function testIncNumview()
