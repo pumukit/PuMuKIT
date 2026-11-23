@@ -65,7 +65,7 @@ trait Keywords
 
         if (false !== $key) {
             unset($keywords[$key]);
-            $this->keywords[$locale] = $keywords;
+            $this->keywords[$locale] = array_values($keywords);
 
             return true;
         }

@@ -43,7 +43,7 @@ class KeywordsTest extends TestCase
         static::assertSame(['en' => 'dog,cat,bird', 'es' => 'perro'], $document->getI18nKeyword());
         static::assertTrue($document->containsKeyword('cat', 'en'));
         static::assertTrue($document->removeKeyword('cat', 'en'));
-        static::assertSame(['dog', 'bird'], array_values($document->getKeywords('en')));
+        static::assertSame(['dog', 'bird'], $document->getKeywords('en'));
     }
 
     #[DataProvider('documents')]
