@@ -1,17 +1,24 @@
 name: Code validation
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - "*.*.x"
+      - "master"
+  pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: true
-      matrix:
-        php-versions: ['8.5']
+    timeout-minutes: 30
 
     steps:
       - name: Checkout
@@ -35,15 +42,18 @@ jobs:
         run:  docker compose -f docker-compose.test.yml run --rm --user root php chown -R www-data:www-data /srv/pumukit
 
       - name: Validate composer.json and composer.lock
+        if: ${{ !cancelled() }}
         run:  make composer-validate
 
       - name: Audit the dependencies
+        if: ${{ !cancelled() }}
         run:  |
               make composer-audit
               make importmap-audit
               make paella-audit
 
       - name: Lints
+        if: ${{ !cancelled() }}
         run:  |
               make test-lint-yaml
               make test-lint-twig
@@ -51,19 +61,88 @@ jobs:
               make test-lint-generic
 
       - name: PHPCSFixer
+        if: ${{ !cancelled() }}
         run:  make test-php-cs-fixer
 
       - name: PHPStan
+        if: ${{ !cancelled() }}
         run:  make test-php-stan
 
+      - name: Production container
+        if: ${{ !cancelled() }}
+        run:  |
+              docker compose -f docker-compose.test.yml run --rm --user www-data -e APP_ENV=prod -e APP_DEBUG=0 php bin/console cache:clear
+              docker compose -f docker-compose.test.yml run --rm --user www-data -e APP_ENV=prod -e APP_DEBUG=1 php bin/console lint:container
+
       - name: Test
+        if: ${{ !cancelled() }}
         run:  make test
 
       - name: Route smoke test
+        if: ${{ !cancelled() }}
         run:  make test-smoke
 
       - name: Fixtures
+        if: ${{ !cancelled() }}
         run:  make fixtures
 
       - name: Delivery check
+        if: ${{ !cancelled() }}
         run:  make check-delivery
+
+      - name: Keep the logs of a failed run
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: var-log
+          path: var/log/
+          retention-days: 7
+
+  publish:
+    needs: validate
+    if: ${{ github.event_name != 'pull_request' && (github.ref_name == 'master' || endsWith(github.ref_name, '.x')) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TAG: ${{ github.ref_name == 'master' && 'latest' || github.ref_name }}
+
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push base
+        uses: docker/build-push-action@v7
+        with:
+          push: true
+          target: base
+          tags: teltek/pumukit-base:${{ env.TAG }}
+
+      - name: Build and push PuMuKIT
+        uses: docker/build-push-action@v7
+        with:
+          push: true
+          target: production
+          tags: teltek/pumukit:${{ env.TAG }}
+
+      - name: Build and push PuMuKIT Proxy
+        uses: docker/build-push-action@v7
+        with:
+          push: true
+          target: proxy
+          tags: teltek/nginx:${{ env.TAG }}
+
+      - name: Build and push the download server
+        uses: docker/build-push-action@v7
+        with:
+          push: true
+          target: dls
+          tags: teltek/pumukit-dls:${{ env.TAG }}
