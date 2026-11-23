@@ -102,6 +102,26 @@ class UploadResponseTest extends PumukitTestCase
         $this->assertSame(['uploaded' => 'success', 'message' => 'New Pic added.'], $this->json());
     }
 
+    public function testTheTrackModalOnlyUploadsThroughTheUploader(): void
+    {
+        $url = static::getContainer()->get('router')->generate('pumukitnewadmin_track_create', ['id' => $this->multimediaObject->getId()]);
+        $crawler = $this->client->request('GET', $url);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertCount(1, $crawler->filter('#pumukit_media_form [data-core--uploader-target="dashboard"]'));
+        $this->assertCount(0, $crawler->filter('#pumukit_media_form #server_selected_path'));
+        $this->assertCount(0, $crawler->filter('#pumukit_media_form a[href="#server"]'));
+    }
+
+    public function testTheTrackUploadIgnoresAServerPath(): void
+    {
+        $url = static::getContainer()->get('router')->generate('pumukitnewadmin_track_upload', ['id' => $this->multimediaObject->getId()]);
+        $this->client->request('POST', $url, ['profile_option' => 'master_copy', 'file' => $this->tmpDir]);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSame('failed', $this->json()['uploaded']);
+    }
+
     private function picUploadUrl(): string
     {
         return static::getContainer()->get('router')->generate('pumukitnewadmin_mmspic_upload', ['id' => $this->multimediaObject->getId()]);
