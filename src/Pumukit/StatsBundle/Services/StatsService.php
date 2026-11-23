@@ -42,19 +42,22 @@ class StatsService
             ['$limit' => $limit * 2], // Get more elements due to tags post-filter.
         ];
 
-        $aggregation = $viewsLogColl->aggregate($pipeline, ['cursor' => []]);
+        $aggregation = $viewsLogColl->aggregate($pipeline, ['cursor' => []])->toArray();
+
+        $candidates = [];
+        if ([] !== $aggregation) {
+            $criteria['head'] = ['$ne' => true];
+            $criteria['tail'] = ['$ne' => true];
+            $candidates = $this->indexById($this->repo->findBy(array_merge($criteria, ['_id' => ['$in' => $this->ids($aggregation)]])));
+        }
 
         $mostViewed = [];
 
         foreach ($aggregation as $element) {
             $ids[] = $element['_id'];
-            $criteria['_id'] = $element['_id'];
-            $criteria['head'] = ['$ne' => true];
-            $criteria['tail'] = ['$ne' => true];
-            $multimediaObject = $this->repo->findBy($criteria, null, 1);
 
-            if ($multimediaObject) {
-                $mostViewed[] = $multimediaObject[0];
+            if (isset($candidates[(string) $element['_id']])) {
+                $mostViewed[] = $candidates[(string) $element['_id']];
                 if (0 == --$limit) {
                     break;
                 }
@@ -114,10 +117,12 @@ class StatsService
         $total = is_countable($mmobjIds) ? count($mmobjIds) : 0;
         $aggregation = $this->getPagedAggregation($aggregationTotal, $options['page'], $options['limit']);
 
+        $multimediaObjects = $this->indexById($this->repo->findBy(['_id' => ['$in' => $this->ids($aggregation)]]));
+
         $mostViewed = [];
         foreach ($aggregation as $element) {
             $ids[] = $element['_id'];
-            $multimediaObject = $this->repo->find($element['_id']);
+            $multimediaObject = $multimediaObjects[(string) $element['_id']] ?? null;
             if ($multimediaObject) {
                 $mostViewed[] = ['mmobj' => $multimediaObject,
                     'num_viewed' => $element['numView'],
@@ -154,10 +159,12 @@ class StatsService
         $total = is_countable($seriesIds) ? count($seriesIds) : 0;
         $aggregation = $this->getPagedAggregation($aggregationTotal, $options['page'], $options['limit']);
 
+        $seriesById = $this->indexById($this->repoSeries->findBy(['_id' => ['$in' => $this->ids($aggregation)]]));
+
         $mostViewed = [];
         foreach ($aggregation as $element) {
             $ids[] = $element['_id'];
-            $series = $this->repoSeries->find($element['_id']);
+            $series = $seriesById[(string) $element['_id']] ?? null;
             if ($series) {
                 $mostViewed[] = ['series' => $series,
                     'num_viewed' => $element['numView'],
@@ -424,5 +431,20 @@ class StatsService
         $options['criteria_mmobj'] = $options['criteria_mmobj'] ?? [];
 
         return $options;
+    }
+
+    private function ids(array $aggregation): array
+    {
+        return array_values(array_map(static fn ($element) => $element['_id'], $aggregation));
+    }
+
+    private function indexById(iterable $documents): array
+    {
+        $indexed = [];
+        foreach ($documents as $document) {
+            $indexed[(string) $document->getId()] = $document;
+        }
+
+        return $indexed;
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\StatsBundle\Tests\Services;
 
 use PHPUnit\Framework\Attributes\CoversNothing;
+use Pumukit\CoreBundle\Tests\Mongo\MongoCommandCounter;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -226,6 +227,37 @@ class StatsServiceTest extends PumukitTestCase
         static::assertEquals(1, $total);
         static::assertCount($total, $mostViewed);
         static::assertEquals(1, $mostViewed[0]['num_viewed']);
+    }
+
+    public function testTheMostViewedDoNotQueryEachVideo(): void
+    {
+        $this->initContext();
+        $this->dm->clear();
+        $service = new StatsService($this->dm);
+
+        $counter = MongoCommandCounter::start();
+        $mostViewed = $service->getMostViewed([], 30, 30);
+        $counter->stop();
+
+        static::assertCount(5, $mostViewed);
+        static::assertSame(2, $counter->count('find', 'MultimediaObject'));
+    }
+
+    public function testTheMostViewedByRangeDoNotQueryEachVideoOrSeries(): void
+    {
+        $this->initContext();
+        $this->dm->clear();
+        $service = new StatsService($this->dm);
+
+        $counter = MongoCommandCounter::start();
+        [$multimediaObjects] = $service->getMmobjsMostViewedByRange([], ['limit' => 10]);
+        [$series] = $service->getSeriesMostViewedByRange([], ['limit' => 10]);
+        $counter->stop();
+
+        static::assertCount(5, $multimediaObjects);
+        static::assertCount(1, $series);
+        static::assertLessThanOrEqual(2, $counter->count('find', 'MultimediaObject'));
+        static::assertLessThanOrEqual(2, $counter->count('find', 'Series'));
     }
 
     private function logView($when, MultimediaObject $multimediaObject)
