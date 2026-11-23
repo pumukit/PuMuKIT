@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\EncoderBundle\Services;
 
 use Psr\Log\LoggerInterface;
+use Pumukit\CoreBundle\Utils\MediaMimeTypeUtils;
 use Symfony\Component\Mime\MimeTypes;
 
 final class ProfileValidator
@@ -39,15 +40,7 @@ final class ProfileValidator
             return 'master_copy';
         }
 
-        if (str_contains($mimeType, 'application/')) {
-            return 'master_copy';
-        }
-
-        if (str_contains($mimeType, 'audio/')) {
-            return 'master_copy';
-        }
-
-        if (str_contains($mimeType, 'video/')) {
+        if (MediaMimeTypeUtils::isVideo($mimeType)) {
             if ('master_copy' === $genericProfile) {
                 return 'master_copy';
             }

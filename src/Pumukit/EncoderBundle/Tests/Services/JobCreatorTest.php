@@ -222,6 +222,18 @@ final class JobCreatorTest extends PumukitTestCase
         $this->generateJobFromUploadedFile($multimediaObject, $uploadedFile, new JobOptions('master_copy', 2, 'en', [], []));
     }
 
+    public function testAnMxfIsAVideoWithItsDuration(): void
+    {
+        $multimediaObject = $this->createMultimediaObject($this->createSeries());
+        $path = Path::create($this->copyFileToUse($this->projectDir.'/tests/files/pumukit.mxf', 'pumukit.mxf'));
+
+        $result = $this->generateJobFromPath($multimediaObject, $path, new JobOptions('master_copy', 2, 'en', [], []));
+
+        $this->assertEquals(MultimediaObject::TYPE_VIDEO, $result->getType());
+        $job = $this->dm->getRepository(Job::class)->findOneBy(['mm_id' => $result->getId()]);
+        $this->assertGreaterThan(0, $job->getDuration());
+    }
+
     public function createSeries(): Series
     {
         return $this->factoryService->createSeries();

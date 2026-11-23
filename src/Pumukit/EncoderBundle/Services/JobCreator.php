@@ -9,6 +9,7 @@ use Psr\Log\LoggerInterface;
 use Pumukit\CoreBundle\Utils\BlackListExtensions;
 use Pumukit\CoreBundle\Utils\FileSystemUtils;
 use Pumukit\CoreBundle\Utils\ImageRawUtils;
+use Pumukit\CoreBundle\Utils\MediaMimeTypeUtils;
 use Pumukit\EncoderBundle\Document\Job;
 use Pumukit\EncoderBundle\Services\DTO\JobOptions;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
@@ -113,6 +114,15 @@ final class JobCreator
             return $this->generateJob($multimediaObject, $jobOptions, $pathFile, 0);
         }
 
+        if (MediaMimeTypeUtils::isVideo($mimeType)) {
+            $multimediaObject->setVideoType();
+            $this->documentManager->flush();
+
+            $duration = $this->jobValidator->validateTrack($profile, $jobOptions, $pathFile);
+
+            return $this->generateJob($multimediaObject, $jobOptions, $pathFile, $duration);
+        }
+
         if (str_contains($mimeType, 'application/')) {
             $multimediaObject->setDocumentType();
             $this->documentManager->flush();
@@ -122,15 +132,6 @@ final class JobCreator
 
         if (str_contains($mimeType, 'audio/')) {
             $multimediaObject->setAudioType();
-            $this->documentManager->flush();
-
-            $duration = $this->jobValidator->validateTrack($profile, $jobOptions, $pathFile);
-
-            return $this->generateJob($multimediaObject, $jobOptions, $pathFile, $duration);
-        }
-
-        if (str_contains($mimeType, 'video/')) {
-            $multimediaObject->setVideoType();
             $this->documentManager->flush();
 
             $duration = $this->jobValidator->validateTrack($profile, $jobOptions, $pathFile);

@@ -6,6 +6,8 @@ namespace Pumukit\CoreBundle\Utils;
 
 final class MediaMimeTypeUtils
 {
+    private const VIDEO_APPLICATION_MIME_TYPES = ['application/mxf'];
+
     public static function allowedMimeTypes(): array
     {
         return array_merge(
@@ -26,7 +28,14 @@ final class MediaMimeTypeUtils
 
     public static function allowedVideoMimeTypes(): array
     {
-        return ['video/*', '*.mxf'];
+        return ['video/*', '.mxf'];
+    }
+
+    public static function isVideo(?string $mimeType): bool
+    {
+        $mimeType = strtolower((string) $mimeType);
+
+        return str_starts_with($mimeType, 'video/') || in_array($mimeType, self::VIDEO_APPLICATION_MIME_TYPES, true);
     }
 
     public static function allowedAudioMimeTypes(): array
