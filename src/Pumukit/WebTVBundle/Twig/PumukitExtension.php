@@ -8,7 +8,6 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
-use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
 use Pumukit\SchemaBundle\Services\CaptionService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectDurationService;
@@ -290,10 +289,10 @@ class PumukitExtension extends AbstractExtension
         return $sessionData;
     }
 
-    public function getMMobjsFromSerie(Series $series)
+    public function getMMobjsFromSerie(string $seriesId): int
     {
         $criteria = [
-            'series' => new ObjectId($series),
+            'series' => new ObjectId($seriesId),
             'status' => MultimediaObject::STATUS_PUBLISHED,
             'tags.cod' => PumukitWebTVBundle::WEB_TV_TAG,
             'type' => ['$ne' => MultimediaObject::TYPE_LIVE],
