@@ -82,12 +82,17 @@ class PlaylistManifest
 
         $data = [];
 
+        $multimediaObjectsById = $series->isPlaylist() ? $this->findByIds($multimediaObjects) : [];
+
         $i = 0;
         foreach ($multimediaObjects as $multimediaObjectId) {
-            $omId = (!$series->isPlaylist()) ? new ObjectId($multimediaObjectId->getId()) : $multimediaObjectId;
-            $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findoneBy([
-                '_id' => $omId,
-            ]);
+            if ($series->isPlaylist()) {
+                $omId = $multimediaObjectId;
+                $multimediaObject = $multimediaObjectsById[(string) $omId] ?? null;
+            } else {
+                $omId = new ObjectId($multimediaObjectId->getId());
+                $multimediaObject = $multimediaObjectId;
+            }
             $data[] = [
                 'videoURL' => $this->generateManifestURL($series, $omId, $i, $pathInfo),
                 'title' => $multimediaObject->getTitle(),
@@ -118,11 +123,11 @@ class PlaylistManifest
 
     private function getMultimediaObjectsPlayable(array $multimediaObjects): array
     {
+        $multimediaObjectsById = $this->findByIds($multimediaObjects);
+
         $elements = [];
         foreach ($multimediaObjects as $multimediaObject) {
-            $element = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy([
-                '_id' => $multimediaObject,
-            ]);
+            $element = $multimediaObjectsById[(string) $multimediaObject] ?? null;
 
             if ($element instanceof MultimediaObject && $this->multimediaObjectService->isPlayableOnPlaylist($element)) {
                 $elements[] = $multimediaObject;
@@ -130,5 +135,19 @@ class PlaylistManifest
         }
 
         return $elements;
+    }
+
+    private function findByIds(array $ids): array
+    {
+        if ([] === $ids) {
+            return [];
+        }
+
+        $multimediaObjectsById = [];
+        foreach ($this->documentManager->getRepository(MultimediaObject::class)->findBy(['_id' => ['$in' => array_values($ids)]]) as $multimediaObject) {
+            $multimediaObjectsById[(string) $multimediaObject->getId()] = $multimediaObject;
+        }
+
+        return $multimediaObjectsById;
     }
 }
