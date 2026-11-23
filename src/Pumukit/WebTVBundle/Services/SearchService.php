@@ -95,10 +95,21 @@ class SearchService
                 $years[] = $year['_id'];
             }
         } else {
-            foreach ($yearResults as $series) {
-                $series = $this->documentManager->getRepository(Series::class)->findOneBy(['_id' => $series['_id']]);
-                if ($series) {
-                    $years[] = $series->getPublicDate()->format('Y');
+            $seriesIds = [];
+            foreach ($yearResults as $result) {
+                if (null !== $result['_id']) {
+                    $seriesIds[] = $result['_id'];
+                }
+            }
+
+            $seriesById = [];
+            foreach ($this->documentManager->getRepository(Series::class)->findBy(['_id' => ['$in' => $seriesIds]]) as $series) {
+                $seriesById[(string) $series->getId()] = $series;
+            }
+
+            foreach ($seriesIds as $seriesId) {
+                if (isset($seriesById[(string) $seriesId])) {
+                    $years[] = $seriesById[(string) $seriesId]->getPublicDate()->format('Y');
                 }
             }
         }
