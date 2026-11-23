@@ -17,7 +17,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class JobNotificationService
 {
-    public const PERSONAL_SCOPE_ROLE_CODE = 'owner';
     protected $dm;
     protected $senderService;
     protected $translator;
@@ -43,7 +42,8 @@ class JobNotificationService
         $subjectSuccess,
         $subjectFails,
         $subjectSuccessTrans,
-        $subjectFailsTrans
+        $subjectFailsTrans,
+        private readonly string $personalScopeRoleCode = 'owner'
     ) {
         $this->dm = $documentManager;
         $this->senderService = $senderService;
@@ -216,7 +216,7 @@ class JobNotificationService
         $emailsTo = [];
 
         if (Job::STATUS_FINISHED === $job->getStatus()) {
-            $aPeople = $multimediaObject->getPeopleByRoleCod(self::PERSONAL_SCOPE_ROLE_CODE, true);
+            $aPeople = $multimediaObject->getPeopleByRoleCod($this->personalScopeRoleCode, true);
             foreach ($aPeople as $people) {
                 $user = $this->dm->getRepository(User::class)->findOneBy(['email' => $people->getEmail()]);
                 if ($user && ($user->hasRole(Permission::ROLE_SEND_NOTIFICATION_COMPLETE) || $user->hasRole('ROLE_SUPER_ADMIN'))) {
@@ -224,7 +224,7 @@ class JobNotificationService
                 }
             }
         } elseif (Job::STATUS_ERROR === $job->getStatus()) {
-            $aPeople = $multimediaObject->getPeopleByRoleCod(self::PERSONAL_SCOPE_ROLE_CODE, true);
+            $aPeople = $multimediaObject->getPeopleByRoleCod($this->personalScopeRoleCode, true);
 
             foreach ($aPeople as $people) {
                 $user = $this->dm->getRepository(User::class)->findOneBy(['email' => $people->getEmail()]);

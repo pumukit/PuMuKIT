@@ -122,7 +122,7 @@ class JobNotificationServiceTest extends PumukitTestCase
         $user->setPerson($person);
         $person->setUser($user);
         $role = new Role();
-        $role->setCod(JobNotificationService::PERSONAL_SCOPE_ROLE_CODE);
+        $role->setCod($this->containerHelper->getParameter('pumukitschema.personal_scope_role_code'));
         $this->dm->persist($person);
         $this->dm->persist($user);
         $this->dm->persist($role);

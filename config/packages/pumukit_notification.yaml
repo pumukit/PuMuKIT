@@ -28,6 +28,7 @@ services:
       $subjectFails:        '%pumukit_notification.subject_fails%'
       $subjectSuccessTrans: '%pumukit_notification.subject_success_trans%'
       $subjectFailsTrans:   '%pumukit_notification.subject_fails_trans%'
+      $personalScopeRoleCode: '%pumukitschema.personal_scope_role_code%'
     tags:
       - { name: "kernel.event_listener", event: "job.success", method: "onJobSuccess" }
       - { name: "kernel.event_listener", event: "job.error", method: "onJobError" }
