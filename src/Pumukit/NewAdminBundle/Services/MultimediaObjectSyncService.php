@@ -55,7 +55,7 @@ class MultimediaObjectSyncService
     /**
      * MultimediaObjectSyncService constructor.
      */
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager, private readonly string $personalScopeRoleCode)
     {
         $this->dm = $documentManager;
     }
@@ -201,7 +201,7 @@ class MultimediaObjectSyncService
     public function syncOwners(MultimediaObject $multimediaObject, MultimediaObject $originData)
     {
         $roleOwner = $this->dm->getRepository(Role::class)->findOneBy(
-            ['cod' => 'owner']
+            ['cod' => $this->personalScopeRoleCode]
         );
         $role = $originData->getEmbeddedRole($roleOwner);
 

@@ -6,10 +6,14 @@ namespace Pumukit\NewAdminBundle\Tests\Services;
 
 use PHPUnit\Framework\Attributes\CoversNothing;
 use Pumukit\CoreBundle\Tests\PumukitTestCase;
+use Pumukit\NewAdminBundle\Services\MultimediaObjectSyncService;
 use Pumukit\SchemaBundle\Document\Group;
+use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Person;
 use Pumukit\SchemaBundle\Document\Role;
+use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
+use Pumukit\SchemaBundle\Document\User;
 
 /**
  * @internal
@@ -180,5 +184,40 @@ class MultimediaObjectSyncServiceTest extends PumukitTestCase
         static::assertEquals($multimediaObject->getProperty('subseries'), $multimediaObject2->getProperty('subseries'));
         static::assertEquals($multimediaObject->getEmbeddedRole($roleAuthor), $multimediaObject2->getEmbeddedRole($roleAuthor));
         static::assertEquals($multimediaObject->containsTag($tag3), $multimediaObject2->containsTag($tag3));
+    }
+
+    public function testSyncOwnersCopiesThePeopleOfTheConfiguredPersonalScopeRole(): void
+    {
+        $role = new Role();
+        $role->setCod('author');
+        $this->dm->persist($role);
+        $person = new Person();
+        $person->setName('Ana');
+        $this->dm->persist($person);
+        $user = new User();
+        $user->setUsername('ana');
+        $user->setEmail('ana@pumukit.local');
+        $user->setPassword('unused');
+        $user->setPerson($person);
+        $person->setUser($user);
+        $this->dm->persist($user);
+        $series = new Series();
+        $series->setNumericalID(1);
+        $this->dm->persist($series);
+        $origin = new MultimediaObject();
+        $origin->setNumericalID(1);
+        $origin->setSeries($series);
+        $origin->addPersonWithRole($person, $role);
+        $this->dm->persist($origin);
+        $copy = new MultimediaObject();
+        $copy->setNumericalID(2);
+        $copy->setSeries($series);
+        $this->dm->persist($copy);
+        $this->dm->flush();
+
+        (new MultimediaObjectSyncService($this->dm, 'author'))->syncOwners($copy, $origin);
+
+        $this->assertTrue($copy->containsPersonWithRole($person, $role));
+        $this->assertSame([$user->getId()], $copy->getProperty('owners'));
     }
 }

@@ -105,7 +105,7 @@ class MultimediaObjectArchiveService
 
     private function getOwnerRole(): Role
     {
-        return $this->documentManager->getRepository(Role::class)->findOneBy(['cod' => 'owner']);
+        return $this->documentManager->getRepository(Role::class)->findOneBy(['cod' => $this->personService->getPersonalScopeRoleCode()]);
     }
 
     private function getFormerOwnerRole(): Role

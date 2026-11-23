@@ -14,7 +14,7 @@ class UserStatsService
 {
     private $documentManager;
 
-    public function __construct(DocumentManager $documentManager)
+    public function __construct(DocumentManager $documentManager, private readonly string $personalScopeRoleCode)
     {
         $this->documentManager = $documentManager;
     }
@@ -22,8 +22,7 @@ class UserStatsService
     public function getUserMultimediaObjectsGroupByStats(User $user): array
     {
         $collection = $this->documentManager->getDocumentCollection(MultimediaObject::class);
-        $code = 'owner';
-        $pipeline = $this->generateUserFilterPipeline($user, $code);
+        $pipeline = $this->generateUserFilterPipeline($user, $this->personalScopeRoleCode);
 
         $pipelinePublished = $pipeline;
         $pipelinePublished[] = ['$match' => ['status' => MultimediaObject::STATUS_PUBLISHED]];
@@ -68,8 +67,7 @@ class UserStatsService
     public function getUserStorageMB(User $user)
     {
         $collection = $this->documentManager->getDocumentCollection(MultimediaObject::class);
-        $code = 'owner';
-        $pipeline = $this->generateUserFilterPipeline($user, $code);
+        $pipeline = $this->generateUserFilterPipeline($user, $this->personalScopeRoleCode);
         $pipeline[] = ['$unwind' => '$tracks'];
         $pipeline[] = [
             '$project' => [
@@ -94,8 +92,7 @@ class UserStatsService
     public function getUserUploadedHours(User $user)
     {
         $collection = $this->documentManager->getDocumentCollection(MultimediaObject::class);
-        $code = 'owner';
-        $pipeline = $this->generateUserFilterPipeline($user, $code);
+        $pipeline = $this->generateUserFilterPipeline($user, $this->personalScopeRoleCode);
         $pipeline[] = ['$unwind' => '$tracks'];
         $pipeline[] = [
             '$project' => [
