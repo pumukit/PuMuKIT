@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace Pumukit\NewAdminBundle\Controller;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\NewAdminBundle\Form\Type\UserUpdateProfileType;
 use Pumukit\NewAdminBundle\Services\UserStatsService;
 use Pumukit\SchemaBundle\Document\User;
-use Pumukit\SchemaBundle\Services\PersonService;
-use Pumukit\SchemaBundle\Services\SeriesService;
 use Pumukit\SchemaBundle\Services\UpdateUserService;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,27 +19,18 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
 class UserProfileController extends AbstractController
 {
-    protected $documentManager;
     protected $translator;
     protected $updateUserService;
     protected $userStatsService;
-    protected $seriesService;
-    protected $personService;
 
     public function __construct(
-        DocumentManager $documentManager,
         UpdateUserService $updateUserService,
         TranslatorInterface $translator,
-        UserStatsService $userStatsService,
-        SeriesService $seriesService,
-        PersonService $personService
+        UserStatsService $userStatsService
     ) {
-        $this->documentManager = $documentManager;
         $this->translator = $translator;
         $this->updateUserService = $updateUserService;
         $this->userStatsService = $userStatsService;
-        $this->seriesService = $seriesService;
-        $this->personService = $personService;
     }
 
     #[Route('/', name: 'pumukitnewadmin_profile_user_index')]
@@ -50,8 +38,6 @@ class UserProfileController extends AbstractController
     public function profileAction(Request $request): array
     {
         $user = $this->getUser();
-
-        $personalScopeRoleCode = $this->personService->getPersonalScopeRoleCode();
 
         $locale = $request->getLocale();
         $form = $this->createForm(UserUpdateProfileType::class, $user, ['translator' => $this->translator, 'locale' => $locale]);
@@ -61,13 +47,9 @@ class UserProfileController extends AbstractController
             $this->updateUserService->update($user);
         }
 
-        // $seriesOfUser = $this->seriesService->getSeriesOfUser($user, false, $personalScopeRoleCode, ['public_date' => 'desc']);
-        $seriesOfUser = [];
-
         return [
             'user' => $user,
             'form' => $form->createView(),
-            'seriesOfUser' => $seriesOfUser,
         ];
     }
 
