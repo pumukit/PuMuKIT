@@ -146,6 +146,8 @@ class UserController extends AdminController
             return $response;
         }
 
+        $this->unlinkPerson($userToDelete);
+
         return parent::deleteAction($request);
     }
 
@@ -159,12 +161,18 @@ class UserController extends AdminController
             $ids = json_decode($ids, true, 512, JSON_THROW_ON_ERROR);
         }
 
+        $usersToDelete = [];
         foreach ($ids as $id) {
             $userToDelete = $repo->find($id);
             $response = $this->isAllowedToBeDeleted($userToDelete);
             if ($response instanceof Response) {
                 return $response;
             }
+            $usersToDelete[] = $userToDelete;
+        }
+
+        foreach ($usersToDelete as $userToDelete) {
+            $this->unlinkPerson($userToDelete);
         }
 
         return parent::batchDeleteAction($request);
@@ -341,26 +349,18 @@ class UserController extends AdminController
             return new Response("Can not delete this unique admin user '".$userToDelete->getUsername()."'", 409);
         }
 
-        if (null !== $person = $userToDelete->getPerson()) {
-            try {
-                $this->personService->removeUserFromPerson($userToDelete, $person, true);
-            } catch (\Exception $e) {
-                return new Response(
-                    "Can not delete the user '".$userToDelete->getUsername()."'. ".$e->getMessage(),
-                    409
-                );
-            }
-        }
-
-        if (User::ORIGIN_LOCAL !== $userToDelete->getOrigin()) {
-            if ($loggedInUser->isSuperAdmin()) {
-                return true;
-            }
-
+        if (User::ORIGIN_LOCAL !== $userToDelete->getOrigin() && !$loggedInUser->isSuperAdmin()) {
             return new Response("Can not delete the external user '".$userToDelete->getUsername()."'. ", 409);
         }
 
         return true;
+    }
+
+    private function unlinkPerson(User $userToDelete): void
+    {
+        if (null !== $person = $userToDelete->getPerson()) {
+            $this->personService->removeUserFromPerson($userToDelete, $person, true);
+        }
     }
 
     private function isAllowedToBeUpdated(User $userToUpdate)
