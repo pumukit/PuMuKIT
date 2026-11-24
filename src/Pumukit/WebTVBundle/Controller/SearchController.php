@@ -8,7 +8,6 @@ use Doctrine\Bundle\MongoDBBundle\Attribute\MapDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Pumukit\CoreBundle\Controller\WebTVControllerInterface;
 use Pumukit\CoreBundle\Services\PaginationService;
-use Pumukit\SchemaBundle\Document\EmbeddedBroadcast;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Document\Series;
 use Pumukit\SchemaBundle\Document\Tag;
@@ -131,10 +130,6 @@ class SearchController extends AbstractController implements WebTVControllerInte
             $queryBuilder = $queryBuilder->sortMeta('score', 'textScore');
         } else {
             $queryBuilder = $queryBuilder->sort('record_date', 'desc');
-        }
-
-        if ($request->attributes->get('only_public')) {
-            $queryBuilder->field('embeddedBroadcast.type')->equals(EmbeddedBroadcast::TYPE_PUBLIC);
         }
 
         [$pager, $totalObjects] = $this->createPager($queryBuilder, $request->query->get('page', 1));
