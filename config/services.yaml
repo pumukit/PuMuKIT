@@ -56,6 +56,9 @@ services:
   doctrine:
     alias: doctrine_mongodb
 
+  asset_mapper.http_client:
+    alias: github_advisories.client
+
   Gedmo\Mapping\Driver\AttributeReader: ~
 
   Gedmo\Tree\TreeListener:

@@ -20,9 +20,9 @@ IMPORTMAP_DIR = src/Pumukit/CoreBundle/Resources/importmap
 # otherwise spin up an ephemeral one that is removed afterwards (--rm).
 define run_php
 	@if [ -n "$$($(DOCKER_COMP) ps -q php 2>/dev/null)" ]; then \
-		$(DOCKER_COMP) exec -u www-data php $(1); \
+		$(DOCKER_COMP) exec $(2) -u www-data php $(1); \
 	else \
-		$(DC_BASE) run --rm --user www-data php $(1); \
+		$(DC_BASE) run --rm $(2) --user www-data php $(1); \
 	fi
 endef
 
@@ -101,7 +101,7 @@ composer-audit: ## Fail if a composer dependency has a security advisory
 	$(call run_php,composer audit)
 
 importmap-audit: ## Fail if an importmap package has a security advisory
-	$(call run_php,bin/console importmap:audit)
+	$(call run_php,bin/console importmap:audit,-e GITHUB_TOKEN)
 
 paella-audit: ## Fail if a runtime dependency of Paella has a security advisory
 	$(call run_paella,npm audit --omit=dev --no-fund --no-update-notifier --loglevel=error)
@@ -148,7 +148,7 @@ update-composer: ## composer update within composer.json, validate, audit and li
 
 update-importmap: ## Update the importmap packages used by PuMuKIT within their major versions, remove the unused ones and audit
 	$(call run_php_root,sh -c 'bin/console pumukit:importmap:update; status=$$?; chown -R --reference=composer.json $(IMPORTMAP_DIR); chown -R www-data:www-data var; exit $$status')
-	$(call run_php,bin/console importmap:audit)
+	$(call run_php,bin/console importmap:audit,-e GITHUB_TOKEN)
 
 update-paella: ## Update the Paella dependencies within package.json, fix the npm advisories and build the player
 	$(call run_paella,npm update --save --no-fund --loglevel=error; npm audit fix --no-fund --loglevel=error || true; cp package.json package-lock.json /src/; npm outdated || true; npm audit)

@@ -47,6 +47,8 @@ jobs:
 
       - name: Audit the dependencies
         if: ${{ !cancelled() }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run:  |
               make composer-audit
               make importmap-audit

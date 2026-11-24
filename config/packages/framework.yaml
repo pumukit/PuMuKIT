@@ -20,3 +20,8 @@ framework:
     cookie_samesite: 'lax'
   fragments:       ~
   http_method_override: true
+  http_client:
+    scoped_clients:
+      github_advisories.client:
+        scope: '^https://api\.github\.com/advisories'
+        auth_bearer: '%env(default::GITHUB_TOKEN)%'
