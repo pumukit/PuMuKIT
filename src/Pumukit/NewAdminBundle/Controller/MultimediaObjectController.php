@@ -39,6 +39,7 @@ use Pumukit\SchemaBundle\Services\MediaCreator;
 use Pumukit\SchemaBundle\Services\MediaUpdater;
 use Pumukit\SchemaBundle\Services\MultimediaObjectEventDispatcherService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
+use Pumukit\SchemaBundle\Services\MultimediaObjectVoter;
 use Pumukit\SchemaBundle\Services\PersonService;
 use Pumukit\SchemaBundle\Services\Repository\SeriesRepository;
 use Pumukit\SchemaBundle\Services\SortedMultimediaObjectsService;
@@ -1215,9 +1216,9 @@ class MultimediaObjectController extends SortableAdminController
         return (false === strpos($sRoute, 'all')) ? 'mms' : 'mmslist';
     }
 
-    public function updatePropertyAction(Request $request): JsonResponse
+    public function updatePropertyAction(Request $request, #[MapDocument(id: 'id')] MultimediaObject $multimediaObject): JsonResponse
     {
-        $multimediaObject = $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($request->attributes->get('id'))]);
+        $this->denyAccessUnlessGranted(MultimediaObjectVoter::EDIT, $multimediaObject);
         $method = $request->getMethod();
         if (in_array($method, ['POST'])) {
             $multimediaObject->setProperty('paellalayout', $request->request->get('paellalayout'));
