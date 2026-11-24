@@ -22,7 +22,8 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
         set -e
     fi
 
-    chown -R www-data:www-data var/cache var/log var/sessions public/storage public/uploads
+    chown -R www-data:www-data var/cache var/log var/sessions
+    find public/storage public/uploads -maxdepth 1 ! -user www-data -exec chown www-data:www-data {} +
 fi
 
 exec docker-php-entrypoint "$@"
