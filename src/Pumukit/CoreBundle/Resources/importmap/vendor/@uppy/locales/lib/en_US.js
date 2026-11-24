@@ -1,6 +1,6 @@
 /**
- * Bundled by jsDelivr using Rollup v4.62.2 and esbuild v0.28.1.
- * Original file: /npm/@uppy/locales@5.3.1/lib/en_US.js
+ * Bundled by jsDelivr using Rollup v4.68.6 and esbuild v0.28.2.
+ * Original file: /npm/@uppy/locales@5.3.2/lib/en_US.js
  *
  * Do NOT use SRI with dynamically generated files! More information: https://www.jsdelivr.com/using-sri-with-dynamic-files
  */

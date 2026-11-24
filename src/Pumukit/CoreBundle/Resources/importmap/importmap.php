@@ -39,50 +39,50 @@ return [
         'version' => '3.2.2',
     ],
     'intl-messageformat' => [
-        'version' => '12.1.4',
+        'version' => '12.2.1',
     ],
     '@formatjs/fast-memoize' => [
-        'version' => '3.1.7',
+        'version' => '3.1.8',
     ],
     '@formatjs/icu-messageformat-parser' => [
-        'version' => '3.5.22',
+        'version' => '3.5.23',
     ],
     '@formatjs/icu-skeleton-parser' => [
-        'version' => '2.1.12',
+        'version' => '2.1.13',
     ],
     'chart.js' => [
-        'version' => '4.6.1',
+        'version' => '4.6.2',
     ],
     '@kurkle/color' => [
-        'version' => '0.3.4',
+        'version' => '0.6.6',
     ],
     '@uppy/core' => [
-        'version' => '6.3.0',
+        'version' => '6.3.2',
     ],
     '@uppy/dashboard' => [
-        'version' => '6.0.2',
+        'version' => '6.0.3',
     ],
     '@uppy/tus' => [
-        'version' => '6.0.0',
+        'version' => '6.0.1',
     ],
     '@uppy/xhr-upload' => [
         'version' => '6.0.1',
     ],
     '@uppy/locales/lib/es_ES.js' => [
-        'version' => '5.3.1',
+        'version' => '5.3.2',
     ],
     '@uppy/locales/lib/en_US.js' => [
-        'version' => '5.3.1',
+        'version' => '5.3.2',
     ],
     '@uppy/locales/lib/gl_ES.js' => [
-        'version' => '5.3.1',
+        'version' => '5.3.2',
     ],
     '@uppy/core/dist/style.min.css' => [
-        'version' => '6.3.0',
+        'version' => '6.3.2',
         'type' => 'css',
     ],
     '@uppy/dashboard/dist/style.min.css' => [
-        'version' => '6.0.2',
+        'version' => '6.0.3',
         'type' => 'css',
     ],
     'preact/jsx-runtime' => [
@@ -110,7 +110,7 @@ return [
         'version' => '6.0.2',
     ],
     '@uppy/core/provider-views' => [
-        'version' => '6.3.0',
+        'version' => '6.3.1',
     ],
     '@uppy/core/utils' => [
         'version' => '6.2.0',
@@ -122,10 +122,10 @@ return [
         'version' => '2.5.1',
     ],
     '@uppy/core/utils/preact' => [
-        'version' => '6.3.0',
+        'version' => '6.3.1',
     ],
     '@uppy/core/utils/preact/hooks' => [
-        'version' => '6.3.0',
+        'version' => '6.3.1',
     ],
     'shallow-equal' => [
         'version' => '3.1.0',

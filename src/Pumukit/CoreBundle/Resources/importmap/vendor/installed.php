@@ -9,123 +9,6 @@
     array (
     ),
   ),
-  'intl-messageformat' => 
-  array (
-    'version' => '12.1.4',
-    'dependencies' => 
-    array (
-      0 => '@formatjs/fast-memoize',
-      1 => '@formatjs/icu-messageformat-parser',
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
-  '@formatjs/fast-memoize' => 
-  array (
-    'version' => '3.1.7',
-    'dependencies' => 
-    array (
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
-  '@formatjs/icu-messageformat-parser' => 
-  array (
-    'version' => '3.5.22',
-    'dependencies' => 
-    array (
-      0 => '@formatjs/icu-skeleton-parser',
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
-  '@formatjs/icu-skeleton-parser' => 
-  array (
-    'version' => '2.1.12',
-    'dependencies' => 
-    array (
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
-  'chart.js' => 
-  array (
-    'version' => '4.6.1',
-    'dependencies' => 
-    array (
-      0 => '@kurkle/color',
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
-  '@kurkle/color' => 
-  array (
-    'version' => '0.3.4',
-    'dependencies' => 
-    array (
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
-  '@uppy/core' => 
-  array (
-    'version' => '6.3.0',
-    'dependencies' => 
-    array (
-      0 => 'preact/jsx-runtime',
-      1 => 'preact/hooks',
-      2 => '@transloadit/prettier-bytes',
-      3 => 'mime-match',
-      4 => 'preact',
-      5 => 'lodash/throttle.js',
-      6 => 'namespace-emitter',
-      7 => 'nanoid/non-secure',
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
-  '@uppy/dashboard' => 
-  array (
-    'version' => '6.0.2',
-    'dependencies' => 
-    array (
-      0 => '@uppy/core',
-      1 => '@uppy/core/provider-views',
-      2 => '@uppy/core/utils',
-      3 => '@uppy/thumbnail-generator',
-      4 => 'nanoid/non-secure',
-      5 => 'preact/jsx-runtime',
-      6 => 'classnames',
-      7 => '@uppy/core/utils/preact',
-      8 => '@uppy/core/utils/preact/hooks',
-      9 => 'shallow-equal',
-      10 => '@transloadit/prettier-bytes',
-      11 => 'lodash/debounce.js',
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
-  '@uppy/tus' => 
-  array (
-    'version' => '6.0.0',
-    'dependencies' => 
-    array (
-      0 => '@uppy/core',
-      1 => '@uppy/core/utils',
-      2 => 'tus-js-client',
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
   '@uppy/xhr-upload' => 
   array (
     'version' => '6.0.1',
@@ -133,56 +16,6 @@
     array (
       0 => '@uppy/core',
       1 => '@uppy/core/utils',
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
-  '@uppy/locales/lib/es_ES.js' => 
-  array (
-    'version' => '5.3.1',
-    'dependencies' => 
-    array (
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
-  '@uppy/locales/lib/en_US.js' => 
-  array (
-    'version' => '5.3.1',
-    'dependencies' => 
-    array (
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
-  '@uppy/locales/lib/gl_ES.js' => 
-  array (
-    'version' => '5.3.1',
-    'dependencies' => 
-    array (
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
-  '@uppy/core/dist/style.min.css' => 
-  array (
-    'version' => '6.3.0',
-    'dependencies' => 
-    array (
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
-  '@uppy/dashboard/dist/style.min.css' => 
-  array (
-    'version' => '6.0.2',
-    'dependencies' => 
-    array (
     ),
     'extraFiles' => 
     array (
@@ -272,25 +105,6 @@
     array (
     ),
   ),
-  '@uppy/core/provider-views' => 
-  array (
-    'version' => '6.3.0',
-    'dependencies' => 
-    array (
-      0 => 'preact/jsx-runtime',
-      1 => 'nanoid/non-secure',
-      2 => 'preact/hooks',
-      3 => 'preact/compat',
-      4 => 'p-retry',
-      5 => 'classnames',
-      6 => 'lodash/debounce.js',
-      7 => 'p-queue',
-      8 => 'preact',
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
   '@uppy/core/utils' => 
   array (
     'version' => '6.2.0',
@@ -321,28 +135,6 @@
     'version' => '2.5.1',
     'dependencies' => 
     array (
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
-  '@uppy/core/utils/preact' => 
-  array (
-    'version' => '6.3.0',
-    'dependencies' => 
-    array (
-      0 => 'preact',
-    ),
-    'extraFiles' => 
-    array (
-    ),
-  ),
-  '@uppy/core/utils/preact/hooks' => 
-  array (
-    'version' => '6.3.0',
-    'dependencies' => 
-    array (
-      0 => 'preact/hooks',
     ),
     'extraFiles' => 
     array (
@@ -510,23 +302,209 @@
     array (
     ),
   ),
-  'chartjs-adapter-date-fns' => 
+  'intl-messageformat' => 
   array (
-    'version' => '3.0.0',
+    'version' => '12.2.1',
     'dependencies' => 
     array (
-      0 => 'chart.js',
-      1 => 'date-fns',
+      0 => '@formatjs/fast-memoize',
+      1 => '@formatjs/icu-messageformat-parser',
     ),
     'extraFiles' => 
     array (
     ),
   ),
-  'date-fns' => 
+  '@formatjs/fast-memoize' => 
   array (
-    'version' => '4.4.0',
+    'version' => '3.1.8',
     'dependencies' => 
     array (
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  '@formatjs/icu-messageformat-parser' => 
+  array (
+    'version' => '3.5.23',
+    'dependencies' => 
+    array (
+      0 => '@formatjs/icu-skeleton-parser',
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  '@formatjs/icu-skeleton-parser' => 
+  array (
+    'version' => '2.1.13',
+    'dependencies' => 
+    array (
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  'chart.js' => 
+  array (
+    'version' => '4.6.2',
+    'dependencies' => 
+    array (
+      0 => '@kurkle/color',
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  '@kurkle/color' => 
+  array (
+    'version' => '0.6.6',
+    'dependencies' => 
+    array (
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  '@uppy/core' => 
+  array (
+    'version' => '6.3.2',
+    'dependencies' => 
+    array (
+      0 => 'preact/jsx-runtime',
+      1 => 'preact/hooks',
+      2 => '@transloadit/prettier-bytes',
+      3 => 'mime-match',
+      4 => 'preact',
+      5 => 'lodash/throttle.js',
+      6 => 'namespace-emitter',
+      7 => 'nanoid/non-secure',
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  '@uppy/dashboard' => 
+  array (
+    'version' => '6.0.3',
+    'dependencies' => 
+    array (
+      0 => '@uppy/core',
+      1 => '@uppy/core/provider-views',
+      2 => '@uppy/core/utils',
+      3 => '@uppy/thumbnail-generator',
+      4 => 'nanoid/non-secure',
+      5 => 'preact/jsx-runtime',
+      6 => 'classnames',
+      7 => '@uppy/core/utils/preact',
+      8 => '@uppy/core/utils/preact/hooks',
+      9 => 'shallow-equal',
+      10 => '@transloadit/prettier-bytes',
+      11 => 'lodash/debounce.js',
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  '@uppy/tus' => 
+  array (
+    'version' => '6.0.1',
+    'dependencies' => 
+    array (
+      0 => '@uppy/core',
+      1 => '@uppy/core/utils',
+      2 => 'tus-js-client',
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  '@uppy/locales/lib/es_ES.js' => 
+  array (
+    'version' => '5.3.2',
+    'dependencies' => 
+    array (
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  '@uppy/locales/lib/en_US.js' => 
+  array (
+    'version' => '5.3.2',
+    'dependencies' => 
+    array (
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  '@uppy/locales/lib/gl_ES.js' => 
+  array (
+    'version' => '5.3.2',
+    'dependencies' => 
+    array (
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  '@uppy/core/dist/style.min.css' => 
+  array (
+    'version' => '6.3.2',
+    'dependencies' => 
+    array (
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  '@uppy/dashboard/dist/style.min.css' => 
+  array (
+    'version' => '6.0.3',
+    'dependencies' => 
+    array (
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  '@uppy/core/provider-views' => 
+  array (
+    'version' => '6.3.1',
+    'dependencies' => 
+    array (
+      0 => 'preact/jsx-runtime',
+      1 => 'nanoid/non-secure',
+      2 => 'preact/hooks',
+      3 => 'preact/compat',
+      4 => 'p-retry',
+      5 => 'classnames',
+      6 => 'lodash/debounce.js',
+      7 => 'p-queue',
+      8 => 'preact',
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  '@uppy/core/utils/preact' => 
+  array (
+    'version' => '6.3.1',
+    'dependencies' => 
+    array (
+      0 => 'preact',
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  '@uppy/core/utils/preact/hooks' => 
+  array (
+    'version' => '6.3.1',
+    'dependencies' => 
+    array (
+      0 => 'preact/hooks',
     ),
     'extraFiles' => 
     array (
