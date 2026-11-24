@@ -23,9 +23,28 @@ class AuthController extends AbstractController implements WebTVControllerInterf
             throw $this->createAccessDeniedException('Unable to access this page!');
         }
 
-        $targetUrl = $request->getSession()->get('target_path');
+        $targetUrl = (string) $request->getSession()->get('target_path');
         $request->getSession()->remove('target_path');
 
-        return $this->redirect($targetUrl);
+        return $this->redirect($this->isWithinTheSite($request, $targetUrl) ? $targetUrl : '/');
+    }
+
+    private function isWithinTheSite(Request $request, string $url): bool
+    {
+        if ('' === $url || preg_match('/[\x00-\x1f\x7f\\\]/', $url)) {
+            return false;
+        }
+
+        if (str_starts_with($url, '/')) {
+            return !str_starts_with($url, '//');
+        }
+
+        $parts = parse_url($url);
+        if (!is_array($parts) || isset($parts['user']) || isset($parts['pass'])) {
+            return false;
+        }
+
+        return in_array(strtolower($parts['scheme'] ?? ''), ['http', 'https'], true)
+            && 0 === strcasecmp($parts['host'] ?? '', $request->getHost());
     }
 }
