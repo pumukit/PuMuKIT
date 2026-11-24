@@ -17,13 +17,20 @@ class TrackDeliveryService
     public const REASON_SHARED_HLS_DIRECTORY = 'shared HLS directory';
     public const REASON_NO_DOWNLOAD_SERVER = 'no download server';
 
+    private const RESERVED_PREFIXES = ['files', 'hls', 'pumukit'];
+
+    private readonly array $extraRoots;
+
     public function __construct(
         private readonly string $storageDir,
         private readonly ?string $downloadServerUrl,
         private readonly SecureTokenService $secureTokenService,
         private readonly TrackUrlService $trackUrlService,
-        private readonly LoggerInterface $logger
-    ) {}
+        private readonly LoggerInterface $logger,
+        ?string $extraRoots = null
+    ) {
+        $this->extraRoots = $this->parseExtraRoots((string) $extraRoots);
+    }
 
     public function response(Media $track, bool $forceDownload = false, ?string $externalQuery = null): Response
     {
@@ -70,9 +77,18 @@ class TrackDeliveryService
         }
 
         $realPath = (string) realpath($this->localPath($track));
-        $relative = substr($realPath, strlen($this->realStorageDir()) + 1);
         $validFor = $this->validFor($track);
         $baseUrl = rtrim((string) $this->downloadServerUrl, '/');
+
+        $extraRoot = $this->isInStorage($realPath) ? null : $this->extraRootOf($realPath);
+        if (null !== $extraRoot) {
+            $relative = substr($realPath, strlen($extraRoot['root']) + 1);
+            $encoded = implode('/', array_map('rawurlencode', explode('/', $relative)));
+
+            return $this->forceDownload($this->secureTokenService->generateDownloadUrl($baseUrl.$extraRoot['prefix'].'/'.$encoded, $validFor), $forceDownload);
+        }
+
+        $relative = substr($realPath, strlen($this->realStorageDir()) + 1);
 
         if ($this->isHls($realPath)) {
             $segments = explode('/', $relative);
@@ -106,13 +122,8 @@ class TrackDeliveryService
             return self::REASON_MISSING_FILE;
         }
 
-        $root = $this->realStorageDir();
-        if ('' === $root) {
-            return self::REASON_OUTSIDE_STORAGE;
-        }
-
-        if (!str_starts_with($realPath, $root.'/downloads/') && !str_starts_with($realPath, $root.'/masters/')) {
-            return self::REASON_OUTSIDE_STORAGE;
+        if (!$this->isInStorage($realPath)) {
+            return null === $this->extraRootOf($realPath) || $this->isHls($realPath) ? self::REASON_OUTSIDE_STORAGE : null;
         }
 
         if ($this->isHls($realPath) && !$this->isInOwnHlsDirectory($realPath)) {
@@ -166,6 +177,52 @@ class TrackDeliveryService
     private function realStorageDir(): string
     {
         return rtrim((string) realpath($this->storageDir), '/');
+    }
+
+    private function isInStorage(string $realPath): bool
+    {
+        $root = $this->realStorageDir();
+
+        return '' !== $root && (str_starts_with($realPath, $root.'/downloads/') || str_starts_with($realPath, $root.'/masters/'));
+    }
+
+    private function extraRootOf(string $realPath): ?array
+    {
+        foreach ($this->extraRoots as $extraRoot) {
+            $root = realpath($extraRoot['root']);
+            if (false !== $root && str_starts_with($realPath, rtrim($root, '/').'/')) {
+                return ['root' => rtrim($root, '/'), 'prefix' => $extraRoot['prefix']];
+            }
+        }
+
+        return null;
+    }
+
+    private function parseExtraRoots(string $value): array
+    {
+        $extraRoots = [];
+        foreach (explode(',', $value) as $entry) {
+            $entry = trim($entry);
+            if ('' === $entry) {
+                continue;
+            }
+
+            $parts = array_map('trim', explode('=', $entry, 2));
+            $root = rtrim($parts[0], '/');
+            $prefix = $parts[1] ?? '';
+            $firstSegment = explode('/', $prefix)[1] ?? '';
+
+            if (!str_starts_with($root, '/')
+                || 1 !== preg_match('#^(/[A-Za-z0-9_-]+)+$#', $prefix)
+                || in_array($firstSegment, self::RESERVED_PREFIXES, true)
+                || in_array($prefix, array_column($extraRoots, 'prefix'), true)) {
+                throw new \InvalidArgumentException(sprintf('Invalid extra root "%s" of the download server: use "/absolute/path=/prefix", separated by commas, with a prefix that is not /files, /hls or /pumukit and is not repeated.', $entry));
+            }
+
+            $extraRoots[] = ['root' => $root, 'prefix' => $prefix];
+        }
+
+        return $extraRoots;
     }
 
     private function isHls(string $realPath): bool

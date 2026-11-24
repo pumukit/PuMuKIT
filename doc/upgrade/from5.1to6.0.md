@@ -320,7 +320,11 @@ of the old HLS tracks, rewritten by `pumukit:hls:move-to-own-directory`.
   address of its web server) and it checks them over HTTP with `/download/validate-token` and `/download/validate-hls`. Both modes send
   `PUMUKIT_FRONTEND_HOST` as host, which must be in `TRUSTED_HOSTS`, and keep each answer 10 seconds.
 
-  The images of `/opencast` do not ask for a token, because PuMuKIT stores them as public URLs. To serve Opencast, also mount its storage on `/mnt/storage/opencast`. With validation,
+  The images of `/opencast` do not ask for a token, because PuMuKIT stores them as public URLs. To serve Opencast, also mount its storage on `/mnt/storage/opencast`.
+  The tracks imported from Opencast keep the path of its storage (`/mnt/storage/opencast/downloads/…` with `url_mapping`), outside
+  `PUMUKIT_STORAGE_DIR`: set `PUMUKIT_DLS_EXTRA_ROOTS=/mnt/storage/opencast/downloads=/opencast` so that PuMuKIT signs them on `/opencast/` instead
+  of answering 503. It is a comma-separated list of `path=prefix`, empty by default; the path is the one PHP sees, the prefix a location of the
+  DLS that serves that directory with `auth_request`, never `/files`, `/hls` or `/pumukit`. HLS outside the storage is not served. With validation,
   a saved link to the server stops working: check first which URLs are used from outside (podcast clients, apps, other websites, LMS).
 
   **Links to `/trackfile` without a token.** `/trackfile` answers 404 to a request without a valid token. For the old links that cannot be

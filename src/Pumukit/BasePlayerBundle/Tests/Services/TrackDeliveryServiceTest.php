@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pumukit\BasePlayerBundle\Tests\Services;
 
 use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\AbstractLogger;
 use Pumukit\BasePlayerBundle\Services\SecureTokenService;
@@ -296,6 +297,93 @@ class TrackDeliveryServiceTest extends TestCase
         $this->assertSame('https://example.org/video.mp4', $this->service()->response($plain)->headers->get('Location'));
     }
 
+    public function testATrackInAnExtraRootRedirectsToItsPrefix(): void
+    {
+        $track = $this->extraTrack('opencast/downloads/engage-player/mp/el/a b.mp4');
+        $service = $this->service(extraRoots: $this->root.'/opencast/downloads=/opencast');
+
+        $response = $service->response($track, true);
+
+        $this->assertSame(Response::HTTP_FOUND, $response->getStatusCode());
+        $location = (string) $response->headers->get('Location');
+        $this->assertStringStartsWith('https://dls/opencast/engage-player/mp/el/a%20b.mp4?token=', $location);
+        $this->assertStringEndsWith('&forcedl=1', $location);
+        parse_str((string) parse_url($location, PHP_URL_QUERY), $query);
+        $this->assertSame('/opencast/engage-player/mp/el/a b.mp4', $query['resource']);
+        $this->assertTrue($this->tokens->validateToken($query['token'], $query['resource'], (int) $query['expires']));
+        $this->assertNull($service->undeliverableReason($track));
+    }
+
+    public function testEveryExtraRootHasItsOwnPrefix(): void
+    {
+        $opencast = $this->extraTrack('opencast/downloads/a.mp4');
+        $other = $this->extraTrack('other/b.mp4');
+        $service = $this->service(extraRoots: ' '.$this->root.'/opencast/downloads/=/opencast , '.$this->root.'/other=/media/other ');
+
+        $this->assertStringStartsWith('https://dls/opencast/a.mp4?', (string) $service->downloadServerUrl($opencast));
+        $this->assertStringStartsWith('https://dls/media/other/b.mp4?', (string) $service->downloadServerUrl($other));
+    }
+
+    public function testATrackOutsideEveryExtraRootIsOutsideTheStorage(): void
+    {
+        $track = $this->extraTrack('otro/a.mp4');
+
+        $this->assertSame('outside the storage', $this->service(extraRoots: $this->root.'/opencast/downloads=/opencast')->undeliverableReason($track));
+    }
+
+    public function testSymlinkCannotEscapeAnExtraRoot(): void
+    {
+        file_put_contents($this->outside.'/secret.mp4', 'x');
+        mkdir($this->root.'/opencast/downloads', 0777, true);
+        symlink($this->outside, $this->root.'/opencast/downloads/link');
+        $track = $this->extraTrack('opencast/downloads/link/secret.mp4');
+
+        $this->assertSame('outside the storage', $this->service(extraRoots: $this->root.'/opencast/downloads=/opencast')->undeliverableReason($track));
+    }
+
+    public function testHlsInAnExtraRootIsNotDeliverable(): void
+    {
+        $track = $this->extraTrack('opencast/downloads/mp/el/a.m3u8');
+
+        $this->assertSame('outside the storage', $this->service(extraRoots: $this->root.'/opencast/downloads=/opencast')->undeliverableReason($track));
+    }
+
+    public function testAMissingExtraRootIsIgnored(): void
+    {
+        $track = $this->localTrack('downloads/s/a.mp4');
+
+        $this->assertNull($this->service(extraRoots: $this->root.'/missing=/opencast')->undeliverableReason($track));
+    }
+
+    #[DataProvider('invalidExtraRoots')]
+    public function testAnInvalidExtraRootIsRejected(string $extraRoots): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $this->service(extraRoots: $extraRoots);
+    }
+
+    public static function invalidExtraRoots(): iterable
+    {
+        yield 'no prefix' => ['/mnt/storage/opencast/downloads'];
+
+        yield 'relative prefix' => ['/mnt/storage/opencast/downloads=opencast'];
+
+        yield 'relative root' => ['mnt/storage=/opencast'];
+
+        yield 'files prefix' => ['/mnt/storage=/files'];
+
+        yield 'hls prefix' => ['/mnt/storage=/hls'];
+
+        yield 'pumukit prefix' => ['/mnt/storage=/pumukit'];
+
+        yield 'dot segment' => ['/mnt/storage=/opencast/..'];
+
+        yield 'trailing slash' => ['/mnt/storage=/opencast/'];
+
+        yield 'repeated prefix' => ['/mnt/a=/opencast,/mnt/b=/opencast'];
+    }
+
     public function testNeverReturnsABinaryFileResponse(): void
     {
         $tracks = [
@@ -318,7 +406,7 @@ class TrackDeliveryServiceTest extends TestCase
         $this->assertInstanceOf(RedirectResponse::class, $this->service()->response($tracks[0]));
     }
 
-    private function service(string $downloadServer = self::DLS): TrackDeliveryService
+    private function service(string $downloadServer = self::DLS, ?string $extraRoots = null): TrackDeliveryService
     {
         $router = $this->createStub(UrlGeneratorInterface::class);
 
@@ -327,8 +415,20 @@ class TrackDeliveryServiceTest extends TestCase
             $downloadServer,
             $this->tokens,
             new TrackUrlService($router, $this->tokens, self::DLS),
-            $this->logger
+            $this->logger,
+            $extraRoots
         );
+    }
+
+    private function extraTrack(string $relative): Track
+    {
+        $file = $this->root.'/'.$relative;
+        if (!is_dir(dirname($file))) {
+            mkdir(dirname($file), 0777, true);
+        }
+        file_put_contents($file, 'x');
+
+        return $this->track(Storage::local(StorageUrl::create(''), Path::create($file)), 0);
     }
 
     private function localTrack(string $relative, int $duration = 0, string $url = ''): Track

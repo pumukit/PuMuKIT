@@ -26,6 +26,7 @@ services:
     arguments:
       $storageDir: '%pumukit.storage_dir%'
       $downloadServerUrl: '%env(default::PUMUKIT_DOWNLOAD_SERVER_URL)%'
+      $extraRoots: '%env(default::PUMUKIT_DLS_EXTRA_ROOTS)%'
 
   Pumukit\BasePlayerBundle\Services\TrackfileWithoutTokenPolicy:
     arguments:
