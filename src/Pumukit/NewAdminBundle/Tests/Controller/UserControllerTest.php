@@ -67,6 +67,18 @@ class UserControllerTest extends PumukitTestCase
         $this->assertNull($person->getUser());
     }
 
+    public function testAUserManagerCanEditTheProfileOfAnExternalUser(): void
+    {
+        $external = $this->user('external', 'cas');
+        $local = $this->user('local', User::ORIGIN_LOCAL);
+
+        $crawler = $this->client->request('GET', '/admin/user/list');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertCount(1, $crawler->filter('a[href="/admin/user/'.$external->getId().'/edit"][title^="Edit non local user"]'));
+        $this->assertCount(1, $crawler->filter('a[href="/admin/user/'.$local->getId().'/edit"][title^="Edit User"]'));
+    }
+
     private function assertTheUserKeepsItsPerson(string $username): void
     {
         $this->dm->clear();
