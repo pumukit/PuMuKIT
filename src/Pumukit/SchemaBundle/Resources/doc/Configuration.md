@@ -18,7 +18,6 @@ pumukit_schema:
     default_audio_sd_pic: /bundles/pumukitschema/images/audio_sd.svg
     enable_add_user_as_person: true
     personal_scope_role_code: owner
-    personal_scope_delete_owners: false
     gen_user_salt: true
 ```
 
@@ -35,5 +34,4 @@ pumukit_schema:
 * `default_audio_sd_pic` Default audio SD picture
 * `enable_add_user_as_person` Add logged in User as Person to MultimediaObjects
 * `personal_scope_role_code` Role code related to Personal Scope User to use as EmbeddedPerson
-* `personal_scope_delete_owners` Allow Personal Scope users to delete other owners of Series and MultimediaObjects
 * `gen_user_salt` Disable the generation of a random user salt. Required to use PuMuKIT as a CAS user provider.

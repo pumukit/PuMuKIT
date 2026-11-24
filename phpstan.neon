@@ -12,10 +12,6 @@ parameters:
         objectManagerLoader: bin/object-manager.php
     ignoreErrors:
         -
-            identifier: property.onlyWritten
-            message: '#UserService::\$personalScopeDeleteOwners#'
-            path: src/Pumukit/SchemaBundle/Services/UserService.php
-        -
             identifier: argument.type
             message: '#^Parameter \$keys of attribute class Doctrine\\ODM\\MongoDB\\Mapping\\Attribute\\Index constructor#'
 

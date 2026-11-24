@@ -80,7 +80,6 @@ class UserServiceOwnerEmailTest extends PumukitTestCase
             $permissionService,
             new MultimediaObjectEventDispatcherService($this->dispatcher),
             $this->tokenStorage,
-            false,
             $sendEmail
         );
     }

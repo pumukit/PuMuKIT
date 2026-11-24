@@ -25,7 +25,6 @@ class PumukitSchemaExtension extends Extension
         $container->setParameter('pumukitschema.event_default_poster_text_color', $config['event_default_poster_text_color']);
         $container->setParameter('pumukitschema.personal_scope_role_code', $config['personal_scope_role_code']);
         $container->setParameter('pumukitschema.enable_add_user_as_person', $config['enable_add_user_as_person']);
-        $container->setParameter('pumukitschema.personal_scope_delete_owners', $config['personal_scope_delete_owners']);
         $container->setParameter('pumukitschema.external_permissions', $config['external_permissions']);
         $container->setParameter('pumukitschema.gen_user_salt', $config['gen_user_salt']);
         $container->setParameter('pumukit_schema.multimedia_object_add_owner_subject', $config['multimedia_object_add_owner_subject']);

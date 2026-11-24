@@ -56,7 +56,6 @@ class UserServiceTest extends PumukitTestCase
         );
 
         $tokenStorage = new TokenStorage();
-        $personalScopeDeleteOwners = false;
         $sendEmailWhenAddUserOwner = false;
 
         $this->userService = new UserService(
@@ -65,7 +64,6 @@ class UserServiceTest extends PumukitTestCase
             $permissionService,
             $multimediaObjectEventDispatcher,
             $tokenStorage,
-            $personalScopeDeleteOwners,
             $sendEmailWhenAddUserOwner
         );
 

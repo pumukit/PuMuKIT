@@ -188,7 +188,6 @@ services:
   Pumukit\SchemaBundle\Services\UserService:
     class: Pumukit\SchemaBundle\Services\UserService
     arguments:
-      $personalScopeDeleteOwners: '%pumukitschema.personal_scope_delete_owners%'
       $sendEmailWhenAddUserOwner: '%pumukit_schema.send_email_on_user_added_as_owner%'
 
   Pumukit\SchemaBundle\Services\GroupService:
