@@ -76,10 +76,10 @@ class SearchController extends AbstractController implements WebTVControllerInte
         $queryBuilder = $this->searchService->addValidSeriesQueryBuilder($queryBuilder);
         $queryBuilder = $this->searchService->addSearchQueryBuilder($queryBuilder, $request->getLocale(), $searchFound);
         $queryBuilder = $this->searchService->addDateQueryBuilder($queryBuilder, $startFound, $endFound, $yearFound, 'public_date');
-        if ('' === $searchFound || null === $searchFound) {
-            $queryBuilder = $queryBuilder->sort('public_date', 'desc');
-        } else {
+        if (isset($queryBuilder->getQueryArray()['$text'])) {
             $queryBuilder = $queryBuilder->sortMeta('score', 'textScore');
+        } else {
+            $queryBuilder = $queryBuilder->sort('public_date', 'desc');
         }
 
         [$pager, $totalObjects] = $this->createPager($queryBuilder, $request->query->get('page', 1));
@@ -107,7 +107,7 @@ class SearchController extends AbstractController implements WebTVControllerInte
         $searchYears = $this->searchService->getYears(SearchService::MULTIMEDIA_OBJECT);
 
         $searchFound = $request->query->get('search');
-        $tagsFound = $request->query->get('tags');
+        $tagsFound = $request->query->all('tags');
         $typeFound = $request->query->get('type');
         $durationFound = $request->query->get('duration');
         $startFound = $request->query->get('start');
@@ -126,12 +126,11 @@ class SearchController extends AbstractController implements WebTVControllerInte
         $queryBuilder = $this->searchService->addTagsQueryBuilder($queryBuilder, $tagsFound, $blockedTag, $useTagAsGeneral);
         $queryBuilder = $this->searchService->addLicenseQueryBuilder($queryBuilder, $license);
 
-        $templateListGrouped = false;
-        if ('' === $searchFound || null === $searchFound) {
-            $queryBuilder = $queryBuilder->sort('record_date', 'desc');
-            $templateListGrouped = true;
-        } else {
+        $templateListGrouped = '' === $searchFound || null === $searchFound;
+        if (isset($queryBuilder->getQueryArray()['$text'])) {
             $queryBuilder = $queryBuilder->sortMeta('score', 'textScore');
+        } else {
+            $queryBuilder = $queryBuilder->sort('record_date', 'desc');
         }
 
         if ($request->attributes->get('only_public')) {

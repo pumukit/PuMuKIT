@@ -127,6 +127,7 @@ To get the diff between two versions, go to https://github.com/pumukit/PuMuKIT/c
 
 #### Fixed
 
+- The category filter of the WebTV search gave 400, and the searches of videos or series with `*` gave 500.
 - The row of a pending job in the tracks list spans the columns of the tracks also in the naked back-office and without the track options permission, so it no longer shifts the other rows.
 - The Paella player shows the frames of the multimedia objects again: it reads only their segments, which the OpencastBundle now imports, instead of asking Opencast on every view through a class that does not exist.
 - In production the metadata of the documents was not cached between requests: it is kept in the `cache.system` pool, and the unused `doctrine_mongodb.system_cache_provider` service, whose class no longer exists, is removed.
