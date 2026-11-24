@@ -118,6 +118,8 @@ class SampleSecretsListenerTest extends TestCase
 
         yield ['asset-map:compile'];
 
+        yield ['ux:translator:warm-cache'];
+
         yield ['importmap:install'];
 
         yield ['secrets:set'];

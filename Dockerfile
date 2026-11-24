@@ -142,6 +142,7 @@ RUN set -eux \
     && mkdir -p var/cache var/log var/sessions \
     && composer install --prefer-dist --no-dev --no-scripts --no-progress --classmap-authoritative --no-interaction \
     && bin/console a:i \
+    && bin/console ux:translator:warm-cache \
     && bin/console asset-map:compile
 
 COPY docker/pumukit/docker-entrypoint.sh /usr/local/bin/docker-entrypoint

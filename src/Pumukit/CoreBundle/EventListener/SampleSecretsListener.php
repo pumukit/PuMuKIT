@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 final class SampleSecretsListener
 {
-    private const BUILD_COMMANDS = '/^(cache|assets|importmap|asset-map|secrets|lint|debug|completion):|^(list|help|about|_complete|pumukit:check:secrets)$/';
+    private const BUILD_COMMANDS = '/^(cache|assets|importmap|asset-map|secrets|lint|debug|completion):|^(list|help|about|_complete|pumukit:check:secrets|ux:translator:warm-cache)$/';
 
     public function __construct(
         private readonly SampleSecretsChecker $checker,
