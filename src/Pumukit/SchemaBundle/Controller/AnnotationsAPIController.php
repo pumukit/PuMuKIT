@@ -9,14 +9,18 @@ use MongoDB\BSON\ObjectId;
 use Pumukit\CoreBundle\Services\SerializerService;
 use Pumukit\SchemaBundle\Document\Annotation;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
+use Pumukit\SchemaBundle\Document\PermissionProfile;
 use Pumukit\SchemaBundle\Document\User;
 use Pumukit\SchemaBundle\Event\AnnotationsEvents;
 use Pumukit\SchemaBundle\Event\AnnotationsUpdateEvent;
+use Pumukit\SchemaBundle\Services\MultimediaObjectVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -48,7 +52,11 @@ class AnnotationsAPIController extends AbstractController
         $annonQB = $annonRepo->createQueryBuilder();
 
         if ($episode) {
-            $annonQB->field('multimediaObject')->equals(new ObjectId($this->getMultimediaObject($episode)->getId()));
+            $multimediaObject = $this->findMultimediaObject($episode);
+            $this->denyAccessUnlessAllowed(MultimediaObjectVoter::PLAY, $multimediaObject);
+            $annonQB->field('multimediaObject')->equals(new ObjectId($multimediaObject->getId()));
+        } elseif (!$this->isGranted(PermissionProfile::SCOPE_GLOBAL) && !$this->isGranted('ROLE_SUPER_ADMIN')) {
+            throw new AccessDeniedHttpException();
         }
 
         if ($type) {
@@ -90,21 +98,9 @@ class AnnotationsAPIController extends AbstractController
     #[Route('/{id}.{_format}', defaults: ['_format' => 'json'], requirements: ['_format' => 'json|xml'], methods: ['GET'])]
     public function getByIdAction(Request $request, Annotation $annotation)
     {
-        $data = [
-            'annotation' => [
-                'annotationId' => $annotation->getId(),
-                'mediapackageId' => $annotation->getMultimediaObject(),
-                'userId' => $annotation->getUserId(),
-                'sessionId' => $annotation->getSession(),
-                'inpoint' => $annotation->getInPoint(),
-                'outpoint' => $annotation->getOutPoint(),
-                'length' => $annotation->getLength(),
-                'type' => $annotation->getType(),
-                'isPrivate' => $annotation->isPrivate(),
-                'value' => $annotation->getValue(),
-                'created' => $annotation->getCreated(),
-            ],
-        ];
+        $this->denyAccessUnlessAllowed(MultimediaObjectVoter::PLAY, $this->multimediaObjectOf($annotation));
+
+        $data = $this->annotationData($annotation);
         $response = $this->serializer->dataSerialize($data, $request->getRequestFormat());
 
         return new Response($response);
@@ -121,8 +117,11 @@ class AnnotationsAPIController extends AbstractController
         $outPoint = $request->query->get('out', $request->request->get('out')) ?: 100;
         $isPrivate = $request->query->get('isPrivate', $request->request->get('isPrivate')) ?: false;
 
+        $multimediaObject = $this->findMultimediaObject($episode);
+        $this->denyAccessUnlessAllowed(MultimediaObjectVoter::EDIT, $multimediaObject);
+
         $annotation = new Annotation();
-        $annotation->setMultimediaObject(new ObjectId($episode));
+        $annotation->setMultimediaObject(new ObjectId($multimediaObject->getId()));
         $annotation->setType($type);
         $annotation->setValue($value);
         $annotation->setInPoint($inPoint);
@@ -140,24 +139,9 @@ class AnnotationsAPIController extends AbstractController
         $this->documentManager->persist($annotation);
         $this->documentManager->flush();
 
-        $data = [
-            'annotation' => [
-                'annotationId' => $annotation->getId(),
-                'mediapackageId' => $annotation->getMultimediaObject(),
-                'userId' => $annotation->getUserId(),
-                'sessionId' => $annotation->getSession(),
-                'inpoint' => $annotation->getInPoint(),
-                'outpoint' => $annotation->getOutPoint(),
-                'length' => $annotation->getLength(),
-                'type' => $annotation->getType(),
-                'isPrivate' => $annotation->isPrivate(),
-                'value' => $annotation->getValue(),
-                'created' => $annotation->getCreated(),
-            ],
-        ];
+        $data = $this->annotationData($annotation);
         $response = $this->serializer->dataSerialize($data, 'json');
-        $event = new AnnotationsUpdateEvent($episode);
-        $this->eventDispatcher->dispatch($event, AnnotationsEvents::UPDATE);
+        $this->dispatchUpdate($multimediaObject);
 
         return new Response($response);
     }
@@ -166,11 +150,85 @@ class AnnotationsAPIController extends AbstractController
     #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
     public function editAction(Request $request, Annotation $annotation)
     {
+        $multimediaObject = $this->multimediaObjectOf($annotation);
+        $this->denyAccessUnlessAllowed(MultimediaObjectVoter::EDIT, $multimediaObject);
+
         $value = $request->query->get('value', $request->request->get('value'));
         $annotation->setValue($value);
         $this->documentManager->persist($annotation);
         $this->documentManager->flush();
-        $data = [
+        $data = $this->annotationData($annotation);
+        $response = $this->serializer->dataSerialize($data, 'xml');
+        $this->dispatchUpdate($multimediaObject);
+
+        return new Response($response);
+    }
+
+    #[Route('/{id}', methods: ['DELETE'])]
+    #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
+    public function deleteAction(Annotation $annotation)
+    {
+        $multimediaObject = $this->multimediaObjectOf($annotation);
+        $this->denyAccessUnlessAllowed(MultimediaObjectVoter::EDIT, $multimediaObject);
+
+        $data = $this->annotationData($annotation);
+        $this->documentManager->remove($annotation);
+        $this->documentManager->flush();
+        $this->dispatchUpdate($multimediaObject);
+
+        return new Response($this->serializer->dataSerialize($data, 'xml'));
+    }
+
+    #[Route('/reset/{id}', methods: ['DELETE'])]
+    #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
+    public function deleteAllAction(MultimediaObject $multimediaobject)
+    {
+        $this->denyAccessUnlessAllowed(MultimediaObjectVoter::EDIT, $multimediaobject);
+
+        $annonRepo = $this->documentManager->getRepository(Annotation::class);
+        $annonQB = $annonRepo->createQueryBuilder();
+        $annonQB->field('multimediaObject')->equals(new ObjectId($multimediaobject->getId()));
+        $annonQB->remove()->getQuery()->execute();
+        $this->dispatchUpdate($multimediaobject);
+
+        $response = $this->serializer->dataSerialize(['status' => 'ok'], 'xml');
+
+        return new Response($response);
+    }
+
+    private function findMultimediaObject(?string $objectId): MultimediaObject
+    {
+        $objectId = (string) $objectId;
+        $repository = $this->documentManager->getRepository(MultimediaObject::class);
+        $multimediaObject = preg_match('/^[0-9a-f]{24}$/i', $objectId) ? $repository->find($objectId) : null;
+        $multimediaObject ??= $repository->findOneBy(['secret' => $objectId]);
+        if (!$multimediaObject instanceof MultimediaObject) {
+            throw new NotFoundHttpException('Multimedia object not found');
+        }
+
+        return $multimediaObject;
+    }
+
+    private function multimediaObjectOf(Annotation $annotation): MultimediaObject
+    {
+        return $this->findMultimediaObject((string) $annotation->getMultimediaObject());
+    }
+
+    private function denyAccessUnlessAllowed(string $attribute, MultimediaObject $multimediaObject): void
+    {
+        if (!$this->isGranted($attribute, $multimediaObject)) {
+            throw new AccessDeniedHttpException();
+        }
+    }
+
+    private function dispatchUpdate(MultimediaObject $multimediaObject): void
+    {
+        $this->eventDispatcher->dispatch(new AnnotationsUpdateEvent($multimediaObject->getId()), AnnotationsEvents::UPDATE);
+    }
+
+    private function annotationData(Annotation $annotation): array
+    {
+        return [
             'annotation' => [
                 'annotationId' => $annotation->getId(),
                 'mediapackageId' => $annotation->getMultimediaObject(),
@@ -185,45 +243,5 @@ class AnnotationsAPIController extends AbstractController
                 'created' => $annotation->getCreated(),
             ],
         ];
-        $response = $this->serializer->dataSerialize($data, 'xml');
-        $event = new AnnotationsUpdateEvent($annotation->getMultimediaObject());
-        $this->eventDispatcher->dispatch($event, AnnotationsEvents::UPDATE);
-
-        return new Response($response);
-    }
-
-    #[Route('/{id}', methods: ['DELETE'])]
-    #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
-    public function deleteAction(Annotation $annotation)
-    {
-        $this->documentManager->remove($annotation);
-        $this->documentManager->flush();
-
-        $response = $this->serializer->dataSerialize($annotation, 'xml');
-
-        return new Response($response);
-    }
-
-    #[Route('/reset/{id}', methods: ['DELETE'])]
-    #[IsGranted('ROLE_ACCESS_MULTIMEDIA_SERIES')]
-    public function deleteAllAction(MultimediaObject $multimediaobject)
-    {
-        $annonRepo = $this->documentManager->getRepository(Annotation::class);
-        $annonQB = $annonRepo->createQueryBuilder();
-        $annonQB->field('multimediaObject')->equals(new ObjectId($multimediaobject->getId()));
-        $annonQB->remove()->getQuery()->execute();
-
-        $response = $this->serializer->dataSerialize(['status' => 'ok'], 'xml');
-
-        return new Response($response);
-    }
-
-    private function getMultimediaObject(string $objectId): MultimediaObject
-    {
-        try {
-            return $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['_id' => new ObjectId($objectId)]);
-        } catch (\Exception $exception) {
-            return $this->documentManager->getRepository(MultimediaObject::class)->findOneBy(['secret' => $objectId]);
-        }
     }
 }
