@@ -6,12 +6,14 @@ namespace Pumukit\BasePlayerBundle\Controller;
 
 use Pumukit\BasePlayerBundle\Services\IntroService;
 use Pumukit\BasePlayerBundle\Services\ViewCounterService;
+use Pumukit\SchemaBundle\Document\MediaType\MediaInterface;
 use Pumukit\SchemaBundle\Document\MultimediaObject;
 use Pumukit\SchemaBundle\Services\EmbeddedBroadcastService;
 use Pumukit\SchemaBundle\Services\MultimediaObjectService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 final class PlayerController extends BasePlayerController
@@ -61,14 +63,21 @@ final class PlayerController extends BasePlayerController
             return $response;
         }
 
+        $media = $this->checkMultimediaObjectTracks($request, $multimediaObject);
+        if ($media instanceof Response) {
+            return $media;
+        }
+
         $referer = $request->headers->get('referer') ?? '';
         if (false !== strpos($referer, 'admin')) {
             $this->viewCounter->registerAdminPreview($multimediaObject);
+        } elseif ($media instanceof MediaInterface) {
+            $this->viewCounter->registerOnDisplay($multimediaObject, $media);
         }
 
         return [
             'object' => $multimediaObject,
-            'media' => $this->checkMultimediaObjectTracks($request, $multimediaObject),
+            'media' => $media,
         ];
     }
 }
