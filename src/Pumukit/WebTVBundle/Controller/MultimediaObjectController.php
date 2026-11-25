@@ -92,7 +92,8 @@ class MultimediaObjectController extends AbstractController implements WebTVCont
             }
         }
 
-        if (!$track && !$multimediaObject->isExternalType()) {
+        // El visor generico contabiliza imagenes, documentos y externos al abrirse.
+        if (!$track && $multimediaObject->isVideoAudioType()) {
             $viewCounter->registerOnLoad($multimediaObject);
         }
 

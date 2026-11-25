@@ -57,6 +57,19 @@ class ViewCounterService
     }
 
     /**
+     * Imagenes, documentos y visores externos no emiten un evento de play.
+     * Su visualizacion cuenta al abrir el visor, tambien con `on_play`.
+     */
+    public function registerOnDisplay(MultimediaObject $multimediaObject, ?MediaInterface $track = null): bool
+    {
+        if (!$multimediaObject->isImageType() && !$multimediaObject->isDocumentType() && !$multimediaObject->isExternalType()) {
+            return false;
+        }
+
+        return $this->dispatch($multimediaObject, $track);
+    }
+
+    /**
      * Previsualizacion del reproductor desde el backoffice.
      *
      * Cuenta SIEMPRE, con independencia de `when_dispatch_view_event`. No es un
